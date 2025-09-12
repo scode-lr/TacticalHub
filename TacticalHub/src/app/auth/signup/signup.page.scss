@@ -1,0 +1,211 @@
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--tactical-green) 0%, var(--tactical-orange) 100%);
+}
+
+.logo-section {
+  text-align: center;
+  margin: 20px 0 30px 0;
+  
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    
+    .logo-icon {
+      font-size: 35px;
+      color: white;
+    }
+  }
+  
+  .app-title {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .app-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 15px;
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+.auth-card {
+  background: var(--background-primary);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin: 0;
+  overflow: hidden;
+  
+  .card-title {
+    text-align: center;
+    color: var(--text-primary);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+}
+
+.auth-item {
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-light);
+  
+  .input-icon {
+    color: var(--tactical-green);
+    margin-right: 8px;
+  }
+  
+  ion-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .auth-input {
+    color: var(--text-primary);
+  }
+}
+
+.error-messages {
+  margin: 8px 0;
+  
+  small {
+    font-size: 12px;
+  }
+}
+
+.auth-button {
+  margin: 20px 0 16px 0;
+  height: 48px;
+  font-weight: 600;
+  
+  &.tactical-button-primary {
+    --background: var(--tactical-green);
+    --color: white;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(50, 215, 75, 0.3);
+  }
+}
+
+.divider {
+  text-align: center;
+  margin: 18px 0;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-light);
+    z-index: 1;
+  }
+  
+  .divider-text {
+    background: var(--background-primary);
+    color: var(--text-secondary);
+    padding: 0 16px;
+    font-size: 14px;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+  
+  .social-button {
+    height: 46px;
+    font-weight: 500;
+    --border-radius: 12px;
+    font-size: 14px;
+    
+    &.google-button {
+      --color: var(--auth-google);
+      --border-color: var(--auth-google);
+      
+      ion-icon {
+        color: var(--auth-google);
+      }
+    }
+    
+    &.apple-button {
+      --color: var(--auth-apple);
+      --border-color: var(--auth-apple);
+      
+      ion-icon {
+        color: var(--auth-apple);
+      }
+    }
+  }
+}
+
+.signin-link {
+  text-align: center;
+  margin-top: 14px;
+  
+  .link-text {
+    color: var(--tactical-green);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 16px;
+  }
+  
+  .logo-section {
+    margin: 16px 0 20px 0;
+    
+    .app-title {
+      font-size: 24px;
+    }
+    
+    .app-subtitle {
+      font-size: 14px;
+    }
+  }
+  
+  .auth-item {
+    margin-bottom: 12px;
+  }
+}
+
+// Validation states
+.auth-item.ng-invalid.ng-touched {
+  border-color: var(--ion-color-danger);
+}
+
+.auth-item.ng-valid.ng-touched {
+  border-color: var(--tactical-green);
+}
+
+// Dark mode support (if needed in the future)
+@media (prefers-color-scheme: dark) {
+  // Dark mode styles can be added here
+}

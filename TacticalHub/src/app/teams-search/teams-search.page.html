@@ -1,0 +1,130 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Find Your Team</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refreshTeams($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="search-container">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h2 class="welcome-title">Welcome to TacticalHub!</h2>
+      <p class="welcome-subtitle">Find and join football teams in your area</p>
+    </div>
+
+    <!-- Search Bar -->
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange($event)"
+      placeholder="Search teams by name, location, or level"
+      class="custom-searchbar">
+    </ion-searchbar>
+
+    <!-- Create Team Button -->
+    <div class="create-team-section">
+      <ion-button 
+        fill="outline" 
+        size="small" 
+        (click)="createNewTeam()"
+        class="create-team-button">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        Create New Team
+      </ion-button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-container" *ngIf="isLoading">
+      <ion-spinner name="crescent" class="main-spinner"></ion-spinner>
+      <p class="loading-text">Loading teams...</p>
+    </div>
+
+    <!-- Teams List -->
+    <div class="teams-container" *ngIf="!isLoading">
+      <!-- No Results -->
+      <div class="no-results" *ngIf="filteredTeams.length === 0">
+        <ion-icon name="search" class="no-results-icon"></ion-icon>
+        <h3>No teams found</h3>
+        <p>Try adjusting your search criteria or create a new team</p>
+      </div>
+
+      <!-- Teams Grid -->
+      <ion-grid *ngIf="filteredTeams.length > 0">
+        <ion-row>
+          <ion-col size="12" size-md="6" size-lg="4" *ngFor="let team of filteredTeams">
+            <ion-card class="team-card">
+              <ion-card-header>
+                <div class="team-header">
+                  <ion-avatar class="team-avatar">
+                    <img [src]="team.imageUrl" [alt]="team.name">
+                  </ion-avatar>
+                  <div class="team-info">
+                    <ion-card-title class="team-name">{{ team.name }}</ion-card-title>
+                    <div class="team-location">
+                      <ion-icon name="location-outline"></ion-icon>
+                      <span>{{ team.location }}</span>
+                    </div>
+                  </div>
+                </div>
+              </ion-card-header>
+
+              <ion-card-content>
+                <p class="team-description">{{ team.description }}</p>
+                
+                <div class="team-stats">
+                  <div class="stat-item">
+                    <ion-icon name="people-outline"></ion-icon>
+                    <span>{{ team.membersCount }} members</span>
+                  </div>
+                  
+                  <div class="stat-item">
+                    <ion-icon name="trophy-outline"></ion-icon>
+                    <ion-chip [color]="getLevelColor(team.level)" class="level-chip">
+                      {{ team.level }}
+                    </ion-chip>
+                  </div>
+                </div>
+
+                <div class="team-badges" *ngIf="team.joinRequests && team.joinRequests > 0">
+                  <ion-badge color="primary">{{ team.joinRequests }} pending requests</ion-badge>
+                </div>
+
+                <div class="team-visibility" *ngIf="!team.isPublic">
+                  <ion-chip color="warning" fill="outline">
+                    Private Team
+                  </ion-chip>
+                </div>
+
+                <ion-button 
+                  expand="block" 
+                  class="join-button"
+                  [class.tactical-button-primary]="team.isPublic"
+                  [class.tactical-button-secondary]="!team.isPublic"
+                  (click)="joinTeam(team)"
+                  [disabled]="isLoading">
+                  <ion-spinner name="crescent" *ngIf="isLoading" size="small"></ion-spinner>
+                  <span *ngIf="!isLoading">
+                    {{ team.isPublic ? 'Join Team' : 'Request to Join' }}
+                  </span>
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <!-- Toast for messages -->
+  <ion-toast
+    [isOpen]="showToast"
+    [message]="toastMessage"
+    duration="3000"
+    position="top"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
+</ion-content>
