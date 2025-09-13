@@ -71,6 +71,7 @@
       --border-radius: 12px;
       --border-width: 1.5px;
       --border-color: #e5e7eb;
+      --background: #ffffff;
       --color: #1f2937;
       --placeholder-color: #9ca3af;
       --padding-start: 16px;
@@ -79,10 +80,29 @@
       --padding-bottom: 16px;
       font-size: 16px;
       font-weight: 400;
+      color: #1f2937 !important;
+      
+      .native-input {
+        color: #1f2937 !important;
+        background: transparent !important;
+        -webkit-text-fill-color: #1f2937 !important;
+      }
+      
+      input {
+        color: #1f2937 !important;
+        background: transparent !important;
+        -webkit-text-fill-color: #1f2937 !important;
+      }
       
       &.ion-focused {
         --border-color: #667eea;
         --box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        
+        .native-input,
+        input {
+          color: #1f2937 !important;
+          -webkit-text-fill-color: #1f2937 !important;
+        }
       }
       
       &.ion-invalid.ion-touched {
