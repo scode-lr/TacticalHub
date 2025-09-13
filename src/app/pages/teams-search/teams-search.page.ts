@@ -6,7 +6,8 @@ import { addIcons } from 'ionicons';
 import { 
   search, 
   addOutline,
-  refreshOutline
+  refreshOutline,
+  arrowForwardOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -25,12 +26,22 @@ export class TeamsSearchPage implements OnInit {
   isLoading = false;
   showToast = false;
   toastMessage = '';
+  requestedTeams: Set<string> = new Set();
+
+  get hasRequestedTeams(): boolean {
+    return this.requestedTeams.size > 0;
+  }
+
+  get requestedTeamsCount(): number {
+    return this.requestedTeams.size;
+  }
 
   constructor(private router: Router) {
     addIcons({ 
       search, 
       addOutline,
-      refreshOutline
+      refreshOutline,
+      arrowForwardOutline
     });
   }
 
@@ -63,16 +74,27 @@ export class TeamsSearchPage implements OnInit {
   }
 
   async joinTeam(team: Team) {
-    this.isLoading = true;
+    if (team.isRequested) return;
     
-    setTimeout(() => {
-      this.isLoading = false;
-      this.showToastMessage(`Request sent to join ${team.name}!`);
-      
-      setTimeout(() => {
-        this.router.navigate(['/home']);
-      }, 1500);
-    }, 1000);
+    // Add team to requested teams immediately
+    this.requestedTeams.add(team.id);
+    
+    // Update team status in both teams and filteredTeams arrays
+    const updateTeam = (t: Team) => {
+      if (t.id === team.id) {
+        t.isRequested = true;
+      }
+      return t;
+    };
+    
+    this.teams = this.teams.map(updateTeam);
+    this.filteredTeams = this.filteredTeams.map(updateTeam);
+    
+    this.showToastMessage(`Request sent to join ${team.name}!`);
+  }
+
+  continueToHome() {
+    this.router.navigate(['/home']);
   }
 
   async refreshTeams(event: any) {
@@ -110,10 +132,10 @@ export class TeamsSearchPage implements OnInit {
         location: 'Barcelona, Spain',
         membersCount: 25,
         level: 'Professional',
-        description: 'Elite football training academy focusing on technical skills and tactical awareness.',
+        description: 'Elite football training academy focusing on technical skills and tactical awareness. We offer comprehensive training programs for players looking to reach the highest level of football.',
         imageUrl: 'https://via.placeholder.com/60x60?text=BAR',
-        isPublic: true,
-        joinRequests: 5
+        teamsCount: 4,
+        isRequested: false
       },
       {
         id: '2',
@@ -121,10 +143,10 @@ export class TeamsSearchPage implements OnInit {
         location: 'Manchester, UK',
         membersCount: 18,
         level: 'Semi-Professional',
-        description: 'Youth development program for aspiring football players aged 16-21.',
+        description: 'Youth development program for aspiring football players aged 16-21. Our program includes technical training, physical conditioning, and mental preparation.',
         imageUrl: 'https://via.placeholder.com/60x60?text=MAN',
-        isPublic: true,
-        joinRequests: 12
+        teamsCount: 3,
+        isRequested: false
       },
       {
         id: '3',
@@ -132,10 +154,10 @@ export class TeamsSearchPage implements OnInit {
         location: 'Madrid, Spain',
         membersCount: 32,
         level: 'Amateur',
-        description: 'Community football club welcoming players of all skill levels.',
+        description: 'Community football club welcoming players of all skill levels. We focus on fun, friendship, and development in a supportive environment.',
         imageUrl: 'https://via.placeholder.com/60x60?text=LIO',
-        isPublic: true,
-        joinRequests: 3
+        teamsCount: 2,
+        isRequested: false
       },
       {
         id: '4',
@@ -143,10 +165,10 @@ export class TeamsSearchPage implements OnInit {
         location: 'Munich, Germany',
         membersCount: 22,
         level: 'Professional',
-        description: 'Reserve team for Bayern Munich with focus on advanced tactics.',
+        description: 'Reserve team for Bayern Munich with focus on advanced tactics. Players train with professional coaches and compete at the highest level.',
         imageUrl: 'https://via.placeholder.com/60x60?text=BAY',
-        isPublic: false,
-        joinRequests: 8
+        teamsCount: 6,
+        isRequested: false
       },
       {
         id: '5',
@@ -154,10 +176,10 @@ export class TeamsSearchPage implements OnInit {
         location: 'Paris, France',
         membersCount: 28,
         level: 'Semi-Professional',
-        description: 'Youth academy known for developing world-class talent.',
+        description: 'Youth academy known for developing world-class talent. Our comprehensive program covers all aspects of modern football development.',
         imageUrl: 'https://via.placeholder.com/60x60?text=PSG',
-        isPublic: true,
-        joinRequests: 15
+        teamsCount: 5,
+        isRequested: false
       },
       {
         id: '6',
@@ -165,10 +187,10 @@ export class TeamsSearchPage implements OnInit {
         location: 'London, UK',
         membersCount: 20,
         level: 'Professional',
-        description: 'Premier League academy with emphasis on physical and mental development.',
+        description: 'Premier League academy with emphasis on physical and mental development. We prepare players for the demands of professional football.',
         imageUrl: 'https://via.placeholder.com/60x60?text=CHE',
-        isPublic: false,
-        joinRequests: 7
+        teamsCount: 3,
+        isRequested: false
       }
     ];
   }

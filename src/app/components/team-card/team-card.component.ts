@@ -4,7 +4,10 @@ import { addIcons } from 'ionicons';
 import { 
   locationOutline, 
   peopleOutline, 
-  trophyOutline
+  trophyOutline,
+  checkmarkCircle,
+  checkmarkCircleOutline,
+  shieldOutline
 } from 'ionicons/icons';
 
 export interface Team {
@@ -15,8 +18,8 @@ export interface Team {
   level: string;
   description: string;
   imageUrl: string;
-  isPublic: boolean;
-  joinRequests?: number;
+  teamsCount?: number;
+  isRequested?: boolean;
 }
 
 @Component({
@@ -30,7 +33,6 @@ export interface Team {
 })
 export class TeamCardComponent {
   @Input() team!: Team;
-  @Input() isLoading: boolean = false;
   
   @Output() joinTeam = new EventEmitter<Team>();
 
@@ -38,7 +40,10 @@ export class TeamCardComponent {
     addIcons({ 
       locationOutline, 
       peopleOutline, 
-      trophyOutline
+      trophyOutline,
+      checkmarkCircle,
+      checkmarkCircleOutline,
+      shieldOutline
     });
   }
 

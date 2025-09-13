@@ -7,10 +7,41 @@
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   animation: fadeIn 0.3s ease-out;
+  height: 380px; // Fixed height for all cards
+  display: flex;
+  flex-direction: column;
+  position: relative;
   
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px var(--shadow-medium);
+  }
+  
+  ion-card-header {
+    flex-shrink: 0; // Prevent header from shrinking
+  }
+  
+  ion-card-content {
+    flex: 1;
+    overflow-y: auto; // Enable scrolling for content
+    padding-bottom: 80px; // Space for fixed button
+    
+    .content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  .button-area {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: var(--background-primary);
+    border-top: 1px solid var(--border-light);
+    backdrop-filter: blur(10px);
   }
 }
 
@@ -89,40 +120,33 @@
   }
 }
 
-.team-badges {
-  margin-bottom: 12px;
-  
-  ion-badge {
-    font-size: 11px;
-    font-weight: 500;
-  }
-}
-
-.team-visibility {
-  margin-bottom: 12px;
-  
-  ion-chip {
-    font-size: 12px;
-    height: 24px;
-  }
-}
-
 .join-button {
-  margin-top: 16px;
   height: 44px;
   font-weight: 600;
   --border-radius: 12px;
+  transition: all 0.3s ease;
+  margin: 0; // Remove default margins since it's in a fixed container
   
-  &.tactical-button-primary {
+  &:not(.requested) {
     --background: var(--tactical-blue);
     --color: white;
     --box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    
+    &:hover {
+      --box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+      transform: translateY(-1px);
+    }
   }
   
-  &.tactical-button-secondary {
+  &.requested {
     --background: var(--tactical-green);
     --color: white;
     --box-shadow: 0 4px 12px rgba(50, 215, 75, 0.3);
+    
+    ion-icon {
+      font-size: 18px;
+      margin-right: 4px;
+    }
   }
 }
 

@@ -5,7 +5,7 @@
   </ion-refresher>
 
   <!-- Skip Button -->
-  <div class="skip-button-container" *ngIf="!searchTerm || searchTerm.trim().length === 0">
+  <div class="skip-button-container" *ngIf="(!searchTerm || searchTerm.trim().length === 0) && !hasRequestedTeams">
     <ion-button 
       fill="clear" 
       size="small" 
@@ -15,7 +15,7 @@
     </ion-button>
   </div>
 
-  <div class="search-container" [class.has-results]="searchTerm && searchTerm.trim().length > 0">
+  <div class="search-container" [class.has-results]="searchTerm && searchTerm.trim().length > 0" [class.has-continue]="hasRequestedTeams">
     <!-- Welcome Section -->
     <div class="welcome-section">
       <h2 class="welcome-title">Welcome to TacticalHub!</h2>
@@ -51,13 +51,22 @@
           <ion-col size="12" size-md="6" size-lg="4" *ngFor="let team of filteredTeams">
             <app-team-card 
               [team]="team" 
-              [isLoading]="isLoading"
               (joinTeam)="joinTeam($event)">
             </app-team-card>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
+  </div>
+
+  <!-- Continue Button -->
+  <div class="continue-section" *ngIf="hasRequestedTeams">
+    <ion-button 
+      expand="block" 
+      class="continue-button"
+      (click)="continueToHome()">
+      Continue ({{ requestedTeamsCount }} {{ requestedTeamsCount === 1 ? 'request' : 'requests' }} sent)
+    </ion-button>
   </div>
 
   <!-- Toast for messages -->

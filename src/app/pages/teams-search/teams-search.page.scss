@@ -40,9 +40,19 @@
   // When search results appear, move to top
   &.has-results {
     justify-content: flex-start;
-    align-items: stretch;
-    text-align: left;
+    align-items: center; // Keep horizontal centering
+    text-align: center; // Keep text centered
     padding-top: 16px;
+    
+    .welcome-section,
+    .custom-searchbar {
+      align-self: center; // Ensure items stay centered
+    }
+    
+    .teams-container {
+      align-self: stretch; // Teams container takes full width
+      text-align: left; // Reset text alignment for teams
+    }
   }
 }
 
@@ -57,6 +67,7 @@
   .search-container.has-results & {
     margin-bottom: 16px;
     padding: 10px 0;
+    text-align: center; // Maintain center alignment
   }
   
   .welcome-title {
@@ -164,6 +175,44 @@
 .teams-container {
   width: 100%;
   animation: slideInFromBottom 0.4s ease-out;
+  
+  // Add bottom padding when continue button is visible
+  .search-container.has-continue & {
+    padding-bottom: 100px;
+  }
+}
+
+.continue-section {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--background-primary);
+  padding: 16px;
+  border-top: 1px solid var(--border-light);
+  box-shadow: 0 -4px 12px var(--shadow-light);
+  z-index: 100;
+  animation: slideInFromBottom 0.3s ease-out;
+  
+  .continue-button {
+    --background: var(--tactical-blue);
+    --color: white;
+    --border-radius: 12px;
+    height: 48px;
+    font-weight: 600;
+    font-size: 16px;
+    --box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    
+    ion-icon {
+      font-size: 18px;
+      margin-left: 8px;
+    }
+    
+    &:hover {
+      --box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+      transform: translateY(-1px);
+    }
+  }
 }
 
 // Responsive adjustments
@@ -184,6 +233,19 @@
     
     &.has-results {
       padding-top: 12px;
+    }
+    
+    &.has-continue .teams-container {
+      padding-bottom: 90px;
+    }
+  }
+  
+  .continue-section {
+    padding: 12px;
+    
+    .continue-button {
+      height: 44px;
+      font-size: 15px;
     }
   }
   
