@@ -58,7 +58,6 @@ export class TeamsSearchPage implements OnInit {
   async loadTeams() {
     this.isLoading = true;
     
-    // Simulate API call to load teams
     setTimeout(() => {
       this.teams = this.getMockTeams();
       this.filteredTeams = [...this.teams];
@@ -84,12 +83,10 @@ export class TeamsSearchPage implements OnInit {
   async joinTeam(team: Team) {
     this.isLoading = true;
     
-    // Simulate joining a team
     setTimeout(() => {
       this.isLoading = false;
       this.showToastMessage(`Request sent to join ${team.name}!`);
       
-      // Navigate to home/dashboard after successful join
       setTimeout(() => {
         this.router.navigate(['/home']);
       }, 1500);

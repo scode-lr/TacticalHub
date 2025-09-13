@@ -1,6 +1,12 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": [
+    "projects/**/*",
+    "dist/**/*",
+    "node_modules/**/*",
+    "www/**/*",
+    "*.js"
+  ],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -13,6 +19,7 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        // Angular specific rules
         "@angular-eslint/component-class-suffix": [
           "error",
           {
@@ -34,13 +41,47 @@
             "prefix": "app",
             "style": "camelCase"
           }
+        ],
+
+        // Angular specific rules
+        "@angular-eslint/prefer-inject": "off",
+        "@angular-eslint/no-empty-lifecycle-method": "off",
+
+        // General code quality rules
+        "no-console": [
+          "warn",
+          {
+            "allow": [
+              "warn",
+              "error"
+            ]
+          }
+        ],
+        "no-debugger": "error",
+        "no-var": "error",
+        "prefer-const": "error",
+        "eol-last": "error",
+        "semi": [
+          "error",
+          "always"
+        ],
+        "quotes": [
+          "error",
+          "single",
+          {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+          }
         ]
       }
     },
     {
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/no-negated-async": "error",
+        "@angular-eslint/template/use-track-by-function": "off"
+      }
     }
   ]
 }

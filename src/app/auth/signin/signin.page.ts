@@ -34,9 +34,7 @@ export class SigninPage implements OnInit {
   }
 
   ngOnInit() {
-    // Add real-time form validation feedback
     this.signinForm.statusChanges.subscribe(status => {
-      // You can add visual feedback here if needed
     });
   }
 
@@ -45,12 +43,10 @@ export class SigninPage implements OnInit {
       this.isLoading = true;
       
       try {
-        // Simulate authentication with more realistic timing
         await this.simulateAuth();
         
         this.showToastMessage('Welcome back!', 'success');
         
-        // Navigate to teams search after short delay
         setTimeout(() => {
           this.router.navigate(['/teams-search']);
         }, 800);
@@ -70,7 +66,6 @@ export class SigninPage implements OnInit {
     this.isLoading = true;
     
     try {
-      // Simulate Google Sign-In
       await this.simulateAuth();
       this.showToastMessage('Google sign-in successful!', 'success');
       
@@ -89,7 +84,6 @@ export class SigninPage implements OnInit {
     this.isLoading = true;
     
     try {
-      // Simulate Apple Sign-In
       await this.simulateAuth();
       this.showToastMessage('Apple sign-in successful!', 'success');
       
@@ -108,11 +102,9 @@ export class SigninPage implements OnInit {
     this.router.navigate(['/auth/signup']);
   }
 
-  // Helper Methods
   private async simulateAuth(): Promise<void> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        // Simulate 90% success rate
         if (Math.random() > 0.1) {
           resolve();
         } else {
@@ -139,7 +131,6 @@ export class SigninPage implements OnInit {
     this.showToast = false;
   }
 
-  // Getters for form validation
   get emailError() {
     const control = this.signinForm.get('email');
     if (control?.touched && control?.errors) {

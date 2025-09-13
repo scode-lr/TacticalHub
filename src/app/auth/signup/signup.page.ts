@@ -14,7 +14,7 @@ import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ioni
     TacticalSharedModule
   ]
 })
-export class SignupPage implements OnInit {
+export class SignupPage {
   signupForm: FormGroup;
   isLoading = false;
   showToast = false;
@@ -37,9 +37,6 @@ export class SignupPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
-  // Custom validator to check if passwords match
   passwordMatchValidator(formGroup: FormGroup) {
     const password = formGroup.get('password');
     const confirmPassword = formGroup.get('confirmPassword');
@@ -56,12 +53,10 @@ export class SignupPage implements OnInit {
     if (this.signupForm.valid) {
       this.isLoading = true;
       
-      // Simulate user registration
       setTimeout(() => {
         this.isLoading = false;
         this.showToastMessage('Account created successfully!');
         
-        // Navigate to teams search since new users won't have a club
         setTimeout(() => {
           this.router.navigate(['/teams-search']);
         }, 1000);
@@ -73,7 +68,6 @@ export class SignupPage implements OnInit {
 
   async signUpWithGoogle() {
     this.isLoading = true;
-    // Implement Google Sign-Up logic here
     setTimeout(() => {
       this.isLoading = false;
       this.showToastMessage('Google Sign-Up not implemented yet');
@@ -82,7 +76,6 @@ export class SignupPage implements OnInit {
 
   async signUpWithApple() {
     this.isLoading = true;
-    // Implement Apple Sign-Up logic here
     setTimeout(() => {
       this.isLoading = false;
       this.showToastMessage('Apple Sign-Up not implemented yet');
