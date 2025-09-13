@@ -52,17 +52,8 @@ export class TeamsSearchPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loadTeams();
-  }
-
-  async loadTeams() {
-    this.isLoading = true;
-    
-    setTimeout(() => {
-      this.teams = this.getMockTeams();
-      this.filteredTeams = [...this.teams];
-      this.isLoading = false;
-    }, 1500);
+    // Load teams data but don't display them initially
+    this.teams = this.getMockTeams();
   }
 
   onSearchChange(event: any) {
@@ -70,13 +61,21 @@ export class TeamsSearchPage implements OnInit {
     this.searchTerm = searchTerm;
     
     if (searchTerm.trim() === '') {
-      this.filteredTeams = [...this.teams];
+      // Clear filtered teams when search is empty
+      this.filteredTeams = [];
     } else {
-      this.filteredTeams = this.teams.filter(team => 
-        team.name.toLowerCase().includes(searchTerm) ||
-        team.location.toLowerCase().includes(searchTerm) ||
-        team.level.toLowerCase().includes(searchTerm)
-      );
+      // Show loading while filtering
+      this.isLoading = true;
+      
+      // Simulate search delay for better UX
+      setTimeout(() => {
+        this.filteredTeams = this.teams.filter(team => 
+          team.name.toLowerCase().includes(searchTerm) ||
+          team.location.toLowerCase().includes(searchTerm) ||
+          team.level.toLowerCase().includes(searchTerm)
+        );
+        this.isLoading = false;
+      }, 500);
     }
   }
 
@@ -94,12 +93,30 @@ export class TeamsSearchPage implements OnInit {
   }
 
   async refreshTeams(event: any) {
-    await this.loadTeams();
+    // Reload teams data
+    this.teams = this.getMockTeams();
+    
+    // If there's a current search, reapply it
+    if (this.searchTerm && this.searchTerm.trim() !== '') {
+      this.filteredTeams = this.teams.filter(team => 
+        team.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        team.location.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        team.level.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredTeams = [];
+    }
+    
     event.target.complete();
   }
 
   createNewTeam() {
     this.showToastMessage('Create team feature coming soon!');
+  }
+
+  skipSearch() {
+    // Navigate to home page or another main section
+    this.router.navigate(['/home']);
   }
 
   private getMockTeams(): Team[] {

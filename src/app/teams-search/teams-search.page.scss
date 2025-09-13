@@ -1,19 +1,74 @@
+// Skip button styling
+.skip-button-container {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  
+  .skip-button {
+    --color: var(--text-secondary);
+    --background: transparent;
+    --box-shadow: none;
+    font-size: 14px;
+    font-weight: 400;
+    height: 32px;
+    min-width: auto;
+    padding: 0 12px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      --color: var(--tactical-blue);
+      opacity: 1;
+    }
+  }
+}
+
 .search-container {
   padding: 16px;
   min-height: 100vh;
   background: linear-gradient(180deg, var(--background-secondary) 0%, var(--background-primary) 100%);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+  
+  // Default state: centered
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  // When search results appear, move to top
+  &.has-results {
+    justify-content: flex-start;
+    align-items: stretch;
+    text-align: left;
+    padding-top: 16px;
+  }
 }
 
 .welcome-section {
   text-align: center;
   margin-bottom: 24px;
   padding: 20px 0;
+  transition: all 0.3s ease-in-out;
+  max-width: 500px;
+  width: 100%;
+  
+  .search-container.has-results & {
+    margin-bottom: 16px;
+    padding: 10px 0;
+  }
   
   .welcome-title {
     color: var(--text-primary);
     font-size: 28px;
     font-weight: 700;
     margin: 0 0 8px 0;
+    transition: font-size 0.3s ease-in-out;
+    
+    .search-container.has-results & {
+      font-size: 24px;
+    }
   }
   
   .welcome-subtitle {
@@ -21,6 +76,11 @@
     font-size: 16px;
     margin: 0;
     font-weight: 400;
+    transition: font-size 0.3s ease-in-out;
+    
+    .search-container.has-results & {
+      font-size: 14px;
+    }
   }
 }
 
@@ -33,6 +93,9 @@
   --icon-color: var(--tactical-blue);
   margin-bottom: 16px;
   padding: 0;
+  max-width: 500px;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
 }
 
 .create-team-section {
@@ -55,6 +118,8 @@
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
+  width: 100%;
+  animation: fadeIn 0.3s ease-out;
   
   .main-spinner {
     width: 48px;
@@ -74,6 +139,8 @@
   text-align: center;
   padding: 60px 20px;
   color: var(--text-secondary);
+  width: 100%;
+  animation: fadeIn 0.3s ease-out;
   
   .no-results-icon {
     font-size: 64px;
@@ -95,6 +162,9 @@
 }
 
 .teams-container {
+  width: 100%;
+  animation: slideInFromBottom 0.4s ease-out;
+  
   .team-card {
     background: var(--background-primary);
     border-radius: 16px;
@@ -225,21 +295,54 @@
 
 // Responsive adjustments
 @media (max-width: 768px) {
+  .skip-button-container {
+    top: 12px;
+    right: 12px;
+    
+    .skip-button {
+      font-size: 13px;
+      height: 28px;
+      padding: 0 10px;
+    }
+  }
+  
   .search-container {
     padding: 12px;
+    
+    &.has-results {
+      padding-top: 12px;
+    }
   }
   
   .welcome-section {
     margin-bottom: 20px;
     padding: 16px 0;
+    max-width: 400px;
+    
+    .search-container.has-results & {
+      margin-bottom: 12px;
+      padding: 8px 0;
+    }
     
     .welcome-title {
       font-size: 24px;
+      
+      .search-container.has-results & {
+        font-size: 20px;
+      }
     }
     
     .welcome-subtitle {
       font-size: 14px;
+      
+      .search-container.has-results & {
+        font-size: 13px;
+      }
     }
+  }
+  
+  .custom-searchbar {
+    max-width: 400px;
   }
   
   .team-stats {
@@ -281,6 +384,17 @@
   from {
     opacity: 0;
     transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
   to {
     opacity: 1;

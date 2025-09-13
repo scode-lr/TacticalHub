@@ -1,16 +1,21 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Find Your Team</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-refresher slot="fixed" (ionRefresh)="refreshTeams($event)">
     <ion-refresher-content>
     </ion-refresher-content>
   </ion-refresher>
 
-  <div class="search-container">
+  <!-- Skip Button -->
+  <div class="skip-button-container" *ngIf="!searchTerm || searchTerm.trim().length === 0">
+    <ion-button 
+      fill="clear" 
+      size="small" 
+      class="skip-button"
+      (click)="skipSearch()">
+      Skip
+    </ion-button>
+  </div>
+
+  <div class="search-container" [class.has-results]="searchTerm && searchTerm.trim().length > 0">
     <!-- Welcome Section -->
     <div class="welcome-section">
       <h2 class="welcome-title">Welcome to TacticalHub!</h2>
@@ -25,26 +30,14 @@
       class="custom-searchbar">
     </ion-searchbar>
 
-    <!-- Create Team Button -->
-    <div class="create-team-section">
-      <ion-button 
-        fill="outline" 
-        size="small" 
-        (click)="createNewTeam()"
-        class="create-team-button">
-        <ion-icon name="add-outline" slot="start"></ion-icon>
-        Create New Team
-      </ion-button>
-    </div>
-
     <!-- Loading Spinner -->
-    <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-container" *ngIf="isLoading && searchTerm && searchTerm.trim().length > 0">
       <ion-spinner name="crescent" class="main-spinner"></ion-spinner>
       <p class="loading-text">Loading teams...</p>
     </div>
 
     <!-- Teams List -->
-    <div class="teams-container" *ngIf="!isLoading">
+    <div class="teams-container" *ngIf="searchTerm && searchTerm.trim().length > 0 && !isLoading">
       <!-- No Results -->
       <div class="no-results" *ngIf="filteredTeams.length === 0">
         <ion-icon name="search" class="no-results-icon"></ion-icon>
