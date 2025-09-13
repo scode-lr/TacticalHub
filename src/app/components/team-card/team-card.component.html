@@ -1,0 +1,57 @@
+<ion-card class="team-card">
+  <ion-card-header>
+    <div class="team-header">
+      <ion-avatar class="team-avatar">
+        <img [src]="team.imageUrl" [alt]="team.name">
+      </ion-avatar>
+      <div class="team-info">
+        <ion-card-title class="team-name">{{ team.name }}</ion-card-title>
+        <div class="team-location">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>{{ team.location }}</span>
+        </div>
+      </div>
+    </div>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p class="team-description">{{ team.description }}</p>
+    
+    <div class="team-stats">
+      <div class="stat-item">
+        <ion-icon name="people-outline"></ion-icon>
+        <span>{{ team.membersCount }} members</span>
+      </div>
+      
+      <div class="stat-item">
+        <ion-icon name="trophy-outline"></ion-icon>
+        <ion-chip [color]="getLevelColor(team.level)" class="level-chip">
+          {{ team.level }}
+        </ion-chip>
+      </div>
+    </div>
+
+    <div class="team-badges" *ngIf="team.joinRequests && team.joinRequests > 0">
+      <ion-badge color="primary">{{ team.joinRequests }} pending requests</ion-badge>
+    </div>
+
+    <div class="team-visibility" *ngIf="!team.isPublic">
+      <ion-chip color="warning" fill="outline">
+        Private Team
+      </ion-chip>
+    </div>
+
+    <ion-button 
+      expand="block" 
+      class="join-button"
+      [class.tactical-button-primary]="team.isPublic"
+      [class.tactical-button-secondary]="!team.isPublic"
+      (click)="onJoinTeam()"
+      [disabled]="isLoading">
+      <ion-spinner name="crescent" *ngIf="isLoading" size="small"></ion-spinner>
+      <span *ngIf="!isLoading">
+        {{ team.isPublic ? 'Join Team' : 'Request to Join' }}
+      </span>
+    </ion-button>
+  </ion-card-content>
+</ion-card>

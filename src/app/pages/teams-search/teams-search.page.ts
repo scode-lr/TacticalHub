@@ -1,27 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../shared/modules';
+import { TacticalSharedModule } from '../../core/modules';
+import type { Team } from '../../components';
 import { addIcons } from 'ionicons';
 import { 
   search, 
-  locationOutline, 
-  peopleOutline, 
-  trophyOutline, 
   addOutline,
   refreshOutline
 } from 'ionicons/icons';
-
-interface Team {
-  id: string;
-  name: string;
-  location: string;
-  membersCount: number;
-  level: string;
-  description: string;
-  imageUrl: string;
-  isPublic: boolean;
-  joinRequests?: number;
-}
 
 @Component({
   selector: 'app-teams-search',
@@ -43,9 +29,6 @@ export class TeamsSearchPage implements OnInit {
   constructor(private router: Router) {
     addIcons({ 
       search, 
-      locationOutline, 
-      peopleOutline, 
-      trophyOutline, 
       addOutline,
       refreshOutline
     });
@@ -188,19 +171,6 @@ export class TeamsSearchPage implements OnInit {
         joinRequests: 7
       }
     ];
-  }
-
-  getLevelColor(level: string): string {
-    switch (level.toLowerCase()) {
-      case 'professional':
-        return 'danger';
-      case 'semi-professional':
-        return 'warning';
-      case 'amateur':
-        return 'success';
-      default:
-        return 'medium';
-    }
   }
 
   private showToastMessage(message: string) {

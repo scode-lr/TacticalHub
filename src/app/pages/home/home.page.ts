@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TacticalSharedModule } from '../shared/modules';
+import { TacticalSharedModule } from '../../core/modules';
 
 @Component({
   selector: 'app-home',

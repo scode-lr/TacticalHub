@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../../shared/modules';
+import { TacticalSharedModule } from '../../../core/modules';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple, person, checkmarkCircle, alertCircle } from 'ionicons/icons';
 
