@@ -1,0 +1,324 @@
+// Modern Minimalist Signin Design
+.signin-content {
+  --background: #fafbfc;
+}
+
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  background: transparent;
+}
+
+// Header Section - Clean and Minimal
+.header-section {
+  text-align: center;
+  padding: 80px 0 60px;
+  
+  .brand-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.25);
+    
+    .logo-icon {
+      font-size: 28px;
+      color: white;
+    }
+  }
+  
+  .brand-title {
+    color: #1a1d21;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+  }
+  
+  .brand-subtitle {
+    color: #6b7280;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+// Form Container - Minimal Card Design
+.form-container {
+  background: white;
+  border-radius: 24px;
+  padding: 40px 32px;
+  box-shadow: 
+    0 1px 3px rgba(16, 24, 40, 0.1),
+    0 1px 2px rgba(16, 24, 40, 0.06);
+  border: 1px solid #f3f4f6;
+}
+
+// Form Styling
+.signin-form {
+  .input-group {
+    margin-bottom: 20px;
+    
+    .modern-input {
+      --border-radius: 12px;
+      --border-width: 1.5px;
+      --border-color: #e5e7eb;
+      --color: #1f2937;
+      --placeholder-color: #9ca3af;
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --padding-top: 16px;
+      --padding-bottom: 16px;
+      font-size: 16px;
+      font-weight: 400;
+      
+      &.ion-focused {
+        --border-color: #667eea;
+        --box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+      
+      &.ion-invalid.ion-touched {
+        --border-color: #ef4444;
+        --box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+  }
+  
+  .primary-button {
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --color: white;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.025em;
+    transition: all 0.2s ease;
+    
+    &:hover:not(.button-disabled) {
+      --box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+      transform: translateY(-1px);
+    }
+    
+    &.button-disabled {
+      --background: #e5e7eb;
+      --color: #9ca3af;
+      --box-shadow: none;
+    }
+    
+    .spinner {
+      --color: white;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// Social Section - Clean Divider and Buttons
+.social-section {
+  margin: 32px 0 24px;
+  
+  .divider-line {
+    position: relative;
+    text-align: center;
+    margin-bottom: 24px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e5e7eb;
+    }
+    
+    .divider-text {
+      background: white;
+      color: #9ca3af;
+      padding: 0 16px;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+    }
+  }
+  
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    
+    .social-btn {
+      width: 56px;
+      height: 56px;
+      --border-radius: 16px;
+      --box-shadow: 0 2px 8px rgba(16, 24, 40, 0.1);
+      border: 1px solid #f3f4f6;
+      transition: all 0.2s ease;
+      
+      &:hover:not(.button-disabled) {
+        --box-shadow: 0 4px 16px rgba(16, 24, 40, 0.15);
+        transform: translateY(-2px);
+      }
+      
+      ion-icon {
+        font-size: 24px;
+      }
+      
+      &.google-btn ion-icon {
+        color: #ea4335;
+      }
+      
+      &.apple-btn ion-icon {
+        color: #000000;
+      }
+      
+      &.button-disabled {
+        opacity: 0.5;
+        transform: none !important;
+      }
+    }
+  }
+}
+
+// Footer - Minimal Signup Link
+.form-footer {
+  text-align: center;
+  
+  .signup-text {
+    color: #6b7280;
+    font-size: 14px;
+    
+    .signup-link {
+      color: #667eea;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      
+      &:hover {
+        color: #5a67d8;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 480px) {
+  .signin-container {
+    padding: 0 20px;
+  }
+  
+  .header-section {
+    padding: 60px 0 40px;
+    
+    .brand-title {
+      font-size: 28px;
+    }
+  }
+  
+  .form-container {
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+}
+
+// Animation for smooth transitions
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.header-section .brand-logo {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+// Focus states for accessibility
+.modern-input:focus-within {
+  outline: none;
+}
+
+.primary-button:focus,
+.social-btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .signin-content {
+    --background: #0f172a;
+  }
+  
+  .signin-container {
+    .header-section {
+      .brand-title {
+        color: #f8fafc;
+      }
+      
+      .brand-subtitle {
+        color: #94a3b8;
+      }
+    }
+    
+    .form-container {
+      background: #1e293b;
+      border-color: #334155;
+      box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.12);
+    }
+    
+    .modern-input {
+      --background: #1e293b;
+      --color: #f8fafc;
+      --border-color: #475569;
+      --placeholder-color: #64748b;
+    }
+    
+    .divider-line {
+      &::before {
+        background: #475569;
+      }
+      
+      .divider-text {
+        background: #1e293b;
+        color: #64748b;
+      }
+    }
+    
+    .social-btn {
+      background: #1e293b;
+      border-color: #475569;
+      
+      &.apple-btn ion-icon {
+        color: #f8fafc;
+      }
+    }
+    
+    .signup-text {
+      color: #94a3b8;
+    }
+  }
+}

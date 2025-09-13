@@ -1,0 +1,92 @@
+<ion-content [fullscreen]="true" class="signin-content">
+  <div class="signin-container">
+    <!-- Minimal Header -->
+    <div class="header-section">
+      <div class="brand-logo">
+        <ion-icon name="person" class="logo-icon"></ion-icon>
+      </div>
+      <h1 class="brand-title">TacticalHub</h1>
+      <p class="brand-subtitle">Sign in to continue</p>
+    </div>
+
+    <!-- Minimal Form -->
+    <div class="form-container">
+      <form [formGroup]="signinForm" (ngSubmit)="onSignIn()" class="signin-form">
+        <!-- Email Input -->
+        <div class="input-group">
+          <ion-input 
+            type="email" 
+            formControlName="email"
+            placeholder="Email"
+            fill="outline"
+            class="modern-input">
+          </ion-input>
+        </div>
+        
+        <!-- Password Input -->
+        <div class="input-group">
+          <ion-input 
+            type="password" 
+            formControlName="password"
+            placeholder="Password"
+            fill="outline"
+            class="modern-input">
+          </ion-input>
+        </div>
+
+        <!-- Sign In Button -->
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          class="primary-button"
+          [disabled]="isLoading || !signinForm.valid">
+          <ion-spinner name="dots" *ngIf="isLoading" class="spinner"></ion-spinner>
+          <span *ngIf="!isLoading">Sign In</span>
+        </ion-button>
+      </form>
+
+      <!-- Social Login Section -->
+      <div class="social-section">
+        <div class="divider-line">
+          <span class="divider-text">or</span>
+        </div>
+
+        <div class="social-buttons">
+          <ion-button 
+            fill="clear" 
+            class="social-btn google-btn"
+            (click)="signInWithGoogle()"
+            [disabled]="isLoading">
+            <ion-icon name="logo-google" slot="icon-only"></ion-icon>
+          </ion-button>
+
+          <ion-button 
+            fill="clear" 
+            class="social-btn apple-btn"
+            (click)="signInWithApple()"
+            [disabled]="isLoading">
+            <ion-icon name="logo-apple" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="form-footer">
+        <ion-text class="signup-text">
+          New to TacticalHub? 
+          <span class="signup-link" (click)="navigateToSignUp()">Create account</span>
+        </ion-text>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modern Toast for feedback -->
+  <ion-toast
+    [isOpen]="showToast"
+    [message]="toastMessage"
+    [color]="toastColor"
+    duration="3000"
+    position="top"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
+</ion-content>

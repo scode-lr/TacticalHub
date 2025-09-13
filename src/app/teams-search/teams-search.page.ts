@@ -1,34 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonSearchbar,
-  IonCard, 
-  IonCardContent, 
-  IonCardHeader, 
-  IonCardTitle,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonButton, 
-  IonIcon,
-  IonText,
-  IonSpinner,
-  IonToast,
-  IonAvatar,
-  IonChip,
-  IonBadge,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonRefresher,
-  IonRefresherContent
-} from '@ionic/angular/standalone';
+import { TacticalSharedModule } from '../shared/modules';
 import { addIcons } from 'ionicons';
 import { 
   search, 
@@ -57,33 +29,7 @@ interface Team {
   styleUrls: ['./teams-search.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonSearchbar,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonButton,
-    IonIcon,
-    IonText,
-    IonSpinner,
-    IonToast,
-    IonAvatar,
-    IonChip,
-    IonBadge,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonRefresher,
-    IonRefresherContent
+    TacticalSharedModule
   ]
 })
 export class TeamsSearchPage implements OnInit {

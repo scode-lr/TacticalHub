@@ -1,27 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonCard, 
-  IonCardContent, 
-  IonCardHeader, 
-  IonCardTitle,
-  IonItem, 
-  IonLabel, 
-  IonInput, 
-  IonButton, 
-  IonIcon,
-  IonText,
-  IonSpinner,
-  IonToast,
-  IonBackButton,
-  IonButtons
-} from '@ionic/angular/standalone';
+import { TacticalSharedModule } from '../../shared/modules';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ionicons/icons';
 
@@ -31,27 +11,7 @@ import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ioni
   styleUrls: ['./signup.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonItem,
-    IonLabel,
-    IonInput,
-    IonButton,
-    IonIcon,
-    IonText,
-    IonSpinner,
-    IonToast,
-    IonBackButton,
-    IonButtons
+    TacticalSharedModule
   ]
 })
 export class SignupPage implements OnInit {
