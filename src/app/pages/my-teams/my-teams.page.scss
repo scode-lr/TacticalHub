@@ -1,0 +1,212 @@
+.my-teams-page {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  
+  .layout-container {
+    display: flex;
+    height: 100%;
+    background: var(--ion-color-light);
+  }
+
+  // Menu Container
+  .menu-container {
+    width: 20%;
+    min-width: 250px;
+    max-width: 300px;
+    height: 100%;
+    background: var(--background-primary);
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    
+    app-team-selector {
+      margin-bottom: 1.5rem;
+    }
+    
+    ion-list {
+      background: transparent;
+      padding: 0;
+      
+      ion-item {
+        --background: transparent;
+        --background-hover: var(--ion-color-primary-tint);
+        --background-activated: var(--ion-color-primary-tint);
+        --padding-start: 1rem;
+        --padding-end: 1rem;
+        --border-radius: 12px;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        
+        &.active {
+          --background: var(--ion-color-primary);
+          --color: white;
+          ion-icon {
+            color: white;
+          }
+        }
+        
+        ion-icon {
+          color: var(--text-secondary);
+          font-size: 1.2rem;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  // Content Area
+  .content-container {
+    flex: 1;
+    padding: 2rem;
+    background: var(--background-primary);
+    overflow-y: auto;
+    
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+      
+      .header-left {
+        h1 {
+          margin: 0;
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+        
+        .subtitle {
+          margin: 0.5rem 0 0 0;
+          color: var(--text-secondary);
+          font-size: 1rem;
+        }
+      }
+    }
+
+    // Players List
+    ion-list {
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      
+      .player-item {
+        --background: var(--background-primary);
+        --padding-start: 1rem;
+        --padding-end: 1rem;
+        margin-bottom: 0.5rem;
+        
+        ion-avatar {
+          width: 48px;
+          height: 48px;
+        }
+        
+        ion-label {
+          h2 {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+          }
+          
+          .position-text, .age-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 2px 0;
+            
+            ion-icon {
+              font-size: 1rem;
+              color: var(--ion-color-medium);
+            }
+          }
+        }
+        
+        .role-chip {
+          font-size: 0.8rem;
+          height: 24px;
+          margin: 0;
+        }
+      }
+    }
+    
+    // No Team Message
+    .no-team-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100% - 100px);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-secondary);
+      
+      ion-icon {
+        font-size: 4rem;
+        color: var(--ion-color-medium);
+        margin-bottom: 1rem;
+      }
+      
+      h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      
+      p {
+        margin: 0;
+        max-width: 300px;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  .my-teams-page {
+    .layout-container {
+      flex-direction: column;
+    }
+    
+    .menu-container {
+      width: 100%;
+      max-width: none;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border-light);
+    }
+    
+    .content-container {
+      padding: 1rem;
+      
+      .content-header {
+        flex-direction: column;
+        gap: 1rem;
+        
+        .header-right {
+          width: 100%;
+          
+          ion-button {
+            width: 100%;
+          }
+        }
+      }
+      
+      .players-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .no-team-message {
+        height: calc(100vh - 250px);
+      }
+    }
+  }
+}

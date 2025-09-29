@@ -23,6 +23,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home.page').then((m) => m.HomePage),
   },
   {
+    path: 'my-teams',
+    loadComponent: () => import('./pages/my-teams/my-teams.page').then((m) => m.MyTeamsPage),
+  },
+  {
     path: '**',
     redirectTo: 'auth/signin',
   },

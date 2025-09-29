@@ -1,0 +1,58 @@
+<ion-content [fullscreen]="true" class="my-teams-page">
+  <div class="layout-container">
+    <!-- Left Menu -->
+    <app-side-menu 
+      [activePage]="'teams'"
+      [showTeamSelector]="true"
+      [currentOrg]="currentOrg"
+      [organizations]="organizations">
+    </app-side-menu>
+
+    <!-- Main Content -->
+    <div class="content-container">
+      <div class="content-header">
+        <div class="header-left">
+          <h1>Club Squad</h1>
+          <p class="subtitle" *ngIf="!currentOrg">Select a club to manage</p>
+          <p class="subtitle" *ngIf="currentOrg">{{ currentOrg.name }} - {{ currentOrg.location }}</p>
+        </div>
+        <div class="header-right" *ngIf="currentOrg">
+          <ion-button>
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+            Add Player
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Players List -->
+      <ion-list lines="full" *ngIf="currentOrg">
+        <ion-item *ngFor="let player of players" class="player-item">
+          <ion-avatar slot="start">
+            <img [src]="player.imageUrl || 'assets/image-non-available.svg'" [alt]="player.name">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ player.name }}</h2>
+            <p class="position-text">
+              <ion-icon name="shirt-outline"></ion-icon>
+              #{{ player.number }} | {{ player.position }}
+            </p>
+            <p class="age-text">
+              <ion-icon name="calendar-outline"></ion-icon>
+              {{ player.age }} years
+            </p>
+          </ion-label>
+          <ion-chip [color]="getRoleColor(player.role)" slot="end" class="role-chip">
+            {{ player.role }}
+          </ion-chip>
+        </ion-item>
+      </ion-list>
+
+      <!-- No Club Selected Message -->
+      <div class="no-team-message" *ngIf="!currentOrg">
+        <ion-icon name="people-outline"></ion-icon>
+        <h2>No Club Selected</h2>
+        <p>Click on the club selector above to choose a club and view its squad</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,20 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="home-page">
+  <div class="layout-container">
+    <!-- Left Menu -->
+    <app-side-menu [activePage]="'home'"></app-side-menu>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <!-- Main Content -->
+    <div class="content-container">
+      <div class="redirect-message">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Redirecting to My Teams...</p>
+      </div>
+    </div>
   </div>
 </ion-content>
