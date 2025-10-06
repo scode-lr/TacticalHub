@@ -46,7 +46,6 @@ export class TeamsSearchPage implements OnInit {
   }
 
   ngOnInit() {
-    // Load teams data but don't display them initially
     this.teams = this.getMockTeams();
   }
 
@@ -55,13 +54,10 @@ export class TeamsSearchPage implements OnInit {
     this.searchTerm = searchTerm;
     
     if (searchTerm.trim() === '') {
-      // Clear filtered teams when search is empty
       this.filteredTeams = [];
     } else {
-      // Show loading while filtering
       this.isLoading = true;
       
-      // Simulate search delay for better UX
       setTimeout(() => {
         this.filteredTeams = this.teams.filter(team => 
           team.name.toLowerCase().includes(searchTerm) ||
@@ -76,10 +72,8 @@ export class TeamsSearchPage implements OnInit {
   async joinTeam(team: Team) {
     if (team.isRequested) return;
     
-    // Add team to requested teams immediately
     this.requestedTeams.add(team.id);
     
-    // Update team status in both teams and filteredTeams arrays
     const updateTeam = (t: Team) => {
       if (t.id === team.id) {
         t.isRequested = true;
@@ -91,6 +85,11 @@ export class TeamsSearchPage implements OnInit {
     this.filteredTeams = this.filteredTeams.map(updateTeam);
     
     this.showToastMessage(`Request sent to join ${team.name}!`);
+    
+    // Navigate to my-teams page after joining
+    setTimeout(() => {
+      this.router.navigate(['/my-teams']);
+    }, 1500); // Wait for the toast to be visible
   }
 
   continueToHome() {
@@ -98,10 +97,8 @@ export class TeamsSearchPage implements OnInit {
   }
 
   async refreshTeams(event: any) {
-    // Reload teams data
     this.teams = this.getMockTeams();
     
-    // If there's a current search, reapply it
     if (this.searchTerm && this.searchTerm.trim() !== '') {
       this.filteredTeams = this.teams.filter(team => 
         team.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
@@ -120,7 +117,6 @@ export class TeamsSearchPage implements OnInit {
   }
 
   skipSearch() {
-    // Navigate to home page or another main section
     this.router.navigate(['/home']);
   }
 

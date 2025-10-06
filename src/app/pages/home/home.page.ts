@@ -32,9 +32,5 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    // Redirect to my-teams after a short delay
-    setTimeout(() => {
-      this.router.navigate(['/my-teams']);
-    }, 1000);
   }
 }

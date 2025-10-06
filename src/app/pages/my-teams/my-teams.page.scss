@@ -87,51 +87,127 @@
     }
 
     // Players List
-    ion-list {
-      background: transparent;
-      margin: 0;
-      padding: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      
-      .player-item {
-        --background: var(--background-primary);
-        --padding-start: 1rem;
-        --padding-end: 1rem;
-        margin-bottom: 0.5rem;
-        
-        ion-avatar {
-          width: 48px;
-          height: 48px;
+    .players-by-position {
+      .position-group {
+        margin-bottom: 1.5rem;
+
+        .position-header {
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: var(--ion-color-medium);
+          text-transform: uppercase;
+          padding: 0 1rem;
+          margin-bottom: 0.5rem;
         }
-        
-        ion-label {
-          h2 {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-          }
+
+        ion-list {
+          background: transparent;
+          margin: 0;
+          padding: 0;
+          border-radius: 8px;
+          overflow: hidden;
           
-          .position-text, .age-text {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin: 2px 0;
-            
-            ion-icon {
-              font-size: 1rem;
-              color: var(--ion-color-medium);
+          .player-accordion {
+            margin-bottom: 2px;
+
+            .player-item {
+              --background: var(--background-primary);
+              --padding-start: 1rem;
+              --padding-end: 1rem;
+              --min-height: 42px;
+              
+              &.expanded {
+                --background: var(--ion-color-light);
+                margin-bottom: 0;
+              }
+              
+              ion-label {
+                .player-info {
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  
+                  .player-number {
+                    font-weight: 600;
+                    color: var(--ion-color-primary);
+                    font-size: 0.9rem;
+                    min-width: 28px;
+                  }
+                  
+                  .player-name {
+                    color: var(--text-primary);
+                  }
+                }
+              }
+              
+              .role-chip {
+                font-size: 0.75rem;
+                height: 20px;
+                margin: 0;
+                padding: 0 8px;
+              }
+            }
+
+            .player-details {
+              max-height: 0;
+              overflow: hidden;
+              transition: max-height 0.3s ease-out;
+              background: var(--ion-color-light-tint);
+              
+              &.expanded {
+                max-height: 200px;
+              }
+
+              .training-week {
+                padding: 8px 16px;
+
+                .day-indicators {
+                  display: flex;
+                  gap: 4px;
+                  margin-bottom: 8px;
+
+                  .day-indicator {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 4px;
+                    border-radius: 6px;
+                    background-color: var(--ion-color-light-shade);
+                    cursor: help;
+
+                    &.has-training {
+                      color: var(--ion-color-dark);
+                    }
+
+                    &:not(.has-training) {
+                      opacity: 0.5;
+                    }
+
+                    .day-label {
+                      font-size: 0.7rem;
+                      font-weight: 500;
+                      text-transform: uppercase;
+                    }
+
+                    .day-number {
+                      font-size: 0.9rem;
+                      font-weight: 600;
+                    }
+                  }
+                }
+
+                .day-note {
+                  font-size: 0.8rem;
+                  color: var(--text-primary);
+                  padding: 8px;
+                  background: var(--ion-color-light-tint);
+                  border-radius: 6px;
+                  margin-top: 4px;
+                }
+              }
             }
           }
-        }
-        
-        .role-chip {
-          font-size: 0.8rem;
-          height: 24px;
-          margin: 0;
         }
       }
     }
