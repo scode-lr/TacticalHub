@@ -31,6 +31,7 @@ interface MinimalTeam {
 export class TeamSelectorComponent {
   @Input() currentTeam: Organization | MinimalTeam | null = null;
   @Input() organizations: Organization[] = [];
+  @Input() compact: boolean = false;
   @Output() clubSelected = new EventEmitter<Organization>();
 
   isModalOpen = false;

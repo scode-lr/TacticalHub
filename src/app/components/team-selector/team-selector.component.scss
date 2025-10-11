@@ -11,10 +11,26 @@
     background: var(--ion-color-light);
   }
   
+  // Compact mode for mobile header
+  &.compact {
+    padding: 0.5rem;
+    gap: 0.5rem;
+    
+    &:hover {
+      background: transparent; // No hover effect on mobile
+    }
+  }
+  
   ion-avatar {
     width: 40px;
     height: 40px;
     border: 2px solid var(--ion-color-light);
+    
+    &.small {
+      width: 32px;
+      height: 32px;
+      border-width: 1px;
+    }
   }
   
   .team-info {
@@ -23,6 +39,26 @@
       font-weight: 600;
       color: var(--text-primary);
       font-size: 1rem;
+    }
+    
+    // Compact mode styles
+    &.compact {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      h3 {
+        font-size: 0.9rem;
+        max-width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      .dropdown-icon {
+        font-size: 1rem;
+        color: var(--text-secondary);
+      }
     }
     
     .selector-hint {

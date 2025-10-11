@@ -1,6 +1,7 @@
-.menu-container {
-  width: 20%;
-  min-width: 250px;
+// Desktop/Tablet Sidebar
+.desktop-menu {
+  width: 280px;
+  min-width: 280px;
   max-width: 300px;
   height: 100%;
   background: var(--background-primary);
@@ -64,13 +65,116 @@
   }
 }
 
+// Mobile Layout
+.mobile-layout {
+  display: none;
+}
+
+.mobile-header {
+  --background: var(--background-primary);
+  --border-color: var(--border-light);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  
+  ion-toolbar {
+    --background: var(--background-primary);
+    --color: var(--text-primary);
+    
+    ion-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
+  
+  .header-team-selector {
+    padding-right: 1rem;
+    
+    app-team-selector {
+      transform: scale(0.9);
+      transform-origin: right center;
+    }
+  }
+}
+
+.mobile-bottom-nav {
+  --background: var(--background-primary);
+  --border: 1px solid var(--border-light);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 60px;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+  
+  ion-tab-button {
+    --background: var(--background-primary);
+    --color: var(--text-secondary);
+    --color-selected: var(--ion-color-primary);
+    --background-focused: var(--ion-color-primary-tint);
+    max-width: none;
+    
+    &.active {
+      --color: var(--ion-color-primary);
+      
+      ion-icon {
+        color: var(--ion-color-primary);
+        transform: scale(1.1);
+      }
+      
+      ion-label {
+        color: var(--ion-color-primary);
+        font-weight: 600;
+      }
+    }
+    
+    &:hover:not(.active) {
+      --color: var(--ion-color-primary-shade);
+      
+      ion-icon {
+        transform: scale(1.05);
+      }
+    }
+    
+    ion-icon {
+      font-size: 1.4rem;
+      margin-bottom: 2px;
+      transition: all 0.2s ease;
+    }
+    
+    ion-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+  }
+}
+
 // Responsive Styles
 @media (max-width: 768px) {
-  .menu-container {
-    width: 100%;
-    max-width: none;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border-light);
+  .desktop-menu {
+    display: none;
+  }
+  
+  .mobile-layout {
+    display: block;
+  }
+  
+  // Ensure content has space for bottom nav
+  .mobile-content-padding {
+    padding-bottom: 60px; // Height of bottom nav
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-layout {
+    display: none;
+  }
+  
+  .desktop-menu {
+    display: flex;
   }
 }

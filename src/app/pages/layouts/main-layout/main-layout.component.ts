@@ -8,22 +8,23 @@ import { Organization } from '../../../components/team-selector/team-selector.co
 @Component({
   selector: 'app-main-layout',
   template: `
-    <ion-content [fullscreen]="true" class="main-layout">
-      <div class="layout-container">
-        <!-- Left Menu -->
-        <app-side-menu 
-          [activePage]="activePage()"
-          [showTeamSelector]="true"
-          [currentOrg]="currentOrg()"
-          [organizations]="organizations()">
-        </app-side-menu>
+    <div class="main-layout">
+      <!-- Side Menu Component (handles both desktop and mobile layouts) -->
+      <app-side-menu 
+        [activePage]="activePage()"
+        [showTeamSelector]="true"
+        [currentOrg]="currentOrg()"
+        [organizations]="organizations()">
+      </app-side-menu>
 
+      <!-- Layout Container -->
+      <div class="layout-container">
         <!-- Main Content Area -->
-        <div class="content-container">
+        <ion-content [fullscreen]="true" class="content-container">
           <router-outlet></router-outlet>
-        </div>
+        </ion-content>
       </div>
-    </ion-content>
+    </div>
   `,
   styleUrls: ['./main-layout.component.scss'],
   standalone: true,

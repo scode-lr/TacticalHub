@@ -1,4 +1,5 @@
-<div class="menu-container">
+<!-- Desktop/Tablet Sidebar -->
+<div class="menu-container desktop-menu">
   <!-- Team Selector (optional) -->
   <app-team-selector *ngIf="showTeamSelector"
     [currentTeam]="currentOrg || { organizationId: '' }"
@@ -25,7 +26,7 @@
       <ion-label>Team Squad</ion-label>
     </ion-item>
 
-    <ion-item button detail="false" [class.active]="activePage === 'search'" routerLink="/app/teams-search">
+    <ion-item button detail="false" [class.active]="activePage === 'search'" routerLink="/teams-search">
       <ion-icon slot="start" name="search-outline"></ion-icon>
       <ion-label>Find Teams</ion-label>
     </ion-item>
@@ -45,4 +46,50 @@
       <ion-label>Settings</ion-label>
     </ion-item>
   </ion-list>
+</div>
+
+<!-- Mobile Layout -->
+<div class="mobile-layout">
+  <!-- Mobile Header with Team Selector -->
+  <ion-header class="mobile-header">
+    <ion-toolbar>
+      <ion-title slot="start" size="small">Tactical.hub</ion-title>
+      <div slot="end" class="header-team-selector" *ngIf="showTeamSelector">
+        <app-team-selector
+          [currentTeam]="currentOrg || { organizationId: '' }"
+          [organizations]="organizations"
+          [compact]="true"
+          (clubSelected)="onClubSelected($event)">
+        </app-team-selector>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Mobile Bottom Navigation -->
+  <ion-tab-bar class="mobile-bottom-nav" slot="bottom">
+    <ion-tab-button tab="dashboard" [class.active]="activePage === 'home'" routerLink="/app/dashboard">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Dashboard</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="teams" [class.active]="activePage === 'teams'" routerLink="/app/my-teams">
+      <ion-icon name="people-outline"></ion-icon>
+      <ion-label>Squad</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="search" [class.active]="activePage === 'search'" routerLink="/teams-search">
+      <ion-icon name="search-outline"></ion-icon>
+      <ion-label>Search</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="schedule" [class.active]="activePage === 'schedule'">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="tournaments" [class.active]="activePage === 'tournaments'">
+      <ion-icon name="trophy-outline"></ion-icon>
+      <ion-label>Tournaments</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
 </div>

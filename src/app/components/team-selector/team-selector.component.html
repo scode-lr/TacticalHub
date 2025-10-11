@@ -1,13 +1,14 @@
-<div class="team-selector" (click)="openTeamSelector()">
-  <ion-avatar>
+<div class="team-selector" [class.compact]="compact" (click)="openTeamSelector()">
+  <ion-avatar [class.small]="compact">
     <img [src]="getTeamImage(currentTeam)" [alt]="getTeamName(currentTeam)">
   </ion-avatar>
-  <div class="team-info">
+  <div class="team-info" [class.compact]="compact">
     <h3>{{ getTeamName(currentTeam) }}</h3>
-    <span class="selector-hint">
+    <span class="selector-hint" *ngIf="!compact">
       <ion-icon name="chevron-down-outline"></ion-icon>
       Switch Team
     </span>
+    <ion-icon class="dropdown-icon" *ngIf="compact" name="chevron-down-outline"></ion-icon>
   </div>
 </div>
 
