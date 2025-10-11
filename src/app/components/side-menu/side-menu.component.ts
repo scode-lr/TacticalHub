@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TacticalSharedModule } from '../../core/modules';
+import { SHARED_IMPORTS } from '../../shared/shared-imports';
 import { addIcons } from 'ionicons';
 import { 
   homeOutline,
@@ -17,10 +17,10 @@ import { TeamSelectorComponent } from '../team-selector/team-selector.component'
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
   standalone: true,
-  imports: [TacticalSharedModule, TeamSelectorComponent]
+  imports: [SHARED_IMPORTS, TeamSelectorComponent]
 })
 export class SideMenuComponent {
-  @Input() showTeamSelector = false;
+  @Input() showTeamSelector = true;
   @Input() currentOrg: Organization | null = null;
   @Input() organizations: Organization[] = [];
   @Input() activePage: 'home' | 'teams' | 'search' | 'schedule' | 'tournaments' | 'settings' = 'home';

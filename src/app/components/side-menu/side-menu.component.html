@@ -9,23 +9,23 @@
   <!-- App Logo (shown when team selector is hidden) -->
   <div class="menu-header" *ngIf="!showTeamSelector">
     <ion-avatar>
-      <img src="assets/icon/favicon.png" alt="TacticalHub">
+      <img src="assets/icon/favicon.png" alt="Tactical.hub">
     </ion-avatar>
-    <h3>TacticalHub</h3>
+    <h3>Tactical.hub</h3>
   </div>
   
   <ion-list lines="none">
-    <ion-item button detail="false" [class.active]="activePage === 'home'" routerLink="/home">
+    <ion-item button detail="false" [class.active]="activePage === 'home'" routerLink="/app/dashboard">
       <ion-icon slot="start" name="home-outline"></ion-icon>
       <ion-label>Dashboard</ion-label>
     </ion-item>
     
-    <ion-item button detail="false" [class.active]="activePage === 'teams'" routerLink="/my-teams">
+    <ion-item button detail="false" [class.active]="activePage === 'teams'" routerLink="/app/my-teams">
       <ion-icon slot="start" name="people-outline"></ion-icon>
       <ion-label>Team Squad</ion-label>
     </ion-item>
 
-    <ion-item button detail="false" [class.active]="activePage === 'search'" routerLink="/teams-search">
+    <ion-item button detail="false" [class.active]="activePage === 'search'" routerLink="/app/teams-search">
       <ion-icon slot="start" name="search-outline"></ion-icon>
       <ion-label>Find Teams</ion-label>
     </ion-item>

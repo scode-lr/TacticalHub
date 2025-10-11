@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../../core/modules';
-import { SideMenuComponent } from '../../components/side-menu/side-menu.component';
+import { SHARED_IMPORTS } from '../../../shared/shared-imports';
 import { addIcons } from 'ionicons';
 import { 
   homeOutline,
@@ -17,7 +16,7 @@ import {
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [TacticalSharedModule, SideMenuComponent],
+  imports: [SHARED_IMPORTS],
 })
 export class HomePage implements OnInit {
   constructor(private router: Router) {

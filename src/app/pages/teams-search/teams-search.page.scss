@@ -24,10 +24,16 @@
   }
 }
 
-.search-container {
+.teams-search-page {
   padding: 16px;
-  min-height: 100vh;
+  height: 100%;
   background: linear-gradient(180deg, var(--background-secondary) 0%, var(--background-primary) 100%);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-container {
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease-in-out;
@@ -42,7 +48,6 @@
     justify-content: flex-start;
     align-items: center; // Keep horizontal centering
     text-align: center; // Keep text centered
-    padding-top: 16px;
     
     .welcome-section,
     .custom-searchbar {

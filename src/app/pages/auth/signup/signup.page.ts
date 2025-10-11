@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../../../core/modules';
+import { SHARED_IMPORTS } from '../../../shared/shared-imports';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ionicons/icons';
 
@@ -10,9 +10,7 @@ import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ioni
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
   standalone: true,
-  imports: [
-    TacticalSharedModule
-  ]
+  imports: [SHARED_IMPORTS]
 })
 export class SignupPage {
   signupForm: FormGroup;
@@ -58,7 +56,7 @@ export class SignupPage {
         this.showToastMessage('Account created successfully!');
         
         setTimeout(() => {
-          this.router.navigate(['/teams-search']);
+          this.router.navigate(['/app/teams-search']);
         }, 1000);
       }, 2000);
     } else {

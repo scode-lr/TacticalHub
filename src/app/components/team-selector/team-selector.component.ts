@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TacticalSharedModule } from '../../core/modules';
+import { SHARED_IMPORTS } from '../../shared/shared-imports';
 import { addIcons } from 'ionicons';
 import { 
   chevronDownOutline,
@@ -25,7 +25,7 @@ interface MinimalTeam {
   templateUrl: './team-selector.component.html',
   styleUrls: ['./team-selector.component.scss'],
   standalone: true,
-  imports: [TacticalSharedModule],
+  imports: [SHARED_IMPORTS],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TeamSelectorComponent {

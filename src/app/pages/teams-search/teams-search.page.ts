@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../../core/modules';
-import type { Team } from '../../components';
+import { SHARED_IMPORTS, ADVANCED_IMPORTS } from '../../shared/shared-imports';
+import { TeamCardComponent, type Team } from '../../components';
 import { addIcons } from 'ionicons';
 import { 
   search, 
@@ -15,9 +15,7 @@ import {
   templateUrl: './teams-search.page.html',
   styleUrls: ['./teams-search.page.scss'],
   standalone: true,
-  imports: [
-    TacticalSharedModule
-  ]
+  imports: [SHARED_IMPORTS, ...ADVANCED_IMPORTS, TeamCardComponent]
 })
 export class TeamsSearchPage implements OnInit {
   searchTerm = '';
@@ -88,12 +86,12 @@ export class TeamsSearchPage implements OnInit {
     
     // Navigate to my-teams page after joining
     setTimeout(() => {
-      this.router.navigate(['/my-teams']);
+      this.router.navigate(['/app/my-teams']);
     }, 1500); // Wait for the toast to be visible
   }
 
   continueToHome() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/app/dashboard']);
   }
 
   async refreshTeams(event: any) {
@@ -117,7 +115,7 @@ export class TeamsSearchPage implements OnInit {
   }
 
   skipSearch() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/app/dashboard']);
   }
 
   private getMockTeams(): Team[] {

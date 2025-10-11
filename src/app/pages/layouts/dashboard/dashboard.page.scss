@@ -1,0 +1,21 @@
+.dashboard-content {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.redirect-message {
+  text-align: center;
+  
+  ion-spinner {
+    margin-bottom: 16px;
+  }
+  
+  p {
+    font-size: 18px;
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}

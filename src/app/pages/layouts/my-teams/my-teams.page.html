@@ -1,28 +1,17 @@
-<ion-content [fullscreen]="true" class="my-teams-page">
-  <div class="layout-container">
-    <!-- Left Menu -->
-    <app-side-menu 
-      [activePage]="'teams'"
-      [showTeamSelector]="true"
-      [currentOrg]="currentOrg()"
-      [organizations]="organizations()">
-    </app-side-menu>
-
-    <!-- Main Content -->
-    <div class="content-container">
-      <div class="content-header">
-        <div class="header-left">
-          <h1>Club Squad</h1>
-          <p class="subtitle" *ngIf="!currentOrg()">Select a club to manage</p>
-          <p class="subtitle" *ngIf="currentOrg()">{{ currentOrg()?.name }} - {{ currentOrg()?.location }}</p>
-        </div>
-        <div class="header-right" *ngIf="currentOrg()">
-          <ion-button>
-            <ion-icon slot="start" name="person-add-outline"></ion-icon>
-            Add Player
-          </ion-button>
-        </div>
-      </div>
+<div class="my-teams-page">
+  <div class="content-header">
+    <div class="header-left">
+      <h1>Club Squad</h1>
+      <p class="subtitle" *ngIf="!currentOrg()">Select a club to manage</p>
+      <p class="subtitle" *ngIf="currentOrg()">{{ currentOrg()?.name }} - {{ currentOrg()?.location }}</p>
+    </div>
+    <div class="header-right" *ngIf="currentOrg()">
+      <ion-button>
+        <ion-icon slot="start" name="person-add-outline"></ion-icon>
+        Add Player
+      </ion-button>
+    </div>
+  </div>
 
       <!-- Players List -->
       <div class="players-by-position" *ngIf="currentOrg()">
@@ -64,12 +53,10 @@
         </div>
       </div>
 
-      <!-- No Club Selected Message -->
-      <div class="no-team-message" *ngIf="!currentOrg()">
-        <ion-icon name="people-outline"></ion-icon>
-        <h2>No Club Selected</h2>
-        <p>Click on the club selector above to choose a club and view its squad</p>
-      </div>
-    </div>
+  <!-- No Club Selected Message -->
+  <div class="no-team-message" *ngIf="!currentOrg()">
+    <ion-icon name="people-outline"></ion-icon>
+    <h2>No Club Selected</h2>
+    <p>Click on the club selector above to choose a club and view its squad</p>
   </div>
-</ion-content>
+</div>

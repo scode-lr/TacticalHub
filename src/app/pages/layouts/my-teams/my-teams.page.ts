@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
-import { TacticalSharedModule } from '../../core/modules';
+import { SHARED_IMPORTS } from '../../../shared/shared-imports';
 import { addIcons } from 'ionicons';
 import { 
   homeOutline,
@@ -14,8 +14,7 @@ import {
   shirtOutline,
   people
 } from 'ionicons/icons';
-import { Organization } from '../../components/team-selector/team-selector.component';
-import { SideMenuComponent } from '../../components/side-menu/side-menu.component';
+import { Organization } from '../../../components/team-selector/team-selector.component';
 
 interface TrainingNote {
   date: string;
@@ -40,7 +39,7 @@ interface Player {
   templateUrl: './my-teams.page.html',
   styleUrls: ['./my-teams.page.scss'],
   standalone: true,
-  imports: [TacticalSharedModule, SideMenuComponent],
+  imports: [SHARED_IMPORTS],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MyTeamsPage {

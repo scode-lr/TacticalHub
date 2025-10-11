@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TacticalSharedModule } from '../../core/modules';
+import { SHARED_IMPORTS } from '../../shared/shared-imports';
 import { addIcons } from 'ionicons';
 import { 
   locationOutline, 
@@ -27,9 +27,7 @@ export interface Team {
   templateUrl: './team-card.component.html',
   styleUrls: ['./team-card.component.scss'],
   standalone: true,
-  imports: [
-    TacticalSharedModule
-  ]
+  imports: [SHARED_IMPORTS]
 })
 export class TeamCardComponent {
   @Input() team!: Team;

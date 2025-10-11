@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../../../core/modules';
+import { SHARED_IMPORTS } from '../../../shared/shared-imports';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple, person, checkmarkCircle, alertCircle } from 'ionicons/icons';
 
@@ -10,9 +10,7 @@ import { logoGoogle, logoApple, person, checkmarkCircle, alertCircle } from 'ion
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
   standalone: true,
-  imports: [
-    TacticalSharedModule
-  ]
+  imports: [SHARED_IMPORTS]
 })
 export class SigninPage implements OnInit {
   signinForm: FormGroup;
@@ -48,7 +46,7 @@ export class SigninPage implements OnInit {
         this.showToastMessage('Welcome back!', 'success');
         
         setTimeout(() => {
-          this.router.navigate(['/teams-search']);
+          this.router.navigate(['/app/teams-search']);
         }, 800);
         
       } catch (error) {
@@ -70,7 +68,7 @@ export class SigninPage implements OnInit {
       this.showToastMessage('Google sign-in successful!', 'success');
       
       setTimeout(() => {
-        this.router.navigate(['/teams-search']);
+        this.router.navigate(['/app/teams-search']);
       }, 800);
       
     } catch (error) {
@@ -88,7 +86,7 @@ export class SigninPage implements OnInit {
       this.showToastMessage('Apple sign-in successful!', 'success');
       
       setTimeout(() => {
-        this.router.navigate(['/teams-search']);
+        this.router.navigate(['/app/teams-search']);
       }, 800);
       
     } catch (error) {
