@@ -1,5 +1,19 @@
 import { Component, EventEmitter, Input, Output, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { SHARED_IMPORTS } from '../../shared/shared-imports';
+import { CommonModule } from '@angular/common';
+import { 
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonContent,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonAvatar,
+  IonText
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   chevronDownOutline,
@@ -25,7 +39,21 @@ interface MinimalTeam {
   templateUrl: './team-selector.component.html',
   styleUrls: ['./team-selector.component.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS],
+  imports: [
+    CommonModule,
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonAvatar,
+    IonText
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TeamSelectorComponent {

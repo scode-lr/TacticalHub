@@ -1,0 +1,254 @@
+<ion-content class="player-register-content">
+  <div class="player-register-page">
+    <!-- Header -->
+    <div class="page-header">
+      <ion-button 
+        fill="clear" 
+        class="back-btn"
+        (click)="goBack()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+      <h1 class="page-title">Player Registration</h1>
+    </div>
+
+    <!-- Form Content -->
+    <div class="form-content">
+    <form [formGroup]="playerForm" (ngSubmit)="onSubmit()" class="player-form">
+      
+      <!-- Personal Information Section -->
+      <div class="form-section">
+        <h2 class="section-title">Personal Information</h2>
+        
+        <div class="name-row">
+          <div class="input-group half-width">
+            <ion-input 
+              type="text" 
+              formControlName="firstName"
+              placeholder="First Name"
+              fill="outline"
+              [class.ion-invalid]="firstName?.invalid && firstName?.touched">
+            </ion-input>
+            <div class="error-message" *ngIf="firstName?.invalid && firstName?.touched">
+              <ion-text color="danger">
+                <small>First name is required</small>
+              </ion-text>
+            </div>
+          </div>
+          
+          <div class="input-group half-width">
+            <ion-input 
+              type="text" 
+              formControlName="lastName"
+              placeholder="Last Name"
+              fill="outline"
+              [class.ion-invalid]="lastName?.invalid && lastName?.touched">
+            </ion-input>
+            <div class="error-message" *ngIf="lastName?.invalid && lastName?.touched">
+              <ion-text color="danger">
+                <small>Last name is required</small>
+              </ion-text>
+            </div>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <ion-input 
+            type="email" 
+            formControlName="email"
+            placeholder="Email"
+            fill="outline"
+            [class.ion-invalid]="email?.invalid && email?.touched">
+          </ion-input>
+          <div class="error-message" *ngIf="email?.invalid && email?.touched">
+            <ion-text color="danger">
+              <small>Valid email is required</small>
+            </ion-text>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <ion-input 
+            type="tel" 
+            formControlName="phone"
+            placeholder="Phone Number"
+            fill="outline"
+            [class.ion-invalid]="phone?.invalid && phone?.touched">
+          </ion-input>
+          <div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+            <ion-text color="danger">
+              <small>Valid phone number is required</small>
+            </ion-text>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <ion-input 
+            type="date" 
+            formControlName="dateOfBirth"
+            placeholder="Date of Birth"
+            fill="outline"
+            [class.ion-invalid]="dateOfBirth?.invalid && dateOfBirth?.touched">
+          </ion-input>
+          <div class="error-message" *ngIf="dateOfBirth?.invalid && dateOfBirth?.touched">
+            <ion-text color="danger">
+              <small>Date of birth is required</small>
+            </ion-text>
+          </div>
+        </div>
+      </div>
+
+      <!-- Location Section -->
+      <div class="form-section">
+        <h2 class="section-title">Location</h2>
+        
+        <div class="input-group">
+          <ion-input 
+            type="text" 
+            formControlName="city"
+            placeholder="City"
+            fill="outline"
+            [class.ion-invalid]="city?.invalid && city?.touched">
+          </ion-input>
+        </div>
+        
+        <div class="input-group">
+          <ion-input 
+            type="text" 
+            formControlName="country"
+            placeholder="Country"
+            fill="outline"
+            [class.ion-invalid]="country?.invalid && country?.touched">
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Player Details Section -->
+      <div class="form-section">
+        <h2 class="section-title">Player Details</h2>
+        
+        <div class="input-group">
+          <ion-select 
+            formControlName="position"
+            placeholder="Select Position"
+            fill="outline"
+            interface="action-sheet"
+            [class.ion-invalid]="position?.invalid && position?.touched">
+            <ion-select-option *ngFor="let pos of positions" [value]="pos.value">
+              {{ pos.label }}
+            </ion-select-option>
+          </ion-select>
+          <div class="error-message" *ngIf="position?.invalid && position?.touched">
+            <ion-text color="danger">
+              <small>Position is required</small>
+            </ion-text>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <ion-select 
+            formControlName="preferredFoot"
+            placeholder="Preferred Foot"
+            fill="outline"
+            interface="action-sheet"
+            [class.ion-invalid]="preferredFootControl?.invalid && preferredFootControl?.touched">
+            <ion-select-option *ngFor="let foot of preferredFoot" [value]="foot.value">
+              {{ foot.label }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        
+        <div class="input-group">
+          <ion-input 
+            type="number" 
+            formControlName="jerseyNumber"
+            placeholder="Jersey Number (Optional)"
+            fill="outline"
+            min="1"
+            max="99">
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Experience Section -->
+      <div class="form-section">
+        <h2 class="section-title">Experience</h2>
+        
+        <div class="input-group">
+          <ion-select 
+            formControlName="experienceLevel"
+            placeholder="Experience Level"
+            fill="outline"
+            interface="action-sheet"
+            [class.ion-invalid]="experienceLevel?.invalid && experienceLevel?.touched">
+            <ion-select-option *ngFor="let level of experienceLevels" [value]="level.value">
+              {{ level.label }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        
+        <div class="input-group">
+          <ion-input 
+            type="number" 
+            formControlName="yearsPlaying"
+            placeholder="Years Playing"
+            fill="outline"
+            min="0"
+            max="50">
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Additional Information Section -->
+      <div class="form-section">
+        <h2 class="section-title">Additional Information</h2>
+        
+        <div class="input-group">
+          <ion-textarea 
+            formControlName="bio"
+            placeholder="Bio / About Me (Optional)"
+            fill="outline"
+            rows="4"
+            maxlength="500">
+          </ion-textarea>
+          <div class="char-count">
+            {{ playerForm.get('bio')?.value?.length || 0 }} / 500
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <ion-textarea 
+            formControlName="achievements"
+            placeholder="Achievements & Awards (Optional)"
+            fill="outline"
+            rows="4"
+            maxlength="500">
+          </ion-textarea>
+          <div class="char-count">
+            {{ playerForm.get('achievements')?.value?.length || 0 }} / 500
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        class="register-btn"
+        [disabled]="isLoading || !playerForm.valid">
+        <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
+        <span *ngIf="!isLoading">Register Player</span>
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- Toast for messages -->
+  <ion-toast
+    [isOpen]="showToast"
+    [message]="toastMessage"
+    [color]="toastColor"
+    duration="3000"
+    position="top"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
+  </div>
+</ion-content>

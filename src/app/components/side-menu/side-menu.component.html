@@ -53,8 +53,7 @@
   <!-- Mobile Header with Team Selector -->
   <ion-header class="mobile-header">
     <ion-toolbar>
-      <ion-title slot="start" size="small">Tactical.hub</ion-title>
-      <div slot="end" class="header-team-selector" *ngIf="showTeamSelector">
+      <div slot="start" class="header-team-selector" *ngIf="showTeamSelector">
         <app-team-selector
           [currentTeam]="currentOrg || { organizationId: '' }"
           [organizations]="organizations"
@@ -62,6 +61,11 @@
           (clubSelected)="onClubSelected($event)">
         </app-team-selector>
       </div>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" class="profile-button">
+          <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 

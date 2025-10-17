@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+import { IonContent } from '@ionic/angular/standalone';
 import { SideMenuComponent } from '../../../components/side-menu/side-menu.component';
 import { Organization } from '../../../components/team-selector/team-selector.component';
 
@@ -28,7 +28,7 @@ import { Organization } from '../../../components/team-selector/team-selector.co
   `,
   styleUrls: ['./main-layout.component.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS, SideMenuComponent]
+  imports: [IonContent, RouterOutlet, SideMenuComponent]
 })
 export class MainLayoutComponent {
   organizations = signal<Organization[]>([]);

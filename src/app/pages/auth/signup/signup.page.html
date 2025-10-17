@@ -1,146 +1,134 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/auth/signin"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Join TacticalHub</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="signup-page">
+  <!-- Back Button (Mobile Only) -->
+  <ion-button 
+    fill="clear" 
+    class="back-btn"
+    (click)="goBack()">
+    <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+  </ion-button>
 
-<ion-content [fullscreen]="true">
-  <div class="signup-container">
-    <!-- Logo Section -->
-    <div class="logo-section">
-      <div class="logo-circle">
-        <ion-icon name="person" class="logo-icon"></ion-icon>
+  <!-- Left Side - Branding -->
+  <div class="branding-section">
+    <div class="brand-content">
+      <div class="brand-logo">
+        <ion-icon name="shield-checkmark" class="logo-icon"></ion-icon>
       </div>
-      <h1 class="app-title">Create Account</h1>
-      <p class="app-subtitle">Join the football training community</p>
+      <h2 class="brand-title">Tactical.hub</h2>
+      <p class="brand-subtitle">Join the football training community</p>
     </div>
+  </div>
 
-    <!-- Sign Up Form -->
-    <ion-card class="auth-card">
-      <ion-card-header>
-        <ion-card-title class="card-title">Sign Up</ion-card-title>
-      </ion-card-header>
-      
-      <ion-card-content>
-        <form [formGroup]="signupForm" (ngSubmit)="onSignUp()">
-          <!-- First Name Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="person" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">First Name</ion-label>
+  <!-- Right Side - Form -->
+  <div class="form-section">
+    <div class="form-container">
+      <!-- Header -->
+      <div class="form-header">
+        <h1>Create Account</h1>
+        <p>Sign up to start managing your teams</p>
+      </div>
+      <form [formGroup]="signupForm" (ngSubmit)="onSignUp()" class="signup-form">
+        <!-- Name Inputs Row -->
+        <div class="name-row">
+          <div class="input-group half-width">
             <ion-input 
               type="text" 
               formControlName="firstName"
-              placeholder="Enter your first name"
-              class="auth-input">
+              placeholder="First Name"
+              fill="outline">
             </ion-input>
-          </ion-item>
+          </div>
           
-          <!-- Last Name Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="person" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Last Name</ion-label>
+          <div class="input-group half-width">
             <ion-input 
               type="text" 
               formControlName="lastName"
-              placeholder="Enter your last name"
-              class="auth-input">
+              placeholder="Last Name"
+              fill="outline">
             </ion-input>
-          </ion-item>
-          
-          <!-- Email Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="mail" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Email</ion-label>
-            <ion-input 
-              type="email" 
-              formControlName="email"
-              placeholder="Enter your email"
-              class="auth-input">
-            </ion-input>
-          </ion-item>
-          
-          <!-- Password Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Password</ion-label>
-            <ion-input 
-              type="password" 
-              formControlName="password"
-              placeholder="Create a password"
-              class="auth-input">
-            </ion-input>
-          </ion-item>
-          
-          <!-- Confirm Password Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Confirm Password</ion-label>
-            <ion-input 
-              type="password" 
-              formControlName="confirmPassword"
-              placeholder="Confirm your password"
-              class="auth-input">
-            </ion-input>
-          </ion-item>
-
-          <!-- Error Messages -->
-          <div class="error-messages" *ngIf="signupForm.errors?.['passwordMismatch'] && confirmPassword?.touched">
-            <ion-text color="danger">
-              <small>Passwords do not match</small>
-            </ion-text>
           </div>
-
-          <!-- Sign Up Button -->
-          <ion-button 
-            expand="block" 
-            type="submit" 
-            class="tactical-button-primary auth-button"
-            [disabled]="isLoading || !signupForm.valid">
-            <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
-            <span *ngIf="!isLoading">Create Account</span>
-          </ion-button>
-        </form>
-
-        <!-- Divider -->
-        <div class="divider">
-          <span class="divider-text">or sign up with</span>
+        </div>
+        
+        <!-- Email Input -->
+        <div class="input-group">
+          <ion-input 
+            type="email" 
+            formControlName="email"
+            placeholder="Email"
+            fill="outline">
+          </ion-input>
+        </div>
+        
+        <!-- Password Input -->
+        <div class="input-group">
+          <ion-input 
+            type="password" 
+            formControlName="password"
+            placeholder="Password"
+            fill="outline">
+          </ion-input>
+        </div>
+        
+        <!-- Confirm Password Input -->
+        <div class="input-group">
+          <ion-input 
+            type="password" 
+            formControlName="confirmPassword"
+            placeholder="Confirm Password"
+            fill="outline">
+          </ion-input>
         </div>
 
-        <!-- Social Sign Up Buttons -->
-        <div class="social-buttons">
-          <ion-button 
-            fill="outline" 
-            expand="block" 
-            class="social-button google-button"
-            (click)="signUpWithGoogle()"
-            [disabled]="isLoading">
-            <ion-icon name="logo-google" slot="start"></ion-icon>
-            Continue with Google
-          </ion-button>
-
-          <ion-button 
-            fill="outline" 
-            expand="block" 
-            class="social-button apple-button"
-            (click)="signUpWithApple()"
-            [disabled]="isLoading">
-            <ion-icon name="logo-apple" slot="start"></ion-icon>
-            Continue with Apple
-          </ion-button>
-        </div>
-
-        <!-- Sign In Link -->
-        <div class="signin-link">
-          <ion-text color="medium">
-            Already have an account? 
-            <span class="link-text" (click)="navigateToSignIn()">Sign in</span>
+        <!-- Error Messages -->
+        <div class="error-messages" *ngIf="signupForm.errors?.['passwordMismatch'] && confirmPassword?.touched">
+          <ion-text color="danger">
+            <small>Passwords do not match</small>
           </ion-text>
         </div>
-      </ion-card-content>
-    </ion-card>
+
+        <!-- Sign Up Button -->
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          class="signup-btn"
+          [disabled]="isLoading || !signupForm.valid">
+          <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
+          <span *ngIf="!isLoading">Create Account</span>
+        </ion-button>
+      </form>
+
+      <!-- Social Login Section -->
+      <div class="social-section">
+        <div class="divider-line">
+          <span class="divider-text">or</span>
+        </div>
+
+        <div class="social-buttons">
+          <ion-button 
+            fill="clear" 
+            class="social-btn google-btn"
+            (click)="signUpWithGoogle()"
+            [disabled]="isLoading">
+            <ion-icon name="logo-google" slot="icon-only"></ion-icon>
+          </ion-button>
+
+          <ion-button 
+            fill="clear" 
+            class="social-btn apple-btn"
+            (click)="signUpWithApple()"
+            [disabled]="isLoading">
+            <ion-icon name="logo-apple" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="form-footer">
+        <ion-text class="signin-text">
+          Already have an account? 
+          <span class="signin-link" (click)="navigateToSignIn()">Sign in</span>
+        </ion-text>
+      </div>
+    </div>
   </div>
 
   <!-- Toast for messages -->
@@ -151,4 +139,4 @@
     position="top"
     (didDismiss)="onToastDismiss()">
   </ion-toast>
-</ion-content>
+</div>

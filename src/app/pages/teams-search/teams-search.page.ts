@@ -1,6 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SHARED_IMPORTS, ADVANCED_IMPORTS } from '../../shared/shared-imports';
+import { 
+  IonButton,
+  IonIcon,
+  IonSearchbar,
+  IonSpinner,
+  IonToast,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonRefresher,
+  IonRefresherContent
+} from '@ionic/angular/standalone';
 import { TeamCardComponent, type Team } from '../../components';
 import { addIcons } from 'ionicons';
 import { 
@@ -15,7 +28,21 @@ import {
   templateUrl: './teams-search.page.html',
   styleUrls: ['./teams-search.page.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS, ...ADVANCED_IMPORTS, TeamCardComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonButton,
+    IonIcon,
+    IonSearchbar,
+    IonSpinner,
+    IonToast,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonRefresher,
+    IonRefresherContent,
+    TeamCardComponent
+  ]
 })
 export class TeamsSearchPage implements OnInit {
   searchTerm = '';

@@ -1,0 +1,50 @@
+<div class="welcome-page">
+  <!-- Branding Section -->
+  <div class="brand-section">
+    <div class="brand-content">
+      <!-- Logo -->
+      <div class="brand-logo">
+        <ion-icon name="shield-checkmark-outline" class="logo-icon"></ion-icon>
+      </div>
+      
+      <!-- Title -->
+      <h1 class="brand-title">Tactical.hub</h1>
+      
+      <!-- Subtitle -->
+      <p class="brand-subtitle">
+        Manage your football teams and strategies with ease
+      </p>
+    </div>
+  </div>
+
+  <!-- Action Section -->
+  <div class="action-section">
+    <!-- Sign Up Button (Primary) -->
+    <ion-button 
+      expand="block" 
+      class="signup-btn"
+      (click)="navigateToSignUp()">
+      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+      Create Account
+    </ion-button>
+
+    <!-- Sign In Button (Secondary) -->
+    <ion-button 
+      expand="block" 
+      fill="outline"
+      class="signin-btn"
+      (click)="navigateToSignIn()">
+      <ion-icon name="log-in-outline" slot="start"></ion-icon>
+      Sign In
+    </ion-button>
+
+    <!-- Terms Text -->
+    <div class="terms-text">
+      <ion-text>
+        By continuing, you agree to our 
+        <span class="link">Terms of Service</span> and 
+        <span class="link">Privacy Policy</span>
+      </ion-text>
+    </div>
+  </div>
+</div>

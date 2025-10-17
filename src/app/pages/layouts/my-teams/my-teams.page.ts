@@ -1,5 +1,13 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
-import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+import { CommonModule } from '@angular/common';
+import { 
+  IonButton,
+  IonIcon,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonChip
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   homeOutline,
@@ -39,7 +47,15 @@ interface Player {
   templateUrl: './my-teams.page.html',
   styleUrls: ['./my-teams.page.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS],
+  imports: [
+    CommonModule,
+    IonButton,
+    IonIcon,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonChip
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MyTeamsPage {

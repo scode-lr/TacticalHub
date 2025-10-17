@@ -72,50 +72,88 @@
 
 .mobile-header {
   --background: var(--background-primary);
-  --border-color: var(--border-light);
+  --border-color: transparent;
+  --box-shadow: none;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  backdrop-filter: blur(20px);
+  background: rgba(var(--background-primary-rgb, 255, 255, 255), 0.95);
+  border-bottom: 1px solid rgba(var(--border-light-rgb, 0, 0, 0), 0.1);
   
   ion-toolbar {
-    --background: var(--background-primary);
+    --background: transparent;
     --color: var(--text-primary);
-    
-    ion-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
+    --box-shadow: none;
+    --border-width: 0;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   
   .header-team-selector {
-    padding-right: 1rem;
+    display: flex;
+    align-items: center;
     
     app-team-selector {
-      transform: scale(0.9);
-      transform-origin: right center;
+      transform: scale(0.95);
+      transform-origin: left center;
+    }
+  }
+  
+  .profile-button {
+    --background: transparent;
+    --background-hover: rgba(var(--ion-color-primary-rgb), 0.1);
+    --background-activated: rgba(var(--ion-color-primary-rgb), 0.2);
+    --border-radius: 50%;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --color: var(--text-secondary);
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    
+    ion-icon {
+      font-size: 1.8rem;
+      color: var(--text-secondary);
+    }
+    
+    &:hover {
+      --color: var(--ion-color-primary);
+      
+      ion-icon {
+        color: var(--ion-color-primary);
+      }
     }
   }
 }
 
 .mobile-bottom-nav {
   --background: var(--background-primary);
-  --border: 1px solid var(--border-light);
+  --border: none;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000;
   height: 60px;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  background: rgba(var(--background-primary-rgb, 255, 255, 255), 0.95);
+  border-top: 1px solid rgba(var(--border-light-rgb, 0, 0, 0), 0.1);
   
   ion-tab-button {
-    --background: var(--background-primary);
+    --background: transparent;
     --color: var(--text-secondary);
     --color-selected: var(--ion-color-primary);
-    --background-focused: var(--ion-color-primary-tint);
+    --background-focused: transparent;
+    --ripple-color: transparent;
     max-width: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
     &.active {
       --color: var(--ion-color-primary);
@@ -142,13 +180,14 @@
     ion-icon {
       font-size: 1.4rem;
       margin-bottom: 2px;
-      transition: all 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     ion-label {
       font-size: 0.75rem;
       font-weight: 500;
       margin-top: 2px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 }

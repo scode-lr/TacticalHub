@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+import { 
+  IonButton,
+  IonIcon,
+  IonInput,
+  IonText,
+  IonSpinner,
+  IonToast
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ionicons/icons';
 
@@ -10,7 +18,16 @@ import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ioni
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    IonButton,
+    IonIcon,
+    IonInput,
+    IonText,
+    IonSpinner,
+    IonToast
+  ]
 })
 export class SignupPage {
   signupForm: FormGroup;
@@ -33,6 +50,10 @@ export class SignupPage {
     }, {
       validators: this.passwordMatchValidator
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/welcome']);
   }
 
   passwordMatchValidator(formGroup: FormGroup) {
@@ -81,7 +102,7 @@ export class SignupPage {
   }
 
   navigateToSignIn() {
-    this.router.navigate(['/auth/signin']);
+    this.router.navigate(['/signin']);
   }
 
   private showToastMessage(message: string) {

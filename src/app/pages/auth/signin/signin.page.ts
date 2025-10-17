@@ -1,16 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+import { 
+  IonButton,
+  IonIcon,
+  IonInput,
+  IonText,
+  IonSpinner,
+  IonToast
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, person, checkmarkCircle, alertCircle } from 'ionicons/icons';
+import { logoGoogle, logoApple, person, checkmarkCircle, alertCircle, arrowBack } from 'ionicons/icons';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    IonButton,
+    IonIcon,
+    IonInput,
+    IonText,
+    IonSpinner,
+    IonToast
+  ]
 })
 export class SigninPage implements OnInit {
   signinForm: FormGroup;
@@ -23,7 +40,7 @@ export class SigninPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-    addIcons({ logoGoogle, logoApple, person, checkmarkCircle, alertCircle });
+    addIcons({ logoGoogle, logoApple, person, checkmarkCircle, alertCircle, arrowBack });
     
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,6 +53,10 @@ export class SigninPage implements OnInit {
     });
   }
 
+  goBack() {
+    this.router.navigate(['/welcome']);
+  }
+
   async onSignIn() {
     if (this.signinForm.valid) {
       this.isLoading = true;
@@ -46,7 +67,7 @@ export class SigninPage implements OnInit {
         this.showToastMessage('Welcome back!', 'success');
         
         setTimeout(() => {
-          this.router.navigate(['/app/teams-search']);
+          this.router.navigate(['/teams-search']);
         }, 800);
         
       } catch (error) {
@@ -97,7 +118,7 @@ export class SigninPage implements OnInit {
   }
 
   navigateToSignUp() {
-    this.router.navigate(['/auth/signup']);
+    this.router.navigate(['/signup']);
   }
 
   private async simulateAuth(): Promise<void> {

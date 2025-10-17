@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+import { IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   homeOutline,
@@ -16,7 +17,7 @@ import {
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS],
+  imports: [CommonModule, IonSpinner],
 })
 export class HomePage implements OnInit {
   constructor(private router: Router) {

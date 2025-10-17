@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+import { CommonModule } from '@angular/common';
+import { IonSpinner } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ import { SHARED_IMPORTS } from '../../../shared/shared-imports';
   `,
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS]
+  imports: [CommonModule, IonSpinner]
 })
 export class DashboardPage {
   constructor() {}

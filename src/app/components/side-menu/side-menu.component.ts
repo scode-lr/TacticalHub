@@ -1,5 +1,19 @@
 import { Component, Input } from '@angular/core';
-import { SHARED_IMPORTS } from '../../shared/shared-imports';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { 
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonAvatar,
+  IonTabBar,
+  IonTabButton
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   homeOutline,
@@ -7,7 +21,8 @@ import {
   searchOutline,
   calendarOutline,
   trophyOutline,
-  settingsOutline
+  settingsOutline,
+  personCircleOutline
 } from 'ionicons/icons';
 import { Organization } from '../team-selector/team-selector.component';
 import { TeamSelectorComponent } from '../team-selector/team-selector.component';
@@ -17,7 +32,22 @@ import { TeamSelectorComponent } from '../team-selector/team-selector.component'
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
   standalone: true,
-  imports: [SHARED_IMPORTS, TeamSelectorComponent]
+  imports: [
+    CommonModule,
+    RouterModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonAvatar,
+    IonTabBar,
+    IonTabButton,
+    TeamSelectorComponent
+  ]
 })
 export class SideMenuComponent {
   @Input() showTeamSelector = true;
@@ -32,7 +62,8 @@ export class SideMenuComponent {
       searchOutline,
       calendarOutline,
       trophyOutline,
-      settingsOutline
+      settingsOutline,
+      personCircleOutline
     });
   }
 
