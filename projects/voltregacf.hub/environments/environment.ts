@@ -10,7 +10,8 @@ export const environment = {
   taglineKey: PROJECT_CONFIG.taglineKey,
   appId: PROJECT_CONFIG.appId,
   version: PROJECT_CONFIG.version,
-  apiUrl: 'https://api-dev.tactical.hub',
+  clubId: PROJECT_CONFIG.clubId,
+  apiUrl: 'https://api-dev.voltregacf.hub',
   translations: PROJECT_CONFIG.translations,
   features: {
     analytics: false,
@@ -26,4 +27,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
-

@@ -1,0 +1,210 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+// Voltrega CF - Modern Yellow & Black Color Scheme
+// Custom Club Color Variables
+
+// Primary Colors
+:root {
+  // Primary - Vibrant Yellow (Voltrega Brand)
+  --ion-color-primary: #ffd700;
+  --ion-color-primary-rgb: 255, 215, 0;
+  --ion-color-primary-contrast: #1a1a1a;
+  --ion-color-primary-contrast-rgb: 26, 26, 26;
+  --ion-color-primary-shade: #e0bc00;
+  --ion-color-primary-tint: #ffdc1a;
+
+  // Secondary - Deep Black
+  --ion-color-secondary: #1a1a1a;
+  --ion-color-secondary-rgb: 26, 26, 26;
+  --ion-color-secondary-contrast: #ffd700;
+  --ion-color-secondary-contrast-rgb: 255, 215, 0;
+  --ion-color-secondary-shade: #0d0d0d;
+  --ion-color-secondary-tint: #2e2e2e;
+
+  // Tertiary - Gold (Softer Yellow)
+  --ion-color-tertiary: #ffb700;
+  --ion-color-tertiary-rgb: 255, 183, 0;
+  --ion-color-tertiary-contrast: #1a1a1a;
+  --ion-color-tertiary-contrast-rgb: 26, 26, 26;
+  --ion-color-tertiary-shade: #e0a100;
+  --ion-color-tertiary-tint: #ffc01a;
+
+  // Status Colors
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  // Light Theme Colors
+  --ion-color-light: #f8f8f8;
+  --ion-color-light-rgb: 248, 248, 248;
+  --ion-color-light-contrast: #1a1a1a;
+  --ion-color-light-contrast-rgb: 26, 26, 26;
+  --ion-color-light-shade: #dadada;
+  --ion-color-light-tint: #f9f9f9;
+
+  --ion-color-medium: #6c6c6c;
+  --ion-color-medium-rgb: 108, 108, 108;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #5f5f5f;
+  --ion-color-medium-tint: #7b7b7b;
+
+  --ion-color-dark: #1a1a1a;
+  --ion-color-dark-rgb: 26, 26, 26;
+  --ion-color-dark-contrast: #ffd700;
+  --ion-color-dark-contrast-rgb: 255, 215, 0;
+  --ion-color-dark-shade: #0d0d0d;
+  --ion-color-dark-tint: #2e2e2e;
+}
+
+// Custom Voltrega CF Colors
+:root {
+  // Brand Colors
+  --voltrega-gold: #ffd700;
+  --voltrega-yellow: #ffb700;
+  --voltrega-black: #1a1a1a;
+  --voltrega-dark-gray: #2e2e2e;
+  --voltrega-light-gray: #f8f8f8;
+  
+  // Background Colors (Light Theme)
+  --background-primary: #ffffff;
+  --background-secondary: #f8f8f8;
+  --background-tertiary: #f0f0f0;
+  --background-dark: #1a1a1a;
+  --background-dark-secondary: #2e2e2e;
+  
+  // Text Colors
+  --text-primary: #1a1a1a;
+  --text-secondary: #6c6c6c;
+  --text-light: #9a9a9a;
+  --text-on-dark: #ffffff;
+  --text-gold: #ffd700;
+  
+  // Border Colors
+  --border-light: #e0e0e0;
+  --border-medium: #c0c0c0;
+  --border-dark: #2e2e2e;
+  --border-gold: #ffd700;
+  
+  // Shadow Colors
+  --shadow-light: rgba(26, 26, 26, 0.08);
+  --shadow-medium: rgba(26, 26, 26, 0.15);
+  --shadow-dark: rgba(26, 26, 26, 0.25);
+  --shadow-gold: rgba(255, 215, 0, 0.3);
+  
+  // Gradient Colors
+  --gradient-primary: linear-gradient(135deg, var(--voltrega-gold) 0%, var(--voltrega-yellow) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--voltrega-black) 0%, var(--voltrega-dark-gray) 100%);
+  --gradient-hero: linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 50%, #ffd700 100%);
+  --gradient-card: linear-gradient(180deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 215, 0, 0) 100%);
+}
+
+// Authentication Colors
+:root {
+  --auth-google: #db4437;
+  --auth-apple: #000000;
+  --auth-email: var(--voltrega-gold);
+}
+
+// Card and Component Styles
+.tactical-card {
+  background: var(--background-primary);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px var(--shadow-light);
+  border: 1px solid var(--border-light);
+  
+  &.card-dark {
+    background: var(--background-dark);
+    border-color: var(--border-dark);
+    box-shadow: 0 4px 16px var(--shadow-dark);
+  }
+  
+  &.card-highlighted {
+    background: var(--gradient-card), var(--background-primary);
+    border: 2px solid var(--border-gold);
+    box-shadow: 0 4px 20px var(--shadow-gold);
+  }
+}
+
+.tactical-button-primary {
+  --background: var(--voltrega-gold);
+  --color: var(--voltrega-black);
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px var(--shadow-gold);
+  font-weight: 600;
+  
+  &:hover {
+    --background: var(--voltrega-yellow);
+  }
+}
+
+.tactical-button-secondary {
+  --background: var(--voltrega-black);
+  --color: var(--voltrega-gold);
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px var(--shadow-medium);
+  font-weight: 600;
+  
+  &:hover {
+    --background: var(--voltrega-dark-gray);
+  }
+}
+
+.tactical-button-outline {
+  --background: transparent;
+  --color: var(--voltrega-black);
+  --border-color: var(--voltrega-black);
+  --border-width: 2px;
+  --border-radius: 12px;
+  font-weight: 600;
+  
+  &:hover {
+    --background: var(--voltrega-black);
+    --color: var(--voltrega-gold);
+  }
+}
+
+// Header Styles
+.tactical-header {
+  background: var(--gradient-secondary);
+  color: var(--voltrega-gold);
+  border-bottom: 2px solid var(--voltrega-gold);
+  
+  ion-title {
+    color: var(--voltrega-gold);
+    font-weight: 700;
+  }
+}
+
+// Badge Styles
+.tactical-badge {
+  background: var(--voltrega-gold);
+  color: var(--voltrega-black);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  
+  &.badge-dark {
+    background: var(--voltrega-black);
+    color: var(--voltrega-gold);
+  }
+}

@@ -7,8 +7,7 @@ import {
   IonIcon,
   IonSpinner,
   IonText,
-  IonAvatar,
-  IonChip
+  IonAvatar
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -39,8 +38,7 @@ interface ClubInvitation {
     IonIcon,
     IonSpinner,
     IonText,
-    IonAvatar,
-    IonChip
+    IonAvatar
   ]
 })
 export class InvitationPage implements OnInit, ViewWillEnter {

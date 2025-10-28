@@ -6,7 +6,8 @@ export const environment = {
   taglineKey: PROJECT_CONFIG.taglineKey,
   appId: PROJECT_CONFIG.appId,
   version: PROJECT_CONFIG.version,
-  apiUrl: 'https://api.tactical.hub',
+  clubId: PROJECT_CONFIG.clubId,
+  apiUrl: 'https://api.voltregacf.hub',
   translations: PROJECT_CONFIG.translations,
   features: {
     analytics: true,

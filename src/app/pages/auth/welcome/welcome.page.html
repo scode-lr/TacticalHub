@@ -8,11 +8,11 @@
       </div>
       
       <!-- Title -->
-      <h1 class="brand-title">Tactical.hub</h1>
+      <h1 class="brand-title">{{ appName }}</h1>
       
       <!-- Subtitle -->
       <p class="brand-subtitle">
-        Manage your football teams and strategies with ease
+        {{ tagline }}
       </p>
     </div>
   </div>
@@ -25,7 +25,7 @@
       class="signup-btn"
       (click)="navigateToSignUp()">
       <ion-icon name="person-add-outline" slot="start"></ion-icon>
-      Create Account
+      {{ t('welcome.createAccount') }}
     </ion-button>
 
     <!-- Sign In Button (Secondary) -->
@@ -35,15 +35,15 @@
       class="signin-btn"
       (click)="navigateToSignIn()">
       <ion-icon name="log-in-outline" slot="start"></ion-icon>
-      Sign In
+      {{ t('welcome.signIn') }}
     </ion-button>
 
     <!-- Terms Text -->
     <div class="terms-text">
       <ion-text>
-        By continuing, you agree to our 
-        <span class="link">Terms of Service</span> and 
-        <span class="link">Privacy Policy</span>
+        {{ t('welcome.terms') }} 
+        <span class="link">{{ t('welcome.termsOfService') }}</span> {{ t('welcome.and') }} 
+        <span class="link">{{ t('welcome.privacyPolicy') }}</span>
       </ion-text>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { 
@@ -12,6 +12,8 @@ import {
   logInOutline,
   personAddOutline
 } from 'ionicons/icons';
+import { environment } from '../../../../environments/environment';
+import { TranslationService } from '../../../core/services/i18n/translation.service';
 
 @Component({
   selector: 'app-welcome',
@@ -25,13 +27,26 @@ import {
     IonText
   ]
 })
-export class WelcomePage {
-  constructor(private router: Router) {
+export class WelcomePage implements OnInit {
+  appName = environment.projectName;
+  tagline = '';
+  
+  constructor(
+    private router: Router,
+    private translationService: TranslationService
+  ) {
     addIcons({
       'shield-checkmark-outline': shieldCheckmarkOutline,
       'log-in-outline': logInOutline,
       'person-add-outline': personAddOutline
     });
+  }
+
+  ngOnInit() {
+    // Initialize translations
+    this.translationService.setTranslations(environment.translations);
+    // Get translated tagline
+    this.tagline = this.translationService.t(environment.taglineKey);
   }
 
   navigateToSignIn() {
@@ -40,5 +55,10 @@ export class WelcomePage {
 
   navigateToSignUp() {
     this.router.navigate(['/signup']);
+  }
+
+  // Helper method to get translation (can be used in template)
+  t(key: string): string {
+    return this.translationService.t(key);
   }
 }
