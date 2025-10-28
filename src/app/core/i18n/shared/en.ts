@@ -1,7 +1,3 @@
-// Shared Translations - English
-// These translations are common across all projects
-// Can be overridden by project-specific translations
-
 export const sharedTranslations = {
   welcome: {
     createAccount: 'Create Account',

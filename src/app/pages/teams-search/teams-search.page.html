@@ -16,9 +16,8 @@
   </div>
 
   <div class="search-container" [class.has-results]="searchTerm && searchTerm.trim().length > 0" [class.has-continue]="hasRequestedTeams">
-    <!-- Welcome Section -->
     <div class="welcome-section">
-      <h2 class="welcome-title">Welcome to TacticalHub!</h2>
+      <h2 class="welcome-title">Welcome to {{ appName }}!</h2>
       <p class="welcome-subtitle">Find and join football teams in your area</p>
     </div>
 

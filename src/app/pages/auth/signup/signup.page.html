@@ -7,15 +7,8 @@
     <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
   </ion-button>
 
-  <!-- Left Side - Branding -->
   <div class="branding-section">
-    <div class="brand-content">
-      <div class="brand-logo">
-        <ion-icon name="shield-checkmark" class="logo-icon"></ion-icon>
-      </div>
-      <h2 class="brand-title">Tactical.hub</h2>
-      <p class="brand-subtitle">Join the football training community</p>
-    </div>
+    <app-auth-branding></app-auth-branding>
   </div>
 
   <!-- Right Side - Form -->
@@ -34,8 +27,13 @@
               type="text" 
               formControlName="firstName"
               placeholder="First Name"
-              fill="outline">
+              fill="outline"
+              [class.ion-invalid]="signupForm.get('firstName')?.invalid && formSubmitted">
             </ion-input>
+            <div class="error-message" *ngIf="signupForm.get('firstName')?.invalid && formSubmitted">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>First name is required</span>
+            </div>
           </div>
           
           <div class="input-group half-width">
@@ -43,8 +41,13 @@
               type="text" 
               formControlName="lastName"
               placeholder="Last Name"
-              fill="outline">
+              fill="outline"
+              [class.ion-invalid]="signupForm.get('lastName')?.invalid && formSubmitted">
             </ion-input>
+            <div class="error-message" *ngIf="signupForm.get('lastName')?.invalid && formSubmitted">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>Last name is required</span>
+            </div>
           </div>
         </div>
         
@@ -54,8 +57,14 @@
             type="email" 
             formControlName="email"
             placeholder="Email"
-            fill="outline">
+            fill="outline"
+            [class.ion-invalid]="signupForm.get('email')?.invalid && formSubmitted">
           </ion-input>
+          <div class="error-message" *ngIf="signupForm.get('email')?.invalid && formSubmitted">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span *ngIf="signupForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="signupForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+          </div>
         </div>
         
         <!-- Password Input -->
@@ -64,8 +73,14 @@
             type="password" 
             formControlName="password"
             placeholder="Password"
-            fill="outline">
+            fill="outline"
+            [class.ion-invalid]="signupForm.get('password')?.invalid && formSubmitted">
           </ion-input>
+          <div class="error-message" *ngIf="signupForm.get('password')?.invalid && formSubmitted">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span *ngIf="signupForm.get('password')?.errors?.['required']">Password is required</span>
+            <span *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+          </div>
         </div>
         
         <!-- Confirm Password Input -->
@@ -74,15 +89,17 @@
             type="password" 
             formControlName="confirmPassword"
             placeholder="Confirm Password"
-            fill="outline">
+            fill="outline"
+            [class.ion-invalid]="((signupForm.get('confirmPassword')?.invalid && formSubmitted) || (signupForm.errors?.['passwordMismatch'] && formSubmitted))">
           </ion-input>
-        </div>
-
-        <!-- Error Messages -->
-        <div class="error-messages" *ngIf="signupForm.errors?.['passwordMismatch'] && confirmPassword?.touched">
-          <ion-text color="danger">
-            <small>Passwords do not match</small>
-          </ion-text>
+          <div class="error-message" *ngIf="signupForm.get('confirmPassword')?.invalid && formSubmitted">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span>Please confirm your password</span>
+          </div>
+          <div class="error-message" *ngIf="signupForm.errors?.['passwordMismatch'] && formSubmitted && !signupForm.get('confirmPassword')?.errors">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span>Passwords do not match</span>
+          </div>
         </div>
 
         <!-- Sign Up Button -->

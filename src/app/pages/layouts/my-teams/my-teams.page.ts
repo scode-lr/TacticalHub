@@ -22,7 +22,7 @@ import {
   shirtOutline,
   people
 } from 'ionicons/icons';
-import { Organization } from '../../../components/team-selector/team-selector.component';
+import { Organization } from '@components/team-selector/team-selector.component';
 
 interface TrainingNote {
   date: string;

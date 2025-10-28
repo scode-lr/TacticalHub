@@ -1,55 +1,79 @@
 import { Injectable } from '@angular/core';
-import { sharedTranslations } from '../../i18n/shared';
+import { SHARED_TRANSLATIONS } from '../../i18n/shared';
 
-/**
- * Translation Service
- * 
- * This service provides translation functionality for the application.
- * It supports both shared (common) and project-specific translations.
- * 
- * Architecture:
- * - Shared translations: Common strings used across all projects
- * - Project translations: Unique strings per project (can override shared)
- * - Final translations = { ...shared, ...project } (project wins on conflicts)
- * 
- * Currently, it loads translations from local files, but it's designed
- * to be easily migrated to an external translation service/API.
- * 
- * Migration Path:
- * 1. Replace the import statements with API calls
- * 2. Implement caching strategy
- * 3. Add language switching functionality
- * 4. Add loading states for async translation loading
- */
 @Injectable({
   providedIn: 'root'
 })
 export class TranslationService {
   private translations: any = {};
   private currentLanguage = 'en';
-  private sharedTranslations: any = sharedTranslations;
+  private projectTranslations: any = {};
+  private supportedLanguages: string[] = ['en'];
+  private defaultLanguage = 'en';
 
   constructor() {
-    // Shared translations are loaded automatically
+    this.detectAndSetLanguage();
   }
 
-  /**
-   * Set project-specific translations
-   * These will be merged with shared translations
-   * Project translations override shared ones if keys conflict
-   */
-  setTranslations(projectTranslations: any): void {
-    // Deep merge: shared + project (project wins)
-    this.translations = this.deepMerge(
-      this.sharedTranslations,
-      projectTranslations
-    );
+  initialize(config: {
+    translations: Record<string, any>;
+    supportedLanguages: string[];
+    defaultLanguage: string;
+  }): void {
+    this.projectTranslations = config.translations;
+    this.supportedLanguages = config.supportedLanguages;
+    this.defaultLanguage = config.defaultLanguage;
+    this.detectAndSetLanguage();
   }
 
-  /**
-   * Deep merge two objects
-   * Second object (project) overrides first (shared)
-   */
+  private detectAndSetLanguage(): void {
+    const browserLang = this.getBrowserLanguage();
+    const storedLang = localStorage.getItem('app-language');
+    
+    let targetLang = storedLang || browserLang || this.defaultLanguage;
+    
+    if (!this.supportedLanguages.includes(targetLang)) {
+      const langPrefix = targetLang.split('-')[0];
+      if (this.supportedLanguages.includes(langPrefix)) {
+        targetLang = langPrefix;
+      } else {
+        targetLang = this.defaultLanguage;
+      }
+    }
+
+    this.setLanguage(targetLang);
+  }
+
+  private getBrowserLanguage(): string {
+    if (typeof window === 'undefined' || !window.navigator) {
+      return 'en';
+    }
+
+    const nav = window.navigator as any;
+    const browserLang = nav.language || nav.userLanguage || nav.browserLanguage;
+    
+    if (browserLang) {
+      return browserLang.toLowerCase().split('-')[0];
+    }
+
+    return 'en';
+  }
+
+  setLanguage(lang: string): void {
+    if (!this.supportedLanguages.includes(lang)) {
+      console.warn(`Language '${lang}' not supported, using default: ${this.defaultLanguage}`);
+      lang = this.defaultLanguage;
+    }
+
+    this.currentLanguage = lang;
+    localStorage.setItem('app-language', lang);
+
+    const sharedForLang = (SHARED_TRANSLATIONS as any)[lang] || (SHARED_TRANSLATIONS as any).en;
+    const projectForLang = this.projectTranslations[lang] || this.projectTranslations.en || {};
+
+    this.translations = this.deepMerge(sharedForLang, projectForLang);
+  }
+
   private deepMerge(shared: any, project: any): any {
     const result = { ...shared };
 
@@ -73,29 +97,19 @@ export class TranslationService {
     return result;
   }
 
-  /**
-   * Get a translation by key path
-   * Example: t('app.tagline') or t('welcome.signIn')
-   * 
-   * @param key - Dot notation path to translation
-   * @param params - Optional parameters for interpolation
-   * @returns Translated string
-   */
   t(key: string, params?: Record<string, any>): string {
     const keys = key.split('.');
     let value = this.translations;
 
-    // Navigate through the translation object
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k];
       } else {
         console.warn(`Translation key not found: ${key}`);
-        return key; // Return key if translation not found
+        return key;
       }
     }
 
-    // Handle string interpolation if params provided
     if (params && typeof value === 'string') {
       return this.interpolate(value, params);
     }
@@ -103,36 +117,20 @@ export class TranslationService {
     return typeof value === 'string' ? value : key;
   }
 
-  /**
-   * Interpolate parameters into translation string
-   * Example: "Hello {name}" with {name: "John"} -> "Hello John"
-   */
   private interpolate(text: string, params: Record<string, any>): string {
     return text.replace(/\{(\w+)\}/g, (match, key) => {
       return params[key] !== undefined ? String(params[key]) : match;
     });
   }
 
-  /**
-   * Change current language
-   * Future: This will trigger loading translations from API
-   */
-  setLanguage(lang: string): void {
-    this.currentLanguage = lang;
-    // Future: Load translations for new language
-    console.log(`Language changed to: ${lang}`);
-  }
-
-  /**
-   * Get current language
-   */
   getCurrentLanguage(): string {
     return this.currentLanguage;
   }
 
-  /**
-   * Get all loaded translations (for debugging)
-   */
+  getSupportedLanguages(): string[] {
+    return this.supportedLanguages;
+  }
+
   getAllTranslations(): any {
     return this.translations;
   }

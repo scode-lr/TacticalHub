@@ -26,6 +26,7 @@ import {
 } from 'ionicons/icons';
 import { Organization } from '../team-selector/team-selector.component';
 import { TeamSelectorComponent } from '../team-selector/team-selector.component';
+import { environment } from '@environment';
 
 @Component({
   selector: 'app-side-menu',
@@ -54,6 +55,7 @@ export class SideMenuComponent {
   @Input() currentOrg: Organization | null = null;
   @Input() organizations: Organization[] = [];
   @Input() activePage: 'home' | 'teams' | 'search' | 'schedule' | 'tournaments' | 'settings' = 'home';
+  appName = environment.name;
 
   constructor() {
     addIcons({

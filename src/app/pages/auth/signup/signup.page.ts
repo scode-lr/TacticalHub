@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,7 +11,10 @@ import {
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ionicons/icons';
+import { logoGoogle, logoApple, arrowBack, alertCircle } from 'ionicons/icons';
+import { environment } from '@environment';
+import { TranslationService } from '@services/i18n/translation.service';
+import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
 
 @Component({
   selector: 'app-signup',
@@ -26,7 +29,8 @@ import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ioni
     IonInput,
     IonText,
     IonSpinner,
-    IonToast
+    IonToast,
+    AuthBrandingComponent
   ]
 })
 export class SignupPage {
@@ -34,12 +38,15 @@ export class SignupPage {
   isLoading = false;
   showToast = false;
   toastMessage = '';
+  appName = environment.name;
+  formSubmitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private translationService: TranslationService
   ) {
-    addIcons({ logoGoogle, logoApple, mail, lockClosed, person, arrowBack });
+    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle });
     
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -69,6 +76,8 @@ export class SignupPage {
   }
 
   async onSignUp() {
+    this.formSubmitted = true;
+    
     if (this.signupForm.valid) {
       this.isLoading = true;
       

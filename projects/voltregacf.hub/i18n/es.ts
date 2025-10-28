@@ -1,7 +1,7 @@
 export const translations = {
   app: {
     name: 'Voltrega CF Hub',
-    tagline: 'Grow together'
+    tagline: 'Crecer juntos'
   }
 } as const;
 

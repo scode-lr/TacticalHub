@@ -1,29 +1,16 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
-import { PROJECT_CONFIG } from '../config';
-
 export const environment = {
   production: false,
-  projectName: PROJECT_CONFIG.name,
-  taglineKey: PROJECT_CONFIG.taglineKey,
-  appId: PROJECT_CONFIG.appId,
-  version: PROJECT_CONFIG.version,
+  name: 'Tactical Hub',
+  taglineKey: 'app.tagline',
+  appId: 'com.tactical.hub',
+  version: '1.0.0',
   apiUrl: 'https://api-dev.tactical.hub',
-  translations: PROJECT_CONFIG.translations,
-  features: {
-    analytics: false,
-    pushNotifications: false
-  }
+  translations: {
+    en: { app: { name: 'Tactical Hub', tagline: 'Manage your football teams' } },
+    es: { app: { name: 'Tactical Hub', tagline: 'Gestiona tus equipos' } },
+    ca: { app: { name: 'Tactical Hub', tagline: 'Gestiona els teus equips' } }
+  },
+  supportedLanguages: ['en', 'es', 'ca'],
+  defaultLanguage: 'en'
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
 

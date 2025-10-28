@@ -1,7 +1,7 @@
 export const translations = {
   app: {
-    name: 'Voltrega CF Hub',
-    tagline: 'Grow together'
+    name: 'Tactical Hub',
+    tagline: 'Gestiona tus equipos y estrategias de fútbol con facilidad'
   }
 } as const;
 

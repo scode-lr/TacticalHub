@@ -2,8 +2,8 @@ import { Component, signal } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { IonContent } from '@ionic/angular/standalone';
-import { SideMenuComponent } from '../../../components/side-menu/side-menu.component';
-import { Organization } from '../../../components/team-selector/team-selector.component';
+import { SideMenuComponent } from '@components/side-menu/side-menu.component';
+import { Organization } from '@components/team-selector/team-selector.component';
 
 @Component({
   selector: 'app-main-layout',

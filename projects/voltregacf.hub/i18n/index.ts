@@ -1,5 +1,5 @@
-// i18n Index - Exports the current language translations
-// Future: This can dynamically load translations based on user language preference
-
-export { translations } from './en';
+export { translations as translationsEn } from './en';
+export { translations as translationsEs } from './es';
+export { translations as translationsCa } from './ca';
 export type { TranslationKeys } from './en';
+export { translations } from './en';

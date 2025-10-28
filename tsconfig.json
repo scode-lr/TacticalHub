@@ -19,7 +19,15 @@
     "target": "es2022",
     "module": "es2020",
     "lib": ["es2018", "dom"],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+      "@environment": ["src/environments/environment"],
+      "@services/*": ["src/app/core/services/*"],
+      "@components/*": ["src/app/components/*"],
+      "@pages/*": ["src/app/pages/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@assets/*": ["src/assets/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

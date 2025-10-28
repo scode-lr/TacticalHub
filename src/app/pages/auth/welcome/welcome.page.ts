@@ -8,12 +8,12 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
-  shieldCheckmarkOutline,
   logInOutline,
   personAddOutline
 } from 'ionicons/icons';
-import { environment } from '../../../../environments/environment';
-import { TranslationService } from '../../../core/services/i18n/translation.service';
+import { environment } from '@environment';
+import { TranslationService } from '@services/i18n/translation.service';
+import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
 
 @Component({
   selector: 'app-welcome',
@@ -24,11 +24,12 @@ import { TranslationService } from '../../../core/services/i18n/translation.serv
     CommonModule,
     IonButton,
     IonIcon,
-    IonText
+    IonText,
+    AuthBrandingComponent
   ]
 })
 export class WelcomePage implements OnInit {
-  appName = environment.projectName;
+  appName = environment.name;
   tagline = '';
   
   constructor(
@@ -36,16 +37,12 @@ export class WelcomePage implements OnInit {
     private translationService: TranslationService
   ) {
     addIcons({
-      'shield-checkmark-outline': shieldCheckmarkOutline,
       'log-in-outline': logInOutline,
       'person-add-outline': personAddOutline
     });
   }
 
   ngOnInit() {
-    // Initialize translations
-    this.translationService.setTranslations(environment.translations);
-    // Get translated tagline
     this.tagline = this.translationService.t(environment.taglineKey);
   }
 

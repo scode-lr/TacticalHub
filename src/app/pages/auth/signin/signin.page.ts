@@ -11,7 +11,10 @@ import {
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, person, checkmarkCircle, alertCircle, arrowBack } from 'ionicons/icons';
+import { logoGoogle, logoApple, arrowBack, alertCircle } from 'ionicons/icons';
+import { environment } from '@environment';
+import { TranslationService } from '@services/i18n/translation.service';
+import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
 
 @Component({
   selector: 'app-signin',
@@ -26,7 +29,8 @@ import { logoGoogle, logoApple, person, checkmarkCircle, alertCircle, arrowBack 
     IonInput,
     IonText,
     IonSpinner,
-    IonToast
+    IonToast,
+    AuthBrandingComponent
   ]
 })
 export class SigninPage implements OnInit {
@@ -35,12 +39,16 @@ export class SigninPage implements OnInit {
   showToast = false;
   toastMessage = '';
   toastColor = 'success';
+  appName = environment.name;
+  tagline = '';
+  formSubmitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private translationService: TranslationService
   ) {
-    addIcons({ logoGoogle, logoApple, person, checkmarkCircle, alertCircle, arrowBack });
+    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle });
     
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -49,6 +57,7 @@ export class SigninPage implements OnInit {
   }
 
   ngOnInit() {
+    this.tagline = this.translationService.t(environment.taglineKey);
     this.signinForm.statusChanges.subscribe(status => {
     });
   }
@@ -58,6 +67,8 @@ export class SigninPage implements OnInit {
   }
 
   async onSignIn() {
+    this.formSubmitted = true;
+    
     if (this.signinForm.valid) {
       this.isLoading = true;
       
@@ -76,7 +87,6 @@ export class SigninPage implements OnInit {
         this.isLoading = false;
       }
     } else {
-      this.markFormGroupTouched();
       this.showToastMessage('Please check your input', 'warning');
     }
   }
@@ -152,7 +162,7 @@ export class SigninPage implements OnInit {
 
   get emailError() {
     const control = this.signinForm.get('email');
-    if (control?.touched && control?.errors) {
+    if (this.formSubmitted && control?.errors) {
       if (control.errors['required']) return 'Email is required';
       if (control.errors['email']) return 'Please enter a valid email';
     }
@@ -161,7 +171,7 @@ export class SigninPage implements OnInit {
 
   get passwordError() {
     const control = this.signinForm.get('password');
-    if (control?.touched && control?.errors) {
+    if (this.formSubmitted && control?.errors) {
       if (control.errors['required']) return 'Password is required';
       if (control.errors['minlength']) return 'Password must be at least 6 characters';
     }

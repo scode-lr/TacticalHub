@@ -14,7 +14,7 @@ import {
   IonRefresher,
   IonRefresherContent
 } from '@ionic/angular/standalone';
-import { TeamCardComponent, type Team } from '../../components';
+import { TeamCardComponent, type Team } from '@components/index';
 import { addIcons } from 'ionicons';
 import { 
   search, 
@@ -22,6 +22,7 @@ import {
   refreshOutline,
   arrowForwardOutline
 } from 'ionicons/icons';
+import { environment } from '@environment';
 
 @Component({
   selector: 'app-teams-search',
@@ -52,6 +53,7 @@ export class TeamsSearchPage implements OnInit {
   showToast = false;
   toastMessage = '';
   requestedTeams: Set<string> = new Set();
+  appName = environment.name;
 
   get hasRequestedTeams(): boolean {
     return this.requestedTeams.size > 0;
