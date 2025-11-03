@@ -15,6 +15,8 @@ import { logoGoogle, logoApple, arrowBack, alertCircle } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
+import { SocialLoginComponent, SocialLoginResult } from '@components/social-login/social-login.component';
+import { TranslatePipe } from '@pipes/index';
 
 @Component({
   selector: 'app-signup',
@@ -30,7 +32,9 @@ import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.c
     IonText,
     IonSpinner,
     IonToast,
-    AuthBrandingComponent
+    AuthBrandingComponent,
+    SocialLoginComponent,
+    TranslatePipe
   ]
 })
 export class SignupPage {
@@ -94,20 +98,18 @@ export class SignupPage {
     }
   }
 
-  async signUpWithGoogle() {
-    this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-      this.showToastMessage('Google Sign-Up not implemented yet');
-    }, 1000);
-  }
-
-  async signUpWithApple() {
-    this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-      this.showToastMessage('Apple Sign-Up not implemented yet');
-    }, 1000);
+  onSocialLoginComplete(result: SocialLoginResult) {
+    if (result.success) {
+      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
+      this.showToastMessage(`${providerName} sign-up successful!`);
+      
+      setTimeout(() => {
+        this.router.navigate(['/app/teams-search']);
+      }, 800);
+    } else {
+      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
+      this.showToastMessage(`${providerName} sign-up failed`);
+    }
   }
 
   navigateToSignIn() {

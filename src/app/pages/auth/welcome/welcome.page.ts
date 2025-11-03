@@ -14,6 +14,7 @@ import {
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
+import { TranslatePipe } from '@pipes/index';
 
 @Component({
   selector: 'app-welcome',
@@ -25,7 +26,8 @@ import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.c
     IonButton,
     IonIcon,
     IonText,
-    AuthBrandingComponent
+    AuthBrandingComponent,
+    TranslatePipe
   ]
 })
 export class WelcomePage implements OnInit {

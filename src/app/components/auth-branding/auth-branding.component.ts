@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { shieldCheckmarkOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 
@@ -12,8 +9,7 @@ import { TranslationService } from '@services/i18n/translation.service';
   styleUrls: ['./auth-branding.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    IonIcon
+    CommonModule
   ]
 })
 export class AuthBrandingComponent implements OnInit {
@@ -21,9 +17,6 @@ export class AuthBrandingComponent implements OnInit {
   tagline = '';
 
   constructor(private translationService: TranslationService) {
-    addIcons({
-      'shield-checkmark-outline': shieldCheckmarkOutline
-    });
   }
 
   ngOnInit() {

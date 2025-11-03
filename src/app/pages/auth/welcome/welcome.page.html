@@ -12,7 +12,7 @@
       class="signup-btn"
       (click)="navigateToSignUp()">
       <ion-icon name="person-add-outline" slot="start"></ion-icon>
-      {{ t('welcome.createAccount') }}
+      {{ 'welcome.createAccount' | translate }}
     </ion-button>
 
     <!-- Sign In Button (Secondary) -->
@@ -22,15 +22,15 @@
       class="signin-btn"
       (click)="navigateToSignIn()">
       <ion-icon name="log-in-outline" slot="start"></ion-icon>
-      {{ t('welcome.signIn') }}
+      {{ 'welcome.signIn' | translate }}
     </ion-button>
 
     <!-- Terms Text -->
     <div class="terms-text">
       <ion-text>
-        {{ t('welcome.terms') }} 
-        <span class="link">{{ t('welcome.termsOfService') }}</span> {{ t('welcome.and') }} 
-        <span class="link">{{ t('welcome.privacyPolicy') }}</span>
+        {{ 'welcome.terms' | translate }} 
+        <span class="link">{{ 'welcome.termsOfService' | translate }}</span> {{ 'welcome.and' | translate }} 
+        <span class="link">{{ 'welcome.privacyPolicy' | translate }}</span>
       </ion-text>
     </div>
   </div>

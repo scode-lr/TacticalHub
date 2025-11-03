@@ -1,0 +1,89 @@
+.social-section {
+  margin: 2rem 0;
+
+  .divider-line {
+    position: relative;
+    text-align: center;
+    margin: 1.5rem 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--ion-color-medium);
+      opacity: 0.3;
+      transform: translateY(-50%);
+    }
+
+    .divider-text {
+      position: relative;
+      display: inline-block;
+      background: var(--ion-background-color, var(--background-primary, #ffffff));
+      padding: 0 1rem;
+      color: var(--ion-color-medium);
+      font-size: 0.875rem;
+      font-weight: 500;
+      z-index: 1;
+    }
+  }
+
+  .social-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+
+    .social-btn {
+      --border-radius: 12px;
+      --padding-start: 1.5rem;
+      --padding-end: 1.5rem;
+      height: 48px;
+      flex: 1;
+      max-width: 120px;
+
+      ion-icon {
+        font-size: 1.5rem;
+      }
+
+      ion-spinner {
+        width: 20px;
+        height: 20px;
+      }
+
+      &.google-btn {
+        --background: #fff;
+        --color: #757575;
+        --border-color: var(--ion-color-medium);
+        --border-width: 1px;
+        --border-style: solid;
+
+        &:hover:not(:disabled) {
+          --background: #f8f9fa;
+        }
+
+        ion-spinner {
+          --color: #757575;
+        }
+      }
+
+      &.apple-btn {
+        --background: #000;
+        --color: #fff;
+
+        &:hover:not(:disabled) {
+          --background: #1a1a1a;
+        }
+
+        ion-spinner {
+          --color: #fff;
+        }
+      }
+
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
+  }
+}

@@ -1,4 +1,7 @@
+import { sharedTranslationsEs } from '../../shared/i18n';
+
 export const translations = {
+  ...sharedTranslationsEs,
   app: {
     name: 'Voltrega CF Hub',
     tagline: 'Crecer juntos'

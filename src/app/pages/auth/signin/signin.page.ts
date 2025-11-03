@@ -15,6 +15,8 @@ import { logoGoogle, logoApple, arrowBack, alertCircle } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
+import { SocialLoginComponent, SocialLoginResult } from '@components/social-login/social-login.component';
+import { TranslatePipe } from '@pipes/index';
 
 @Component({
   selector: 'app-signin',
@@ -30,7 +32,9 @@ import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.c
     IonText,
     IonSpinner,
     IonToast,
-    AuthBrandingComponent
+    AuthBrandingComponent,
+    SocialLoginComponent,
+    TranslatePipe
   ]
 })
 export class SigninPage implements OnInit {
@@ -91,39 +95,17 @@ export class SigninPage implements OnInit {
     }
   }
 
-  async signInWithGoogle() {
-    this.isLoading = true;
-    
-    try {
-      await this.simulateAuth();
-      this.showToastMessage('Google sign-in successful!', 'success');
+  onSocialLoginComplete(result: SocialLoginResult) {
+    if (result.success) {
+      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
+      this.showToastMessage(`${providerName} sign-in successful!`, 'success');
       
       setTimeout(() => {
         this.router.navigate(['/app/teams-search']);
       }, 800);
-      
-    } catch (error) {
-      this.showToastMessage('Google sign-in failed', 'danger');
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
-  async signInWithApple() {
-    this.isLoading = true;
-    
-    try {
-      await this.simulateAuth();
-      this.showToastMessage('Apple sign-in successful!', 'success');
-      
-      setTimeout(() => {
-        this.router.navigate(['/app/teams-search']);
-      }, 800);
-      
-    } catch (error) {
-      this.showToastMessage('Apple sign-in failed', 'danger');
-    } finally {
-      this.isLoading = false;
+    } else {
+      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
+      this.showToastMessage(`${providerName} sign-in failed`, 'danger');
     }
   }
 

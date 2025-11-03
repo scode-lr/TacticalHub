@@ -15,8 +15,8 @@
   <div class="form-section">
     <div class="form-container">
       <div class="form-header">
-        <h1>Welcome Back</h1>
-        <p>Sign in to continue to {{ appName }}</p>
+        <h1>{{ 'welcome.signIn' | translate }}</h1>
+        <p>{{ 'auth.signInButton' | translate }} {{ appName }}</p>
       </div>
       <form [formGroup]="signinForm" (ngSubmit)="onSignIn()" class="signin-form">
         <!-- Email Input -->
@@ -24,15 +24,15 @@
           <ion-input 
             type="email" 
             formControlName="email"
-            placeholder="Email"
+            [placeholder]="'auth.email' | translate"
             fill="outline"
             class="modern-input"
             [class.ion-invalid]="signinForm.get('email')?.invalid && formSubmitted">
           </ion-input>
           <div class="error-message" *ngIf="signinForm.get('email')?.invalid && formSubmitted">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span *ngIf="signinForm.get('email')?.errors?.['required']">Email is required</span>
-            <span *ngIf="signinForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+            <span *ngIf="signinForm.get('email')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
+            <span *ngIf="signinForm.get('email')?.errors?.['email']">{{ 'validation.invalidEmail' | translate }}</span>
           </div>
         </div>
         
@@ -41,14 +41,14 @@
           <ion-input 
             type="password" 
             formControlName="password"
-            placeholder="Password"
+            [placeholder]="'auth.password' | translate"
             fill="outline"
             class="modern-input"
             [class.ion-invalid]="signinForm.get('password')?.invalid && formSubmitted">
           </ion-input>
           <div class="error-message" *ngIf="signinForm.get('password')?.invalid && formSubmitted">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span>Password is required</span>
+            <span>{{ 'validation.required' | translate }}</span>
           </div>
         </div>
 
@@ -59,40 +59,21 @@
           class="signin-btn"
           [disabled]="isLoading || !signinForm.valid">
           <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
-          <span *ngIf="!isLoading">Sign In</span>
+          <span *ngIf="!isLoading">{{ 'auth.signInButton' | translate }}</span>
         </ion-button>
       </form>
 
       <!-- Social Login Section -->
-      <div class="social-section">
-        <div class="divider-line">
-          <span class="divider-text">or</span>
-        </div>
-
-        <div class="social-buttons">
-          <ion-button 
-            fill="clear" 
-            class="social-btn google-btn"
-            (click)="signInWithGoogle()"
-            [disabled]="isLoading">
-            <ion-icon name="logo-google" slot="icon-only"></ion-icon>
-          </ion-button>
-
-          <ion-button 
-            fill="clear" 
-            class="social-btn apple-btn"
-            (click)="signInWithApple()"
-            [disabled]="isLoading">
-            <ion-icon name="logo-apple" slot="icon-only"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
+      <app-social-login
+        mode="signin"
+        (loginComplete)="onSocialLoginComplete($event)">
+      </app-social-login>
 
       <!-- Footer -->
       <div class="form-footer">
         <ion-text class="signup-text">
-          Don't have an account? 
-          <span class="signup-link" (click)="navigateToSignUp()">Sign up</span>
+          {{ 'auth.dontHaveAccount' | translate }}
+          <span class="signup-link" (click)="navigateToSignUp()">{{ 'auth.signUpButton' | translate }}</span>
         </ion-text>
       </div>
     </div>

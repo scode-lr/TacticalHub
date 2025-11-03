@@ -33,6 +33,11 @@
                 "glob": "**/*",
                 "input": "projects/tactical.hub/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/shared/assets",
+                "output": "assets"
               }
             ],
             "styles": ["src/global.scss", "projects/tactical.hub/theme/variables.scss"],
@@ -110,6 +115,11 @@
                 "glob": "**/*",
                 "input": "projects/tactical.hub/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/shared/assets",
+                "output": "assets"
               }
             ],
             "styles": ["src/global.scss", "projects/tactical.hub/theme/variables.scss"],
@@ -159,6 +169,11 @@
               {
                 "glob": "**/*",
                 "input": "projects/voltregacf.hub/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/shared/assets",
                 "output": "assets"
               }
             ],
