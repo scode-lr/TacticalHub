@@ -145,10 +145,10 @@
 
 // Submit Button
 .register-btn {
-  --background: #667eea;
-  --background-hover: #5568d3;
-  --background-activated: #4c5fd6;
-  --color: white;
+  --background: var(--button-primary-color, #667eea);
+  --background-hover: var(--button-primary-color, #5568d3);
+  --background-activated: var(--button-primary-color, #4c5fd6);
+  --color: var(--button-primary-contrast, white);
   --border-radius: 8px;
   --padding-top: 14px;
   --padding-bottom: 14px;

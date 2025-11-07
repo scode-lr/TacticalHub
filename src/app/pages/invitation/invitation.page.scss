@@ -179,9 +179,10 @@
   text-transform: none;
   letter-spacing: 0.3px;
   --border-radius: 12px;
-  --background: #667eea;
-  --background-hover: #5568d3;
-  --background-activated: #4c5fd6;
+  --background: var(--button-primary-color, #667eea);
+  --background-hover: var(--button-primary-color, #5568d3);
+  --background-activated: var(--button-primary-color, #4c5fd6);
+  --color: var(--button-primary-contrast, white);
 }
 
 /* Mobile Responsive */

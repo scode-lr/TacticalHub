@@ -212,13 +212,13 @@
   animation: slideInFromBottom 0.3s ease-out;
   
   .continue-button {
-    --background: var(--tactical-blue);
-    --color: white;
+    --background: var(--button-primary-color, var(--tactical-blue));
+    --color: var(--button-primary-contrast, white);
     --border-radius: 12px;
     height: 48px;
     font-weight: 600;
     font-size: 16px;
-    --box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    --box-shadow: 0 4px 12px rgba(var(--button-primary-color-rgb, 74, 144, 226), 0.3);
     
     ion-icon {
       font-size: 18px;
@@ -226,7 +226,7 @@
     }
     
     &:hover {
-      --box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+      --box-shadow: 0 6px 16px rgba(var(--button-primary-color-rgb, 74, 144, 226), 0.4);
       transform: translateY(-1px);
     }
   }

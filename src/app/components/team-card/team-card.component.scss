@@ -128,12 +128,12 @@
   margin: 0; // Remove default margins since it's in a fixed container
   
   &:not(.requested) {
-    --background: var(--tactical-blue);
-    --color: white;
-    --box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    --background: var(--button-primary-color, var(--tactical-blue));
+    --color: var(--button-primary-contrast, white);
+    --box-shadow: 0 4px 12px rgba(var(--button-primary-color-rgb, 74, 144, 226), 0.3);
     
     &:hover {
-      --box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+      --box-shadow: 0 6px 16px rgba(var(--button-primary-color-rgb, 74, 144, 226), 0.4);
       transform: translateY(-1px);
     }
   }

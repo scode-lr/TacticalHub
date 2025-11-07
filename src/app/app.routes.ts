@@ -1,20 +1,17 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // Default redirect to welcome page
   {
     path: '',
     redirectTo: 'welcome',
     pathMatch: 'full',
   },
 
-  // Welcome page (app init page)
   {
     path: 'welcome',
     loadComponent: () => import('./pages/auth/welcome/welcome.page').then(m => m.WelcomePage),
   },
 
-  // Authentication routes (standalone pages)
   {
     path: 'signin',
     loadComponent: () => import('./pages/auth/signin/signin.page').then(m => m.SigninPage),
@@ -34,6 +31,14 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'auth/loading',
+    loadComponent: () => import('./pages/auth/loading/loading.page').then(m => m.LoadingPage),
+  },
+  {
+    path: 'auth/role-selection',
+    loadComponent: () => import('./pages/auth/role-selection/role-selection.page').then(m => m.RoleSelectionPage),
+  },
+  {
     path: 'teams-search',
     loadComponent: () => import('./pages/teams-search/teams-search.page').then(m => m.TeamsSearchPage),
   },
@@ -41,23 +46,23 @@ export const routes: Routes = [
     path: 'player-register',
     loadComponent: () => import('./pages/player-register/player-register.page').then(m => m.PlayerRegisterPage),
   },
-  // Invitation route with UUID parameter
   {
     path: 'invitation/:uuid',
     loadComponent: () => import('./pages/invitation/invitation.page').then(m => m.InvitationPage),
   },
   {
     path: 'app',
+    redirectTo: 'layouts/my-teams',
+    pathMatch: 'full',
+  },
+  {
+    path: 'layouts',
     loadComponent: () => import('./pages/layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'my-teams',
         pathMatch: 'full',
-      },
-      {
-        path: 'dashboard',
-        loadComponent: () => import('./pages/layouts/dashboard/dashboard.page').then(m => m.DashboardPage),
       },
       {
         path: 'my-teams',

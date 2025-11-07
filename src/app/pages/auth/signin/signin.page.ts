@@ -17,6 +17,7 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
 import { SocialLoginComponent, SocialLoginResult } from '@components/social-login/social-login.component';
 import { TranslatePipe } from '@pipes/index';
+import { MockAuthService } from '@services/mock-auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -50,7 +51,8 @@ export class SigninPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private mockAuthService: MockAuthService
   ) {
     addIcons({ logoGoogle, logoApple, arrowBack, alertCircle });
     
@@ -77,18 +79,27 @@ export class SigninPage implements OnInit {
       this.isLoading = true;
       
       try {
-        await this.simulateAuth();
+        const email = this.signinForm.value.email;
+        const password = this.signinForm.value.password;
         
-        this.showToastMessage('Welcome back!', 'success');
-        
-        setTimeout(() => {
-          this.router.navigate(['/teams-search']);
-        }, 800);
+        // Call mock auth service
+        this.mockAuthService.signIn(email, password).subscribe({
+          next: (authResponse) => {
+            // Save auth data
+            this.mockAuthService.saveAuthData(authResponse);
+            
+            // Navigate to loading page
+            this.router.navigate(['/auth/loading']);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.showToastMessage('Invalid email or password', 'danger');
+          }
+        });
         
       } catch (error) {
-        this.showToastMessage('Invalid email or password', 'danger');
-      } finally {
         this.isLoading = false;
+        this.showToastMessage('An error occurred', 'danger');
       }
     } else {
       this.showToastMessage('Please check your input', 'warning');
