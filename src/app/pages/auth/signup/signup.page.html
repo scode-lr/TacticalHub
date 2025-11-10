@@ -17,7 +17,6 @@
       <!-- Header -->
       <div class="form-header">
         <h1>{{ 'welcome.createAccount' | translate }}</h1>
-        <p>{{ 'welcome.signUpTagline' | translate }}</p>
       </div>
       <form [formGroup]="signupForm" (ngSubmit)="onSignUp()" class="signup-form">
         <!-- Name Inputs Row -->
@@ -28,12 +27,14 @@
               formControlName="firstName"
               [placeholder]="'auth.firstName' | translate"
               fill="outline"
-              [class.ion-invalid]="signupForm.get('firstName')?.invalid && formSubmitted">
+              [class.ion-invalid]="signupForm.get('firstName')?.invalid && formSubmitted()">
             </ion-input>
-            <div class="error-message" *ngIf="signupForm.get('firstName')?.invalid && formSubmitted">
-              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-              <span>{{ 'validation.firstNameRequired' | translate }}</span>
-            </div>
+            @if (signupForm.get('firstName')?.invalid && formSubmitted()) {
+              <div class="error-message">
+                <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+                <span>{{ 'validation.firstNameRequired' | translate }}</span>
+              </div>
+            }
           </div>
           
           <div class="input-group half-width">
@@ -42,12 +43,14 @@
               formControlName="lastName"
               [placeholder]="'auth.lastName' | translate"
               fill="outline"
-              [class.ion-invalid]="signupForm.get('lastName')?.invalid && formSubmitted">
+              [class.ion-invalid]="signupForm.get('lastName')?.invalid && formSubmitted()">
             </ion-input>
-            <div class="error-message" *ngIf="signupForm.get('lastName')?.invalid && formSubmitted">
-              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-              <span>{{ 'validation.lastNameRequired' | translate }}</span>
-            </div>
+            @if (signupForm.get('lastName')?.invalid && formSubmitted()) {
+              <div class="error-message">
+                <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+                <span>{{ 'validation.lastNameRequired' | translate }}</span>
+              </div>
+            }
           </div>
         </div>
         
@@ -58,13 +61,19 @@
             formControlName="email"
             [placeholder]="'auth.email' | translate"
             fill="outline"
-            [class.ion-invalid]="signupForm.get('email')?.invalid && formSubmitted">
+            [class.ion-invalid]="signupForm.get('email')?.invalid && formSubmitted()">
           </ion-input>
-          <div class="error-message" *ngIf="signupForm.get('email')?.invalid && formSubmitted">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span *ngIf="signupForm.get('email')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
-            <span *ngIf="signupForm.get('email')?.errors?.['email']">{{ 'validation.invalidEmail' | translate }}</span>
-          </div>
+          @if (signupForm.get('email')?.invalid && formSubmitted()) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              @if (signupForm.get('email')?.errors?.['required']) {
+                <span>{{ 'validation.required' | translate }}</span>
+              }
+              @if (signupForm.get('email')?.errors?.['email']) {
+                <span>{{ 'validation.invalidEmail' | translate }}</span>
+              }
+            </div>
+          }
         </div>
         
         <!-- Password Input -->
@@ -74,13 +83,19 @@
             formControlName="password"
             [placeholder]="'auth.password' | translate"
             fill="outline"
-            [class.ion-invalid]="signupForm.get('password')?.invalid && formSubmitted">
+            [class.ion-invalid]="signupForm.get('password')?.invalid && formSubmitted()">
           </ion-input>
-          <div class="error-message" *ngIf="signupForm.get('password')?.invalid && formSubmitted">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span *ngIf="signupForm.get('password')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
-            <span *ngIf="signupForm.get('password')?.errors?.['minlength']">{{ 'validation.minLength6' | translate }}</span>
-          </div>
+          @if (signupForm.get('password')?.invalid && formSubmitted()) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              @if (signupForm.get('password')?.errors?.['required']) {
+                <span>{{ 'validation.required' | translate }}</span>
+              }
+              @if (signupForm.get('password')?.errors?.['minlength']) {
+                <span>{{ 'validation.minLength6' | translate }}</span>
+              }
+            </div>
+          }
         </div>
         
         <!-- Confirm Password Input -->
@@ -90,16 +105,20 @@
             formControlName="confirmPassword"
             [placeholder]="'auth.confirmPassword' | translate"
             fill="outline"
-            [class.ion-invalid]="((signupForm.get('confirmPassword')?.invalid && formSubmitted) || (signupForm.errors?.['passwordMismatch'] && formSubmitted))">
+            [class.ion-invalid]="((signupForm.get('confirmPassword')?.invalid && formSubmitted()) || (signupForm.errors?.['passwordMismatch'] && formSubmitted()))">
           </ion-input>
-          <div class="error-message" *ngIf="signupForm.get('confirmPassword')?.invalid && formSubmitted">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span>{{ 'validation.confirmPasswordRequired' | translate }}</span>
-          </div>
-          <div class="error-message" *ngIf="signupForm.errors?.['passwordMismatch'] && formSubmitted && !signupForm.get('confirmPassword')?.errors">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span>{{ 'validation.passwordMismatch' | translate }}</span>
-          </div>
+          @if (signupForm.get('confirmPassword')?.invalid && formSubmitted()) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ 'validation.confirmPasswordRequired' | translate }}</span>
+            </div>
+          }
+          @if (signupForm.errors?.['passwordMismatch'] && formSubmitted() && !signupForm.get('confirmPassword')?.errors) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ 'validation.passwordMismatch' | translate }}</span>
+            </div>
+          }
         </div>
 
         <!-- Sign Up Button -->
@@ -107,9 +126,13 @@
           expand="block" 
           type="submit" 
           class="signup-btn"
-          [disabled]="isLoading || !signupForm.valid">
-          <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
-          <span *ngIf="!isLoading">{{ 'welcome.createAccount' | translate }}</span>
+          [disabled]="isLoading() || !signupForm.valid">
+          @if (isLoading()) {
+            <ion-spinner name="dots"></ion-spinner>
+          }
+          @if (!isLoading()) {
+            <span>{{ 'welcome.createAccount' | translate }}</span>
+          }
         </ion-button>
       </form>
 
@@ -125,14 +148,21 @@
           {{ 'auth.alreadyHaveAccount' | translate }}
           <span class="signin-link" (click)="navigateToSignIn()">{{ 'auth.signInButton' | translate }}</span>
         </ion-text>
+        
+        <ion-text class="guest-text">
+          <span class="guest-link" (click)="continueAsGuest()">
+            <ion-icon name="eye-outline"></ion-icon>
+            {{ 'auth.continueAsGuest' | translate }}
+          </span>
+        </ion-text>
       </div>
     </div>
   </div>
 
   <!-- Toast for messages -->
   <ion-toast
-    [isOpen]="showToast"
-    [message]="toastMessage"
+    [isOpen]="showToast()"
+    [message]="toastMessage()"
     duration="3000"
     position="top"
     (didDismiss)="onToastDismiss()">

@@ -21,7 +21,8 @@ export const sharedTranslations = {
     continueWithGoogle: 'Continuar amb Google',
     continueWithApple: 'Continuar amb Apple',
     alreadyHaveAccount: 'Ja tens un compte?',
-    dontHaveAccount: 'No tens un compte?'
+    dontHaveAccount: 'No tens un compte?',
+    continueAsGuest: 'Continuar com a Convidat'
   },
   common: {
     loading: 'Carregant...',
@@ -46,7 +47,26 @@ export const sharedTranslations = {
     minLength6: 'La contrasenya ha de tenir almenys 6 caràcters',
     firstNameRequired: 'El nom és obligatori',
     lastNameRequired: 'El cognom és obligatori',
-    confirmPasswordRequired: 'Si us plau confirma la teva contrasenya'
+    confirmPasswordRequired: 'Si us plau confirma la teva contrasenya',
+    emailRequired: 'El correu electrònic és obligatori',
+    emailInvalid: 'Si us plau introdueix un correu vàlid',
+    passwordRequired: 'La contrasenya és obligatòria',
+    passwordMinLength: 'La contrasenya ha de tenir almenys 6 caràcters',
+    checkInput: 'Si us plau verifica la teva informació',
+    fillAllFields: 'Si us plau completa tots els camps correctament'
+  },
+  messages: {
+    accountCreatedSuccess: 'Compte creat amb èxit!',
+    signUpError: 'Ha ocorregut un error durant el registre.',
+    signInError: 'Ha ocorregut un error',
+    googleSignUpSuccess: 'Registre amb Google amb èxit!',
+    appleSignUpSuccess: 'Registre amb Apple amb èxit!',
+    googleSignUpFailed: 'Registre amb Google ha fallat',
+    appleSignUpFailed: 'Registre amb Apple ha fallat',
+    googleSignInSuccess: 'Inici de sessió amb Google amb èxit!',
+    appleSignInSuccess: 'Inici de sessió amb Apple amb èxit!',
+    googleSignInFailed: 'Inici de sessió amb Google ha fallat',
+    appleSignInFailed: 'Inici de sessió amb Apple ha fallat'
   }
 } as const;
 

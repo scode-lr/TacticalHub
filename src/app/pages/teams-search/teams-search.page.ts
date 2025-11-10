@@ -14,7 +14,8 @@ import {
   IonRefresher,
   IonRefresherContent
 } from '@ionic/angular/standalone';
-import { TeamCardComponent, type Team } from '@components/index';
+import { TeamCardComponent } from '@components/team-card/team-card.component';
+import { type Team } from '@components/team-card/team-card.component';
 import { addIcons } from 'ionicons';
 import { 
   search, 

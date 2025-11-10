@@ -1,4 +1,6 @@
-import { User, Role, Club } from '../app/core/models';
+import { User } from '../app/core/models/user.model';
+import { Role } from '../app/core/models/role.model';
+import { Club } from '../app/core/models/club.model';
 
 // Mock Club
 export const mockClub: Club = Object.assign(new Club(), {
@@ -71,8 +73,8 @@ export const mockAdminUser: User = Object.assign(new User(), {
   id: 'user-003',
   email: 'admin@example.com',
   roles: [mockAdminRole, mockCoachRole],
-  firstName: 'Carlos',
-  lastName: 'Rodriguez',
+  firstName: 'Elisabeth',
+  lastName: 'Portús',
   avatarUrl: 'https://example.com/avatar-carlos.jpg',
   prefixPhoneNumber: '+34',
   phoneNumber: '687654321',

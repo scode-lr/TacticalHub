@@ -97,7 +97,7 @@ export class TranslationService {
     return result;
   }
 
-  t(key: string, params?: Record<string, any>): string {
+  instant(key: string, params?: Record<string, any>): string {
     const keys = key.split('.');
     let value = this.translations;
 

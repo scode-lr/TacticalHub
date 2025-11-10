@@ -21,7 +21,8 @@ export const sharedTranslations = {
     continueWithGoogle: 'Continue with Google',
     continueWithApple: 'Continue with Apple',
     alreadyHaveAccount: 'Already have an account?',
-    dontHaveAccount: "Don't have an account?"
+    dontHaveAccount: "Don't have an account?",
+    continueAsGuest: 'Continue as Guest'
   },
   common: {
     loading: 'Loading...',
@@ -46,7 +47,26 @@ export const sharedTranslations = {
     minLength6: 'Password must be at least 6 characters',
     firstNameRequired: 'First name is required',
     lastNameRequired: 'Last name is required',
-    confirmPasswordRequired: 'Please confirm your password'
+    confirmPasswordRequired: 'Please confirm your password',
+    emailRequired: 'Email is required',
+    emailInvalid: 'Please enter a valid email',
+    passwordRequired: 'Password is required',
+    passwordMinLength: 'Password must be at least 6 characters',
+    checkInput: 'Please check your input',
+    fillAllFields: 'Please fill in all required fields correctly'
+  },
+  messages: {
+    accountCreatedSuccess: 'Account created successfully!',
+    signUpError: 'An error occurred during sign up.',
+    signInError: 'An error occurred',
+    googleSignUpSuccess: 'Google sign-up successful!',
+    appleSignUpSuccess: 'Apple sign-up successful!',
+    googleSignUpFailed: 'Google sign-up failed',
+    appleSignUpFailed: 'Apple sign-up failed',
+    googleSignInSuccess: 'Google sign-in successful!',
+    appleSignInSuccess: 'Apple sign-in successful!',
+    googleSignInFailed: 'Google sign-in failed',
+    appleSignInFailed: 'Apple sign-in failed'
   }
 } as const;
 

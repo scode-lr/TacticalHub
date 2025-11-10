@@ -14,7 +14,7 @@ import {
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
-import { TranslatePipe } from '@pipes/index';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'app-welcome',
@@ -45,7 +45,7 @@ export class WelcomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.tagline = this.translationService.t(environment.taglineKey);
+    this.tagline = this.translationService.instant(environment.taglineKey);
   }
 
   navigateToSignIn() {
@@ -58,6 +58,6 @@ export class WelcomePage implements OnInit {
 
   // Helper method to get translation (can be used in template)
   t(key: string): string {
-    return this.translationService.t(key);
+    return this.translationService.instant(key);
   }
 }

@@ -20,6 +20,6 @@ export class AuthBrandingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tagline = this.translationService.t(environment.taglineKey);
+    this.tagline = this.translationService.instant(environment.taglineKey);
   }
 }

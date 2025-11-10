@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonAvatar, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { User, Role } from '../../../core/models';
+import { User } from '../../../core/models/user.model';
+import { Role } from '../../../core/models/role.model';
 import { MockAuthService } from '../../../core/services/mock-auth.service';
 
 @Component({
