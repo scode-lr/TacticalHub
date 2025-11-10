@@ -1,0 +1,29 @@
+<!-- Social Login Section -->
+<app-social-login
+  [mode]="mode()"
+  (loginComplete)="onSocialLoginComplete($event)">
+</app-social-login>
+
+<div class="form-footer">
+    <ion-text class="footer-text">
+    <span class="footer-link" (click)="onContinueAsGuest()">
+      <ion-icon name="eye-outline"></ion-icon>
+      {{ 'auth.continueAsGuest' | translate }}
+    </span>
+  </ion-text>
+  
+  @if (mode() === 'signin') {
+    <ion-text class="footer-text">
+      {{ 'auth.dontHaveAccount' | translate }}
+      <span class="footer-link" (click)="onNavigateToSignUp()">{{ 'auth.signUpButton' | translate }}</span>
+    </ion-text>
+  }
+  
+  @if (mode() === 'signup') {
+    <ion-text class="footer-text">
+      {{ 'auth.alreadyHaveAccount' | translate }}
+      <span class="footer-link" (click)="onNavigateToSignIn()">{{ 'auth.signInButton' | translate }}</span>
+    </ion-text>
+  }
+  
+</div>

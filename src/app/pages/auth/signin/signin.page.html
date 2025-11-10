@@ -68,26 +68,8 @@
         </ion-button>
       </form>
 
-      <!-- Social Login Section -->
-      <app-social-login
-        mode="signin"
-        (loginComplete)="onSocialLoginComplete($event)">
-      </app-social-login>
-
-      <!-- Footer -->
-      <div class="form-footer">
-        <ion-text class="signup-text">
-          {{ 'auth.dontHaveAccount' | translate }}
-          <span class="signup-link" (click)="navigateToSignUp()">{{ 'auth.signUpButton' | translate }}</span>
-        </ion-text>
-        
-        <ion-text class="guest-text">
-          <span class="guest-link" (click)="continueAsGuest()">
-            <ion-icon name="eye-outline"></ion-icon>
-            {{ 'auth.continueAsGuest' | translate }}
-          </span>
-        </ion-text>
-      </div>
+      <!-- Footer with Social Login -->
+      <app-auth-footer mode="signin"></app-auth-footer>
     </div>
   </div>
 

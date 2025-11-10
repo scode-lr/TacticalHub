@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+// Note: Router is used for event subscriptions (NavigationEnd), not for direct navigation
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { IonContent } from '@ionic/angular/standalone';

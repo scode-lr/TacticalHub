@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationService } from '@services/navigation.service';
 import { 
   IonButton,
   IonIcon,
@@ -64,7 +64,9 @@ export class TeamsSearchPage implements OnInit {
     return this.requestedTeams.size;
   }
 
-  constructor(private router: Router) {
+  private readonly navigationService = inject(NavigationService);
+
+  constructor() {
     addIcons({ 
       search, 
       addOutline,
@@ -116,12 +118,12 @@ export class TeamsSearchPage implements OnInit {
     
     // Navigate to my-teams page after joining
     setTimeout(() => {
-      this.router.navigate(['/app/my-teams']);
+      this.navigationService.navigateTo(['/app/my-teams']);
     }, 1500); // Wait for the toast to be visible
   }
 
   continueToHome() {
-    this.router.navigate(['/app/dashboard']);
+    this.navigationService.navigateTo(['/app/dashboard']);
   }
 
   async refreshTeams(event: any) {
@@ -145,7 +147,7 @@ export class TeamsSearchPage implements OnInit {
   }
 
   skipSearch() {
-    this.router.navigate(['/app/dashboard']);
+    this.navigationService.navigateTo(['/app/dashboard']);
   }
 
   private getMockTeams(): Team[] {

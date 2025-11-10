@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonContent, IonAvatar, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { NavigationService } from '@services/navigation.service';
 import { User } from '../../../core/models/user.model';
 import { Role } from '../../../core/models/role.model';
 import { MockAuthService } from '../../../core/services/mock-auth.service';
@@ -20,12 +20,12 @@ import { MockAuthService } from '../../../core/services/mock-auth.service';
   ]
 })
 export class RoleSelectionPage implements OnInit {
+  private readonly navigationService = inject(NavigationService);
+  private readonly mockAuthService = inject(MockAuthService);
+  
   user: User | null = null;
 
-  constructor(
-    private router: Router,
-    private mockAuthService: MockAuthService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     this.loadUserData();
@@ -37,7 +37,7 @@ export class RoleSelectionPage implements OnInit {
       this.user = Object.assign(new User(), storedUser);
     } else {
       // If no user data, redirect to sign in
-      this.router.navigate(['/auth/signin']);
+      this.navigationService.navigateTo(['/auth/signin']);
     }
   }
 
@@ -46,7 +46,7 @@ export class RoleSelectionPage implements OnInit {
     localStorage.setItem('selectedRole', JSON.stringify(role));
     
     // Navigate to main app
-    this.router.navigate(['/layouts/my-teams']);
+    this.navigationService.navigateTo(['/layouts/my-teams']);
   }
 
   getRoleIcon(roleName: string): string {
@@ -61,6 +61,6 @@ export class RoleSelectionPage implements OnInit {
 
   logout() {
     this.mockAuthService.clearAuthData();
-    this.router.navigate(['/auth/signin']);
+    this.navigationService.navigateTo(['/auth/signin']);
   }
 }

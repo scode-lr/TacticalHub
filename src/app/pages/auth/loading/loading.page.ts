@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonContent, IonSpinner, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { AuthBrandingComponent } from '../../../components/auth-branding/auth-branding.component';
+import { NavigationService } from '@services/navigation.service';
+import { AuthBrandingComponent } from '../components/auth-branding/auth-branding.component';
 import { MockAuthService } from '../../../core/services/mock-auth.service';
 
 @Component({
@@ -19,15 +19,15 @@ import { MockAuthService } from '../../../core/services/mock-auth.service';
   ]
 })
 export class LoadingPage implements OnInit {
+  private readonly navigationService = inject(NavigationService);
+  private readonly mockAuthService = inject(MockAuthService);
+  
   loadingMessage = 'Signing you in...';
   loadingSubMessage = 'Please wait while we prepare everything';
   showSteps = true;
   currentStep = 1;
 
-  constructor(
-    private router: Router,
-    private mockAuthService: MockAuthService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     this.simulateLoadingSteps();
@@ -53,7 +53,7 @@ export class LoadingPage implements OnInit {
       
       // Navigate to role selection
       setTimeout(() => {
-        this.router.navigate(['/auth/role-selection']);
+        this.navigationService.navigateTo(['/auth/role-selection']);
       }, 500);
     }, 2400);
   }

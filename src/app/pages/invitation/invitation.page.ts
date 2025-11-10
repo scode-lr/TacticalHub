@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { NavigationService } from '@services/navigation.service';
 import { ViewWillEnter } from '@ionic/angular';
 import { 
   IonButton,
@@ -48,10 +49,10 @@ export class InvitationPage implements OnInit, ViewWillEnter {
   isAccepting = false;
   error: string | null = null;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  private readonly navigationService = inject(NavigationService);
+  private readonly route = inject(ActivatedRoute);
+
+  constructor() {
     addIcons({
       'checkmark-circle': checkmarkCircle,
       'close-circle': closeCircle,
@@ -109,7 +110,7 @@ export class InvitationPage implements OnInit, ViewWillEnter {
       await this.delay(1500);
       
       // Navigate to player registration with club context
-      this.router.navigate(['/player-register'], {
+      this.navigationService.navigateTo(['/player-register'], {
         queryParams: {
           clubId: this.invitation.clubId,
           invitationId: this.invitationUuid

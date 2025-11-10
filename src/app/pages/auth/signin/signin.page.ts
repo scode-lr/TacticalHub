@@ -1,12 +1,10 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { 
   IonButton,
   IonIcon,
   IonInput,
-  IonText,
   IonSpinner,
   IonToast
 } from '@ionic/angular/standalone';
@@ -14,8 +12,8 @@ import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
-import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
-import { SocialLoginComponent, SocialLoginResult } from '@components/social-login/social-login.component';
+import { NavigationService } from '@services/navigation.service';
+import { AuthBrandingComponent, AuthFooterComponent } from '../components';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { AuthService } from '@services/auth.service';
 
@@ -30,17 +28,16 @@ import { AuthService } from '@services/auth.service';
     IonButton,
     IonIcon,
     IonInput,
-    IonText,
     IonSpinner,
     IonToast,
     AuthBrandingComponent,
-    SocialLoginComponent,
+    AuthFooterComponent,
     TranslatePipe
   ]
 })
 export class SigninPage {
   private readonly formBuilder = inject(FormBuilder);
-  private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
   private readonly authService = inject(AuthService);
 
@@ -84,7 +81,7 @@ export class SigninPage {
   }
 
   goBack(): void {
-    this.router.navigate(['/welcome']);
+    this.navigationService.navigateTo(['/auth/welcome']);
   }
 
   async onSignIn(): Promise<void> {
@@ -102,35 +99,13 @@ export class SigninPage {
       const response = await this.authService.signIn({ email, password });
       
       if (response.success) {
-        this.router.navigate(['/auth/loading']);
+        this.navigationService.navigateTo(['/auth/loading']);
       } else {
         this.showToastMessage(response.message, 'danger');
       }
     } catch (error) {
       this.showToastMessage(this.translationService.instant('messages.signInError'), 'danger');
     }
-  }
-
-  onSocialLoginComplete(result: SocialLoginResult): void {
-    if (result.success) {
-      const messageKey = result.provider === 'google' ? 'messages.googleSignInSuccess' : 'messages.appleSignInSuccess';
-      this.showToastMessage(this.translationService.instant(messageKey), 'success');
-      
-      setTimeout(() => {
-        this.router.navigate(['/app/teams-search']);
-      }, 800);
-    } else {
-      const messageKey = result.provider === 'google' ? 'messages.googleSignInFailed' : 'messages.appleSignInFailed';
-      this.showToastMessage(this.translationService.instant(messageKey), 'danger');
-    }
-  }
-
-  navigateToSignUp(): void {
-    this.router.navigate(['/signup']);
-  }
-
-  continueAsGuest(): void {
-    this.router.navigate(['/app/teams-search']);
   }
 
   private showToastMessage(message: string, color: string = 'success'): void {
