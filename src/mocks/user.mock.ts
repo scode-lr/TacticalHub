@@ -43,7 +43,8 @@ export const mockAdminRole: Role = Object.assign(new Role(), {
 });
 
 // Mock Users
-export const mockPlayerUser: User = Object.assign(new User(), {
+// Scenario 1: User with only ONE role - should redirect directly to home
+export const mockPlayerUser: User = {
   id: 'user-001',
   email: 'john.doe@example.com',
   roles: [mockPlayerRole],
@@ -54,9 +55,10 @@ export const mockPlayerUser: User = Object.assign(new User(), {
   phoneNumber: '612345678',
   dateOfBirth: new Date('1995-06-15'),
   createdAt: new Date('2024-01-15')
-});
+};
 
-export const mockCoachUser: User = Object.assign(new User(), {
+// Scenario 2: User with MULTIPLE roles - should show role selection with all cards
+export const mockCoachUser: User = {
   id: 'user-002',
   email: 'maria.garcia@example.com',
   roles: [mockCoachRole],
@@ -67,9 +69,9 @@ export const mockCoachUser: User = Object.assign(new User(), {
   phoneNumber: '698765432',
   dateOfBirth: new Date('1985-03-20'),
   createdAt: new Date('2024-01-10')
-});
+};
 
-export const mockAdminUser: User = Object.assign(new User(), {
+export const mockAdminUser: User = {
   id: 'user-003',
   email: 'admin@example.com',
   roles: [mockAdminRole, mockCoachRole],
@@ -80,10 +82,24 @@ export const mockAdminUser: User = Object.assign(new User(), {
   phoneNumber: '687654321',
   dateOfBirth: new Date('1980-11-30'),
   createdAt: new Date('2024-01-01')
-});
+};
+
+// Scenario 3: User with NO roles - should show role selection with only "add club" card and skip button
+export const mockNewUser: User = {
+  id: 'user-004',
+  email: 'new.user@example.com',
+  roles: [],
+  firstName: 'New',
+  lastName: 'User',
+  avatarUrl: 'https://example.com/avatar-new.jpg',
+  prefixPhoneNumber: '+34',
+  phoneNumber: '600000000',
+  dateOfBirth: new Date('2000-01-01'),
+  createdAt: new Date('2024-03-01')
+};
 
 // Helper to get all mock users
-export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser];
+export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser, mockNewUser];
 
 // Helper to get all mock roles
 export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockAdminRole];

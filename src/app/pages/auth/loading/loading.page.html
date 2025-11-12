@@ -1,35 +1,16 @@
 <ion-content class="loading-content">
   <div class="loading-container">
-    <!-- Logo/Branding -->
     <div class="brand-logo">
       <app-auth-branding></app-auth-branding>
     </div>
 
-    <!-- Loading Spinner -->
     <div class="loading-spinner">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
 
-    <!-- Loading Text -->
     <div class="loading-text">
-      <h2>{{ loadingMessage }}</h2>
-      <p>{{ loadingSubMessage }}</p>
-    </div>
-
-    <!-- Progress Steps (Optional) -->
-    <div class="progress-steps" *ngIf="showSteps">
-      <div class="step" [class.active]="currentStep >= 1" [class.completed]="currentStep > 1">
-        <ion-icon name="checkmark-circle"></ion-icon>
-        <span>Authenticating</span>
-      </div>
-      <div class="step" [class.active]="currentStep >= 2" [class.completed]="currentStep > 2">
-        <ion-icon name="checkmark-circle"></ion-icon>
-        <span>Loading profile</span>
-      </div>
-      <div class="step" [class.active]="currentStep >= 3">
-        <ion-icon name="checkmark-circle"></ion-icon>
-        <span>Preparing workspace</span>
-      </div>
+      <h2>{{ loadingMessageKey() | translate }}</h2>
+      <p>{{ loadingSubMessageKey() | translate }}</p>
     </div>
   </div>
 </ion-content>

@@ -1,57 +1,80 @@
-<ion-content class="role-selection-content">
-  <div class="role-selection-container">
-    <!-- Header -->
-    <div class="header-section">
-      <div class="user-info">
-        <ion-avatar class="user-avatar">
-          <img [src]="user?.avatarUrl || 'assets/default-avatar.png'" [alt]="user?.getFullName()">
-        </ion-avatar>
-        <h1>Welcome, {{ user?.firstName }}!</h1>
-        <p class="subtitle">Select the role you want to use</p>
+<div class="role-selection-page">
+  <!-- Header with Avatar Menu -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-left">
+        <h1>{{ 'roleSelection.selectRole' | translate }}</h1>
+        <p class="header-subtitle">{{ hasRoles() ? ('roleSelection.chooseClub' | translate) : ('roleSelection.noRolesYet' | translate) }}</p>
+      </div>
+      
+      <div class="header-right">
+        <div class="user-menu" (click)="toggleUserMenu()">
+          <ion-avatar class="user-avatar">
+            <img [src]="user?.avatarUrl || 'assets/default-avatar.png'" [alt]="user?.username">
+          </ion-avatar>
+          <ion-icon name="chevron-down-outline" class="dropdown-icon"></ion-icon>
+        </div>
+        
+        @if (showUserMenu()) {
+          <div class="user-dropdown">
+            <div class="user-info-dropdown">
+              <p class="user-name">{{ user?.username }}</p>
+              <p class="user-email">{{ user?.email }}</p>
+            </div>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item logout-item" (click)="logout()">
+              <ion-icon name="log-out-outline"></ion-icon>
+              <span>{{ 'auth.signOut' | translate }}</span>
+            </button>
+          </div>
+        }
       </div>
     </div>
+  </div>
 
-    <!-- Role Cards -->
-    <div class="roles-section">
-      <div class="roles-grid">
-        <div 
-          *ngFor="let role of user?.roles" 
-          class="role-card"
-          (click)="selectRole(role)">
-          <div class="role-card-content">
-            <!-- Role Icon -->
-            <div class="role-icon">
-              <ion-icon [name]="getRoleIcon(role.name)"></ion-icon>
+  <!-- Clubs Grid -->
+  <ion-content class="clubs-content">
+    <div class="clubs-container">
+      <div class="clubs-grid">
+        <!-- Existing Role Cards (only shown if user has roles) -->
+        @if (hasRoles()) {
+          @for (role of user?.roles; track role.id) {
+            <div class="club-card" (click)="selectRole(role)">
+              <div class="club-logo">
+                <ion-icon [name]="getRoleIcon(role.name)"></ion-icon>
+              </div>
+              
+              <div class="club-info">
+                <h3 class="club-name">{{ role.club.name }}</h3>
+                <p class="role-name">{{ role.name }}</p>
+              </div>
+              
+              <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
             </div>
-
-            <!-- Role Info -->
-            <div class="role-info">
-              <h2 class="role-name">{{ role.name }}</h2>
-              <p class="role-club">{{ role.club.name }}</p>
-              <p class="role-description">{{ role.description }}</p>
+          }
+        }
+        
+        <!-- Add New Club Card -->
+        <div class="club-card add-club-card" (click)="addNewClub()">
+          <div class="add-club-content">
+            <div class="add-icon">
+              <ion-icon name="add-circle-outline"></ion-icon>
             </div>
-
-            <!-- Permissions Badge -->
-            <div class="permissions-badge">
-              <ion-icon name="shield-checkmark-outline"></ion-icon>
-              <span>{{ role.permissions.length }} permissions</span>
-            </div>
-
-            <!-- Arrow -->
-            <div class="role-arrow">
-              <ion-icon name="chevron-forward"></ion-icon>
-            </div>
+            <h3>{{ 'roleSelection.addNewClub' | translate }}</h3>
+            <p>{{ 'roleSelection.joinOrCreate' | translate }}</p>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Logout Button -->
-    <div class="footer-section">
-      <ion-button fill="clear" (click)="logout()">
-        <ion-icon name="log-out-outline" slot="start"></ion-icon>
-        Sign Out
-      </ion-button>
+      <!-- Skip Button (only shown when user has no roles) -->
+      @if (!hasRoles()) {
+        <div class="skip-section">
+          <ion-button fill="clear" class="skip-button" (click)="skipForNow()">
+            {{ 'roleSelection.skipForNow' | translate }}
+          </ion-button>
+          <p class="skip-text">{{ 'roleSelection.canAddLater' | translate }}</p>
+        </div>
+      }
     </div>
-  </div>
-</ion-content>
+  </ion-content>
+</div>

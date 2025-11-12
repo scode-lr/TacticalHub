@@ -1,10 +1,13 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { IonContent, IonAvatar, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { Component, OnInit, inject, signal, HostListener } from '@angular/core';
+import { IonContent, IonAvatar, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '@services/navigation.service';
-import { User } from '../../../core/models/user.model';
-import { Role } from '../../../core/models/role.model';
-import { MockAuthService } from '../../../core/services/mock-auth.service';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { User } from '@core/models/user.model';
+import { Role } from '@core/models/role.model';
+import { UserService } from '@core/services/user.service';
+import { StorageService } from '@core/services/storage.service';
+import { STORAGE_KEYS } from '@core/constants/storage-keys';
 
 @Component({
   selector: 'app-role-selection',
@@ -15,38 +18,54 @@ import { MockAuthService } from '../../../core/services/mock-auth.service';
     CommonModule,
     IonContent,
     IonAvatar,
+    IonIcon,
     IonButton,
-    IonIcon
+    TranslatePipe
   ]
 })
 export class RoleSelectionPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
-  private readonly mockAuthService = inject(MockAuthService);
+  private readonly userService = inject(UserService);
+  private readonly storageService = inject(StorageService);
   
   user: User | null = null;
-
-  constructor() {}
+  readonly showUserMenu = signal<boolean>(false);
+  readonly hasRoles = signal<boolean>(true);
 
   ngOnInit() {
     this.loadUserData();
+    this.checkRolesStatus();
   }
 
-  loadUserData() {
-    const storedUser = this.mockAuthService.getStoredUser();
-    if (storedUser) {
-      this.user = Object.assign(new User(), storedUser);
-    } else {
-      // If no user data, redirect to sign in
-      this.navigationService.navigateTo(['/auth/signin']);
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.user-menu') && !target.closest('.user-dropdown')) {
+      this.showUserMenu.set(false);
     }
   }
 
+  loadUserData() {
+    const storedUser = this.userService.getStoredUser();
+    if (storedUser) {
+      this.user = storedUser;
+    } else {
+      this.navigationService.navigateTo(['signin']);
+    }
+  }
+
+  checkRolesStatus() {
+    const hasRolesValue = this.user?.roles;
+    this.hasRoles.set(hasRolesValue?.length! > 50);
+  }
+
+  toggleUserMenu() {
+    this.showUserMenu.set(!this.showUserMenu());
+  }
+
   selectRole(role: Role) {
-    // Store selected role
-    localStorage.setItem('selectedRole', JSON.stringify(role));
-    
-    // Navigate to main app
-    this.navigationService.navigateTo(['/layouts/my-teams']);
+    this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
+    this.navigationService.navigateTo(['layouts/my-teams']);
   }
 
   getRoleIcon(roleName: string): string {
@@ -59,8 +78,16 @@ export class RoleSelectionPage implements OnInit {
     return iconMap[roleName] || 'person-outline';
   }
 
+  addNewClub() {
+    this.navigationService.navigateTo(['teams-search']);
+  }
+
+  skipForNow() {
+    this.navigationService.navigateTo(['layouts/my-teams']);
+  }
+
   logout() {
-    this.mockAuthService.clearAuthData();
-    this.navigationService.navigateTo(['/auth/signin']);
+    this.showUserMenu.set(false);
+    this.userService.logout();
   }
 }

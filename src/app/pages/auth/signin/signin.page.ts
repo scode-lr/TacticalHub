@@ -81,7 +81,7 @@ export class SigninPage {
   }
 
   goBack(): void {
-    this.navigationService.navigateTo(['/auth/welcome']);
+    this.navigationService.navigateTo(['welcome']);
   }
 
   async onSignIn(): Promise<void> {
@@ -99,7 +99,7 @@ export class SigninPage {
       const response = await this.authService.signIn({ email, password });
       
       if (response.success) {
-        this.navigationService.navigateTo(['/auth/loading']);
+        this.navigationService.navigateTo(['auth/loading']);
       } else {
         this.showToastMessage(response.message, 'danger');
       }

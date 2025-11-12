@@ -17,6 +17,7 @@ export const sharedTranslations = {
     forgotPassword: 'Forgot Password?',
     signInButton: 'Sign In',
     signUpButton: 'Sign Up',
+    signOut: 'Sign Out',
     or: 'or',
     continueWithGoogle: 'Continue with Google',
     continueWithApple: 'Continue with Apple',
@@ -67,7 +68,27 @@ export const sharedTranslations = {
     appleSignInSuccess: 'Apple sign-in successful!',
     googleSignInFailed: 'Google sign-in failed',
     appleSignInFailed: 'Apple sign-in failed'
+  },
+  loading: {
+    signingIn: 'Signing you in...',
+    pleaseWait: 'Please wait while we prepare everything',
+    loadingProfile: 'Loading your profile...',
+    preparingWorkspace: 'Preparing workspace...',
+    allSet: 'All set!',
+    redirecting: 'Redirecting...'
+  },
+  roleSelection: {
+    selectRole: 'Select Your Role',
+    chooseClub: 'Choose a club to continue',
+    noRolesYet: 'Start by adding your first club',
+    defaultDescription: 'Manage your club activities',
+    permissions: 'permissions',
+    addNewClub: 'Add New Club',
+    joinOrCreate: 'Join or create a new club',
+    skipForNow: 'Skip for now',
+    canAddLater: 'You can add clubs anytime from your profile'
   }
 } as const;
 
 export type SharedTranslationKeys = typeof sharedTranslations;
+

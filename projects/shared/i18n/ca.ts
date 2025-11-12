@@ -17,6 +17,7 @@ export const sharedTranslations = {
     forgotPassword: 'Has oblidat la contrasenya?',
     signInButton: 'Iniciar Sessió',
     signUpButton: 'Registrar-se',
+    signOut: 'Tancar Sessió',
     or: 'o',
     continueWithGoogle: 'Continuar amb Google',
     continueWithApple: 'Continuar amb Apple',
@@ -67,6 +68,25 @@ export const sharedTranslations = {
     appleSignInSuccess: 'Inici de sessió amb Apple amb èxit!',
     googleSignInFailed: 'Inici de sessió amb Google ha fallat',
     appleSignInFailed: 'Inici de sessió amb Apple ha fallat'
+  },
+  loading: {
+    signingIn: 'Iniciant sessió...',
+    pleaseWait: 'Si us plau espera mentre ho preparem tot',
+    loadingProfile: 'Carregant el teu perfil...',
+    preparingWorkspace: "Preparant espai de treball...",
+    allSet: 'Tot llest!',
+    redirecting: 'Redirigint...'
+  },
+  roleSelection: {
+    selectRole: 'Selecciona el teu Rol',
+    chooseClub: 'Tria un club per continuar',
+    noRolesYet: 'Comença afegint el teu primer club',
+    defaultDescription: 'Gestiona les activitats del teu club',
+    permissions: 'permisos',
+    addNewClub: 'Afegir Nou Club',
+    joinOrCreate: 'Uneix-te o crea un nou club',
+    skipForNow: 'Ometre per ara',
+    canAddLater: 'Pots afegir clubs en qualsevol moment des del teu perfil'
   }
 } as const;
 

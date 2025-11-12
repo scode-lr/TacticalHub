@@ -17,6 +17,7 @@ export const sharedTranslations = {
     forgotPassword: '¿Olvidaste tu Contraseña?',
     signInButton: 'Iniciar Sesión',
     signUpButton: 'Registrarse',
+    signOut: 'Cerrar Sesión',
     or: 'o',
     continueWithGoogle: 'Continuar con Google',
     continueWithApple: 'Continuar con Apple',
@@ -67,6 +68,25 @@ export const sharedTranslations = {
     appleSignInSuccess: '¡Inicio de sesión con Apple exitoso!',
     googleSignInFailed: 'Inicio de sesión con Google falló',
     appleSignInFailed: 'Inicio de sesión con Apple falló'
+  },
+  loading: {
+    signingIn: 'Iniciando sesión...',
+    pleaseWait: 'Por favor espera mientras preparamos todo',
+    loadingProfile: 'Cargando tu perfil...',
+    preparingWorkspace: 'Preparando espacio de trabajo...',
+    allSet: '¡Todo listo!',
+    redirecting: 'Redirigiendo...'
+  },
+  roleSelection: {
+    selectRole: 'Selecciona tu Rol',
+    chooseClub: 'Elige un club para continuar',
+    noRolesYet: 'Comienza agregando tu primer club',
+    defaultDescription: 'Gestiona las actividades de tu club',
+    permissions: 'permisos',
+    addNewClub: 'Agregar Nuevo Club',
+    joinOrCreate: 'Únete o crea un nuevo club',
+    skipForNow: 'Omitir por ahora',
+    canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil'
   }
 } as const;
 
