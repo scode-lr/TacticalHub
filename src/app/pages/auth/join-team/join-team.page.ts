@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, inject, signal, computed, ElementRef, ViewChildren, QueryList, ViewChild, AfterViewInit } from '@angular/core';
 import { IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '@services/navigation.service';
@@ -21,10 +21,12 @@ import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeO
     UserHeaderComponent
   ]
 })
-export class JoinTeamPage {
+export class JoinTeamPage implements AfterViewInit {
   private readonly navigationService = inject(NavigationService);
 
   @ViewChildren('codeInput') codeInputs!: QueryList<ElementRef<HTMLInputElement>>;
+  @ViewChild('roleSection', { read: ElementRef }) roleSection?: ElementRef<HTMLElement>;
+  @ViewChild(IonContent) ionContent?: IonContent;
 
   readonly codeDigits = signal<string[]>(['', '', '', '', '']);
   readonly code = computed(() => this.codeDigits().join(''));
@@ -35,6 +37,20 @@ export class JoinTeamPage {
 
   constructor() {
     addIcons({ arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline });
+  }
+
+  ngAfterViewInit() {
+    // ViewChild will be available after view init
+  }
+
+  scrollToRoles() {
+    setTimeout(() => {
+      if (this.roleSection && this.ionContent) {
+        const element = this.roleSection.nativeElement;
+        const yOffset = element.offsetTop - 20;
+        this.ionContent.scrollToPoint(0, yOffset, 3000);
+      }
+    }, 100);
   }
 
   async checkTeamCode() {
@@ -56,6 +72,7 @@ export class JoinTeamPage {
           clubName: 'FC Barcelona'
         });
         this.showConfirmation.set(true);
+        this.scrollToRoles();
       } else {
         this.matchedTeam.set(null);
         this.showConfirmation.set(false);

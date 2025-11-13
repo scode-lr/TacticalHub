@@ -208,6 +208,10 @@
   }
 }
 
+.role-section {
+  animation: slideInFromBottom 0.5s ease backwards 0.2s;
+}
+
 .role-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -311,6 +315,17 @@
   from {
     opacity: 0;
     transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
