@@ -37,7 +37,8 @@ export const sharedTranslations = {
     back: 'Atrás',
     next: 'Siguiente',
     submit: 'Enviar',
-    close: 'Cerrar'
+    close: 'Cerrar',
+    submitting: 'Enviando...'
   },
   validation: {
     required: 'Este campo es obligatorio',
@@ -88,6 +89,24 @@ export const sharedTranslations = {
     joinOrCreate: 'Únete o crea un nuevo club',
     skipForNow: 'Omitir por ahora',
     canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil'
+  },
+  joinTeam: {
+    title: 'Unirse a un Equipo',
+    subtitle: 'Introduce el código del equipo y selecciona tu rol para unirte',
+    enterCode: 'Introducir Código del Equipo',
+    codeDescription: 'Introduce el código de 5 dígitos proporcionado por el administrador del equipo',
+    selectRole: 'Selecciona tu Rol',
+    roleDescription: 'Elige cómo quieres participar en este equipo',
+    coachDescription: 'Crear y gestionar actividades del equipo, sesiones de entrenamiento y partidos',
+    viewerDescription: 'Ver información del equipo, horarios y resultados de partidos',
+    submitRequest: 'Enviar Solicitud',
+    teamFound: '¡Equipo Encontrado!',
+    confirmMatch: 'Selecciona tu rol a continuación para unirte a este equipo',
+    tryDifferentCode: 'Probar Otro Código'
+  },
+  roles: {
+    coach: 'Entrenador',
+    viewer: 'Observador'
   }
 } as const;
 

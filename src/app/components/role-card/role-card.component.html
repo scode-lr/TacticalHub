@@ -3,7 +3,7 @@
     <div class="club-logo">
       @if (!showDefaultIcon() && role()?.club?.logoUrl) {
         <ion-avatar class="club-avatar">
-          <ion-img [src]="role()?.club?.logoUrl" [alt]="role()?.club?.name" (ionError)="onLogoError()"></ion-img>
+          <ion-img [src]="role()?.club?.logoUrl" [alt]="role()?.id" (ionError)="onLogoError()"></ion-img>
         </ion-avatar>
       } @else {
         <ion-icon name="shield-outline" class="default-shield"></ion-icon>

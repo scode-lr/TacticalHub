@@ -1,4 +1,4 @@
-import { Component, inject, signal, HostListener } from '@angular/core';
+import { Component, inject, signal, HostListener, input, output } from '@angular/core';
 import { IonAvatar, IonIcon, IonImg } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -20,6 +20,9 @@ import { UserService } from '@core/services/user.service';
 })
 export class UserHeaderComponent {
   private readonly userService = inject(UserService);
+  
+  readonly showBackButton = input<boolean>(false);
+  readonly backClick = output<void>();
   
   user: User | null = null;
   readonly showUserMenu = signal<boolean>(false);
@@ -51,6 +54,10 @@ export class UserHeaderComponent {
 
   toggleUserMenu() {
     this.showUserMenu.set(!this.showUserMenu());
+  }
+
+  onBackClick() {
+    this.backClick.emit();
   }
 
   logout() {

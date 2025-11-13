@@ -37,7 +37,8 @@ export const sharedTranslations = {
     back: 'Enrere',
     next: 'Següent',
     submit: 'Enviar',
-    close: 'Tancar'
+    close: 'Tancar',
+    submitting: 'Enviant...'
   },
   validation: {
     required: 'Aquest camp és obligatori',
@@ -88,6 +89,24 @@ export const sharedTranslations = {
     joinOrCreate: 'Uneix-te o crea un nou club',
     skipForNow: 'Ometre per ara',
     canAddLater: 'Pots afegir clubs en qualsevol moment des del teu perfil'
+  },
+  joinTeam: {
+    title: "Unir-se a un Equip",
+    subtitle: 'Introdueix el codi de l\'equip i selecciona el teu rol per unir-te',
+    enterCode: 'Introduir Codi de l\'Equip',
+    codeDescription: 'Introdueix el codi de 5 dígits proporcionat per l\'administrador de l\'equip',
+    selectRole: 'Selecciona el teu Rol',
+    roleDescription: 'Tria com vols participar en aquest equip',
+    coachDescription: 'Crear i gestionar activitats de l\'equip, sessions d\'entrenament i partits',
+    viewerDescription: 'Veure informació de l\'equip, horaris i resultats de partits',
+    submitRequest: 'Enviar Sol·licitud',
+    teamFound: 'Equip Trobat!',
+    confirmMatch: 'Selecciona el teu rol a continuació per unir-te a aquest equip',
+    tryDifferentCode: 'Provar un Altre Codi'
+  },
+  roles: {
+    coach: 'Entrenador',
+    viewer: 'Observador'
   }
 } as const;
 

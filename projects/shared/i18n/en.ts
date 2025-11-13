@@ -37,7 +37,8 @@ export const sharedTranslations = {
     back: 'Back',
     next: 'Next',
     submit: 'Submit',
-    close: 'Close'
+    close: 'Close',
+    submitting: 'Submitting...'
   },
   validation: {
     required: 'This field is required',
@@ -88,6 +89,24 @@ export const sharedTranslations = {
     joinOrCreate: 'Join or create a new club',
     skipForNow: 'Skip for now',
     canAddLater: 'You can add clubs anytime from your profile'
+  },
+  joinTeam: {
+    title: 'Join a Team',
+    subtitle: 'Enter the team code and select your role to join',
+    enterCode: 'Enter Team Code',
+    codeDescription: 'Enter the 5-digit code provided by the team administrator',
+    selectRole: 'Select Your Role',
+    roleDescription: 'Choose how you want to participate in this team',
+    coachDescription: 'Create and manage team activities, training sessions, and matches',
+    viewerDescription: 'View team information, schedules, and match results',
+    submitRequest: 'Submit Join Request',
+    teamFound: 'Team Found!',
+    confirmMatch: 'Select your role below to continue joining this team',
+    tryDifferentCode: 'Try Different Code'
+  },
+  roles: {
+    coach: 'Coach',
+    viewer: 'Viewer'
   }
 } as const;
 

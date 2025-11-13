@@ -1,5 +1,12 @@
 <div class="page-header">
   <div class="header-content">
+    @if (showBackButton()) {
+      <button class="back-button" (click)="onBackClick()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <span>{{ 'common.back' | translate }}</span>
+      </button>
+    }
+    
     <div class="user-menu" (click)="toggleUserMenu()" [class.menu-open]="showUserMenu()">
       <ion-avatar class="user-avatar">
         <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>

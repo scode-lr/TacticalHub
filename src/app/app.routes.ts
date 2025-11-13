@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,12 @@ export const routes: Routes = [
       {
         path: 'role-selection',
         loadComponent: () => import('./pages/auth/role-selection/role-selection.page').then(m => m.RoleSelectionPage),
+        canActivate: [authGuard]
+      },
+      {
+        path: 'join-team',
+        loadComponent: () => import('./pages/auth/join-team/join-team.page').then(m => m.JoinTeamPage),
+        canActivate: [authGuard]
       }
     ]
   },
@@ -39,6 +46,7 @@ export const routes: Routes = [
   {
     path: 'layouts',
     loadComponent: () => import('./pages/layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -55,10 +63,12 @@ export const routes: Routes = [
   {
     path: 'teams-search',
     loadComponent: () => import('./pages/teams-search/teams-search.page').then(m => m.TeamsSearchPage),
+    canActivate: [authGuard]
   },
   {
     path: 'player-register',
     loadComponent: () => import('./pages/player-register/player-register.page').then(m => m.PlayerRegisterPage),
+    canActivate: [authGuard]
   },
   {
     path: 'invitation/:uuid',

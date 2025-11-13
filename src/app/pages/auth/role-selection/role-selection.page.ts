@@ -58,7 +58,7 @@ export class RoleSelectionPage implements OnInit {
   }
 
   addNewClub() {
-    this.navigationService.navigateTo(['teams-search']);
+    this.navigationService.navigateTo(['auth/join-team']);
   }
 
   skipForNow() {

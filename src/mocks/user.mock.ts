@@ -3,28 +3,28 @@ import { Role } from '../app/core/models/role.model';
 import { Club } from '../app/core/models/club.model';
 
 // Mock Club
-export const mockClub: Club = Object.assign(new Club(), {
+export const mockClub: Club = {
   id: 'club-001',
-  name: 'FC Barcelona',
-  description: 'Professional football club based in Barcelona, Catalonia, Spain',
-  location: 'Barcelona, Spain',
-  logoUrl: 'https://example.com/barcelona-logo.png',
+  name: 'Voltregà CF',
+  description: 'Professional football club based in Sant Hipòlit de Voltregà, Catalonia',
+  location: 'Sant Hipòlit de Voltregà, Catalonia, Spain',
+  logoUrl: 'assets/logo.svg',
   level: 'Professional',
   membersCount: 50,
   teamsCount: 3
-});
+};
 
 // Mock Roles
-export const mockPlayerRole: Role = Object.assign(new Role(), {
+export const mockPlayerRole: Role = {
   id: 'role-001',
   name: 'Player',
   club: mockClub,
   description: 'Regular player role',
   permissions: ['view_teams', 'join_teams', 'view_matches', 'view_trainings'],
   createdAt: new Date('2024-01-01')
-});
+};
 
-export const mockCoachRole: Role = Object.assign(new Role(), {
+export const mockCoachRole: Role = {
   id: 'role-002',
   name: 'Coach',
   club: mockClub,
@@ -32,18 +32,18 @@ export const mockCoachRole: Role = Object.assign(new Role(), {
   description: 'Team coach role',
   permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_trainings', 'view_players'],
   createdAt: new Date('2024-01-01')
-});
+};
 
-export const mockAdminRole: Role = Object.assign(new Role(), {
+export const mockAdminRole: Role = {
   id: 'role-003',
   name: 'Admin',
   club: mockClub,
   description: 'Administrator role',
   permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_users', 'manage_roles', 'manage_club'],
   createdAt: new Date('2024-01-01')
-});
+};
 
-export const mockCoachSeniorRole: Role = Object.assign(new Role(), {
+export const mockCoachSeniorRole: Role = {
   id: 'role-004',
   name: 'Coach',
   club: mockClub,
@@ -51,7 +51,7 @@ export const mockCoachSeniorRole: Role = Object.assign(new Role(), {
   description: 'Senior team coach role',
   permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_trainings', 'view_players'],
   createdAt: new Date('2024-01-01')
-});
+};
 
 // Mock Users
 // Scenario 1: User with only ONE role - should redirect directly to home
