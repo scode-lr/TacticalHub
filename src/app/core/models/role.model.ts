@@ -6,6 +6,7 @@ export class Role {
   club!: Club;
   description!: string;
   permissions!: string[];
+  team?: string;
   createdAt!: Date;
 
   hasPermission(permission: string): boolean {

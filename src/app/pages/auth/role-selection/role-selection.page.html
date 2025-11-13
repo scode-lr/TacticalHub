@@ -1,69 +1,24 @@
 <div class="role-selection-page">
-  <!-- Header with Avatar Menu -->
-  <div class="page-header">
-    <div class="header-content">
-      <div class="header-left">
-        <h1>{{ 'roleSelection.selectRole' | translate }}</h1>
-        <p class="header-subtitle">{{ hasRoles() ? ('roleSelection.chooseClub' | translate) : ('roleSelection.noRolesYet' | translate) }}</p>
-      </div>
-      
-      <div class="header-right">
-        <div class="user-menu" (click)="toggleUserMenu()">
-          <ion-avatar class="user-avatar">
-            <img [src]="user?.avatarUrl || 'assets/default-avatar.png'" [alt]="user?.username">
-          </ion-avatar>
-          <ion-icon name="chevron-down-outline" class="dropdown-icon"></ion-icon>
-        </div>
-        
-        @if (showUserMenu()) {
-          <div class="user-dropdown">
-            <div class="user-info-dropdown">
-              <p class="user-name">{{ user?.username }}</p>
-              <p class="user-email">{{ user?.email }}</p>
-            </div>
-            <div class="dropdown-divider"></div>
-            <button class="dropdown-item logout-item" (click)="logout()">
-              <ion-icon name="log-out-outline"></ion-icon>
-              <span>{{ 'auth.signOut' | translate }}</span>
-            </button>
-          </div>
-        }
-      </div>
-    </div>
-  </div>
+  <app-user-header></app-user-header>
 
   <!-- Clubs Grid -->
   <ion-content class="clubs-content">
     <div class="clubs-container">
+      <!-- Page Title -->
+      <div class="page-title">
+        <h1>{{ 'roleSelection.selectRole' | translate }}</h1>
+        <p class="title-subtitle">{{ hasRoles() ? ('roleSelection.chooseClub' | translate) : ('roleSelection.noRolesYet' | translate) }}</p>
+      </div>
       <div class="clubs-grid">
         <!-- Existing Role Cards (only shown if user has roles) -->
         @if (hasRoles()) {
           @for (role of user?.roles; track role.id) {
-            <div class="club-card" (click)="selectRole(role)">
-              <div class="club-logo">
-                <ion-icon [name]="getRoleIcon(role.name)"></ion-icon>
-              </div>
-              
-              <div class="club-info">
-                <h3 class="club-name">{{ role.club.name }}</h3>
-                <p class="role-name">{{ role.name }}</p>
-              </div>
-              
-              <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
-            </div>
+            <app-role-card [role]="role" (cardClicked)="selectRole(role)"></app-role-card>
           }
         }
         
         <!-- Add New Club Card -->
-        <div class="club-card add-club-card" (click)="addNewClub()">
-          <div class="add-club-content">
-            <div class="add-icon">
-              <ion-icon name="add-circle-outline"></ion-icon>
-            </div>
-            <h3>{{ 'roleSelection.addNewClub' | translate }}</h3>
-            <p>{{ 'roleSelection.joinOrCreate' | translate }}</p>
-          </div>
-        </div>
+        <app-role-card [isAddCard]="true" (cardClicked)="addNewClub()"></app-role-card>
       </div>
 
       <!-- Skip Button (only shown when user has no roles) -->

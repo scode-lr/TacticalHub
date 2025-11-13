@@ -78,6 +78,7 @@ export const sharedTranslations = {
     redirecting: 'Redirecting...'
   },
   roleSelection: {
+    welcome: 'Welcome Back',
     selectRole: 'Select Your Role',
     chooseClub: 'Choose a club to continue',
     noRolesYet: 'Start by adding your first club',

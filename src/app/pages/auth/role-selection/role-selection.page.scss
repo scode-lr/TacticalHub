@@ -5,171 +5,6 @@
   background: var(--background-primary, #ffffff);
 }
 
-.page-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 1.5rem 2rem;
-  background: var(--background-primary, #ffffff);
-  border-bottom: 1px solid var(--border-light, #e5e7eb);
-  backdrop-filter: blur(10px);
-
-  .header-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .header-left {
-    flex: 1;
-
-    h1 {
-      color: var(--text-primary, #111827);
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin: 0 0 0.25rem 0;
-      letter-spacing: -0.025em;
-    }
-
-    .header-subtitle {
-      color: var(--text-secondary, #6b7280);
-      font-size: 0.9375rem;
-      font-weight: 400;
-      margin: 0;
-      line-height: 1.5;
-    }
-  }
-
-  .header-right {
-    position: relative;
-  }
-
-  .user-menu {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding: 0.5rem 0.875rem;
-    background: var(--background-primary, #ffffff);
-    border: 1px solid var(--border-light, #e5e7eb);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      border-color: var(--ion-color-primary, #3880ff);
-      box-shadow: 0 0 0 3px rgba(56, 128, 255, 0.1);
-    }
-
-    .user-avatar {
-      width: 36px;
-      height: 36px;
-      border: 2px solid var(--border-light, #e5e7eb);
-    }
-
-    .dropdown-icon {
-      color: var(--text-secondary, #6b7280);
-      font-size: 18px;
-      transition: transform 0.2s ease;
-    }
-
-    &.menu-open .dropdown-icon {
-      transform: rotate(180deg);
-    }
-  }
-
-  .user-dropdown {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    right: 0;
-    min-width: 260px;
-    background: var(--background-primary, #ffffff);
-    border: 1px solid var(--border-light, #e5e7eb);
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    z-index: 1000;
-    animation: slideDown 0.2s ease;
-    overflow: hidden;
-
-    .user-info-dropdown {
-      padding: 1rem 1.25rem;
-      background: var(--background-secondary, #f8f9fa);
-      border-bottom: 1px solid var(--border-light, #e5e7eb);
-
-      .user-name {
-        margin: 0 0 0.25rem 0;
-        font-size: 0.9375rem;
-        font-weight: 600;
-        color: var(--text-primary, #111827);
-      }
-
-      .user-email {
-        margin: 0;
-        font-size: 0.8125rem;
-        font-weight: 400;
-        color: var(--text-secondary, #6b7280);
-      }
-    }
-
-    .dropdown-item {
-      padding: 0.875rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      transition: background 0.15s ease;
-      border: none;
-      background: transparent;
-      width: 100%;
-      text-align: left;
-
-      &:hover {
-        background: var(--background-secondary, #f8f9fa);
-      }
-
-      ion-icon {
-        font-size: 20px;
-        color: var(--ion-color-danger, #eb445a);
-      }
-
-      span {
-        color: var(--text-primary, #111827);
-        font-size: 0.9375rem;
-        font-weight: 500;
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    padding: 1rem 1.5rem;
-
-    .header-content {
-      gap: 1rem;
-    }
-
-    .header-left {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .header-subtitle {
-        font-size: 0.875rem;
-      }
-    }
-
-    .user-menu {
-      padding: 0.375rem 0.625rem;
-
-      .user-avatar {
-        width: 32px;
-        height: 32px;
-      }
-    }
-  }
-}
-
 .clubs-content {
   --background: var(--background-secondary, #f8f9fa);
   flex: 1;
@@ -185,6 +20,41 @@
   }
 }
 
+.page-title {
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease backwards;
+
+  h1 {
+    color: var(--text-primary, #111827);
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .title-subtitle {
+    color: var(--text-secondary, #6b7280);
+    font-size: 1.0625rem;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+
+    h1 {
+      font-size: 1.875rem;
+    }
+
+    .title-subtitle {
+      font-size: 1rem;
+    }
+  }
+}
+
 .clubs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -194,186 +64,13 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-}
 
-.club-card {
-  background: var(--background-primary, #ffffff);
-  border: 1px solid var(--border-light, #e5e7eb);
-  border-radius: 12px;
-  padding: 1.5rem 2rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 1rem;
-  position: relative;
-  min-height: 180px;
-  animation: fadeIn 0.3s ease backwards;
-
-  &:hover {
-    border-color: var(--ion-color-primary, #3880ff);
-    box-shadow: 0 4px 16px rgba(56, 128, 255, 0.12);
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}) {
-      animation-delay: #{$i * 0.04}s;
-    }
-  }
-
-  .club-logo {
-    width: 64px;
-    height: 64px;
-    border-radius: 12px;
-    background: var(--background-secondary, #f8f9fa);
-    border: 1px solid var(--border-light, #e5e7eb);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-
-    ion-icon {
-      font-size: 32px;
-      color: var(--ion-color-primary, #3880ff);
-    }
-  }
-
-  .club-info {
-    flex: 1;
-    min-width: 0;
-    width: 100%;
-
-    .club-name {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--text-primary, #111827);
-      margin: 0 0 0.375rem 0;
-      letter-spacing: -0.015em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .role-name {
-      font-size: 0.875rem;
-      color: var(--text-secondary, #6b7280);
-      margin: 0;
-      font-weight: 500;
-    }
-  }
-
-  .arrow-icon {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    font-size: 20px;
-    color: var(--text-secondary, #6b7280);
-    transition: transform 0.2s ease;
-  }
-
-  &:hover .arrow-icon {
-    transform: translateX(4px);
-    color: var(--ion-color-primary, #3880ff);
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: row;
-    text-align: left;
-    padding: 1.5rem;
-    gap: 1rem;
-
-    .club-logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 10px;
-
-      ion-icon {
-        font-size: 28px;
+  app-role-card {
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.04}s;
       }
     }
-
-    .club-info {
-      .club-name {
-        margin: 0 0 0.25rem 0;
-      }
-    }
-
-    .arrow-icon {
-      position: static;
-    }
-  }
-}
-
-.add-club-card {
-  background: var(--background-primary, #ffffff);
-  border: 2px dashed var(--border-light, #e5e7eb);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 280px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: var(--ion-color-primary, #3880ff);
-    background: var(--background-secondary, #f8f9fa);
-  }
-
-  .add-club-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-  }
-
-  .add-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--background-secondary, #f8f9fa);
-    border: 1px solid var(--border-light, #e5e7eb);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    transition: all 0.2s ease;
-
-    ion-icon {
-      font-size: 32px;
-      color: var(--ion-color-primary, #3880ff);
-    }
-  }
-
-  &:hover .add-icon {
-    background: var(--ion-color-primary, #3880ff);
-    border-color: var(--ion-color-primary, #3880ff);
-
-    ion-icon {
-      color: white;
-    }
-  }
-
-  h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--text-primary, #111827);
-    margin: 0 0 0.375rem 0;
-    letter-spacing: -0.015em;
-  }
-
-  p {
-    font-size: 0.875rem;
-    color: var(--text-secondary, #6b7280);
-    margin: 0;
-    font-weight: 400;
   }
 }
 
@@ -416,17 +113,6 @@
   }
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -437,5 +123,4 @@
     transform: translateY(0);
   }
 }
-
 

@@ -1,0 +1,18 @@
+<div class="page-header">
+  <div class="header-content">
+    <div class="user-menu" (click)="toggleUserMenu()" [class.menu-open]="showUserMenu()">
+      <ion-avatar class="user-avatar">
+        <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>
+      </ion-avatar>
+    </div>
+    
+    @if (showUserMenu()) {
+      <div class="user-dropdown">
+        <button class="dropdown-item logout-item" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          <span>{{ 'auth.signOut' | translate }}</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

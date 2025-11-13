@@ -28,6 +28,7 @@ export const mockCoachRole: Role = Object.assign(new Role(), {
   id: 'role-002',
   name: 'Coach',
   club: mockClub,
+  team: 'U-19',
   description: 'Team coach role',
   permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_trainings', 'view_players'],
   createdAt: new Date('2024-01-01')
@@ -42,10 +43,21 @@ export const mockAdminRole: Role = Object.assign(new Role(), {
   createdAt: new Date('2024-01-01')
 });
 
+export const mockCoachSeniorRole: Role = Object.assign(new Role(), {
+  id: 'role-004',
+  name: 'Coach',
+  club: mockClub,
+  team: 'Senior Team',
+  description: 'Senior team coach role',
+  permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_trainings', 'view_players'],
+  createdAt: new Date('2024-01-01')
+});
+
 // Mock Users
 // Scenario 1: User with only ONE role - should redirect directly to home
 export const mockPlayerUser: User = {
   id: 'user-001',
+  username: 'johndoe',
   email: 'john.doe@example.com',
   roles: [mockPlayerRole],
   firstName: 'John',
@@ -60,6 +72,7 @@ export const mockPlayerUser: User = {
 // Scenario 2: User with MULTIPLE roles - should show role selection with all cards
 export const mockCoachUser: User = {
   id: 'user-002',
+  username: 'mariagarcia',
   email: 'maria.garcia@example.com',
   roles: [mockCoachRole],
   firstName: 'Maria',
@@ -73,8 +86,9 @@ export const mockCoachUser: User = {
 
 export const mockAdminUser: User = {
   id: 'user-003',
+  username: 'adminuser',
   email: 'admin@example.com',
-  roles: [mockAdminRole, mockCoachRole],
+  roles: [mockAdminRole, mockCoachRole, mockCoachSeniorRole],
   firstName: 'Elisabeth',
   lastName: 'Portús',
   avatarUrl: 'https://example.com/avatar-carlos.jpg',
@@ -87,6 +101,7 @@ export const mockAdminUser: User = {
 // Scenario 3: User with NO roles - should show role selection with only "add club" card and skip button
 export const mockNewUser: User = {
   id: 'user-004',
+  username: 'newuser',
   email: 'new.user@example.com',
   roles: [],
   firstName: 'New',
@@ -102,4 +117,4 @@ export const mockNewUser: User = {
 export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser, mockNewUser];
 
 // Helper to get all mock roles
-export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockAdminRole];
+export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockCoachSeniorRole, mockAdminRole];
