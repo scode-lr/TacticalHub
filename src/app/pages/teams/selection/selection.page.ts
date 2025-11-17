@@ -10,11 +10,12 @@ import { StorageService } from '@core/services/storage.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleCardComponent } from '@components/role-card/role-card.component';
+import { environment } from '@environment';
 
 @Component({
-  selector: 'app-role-selection',
-  templateUrl: './role-selection.page.html',
-  styleUrls: ['./role-selection.page.scss'],
+  selector: 'app-selection',
+  templateUrl: './selection.page.html',
+  styleUrls: ['./selection.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -32,6 +33,7 @@ export class RoleSelectionPage implements OnInit {
   
   user: User | null = null;
   readonly hasRoles = signal<boolean>(true);
+  readonly isPrivateApp = environment.private;
 
   ngOnInit() {
     this.loadUserData();
@@ -58,7 +60,7 @@ export class RoleSelectionPage implements OnInit {
   }
 
   addNewClub() {
-    this.navigationService.navigateTo(['auth/join-team']);
+    this.navigationService.navigateTo(['teams/join']);
   }
 
   skipForNow() {

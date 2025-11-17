@@ -74,7 +74,7 @@ export const mockCoachUser: User = {
   id: 'user-002',
   username: 'mariagarcia',
   email: 'maria.garcia@example.com',
-  roles: [mockCoachRole],
+  roles: [],
   firstName: 'Maria',
   lastName: 'Garcia',
   avatarUrl: 'https://example.com/avatar-maria.jpg',

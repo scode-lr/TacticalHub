@@ -100,6 +100,8 @@ export const sharedTranslations = {
     coachDescription: 'Crear y gestionar actividades del equipo, sesiones de entrenamiento y partidos',
     viewerDescription: 'Ver información del equipo, horarios y resultados de partidos',
     submitRequest: 'Enviar Solicitud',
+    joinInstant: 'Unirse Instantáneamente',
+    joiningInstant: 'Uniéndose...',
     teamFound: '¡Equipo Encontrado!',
     confirmMatch: 'Selecciona tu rol a continuación para unirte a este equipo',
     tryDifferentCode: 'Probar Otro Código'

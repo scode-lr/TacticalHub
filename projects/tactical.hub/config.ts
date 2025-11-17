@@ -4,6 +4,7 @@ export const PROJECT_CONFIG = {
   name: 'Tactical Hub',
   taglineKey: 'app.tagline',
   appId: 'com.tactical.hub',
+  private: false,
   translations: {
     en: translationsEn,
     es: translationsEs,

@@ -25,16 +25,6 @@ export const routes: Routes = [
       {
         path: 'loading',
         loadComponent: () => import('./pages/auth/loading/loading.page').then(m => m.LoadingPage),
-      },
-      {
-        path: 'role-selection',
-        loadComponent: () => import('./pages/auth/role-selection/role-selection.page').then(m => m.RoleSelectionPage),
-        canActivate: [authGuard]
-      },
-      {
-        path: 'join-team',
-        loadComponent: () => import('./pages/auth/join-team/join-team.page').then(m => m.JoinTeamPage),
-        canActivate: [authGuard]
       }
     ]
   },
@@ -61,6 +51,25 @@ export const routes: Routes = [
   },
 
   {
+    path: 'teams',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'selection',
+        loadComponent: () => import('./pages/teams/selection/selection.page').then(m => m.RoleSelectionPage),
+      },
+      {
+        path: 'join',
+        loadComponent: () => import('./pages/teams/join/join-team.page').then(m => m.JoinTeamPage),
+      },
+      {
+        path: 'invitation/:uuid',
+        loadComponent: () => import('./pages/teams/invitation/invitation.page').then(m => m.InvitationPage),
+      }
+    ]
+  },
+
+  {
     path: 'teams-search',
     loadComponent: () => import('./pages/teams-search/teams-search.page').then(m => m.TeamsSearchPage),
     canActivate: [authGuard]
@@ -69,10 +78,6 @@ export const routes: Routes = [
     path: 'player-register',
     loadComponent: () => import('./pages/player-register/player-register.page').then(m => m.PlayerRegisterPage),
     canActivate: [authGuard]
-  },
-  {
-    path: 'invitation/:uuid',
-    loadComponent: () => import('./pages/invitation/invitation.page').then(m => m.InvitationPage),
   },
 
   {

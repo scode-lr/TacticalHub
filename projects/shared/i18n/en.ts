@@ -100,6 +100,8 @@ export const sharedTranslations = {
     coachDescription: 'Create and manage team activities, training sessions, and matches',
     viewerDescription: 'View team information, schedules, and match results',
     submitRequest: 'Submit Join Request',
+    joinInstant: 'Join Team Instantly',
+    joiningInstant: 'Joining...',
     teamFound: 'Team Found!',
     confirmMatch: 'Select your role below to continue joining this team',
     tryDifferentCode: 'Try Different Code'

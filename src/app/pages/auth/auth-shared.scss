@@ -187,12 +187,15 @@
       --background: #e5e7eb;
       --color: #9ca3af;
       --box-shadow: none;
+      opacity: 0.6;
     }
     
     ion-spinner {
       --color: white;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
+      opacity: 1;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
     }
   }
 }

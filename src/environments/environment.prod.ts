@@ -3,6 +3,7 @@ export const environment = {
   projectName: 'Tactical Hub',
   taglineKey: 'app.tagline',
   appId: 'com.tactical.hub',
+  private: false,
   version: '1.0.0',
   apiUrl: 'https://api.tactical.hub',
   translations: {

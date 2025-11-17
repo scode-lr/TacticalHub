@@ -1,11 +1,14 @@
-import { Component, inject, signal, computed, ElementRef, ViewChildren, QueryList, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, signal, computed, ElementRef, ViewChildren, QueryList, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { UserService } from '@core/services/user.service';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline } from 'ionicons/icons';
+import { environment } from '@environment';
 
 @Component({
   selector: 'app-join-team',
@@ -21,8 +24,10 @@ import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeO
     UserHeaderComponent
   ]
 })
-export class JoinTeamPage implements AfterViewInit {
+export class JoinTeamPage implements OnInit, AfterViewInit {
   private readonly navigationService = inject(NavigationService);
+  private readonly userService = inject(UserService);
+  private readonly route = inject(ActivatedRoute);
 
   @ViewChildren('codeInput') codeInputs!: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChild('roleSection', { read: ElementRef }) roleSection?: ElementRef<HTMLElement>;
@@ -34,13 +39,43 @@ export class JoinTeamPage implements AfterViewInit {
   readonly isSubmitting = signal<boolean>(false);
   readonly matchedTeam = signal<{ name: string; clubName: string } | null>(null);
   readonly showConfirmation = signal<boolean>(false);
+  readonly isPrivateApp = environment.private;
+  readonly showBackButton = signal<boolean>(false);
+  readonly isGuestMode = signal<boolean>(false);
+
+  readonly buttonText = computed(() => {
+    if (this.isSubmitting()) {
+      return this.selectedRole() === 'Viewer' ? 'joinTeam.joiningInstant' : 'common.submitting';
+    }
+    return this.selectedRole() === 'Viewer' ? 'joinTeam.joinInstant' : 'joinTeam.submitRequest';
+  });
 
   constructor() {
     addIcons({ arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline });
   }
 
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.isGuestMode.set(params['guest'] === 'true');
+    });
+
+    if (this.isGuestMode()) {
+      this.showBackButton.set(false);
+    } else {
+      const user = this.userService.getStoredUser();
+      const hasRoles = (user?.roles?.length ?? 0) > 0;
+      this.showBackButton.set(hasRoles);
+    }
+  }
+
   ngAfterViewInit() {
-    // ViewChild will be available after view init
+    if (this.isPrivateApp) {
+      this.matchedTeam.set({
+        name: environment.name,
+        clubName: environment.name
+      });
+      this.showConfirmation.set(true);
+    }
   }
 
   scrollToRoles() {
@@ -61,11 +96,8 @@ export class JoinTeamPage implements AfterViewInit {
     }
 
     try {
-      // TODO: Replace with actual API call
-      // Simulate API call to check if code matches a team
       await new Promise(resolve => setTimeout(resolve, 300));
       
-      // Mock response - replace with actual API call
       if (this.code() === '12345') {
         this.matchedTeam.set({
           name: 'U-19 Team',
@@ -78,7 +110,6 @@ export class JoinTeamPage implements AfterViewInit {
         this.showConfirmation.set(false);
       }
     } catch (error) {
-      console.error('Error checking team code:', error);
       this.matchedTeam.set(null);
       this.showConfirmation.set(false);
     }
@@ -155,6 +186,9 @@ export class JoinTeamPage implements AfterViewInit {
   }
 
   isFormValid(): boolean {
+    if (this.isPrivateApp) {
+      return this.selectedRole() !== '';
+    }
     return this.code().length === 5 && this.selectedRole() !== '' && this.matchedTeam() !== null;
   }
 
@@ -172,27 +206,29 @@ export class JoinTeamPage implements AfterViewInit {
     }
 
     this.isSubmitting.set(true);
+    const role = this.selectedRole();
 
     try {
-      // TODO: Implement API call to join team
-      console.log('Join team request:', {
-        code: this.code(),
-        role: this.selectedRole()
-      });
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Navigate back to role selection
-      this.navigationService.navigateTo(['auth/role-selection']);
+      if (role === 'Viewer') {
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        this.navigationService.navigateTo(['teams/selection']);
+      } else {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        this.navigationService.navigateTo(['teams/selection']);
+      }
     } catch (error) {
-      console.error('Error joining team:', error);
     } finally {
       this.isSubmitting.set(false);
     }
   }
 
   goBack() {
-    this.navigationService.goBack();
+    this.navigationService.navigateTo(['teams/selection']);
+  }
+
+  skipForNow() {
+    this.navigationService.navigateTo(['layouts/my-teams']);
   }
 }

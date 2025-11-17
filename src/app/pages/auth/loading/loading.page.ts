@@ -78,13 +78,13 @@ export class LoadingPage implements OnInit {
     const rolesCount = user.roles?.length || 0;
 
     if (rolesCount === 0) {
-      this.navigationService.navigateTo(['auth/role-selection']);
+      this.navigationService.navigateTo(['teams/join']);
     } else if (rolesCount === 1) {
       const selectedRole = user.roles![0];
       this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, selectedRole);
       this.navigationService.navigateTo(['layouts/my-teams']);
     } else {
-      this.navigationService.navigateTo(['auth/role-selection']);
+      this.navigationService.navigateTo(['teams/selection']);
     }
   }
 
