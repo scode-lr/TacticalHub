@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
-import { Team, RoleStatus } from '@core/models/role.model';
+import { Role, RoleStatus } from '@core/models/role.model';
 import { UserService } from '@core/services/user.service';
 import { StorageService } from '@core/services/storage.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
@@ -68,8 +68,8 @@ export class RoleSelectionPage implements OnInit {
     this.hasRoles.set(activeRolesCount > 0 || this.hasPendingRoles());
   }
 
-  selectRole(role: Team) {
-    this.storageService.set<Team>(STORAGE_KEYS.SELECTED_ROLE, role);
+  selectRole(role: Role) {
+    this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
     this.navigationService.navigateTo(['layouts/my-teams']);
   }
 

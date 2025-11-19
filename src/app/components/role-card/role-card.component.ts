@@ -2,7 +2,7 @@ import { Component, input, output, signal, computed } from '@angular/core';
 import { IonIcon, IonAvatar, IonImg } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { Team, RoleStatus } from '@core/models/role.model';
+import { Role, RoleStatus } from '@core/models/role.model';
 
 @Component({
   selector: 'app-role-card',
@@ -18,9 +18,9 @@ import { Team, RoleStatus } from '@core/models/role.model';
   ]
 })
 export class RoleCardComponent {
-  readonly role = input<Team | null>(null);
+  readonly role = input<Role | null>(null);
   readonly isAddCard = input<boolean>(false);
-  readonly cardClicked = output<Team | null>();
+  readonly cardClicked = output<Role | null>();
   readonly showDefaultIcon = signal<boolean>(false);
   readonly isPending = computed(() => {
     const roleStatus = this.role()?.status;
