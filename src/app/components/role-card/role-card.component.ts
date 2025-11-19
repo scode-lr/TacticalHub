@@ -1,8 +1,8 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal, computed } from '@angular/core';
 import { IonIcon, IonAvatar, IonImg } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { Role } from '@core/models/role.model';
+import { Team, RoleStatus } from '@core/models/role.model';
 
 @Component({
   selector: 'app-role-card',
@@ -18,10 +18,14 @@ import { Role } from '@core/models/role.model';
   ]
 })
 export class RoleCardComponent {
-  readonly role = input<Role | null>(null);
+  readonly role = input<Team | null>(null);
   readonly isAddCard = input<boolean>(false);
-  readonly cardClicked = output<Role | null>();
+  readonly cardClicked = output<Team | null>();
   readonly showDefaultIcon = signal<boolean>(false);
+  readonly isPending = computed(() => {
+    const roleStatus = this.role()?.status;
+    return roleStatus === RoleStatus.Pending || roleStatus === RoleStatus.Draft;
+  });
 
   getRoleIcon(roleName: string): string {
     const iconMap: { [key: string]: string } = {
@@ -38,6 +42,8 @@ export class RoleCardComponent {
   }
 
   onCardClick() {
-    this.cardClicked.emit(this.role());
+    if (!this.isPending()) {
+      this.cardClicked.emit(this.role());
+    }
   }
 }

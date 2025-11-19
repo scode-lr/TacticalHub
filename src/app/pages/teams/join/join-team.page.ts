@@ -6,6 +6,9 @@ import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { UserService } from '@core/services/user.service';
+import { Team } from '@core/models/team.model';
+import { RoleStatus } from '@core/models/role.model';
+import { mockTeams } from '../../../../mocks';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline } from 'ionicons/icons';
 import { environment } from '@environment';
@@ -31,17 +34,20 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
 
   @ViewChildren('codeInput') codeInputs!: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChild('roleSection', { read: ElementRef }) roleSection?: ElementRef<HTMLElement>;
+  @ViewChild('teamSection', { read: ElementRef }) teamSection?: ElementRef<HTMLElement>;
   @ViewChild(IonContent) ionContent?: IonContent;
 
   readonly codeDigits = signal<string[]>(['', '', '', '', '']);
   readonly code = computed(() => this.codeDigits().join(''));
   readonly selectedRole = signal<string>('');
+  readonly selectedTeam = signal<string>('');
   readonly isSubmitting = signal<boolean>(false);
   readonly matchedTeam = signal<{ name: string; clubName: string } | null>(null);
   readonly showConfirmation = signal<boolean>(false);
   readonly isPrivateApp = environment.private;
   readonly showBackButton = signal<boolean>(false);
   readonly isGuestMode = signal<boolean>(false);
+  readonly availableTeams = signal<Team[]>(mockTeams);
 
   readonly buttonText = computed(() => {
     if (this.isSubmitting()) {
@@ -82,6 +88,16 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     setTimeout(() => {
       if (this.roleSection && this.ionContent) {
         const element = this.roleSection.nativeElement;
+        const yOffset = element.offsetTop - 20;
+        this.ionContent.scrollToPoint(0, yOffset, 3000);
+      }
+    }, 100);
+  }
+
+  scrollToTeams() {
+    setTimeout(() => {
+      if (this.teamSection && this.ionContent) {
+        const element = this.teamSection.nativeElement;
         const yOffset = element.offsetTop - 20;
         this.ionContent.scrollToPoint(0, yOffset, 3000);
       }
@@ -183,11 +199,26 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
 
   selectRole(role: string) {
     this.selectedRole.set(role);
+    if (role !== 'Coach') {
+      this.selectedTeam.set('');
+    } else {
+      this.scrollToTeams();
+    }
+  }
+
+  selectTeam(teamId: string) {
+    this.selectedTeam.set(teamId);
   }
 
   isFormValid(): boolean {
     if (this.isPrivateApp) {
+      if (this.selectedRole() === 'Coach') {
+        return this.selectedRole() !== '' && this.selectedTeam() !== '';
+      }
       return this.selectedRole() !== '';
+    }
+    if (this.selectedRole() === 'Coach') {
+      return this.code().length === 5 && this.selectedRole() !== '' && this.selectedTeam() !== '' && this.matchedTeam() !== null;
     }
     return this.code().length === 5 && this.selectedRole() !== '' && this.matchedTeam() !== null;
   }
@@ -215,6 +246,36 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
         this.navigationService.navigateTo(['teams/selection']);
       } else {
         await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        const currentUser = this.userService.getCurrentUser();
+        if (currentUser) {
+          const selectedTeamData = this.availableTeams().find(t => t.id === this.selectedTeam());
+          const teamName = selectedTeamData ? `${selectedTeamData.name} ${selectedTeamData.category}` : undefined;
+          
+          const pendingRole = {
+            id: `pending-${Date.now()}`,
+            name: 'Coach',
+            club: {
+              id: 'temp-club',
+              name: this.matchedTeam()?.clubName || 'Club',
+              logoUrl: '',
+              description: '',
+              location: ''
+            },
+            description: 'Pending approval',
+            permissions: [],
+            team: teamName,
+            createdAt: new Date(),
+            status: RoleStatus.Pending
+          };
+          
+          const updatedUser = {
+            ...currentUser,
+            roles: [...(currentUser.roles || []), pendingRole]
+          };
+          
+          this.userService.setUser(updatedUser);
+        }
         
         this.navigationService.navigateTo(['teams/selection']);
       }

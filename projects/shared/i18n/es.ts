@@ -88,11 +88,15 @@ export const sharedTranslations = {
     addNewClub: 'Agregar Nuevo Club',
     joinOrCreate: 'Únete o crea un nuevo club',
     skipForNow: 'Omitir por ahora',
-    canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil'
+    canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil',
+    pending: 'Pendiente',
+    pendingRequests: 'Solicitudes Pendientes',
+    pendingDescription: 'Estas solicitudes están esperando aprobación del administrador del equipo'
   },
   joinTeam: {
     title: 'Unirse a un Equipo',
     subtitle: 'Introduce el código del equipo y selecciona tu rol para unirte',
+    subtitlePrivate: 'Selecciona tu rol para unirte al equipo',
     enterCode: 'Introducir Código del Equipo',
     codeDescription: 'Introduce el código de 5 dígitos proporcionado por el administrador del equipo',
     selectRole: 'Selecciona tu Rol',
@@ -104,7 +108,10 @@ export const sharedTranslations = {
     joiningInstant: 'Uniéndose...',
     teamFound: '¡Equipo Encontrado!',
     confirmMatch: 'Selecciona tu rol a continuación para unirte a este equipo',
-    tryDifferentCode: 'Probar Otro Código'
+    tryDifferentCode: 'Probar Otro Código',
+    selectTeam: 'Seleccionar Equipo',
+    teamDescription: 'Elige qué equipo quieres entrenar',
+    category: 'Categoría'
   },
   roles: {
     coach: 'Entrenador',

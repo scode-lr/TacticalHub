@@ -88,11 +88,15 @@ export const sharedTranslations = {
     addNewClub: 'Add New Club',
     joinOrCreate: 'Join or create a new club',
     skipForNow: 'Skip for now',
-    canAddLater: 'You can add clubs anytime from your profile'
+    canAddLater: 'You can add clubs anytime from your profile',
+    pending: 'Pending',
+    pendingRequests: 'Pending Requests',
+    pendingDescription: 'These requests are awaiting approval from the team administrator'
   },
   joinTeam: {
     title: 'Join a Team',
     subtitle: 'Enter the team code and select your role to join',
+    subtitlePrivate: 'Select your role to join the team',
     enterCode: 'Enter Team Code',
     codeDescription: 'Enter the 5-digit code provided by the team administrator',
     selectRole: 'Select Your Role',
@@ -104,7 +108,10 @@ export const sharedTranslations = {
     joiningInstant: 'Joining...',
     teamFound: 'Team Found!',
     confirmMatch: 'Select your role below to continue joining this team',
-    tryDifferentCode: 'Try Different Code'
+    tryDifferentCode: 'Try Different Code',
+    selectTeam: 'Select Team',
+    teamDescription: 'Choose which team you want to coach',
+    category: 'Category'
   },
   roles: {
     coach: 'Coach',

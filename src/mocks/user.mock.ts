@@ -1,17 +1,47 @@
 import { User } from '../app/core/models/user.model';
 import { Role } from '../app/core/models/role.model';
 import { Club } from '../app/core/models/club.model';
+import { Team } from '../app/core/models/team.model';
 
 // Mock Club
 export const mockClub: Club = {
   id: 'club-001',
   name: 'Voltregà CF',
-  description: 'Professional football club based in Sant Hipòlit de Voltregà, Catalonia',
-  location: 'Sant Hipòlit de Voltregà, Catalonia, Spain',
-  logoUrl: 'assets/logo.svg',
+  description: 'Professional football club',
+  location: 'SHV',
+  logoUrl: '/assets/logo.svg',
   level: 'Professional',
   membersCount: 50,
   teamsCount: 3
+};
+
+// Mock Teams
+export const mockTeamJuvenilB: Team = {
+  id: 'team-001',
+  name: 'Juvenil',
+  category: 'B',
+  clubId: 'club-001'
+};
+
+export const mockTeamJuvenilC: Team = {
+  id: 'team-002',
+  name: 'Juvenil',
+  category: 'C',
+  clubId: 'club-001'
+};
+
+export const mockTeamAlevinB: Team = {
+  id: 'team-003',
+  name: 'Alevin',
+  category: 'B',
+  clubId: 'club-001'
+};
+
+export const mockTeamAlevinC: Team = {
+  id: 'team-004',
+  name: 'Alevin',
+  category: 'C',
+  clubId: 'club-001'
 };
 
 // Mock Roles
@@ -40,6 +70,15 @@ export const mockAdminRole: Role = {
   club: mockClub,
   description: 'Administrator role',
   permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_users', 'manage_roles', 'manage_club'],
+  createdAt: new Date('2024-01-01')
+};
+
+export const mockViewerRole: Role = {
+  id: 'role-005',
+  name: 'Viewer',
+  club: mockClub,
+  description: 'Viewer role with read-only access',
+  permissions: ['view_teams', 'view_matches', 'view_trainings'],
   createdAt: new Date('2024-01-01')
 };
 
@@ -88,7 +127,7 @@ export const mockAdminUser: User = {
   id: 'user-003',
   username: 'adminuser',
   email: 'admin@example.com',
-  roles: [mockAdminRole, mockCoachRole, mockCoachSeniorRole],
+  roles: [mockAdminRole, mockCoachRole, mockCoachSeniorRole, mockViewerRole],
   firstName: 'Elisabeth',
   lastName: 'Portús',
   avatarUrl: 'https://example.com/avatar-carlos.jpg',
@@ -117,4 +156,7 @@ export const mockNewUser: User = {
 export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser, mockNewUser];
 
 // Helper to get all mock roles
-export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockCoachSeniorRole, mockAdminRole];
+export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockCoachSeniorRole, mockAdminRole, mockViewerRole];
+
+// Helper to get all mock teams
+export const mockTeams: Team[] = [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC];

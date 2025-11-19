@@ -7,14 +7,19 @@
       <!-- Page Title -->
       <div class="page-title">
         <h1>{{ 'roleSelection.selectRole' | translate }}</h1>
-        <p class="title-subtitle">{{ hasRoles() ? ('roleSelection.chooseClub' | translate) : ('roleSelection.noRolesYet' | translate) }}</p>
+        <p class="title-subtitle">{{ hasActiveRoles() ? ('roleSelection.chooseClub' | translate) : ('roleSelection.noRolesYet' | translate) }}</p>
       </div>
+
+      <!-- All Roles Grid (Active + Pending + Add New) -->
       <div class="clubs-grid">
-        <!-- Existing Role Cards (only shown if user has roles) -->
-        @if (hasRoles()) {
-          @for (role of user?.roles; track role.id) {
-            <app-role-card [role]="role" (cardClicked)="selectRole(role)"></app-role-card>
-          }
+        <!-- Active Roles -->
+        @for (role of activeRoles(); track role.id) {
+          <app-role-card [role]="role" (cardClicked)="selectRole(role)"></app-role-card>
+        }
+
+        <!-- Pending Roles -->
+        @for (role of pendingRoles(); track role.id) {
+          <app-role-card [role]="role" (cardClicked)="selectRole(role)"></app-role-card>
         }
         
         <!-- Add New Club Card -->
@@ -22,7 +27,7 @@
       </div>
 
       <!-- Skip Button (only shown when user has no roles and not private app) -->
-      @if (!hasRoles() && !isPrivateApp) {
+      @if (!hasActiveRoles() && !isPrivateApp && !hasPendingRoles()) {
         <div class="skip-section">
           <ion-button fill="clear" class="skip-button" (click)="skipForNow()">
             {{ 'roleSelection.skipForNow' | translate }}

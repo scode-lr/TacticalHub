@@ -1,5 +1,11 @@
 @if (!isAddCard()) {
-  <div class="club-card" (click)="onCardClick()">
+  <div class="club-card" [class.pending]="isPending()" [class.disabled]="isPending()" (click)="onCardClick()">
+    @if (isPending()) {
+      <div class="pending-badge">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>{{ 'roleSelection.pending' | translate }}</span>
+      </div>
+    }
     <div class="club-logo">
       @if (!showDefaultIcon() && role()?.club?.logoUrl) {
         <ion-avatar class="club-avatar">
@@ -20,7 +26,9 @@
       </div>
     </div>
     
-    <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
+    @if (!isPending()) {
+      <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
+    }
   </div>
 } @else {
   <div class="club-card add-club-card" (click)="onCardClick()">
