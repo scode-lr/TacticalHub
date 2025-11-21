@@ -24,15 +24,22 @@
   }
 }
 
-.search-container {
+.teams-search-page {
   padding: 16px;
-  min-height: 100vh;
+  height: 100%;
   background: linear-gradient(180deg, var(--background-secondary) 0%, var(--background-primary) 100%);
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease-in-out;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+  flex: 1;
   
-  // Default state: centered
+  // Default state: centered vertically and horizontally
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -42,7 +49,7 @@
     justify-content: flex-start;
     align-items: center; // Keep horizontal centering
     text-align: center; // Keep text centered
-    padding-top: 16px;
+    padding-top: 20px;
     
     .welcome-section,
     .custom-searchbar {
@@ -58,23 +65,23 @@
 
 .welcome-section {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   padding: 20px 0;
   transition: all 0.3s ease-in-out;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   
   .search-container.has-results & {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     padding: 10px 0;
     text-align: center; // Maintain center alignment
   }
   
   .welcome-title {
     color: var(--text-primary);
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
-    margin: 0 0 8px 0;
+    margin: 0 0 12px 0;
     transition: font-size 0.3s ease-in-out;
     
     .search-container.has-results & {
@@ -84,7 +91,7 @@
   
   .welcome-subtitle {
     color: var(--text-secondary);
-    font-size: 16px;
+    font-size: 18px;
     margin: 0;
     font-weight: 400;
     transition: font-size 0.3s ease-in-out;
@@ -102,11 +109,21 @@
   --color: var(--text-primary);
   --placeholder-color: var(--text-secondary);
   --icon-color: var(--tactical-blue);
-  margin-bottom: 16px;
+  margin-bottom: 0;
   padding: 0;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   transition: all 0.3s ease-in-out;
+  
+  // Make search bar more prominent
+  --min-height: 56px;
+  font-size: 16px;
+  
+  .search-container.has-results & {
+    margin-bottom: 16px;
+    --min-height: 48px;
+    max-width: 500px;
+  }
 }
 
 .create-team-section {
@@ -195,13 +212,13 @@
   animation: slideInFromBottom 0.3s ease-out;
   
   .continue-button {
-    --background: var(--tactical-blue);
-    --color: white;
+    --background: var(--button-primary-color, var(--tactical-blue));
+    --color: var(--button-primary-contrast, white);
     --border-radius: 12px;
     height: 48px;
     font-weight: 600;
     font-size: 16px;
-    --box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    --box-shadow: 0 4px 12px rgba(var(--button-primary-color-rgb, 74, 144, 226), 0.3);
     
     ion-icon {
       font-size: 18px;
@@ -209,7 +226,7 @@
     }
     
     &:hover {
-      --box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+      --box-shadow: 0 6px 16px rgba(var(--button-primary-color-rgb, 74, 144, 226), 0.4);
       transform: translateY(-1px);
     }
   }

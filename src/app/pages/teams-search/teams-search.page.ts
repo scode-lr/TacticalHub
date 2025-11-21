@@ -1,7 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../../core/modules';
-import type { Team } from '../../components';
+import { 
+  IonButton,
+  IonIcon,
+  IonSearchbar,
+  IonSpinner,
+  IonToast,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonRefresher,
+  IonRefresherContent
+} from '@ionic/angular/standalone';
+import { TeamCardComponent, type Team } from '@components/index';
 import { addIcons } from 'ionicons';
 import { 
   search, 
@@ -9,6 +22,7 @@ import {
   refreshOutline,
   arrowForwardOutline
 } from 'ionicons/icons';
+import { environment } from '@environment';
 
 @Component({
   selector: 'app-teams-search',
@@ -16,7 +30,19 @@ import {
   styleUrls: ['./teams-search.page.scss'],
   standalone: true,
   imports: [
-    TacticalSharedModule
+    CommonModule,
+    FormsModule,
+    IonButton,
+    IonIcon,
+    IonSearchbar,
+    IonSpinner,
+    IonToast,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonRefresher,
+    IonRefresherContent,
+    TeamCardComponent
   ]
 })
 export class TeamsSearchPage implements OnInit {
@@ -27,6 +53,7 @@ export class TeamsSearchPage implements OnInit {
   showToast = false;
   toastMessage = '';
   requestedTeams: Set<string> = new Set();
+  appName = environment.name;
 
   get hasRequestedTeams(): boolean {
     return this.requestedTeams.size > 0;
@@ -46,7 +73,6 @@ export class TeamsSearchPage implements OnInit {
   }
 
   ngOnInit() {
-    // Load teams data but don't display them initially
     this.teams = this.getMockTeams();
   }
 
@@ -55,13 +81,10 @@ export class TeamsSearchPage implements OnInit {
     this.searchTerm = searchTerm;
     
     if (searchTerm.trim() === '') {
-      // Clear filtered teams when search is empty
       this.filteredTeams = [];
     } else {
-      // Show loading while filtering
       this.isLoading = true;
       
-      // Simulate search delay for better UX
       setTimeout(() => {
         this.filteredTeams = this.teams.filter(team => 
           team.name.toLowerCase().includes(searchTerm) ||
@@ -76,10 +99,8 @@ export class TeamsSearchPage implements OnInit {
   async joinTeam(team: Team) {
     if (team.isRequested) return;
     
-    // Add team to requested teams immediately
     this.requestedTeams.add(team.id);
     
-    // Update team status in both teams and filteredTeams arrays
     const updateTeam = (t: Team) => {
       if (t.id === team.id) {
         t.isRequested = true;
@@ -91,17 +112,20 @@ export class TeamsSearchPage implements OnInit {
     this.filteredTeams = this.filteredTeams.map(updateTeam);
     
     this.showToastMessage(`Request sent to join ${team.name}!`);
+    
+    // Navigate to my-teams page after joining
+    setTimeout(() => {
+      this.router.navigate(['/app/my-teams']);
+    }, 1500); // Wait for the toast to be visible
   }
 
   continueToHome() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/app/dashboard']);
   }
 
   async refreshTeams(event: any) {
-    // Reload teams data
     this.teams = this.getMockTeams();
     
-    // If there's a current search, reapply it
     if (this.searchTerm && this.searchTerm.trim() !== '') {
       this.filteredTeams = this.teams.filter(team => 
         team.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
@@ -120,8 +144,7 @@ export class TeamsSearchPage implements OnInit {
   }
 
   skipSearch() {
-    // Navigate to home page or another main section
-    this.router.navigate(['/home']);
+    this.router.navigate(['/app/dashboard']);
   }
 
   private getMockTeams(): Team[] {

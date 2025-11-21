@@ -1,9 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TacticalSharedModule } from '../../../core/modules';
+import { 
+  IonButton,
+  IonIcon,
+  IonInput,
+  IonText,
+  IonSpinner,
+  IonToast
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ionicons/icons';
+import { logoGoogle, logoApple, arrowBack, alertCircle } from 'ionicons/icons';
+import { environment } from '@environment';
+import { TranslationService } from '@services/i18n/translation.service';
+import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
+import { SocialLoginComponent, SocialLoginResult } from '@components/social-login/social-login.component';
+import { TranslatePipe } from '@pipes/index';
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +24,17 @@ import { logoGoogle, logoApple, mail, lockClosed, person, arrowBack } from 'ioni
   styleUrls: ['./signup.page.scss'],
   standalone: true,
   imports: [
-    TacticalSharedModule
+    CommonModule,
+    ReactiveFormsModule,
+    IonButton,
+    IonIcon,
+    IonInput,
+    IonText,
+    IonSpinner,
+    IonToast,
+    AuthBrandingComponent,
+    SocialLoginComponent,
+    TranslatePipe
   ]
 })
 export class SignupPage {
@@ -19,12 +42,15 @@ export class SignupPage {
   isLoading = false;
   showToast = false;
   toastMessage = '';
+  appName = environment.name;
+  formSubmitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private translationService: TranslationService
   ) {
-    addIcons({ logoGoogle, logoApple, mail, lockClosed, person, arrowBack });
+    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle });
     
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -35,6 +61,10 @@ export class SignupPage {
     }, {
       validators: this.passwordMatchValidator
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/welcome']);
   }
 
   passwordMatchValidator(formGroup: FormGroup) {
@@ -50,6 +80,8 @@ export class SignupPage {
   }
 
   async onSignUp() {
+    this.formSubmitted = true;
+    
     if (this.signupForm.valid) {
       this.isLoading = true;
       
@@ -58,7 +90,7 @@ export class SignupPage {
         this.showToastMessage('Account created successfully!');
         
         setTimeout(() => {
-          this.router.navigate(['/teams-search']);
+          this.router.navigate(['/app/teams-search']);
         }, 1000);
       }, 2000);
     } else {
@@ -66,24 +98,22 @@ export class SignupPage {
     }
   }
 
-  async signUpWithGoogle() {
-    this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-      this.showToastMessage('Google Sign-Up not implemented yet');
-    }, 1000);
-  }
-
-  async signUpWithApple() {
-    this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-      this.showToastMessage('Apple Sign-Up not implemented yet');
-    }, 1000);
+  onSocialLoginComplete(result: SocialLoginResult) {
+    if (result.success) {
+      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
+      this.showToastMessage(`${providerName} sign-up successful!`);
+      
+      setTimeout(() => {
+        this.router.navigate(['/app/teams-search']);
+      }, 800);
+    } else {
+      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
+      this.showToastMessage(`${providerName} sign-up failed`);
+    }
   }
 
   navigateToSignIn() {
-    this.router.navigate(['/auth/signin']);
+    this.router.navigate(['/signin']);
   }
 
   private showToastMessage(message: string) {

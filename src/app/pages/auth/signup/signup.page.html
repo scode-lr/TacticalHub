@@ -1,146 +1,132 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/auth/signin"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Join TacticalHub</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="signup-page">
+  <!-- Back Button (Mobile Only) -->
+  <ion-button 
+    fill="clear" 
+    class="back-btn"
+    (click)="goBack()">
+    <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+  </ion-button>
 
-<ion-content [fullscreen]="true">
-  <div class="signup-container">
-    <!-- Logo Section -->
-    <div class="logo-section">
-      <div class="logo-circle">
-        <ion-icon name="person" class="logo-icon"></ion-icon>
+  <div class="branding-section">
+    <app-auth-branding></app-auth-branding>
+  </div>
+
+  <!-- Right Side - Form -->
+  <div class="form-section">
+    <div class="form-container">
+      <!-- Header -->
+      <div class="form-header">
+        <h1>{{ 'welcome.createAccount' | translate }}</h1>
+        <p>{{ 'welcome.signUpTagline' | translate }}</p>
       </div>
-      <h1 class="app-title">Create Account</h1>
-      <p class="app-subtitle">Join the football training community</p>
-    </div>
-
-    <!-- Sign Up Form -->
-    <ion-card class="auth-card">
-      <ion-card-header>
-        <ion-card-title class="card-title">Sign Up</ion-card-title>
-      </ion-card-header>
-      
-      <ion-card-content>
-        <form [formGroup]="signupForm" (ngSubmit)="onSignUp()">
-          <!-- First Name Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="person" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">First Name</ion-label>
+      <form [formGroup]="signupForm" (ngSubmit)="onSignUp()" class="signup-form">
+        <!-- Name Inputs Row -->
+        <div class="name-row">
+          <div class="input-group half-width">
             <ion-input 
               type="text" 
               formControlName="firstName"
-              placeholder="Enter your first name"
-              class="auth-input">
+              [placeholder]="'auth.firstName' | translate"
+              fill="outline"
+              [class.ion-invalid]="signupForm.get('firstName')?.invalid && formSubmitted">
             </ion-input>
-          </ion-item>
+            <div class="error-message" *ngIf="signupForm.get('firstName')?.invalid && formSubmitted">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ 'validation.firstNameRequired' | translate }}</span>
+            </div>
+          </div>
           
-          <!-- Last Name Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="person" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Last Name</ion-label>
+          <div class="input-group half-width">
             <ion-input 
               type="text" 
               formControlName="lastName"
-              placeholder="Enter your last name"
-              class="auth-input">
+              [placeholder]="'auth.lastName' | translate"
+              fill="outline"
+              [class.ion-invalid]="signupForm.get('lastName')?.invalid && formSubmitted">
             </ion-input>
-          </ion-item>
-          
-          <!-- Email Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="mail" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Email</ion-label>
-            <ion-input 
-              type="email" 
-              formControlName="email"
-              placeholder="Enter your email"
-              class="auth-input">
-            </ion-input>
-          </ion-item>
-          
-          <!-- Password Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Password</ion-label>
-            <ion-input 
-              type="password" 
-              formControlName="password"
-              placeholder="Create a password"
-              class="auth-input">
-            </ion-input>
-          </ion-item>
-          
-          <!-- Confirm Password Input -->
-          <ion-item class="auth-item">
-            <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
-            <ion-label position="stacked">Confirm Password</ion-label>
-            <ion-input 
-              type="password" 
-              formControlName="confirmPassword"
-              placeholder="Confirm your password"
-              class="auth-input">
-            </ion-input>
-          </ion-item>
-
-          <!-- Error Messages -->
-          <div class="error-messages" *ngIf="signupForm.errors?.['passwordMismatch'] && confirmPassword?.touched">
-            <ion-text color="danger">
-              <small>Passwords do not match</small>
-            </ion-text>
+            <div class="error-message" *ngIf="signupForm.get('lastName')?.invalid && formSubmitted">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ 'validation.lastNameRequired' | translate }}</span>
+            </div>
           </div>
-
-          <!-- Sign Up Button -->
-          <ion-button 
-            expand="block" 
-            type="submit" 
-            class="tactical-button-primary auth-button"
-            [disabled]="isLoading || !signupForm.valid">
-            <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
-            <span *ngIf="!isLoading">Create Account</span>
-          </ion-button>
-        </form>
-
-        <!-- Divider -->
-        <div class="divider">
-          <span class="divider-text">or sign up with</span>
+        </div>
+        
+        <!-- Email Input -->
+        <div class="input-group">
+          <ion-input 
+            type="email" 
+            formControlName="email"
+            [placeholder]="'auth.email' | translate"
+            fill="outline"
+            [class.ion-invalid]="signupForm.get('email')?.invalid && formSubmitted">
+          </ion-input>
+          <div class="error-message" *ngIf="signupForm.get('email')?.invalid && formSubmitted">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span *ngIf="signupForm.get('email')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
+            <span *ngIf="signupForm.get('email')?.errors?.['email']">{{ 'validation.invalidEmail' | translate }}</span>
+          </div>
+        </div>
+        
+        <!-- Password Input -->
+        <div class="input-group">
+          <ion-input 
+            type="password" 
+            formControlName="password"
+            [placeholder]="'auth.password' | translate"
+            fill="outline"
+            [class.ion-invalid]="signupForm.get('password')?.invalid && formSubmitted">
+          </ion-input>
+          <div class="error-message" *ngIf="signupForm.get('password')?.invalid && formSubmitted">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span *ngIf="signupForm.get('password')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
+            <span *ngIf="signupForm.get('password')?.errors?.['minlength']">{{ 'validation.minLength6' | translate }}</span>
+          </div>
+        </div>
+        
+        <!-- Confirm Password Input -->
+        <div class="input-group">
+          <ion-input 
+            type="password" 
+            formControlName="confirmPassword"
+            [placeholder]="'auth.confirmPassword' | translate"
+            fill="outline"
+            [class.ion-invalid]="((signupForm.get('confirmPassword')?.invalid && formSubmitted) || (signupForm.errors?.['passwordMismatch'] && formSubmitted))">
+          </ion-input>
+          <div class="error-message" *ngIf="signupForm.get('confirmPassword')?.invalid && formSubmitted">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span>{{ 'validation.confirmPasswordRequired' | translate }}</span>
+          </div>
+          <div class="error-message" *ngIf="signupForm.errors?.['passwordMismatch'] && formSubmitted && !signupForm.get('confirmPassword')?.errors">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <span>{{ 'validation.passwordMismatch' | translate }}</span>
+          </div>
         </div>
 
-        <!-- Social Sign Up Buttons -->
-        <div class="social-buttons">
-          <ion-button 
-            fill="outline" 
-            expand="block" 
-            class="social-button google-button"
-            (click)="signUpWithGoogle()"
-            [disabled]="isLoading">
-            <ion-icon name="logo-google" slot="start"></ion-icon>
-            Continue with Google
-          </ion-button>
+        <!-- Sign Up Button -->
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          class="signup-btn"
+          [disabled]="isLoading || !signupForm.valid">
+          <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
+          <span *ngIf="!isLoading">{{ 'welcome.createAccount' | translate }}</span>
+        </ion-button>
+      </form>
 
-          <ion-button 
-            fill="outline" 
-            expand="block" 
-            class="social-button apple-button"
-            (click)="signUpWithApple()"
-            [disabled]="isLoading">
-            <ion-icon name="logo-apple" slot="start"></ion-icon>
-            Continue with Apple
-          </ion-button>
-        </div>
+      <!-- Social Login Section -->
+      <app-social-login
+        mode="signup"
+        (loginComplete)="onSocialLoginComplete($event)">
+      </app-social-login>
 
-        <!-- Sign In Link -->
-        <div class="signin-link">
-          <ion-text color="medium">
-            Already have an account? 
-            <span class="link-text" (click)="navigateToSignIn()">Sign in</span>
-          </ion-text>
-        </div>
-      </ion-card-content>
-    </ion-card>
+      <!-- Footer -->
+      <div class="form-footer">
+        <ion-text class="signin-text">
+          {{ 'auth.alreadyHaveAccount' | translate }}
+          <span class="signin-link" (click)="navigateToSignIn()">{{ 'auth.signInButton' | translate }}</span>
+        </ion-text>
+      </div>
+    </div>
   </div>
 
   <!-- Toast for messages -->
@@ -151,4 +137,4 @@
     position="top"
     (didDismiss)="onToastDismiss()">
   </ion-toast>
-</ion-content>
+</div>

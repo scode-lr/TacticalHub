@@ -1,0 +1,65 @@
+<div class="invitation-page">
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent" class="large-spinner"></ion-spinner>
+    <p class="loading-text">Loading invitation...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !isLoading">
+    <div class="error-icon">
+      <ion-icon name="close-circle" color="danger"></ion-icon>
+    </div>
+    <h2>Oops!</h2>
+    <p>{{ error }}</p>
+    <ion-button fill="outline" (click)="loadInvitation()">
+      Try Again
+    </ion-button>
+  </div>
+
+  <!-- Invitation Content -->
+  <div class="invitation-content" *ngIf="invitation && !isLoading && !error">
+    <!-- Club Card -->
+    <div class="club-card">
+      <div class="club-avatar-container">
+        <ion-avatar class="club-avatar">
+          <img [src]="invitation.clubImageUrl" [alt]="invitation.clubName">
+        </ion-avatar>
+      </div>
+      
+      <h2 class="club-name">{{ invitation.clubName }}</h2>
+      
+      <div class="club-location">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>{{ invitation.clubLocation }}</span>
+      </div>
+
+      <p class="club-description">{{ invitation.description }}</p>
+
+      <div class="club-stats">
+        <div class="stat-item">
+          <ion-icon name="people-outline"></ion-icon>
+          <span>{{ invitation.membersCount }} members</span>
+        </div>
+      </div>
+
+      <div class="invited-by">
+        <ion-text color="medium">
+          <small>Invited by <strong>{{ invitation.invitedBy }}</strong></small>
+        </ion-text>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <ion-button 
+      expand="block" 
+      class="accept-button"
+      (click)="acceptInvitation()"
+      [disabled]="isAccepting">
+      <ion-spinner name="dots" *ngIf="isAccepting"></ion-spinner>
+      <span *ngIf="!isAccepting">
+        Accept Invitation
+      </span>
+    </ion-button>
+  </div>
+</div>

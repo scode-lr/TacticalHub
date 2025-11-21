@@ -1,0 +1,54 @@
+<div class="team-selector" [class.compact]="compact" (click)="openTeamSelector()">
+  <ion-avatar [class.small]="compact">
+    <img [src]="getTeamImage(currentTeam)" [alt]="getTeamName(currentTeam)">
+  </ion-avatar>
+  <div class="team-info" [class.compact]="compact">
+    <h3>{{ getTeamName(currentTeam) }}</h3>
+    <span class="selector-hint" *ngIf="!compact">
+      <ion-icon name="chevron-down-outline"></ion-icon>
+      Switch Team
+    </span>
+    <ion-icon class="dropdown-icon" *ngIf="compact" name="chevron-down-outline"></ion-icon>
+  </div>
+</div>
+
+<!-- Team Selector Modal -->
+<ion-modal 
+  [isOpen]="isModalOpen" 
+  (didDismiss)="closeTeamSelector()"
+  class="club-selector-modal">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeTeamSelector()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list lines="none">
+
+          <ion-item button detail="false" 
+                    *ngFor="let club of organizations" 
+                    [class.selected]="getTeamId(currentTeam) === club.id"
+                    (click)="selectClub(club)">
+            <ion-avatar slot="start">
+              <img [src]="club.imageUrl || 'assets/image-non-available.svg'" [alt]="club.name">
+            </ion-avatar>
+            <ion-label>
+              <h3>{{ club.name }}</h3>
+              <p>
+                <ion-text color="medium">
+                  <ion-icon name="location-outline"></ion-icon>
+                  {{ club.location }}
+                </ion-text>
+              </p>
+            </ion-label>
+          </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

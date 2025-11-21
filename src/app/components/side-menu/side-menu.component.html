@@ -1,0 +1,98 @@
+<!-- Desktop/Tablet Sidebar -->
+<div class="menu-container desktop-menu">
+  <!-- Team Selector (optional) -->
+  <app-team-selector *ngIf="showTeamSelector"
+    [currentTeam]="currentOrg || { organizationId: '' }"
+    [organizations]="organizations"
+    (clubSelected)="onClubSelected($event)">
+  </app-team-selector>
+
+  <div class="menu-header" *ngIf="!showTeamSelector">
+    <ion-avatar>
+      <img src="assets/icon/favicon.png" [alt]="appName">
+    </ion-avatar>
+    <h3>{{ appName }}</h3>
+  </div>
+  
+  <ion-list lines="none">
+    <ion-item button detail="false" [class.active]="activePage === 'home'" routerLink="/app/dashboard">
+      <ion-icon slot="start" name="home-outline"></ion-icon>
+      <ion-label>Dashboard</ion-label>
+    </ion-item>
+    
+    <ion-item button detail="false" [class.active]="activePage === 'teams'" routerLink="/app/my-teams">
+      <ion-icon slot="start" name="people-outline"></ion-icon>
+      <ion-label>Team Squad</ion-label>
+    </ion-item>
+
+    <ion-item button detail="false" [class.active]="activePage === 'search'" routerLink="/teams-search">
+      <ion-icon slot="start" name="search-outline"></ion-icon>
+      <ion-label>Find Teams</ion-label>
+    </ion-item>
+    
+    <ion-item button detail="false" [class.active]="activePage === 'schedule'">
+      <ion-icon slot="start" name="calendar-outline"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </ion-item>
+    
+    <ion-item button detail="false" [class.active]="activePage === 'tournaments'">
+      <ion-icon slot="start" name="trophy-outline"></ion-icon>
+      <ion-label>Tournaments</ion-label>
+    </ion-item>
+    
+    <ion-item button detail="false" [class.active]="activePage === 'settings'" class="settings-item">
+      <ion-icon slot="start" name="settings-outline"></ion-icon>
+      <ion-label>Settings</ion-label>
+    </ion-item>
+  </ion-list>
+</div>
+
+<!-- Mobile Layout -->
+<div class="mobile-layout">
+  <!-- Mobile Header with Team Selector -->
+  <ion-header class="mobile-header">
+    <ion-toolbar>
+      <div slot="start" class="header-team-selector" *ngIf="showTeamSelector">
+        <app-team-selector
+          [currentTeam]="currentOrg || { organizationId: '' }"
+          [organizations]="organizations"
+          [compact]="true"
+          (clubSelected)="onClubSelected($event)">
+        </app-team-selector>
+      </div>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" class="profile-button">
+          <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Mobile Bottom Navigation -->
+  <ion-tab-bar class="mobile-bottom-nav" slot="bottom">
+    <ion-tab-button tab="dashboard" [class.active]="activePage === 'home'" routerLink="/app/dashboard">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Dashboard</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="teams" [class.active]="activePage === 'teams'" routerLink="/app/my-teams">
+      <ion-icon name="people-outline"></ion-icon>
+      <ion-label>Squad</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="search" [class.active]="activePage === 'search'" routerLink="/teams-search">
+      <ion-icon name="search-outline"></ion-icon>
+      <ion-label>Search</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="schedule" [class.active]="activePage === 'schedule'">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="tournaments" [class.active]="activePage === 'tournaments'">
+      <ion-icon name="trophy-outline"></ion-icon>
+      <ion-label>Tournaments</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</div>

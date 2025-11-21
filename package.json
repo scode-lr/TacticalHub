@@ -5,14 +5,18 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve app",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "lint:check": "eslint \"src/**/*.ts\" \"src/**/*.html\"",
-    "lint:fix-all": "eslint \"src/**/*.ts\" \"src/**/*.html\" --fix"
+    "lint:fix-all": "eslint \"src/**/*.ts\" \"src/**/*.html\" --fix",
+    "start:voltregacf": "ng serve voltregacf.hub --port 4201",
+    "build:voltregacf": "ng build voltregacf.hub",
+    "build:voltregacf:prod": "ng build voltregacf.hub --configuration production",
+    "watch:voltregacf": "ng build voltregacf.hub --watch --configuration development"
   },
   "private": true,
   "dependencies": {

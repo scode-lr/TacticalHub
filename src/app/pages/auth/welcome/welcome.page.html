@@ -1,0 +1,37 @@
+<div class="welcome-page">
+  <!-- Branding Section -->
+  <div class="brand-section">
+    <app-auth-branding></app-auth-branding>
+  </div>
+
+  <!-- Action Section -->
+  <div class="action-section">
+    <!-- Sign Up Button (Primary) -->
+    <ion-button 
+      expand="block" 
+      class="signup-btn"
+      (click)="navigateToSignUp()">
+      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+      {{ 'welcome.createAccount' | translate }}
+    </ion-button>
+
+    <!-- Sign In Button (Secondary) -->
+    <ion-button 
+      expand="block" 
+      fill="outline"
+      class="signin-btn"
+      (click)="navigateToSignIn()">
+      <ion-icon name="log-in-outline" slot="start"></ion-icon>
+      {{ 'welcome.signIn' | translate }}
+    </ion-button>
+
+    <!-- Terms Text -->
+    <div class="terms-text">
+      <ion-text>
+        {{ 'welcome.terms' | translate }} 
+        <span class="link">{{ 'welcome.termsOfService' | translate }}</span> {{ 'welcome.and' | translate }} 
+        <span class="link">{{ 'welcome.privacyPolicy' | translate }}</span>
+      </ion-text>
+    </div>
+  </div>
+</div>

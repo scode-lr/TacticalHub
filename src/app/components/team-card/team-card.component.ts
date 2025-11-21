@@ -1,5 +1,15 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TacticalSharedModule } from '../../core/modules';
+import { CommonModule } from '@angular/common';
+import { 
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonButton,
+  IonIcon,
+  IonAvatar,
+  IonChip
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
   locationOutline, 
@@ -28,7 +38,15 @@ export interface Team {
   styleUrls: ['./team-card.component.scss'],
   standalone: true,
   imports: [
-    TacticalSharedModule
+    CommonModule,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonButton,
+    IonIcon,
+    IonAvatar,
+    IonChip
   ]
 })
 export class TeamCardComponent {
