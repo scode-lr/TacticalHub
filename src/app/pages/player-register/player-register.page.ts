@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { NavigationService } from '@services/navigation.service';
 import { CommonModule } from '@angular/common';
 import { 
   IonContent,
@@ -81,11 +82,11 @@ export class PlayerRegisterPage implements OnInit {
     { value: 'professional', label: 'Professional' }
   ];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly navigationService = inject(NavigationService);
+  private readonly route = inject(ActivatedRoute);
+
+  constructor() {
     addIcons({ 
       person, 
       mail, 
@@ -142,9 +143,9 @@ export class PlayerRegisterPage implements OnInit {
   goBack() {
     // If coming from invitation, go back to invitation page
     if (this.invitationId) {
-      this.router.navigate(['/invitation', this.invitationId]);
+      this.navigationService.navigateTo(['/invitation', this.invitationId]);
     } else {
-      this.router.navigate(['/app/my-teams']);
+      this.navigationService.navigateTo(['/app/my-teams']);
     }
   }
 
@@ -162,9 +163,9 @@ export class PlayerRegisterPage implements OnInit {
           // If coming from invitation, redirect to app home
           // Otherwise, redirect to my-teams
           if (this.clubId && this.invitationId) {
-            this.router.navigate(['/app/dashboard']);
+            this.navigationService.navigateTo(['/app/dashboard']);
           } else {
-            this.router.navigate(['/app/my-teams']);
+            this.navigationService.navigateTo(['/app/my-teams']);
           }
         }, 1500);
         

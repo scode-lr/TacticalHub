@@ -1,0 +1,43 @@
+@if (!isAddCard()) {
+  <div class="club-card" [class.pending]="isPending()" [class.disabled]="isPending()" (click)="onCardClick()">
+    @if (isPending()) {
+      <div class="pending-badge">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>{{ 'roleSelection.pending' | translate }}</span>
+      </div>
+    }
+    <div class="club-logo">
+      @if (!showDefaultIcon() && role()?.club?.logoUrl) {
+        <ion-avatar class="club-avatar">
+          <ion-img [src]="role()?.club?.logoUrl" [alt]="role()?.id" (ionError)="onLogoError()"></ion-img>
+        </ion-avatar>
+      } @else {
+        <ion-icon name="shield-outline" class="default-shield"></ion-icon>
+      }
+    </div>
+    
+    <div class="club-info">
+      <h3 class="club-name">{{ role()?.club?.name }}</h3>
+      <div class="role-container">
+        <ion-icon [name]="getRoleIcon(role()?.name || '')" class="role-icon"></ion-icon>
+        <p class="role-name">
+          {{ role()?.name }}@if (role()?.team) { <span class="team-name">({{ role()?.team }})</span>}
+        </p>
+      </div>
+    </div>
+    
+    @if (!isPending()) {
+      <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
+    }
+  </div>
+} @else {
+  <div class="club-card add-club-card" (click)="onCardClick()">
+    <div class="add-club-content">
+      <div class="add-icon">
+        <ion-icon name="add"></ion-icon>
+      </div>
+      <h3>{{ 'roleSelection.addNewClub' | translate }}</h3>
+      <p>{{ 'roleSelection.joinOrCreate' | translate }}</p>
+    </div>
+  </div>
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { NavigationService } from '@services/navigation.service';
 import { IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -20,7 +20,7 @@ import {
   imports: [CommonModule, IonSpinner],
 })
 export class HomePage implements OnInit {
-  constructor(private router: Router) {
+  constructor(private navigationService: NavigationService) {
     addIcons({ 
       homeOutline,
       peopleOutline,

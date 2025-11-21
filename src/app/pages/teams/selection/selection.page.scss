@@ -1,0 +1,126 @@
+.role-selection-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-primary, #ffffff);
+}
+
+.clubs-content {
+  --background: var(--background-secondary, #f8f9fa);
+  flex: 1;
+}
+
+.clubs-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.page-title {
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease backwards;
+
+  h1 {
+    color: var(--text-primary, #111827);
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .title-subtitle {
+    color: var(--text-secondary, #6b7280);
+    font-size: 1.0625rem;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+
+    h1 {
+      font-size: 1.875rem;
+    }
+
+    .title-subtitle {
+      font-size: 1rem;
+    }
+  }
+}
+
+.clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  app-role-card {
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.04}s;
+      }
+    }
+  }
+}
+
+.skip-section {
+  margin-top: 2rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease backwards 0.2s;
+
+  .skip-button {
+    --color: var(--text-secondary, #6b7280);
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
+    --padding-start: 1.5rem;
+    --padding-end: 1.5rem;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    transition: all 0.2s ease;
+
+    &::part(native) {
+      transition: all 0.2s ease;
+    }
+
+    &:hover {
+      --color: var(--ion-color-primary, #3880ff);
+      transform: scale(1.02);
+    }
+  }
+
+  .skip-text {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-light, #adb5bd);
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 1.5rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

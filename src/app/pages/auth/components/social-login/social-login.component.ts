@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonButton, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple } from 'ionicons/icons';
-import { TranslatePipe } from '@pipes/index';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 export type SocialProvider = 'google' | 'apple';
 

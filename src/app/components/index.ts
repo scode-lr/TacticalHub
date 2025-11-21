@@ -1,6 +1,5 @@
 export { TeamCardComponent } from './team-card/team-card.component';
 export type { Team } from './team-card/team-card.component';
 export { LanguageSelectorComponent } from './language-selector/language-selector.component';
-export { AuthBrandingComponent } from './auth-branding/auth-branding.component';
-export { SocialLoginComponent } from './social-login/social-login.component';
-export type { SocialProvider, SocialLoginResult } from './social-login/social-login.component';
+export { UserHeaderComponent } from './user-header/user-header.component';
+export { RoleCardComponent } from './role-card/role-card.component';

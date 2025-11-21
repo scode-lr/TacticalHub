@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SHARED_TRANSLATIONS } from '../../i18n/shared';
+import { StorageService } from '../storage.service';
+import { STORAGE_KEYS } from '../../constants/storage-keys';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslationService {
+  private readonly storageService = inject(StorageService);
   private translations: any = {};
   private currentLanguage = 'en';
   private projectTranslations: any = {};
@@ -28,7 +31,7 @@ export class TranslationService {
 
   private detectAndSetLanguage(): void {
     const browserLang = this.getBrowserLanguage();
-    const storedLang = localStorage.getItem('app-language');
+    const storedLang = this.storageService.getString(STORAGE_KEYS.LANGUAGE);
     
     let targetLang = storedLang || browserLang || this.defaultLanguage;
     
@@ -61,12 +64,11 @@ export class TranslationService {
 
   setLanguage(lang: string): void {
     if (!this.supportedLanguages.includes(lang)) {
-      console.warn(`Language '${lang}' not supported, using default: ${this.defaultLanguage}`);
       lang = this.defaultLanguage;
     }
 
     this.currentLanguage = lang;
-    localStorage.setItem('app-language', lang);
+    this.storageService.setString(STORAGE_KEYS.LANGUAGE, lang);
 
     const sharedForLang = (SHARED_TRANSLATIONS as any)[lang] || (SHARED_TRANSLATIONS as any).en;
     const projectForLang = this.projectTranslations[lang] || this.projectTranslations.en || {};
@@ -97,7 +99,7 @@ export class TranslationService {
     return result;
   }
 
-  t(key: string, params?: Record<string, any>): string {
+  instant(key: string, params?: Record<string, any>): string {
     const keys = key.split('.');
     let value = this.translations;
 
@@ -105,7 +107,6 @@ export class TranslationService {
       if (value && typeof value === 'object' && k in value) {
         value = value[k];
       } else {
-        console.warn(`Translation key not found: ${key}`);
         return key;
       }
     }

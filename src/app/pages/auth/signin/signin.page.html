@@ -16,7 +16,6 @@
     <div class="form-container">
       <div class="form-header">
         <h1>{{ 'welcome.signIn' | translate }}</h1>
-        <p>{{ 'auth.signInButton' | translate }} {{ appName }}</p>
       </div>
       <form [formGroup]="signinForm" (ngSubmit)="onSignIn()" class="signin-form">
         <!-- Email Input -->
@@ -27,13 +26,14 @@
             [placeholder]="'auth.email' | translate"
             fill="outline"
             class="modern-input"
-            [class.ion-invalid]="signinForm.get('email')?.invalid && formSubmitted">
+            [class.ion-invalid]="signinForm.get('email')?.invalid && formSubmitted()">
           </ion-input>
-          <div class="error-message" *ngIf="signinForm.get('email')?.invalid && formSubmitted">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span *ngIf="signinForm.get('email')?.errors?.['required']">{{ 'validation.required' | translate }}</span>
-            <span *ngIf="signinForm.get('email')?.errors?.['email']">{{ 'validation.invalidEmail' | translate }}</span>
-          </div>
+          @if (emailError(); as error) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ error }}</span>
+            </div>
+          }
         </div>
         
         <!-- Password Input -->
@@ -44,12 +44,14 @@
             [placeholder]="'auth.password' | translate"
             fill="outline"
             class="modern-input"
-            [class.ion-invalid]="signinForm.get('password')?.invalid && formSubmitted">
+            [class.ion-invalid]="signinForm.get('password')?.invalid && formSubmitted()">
           </ion-input>
-          <div class="error-message" *ngIf="signinForm.get('password')?.invalid && formSubmitted">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <span>{{ 'validation.required' | translate }}</span>
-          </div>
+          @if (passwordError(); as error) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ error }}</span>
+            </div>
+          }
         </div>
 
         <!-- Sign In Button -->
@@ -57,33 +59,25 @@
           expand="block" 
           type="submit" 
           class="signin-btn"
-          [disabled]="isLoading || !signinForm.valid">
-          <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
-          <span *ngIf="!isLoading">{{ 'auth.signInButton' | translate }}</span>
+          [disabled]="isLoading() || !signinForm.valid">
+          @if (isLoading()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            <span>{{ 'auth.signInButton' | translate }}</span>
+          }
         </ion-button>
       </form>
 
-      <!-- Social Login Section -->
-      <app-social-login
-        mode="signin"
-        (loginComplete)="onSocialLoginComplete($event)">
-      </app-social-login>
-
-      <!-- Footer -->
-      <div class="form-footer">
-        <ion-text class="signup-text">
-          {{ 'auth.dontHaveAccount' | translate }}
-          <span class="signup-link" (click)="navigateToSignUp()">{{ 'auth.signUpButton' | translate }}</span>
-        </ion-text>
-      </div>
+      <!-- Footer with Social Login -->
+      <app-auth-footer mode="signin"></app-auth-footer>
     </div>
   </div>
 
   <!-- Toast for messages -->
   <ion-toast
-    [isOpen]="showToast"
-    [message]="toastMessage"
-    [color]="toastColor"
+    [isOpen]="showToast()"
+    [message]="toastMessage()"
+    [color]="toastColor()"
     duration="3000"
     position="top"
     (didDismiss)="onToastDismiss()">

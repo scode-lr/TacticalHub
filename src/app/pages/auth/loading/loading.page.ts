@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonContent, IonSpinner, IonIcon } from '@ionic/angular/standalone';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { IonContent, IonSpinner } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { AuthBrandingComponent } from '../../../components/auth-branding/auth-branding.component';
-import { MockAuthService } from '../../../core/services/mock-auth.service';
+import { NavigationService } from '@services/navigation.service';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { AuthBrandingComponent } from '../components/auth-branding/auth-branding.component';
+import { AuthService } from '@services/auth.service';
+import { UserService } from '@services/user.service';
+import { StorageService } from '@services/storage.service';
+import { User } from '@core/models/user.model';
+import { STORAGE_KEYS } from '@core/constants/storage-keys';
 
 @Component({
   selector: 'app-loading',
@@ -14,47 +19,76 @@ import { MockAuthService } from '../../../core/services/mock-auth.service';
     CommonModule,
     IonContent,
     IonSpinner,
-    IonIcon,
-    AuthBrandingComponent
+    AuthBrandingComponent,
+    TranslatePipe
   ]
 })
 export class LoadingPage implements OnInit {
-  loadingMessage = 'Signing you in...';
-  loadingSubMessage = 'Please wait while we prepare everything';
-  showSteps = true;
-  currentStep = 1;
+  private readonly navigationService = inject(NavigationService);
+  private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
+  private readonly storageService = inject(StorageService);
+  
+  readonly loadingMessageKey = signal<string>('loading.signingIn');
+  readonly loadingSubMessageKey = signal<string>('loading.pleaseWait');
 
-  constructor(
-    private router: Router,
-    private mockAuthService: MockAuthService
-  ) {}
+  async ngOnInit() {
+    const user = await this.loadUserData();
+    if (!user) {
+      this.authService.signOut();
+      this.navigationService.navigateTo(['auth/signin']);
+      return;
+    }
+    
+    this.loadingMessageKey.set('loading.allSet');
+    this.loadingSubMessageKey.set('loading.redirecting');
+    await this.delay(500);
 
-  ngOnInit() {
-    this.simulateLoadingSteps();
+    this.determineNavigation(user);
   }
 
-  private simulateLoadingSteps() {
-    // Step 1: Authenticating
-    setTimeout(() => {
-      this.currentStep = 2;
-      this.loadingMessage = 'Loading your profile...';
-    }, 800);
+  private async loadUserData(): Promise<User | null> {
+    if (!this.userService.isAuthenticated()) {
+      this.authService.signOut();
+      this.navigationService.navigateTo(['auth/signin']);
+      return null;
+    }
 
-    // Step 2: Loading profile
-    setTimeout(() => {
-      this.currentStep = 3;
-      this.loadingMessage = 'Preparing workspace...';
-    }, 1600);
+    const storedUser = this.userService.getCurrentUser();
+    if (!storedUser) {
+      this.navigationService.navigateTo(['auth/signin']);
+      return null;
+    }
+    
+    this.loadingMessageKey.set('loading.loadingProfile');
+    const fullUser = await this.userService.fetchUserProfile(storedUser.id);
+    
+    if (!fullUser) {
+      this.navigationService.navigateTo(['auth/signin']);
+      return null;
+    }
 
-    // Step 3: Complete and navigate
-    setTimeout(() => {
-      this.loadingMessage = 'All set!';
-      this.loadingSubMessage = 'Redirecting...';
-      
-      // Navigate to role selection
-      setTimeout(() => {
-        this.router.navigate(['/auth/role-selection']);
-      }, 500);
-    }, 2400);
+    this.loadingMessageKey.set('loading.preparingWorkspace');
+    await this.delay(800);
+    return fullUser;
+
+  }
+
+  private determineNavigation(user: User): void {
+    const rolesCount = user.roles?.length || 0;
+
+    if (rolesCount === 0) {
+      this.navigationService.navigateTo(['teams/join']);
+    } else if (rolesCount === 1) {
+      const selectedRole = user.roles![0];
+      this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, selectedRole);
+      this.navigationService.navigateTo(['layouts/my-teams']);
+    } else {
+      this.navigationService.navigateTo(['teams/selection']);
+    }
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

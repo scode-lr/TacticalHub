@@ -1,22 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { 
   IonButton,
   IonIcon,
   IonInput,
-  IonText,
   IonSpinner,
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, arrowBack, alertCircle } from 'ionicons/icons';
+import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
-import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
-import { SocialLoginComponent, SocialLoginResult } from '@components/social-login/social-login.component';
-import { TranslatePipe } from '@pipes/index';
+import { NavigationService } from '@services/navigation.service';
+import { AuthBrandingComponent, AuthFooterComponent } from '../components';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -29,28 +28,28 @@ import { TranslatePipe } from '@pipes/index';
     IonButton,
     IonIcon,
     IonInput,
-    IonText,
     IonSpinner,
     IonToast,
     AuthBrandingComponent,
-    SocialLoginComponent,
+    AuthFooterComponent,
     TranslatePipe
   ]
 })
 export class SignupPage {
-  signupForm: FormGroup;
-  isLoading = false;
-  showToast = false;
-  toastMessage = '';
-  appName = environment.name;
-  formSubmitted = false;
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly navigationService = inject(NavigationService);
+  private readonly translationService = inject(TranslationService);
+  private readonly authService = inject(AuthService);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private translationService: TranslationService
-  ) {
-    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle });
+  readonly signupForm: FormGroup;
+  readonly isLoading = this.authService.isLoading;
+  readonly showToast = signal<boolean>(false);
+  readonly toastMessage = signal<string>('');
+  readonly appName = environment.name;
+  readonly formSubmitted = signal<boolean>(false);
+
+  constructor() {
+    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline });
     
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -63,11 +62,11 @@ export class SignupPage {
     });
   }
 
-  goBack() {
-    this.router.navigate(['/welcome']);
+  goBack(): void {
+    this.navigationService.navigateTo(['/auth/welcome']);
   }
 
-  passwordMatchValidator(formGroup: FormGroup) {
+  passwordMatchValidator(formGroup: AbstractControl): ValidationErrors | null {
     const password = formGroup.get('password');
     const confirmPassword = formGroup.get('confirmPassword');
     
@@ -79,50 +78,44 @@ export class SignupPage {
     return null;
   }
 
-  async onSignUp() {
-    this.formSubmitted = true;
+  async onSignUp(): Promise<void> {
+    this.formSubmitted.set(true);
     
-    if (this.signupForm.valid) {
-      this.isLoading = true;
+    if (!this.signupForm.valid) {
+      this.showToastMessage(this.translationService.instant('validation.fillAllFields'));
+      return;
+    }
+
+    try {
+      const formData = this.signupForm.value;
       
-      setTimeout(() => {
-        this.isLoading = false;
-        this.showToastMessage('Account created successfully!');
-        
+      const response = await this.authService.signUp({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password
+      });
+      
+      if (response.success) {
+        this.showToastMessage(this.translationService.instant('messages.accountCreatedSuccess'));
         setTimeout(() => {
-          this.router.navigate(['/app/teams-search']);
+          this.navigationService.navigateTo(['/auth/loading']);
         }, 1000);
-      }, 2000);
-    } else {
-      this.showToastMessage('Please fill in all required fields correctly.');
+      } else {
+        this.showToastMessage(response.message);
+      }
+    } catch (error) {
+      this.showToastMessage(this.translationService.instant('messages.signUpError'));
     }
   }
 
-  onSocialLoginComplete(result: SocialLoginResult) {
-    if (result.success) {
-      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
-      this.showToastMessage(`${providerName} sign-up successful!`);
-      
-      setTimeout(() => {
-        this.router.navigate(['/app/teams-search']);
-      }, 800);
-    } else {
-      const providerName = result.provider === 'google' ? 'Google' : 'Apple';
-      this.showToastMessage(`${providerName} sign-up failed`);
-    }
+  private showToastMessage(message: string): void {
+    this.toastMessage.set(message);
+    this.showToast.set(true);
   }
 
-  navigateToSignIn() {
-    this.router.navigate(['/signin']);
-  }
-
-  private showToastMessage(message: string) {
-    this.toastMessage = message;
-    this.showToast = true;
-  }
-
-  onToastDismiss() {
-    this.showToast = false;
+  onToastDismiss(): void {
+    this.showToast.set(false);
   }
 
   get firstName() { return this.signupForm.get('firstName'); }

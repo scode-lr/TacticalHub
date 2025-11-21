@@ -17,11 +17,13 @@ export const sharedTranslations = {
     forgotPassword: '¿Olvidaste tu Contraseña?',
     signInButton: 'Iniciar Sesión',
     signUpButton: 'Registrarse',
+    signOut: 'Cerrar Sesión',
     or: 'o',
     continueWithGoogle: 'Continuar con Google',
     continueWithApple: 'Continuar con Apple',
     alreadyHaveAccount: '¿Ya tienes una cuenta?',
-    dontHaveAccount: '¿No tienes una cuenta?'
+    dontHaveAccount: '¿No tienes una cuenta?',
+    continueAsGuest: 'Continuar como Invitado'
   },
   common: {
     loading: 'Cargando...',
@@ -35,7 +37,8 @@ export const sharedTranslations = {
     back: 'Atrás',
     next: 'Siguiente',
     submit: 'Enviar',
-    close: 'Cerrar'
+    close: 'Cerrar',
+    submitting: 'Enviando...'
   },
   validation: {
     required: 'Este campo es obligatorio',
@@ -46,7 +49,73 @@ export const sharedTranslations = {
     minLength6: 'La contraseña debe tener al menos 6 caracteres',
     firstNameRequired: 'El nombre es obligatorio',
     lastNameRequired: 'El apellido es obligatorio',
-    confirmPasswordRequired: 'Por favor confirma tu contraseña'
+    confirmPasswordRequired: 'Por favor confirma tu contraseña',
+    emailRequired: 'El correo electrónico es obligatorio',
+    emailInvalid: 'Por favor ingresa un correo válido',
+    passwordRequired: 'La contraseña es obligatoria',
+    passwordMinLength: 'La contraseña debe tener al menos 6 caracteres',
+    checkInput: 'Por favor verifica tu información',
+    fillAllFields: 'Por favor completa todos los campos correctamente'
+  },
+  messages: {
+    accountCreatedSuccess: '¡Cuenta creada exitosamente!',
+    signUpError: 'Ocurrió un error durante el registro.',
+    signInError: 'Ocurrió un error',
+    googleSignUpSuccess: '¡Registro con Google exitoso!',
+    appleSignUpSuccess: '¡Registro con Apple exitoso!',
+    googleSignUpFailed: 'Registro con Google falló',
+    appleSignUpFailed: 'Registro con Apple falló',
+    googleSignInSuccess: '¡Inicio de sesión con Google exitoso!',
+    appleSignInSuccess: '¡Inicio de sesión con Apple exitoso!',
+    googleSignInFailed: 'Inicio de sesión con Google falló',
+    appleSignInFailed: 'Inicio de sesión con Apple falló'
+  },
+  loading: {
+    signingIn: 'Iniciando sesión...',
+    pleaseWait: 'Por favor espera mientras preparamos todo',
+    loadingProfile: 'Cargando tu perfil...',
+    preparingWorkspace: 'Preparando espacio de trabajo...',
+    allSet: '¡Todo listo!',
+    redirecting: 'Redirigiendo...'
+  },
+  roleSelection: {
+    welcome: 'Bienvenido de nuevo',
+    selectRole: 'Selecciona tu Rol',
+    chooseClub: 'Elige un club para continuar',
+    noRolesYet: 'Comienza agregando tu primer club',
+    defaultDescription: 'Gestiona las actividades de tu club',
+    permissions: 'permisos',
+    addNewClub: 'Agregar Nuevo Club',
+    joinOrCreate: 'Únete o crea un nuevo club',
+    skipForNow: 'Omitir por ahora',
+    canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil',
+    pending: 'Pendiente',
+    pendingRequests: 'Solicitudes Pendientes',
+    pendingDescription: 'Estas solicitudes están esperando aprobación del administrador del equipo'
+  },
+  joinTeam: {
+    title: 'Unirse a un Equipo',
+    subtitle: 'Introduce el código del equipo y selecciona tu rol para unirte',
+    subtitlePrivate: 'Selecciona tu rol para unirte al equipo',
+    enterCode: 'Introducir Código del Equipo',
+    codeDescription: 'Introduce el código de 5 dígitos proporcionado por el administrador del equipo',
+    selectRole: 'Selecciona tu Rol',
+    roleDescription: 'Elige cómo quieres participar en este equipo',
+    coachDescription: 'Crear y gestionar actividades del equipo, sesiones de entrenamiento y partidos',
+    viewerDescription: 'Ver información del equipo, horarios y resultados de partidos',
+    submitRequest: 'Enviar Solicitud',
+    joinInstant: 'Unirse Instantáneamente',
+    joiningInstant: 'Uniéndose...',
+    teamFound: '¡Equipo Encontrado!',
+    confirmMatch: 'Selecciona tu rol a continuación para unirte a este equipo',
+    tryDifferentCode: 'Probar Otro Código',
+    selectTeam: 'Seleccionar Equipo',
+    teamDescription: 'Elige qué equipo quieres entrenar',
+    category: 'Categoría'
+  },
+  roles: {
+    coach: 'Entrenador',
+    viewer: 'Observador'
   }
 } as const;
 

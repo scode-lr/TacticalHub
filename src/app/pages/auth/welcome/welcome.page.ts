@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   IonButton,
@@ -13,8 +12,9 @@ import {
 } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
-import { AuthBrandingComponent } from '@components/auth-branding/auth-branding.component';
-import { TranslatePipe } from '@pipes/index';
+import { NavigationService } from '@services/navigation.service';
+import { AuthBrandingComponent } from '../components';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'app-welcome',
@@ -31,13 +31,13 @@ import { TranslatePipe } from '@pipes/index';
   ]
 })
 export class WelcomePage implements OnInit {
+  private readonly navigationService = inject(NavigationService);
+  private readonly translationService = inject(TranslationService);
+  
   appName = environment.name;
   tagline = '';
   
-  constructor(
-    private router: Router,
-    private translationService: TranslationService
-  ) {
+  constructor() {
     addIcons({
       'log-in-outline': logInOutline,
       'person-add-outline': personAddOutline
@@ -45,19 +45,19 @@ export class WelcomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.tagline = this.translationService.t(environment.taglineKey);
+    this.tagline = this.translationService.instant(environment.taglineKey);
   }
 
   navigateToSignIn() {
-    this.router.navigate(['/signin']);
+    this.navigationService.navigateTo(['/auth/signin']);
   }
 
   navigateToSignUp() {
-    this.router.navigate(['/signup']);
+    this.navigationService.navigateTo(['/auth/signup']);
   }
 
   // Helper method to get translation (can be used in template)
   t(key: string): string {
-    return this.translationService.t(key);
+    return this.translationService.instant(key);
   }
 }

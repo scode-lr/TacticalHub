@@ -1,4 +1,4 @@
-import { AuthResponse } from '../app/core/responses';
+import { AuthResponse } from '../app/core/responses/auth.response';
 import { mockAdminUser } from './user.mock';
 
 export const mockSignInResponse: AuthResponse = {

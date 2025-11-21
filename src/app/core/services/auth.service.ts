@@ -1,147 +1,146 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { AuthUser, User } from '../models';
+import { SignInRequest, SignUpRequest } from '../requests/auth.request';
+import { mockUsers } from '../../../mocks/user.mock';
+import { STORAGE_KEYS } from '../constants/storage-keys';
+import { TranslationService } from './i18n/translation.service';
+import { StorageService } from './storage.service';
 
-export interface User {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  profileImage?: string;
-  clubId?: string;
-  clubName?: string;
-  joinedAt: Date;
-}
-
-export interface AuthState {
+export interface IAuthState {
   isAuthenticated: boolean;
   user: User | null;
   token: string | null;
 }
 
-export interface SignInRequest {
-  email: string;
-  password: string;
-}
-
-export interface SignUpRequest {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+export interface IAuthResponse {
+  success: boolean;
+  message: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private authStateSubject = new BehaviorSubject<AuthState>({
-    isAuthenticated: false,
-    user: null,
-    token: null
-  });
+  private readonly translationService = inject(TranslationService);
+  private readonly storageService = inject(StorageService);
+  private readonly _token = signal<string | null>(null);
+  private readonly _isLoading = signal<boolean>(false);
+  readonly isLoading = this._isLoading.asReadonly();
 
-  public authState$ = this.authStateSubject.asObservable();
-
+  _currentUser = signal<User | null>(null);
+  
   constructor() {
     this.checkStoredAuth();
   }
 
   private checkStoredAuth(): void {
-    const storedUser = localStorage.getItem('tacticalhub_user');
-    const storedToken = localStorage.getItem('tacticalhub_token');
+    const storedUser = this.storageService.get<User>(STORAGE_KEYS.USER);
+    const storedToken = this.storageService.getString(STORAGE_KEYS.TOKEN);
     
     if (storedUser && storedToken) {
-      const user = JSON.parse(storedUser);
-      this.authStateSubject.next({
-        isAuthenticated: true,
-        user,
-        token: storedToken
-      });
+      this._currentUser.set(storedUser);
+      this._token.set(storedToken);
     }
   }
 
-  async signIn(credentials: SignInRequest): Promise<{ success: boolean; message: string }> {
+  async signIn(credentials: SignInRequest): Promise<IAuthResponse> {
     try {
-      // Simulate API call
+      this._isLoading.set(true);
       await this.delay(1500);
       
-      // Mock authentication logic
-      if (credentials.email && credentials.password.length >= 6) {
-        const mockUser: User = {
-          id: this.generateId(),
-          email: credentials.email,
-          firstName: 'John',
-          lastName: 'Doe',
-          clubId: Math.random() > 0.5 ? 'club-123' : undefined,
-          clubName: Math.random() > 0.5 ? 'FC Barcelona Youth' : undefined,
-          joinedAt: new Date()
+      if (!credentials.email || credentials.password.length < 6) {
+        this._isLoading.set(false);
+        return { 
+          success: false, 
+          message: this.translationService.instant('validation.checkInput') 
         };
-
-        const mockToken = this.generateToken();
-        
-        // Store in localStorage
-        localStorage.setItem('tacticalhub_user', JSON.stringify(mockUser));
-        localStorage.setItem('tacticalhub_token', mockToken);
-        
-        // Update auth state
-        this.authStateSubject.next({
-          isAuthenticated: true,
-          user: mockUser,
-          token: mockToken
-        });
-
-        return { success: true, message: 'Sign in successful!' };
-      } else {
-        return { success: false, message: 'Invalid credentials' };
       }
+
+      const authenticatedUser = mockUsers.find(user => user.email === credentials.email);
+      
+      if (!authenticatedUser) {
+        this._isLoading.set(false);
+        return { 
+          success: false, 
+          message: this.translationService.instant('messages.signInError') 
+        };
+      }
+
+      const mockToken = this.generateToken();
+
+      const authUser: AuthUser = {
+        id: authenticatedUser.id,
+        email: authenticatedUser.email,
+        username: authenticatedUser.username,
+        token: mockToken
+      };
+      
+      this.storageService.set<AuthUser>(STORAGE_KEYS.USER, authUser);
+      this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
+      
+      this._currentUser.set(authUser);
+      this._token.set(mockToken);
+      this._isLoading.set(false);
+
+      return { 
+        success: true, 
+        message: this.translationService.instant('messages.googleSignInSuccess') 
+      };
     } catch (error) {
-      return { success: false, message: 'Sign in failed. Please try again.' };
+      this._isLoading.set(false);
+      return { 
+        success: false, 
+        message: this.translationService.instant('messages.signInError') 
+      };
     }
   }
 
-  async signUp(userData: SignUpRequest): Promise<{ success: boolean; message: string }> {
+  async signUp(userData: SignUpRequest): Promise<IAuthResponse> {
     try {
-      // Simulate API call
+      this._isLoading.set(true);
       await this.delay(2000);
       
-      // Mock registration logic
       if (userData.email && userData.password.length >= 6) {
         const newUser: User = {
-          id: this.generateId(),
           email: userData.email,
           firstName: userData.firstName,
           lastName: userData.lastName,
-          // New users don't have a club initially
-          clubId: undefined,
-          clubName: undefined,
-          joinedAt: new Date()
+          id: '',
+          token: ''
         };
 
         const mockToken = this.generateToken();
         
-        // Store in localStorage
-        localStorage.setItem('tacticalhub_user', JSON.stringify(newUser));
-        localStorage.setItem('tacticalhub_token', mockToken);
+        this.storageService.set<User>(STORAGE_KEYS.USER, newUser);
+        this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
         
-        // Update auth state
-        this.authStateSubject.next({
-          isAuthenticated: true,
-          user: newUser,
-          token: mockToken
-        });
+        this._currentUser.set(newUser);
+        this._token.set(mockToken);
+        this._isLoading.set(false);
 
-        return { success: true, message: 'Account created successfully!' };
+        return { 
+          success: true, 
+          message: this.translationService.instant('messages.accountCreatedSuccess') 
+        };
       } else {
-        return { success: false, message: 'Invalid user data' };
+        this._isLoading.set(false);
+        return { 
+          success: false, 
+          message: this.translationService.instant('validation.fillAllFields') 
+        };
       }
     } catch (error) {
-      return { success: false, message: 'Registration failed. Please try again.' };
+      this._isLoading.set(false);
+      return { 
+        success: false, 
+        message: this.translationService.instant('messages.signUpError') 
+      };
     }
   }
 
-  async signInWithGoogle(): Promise<{ success: boolean; message: string }> {
+  async signInWithGoogle(): Promise<IAuthResponse> {
     try {
-      // Simulate Google sign-in
+      this._isLoading.set(true);
       await this.delay(1500);
       
       const googleUser: User = {
@@ -149,32 +148,37 @@ export class AuthService {
         email: 'user@gmail.com',
         firstName: 'Google',
         lastName: 'User',
-        profileImage: 'https://via.placeholder.com/100x100?text=GU',
-        clubId: undefined,
-        clubName: undefined,
-        joinedAt: new Date()
+        avatarUrl: 'https://via.placeholder.com/100x100?text=GU',
+        roles: [],
+        createdAt: new Date(),
+        token: ''
       };
 
       const mockToken = this.generateToken();
       
-      localStorage.setItem('tacticalhub_user', JSON.stringify(googleUser));
-      localStorage.setItem('tacticalhub_token', mockToken);
+      this.storageService.set<User>(STORAGE_KEYS.USER, googleUser);
+      this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
       
-      this.authStateSubject.next({
-        isAuthenticated: true,
-        user: googleUser,
-        token: mockToken
-      });
+      this._currentUser.set(googleUser);
+      this._token.set(mockToken);
+      this._isLoading.set(false);
 
-      return { success: true, message: 'Google sign-in successful!' };
+      return { 
+        success: true, 
+        message: this.translationService.instant('messages.googleSignInSuccess') 
+      };
     } catch (error) {
-      return { success: false, message: 'Google sign-in failed' };
+      this._isLoading.set(false);
+      return { 
+        success: false, 
+        message: this.translationService.instant('messages.googleSignInFailed') 
+      };
     }
   }
 
-  async signInWithApple(): Promise<{ success: boolean; message: string }> {
+  async signInWithApple(): Promise<IAuthResponse> {
     try {
-      // Simulate Apple sign-in
+      this._isLoading.set(true);
       await this.delay(1500);
       
       const appleUser: User = {
@@ -182,83 +186,41 @@ export class AuthService {
         email: 'user@icloud.com',
         firstName: 'Apple',
         lastName: 'User',
-        profileImage: 'https://via.placeholder.com/100x100?text=AU',
-        clubId: undefined,
-        clubName: undefined,
-        joinedAt: new Date()
+        avatarUrl: 'https://via.placeholder.com/100x100?text=AU',
+        roles: [],
+        createdAt: new Date(),
+        token: ''
       };
 
       const mockToken = this.generateToken();
       
-      localStorage.setItem('tacticalhub_user', JSON.stringify(appleUser));
-      localStorage.setItem('tacticalhub_token', mockToken);
+      this.storageService.set<User>(STORAGE_KEYS.USER, appleUser);
+      this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
       
-      this.authStateSubject.next({
-        isAuthenticated: true,
-        user: appleUser,
-        token: mockToken
-      });
+      this._currentUser.set(appleUser);
+      this._token.set(mockToken);
+      this._isLoading.set(false);
 
-      return { success: true, message: 'Apple sign-in successful!' };
+      return { 
+        success: true, 
+        message: this.translationService.instant('messages.appleSignInSuccess') 
+      };
     } catch (error) {
-      return { success: false, message: 'Apple sign-in failed' };
+      this._isLoading.set(false);
+      return { 
+        success: false, 
+        message: this.translationService.instant('messages.appleSignInFailed') 
+      };
     }
   }
 
   async signOut(): Promise<void> {
-    // Clear localStorage
-    localStorage.removeItem('tacticalhub_user');
-    localStorage.removeItem('tacticalhub_token');
+    this.storageService.remove(STORAGE_KEYS.USER);
+    this.storageService.remove(STORAGE_KEYS.TOKEN);
+    this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
     
-    // Reset auth state
-    this.authStateSubject.next({
-      isAuthenticated: false,
-      user: null,
-      token: null
-    });
-  }
-
-  getCurrentUser(): User | null {
-    return this.authStateSubject.value.user;
-  }
-
-  isAuthenticated(): boolean {
-    return this.authStateSubject.value.isAuthenticated;
-  }
-
-  hasClub(): boolean {
-    const user = this.getCurrentUser();
-    return !!(user?.clubId);
-  }
-
-  async joinClub(clubId: string, clubName: string): Promise<{ success: boolean; message: string }> {
-    try {
-      const currentUser = this.getCurrentUser();
-      if (!currentUser) {
-        return { success: false, message: 'User not authenticated' };
-      }
-
-      // Simulate API call
-      await this.delay(1000);
-
-      const updatedUser: User = {
-        ...currentUser,
-        clubId,
-        clubName
-      };
-
-      localStorage.setItem('tacticalhub_user', JSON.stringify(updatedUser));
-
-      this.authStateSubject.next({
-        isAuthenticated: true,
-        user: updatedUser,
-        token: this.authStateSubject.value.token
-      });
-
-      return { success: true, message: `Successfully joined ${clubName}!` };
-    } catch (error) {
-      return { success: false, message: 'Failed to join club' };
-    }
+    this._currentUser.set(null);
+    this._token.set(null);
   }
 
   private delay(ms: number): Promise<void> {
@@ -266,10 +228,10 @@ export class AuthService {
   }
 
   private generateId(): string {
-    return 'user_' + Math.random().toString(36).substr(2, 9);
+    return Math.random().toString(36).substr(2, 9);
   }
 
   private generateToken(): string {
-    return 'token_' + Math.random().toString(36).substr(2, 16);
+    return Math.random().toString(36).substr(2, 16);
   }
 }
