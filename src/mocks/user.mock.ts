@@ -1,19 +1,8 @@
 import { User } from '../app/core/models/user.model';
-import { Role } from '../app/core/models/role.model';
+import { Role, RoleType } from '../app/core/models/role.model';
 import { Club } from '../app/core/models/club.model';
 import { Team } from '../app/core/models/team.model';
 
-// Mock Club
-export const mockClub: Club = {
-  id: 'club-001',
-  name: 'Voltregà CF',
-  description: 'Professional football club',
-  location: 'SHV',
-  logoUrl: '/assets/logo.svg',
-  level: 'Professional',
-  membersCount: 50,
-  teamsCount: 3
-};
 
 // Mock Teams
 export const mockTeamJuvenilB: Team = {
@@ -44,10 +33,21 @@ export const mockTeamAlevinC: Team = {
   clubId: 'club-001'
 };
 
+// Mock Club
+export const mockClub: Club = {
+  id: 'club-001',
+  name: 'Voltregà CF',
+  description: 'Professional football club',
+  location: 'SHV',
+  logoUrl: '/assets/logo.svg',
+  teams: [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC]
+};
+
 // Mock Roles
 export const mockPlayerRole: Role = {
   id: 'role-001',
   name: 'Player',
+  roleId: RoleType.Viewer,
   club: mockClub,
   description: 'Regular player role',
   permissions: ['view_teams', 'join_teams', 'view_matches', 'view_trainings'],
@@ -57,6 +57,7 @@ export const mockPlayerRole: Role = {
 export const mockCoachRole: Role = {
   id: 'role-002',
   name: 'Coach',
+  roleId: RoleType.Coach,
   club: mockClub,
   team: 'U-19',
   description: 'Team coach role',
@@ -67,6 +68,7 @@ export const mockCoachRole: Role = {
 export const mockAdminRole: Role = {
   id: 'role-003',
   name: 'Admin',
+  roleId: RoleType.Admin,
   club: mockClub,
   description: 'Administrator role',
   permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_users', 'manage_roles', 'manage_club'],
@@ -76,6 +78,7 @@ export const mockAdminRole: Role = {
 export const mockViewerRole: Role = {
   id: 'role-005',
   name: 'Viewer',
+  roleId: RoleType.Viewer,
   club: mockClub,
   description: 'Viewer role with read-only access',
   permissions: ['view_teams', 'view_matches', 'view_trainings'],
@@ -85,6 +88,7 @@ export const mockViewerRole: Role = {
 export const mockCoachSeniorRole: Role = {
   id: 'role-004',
   name: 'Coach',
+  roleId: RoleType.Coach,
   club: mockClub,
   team: 'Senior Team',
   description: 'Senior team coach role',

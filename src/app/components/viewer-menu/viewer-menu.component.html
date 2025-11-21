@@ -1,0 +1,61 @@
+<div class="menu-container">
+  <div class="menu-header">
+    <h2>{{ 'viewer.title' | translate }}</h2>
+    <p class="menu-subtitle">{{ 'viewer.subtitle' | translate }}</p>
+  </div>
+  <app-team-selector />
+  
+  <nav class="menu-nav">
+    @for (item of menuItems; track item.id) {
+      <button 
+        class="menu-item" 
+        [class.active]="isSelected(item.id)"
+        (click)="selectMenuItem(item)">
+        <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
+        <span class="menu-label">{{ item.label | translate }}</span>
+      </button>
+    }
+  </nav>
+
+  <!-- Mobile Menu Nav -->
+  <nav class="menu-nav-mobile">
+    @for (item of visibleMenuItems(); track item.id) {
+      <button 
+        class="menu-item" 
+        [class.active]="isSelected(item.id)"
+        (click)="selectMenuItem(item)">
+        <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
+        <span class="menu-label">{{ item.label | translate }}</span>
+      </button>
+    }
+    
+    <button 
+      class="menu-item menu-more" 
+      id="more-trigger"
+      (click)="togglePopover()">
+      <ion-icon name="ellipsis-horizontal" class="menu-icon"></ion-icon>
+      <span class="menu-label">{{ 'viewer.menu.more' | translate }}</span>
+    </button>
+
+    <ion-popover 
+      trigger="more-trigger" 
+      [isOpen]="isPopoverOpen()"
+      (didDismiss)="closePopover()"
+      side="top"
+      alignment="end">
+      <ng-template>
+        <div class="popover-menu">
+          @for (item of hiddenMenuItems(); track item.id) {
+            <button 
+              class="popover-item"
+              [class.active]="isSelected(item.id)"
+              (click)="selectMenuItem(item)">
+              <ion-icon [name]="item.icon" class="popover-icon"></ion-icon>
+              <span class="popover-label">{{ item.label | translate }}</span>
+            </button>
+          }
+        </div>
+      </ng-template>
+    </ion-popover>
+  </nav>
+</div>

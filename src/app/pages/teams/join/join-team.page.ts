@@ -7,7 +7,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { UserService } from '@core/services/user.service';
 import { Team } from '@core/models/team.model';
-import { RoleStatus } from '@core/models/role.model';
+import { RoleStatus, RoleType } from '@core/models/role.model';
 import { mockTeams } from '../../../../mocks';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline } from 'ionicons/icons';
@@ -255,6 +255,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
           const pendingRole = {
             id: `pending-${Date.now()}`,
             name: 'Coach',
+            roleId: RoleType.Coach,
             club: {
               id: 'temp-club',
               name: this.matchedTeam()?.clubName || 'Club',

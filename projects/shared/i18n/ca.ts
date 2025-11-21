@@ -116,6 +116,61 @@ export const sharedTranslations = {
   roles: {
     coach: 'Entrenador',
     viewer: 'Observador'
+  },
+  viewer: {
+    title: 'Portal de l\'Observador',
+    subtitle: 'Accedeix a informació i serveis del club',
+    menu: {
+      home: 'Inici',
+      news: 'Notícies',
+      action: 'Accions',
+      information: 'Informació',
+      proposals: 'Propostes i Queixes',
+      matches: 'Partits del Cap de Setmana',
+      partners: 'Socis',
+      more: 'Més'
+    },
+    description: {
+      home: 'Benvingut al teu portal del club',
+      news: 'Últimes actualitzacions i anuncis',
+      action: 'Registra jugadors o fes-te soci',
+      information: 'Informació i recursos del club',
+      proposals: 'Envia propostes o queixes',
+      matches: 'Veure propers partits del cap de setmana',
+      partners: 'Els nostres socis i patrocinadors del club'
+    },
+    home: {
+      welcome: 'Benvingut al Club!',
+      description: 'Aquí pots accedir a tots els serveis del club i mantenir-te actualitzat amb les últimes notícies i esdeveniments.'
+    },
+    news: {
+      empty: 'No hi ha Notícies Disponibles',
+      emptyDescription: 'No hi ha articles de notícies en aquest moment. Torna més tard per veure actualitzacions.'
+    },
+    action: {
+      registerPlayer: 'Registrar un Jugador',
+      registerPlayerDesc: 'Registra un nou jugador per unir-se al club',
+      register: 'Registrar',
+      becomeMember: 'Fer-se Soci',
+      becomeMemberDesc: 'Uneix-te com a soci oficial del club',
+      join: 'Unir-se Ara'
+    },
+    information: {
+      empty: 'Informació Pròximament',
+      emptyDescription: 'La informació i recursos del club estaran disponibles aquí aviat.'
+    },
+    proposals: {
+      empty: 'Encara No hi ha Propostes',
+      emptyDescription: 'Envia les teves propostes o queixes per ajudar a millorar el club.'
+    },
+    matches: {
+      empty: 'No hi ha Partits Programats',
+      emptyDescription: 'El calendari de partits del cap de setmana apareixerà aquí quan estigui disponible.'
+    },
+    partners: {
+      empty: 'No hi ha Socis Llistats',
+      emptyDescription: 'Els nostres socis i patrocinadors del club es llistaran aquí.'
+    }
   }
 } as const;
 

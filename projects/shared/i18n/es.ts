@@ -116,6 +116,61 @@ export const sharedTranslations = {
   roles: {
     coach: 'Entrenador',
     viewer: 'Observador'
+  },
+  viewer: {
+    title: 'Portal del Observador',
+    subtitle: 'Accede a información y servicios del club',
+    menu: {
+      home: 'Inicio',
+      news: 'Noticias',
+      action: 'Acciones',
+      information: 'Información',
+      proposals: 'Propuestas y Quejas',
+      matches: 'Partidos del Fin de Semana',
+      partners: 'Socios',
+      more: 'Más'
+    },
+    description: {
+      home: 'Bienvenido a tu portal del club',
+      news: 'Últimas actualizaciones y anuncios',
+      action: 'Registra jugadores o hazte socio',
+      information: 'Información y recursos del club',
+      proposals: 'Envía propuestas o quejas',
+      matches: 'Ver próximos partidos del fin de semana',
+      partners: 'Nuestros socios y patrocinadores del club'
+    },
+    home: {
+      welcome: '¡Bienvenido al Club!',
+      description: 'Aquí puedes acceder a todos los servicios del club y mantenerte actualizado con las últimas noticias y eventos.'
+    },
+    news: {
+      empty: 'No hay Noticias Disponibles',
+      emptyDescription: 'No hay artículos de noticias en este momento. Vuelve más tarde para ver actualizaciones.'
+    },
+    action: {
+      registerPlayer: 'Registrar un Jugador',
+      registerPlayerDesc: 'Registra un nuevo jugador para unirse al club',
+      register: 'Registrar',
+      becomeMember: 'Hacerse Socio',
+      becomeMemberDesc: 'Únete como socio oficial del club',
+      join: 'Unirse Ahora'
+    },
+    information: {
+      empty: 'Información Próximamente',
+      emptyDescription: 'La información y recursos del club estarán disponibles aquí pronto.'
+    },
+    proposals: {
+      empty: 'Aún No hay Propuestas',
+      emptyDescription: 'Envía tus propuestas o quejas para ayudar a mejorar el club.'
+    },
+    matches: {
+      empty: 'No hay Partidos Programados',
+      emptyDescription: 'El calendario de partidos del fin de semana aparecerá aquí cuando esté disponible.'
+    },
+    partners: {
+      empty: 'No hay Socios Listados',
+      emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
+    }
   }
 } as const;
 

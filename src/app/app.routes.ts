@@ -30,8 +30,48 @@ export const routes: Routes = [
   },
   {
     path: 'app',
-    redirectTo: 'layouts/my-teams',
-    pathMatch: 'full',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: ':roleId',
+        loadComponent: () => import('./pages/viewer/viewer.page').then(m => m.ViewerPage),
+        children: [
+          {
+            path: '',
+            redirectTo: 'home',
+            pathMatch: 'full'
+          },
+          {
+            path: 'home',
+            loadComponent: () => import('./pages/viewer/home/home.page').then(m => m.ViewerHomePage)
+          },
+          {
+            path: 'news',
+            loadComponent: () => import('./pages/viewer/news/news.page').then(m => m.ViewerNewsPage)
+          },
+          {
+            path: 'action',
+            loadComponent: () => import('./pages/viewer/action/action.page').then(m => m.ViewerActionPage)
+          },
+          {
+            path: 'information',
+            loadComponent: () => import('./pages/viewer/information/information.page').then(m => m.ViewerInformationPage)
+          },
+          {
+            path: 'proposals',
+            loadComponent: () => import('./pages/viewer/proposals/proposals.page').then(m => m.ViewerProposalsPage)
+          },
+          {
+            path: 'matches',
+            loadComponent: () => import('./pages/viewer/matches/matches.page').then(m => m.ViewerMatchesPage)
+          },
+          {
+            path: 'partners',
+            loadComponent: () => import('./pages/viewer/partners/partners.page').then(m => m.ViewerPartnersPage)
+          }
+        ]
+      }
+    ]
   },
   {
     path: 'layouts',

@@ -1,0 +1,225 @@
+.menu-container {
+  width: 280px;
+  background: var(--background-primary, #ffffff);
+  border-right: 1px solid var(--border-light, #e5e7eb);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  .menu-header {
+    padding: 2rem 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--border-light, #e5e7eb);
+
+    h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary, #111827);
+    }
+
+    .menu-subtitle {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary, #6b7280);
+      line-height: 1.5;
+    }
+  }
+
+  .menu-nav {
+    flex: 1;
+    padding: 1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.875rem 1rem;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-secondary, #6b7280);
+
+      .menu-icon {
+        font-size: 1.375rem;
+        color: var(--text-light, #9ca3af);
+        transition: all 0.2s ease;
+      }
+
+      .menu-label {
+        flex: 1;
+        transition: all 0.2s ease;
+      }
+
+      &:hover:not(.active) {
+        background: var(--background-secondary, #f8f9fa);
+        color: var(--text-primary, #111827);
+
+        .menu-icon {
+          color: var(--text-secondary, #6b7280);
+        }
+      }
+
+      &.active {
+        background: var(--ion-color-primary, #3880ff);
+        color: white;
+        font-weight: 600;
+
+        .menu-icon {
+          color: white;
+        }
+
+        box-shadow: 0 4px 12px rgba(56, 128, 255, 0.25);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .menu-nav-mobile {
+    display: none;
+  }
+}
+
+.popover-menu {
+  padding: 0.5rem;
+  background: var(--background-primary, #ffffff);
+
+  .popover-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+    width: 100%;
+    min-width: 180px;
+
+    .popover-icon {
+      font-size: 1.25rem;
+      color: var(--text-light, #9ca3af);
+      transition: all 0.2s ease;
+    }
+
+    .popover-label {
+      flex: 1;
+      transition: all 0.2s ease;
+    }
+
+    &:hover:not(.active) {
+      background: var(--background-secondary, #f8f9fa);
+      color: var(--text-primary, #111827);
+
+      .popover-icon {
+        color: var(--text-secondary, #6b7280);
+      }
+    }
+
+    &.active {
+      background: var(--ion-color-primary-tint, #4c8dff);
+      color: var(--ion-color-primary, #3880ff);
+      font-weight: 600;
+
+      .popover-icon {
+        color: var(--ion-color-primary, #3880ff);
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-container {
+    width: 100%;
+    order: 2;
+    border-right: none;
+    border-top: 1px solid var(--border-light, #e5e7eb);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background: var(--background-primary, #ffffff);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+
+    .menu-header {
+      display: none;
+    }
+
+    .menu-nav {
+      display: none;
+    }
+
+    .menu-nav-mobile {
+      display: flex;
+      padding: 0.5rem 0.25rem;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      gap: 0.25rem;
+      justify-content: space-around;
+
+      .menu-item {
+        flex-direction: column;
+        min-width: 60px;
+        padding: 0.75rem 0.25rem;
+        gap: 0;
+        background: transparent;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: center;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--text-secondary, #6b7280);
+
+        .menu-icon {
+          font-size: 1.625rem;
+          color: var(--text-light, #9ca3af);
+          transition: all 0.2s ease;
+        }
+
+        .menu-label {
+          display: none;
+        }
+
+        &.active {
+          color: var(--ion-color-primary, #3880ff);
+
+          .menu-icon {
+            color: var(--ion-color-primary, #3880ff);
+          }
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        &.menu-more {
+          .menu-icon {
+            font-size: 1.625rem;
+          }
+        }
+      }
+    }
+  }
+}

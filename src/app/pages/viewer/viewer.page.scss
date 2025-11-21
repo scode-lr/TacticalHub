@@ -1,0 +1,31 @@
+.viewer-page {
+  height: 100vh;
+  background: var(--background-primary, #ffffff);
+  overflow: hidden;
+
+  .layout-container {
+    display: flex;
+    height: 100%;
+
+    .content-container {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+      background: var(--background-secondary, #f8f9fa);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .viewer-page {
+    .layout-container {
+      flex-direction: column;
+
+      .content-container {
+        order: 1;
+        padding: 1.5rem;
+        padding-bottom: 70px;
+      }
+    }
+  }
+}

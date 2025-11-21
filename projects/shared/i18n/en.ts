@@ -116,6 +116,61 @@ export const sharedTranslations = {
   roles: {
     coach: 'Coach',
     viewer: 'Viewer'
+  },
+  viewer: {
+    title: 'Viewer Portal',
+    subtitle: 'Access club information and services',
+    menu: {
+      home: 'Home',
+      news: 'News',
+      action: 'Actions',
+      information: 'Information',
+      proposals: 'Proposals & Complaints',
+      matches: 'Weekend Matches',
+      partners: 'Partners',
+      more: 'More'
+    },
+    description: {
+      home: 'Welcome to your club portal',
+      news: 'Latest updates and announcements',
+      action: 'Register players or become a member',
+      information: 'Club information and resources',
+      proposals: 'Submit proposals or complaints',
+      matches: 'View upcoming weekend matches',
+      partners: 'Our club partners and sponsors'
+    },
+    home: {
+      welcome: 'Welcome to the Club!',
+      description: 'Here you can access all club services and stay updated with the latest news and events.'
+    },
+    news: {
+      empty: 'No News Available',
+      emptyDescription: 'There are no news articles at this time. Check back later for updates.'
+    },
+    action: {
+      registerPlayer: 'Register a Player',
+      registerPlayerDesc: 'Register a new player to join the club',
+      register: 'Register',
+      becomeMember: 'Become a Member',
+      becomeMemberDesc: 'Join as an official club member',
+      join: 'Join Now'
+    },
+    information: {
+      empty: 'Information Coming Soon',
+      emptyDescription: 'Club information and resources will be available here soon.'
+    },
+    proposals: {
+      empty: 'No Proposals Yet',
+      emptyDescription: 'Submit your proposals or complaints to help improve the club.'
+    },
+    matches: {
+      empty: 'No Matches Scheduled',
+      emptyDescription: 'Weekend match schedule will appear here when available.'
+    },
+    partners: {
+      empty: 'No Partners Listed',
+      emptyDescription: 'Our club partners and sponsors will be listed here.'
+    }
   }
 } as const;
 
