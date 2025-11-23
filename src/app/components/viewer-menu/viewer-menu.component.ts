@@ -14,11 +14,15 @@ import {
   chatbubbleEllipsesOutline,
   footballOutline,
   peopleOutline,
-  ellipsisHorizontal
+  ellipsisHorizontal,
+  logOutOutline,
+  personOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
-import { TeamSelectorComponent } from "@components/team-selector/team-selector.component";
+import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
+import { UserService } from '@core/services/user.service';
+import { User } from '@core/models/user.model';
 
 interface MenuItem {
   id: string;
@@ -37,15 +41,18 @@ interface MenuItem {
     IonIcon,
     IonPopover,
     TranslatePipe,
-    TeamSelectorComponent
+    RoleSelectorComponent
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ViewerMenuComponent {
   private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
   
   readonly selectedMenuItem = signal<string>('home');
   readonly isPopoverOpen = signal<boolean>(false);
+  readonly user = signal<User | null>(null);
+  readonly avatarUrl = signal<string>('assets/default-avatar.svg');
   
   readonly menuItems: MenuItem[] = [
     { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
@@ -63,6 +70,7 @@ export class ViewerMenuComponent {
   constructor() {
     this.initializeIcons();
     this.trackRouteChanges();
+    this.loadUserData();
   }
 
   private initializeIcons() {
@@ -74,8 +82,18 @@ export class ViewerMenuComponent {
       chatbubbleEllipsesOutline,
       footballOutline,
       peopleOutline,
-      ellipsisHorizontal
+      ellipsisHorizontal,
+      logOutOutline,
+      personOutline
     });
+  }
+
+  private loadUserData() {
+    const storedUser = this.userService.getStoredUser();
+    if (storedUser) {
+      this.user.set(storedUser);
+      this.avatarUrl.set(storedUser.avatarUrl || 'assets/default-avatar.svg');
+    }
   }
 
   private trackRouteChanges() {
@@ -108,5 +126,13 @@ export class ViewerMenuComponent {
 
   closePopover() {
     this.isPopoverOpen.set(false);
+  }
+
+  logout() {
+    this.userService.logout();
+  }
+
+  onAvatarError() {
+    this.avatarUrl.set('assets/default-avatar.svg');
   }
 }

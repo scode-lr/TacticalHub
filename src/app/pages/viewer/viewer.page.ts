@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { ViewerMenuComponent } from '@components/viewer-menu/viewer-menu.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
 
 @Component({
   selector: 'app-viewer',
@@ -13,15 +15,11 @@ import { ViewerMenuComponent } from '@components/viewer-menu/viewer-menu.compone
     CommonModule,
     RouterModule,
     IonContent,
-    ViewerMenuComponent
+    ViewerMenuComponent,
+    UserHeaderComponent,
+    RoleSelectorComponent
   ]
 })
-export class ViewerPage implements OnInit {
+export class ViewerPage  {
   private readonly route = inject(ActivatedRoute);
-
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      console.log('Viewer roleId:', params['roleId']);
-    });
-  }
 }

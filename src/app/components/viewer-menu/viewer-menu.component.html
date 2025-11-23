@@ -1,9 +1,6 @@
 <div class="menu-container">
-  <div class="menu-header">
-    <h2>{{ 'viewer.title' | translate }}</h2>
-    <p class="menu-subtitle">{{ 'viewer.subtitle' | translate }}</p>
-  </div>
-  <app-team-selector />
+  <app-role-selector class="desktop-only" ></app-role-selector>
+
   
   <nav class="menu-nav">
     @for (item of menuItems; track item.id) {
@@ -16,6 +13,20 @@
       </button>
     }
   </nav>
+
+  <!-- User Section (Desktop Only) -->
+  <div class="user-section desktop-only">
+    <div class="user-info">
+      <img [src]="avatarUrl()" [alt]="user()?.username" (error)="onAvatarError()" class="user-avatar">
+      <div class="user-details">
+        <div class="user-name">{{ user()?.firstName }} {{ user()?.lastName }}</div>
+        <div class="user-email">{{ user()?.email }}</div>
+      </div>
+    </div>
+    <button class="logout-button" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </button>
+  </div>
 
   <!-- Mobile Menu Nav -->
   <nav class="menu-nav-mobile">

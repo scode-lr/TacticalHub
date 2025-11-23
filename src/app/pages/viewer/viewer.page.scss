@@ -3,6 +3,10 @@
   background: var(--background-primary, #ffffff);
   overflow: hidden;
 
+  .mobile-header {
+    display: none;
+  }
+
   .layout-container {
     display: flex;
     height: 100%;
@@ -18,8 +22,44 @@
 
 @media (max-width: 768px) {
   .viewer-page {
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background: var(--background-primary, #ffffff);
+      border-bottom: 1px solid var(--border-light, #e5e7eb);
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+
+      .mobile-header-left {
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .mobile-header-right {
+        display: flex;
+        align-items: center;
+
+        app-user-header {
+          ::ng-deep .page-header {
+            padding: 0;
+            border-bottom: none;
+            position: static;
+
+            .header-content {
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+
     .layout-container {
       flex-direction: column;
+      height: calc(100vh - 56px);
 
       .content-container {
         order: 1;

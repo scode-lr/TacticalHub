@@ -81,6 +81,7 @@ export const sharedTranslations = {
   roleSelection: {
     welcome: 'Benvingut de nou',
     selectRole: 'Selecciona el teu Rol',
+    switchRole: 'Canviar Rol',
     chooseClub: 'Tria un club per continuar',
     noRolesYet: 'Comença afegint el teu primer club',
     defaultDescription: 'Gestiona les activitats del teu club',
