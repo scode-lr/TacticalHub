@@ -38,7 +38,17 @@ export const sharedTranslations = {
     next: 'Next',
     submit: 'Submit',
     close: 'Close',
-    submitting: 'Submitting...'
+    submitting: 'Submitting...',
+    settings: 'Settings'
+  },
+  settings: {
+    title: 'Settings',
+    language: 'Language',
+    selectLanguage: 'Select Language',
+    english: 'English',
+    spanish: 'Spanish',
+    catalan: 'Catalan',
+    languageChanged: 'Language changed successfully'
   },
   validation: {
     required: 'This field is required',

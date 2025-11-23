@@ -34,11 +34,21 @@ export const sharedTranslations = {
     save: 'Guardar',
     delete: 'Eliminar',
     edit: 'Editar',
-    back: 'Atrás',
+    back: 'Volver',
     next: 'Siguiente',
     submit: 'Enviar',
     close: 'Cerrar',
-    submitting: 'Enviando...'
+    submitting: 'Enviando...',
+    settings: 'Ajustes'
+  },
+  settings: {
+    title: 'Ajustes',
+    language: 'Idioma',
+    selectLanguage: 'Seleccionar Idioma',
+    english: 'Inglés',
+    spanish: 'Español',
+    catalan: 'Catalán',
+    languageChanged: 'Idioma cambiado correctamente'
   },
   validation: {
     required: 'Este campo es obligatorio',

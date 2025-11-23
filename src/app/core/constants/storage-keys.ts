@@ -6,4 +6,5 @@ export const STORAGE_KEYS = {
   TOKEN: 'userToken',
   SELECTED_ROLE: 'selectedRole',
   LANGUAGE: 'language',
+  FORCE_LANGUAGE: 'forceLanguage',
 } as const;

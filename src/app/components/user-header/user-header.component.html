@@ -15,6 +15,10 @@
     
     @if (showUserMenu()) {
       <div class="user-dropdown">
+        <button class="dropdown-item" (click)="goToSettings()">
+          <ion-icon name="settings-outline"></ion-icon>
+          <span>{{ 'common.settings' | translate }}</span>
+        </button>
         <button class="dropdown-item logout-item" (click)="logout()">
           <ion-icon name="log-out-outline"></ion-icon>
           <span>{{ 'auth.signOut' | translate }}</span>

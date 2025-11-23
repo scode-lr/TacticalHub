@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { SHARED_TRANSLATIONS } from '../../i18n/shared';
 import { StorageService } from '../storage.service';
 import { STORAGE_KEYS } from '../../constants/storage-keys';
+import { Device } from '@capacitor/device';
 
 @Injectable({
   providedIn: 'root'
@@ -13,27 +14,30 @@ export class TranslationService {
   private projectTranslations: any = {};
   private supportedLanguages: string[] = ['en'];
   private defaultLanguage = 'en';
+  private initialized = false;
 
-  constructor() {
-    this.detectAndSetLanguage();
-  }
-
-  initialize(config: {
+  async initialize(config: {
     translations: Record<string, any>;
     supportedLanguages: string[];
     defaultLanguage: string;
-  }): void {
+  }): Promise<void> {
     this.projectTranslations = config.translations;
     this.supportedLanguages = config.supportedLanguages;
     this.defaultLanguage = config.defaultLanguage;
-    this.detectAndSetLanguage();
+    this.initialized = true;
+    await this.detectAndSetLanguage();
   }
 
-  private detectAndSetLanguage(): void {
-    const browserLang = this.getBrowserLanguage();
+  private async detectAndSetLanguage(): Promise<void> {
+    if (!this.initialized) {
+      return;
+    }
+
+    const forcedLang = this.storageService.getString(STORAGE_KEYS.FORCE_LANGUAGE);
+    const deviceLang = await this.getDeviceLanguage();
     const storedLang = this.storageService.getString(STORAGE_KEYS.LANGUAGE);
     
-    let targetLang = storedLang || browserLang || this.defaultLanguage;
+    let targetLang = forcedLang || deviceLang || storedLang || this.defaultLanguage;
     
     if (!this.supportedLanguages.includes(targetLang)) {
       const langPrefix = targetLang.split('-')[0];
@@ -45,6 +49,18 @@ export class TranslationService {
     }
 
     this.setLanguage(targetLang);
+  }
+
+  private async getDeviceLanguage(): Promise<string> {
+    try {
+      const languageInfo = await Device.getLanguageCode();
+      if (languageInfo && languageInfo.value) {
+        return languageInfo.value.toLowerCase().split('-')[0];
+      }
+    } catch (error) {
+    }
+
+    return this.getBrowserLanguage();
   }
 
   private getBrowserLanguage(): string {
@@ -62,12 +78,17 @@ export class TranslationService {
     return 'en';
   }
 
-  setLanguage(lang: string): void {
+  setLanguage(lang: string, fromSettings: boolean = false): void {
     if (!this.supportedLanguages.includes(lang)) {
       lang = this.defaultLanguage;
     }
 
     this.currentLanguage = lang;
+    
+    if (fromSettings) {
+      this.storageService.setString(STORAGE_KEYS.FORCE_LANGUAGE, lang);
+    }
+    
     this.storageService.setString(STORAGE_KEYS.LANGUAGE, lang);
 
     const sharedForLang = (SHARED_TRANSLATIONS as any)[lang] || (SHARED_TRANSLATIONS as any).en;

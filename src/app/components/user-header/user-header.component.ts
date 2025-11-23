@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
 import { UserService } from '@core/services/user.service';
+import { NavigationService } from '@services/navigation.service';
 
 @Component({
   selector: 'app-user-header',
@@ -20,6 +21,7 @@ import { UserService } from '@core/services/user.service';
 })
 export class UserHeaderComponent {
   private readonly userService = inject(UserService);
+  private readonly navigationService = inject(NavigationService);
   
   readonly showBackButton = input<boolean>(false);
   readonly backClick = output<void>();
@@ -58,6 +60,11 @@ export class UserHeaderComponent {
 
   onBackClick() {
     this.backClick.emit();
+  }
+
+  goToSettings() {
+    this.showUserMenu.set(false);
+    this.navigationService.navigateTo(['/settings']);
   }
 
   logout() {

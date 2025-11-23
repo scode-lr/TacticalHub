@@ -110,6 +110,12 @@ export const routes: Routes = [
   },
 
   {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.page').then(m => m.SettingsPage),
+    canActivate: [authGuard]
+  },
+
+  {
     path: 'teams-search',
     loadComponent: () => import('./pages/teams-search/teams-search.page').then(m => m.TeamsSearchPage),
     canActivate: [authGuard]

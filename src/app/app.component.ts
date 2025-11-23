@@ -12,8 +12,8 @@ import { environment } from '@environment';
 export class AppComponent implements OnInit {
   constructor(private translationService: TranslationService) {}
 
-  ngOnInit() {
-    this.translationService.initialize({
+  async ngOnInit() {
+    await this.translationService.initialize({
       translations: environment.translations,
       supportedLanguages: environment.supportedLanguages,
       defaultLanguage: environment.defaultLanguage

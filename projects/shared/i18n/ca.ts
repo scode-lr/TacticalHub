@@ -31,14 +31,24 @@ export const sharedTranslations = {
     success: 'Èxit',
     cancel: 'Cancel·lar',
     confirm: 'Confirmar',
-    save: 'Desar',
+    save: 'Guardar',
     delete: 'Eliminar',
     edit: 'Editar',
-    back: 'Enrere',
+    back: 'Tornar',
     next: 'Següent',
     submit: 'Enviar',
     close: 'Tancar',
-    submitting: 'Enviant...'
+    submitting: 'Enviant...',
+    settings: 'Configuració'
+  },
+  settings: {
+    title: 'Configuració',
+    language: 'Idioma',
+    selectLanguage: 'Seleccionar Idioma',
+    english: 'Anglès',
+    spanish: 'Espanyol',
+    catalan: 'Català',
+    languageChanged: 'Idioma canviat correctament'
   },
   validation: {
     required: 'Aquest camp és obligatori',

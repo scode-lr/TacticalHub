@@ -16,13 +16,15 @@ import {
   peopleOutline,
   ellipsisHorizontal,
   logOutOutline,
-  personOutline
+  personOutline,
+  settingsOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
 import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
 import { UserService } from '@core/services/user.service';
 import { User } from '@core/models/user.model';
+import { NavigationService } from '@services/navigation.service';
 
 interface MenuItem {
   id: string;
@@ -48,6 +50,7 @@ interface MenuItem {
 export class ViewerMenuComponent {
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
+  private readonly navigationService = inject(NavigationService);
   
   readonly selectedMenuItem = signal<string>('home');
   readonly isPopoverOpen = signal<boolean>(false);
@@ -84,7 +87,8 @@ export class ViewerMenuComponent {
       peopleOutline,
       ellipsisHorizontal,
       logOutOutline,
-      personOutline
+      personOutline,
+      settingsOutline
     });
   }
 
@@ -126,6 +130,10 @@ export class ViewerMenuComponent {
 
   closePopover() {
     this.isPopoverOpen.set(false);
+  }
+
+  goToSettings() {
+    this.navigationService.navigateTo(['/settings']);
   }
 
   logout() {
