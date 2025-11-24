@@ -1,7 +1,7 @@
 import { Directive, Input, HostListener, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: 'img[appDefaultImage]',
+  selector: 'img[appDefaultImage], ion-img[appDefaultImage]',
   standalone: true
 })
 export class DefaultImageDirective {
@@ -9,6 +9,7 @@ export class DefaultImageDirective {
 
   constructor(private el: ElementRef<HTMLImageElement>) {}
 
+  @HostListener('ionError')
   @HostListener('error')
   onError() {
     const element = this.el.nativeElement;

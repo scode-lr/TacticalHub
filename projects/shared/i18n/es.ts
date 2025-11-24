@@ -155,8 +155,31 @@ export const sharedTranslations = {
       description: 'Aquí puedes acceder a todos los servicios del club y mantenerte actualizado con las últimas noticias y eventos.'
     },
     news: {
-      empty: 'No hay Noticias Disponibles',
-      emptyDescription: 'No hay artículos de noticias en este momento. Vuelve más tarde para ver actualizaciones.'
+      title: 'Noticias',
+      category: 'Categoría',
+      empty: 'No hay noticias disponibles',
+      emptyDescription: 'No hay artículos de noticias en este momento. Vuelve más tarde para actualizaciones.',
+      author: 'Autor',
+      notFound: 'Noticia no encontrada',
+      comments: 'Comentarios',
+      noComments: '¡Aún no hay comentarios. Sé el primero en comentar!',
+      time: {
+        title: 'Tiempo',
+        all: 'Todo el tiempo',
+        today: 'Hoy',
+        week: 'Esta semana',
+        month: 'Este mes',
+        year: 'Este año'
+      },
+      categories: {
+        all: 'Todas',
+        general: 'General',
+        match: 'Partido',
+        training: 'Entrenamiento',
+        event: 'Evento',
+        announcement: 'Anuncio',
+        achievement: 'Logro'
+      }
     },
     action: {
       registerPlayer: 'Registrar un Jugador',

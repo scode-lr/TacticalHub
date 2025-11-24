@@ -1,0 +1,118 @@
+<div class="viewer-news-page">
+  <div class="news-header">
+    <h1 class="page-title">{{ 'viewer.news.title' | translate }}</h1>
+    
+    <div class="filters-icons">
+      <div class="filter-wrapper">
+        <button class="filter-icon" [class.active]="selectedCategory() !== 'all'" (click)="openCategoryFilter()">
+          <ion-icon name="pricetag-outline"></ion-icon>
+        </button>
+        
+        @if (showCategoryDropdown()) {
+          <div class="filter-dropdown" (click)="$event.stopPropagation()">
+            @for (category of categories; track category.value) {
+              <button 
+                class="filter-dropdown-item" 
+                [class.active]="selectedCategory() === category.value"
+                (click)="selectCategory(category.value)">
+                <span>{{ category.label | translate }}</span>
+                @if (selectedCategory() === category.value) {
+                  <ion-icon name="checkmark"></ion-icon>
+                }
+              </button>
+            }
+          </div>
+        }
+      </div>
+      
+      <div class="filter-wrapper">
+        <button class="filter-icon" [class.active]="selectedTimeFilter() !== TimeFilter.All" (click)="openTimeFilter()">
+          <ion-icon name="time-outline"></ion-icon>
+        </button>
+        
+        @if (showTimeDropdown()) {
+          <div class="filter-dropdown" (click)="$event.stopPropagation()">
+            @for (timeFilter of timeFilters; track timeFilter.value) {
+              <button 
+                class="filter-dropdown-item" 
+                [class.active]="selectedTimeFilter() === timeFilter.value"
+                (click)="selectTimeFilter(timeFilter.value)">
+                <span>{{ timeFilter.label | translate }}</span>
+                @if (selectedTimeFilter() === timeFilter.value) {
+                  <ion-icon name="checkmark"></ion-icon>
+                }
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+  
+  <!-- Category Filter Modal -->
+  <ion-modal [isOpen]="showCategoryModal()" (didDismiss)="showCategoryModal.set(false)" [breakpoints]="[0, 0.6, 0.9]" [initialBreakpoint]="0.6">
+    <ng-template>
+      <ion-content class="filter-modal">
+        <div class="modal-header">
+          <h2>{{ 'viewer.news.category' | translate }}</h2>
+        </div>
+        <div class="filter-options">
+          @for (category of categories; track category.value) {
+            <button 
+              class="filter-option" 
+              [class.active]="selectedCategory() === category.value"
+              (click)="selectCategory(category.value)">
+              <span>{{ category.label | translate }}</span>
+              @if (selectedCategory() === category.value) {
+                <ion-icon name="checkmark"></ion-icon>
+              }
+            </button>
+          }
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
+  <!-- Time Filter Modal -->
+  <ion-modal [isOpen]="showTimeModal()" (didDismiss)="showTimeModal.set(false)" [breakpoints]="[0, 0.5, 0.8]" [initialBreakpoint]="0.5">
+    <ng-template>
+      <ion-content class="filter-modal">
+        <div class="modal-header">
+          <h2>{{ 'viewer.news.time.title' | translate }}</h2>
+        </div>
+        <div class="filter-options">
+          @for (timeFilter of timeFilters; track timeFilter.value) {
+            <button 
+              class="filter-option" 
+              [class.active]="selectedTimeFilter() === timeFilter.value"
+              (click)="selectTimeFilter(timeFilter.value)">
+              <span>{{ timeFilter.label | translate }}</span>
+              @if (selectedTimeFilter() === timeFilter.value) {
+                <ion-icon name="checkmark"></ion-icon>
+              }
+            </button>
+          }
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
+  @if (filteredNews().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
+      <h3>{{ 'viewer.news.empty' | translate }}</h3>
+      <p>{{ 'viewer.news.emptyDescription' | translate }}</p>
+    </div>
+  } @else {
+    <div class="news-grid">
+      @for (newsItem of filteredNews(); track newsItem.id; let i = $index) {
+        <app-news-card
+          [news]="newsItem"
+          [animationDelay]="i"
+          (cardClick)="openNews($event)"
+          (voteChange)="vote($event.newsId, $event.voteType)"
+        />
+      }
+    </div>
+  }
+</div>

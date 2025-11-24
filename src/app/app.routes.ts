@@ -47,7 +47,11 @@ export const routes: Routes = [
           },
           {
             path: 'news',
-            loadComponent: () => import('./pages/viewer/news/news.page').then(m => m.ViewerNewsPage)
+            loadComponent: () => import('./pages/viewer/news/news/news.page').then(m => m.ViewerNewsPage)
+          },
+          {
+            path: 'news/:id',
+            loadComponent: () => import('./pages/viewer/news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
           },
           {
             path: 'action',

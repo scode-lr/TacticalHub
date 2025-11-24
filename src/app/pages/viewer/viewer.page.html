@@ -1,19 +1,19 @@
-<ion-content>
+<ion-content [scrollY]="false">
   <div class="viewer-page">
     <!-- Mobile Header -->
     <div class="mobile-header">
-      <div class="mobile-header-left">
-        <app-role-selector></app-role-selector>
-      </div>
-      <div class="mobile-header-right">
-        <app-user-header [showBackButton]="false"></app-user-header>
-      </div>
+      <app-user-header 
+        [showBackButton]="isDetailPage()" 
+        [showRoleSelector]="!isDetailPage()"
+        [backUrl]="backUrl()"
+        (backClick)="goBack()">
+      </app-user-header>
     </div>
 
     <div class="layout-container">
-      <app-viewer-menu></app-viewer-menu>
+      <app-viewer-menu [class.hidden-on-detail]="isDetailPage()"></app-viewer-menu>
       
-      <div class="content-container">
+      <div class="content-container" [class.full-width]="isDetailPage()">
         <router-outlet></router-outlet>
       </div>
     </div>

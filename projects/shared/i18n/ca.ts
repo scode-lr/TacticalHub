@@ -155,8 +155,31 @@ export const sharedTranslations = {
       description: 'Aquí pots accedir a tots els serveis del club i mantenir-te actualitzat amb les últimes notícies i esdeveniments.'
     },
     news: {
-      empty: 'No hi ha Notícies Disponibles',
-      emptyDescription: 'No hi ha articles de notícies en aquest moment. Torna més tard per veure actualitzacions.'
+      title: 'Notícies',
+      category: 'Categoria',
+      empty: 'No hi ha notícies disponibles',
+      emptyDescription: 'No hi ha articles de notícies en aquest moment. Torna més tard per a actualitzacions.',
+      author: 'Autor',
+      notFound: 'Notícia no trobada',
+      comments: 'Comentaris',
+      noComments: 'Encara no hi ha comentaris. Sigues el primer a comentar!',
+      time: {
+        title: 'Temps',
+        all: 'Tot el temps',
+        today: 'Avui',
+        week: 'Aquesta setmana',
+        month: 'Aquest mes',
+        year: 'Aquest any'
+      },
+      categories: {
+        all: 'Totes',
+        general: 'General',
+        match: 'Partit',
+        training: 'Entrenament',
+        event: 'Esdeveniment',
+        announcement: 'Anunci',
+        achievement: 'Assoliment'
+      }
     },
     action: {
       registerPlayer: 'Registrar un Jugador',

@@ -1,0 +1,57 @@
+<div class="comments-section">
+  <h2 class="comments-title">
+    {{ 'viewer.news.comments' | translate }} ({{ commentCount() }})
+  </h2>
+  
+  @if (comments().length === 0) {
+    <p class="no-comments">{{ 'viewer.news.noComments' | translate }}</p>
+  } @else {
+    <div class="comments-list">
+      @for (comment of comments(); track comment.id) {
+        <div class="comment">
+          <div class="comment-header">
+            <div class="comment-author">
+                <ion-img [src]="comment.author.avatarUrl || 'assets/default-avatar.svg'" [alt]="comment.id" class="comment-avatar" appDefaultImage="assets/default-avatar.svg" />
+              <span class="comment-author-name">{{ comment.author.name }}</span>
+            </div>
+            
+            <app-upvotes
+              [upvotes]="comment.upvotes"
+              [downvotes]="comment.downvotes"
+              [userVote]="null"
+              [size]="'small'"
+              (voteChange)="onVoteComment(comment.id, $event)"
+            />
+          </div>
+          
+          <p class="comment-body">{{ comment.body }}</p>
+          
+          @if (comment.replies && comment.replies.length > 0) {
+            <div class="replies">
+              @for (reply of comment.replies; track reply.id) {
+                <div class="reply">
+                  <div class="comment-header">
+                    <div class="comment-author">
+                        <ion-img [src]="reply.author.avatarUrl || 'assets/default-avatar.svg'" [alt]="reply.id" class="comment-avatar" appDefaultImage="assets/default-avatar.svg" />
+                      <span class="comment-author-name">{{ reply.author.name }}</span>
+                    </div>
+                    
+                    <app-upvotes
+                      [upvotes]="reply.upvotes"
+                      [downvotes]="reply.downvotes"
+                      [userVote]="null"
+                      [size]="'small'"
+                      (voteChange)="onVoteComment(reply.id, $event, comment.id)"
+                    />
+                  </div>
+                  
+                  <p class="comment-body">{{ reply.body }}</p>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

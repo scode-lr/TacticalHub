@@ -14,13 +14,20 @@
     align-items: center;
     position: relative;
 
-    &:has(.back-button) {
+    &:has(.back-button),
+    &:has(.role-selector-wrapper) {
       justify-content: space-between;
     }
 
-    &:not(:has(.back-button)) {
+    &:not(:has(.back-button)):not(:has(.role-selector-wrapper)) {
       justify-content: flex-end;
     }
+  }
+  
+  .role-selector-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
   }
   
   .back-button {

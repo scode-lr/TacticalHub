@@ -13,7 +13,6 @@
         class="language-select"
         [value]="currentLanguage()"
         (ionChange)="onLanguageChange($event)"
-        interface="popover"
         [placeholder]="'settings.selectLanguage' | translate">
         @for (lang of supportedLanguages(); track lang.code) {
           <ion-select-option [value]="lang.code">

@@ -52,13 +52,15 @@
               <h3>{{ role.club.name }}</h3>
               <p>
                 <ion-icon name="briefcase-outline"></ion-icon>
-                {{ getRoleName(role.roleId) }}
+                <span>{{ getRoleName(role.roleId) }}</span>
+                @if (role.team) {
+                  <span class="team-info">({{ role.team }})</span>
+                }
               </p>
             </ion-label>
           </ion-item>
         }
         
-        <!-- Add New Team Button -->
         <ion-item 
           button 
           detail="false" 

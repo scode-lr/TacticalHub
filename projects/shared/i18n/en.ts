@@ -155,8 +155,31 @@ export const sharedTranslations = {
       description: 'Here you can access all club services and stay updated with the latest news and events.'
     },
     news: {
+      title: 'News',
+      category: 'Category',
       empty: 'No News Available',
-      emptyDescription: 'There are no news articles at this time. Check back later for updates.'
+      emptyDescription: 'There are no news articles at this time. Check back later for updates.',
+      author: 'Author',
+      notFound: 'News Not Found',
+      comments: 'Comments',
+      noComments: 'No comments yet. Be the first to comment!',
+      time: {
+        title: 'Time',
+        all: 'All Time',
+        today: 'Today',
+        week: 'This Week',
+        month: 'This Month',
+        year: 'This Year'
+      },
+      categories: {
+        all: 'All',
+        general: 'General',
+        match: 'Match',
+        training: 'Training',
+        event: 'Event',
+        announcement: 'Announcement',
+        achievement: 'Achievement'
+      }
     },
     action: {
       registerPlayer: 'Register a Player',

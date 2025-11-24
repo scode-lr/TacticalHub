@@ -25,7 +25,6 @@
     .mobile-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       padding: 0.5rem 1rem;
       background: var(--background-primary, #ffffff);
       border-bottom: 1px solid var(--border-light, #e5e7eb);
@@ -33,25 +32,16 @@
       top: 0;
       z-index: 1001;
 
-      .mobile-header-left {
+      app-user-header {
         flex: 1;
-        display: flex;
-        align-items: center;
-      }
+        
+        ::ng-deep .page-header {
+          padding: 0;
+          border-bottom: none;
+          position: static;
 
-      .mobile-header-right {
-        display: flex;
-        align-items: center;
-
-        app-user-header {
-          ::ng-deep .page-header {
+          .header-content {
             padding: 0;
-            border-bottom: none;
-            position: static;
-
-            .header-content {
-              padding: 0;
-            }
           }
         }
       }
@@ -61,10 +51,21 @@
       flex-direction: column;
       height: calc(100vh - 56px);
 
+      app-viewer-menu {
+        &.hidden-on-detail {
+          display: none;
+        }
+      }
+
       .content-container {
         order: 1;
-        padding: 1.5rem;
+        padding: 1rem;
         padding-bottom: 70px;
+
+        &.full-width {
+          padding: 0;
+          padding-bottom: 70px;
+        }
       }
     }
   }
