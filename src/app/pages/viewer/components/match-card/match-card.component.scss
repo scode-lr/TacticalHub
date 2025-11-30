@@ -1,0 +1,87 @@
+.match-card {
+    background: var(--background-card, #ffffff);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--border-light, #e5e7eb);
+    height: 100%;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .match-time {
+        background: var(--background-secondary, #f9fafb);
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-secondary, #6b7280);
+        border-bottom: 1px solid var(--border-light, #e5e7eb);
+    }
+
+    .match-content {
+        padding: 1rem;
+    }
+
+    .teams {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+
+            &.winner {
+                background-color: var(--background-success-light, #ecfdf5);
+
+                .name,
+                .score {
+                    font-weight: 700;
+                    color: var(--text-primary, #111827);
+                }
+            }
+
+            .name {
+                font-size: 1rem;
+                color: var(--text-secondary, #4b5563);
+            }
+
+            .score {
+                font-size: 1.125rem;
+                font-weight: 600;
+                color: var(--text-secondary, #4b5563);
+                min-width: 2rem;
+                text-align: center;
+            }
+        }
+    }
+
+    .match-footer {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--text-tertiary, #9ca3af);
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border-light, #e5e7eb);
+
+        .category {
+            font-weight: 600;
+            color: var(--primary-color, #3b82f6);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .separator {
+            color: var(--border-light, #e5e7eb);
+        }
+    }
+}

@@ -58,6 +58,13 @@ export const sharedTranslations = {
         fileTypeError: 'Tipo de archivo no válido. Solo se permiten PDF, DOC, Excel e imágenes',
         fileSizeError: 'El archivo excede el límite de 5MB'
       }
+    },
+    matches: {
+      title: 'Partidos',
+      empty: 'No hay partidos esta semana',
+      emptyDescription: 'No se han programado partidos para esta semana.',
+      saturday: 'Sábado',
+      sunday: 'Domingo'
     }
   }
 } as const;
