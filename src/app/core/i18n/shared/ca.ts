@@ -37,6 +37,28 @@ export const sharedTranslations = {
     minLength: 'Es requereixen mínim {min} caràcters',
     maxLength: 'Màxim {max} caràcters permesos',
     passwordMismatch: 'Les contrasenyes no coincideixen'
+  },
+  viewer: {
+    proposals: {
+      title: 'Propostes',
+      empty: 'No hi ha propostes encara',
+      emptyDescription: 'Envia una proposta a l\'administrador per millorar la plataforma.',
+      form: {
+        title: 'Títol',
+        titlePlaceholder: 'Introdueix el títol de la proposta',
+        titleError: 'El títol és obligatori (min 5 caràcters)',
+        body: 'Descripció',
+        bodyPlaceholder: 'Descriu la teva proposta en detall...',
+        bodyError: 'La descripció és obligatòria (min 20 caràcters)',
+        attachment: 'Adjunt',
+        changeFile: 'Canviar arxiu',
+        uploadText: 'Fes clic per pujar arxiu',
+        uploadSubtext: 'PDF, DOC, Imatges (max 5MB)',
+        submit: 'Enviar Proposta',
+        fileTypeError: 'Tipus d\'arxiu no vàlid. Només es permeten PDF, DOC, Excel i imatges',
+        fileSizeError: 'L\'arxiu excedeix el límit de 5MB'
+      }
+    }
   }
 } as const;
 
