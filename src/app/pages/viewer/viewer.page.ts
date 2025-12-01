@@ -28,6 +28,11 @@ export class ViewerPage  {
     if (this.isDetailPage()) {
       const urlSegments = this.router.url.split('/');
       const roleId = urlSegments[2];
+      
+      if (this.router.url.includes('/action-form/')) {
+        return `/app/${roleId}/action`;
+      }
+      
       return `/app/${roleId}/news`;
     }
     return '';
@@ -42,7 +47,9 @@ export class ViewerPage  {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         const url = this.router.url;
-        const isDetail = url.includes('/news/') && url.split('/').length > 4;
+        const isNewsDetail = url.includes('/news/') && url.split('/').length > 4;
+        const isActionForm = url.includes('/action-form/');
+        const isDetail = isNewsDetail || isActionForm;
         this.isDetailPage.set(isDetail);
         
         if (isDetail) {
@@ -54,7 +61,9 @@ export class ViewerPage  {
       });
       
     const url = this.router.url;
-    const isDetail = url.includes('/news/') && url.split('/').length > 4;
+    const isNewsDetail = url.includes('/news/') && url.split('/').length > 4;
+    const isActionForm = url.includes('/action-form/');
+    const isDetail = isNewsDetail || isActionForm;
     this.isDetailPage.set(isDetail);
   }
   

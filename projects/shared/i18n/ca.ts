@@ -187,7 +187,62 @@ export const sharedTranslations = {
       register: 'Registrar',
       becomeMember: 'Fer-se Soci',
       becomeMemberDesc: 'Uneix-te com a soci oficial del club',
-      join: 'Unir-se Ara'
+      join: 'Unir-se Ara',
+      form: {
+        submit: 'Enviar',
+        cancel: 'Cancel·lar',
+        submitting: 'Enviant...',
+        firstName: 'Nom',
+        firstNamePlaceholder: 'Introdueix el nom',
+        lastName: 'Cognom',
+        lastNamePlaceholder: 'Introdueix el cognom',
+        dateOfBirth: 'Data de Naixement',
+        dateOfBirthPlaceholder: 'Selecciona data de naixement',
+        email: 'Correu Electrònic',
+        emailPlaceholder: 'Introdueix el correu electrònic',
+        emailError: 'Si us plau introdueix un correu electrònic vàlid',
+        phone: 'Número de Telèfon',
+        phonePlaceholder: 'Introdueix el número de telèfon',
+        phoneError: 'Si us plau introdueix un número de telèfon vàlid',
+        previousClub: 'Club Anterior',
+        previousClubPlaceholder: 'Introdueix el club anterior (opcional)',
+        position: 'Posició',
+        positionPlaceholder: 'Selecciona la posició',
+        positions: {
+          goalkeeper: 'Porter',
+          defender: 'Defensa',
+          midfielder: 'Migcampista',
+          forward: 'Davanter'
+        },
+        notes: 'Notes Addicionals',
+        notesPlaceholder: 'Afegeix informació addicional (opcional)',
+        address: 'Adreça',
+        addressPlaceholder: 'Introdueix l\'adreça',
+        city: 'Ciutat',
+        cityPlaceholder: 'Introdueix la ciutat',
+        postalCode: 'Codi Postal',
+        postalCodePlaceholder: 'Introdueix el codi postal',
+        postalCodeError: 'Si us plau introdueix un codi postal vàlid de 5 dígits',
+        membershipType: 'Tipus de Membresía',
+        membershipTypePlaceholder: 'Selecciona el tipus de membresía',
+        membershipTypes: {
+          basic: 'Membresía Bàsica',
+          premium: 'Membresía Premium',
+          family: 'Membresía Familiar'
+        },
+        comments: 'Comentaris',
+        commentsPlaceholder: 'Afegeix comentaris (opcional)',
+        registerPlayerSuccess: 'Registre de jugador enviat amb èxit!',
+        becomeMemberSuccess: 'Sol·licitud de membresía enviada amb èxit!',
+        errors: {
+          required: 'Aquest camp és obligatori',
+          email: 'Si us plau introdueix un correu electrònic vàlid',
+          pattern: 'Si us plau introdueix un format vàlid',
+          minLength: 'Es requereixen mínim {min} caràcters',
+          maxLength: 'Es permeten màxim {max} caràcters',
+          submitError: 'Ha ocorregut un error. Si us plau intenta de nou.'
+        }
+      }
     },
     information: {
       empty: 'Informació Pròximament',

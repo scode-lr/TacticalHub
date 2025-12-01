@@ -1,305 +1,108 @@
-ion-content {
-  --background: var(--background-secondary, #f8f9fa);
-}
-
-.viewer-proposals-page {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1rem 2rem;
+.content-card {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 12px;
+  padding: 2rem;
 
   @media (max-width: 768px) {
-    padding: 0 0.75rem 1.5rem;
+    padding: 1.5rem;
+    border: none;
   }
+}
 
-  .proposals-header {
+.form-group {
+  margin-bottom: 1.5rem;
+
+  &:last-of-type {
     margin-bottom: 2rem;
-    padding-top: 0.5rem;
 
     @media (max-width: 768px) {
       margin-bottom: 1.5rem;
     }
+  }
 
-    .page-title {
-      margin: 0;
-      font-size: 1.875rem;
-      font-weight: 700;
-      color: var(--text-primary, #111827);
-      letter-spacing: -0.025em;
+}
+
+ion-button {
+  ion-spinner {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.5rem;
+  }
+}
+
+.file-upload {
+  border: 2px dashed var(--border-light, #e5e7eb);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--background-secondary, #f9fafb);
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  &:hover {
+    border-color: var(--ion-color-primary, #3880ff);
+    background: rgba(56, 128, 255, 0.02);
+
+    ion-icon {
+      color: var(--ion-color-primary, #3880ff);
+      transform: scale(1.05);
+    }
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  .upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    ion-icon {
+      font-size: 2.5rem;
+      color: var(--text-secondary, #6b7280);
+      transition: all 0.2s ease;
 
       @media (max-width: 768px) {
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
     }
-  }
 
-  .proposals-content {
-    background: var(--background-primary, #ffffff);
-    border: 1px solid var(--border-light, #e5e7eb);
-    border-radius: 16px;
-    padding: 2.5rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    animation: fadeIn 0.3s ease backwards;
+    .upload-label {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-primary, #111827);
 
-    @media (max-width: 768px) {
-      padding: 1.5rem 1rem;
-      border-radius: 12px;
-      border: none;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    }
-
-    .proposal-form {
-      .form-group {
-        margin-bottom: 1.75rem;
-
-        @media (max-width: 768px) {
-          margin-bottom: 1.5rem;
-        }
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-
-        label {
-          display: block;
-          margin-bottom: 0.625rem;
-          font-size: 0.9375rem;
-          font-weight: 600;
-          color: var(--text-primary, #111827);
-          letter-spacing: -0.01em;
-
-          @media (max-width: 768px) {
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-          }
-        }
-
-        .custom-input {
-          --background: var(--background-primary, #ffffff);
-          --border-radius: 10px;
-          --padding-start: 1rem;
-          --padding-end: 1rem;
-          --inner-padding-end: 0;
-          --min-height: 48px;
-          border: 1.5px solid var(--border-light, #e5e7eb);
-          border-radius: 10px;
-          transition: all 0.2s ease;
-
-          @media (max-width: 768px) {
-            --border-radius: 8px;
-            --min-height: 44px;
-            border-radius: 8px;
-          }
-
-          &:hover {
-            border-color: var(--border-medium, #d1d5db);
-          }
-
-          &.item-has-focus,
-          &.ion-focused {
-            border-color: var(--ion-color-primary, #3880ff);
-            box-shadow: 0 0 0 3px rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.1);
-          }
-
-          ion-input,
-          ion-textarea {
-            --padding-top: 0.75rem;
-            --padding-bottom: 0.75rem;
-            font-size: 0.9375rem;
-            color: var(--text-primary, #111827);
-
-            @media (max-width: 768px) {
-              font-size: 0.875rem;
-              --padding-top: 0.625rem;
-              --padding-bottom: 0.625rem;
-            }
-
-            &::placeholder {
-              color: var(--text-light, #9ca3af);
-              opacity: 1;
-            }
-          }
-
-          &.textarea-input {
-            align-items: flex-start;
-            --min-height: auto;
-
-            ion-textarea {
-              min-height: 140px;
-
-              @media (max-width: 768px) {
-                min-height: 120px;
-              }
-            }
-          }
-        }
-
-        .error-message {
-          display: block;
-          margin-top: 0.5rem;
-          font-size: 0.8125rem;
-          padding-left: 0.25rem;
-          font-weight: 500;
-
-          @media (max-width: 768px) {
-            font-size: 0.75rem;
-          }
-        }
-      }
-
-      .file-upload-container {
-        border: 2px dashed var(--border-light, #e5e7eb);
-        border-radius: 12px;
-        padding: 2.5rem 1.5rem;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        background: var(--background-secondary, #f9fafb);
-
-        @media (max-width: 768px) {
-          padding: 2rem 1rem;
-          border-radius: 10px;
-        }
-
-        &:hover {
-          border-color: var(--ion-color-primary, #3880ff);
-          background: rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.03);
-
-          .upload-area ion-icon {
-            color: var(--ion-color-primary, #3880ff);
-            transform: scale(1.05);
-          }
-        }
-
-        &:active {
-          transform: scale(0.98);
-        }
-
-        .upload-area {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.75rem;
-
-          ion-icon {
-            font-size: 3rem;
-            color: var(--text-secondary, #6b7280);
-            transition: all 0.25s ease;
-
-            @media (max-width: 768px) {
-              font-size: 2.5rem;
-            }
-          }
-
-          .upload-text {
-            font-weight: 600;
-            font-size: 0.9375rem;
-            color: var(--text-primary, #111827);
-
-            @media (max-width: 768px) {
-              font-size: 0.875rem;
-            }
-          }
-
-          .upload-subtext {
-            font-size: 0.8125rem;
-            color: var(--text-secondary, #6b7280);
-            margin-top: -0.25rem;
-
-            @media (max-width: 768px) {
-              font-size: 0.75rem;
-            }
-          }
-
-          .file-name {
-            font-weight: 600;
-            font-size: 0.9375rem;
-            color: var(--ion-color-primary, #3880ff);
-            word-break: break-all;
-            max-width: 100%;
-            padding: 0 1rem;
-
-            @media (max-width: 768px) {
-              font-size: 0.875rem;
-              padding: 0 0.5rem;
-            }
-          }
-
-          .change-text {
-            font-size: 0.8125rem;
-            color: var(--text-secondary, #6b7280);
-            margin-top: -0.25rem;
-
-            @media (max-width: 768px) {
-              font-size: 0.75rem;
-            }
-          }
-        }
-      }
-
-      .form-actions {
-        margin-top: 2.5rem;
-
-        @media (max-width: 768px) {
-          margin-top: 2rem;
-        }
-
-        .submit-button {
-          --border-radius: 10px;
-          --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-          font-weight: 600;
-          font-size: 1rem;
-          height: 52px;
-          margin: 0;
-          text-transform: none;
-          letter-spacing: -0.01em;
-
-          @media (max-width: 768px) {
-            --border-radius: 8px;
-            height: 48px;
-            font-size: 0.9375rem;
-          }
-
-          &:not([disabled]):hover {
-            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transform: translateY(-1px);
-          }
-
-          &:not([disabled]):active {
-            transform: translateY(0);
-          }
-
-          &[disabled] {
-            opacity: 0.5;
-          }
-
-          .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 0.8s linear infinite;
-          }
-        }
+      @media (max-width: 768px) {
+        font-size: 0.875rem;
       }
     }
-  }
-}
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+    .file-name {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--ion-color-primary, #3880ff);
+      word-break: break-word;
+      max-width: 100%;
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
+      @media (max-width: 768px) {
+        font-size: 0.875rem;
+      }
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    .file-hint {
+      font-size: 0.8125rem;
+      color: var(--text-secondary, #6b7280);
+
+      @media (max-width: 768px) {
+        font-size: 0.75rem;
+      }
+    }
   }
 }

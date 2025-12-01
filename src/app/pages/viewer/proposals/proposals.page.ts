@@ -1,7 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonIcon, IonContent, IonItem, IonInput, IonTextarea, IonButton, IonNote } from '@ionic/angular/standalone';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { IonIcon, IonInput, IonTextarea, IonButton, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { FileValidationService } from '@services/file-validation.service';
 
@@ -14,12 +14,10 @@ import { FileValidationService } from '@services/file-validation.service';
     CommonModule,
     ReactiveFormsModule,
     IonIcon,
-    IonContent,
-    IonItem,
     IonInput,
     IonTextarea,
     IonButton,
-    IonNote,
+    IonSpinner,
     TranslatePipe
   ]
 })
@@ -28,51 +26,56 @@ export class ViewerProposalsPage {
   private fileValidationService = inject(FileValidationService);
 
   readonly proposalForm = this.fb.group({
-    title: ['', [Validators.required, Validators.minLength(5)]],
-    body: ['', [Validators.required, Validators.minLength(20)]],
+    title: [''],
+    content: [''],
     attachment: [null as File | null]
   });
 
   readonly selectedFileName = signal<string | null>(null);
   readonly isSubmitting = signal<boolean>(false);
-  readonly fileError = signal<string | null>(null);
+  readonly canSubmit = signal<boolean>(false);
+
+  constructor() {
+    this.proposalForm.valueChanges.subscribe(() => {
+      const title = this.proposalForm.get('title')?.value;
+      const content = this.proposalForm.get('content')?.value;
+      this.canSubmit.set(!!(title?.trim() && content?.trim()));
+    });
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.fileError.set(null);
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-
-      // Validate file using the service
-      const validationResult = this.fileValidationService.validateFile(file);
-
-      if (!validationResult.valid) {
-        this.fileError.set(validationResult.errorKey!);
+      
+      const validation = this.fileValidationService.validateFile(file);
+      
+      if (validation.valid) {
+        this.selectedFileName.set(file.name);
+        this.proposalForm.patchValue({ attachment: file });
+      } else {
+        input.value = '';
         this.selectedFileName.set(null);
         this.proposalForm.patchValue({ attachment: null });
-        input.value = '';
-        return;
       }
-
-      // File is valid
-      this.selectedFileName.set(file.name);
-      this.proposalForm.patchValue({ attachment: file });
     }
   }
 
   onSubmit(): void {
-    if (this.proposalForm.valid) {
+    if (this.canSubmit() && !this.isSubmitting()) {
       this.isSubmitting.set(true);
-      console.log('Proposal submitted:', this.proposalForm.value);
+      
+      console.log('Proposal submitted:', {
+        title: this.proposalForm.get('title')?.value,
+        content: this.proposalForm.get('content')?.value,
+        attachment: this.selectedFileName()
+      });
 
-      // Mock submission delay
       setTimeout(() => {
         this.isSubmitting.set(false);
         this.proposalForm.reset();
         this.selectedFileName.set(null);
-        this.fileError.set(null);
-        // Here we would ideally show a success toast
       }, 1500);
     }
   }

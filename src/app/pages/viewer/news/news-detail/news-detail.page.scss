@@ -2,10 +2,6 @@
   max-width: 900px;
   margin: 0 auto;
 
-  @media (max-width: 768px) {
-    padding: 0;
-  }
-
   .news-article {
     background: var(--background-primary, #ffffff);
     border: 1px solid var(--border-light, #e5e7eb);

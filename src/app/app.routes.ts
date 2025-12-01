@@ -58,6 +58,10 @@ export const routes: Routes = [
             loadComponent: () => import('./pages/viewer/action/action.page').then(m => m.ViewerActionPage)
           },
           {
+            path: 'action-form/:type',
+            loadComponent: () => import('./pages/viewer/action-form/action-form.page').then(m => m.ActionFormPage)
+          },
+          {
             path: 'information',
             loadComponent: () => import('./pages/viewer/information/information.page').then(m => m.ViewerInformationPage)
           },

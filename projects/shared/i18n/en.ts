@@ -187,7 +187,62 @@ export const sharedTranslations = {
       register: 'Register',
       becomeMember: 'Become a Member',
       becomeMemberDesc: 'Join as an official club member',
-      join: 'Join Now'
+      join: 'Join Now',
+      form: {
+        submit: 'Submit',
+        cancel: 'Cancel',
+        submitting: 'Submitting...',
+        firstName: 'First Name',
+        firstNamePlaceholder: 'Enter first name',
+        lastName: 'Last Name',
+        lastNamePlaceholder: 'Enter last name',
+        dateOfBirth: 'Date of Birth',
+        dateOfBirthPlaceholder: 'Select date of birth',
+        email: 'Email',
+        emailPlaceholder: 'Enter email address',
+        emailError: 'Please enter a valid email address',
+        phone: 'Phone Number',
+        phonePlaceholder: 'Enter phone number',
+        phoneError: 'Please enter a valid phone number',
+        previousClub: 'Previous Club',
+        previousClubPlaceholder: 'Enter previous club (optional)',
+        position: 'Position',
+        positionPlaceholder: 'Select position',
+        positions: {
+          goalkeeper: 'Goalkeeper',
+          defender: 'Defender',
+          midfielder: 'Midfielder',
+          forward: 'Forward'
+        },
+        notes: 'Additional Notes',
+        notesPlaceholder: 'Add any additional information (optional)',
+        address: 'Address',
+        addressPlaceholder: 'Enter street address',
+        city: 'City',
+        cityPlaceholder: 'Enter city',
+        postalCode: 'Postal Code',
+        postalCodePlaceholder: 'Enter postal code',
+        postalCodeError: 'Please enter a valid 5-digit postal code',
+        membershipType: 'Membership Type',
+        membershipTypePlaceholder: 'Select membership type',
+        membershipTypes: {
+          basic: 'Basic Membership',
+          premium: 'Premium Membership',
+          family: 'Family Membership'
+        },
+        comments: 'Comments',
+        commentsPlaceholder: 'Add any comments (optional)',
+        registerPlayerSuccess: 'Player registration submitted successfully!',
+        becomeMemberSuccess: 'Membership application submitted successfully!',
+        errors: {
+          required: 'This field is required',
+          email: 'Please enter a valid email address',
+          pattern: 'Please enter a valid format',
+          minLength: 'Minimum {min} characters required',
+          maxLength: 'Maximum {max} characters allowed',
+          submitError: 'An error occurred. Please try again.'
+        }
+      }
     },
     information: {
       empty: 'Information Coming Soon',

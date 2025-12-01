@@ -18,10 +18,6 @@
   <div class="user-section desktop-only">
     <div class="user-info">
       <img [src]="avatarUrl()" [alt]="user()?.username" (error)="onAvatarError()" class="user-avatar">
-      <div class="user-details">
-        <div class="user-name">{{ user()?.firstName }} {{ user()?.lastName }}</div>
-        <div class="user-email">{{ user()?.email }}</div>
-      </div>
     </div>
     <div class="action-buttons">
       <button class="settings-button" (click)="goToSettings()">

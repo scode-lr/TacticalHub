@@ -37,8 +37,14 @@
 /* @import '@ionic/angular/css/palettes/dark.system.css'; */
 
 /**
- * Unified Button Styles
+ * Global Component Styles
  * -----------------------------------------------------
- * Import unified button styles for consistent buttons across the app
+ * Import global component styles for consistency across the app
  */
 @import "app/styles/buttons";
+@import "app/styles/layout";
+@import "app/styles/cards";
+@import "app/styles/forms";
+@import "app/styles/typography";
+@import "app/styles/animations";
+@import "app/styles/utilities";

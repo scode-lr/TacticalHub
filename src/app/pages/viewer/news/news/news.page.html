@@ -1,6 +1,6 @@
-<div class="viewer-news-page">
-  <div class="news-header">
-    <h1 class="page-title">{{ 'viewer.news.title' | translate }}</h1>
+<div class="page-container viewer-news-page">
+  <div class="section-header news-header">
+    <h1 class="section-title">{{ 'viewer.news.title' | translate }}</h1>
     
     <div class="filters-icons">
       <div class="filter-wrapper">
@@ -100,11 +100,11 @@
   @if (filteredNews().length === 0) {
     <div class="empty-state">
       <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
-      <h3>{{ 'viewer.news.empty' | translate }}</h3>
-      <p>{{ 'viewer.news.emptyDescription' | translate }}</p>
+      <h3 class="empty-title">{{ 'viewer.news.empty' | translate }}</h3>
+      <p class="empty-description">{{ 'viewer.news.emptyDescription' | translate }}</p>
     </div>
   } @else {
-    <div class="news-grid">
+    <div class="grid-auto-fill news-grid">
       @for (newsItem of filteredNews(); track newsItem.id; let i = $index) {
         <app-news-card
           [news]="newsItem"

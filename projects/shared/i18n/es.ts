@@ -187,7 +187,62 @@ export const sharedTranslations = {
       register: 'Registrar',
       becomeMember: 'Hacerse Socio',
       becomeMemberDesc: 'Únete como socio oficial del club',
-      join: 'Unirse Ahora'
+      join: 'Unirse Ahora',
+      form: {
+        submit: 'Enviar',
+        cancel: 'Cancelar',
+        submitting: 'Enviando...',
+        firstName: 'Nombre',
+        firstNamePlaceholder: 'Ingresa el nombre',
+        lastName: 'Apellido',
+        lastNamePlaceholder: 'Ingresa el apellido',
+        dateOfBirth: 'Fecha de Nacimiento',
+        dateOfBirthPlaceholder: 'Selecciona fecha de nacimiento',
+        email: 'Correo Electrónico',
+        emailPlaceholder: 'Ingresa el correo electrónico',
+        emailError: 'Por favor ingresa un correo electrónico válido',
+        phone: 'Número de Teléfono',
+        phonePlaceholder: 'Ingresa el número de teléfono',
+        phoneError: 'Por favor ingresa un número de teléfono válido',
+        previousClub: 'Club Anterior',
+        previousClubPlaceholder: 'Ingresa el club anterior (opcional)',
+        position: 'Posición',
+        positionPlaceholder: 'Selecciona la posición',
+        positions: {
+          goalkeeper: 'Portero',
+          defender: 'Defensa',
+          midfielder: 'Centrocampista',
+          forward: 'Delantero'
+        },
+        notes: 'Notas Adicionales',
+        notesPlaceholder: 'Agrega información adicional (opcional)',
+        address: 'Dirección',
+        addressPlaceholder: 'Ingresa la dirección',
+        city: 'Ciudad',
+        cityPlaceholder: 'Ingresa la ciudad',
+        postalCode: 'Código Postal',
+        postalCodePlaceholder: 'Ingresa el código postal',
+        postalCodeError: 'Por favor ingresa un código postal válido de 5 dígitos',
+        membershipType: 'Tipo de Membresía',
+        membershipTypePlaceholder: 'Selecciona el tipo de membresía',
+        membershipTypes: {
+          basic: 'Membresía Básica',
+          premium: 'Membresía Premium',
+          family: 'Membresía Familiar'
+        },
+        comments: 'Comentarios',
+        commentsPlaceholder: 'Agrega comentarios (opcional)',
+        registerPlayerSuccess: '¡Registro de jugador enviado exitosamente!',
+        becomeMemberSuccess: '¡Solicitud de membresía enviada exitosamente!',
+        errors: {
+          required: 'Este campo es obligatorio',
+          email: 'Por favor ingresa un correo electrónico válido',
+          pattern: 'Por favor ingresa un formato válido',
+          minLength: 'Se requieren mínimo {min} caracteres',
+          maxLength: 'Se permiten máximo {max} caracteres',
+          submitError: 'Ocurrió un error. Por favor intenta de nuevo.'
+        }
+      }
     },
     information: {
       empty: 'Información Próximamente',
