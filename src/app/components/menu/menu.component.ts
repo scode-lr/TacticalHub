@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { 
@@ -16,7 +16,6 @@ import {
   peopleOutline,
   ellipsisHorizontal,
   logOutOutline,
-  personOutline,
   settingsOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -25,18 +24,24 @@ import { RoleSelectorComponent } from '@components/role-selector/role-selector.c
 import { UserService } from '@core/services/user.service';
 import { User } from '@core/models/user.model';
 import { NavigationService } from '@services/navigation.service';
+import { RoleType } from '@core/models/role.model';
 
-interface MenuItem {
+export interface MenuItem {
   id: string;
   label: string;
   icon: string;
   route: string;
 }
 
+export interface MenuConfig {
+  role: RoleType;
+  items: MenuItem[];
+}
+
 @Component({
-  selector: 'app-viewer-menu',
-  templateUrl: './viewer-menu.component.html',
-  styleUrls: ['./viewer-menu.component.scss'],
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -44,36 +49,28 @@ interface MenuItem {
     IonPopover,
     TranslatePipe,
     RoleSelectorComponent
-],
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ViewerMenuComponent {
+export class MenuComponent {
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
+
+  readonly config = input.required<MenuConfig>();
   
-  readonly selectedMenuItem = signal<string>('home');
+  readonly selectedMenuItem = signal<string>('');
   readonly isPopoverOpen = signal<boolean>(false);
   readonly user = signal<User | null>(null);
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
-  
-  readonly menuItems: MenuItem[] = [
-    { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
-    { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
-    { id: 'action', label: 'viewer.menu.action', icon: 'add-circle-outline', route: 'action' },
-    { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
-    { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-    { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
-    { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
-  ];
 
-  readonly visibleMenuItems = computed(() => this.menuItems.slice(0, 4));
-  readonly hiddenMenuItems = computed(() => this.menuItems.slice(4));
+  readonly visibleMenuItems = computed(() => this.config().items.slice(0, 4));
+  readonly hiddenMenuItems = computed(() => this.config().items.slice(4));
 
   constructor() {
     this.initializeIcons();
-    this.trackRouteChanges();
     this.loadUserData();
+    this.trackRouteChanges();
   }
 
   private initializeIcons() {
@@ -87,7 +84,6 @@ export class ViewerMenuComponent {
       peopleOutline,
       ellipsisHorizontal,
       logOutOutline,
-      personOutline,
       settingsOutline
     });
   }
@@ -104,8 +100,9 @@ export class ViewerMenuComponent {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        const currentRoute = this.router.url.split('/').pop();
-        const menuItem = this.menuItems.find(item => item.route === currentRoute);
+        const urlParts = this.router.url.split('/');
+        const currentRoute = urlParts[urlParts.length - 1];
+        const menuItem = this.config().items.find(item => item.route === currentRoute);
         if (menuItem) {
           this.selectedMenuItem.set(menuItem.id);
         }
@@ -115,9 +112,8 @@ export class ViewerMenuComponent {
   selectMenuItem(item: MenuItem) {
     this.selectedMenuItem.set(item.id);
     this.isPopoverOpen.set(false);
-    
-    const roleId = this.router.url.split('/')[2];
-    this.router.navigate([`/app/${roleId}/${item.route}`]);
+    const role = this.config().role;
+    this.router.navigate([`/app/${role}/${item.route}`]);
   }
 
   isSelected(itemId: string): boolean {

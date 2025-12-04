@@ -39,7 +39,7 @@ export const mockClub: Club = {
   name: 'Voltregà CF',
   description: 'Professional football club',
   location: 'SHV',
-  logoUrl: '/assets/logo.svg',
+  logoUrl: '',
   teams: [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC]
 };
 

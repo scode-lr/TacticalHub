@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonSelect, IonSelectOption, IonContent } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -13,13 +13,12 @@ import { UserHeaderComponent } from '@components/user-header/user-header.compone
   standalone: true,
   imports: [
     CommonModule,
-    IonContent,
-    IonHeader,
     IonSelect,
     IonSelectOption,
     TranslatePipe,
-    UserHeaderComponent
-  ]
+    UserHeaderComponent,
+    IonContent
+]
 })
 export class SettingsPage {
   private readonly translationService = inject(TranslationService);

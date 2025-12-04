@@ -2,8 +2,9 @@ import { Component, OnInit, inject, signal, computed, effect } from '@angular/co
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
-import { ViewerMenuComponent } from '@components/viewer-menu/viewer-menu.component';
+import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { RoleType } from '@core/models/role.model';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -15,13 +16,26 @@ import { filter } from 'rxjs/operators';
     CommonModule,
     RouterModule,
     IonContent,
-    ViewerMenuComponent,
+    MenuComponent,
     UserHeaderComponent
   ],
 })
 export class ViewerPage  {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  
+  readonly viewerMenuConfig: MenuConfig = {
+    role: RoleType.Viewer,
+    items: [
+      { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
+      { id: 'action', label: 'viewer.menu.action', icon: 'add-circle-outline', route: 'action' },
+      { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
+      { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
+      { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
+    ]
+  };
   
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {

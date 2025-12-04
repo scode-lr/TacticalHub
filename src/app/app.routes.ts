@@ -10,6 +10,8 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
+    canActivate: [authGuard],
+    data: { requiresAuth: false },
     children: [
       {
         path: 'welcome',

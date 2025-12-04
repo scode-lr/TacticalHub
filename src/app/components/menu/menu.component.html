@@ -1,9 +1,10 @@
 <div class="menu-container">
-  <app-role-selector class="desktop-only" ></app-role-selector>
+  <!-- Desktop Role Selector -->
+  <app-role-selector class="desktop-only"></app-role-selector>
 
-  
+  <!-- Desktop Menu Nav -->
   <nav class="menu-nav">
-    @for (item of menuItems; track item.id) {
+    @for (item of config().items; track item.id) {
       <button 
         class="menu-item" 
         [class.active]="isSelected(item.id)"
@@ -14,7 +15,7 @@
     }
   </nav>
 
-  <!-- User Section (Desktop Only) -->
+  <!-- Desktop User Section -->
   <div class="user-section desktop-only">
     <div class="user-info">
       <img [src]="avatarUrl()" [alt]="user()?.username" (error)="onAvatarError()" class="user-avatar">
@@ -46,9 +47,10 @@
       id="more-trigger"
       (click)="togglePopover()">
       <ion-icon name="ellipsis-horizontal" class="menu-icon"></ion-icon>
-      <span class="menu-label">{{ 'viewer.menu.more' | translate }}</span>
+      <span class="menu-label">More</span>
     </button>
 
+    <!-- Mobile Popover Menu -->
     <ion-popover 
       trigger="more-trigger" 
       [isOpen]="isPopoverOpen()"

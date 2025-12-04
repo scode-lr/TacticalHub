@@ -1,25 +1,29 @@
-<ion-header>
+<div class="settings-header">
   <app-user-header [showBackButton]="true" (backClick)="goBack()"></app-user-header>
-</ion-header>
-
-<ion-content class="page-container">
-  <div class="settings-container">
-    <h1 class="page-title">{{ 'settings.title' | translate }}</h1>
-
-    <div class="section">
-      <h2 class="section-label">{{ 'settings.language' | translate }}</h2>
-      
-      <ion-select
-        class="language-select"
-        [value]="currentLanguage()"
-        (ionChange)="onLanguageChange($event)"
-        [placeholder]="'settings.selectLanguage' | translate">
-        @for (lang of supportedLanguages(); track lang.code) {
-          <ion-select-option [value]="lang.code">
-            {{ lang.name | translate }}
-          </ion-select-option>
-        }
-      </ion-select>
+</div>
+<ion-content>
+  <div class="page-container">
+    <div class="section-header">
+      <h1 class="section-title">{{ 'settings.title' | translate }}</h1>
+    </div>
+    <div class="content-section">
+      <div class="section-content">
+        <div class="setting-group">
+          <label class="setting-label">{{ 'settings.language' | translate }}</label>
+          
+          <ion-select
+            class="language-select"
+            [value]="currentLanguage()"
+            (ionChange)="onLanguageChange($event)"
+            [placeholder]="'settings.selectLanguage' | translate">
+            @for (lang of supportedLanguages(); track lang.code) {
+              <ion-select-option [value]="lang.code">
+                {{ lang.name | translate }}
+              </ion-select-option>
+            }
+          </ion-select>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

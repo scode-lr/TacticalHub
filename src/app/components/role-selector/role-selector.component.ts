@@ -26,6 +26,8 @@ import { NavigationService } from '@services/navigation.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role, RoleType, RoleStatus } from '@core/models/role.model';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
+import { environment } from '@environment';
+
 
 @Component({
   selector: 'app-role-selector',
@@ -62,6 +64,7 @@ export class RoleSelectorComponent {
       role.id !== this.currentRole()?.id
     ) || [];
   });
+  readonly privateApp = environment.private;
 
   constructor() {
     addIcons({

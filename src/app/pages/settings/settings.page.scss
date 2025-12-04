@@ -1,33 +1,51 @@
-.settings-content {
-  --background: var(--background-primary, #ffffff);
-}
+.settings-header {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      min-height: 56px;
+      padding: 0.5rem 1rem;
+      background: var(--background-primary, #ffffff);
+      border-bottom: 1px solid var(--border-light, #e5e7eb);
+      position: sticky;
+      top: 0;
+      z-index: 1001;
 
-.settings-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
+      app-user-header {
+        flex: 1;
+        
+        ::ng-deep .page-header {
+          padding: 0;
+          border-bottom: none;
+          position: static;
+
+          .header-content {
+            padding: 0;
+            min-height: auto;
+          }
+        }
+      }
+    }
+
+.section-content {
+  padding: 2rem;
 
   @media (max-width: 768px) {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem;
   }
 }
 
-.page-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--text-primary, #111827);
-  margin: 0 0 2rem 0;
-  letter-spacing: -0.025em;
-}
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 
-.section {
-  .section-label {
+  .setting-label {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-secondary, #6b7280);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin: 0 0 0.75rem 0;
+    margin: 0;
   }
 
   .language-select {
@@ -37,7 +55,7 @@
     --border-style: solid;
     --background: var(--background-primary, #ffffff);
     --color: var(--text-primary, #111827);
-    --placeholder-color: var(--text-secondary, #6b7280);
+    --placeholder-color: var(--text-light, #9ca3af);
     --padding-start: 1rem;
     --padding-end: 1rem;
     --padding-top: 0.875rem;
@@ -47,19 +65,6 @@
     width: 100%;
     border: 1px solid var(--border-light, #e5e7eb);
     border-radius: 10px;
-
-    &::part(container) {
-      border: none;
-    }
-
-    &::part(icon) {
-      color: var(--text-secondary, #6b7280);
-      opacity: 1;
-    }
-
-    &.select-expanded {
-      --border-color: var(--ion-color-primary, #3880ff);
-      border-color: var(--ion-color-primary, #3880ff);
-    }
+    transition: all 0.2s ease;
   }
 }

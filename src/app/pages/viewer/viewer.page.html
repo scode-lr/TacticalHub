@@ -11,7 +11,7 @@
     </div>
 
     <div class="layout-container">
-      <app-viewer-menu [class.hidden-on-detail]="isDetailPage()"></app-viewer-menu>
+      <app-menu [config]="viewerMenuConfig" [class.hidden-on-detail]="isDetailPage()"></app-menu>
       
       <div class="content-container" [class.full-width]="isDetailPage()">
         <router-outlet></router-outlet>
