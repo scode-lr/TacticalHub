@@ -35,11 +35,14 @@
   }
 }
 
+.auth-background {
+  background: linear-gradient(135deg, var(--ion-color-primary, #3880ff) 0%, #000000 100%);
+}
+
 // Left Side - Branding
 .branding-section {
   flex: 0 0 50%; // Fixed 50% width
   min-width: 50%;
-  background: linear-gradient(135deg, var(--ion-color-primary, #3880ff) 0%, #000000 100%);
   display: flex;
   align-items: center;
   justify-content: center;

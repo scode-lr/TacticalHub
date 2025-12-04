@@ -1,7 +1,7 @@
 import { Component, inject, signal, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonIcon, ToastController } from '@ionic/angular/standalone';
+import { ToastController } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@core/services/navigation.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
@@ -15,7 +15,6 @@ import { DynamicFormComponent } from '@components/dynamic-form/dynamic-form.comp
   standalone: true,
   imports: [
     CommonModule,
-    IonIcon,
     TranslatePipe,
     DynamicFormComponent
   ],
