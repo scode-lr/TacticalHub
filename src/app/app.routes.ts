@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
+import { roleAccessGuard } from '@core/guards/role-access.guard';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,7 @@ export const routes: Routes = [
     children: [
       {
         path: ':roleId',
+        canActivate: [roleAccessGuard],
         loadComponent: () => import('./pages/viewer/viewer.page').then(m => m.ViewerPage),
         children: [
           {
