@@ -1,29 +1,29 @@
 export const sharedTranslations = {
   welcome: {
-    createAccount: 'Create Account',
-    signIn: 'Sign In',
+    createAccount: 'Create account',
+    signIn: 'Sign in',
     signUpTagline: 'Sign up to start managing your teams',
     terms: 'By continuing, you agree to our',
-    termsOfService: 'Terms of Service',
+    termsOfService: 'Terms of service',
     and: 'and',
-    privacyPolicy: 'Privacy Policy'
+    privacyPolicy: 'Privacy policy'
   },
   auth: {
     email: 'Email',
     password: 'Password',
-    confirmPassword: 'Confirm Password',
-    firstName: 'First Name',
-    lastName: 'Last Name',
-    forgotPassword: 'Forgot Password?',
-    signInButton: 'Sign In',
-    signUpButton: 'Sign Up',
-    signOut: 'Sign Out',
+    confirmPassword: 'Confirm password',
+    firstName: 'First name',
+    lastName: 'Last name',
+    forgotPassword: 'Forgot password?',
+    signInButton: 'Sign in',
+    signUpButton: 'Sign up',
+    signOut: 'Sign out',
     or: 'or',
     continueWithGoogle: 'Continue with Google',
     continueWithApple: 'Continue with Apple',
     alreadyHaveAccount: 'Already have an account?',
     dontHaveAccount: "Don't have an account?",
-    continueAsGuest: 'Continue as Guest'
+    continueAsGuest: 'Continue as guest'
   },
   common: {
     loading: 'Loading...',
@@ -44,7 +44,7 @@ export const sharedTranslations = {
   settings: {
     title: 'Settings',
     language: 'Language',
-    selectLanguage: 'Select Language',
+    selectLanguage: 'Select language',
     english: 'English',
     spanish: 'Spanish',
     catalan: 'Catalan',
@@ -89,38 +89,38 @@ export const sharedTranslations = {
     redirecting: 'Redirecting...'
   },
   roleSelection: {
-    welcome: 'Welcome Back',
-    selectRole: 'Select Your Role',
-    switchRole: 'Switch Role',
+    welcome: 'Welcome back',
+    selectRole: 'Select your role',
+    switchRole: 'Switch role',
     chooseClub: 'Choose a club to continue',
     noRolesYet: 'Start by adding your first club',
     defaultDescription: 'Manage your club activities',
     permissions: 'permissions',
-    addNewClub: 'Add New Club',
+    addNewClub: 'Add new club',
     joinOrCreate: 'Join or create a new club',
     skipForNow: 'Skip for now',
     canAddLater: 'You can add clubs anytime from your profile',
     pending: 'Pending',
-    pendingRequests: 'Pending Requests',
+    pendingRequests: 'Pending requests',
     pendingDescription: 'These requests are awaiting approval from the team administrator'
   },
   joinTeam: {
-    title: 'Join a Team',
+    title: 'Join a team',
     subtitle: 'Enter the team code and select your role to join',
     subtitlePrivate: 'Select your role to join the team',
-    enterCode: 'Enter Team Code',
+    enterCode: 'Enter team code',
     codeDescription: 'Enter the 5-digit code provided by the team administrator',
-    selectRole: 'Select Your Role',
+    selectRole: 'Select your role',
     roleDescription: 'Choose how you want to participate in this team',
     coachDescription: 'Create and manage team activities, training sessions, and matches',
     viewerDescription: 'View team information, schedules, and match results',
-    submitRequest: 'Submit Join Request',
-    joinInstant: 'Join Team Instantly',
+    submitRequest: 'Submit join request',
+    joinInstant: 'Join team instantly',
     joiningInstant: 'Joining...',
-    teamFound: 'Team Found!',
+    teamFound: 'Team found!',
     confirmMatch: 'Select your role below to continue joining this team',
-    tryDifferentCode: 'Try Different Code',
-    selectTeam: 'Select Team',
+    tryDifferentCode: 'Try different code',
+    selectTeam: 'Select team',
     teamDescription: 'Choose which team you want to coach',
     category: 'Category'
   },
@@ -129,15 +129,15 @@ export const sharedTranslations = {
     viewer: 'Viewer'
   },
   viewer: {
-    title: 'Viewer Portal',
+    title: 'Viewer portal',
     subtitle: 'Access club information and services',
     menu: {
       home: 'Home',
       news: 'News',
       action: 'Actions',
       information: 'Information',
-      proposals: 'Proposals & Complaints',
-      matches: 'Weekend Matches',
+      proposals: 'Proposals & complaints',
+      matches: 'Weekend matches',
       partners: 'Partners',
       more: 'More'
     },
@@ -151,25 +151,25 @@ export const sharedTranslations = {
       partners: 'Our club partners and sponsors'
     },
     home: {
-      welcome: 'Welcome to the Club!',
+      welcome: 'Welcome to the club!',
       description: 'Here you can access all club services and stay updated with the latest news and events.'
     },
     news: {
       title: 'News',
       category: 'Category',
-      empty: 'No News Available',
+      empty: 'No news available',
       emptyDescription: 'There are no news articles at this time. Check back later for updates.',
       author: 'Author',
-      notFound: 'News Not Found',
+      notFound: 'News not found',
       comments: 'Comments',
       noComments: 'No comments yet. Be the first to comment!',
       time: {
         title: 'Time',
-        all: 'All Time',
+        all: 'All time',
         today: 'Today',
-        week: 'This Week',
-        month: 'This Month',
-        year: 'This Year'
+        week: 'This week',
+        month: 'This month',
+        year: 'This year'
       },
       categories: {
         all: 'All',
@@ -182,29 +182,29 @@ export const sharedTranslations = {
       }
     },
     action: {
-      registerPlayer: 'Register a Player',
+      registerPlayer: 'Register a player',
       registerPlayerDesc: 'Register a new player to join the club',
       register: 'Register',
-      becomeMember: 'Become a Member',
+      becomeMember: 'Become a member',
       becomeMemberDesc: 'Join as an official club member',
-      join: 'Join Now',
+      join: 'Join now',
       form: {
         submit: 'Submit',
         cancel: 'Cancel',
         submitting: 'Submitting...',
-        firstName: 'First Name',
+        firstName: 'First name',
         firstNamePlaceholder: 'Enter first name',
-        lastName: 'Last Name',
+        lastName: 'Last name',
         lastNamePlaceholder: 'Enter last name',
-        dateOfBirth: 'Date of Birth',
+        dateOfBirth: 'Date of birth',
         dateOfBirthPlaceholder: 'Select date of birth',
         email: 'Email',
         emailPlaceholder: 'Enter email address',
         emailError: 'Please enter a valid email address',
-        phone: 'Phone Number',
+        phone: 'Phone number',
         phonePlaceholder: 'Enter phone number',
         phoneError: 'Please enter a valid phone number',
-        previousClub: 'Previous Club',
+        previousClub: 'Previous club',
         previousClubPlaceholder: 'Enter previous club (optional)',
         position: 'Position',
         positionPlaceholder: 'Select position',
@@ -214,21 +214,21 @@ export const sharedTranslations = {
           midfielder: 'Midfielder',
           forward: 'Forward'
         },
-        notes: 'Additional Notes',
+        notes: 'Additional notes',
         notesPlaceholder: 'Add any additional information (optional)',
         address: 'Address',
         addressPlaceholder: 'Enter street address',
         city: 'City',
         cityPlaceholder: 'Enter city',
-        postalCode: 'Postal Code',
+        postalCode: 'Postal code',
         postalCodePlaceholder: 'Enter postal code',
         postalCodeError: 'Please enter a valid 5-digit postal code',
-        membershipType: 'Membership Type',
+        membershipType: 'Membership type',
         membershipTypePlaceholder: 'Select membership type',
         membershipTypes: {
-          basic: 'Basic Membership',
-          premium: 'Premium Membership',
-          family: 'Family Membership'
+          basic: 'Basic membership',
+          premium: 'Premium membership',
+          family: 'Family membership'
         },
         comments: 'Comments',
         commentsPlaceholder: 'Add any comments (optional)',
@@ -245,19 +245,19 @@ export const sharedTranslations = {
       }
     },
     information: {
-      empty: 'Information Coming Soon',
+      empty: 'Information coming soon',
       emptyDescription: 'Club information and resources will be available here soon.'
     },
     proposals: {
-      empty: 'No Proposals Yet',
+      empty: 'No proposals yet',
       emptyDescription: 'Submit your proposals or complaints to help improve the club.'
     },
     matches: {
-      empty: 'No Matches Scheduled',
+      empty: 'No matches scheduled',
       emptyDescription: 'Weekend match schedule will appear here when available.'
     },
     partners: {
-      empty: 'No Partners Listed',
+      empty: 'No partners listed',
       emptyDescription: 'Our club partners and sponsors will be listed here.'
     }
   }

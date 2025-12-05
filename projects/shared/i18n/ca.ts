@@ -1,29 +1,29 @@
 export const sharedTranslations = {
   welcome: {
-    createAccount: 'Crear Compte',
-    signIn: 'Iniciar Sessió',
+    createAccount: 'Crear compte',
+    signIn: 'Iniciar sessió',
     signUpTagline: "Registra't per començar a gestionar els teus equips",
     terms: 'En continuar, acceptes els nostres',
-    termsOfService: 'Termes de Servei',
+    termsOfService: 'Termes de servei',
     and: 'i',
-    privacyPolicy: 'Política de Privadesa'
+    privacyPolicy: 'Política de privadesa'
   },
   auth: {
-    email: 'Correu Electrònic',
+    email: 'Correu electrònic',
     password: 'Contrasenya',
-    confirmPassword: 'Confirmar Contrasenya',
+    confirmPassword: 'Confirmar contrasenya',
     firstName: 'Nom',
     lastName: 'Cognom',
     forgotPassword: 'Has oblidat la contrasenya?',
-    signInButton: 'Iniciar Sessió',
+    signInButton: 'Iniciar sessió',
     signUpButton: 'Registrar-se',
-    signOut: 'Tancar Sessió',
+    signOut: 'Tancar sessió',
     or: 'o',
     continueWithGoogle: 'Continuar amb Google',
     continueWithApple: 'Continuar amb Apple',
     alreadyHaveAccount: 'Ja tens un compte?',
     dontHaveAccount: 'No tens un compte?',
-    continueAsGuest: 'Continuar com a Convidat'
+    continueAsGuest: 'Continuar com a convidat'
   },
   common: {
     loading: 'Carregant...',
@@ -44,7 +44,7 @@ export const sharedTranslations = {
   settings: {
     title: 'Configuració',
     language: 'Idioma',
-    selectLanguage: 'Seleccionar Idioma',
+    selectLanguage: 'Seleccionar idioma',
     english: 'Anglès',
     spanish: 'Espanyol',
     catalan: 'Català',
@@ -90,37 +90,37 @@ export const sharedTranslations = {
   },
   roleSelection: {
     welcome: 'Benvingut de nou',
-    selectRole: 'Selecciona el teu Rol',
-    switchRole: 'Canviar Rol',
+    selectRole: 'Selecciona el teu rol',
+    switchRole: 'Canviar rol',
     chooseClub: 'Tria un club per continuar',
     noRolesYet: 'Comença afegint el teu primer club',
     defaultDescription: 'Gestiona les activitats del teu club',
     permissions: 'permisos',
-    addNewClub: 'Afegir Nou Club',
+    addNewClub: 'Afegir nou club',
     joinOrCreate: 'Uneix-te o crea un nou club',
     skipForNow: 'Ometre per ara',
     canAddLater: 'Pots afegir clubs en qualsevol moment des del teu perfil',
     pending: 'Pendent',
-    pendingRequests: 'Sol·licituds Pendents',
+    pendingRequests: 'Sol·licituds pendents',
     pendingDescription: 'Aquestes sol·licituds estan esperant l\'aprovació de l\'administrador de l\'equip'
   },
   joinTeam: {
-    title: "Unir-se a un Equip",
+    title: "Unir-se a un equip",
     subtitle: 'Introdueix el codi de l\'equip i selecciona el teu rol per unir-te',
     subtitlePrivate: 'Selecciona el teu rol per unir-te a l\'equip',
-    enterCode: 'Introduir Codi de l\'Equip',
+    enterCode: 'Introduir codi de l\'equip',
     codeDescription: 'Introdueix el codi de 5 dígits proporcionat per l\'administrador de l\'equip',
-    selectRole: 'Selecciona el teu Rol',
+    selectRole: 'Selecciona el teu rol',
     roleDescription: 'Tria com vols participar en aquest equip',
     coachDescription: 'Crear i gestionar activitats de l\'equip, sessions d\'entrenament i partits',
     viewerDescription: 'Veure informació de l\'equip, horaris i resultats de partits',
-    submitRequest: 'Enviar Sol·licitud',
-    joinInstant: 'Unir-se Instantàniament',
+    submitRequest: 'Enviar sol·licitud',
+    joinInstant: 'Unir-se instantàniament',
     joiningInstant: 'Unint-se...',
-    teamFound: 'Equip Trobat!',
+    teamFound: 'Equip trobat!',
     confirmMatch: 'Selecciona el teu rol a continuació per unir-te a aquest equip',
-    tryDifferentCode: 'Provar un Altre Codi',
-    selectTeam: 'Seleccionar Equip',
+    tryDifferentCode: 'Provar un altre codi',
+    selectTeam: 'Seleccionar equip',
     teamDescription: 'Tria quin equip vols entrenar',
     category: 'Categoria'
   },
@@ -129,15 +129,15 @@ export const sharedTranslations = {
     viewer: 'Observador'
   },
   viewer: {
-    title: 'Portal de l\'Observador',
+    title: 'Portal de l\'observador',
     subtitle: 'Accedeix a informació i serveis del club',
     menu: {
       home: 'Inici',
       news: 'Notícies',
       action: 'Accions',
       information: 'Informació',
-      proposals: 'Propostes i Queixes',
-      matches: 'Partits del Cap de Setmana',
+      proposals: 'Propostes i queixes',
+      matches: 'Partits del cap de setmana',
       partners: 'Socis',
       more: 'Més'
     },
@@ -151,7 +151,7 @@ export const sharedTranslations = {
       partners: 'Els nostres socis i patrocinadors del club'
     },
     home: {
-      welcome: 'Benvingut al Club!',
+      welcome: 'Benvingut al club!',
       description: 'Aquí pots accedir a tots els serveis del club i mantenir-te actualitzat amb les últimes notícies i esdeveniments.'
     },
     news: {
@@ -182,12 +182,12 @@ export const sharedTranslations = {
       }
     },
     action: {
-      registerPlayer: 'Registrar un Jugador',
+      registerPlayer: 'Registrar un jugador',
       registerPlayerDesc: 'Registra un nou jugador per unir-se al club',
       register: 'Registrar',
-      becomeMember: 'Fer-se Soci',
+      becomeMember: 'Fer-se soci',
       becomeMemberDesc: 'Uneix-te com a soci oficial del club',
-      join: 'Unir-se Ara',
+      join: 'Unir-se ara',
       form: {
         submit: 'Enviar',
         cancel: 'Cancel·lar',
@@ -196,15 +196,15 @@ export const sharedTranslations = {
         firstNamePlaceholder: 'Introdueix el nom',
         lastName: 'Cognom',
         lastNamePlaceholder: 'Introdueix el cognom',
-        dateOfBirth: 'Data de Naixement',
+        dateOfBirth: 'Data de naixement',
         dateOfBirthPlaceholder: 'Selecciona data de naixement',
-        email: 'Correu Electrònic',
+        email: 'Correu electrònic',
         emailPlaceholder: 'Introdueix el correu electrònic',
         emailError: 'Si us plau introdueix un correu electrònic vàlid',
-        phone: 'Número de Telèfon',
+        phone: 'Número de telèfon',
         phonePlaceholder: 'Introdueix el número de telèfon',
         phoneError: 'Si us plau introdueix un número de telèfon vàlid',
-        previousClub: 'Club Anterior',
+        previousClub: 'Club anterior',
         previousClubPlaceholder: 'Introdueix el club anterior (opcional)',
         position: 'Posició',
         positionPlaceholder: 'Selecciona la posició',
@@ -214,21 +214,21 @@ export const sharedTranslations = {
           midfielder: 'Migcampista',
           forward: 'Davanter'
         },
-        notes: 'Notes Addicionals',
+        notes: 'Notes addicionals',
         notesPlaceholder: 'Afegeix informació addicional (opcional)',
         address: 'Adreça',
         addressPlaceholder: 'Introdueix l\'adreça',
         city: 'Ciutat',
         cityPlaceholder: 'Introdueix la ciutat',
-        postalCode: 'Codi Postal',
+        postalCode: 'Codi postal',
         postalCodePlaceholder: 'Introdueix el codi postal',
         postalCodeError: 'Si us plau introdueix un codi postal vàlid de 5 dígits',
-        membershipType: 'Tipus de Membresía',
+        membershipType: 'Tipus de membresía',
         membershipTypePlaceholder: 'Selecciona el tipus de membresía',
         membershipTypes: {
-          basic: 'Membresía Bàsica',
-          premium: 'Membresía Premium',
-          family: 'Membresía Familiar'
+          basic: 'Membresía bàsica',
+          premium: 'Membresía premium',
+          family: 'Membresía familiar'
         },
         comments: 'Comentaris',
         commentsPlaceholder: 'Afegeix comentaris (opcional)',
@@ -245,19 +245,19 @@ export const sharedTranslations = {
       }
     },
     information: {
-      empty: 'Informació Pròximament',
+      empty: 'Informació pròximament',
       emptyDescription: 'La informació i recursos del club estaran disponibles aquí aviat.'
     },
     proposals: {
-      empty: 'Encara No hi ha Propostes',
+      empty: 'Encara no hi ha propostes',
       emptyDescription: 'Envia les teves propostes o queixes per ajudar a millorar el club.'
     },
     matches: {
-      empty: 'No hi ha Partits Programats',
+      empty: 'No hi ha partits programats',
       emptyDescription: 'El calendari de partits del cap de setmana apareixerà aquí quan estigui disponible.'
     },
     partners: {
-      empty: 'No hi ha Socis Llistats',
+      empty: 'No hi ha socis llistats',
       emptyDescription: 'Els nostres socis i patrocinadors del club es llistaran aquí.'
     }
   }

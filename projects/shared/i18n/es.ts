@@ -1,29 +1,29 @@
 export const sharedTranslations = {
   welcome: {
-    createAccount: 'Crear Cuenta',
-    signIn: 'Iniciar Sesión',
+    createAccount: 'Crear cuenta',
+    signIn: 'Iniciar sesión',
     signUpTagline: 'Regístrate para comenzar a gestionar tus equipos',
     terms: 'Al continuar, aceptas nuestros',
-    termsOfService: 'Términos de Servicio',
+    termsOfService: 'Términos de servicio',
     and: 'y',
-    privacyPolicy: 'Política de Privacidad'
+    privacyPolicy: 'Política de privacidad'
   },
   auth: {
-    email: 'Correo Electrónico',
+    email: 'Correo electrónico',
     password: 'Contraseña',
-    confirmPassword: 'Confirmar Contraseña',
+    confirmPassword: 'Confirmar contraseña',
     firstName: 'Nombre',
     lastName: 'Apellido',
-    forgotPassword: '¿Olvidaste tu Contraseña?',
-    signInButton: 'Iniciar Sesión',
+    forgotPassword: '¿Olvidaste tu contraseña?',
+    signInButton: 'Iniciar sesión',
     signUpButton: 'Registrarse',
-    signOut: 'Cerrar Sesión',
+    signOut: 'Cerrar sesión',
     or: 'o',
     continueWithGoogle: 'Continuar con Google',
     continueWithApple: 'Continuar con Apple',
     alreadyHaveAccount: '¿Ya tienes una cuenta?',
     dontHaveAccount: '¿No tienes una cuenta?',
-    continueAsGuest: 'Continuar como Invitado'
+    continueAsGuest: 'Continuar como invitado'
   },
   common: {
     loading: 'Cargando...',
@@ -44,7 +44,7 @@ export const sharedTranslations = {
   settings: {
     title: 'Ajustes',
     language: 'Idioma',
-    selectLanguage: 'Seleccionar Idioma',
+    selectLanguage: 'Seleccionar idioma',
     english: 'Inglés',
     spanish: 'Español',
     catalan: 'Catalán',
@@ -90,37 +90,37 @@ export const sharedTranslations = {
   },
   roleSelection: {
     welcome: 'Bienvenido de nuevo',
-    selectRole: 'Selecciona tu Rol',
-    switchRole: 'Cambiar Rol',
+    selectRole: 'Selecciona tu rol',
+    switchRole: 'Cambiar rol',
     chooseClub: 'Elige un club para continuar',
     noRolesYet: 'Comienza agregando tu primer club',
     defaultDescription: 'Gestiona las actividades de tu club',
     permissions: 'permisos',
-    addNewClub: 'Agregar Nuevo Club',
+    addNewClub: 'Agregar nuevo club',
     joinOrCreate: 'Únete o crea un nuevo club',
     skipForNow: 'Omitir por ahora',
     canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil',
     pending: 'Pendiente',
-    pendingRequests: 'Solicitudes Pendientes',
+    pendingRequests: 'Solicitudes pendientes',
     pendingDescription: 'Estas solicitudes están esperando aprobación del administrador del equipo'
   },
   joinTeam: {
-    title: 'Unirse a un Equipo',
+    title: 'Unirse a un equipo',
     subtitle: 'Introduce el código del equipo y selecciona tu rol para unirte',
     subtitlePrivate: 'Selecciona tu rol para unirte al equipo',
-    enterCode: 'Introducir Código del Equipo',
+    enterCode: 'Introducir código del equipo',
     codeDescription: 'Introduce el código de 5 dígitos proporcionado por el administrador del equipo',
-    selectRole: 'Selecciona tu Rol',
+    selectRole: 'Selecciona tu rol',
     roleDescription: 'Elige cómo quieres participar en este equipo',
     coachDescription: 'Crear y gestionar actividades del equipo, sesiones de entrenamiento y partidos',
     viewerDescription: 'Ver información del equipo, horarios y resultados de partidos',
-    submitRequest: 'Enviar Solicitud',
-    joinInstant: 'Unirse Instantáneamente',
+    submitRequest: 'Enviar solicitud',
+    joinInstant: 'Unirse instantáneamente',
     joiningInstant: 'Uniéndose...',
-    teamFound: '¡Equipo Encontrado!',
+    teamFound: '¡Equipo encontrado!',
     confirmMatch: 'Selecciona tu rol a continuación para unirte a este equipo',
-    tryDifferentCode: 'Probar Otro Código',
-    selectTeam: 'Seleccionar Equipo',
+    tryDifferentCode: 'Probar otro código',
+    selectTeam: 'Seleccionar equipo',
     teamDescription: 'Elige qué equipo quieres entrenar',
     category: 'Categoría'
   },
@@ -129,15 +129,15 @@ export const sharedTranslations = {
     viewer: 'Observador'
   },
   viewer: {
-    title: 'Portal del Observador',
+    title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',
     menu: {
       home: 'Inicio',
       news: 'Noticias',
       action: 'Acciones',
       information: 'Información',
-      proposals: 'Propuestas y Quejas',
-      matches: 'Partidos del Fin de Semana',
+      proposals: 'Propuestas y quejas',
+      matches: 'Partidos del fin de semana',
       partners: 'Socios',
       more: 'Más'
     },
@@ -151,7 +151,7 @@ export const sharedTranslations = {
       partners: 'Nuestros socios y patrocinadores del club'
     },
     home: {
-      welcome: '¡Bienvenido al Club!',
+      welcome: '¡Bienvenido al club!',
       description: 'Aquí puedes acceder a todos los servicios del club y mantenerte actualizado con las últimas noticias y eventos.'
     },
     news: {
@@ -182,12 +182,12 @@ export const sharedTranslations = {
       }
     },
     action: {
-      registerPlayer: 'Registrar un Jugador',
+      registerPlayer: 'Registrar un jugador',
       registerPlayerDesc: 'Registra un nuevo jugador para unirse al club',
       register: 'Registrar',
-      becomeMember: 'Hacerse Socio',
+      becomeMember: 'Hacerse socio',
       becomeMemberDesc: 'Únete como socio oficial del club',
-      join: 'Unirse Ahora',
+      join: 'Unirse ahora',
       form: {
         submit: 'Enviar',
         cancel: 'Cancelar',
@@ -196,15 +196,15 @@ export const sharedTranslations = {
         firstNamePlaceholder: 'Ingresa el nombre',
         lastName: 'Apellido',
         lastNamePlaceholder: 'Ingresa el apellido',
-        dateOfBirth: 'Fecha de Nacimiento',
+        dateOfBirth: 'Fecha de nacimiento',
         dateOfBirthPlaceholder: 'Selecciona fecha de nacimiento',
-        email: 'Correo Electrónico',
+        email: 'Correo electrónico',
         emailPlaceholder: 'Ingresa el correo electrónico',
         emailError: 'Por favor ingresa un correo electrónico válido',
-        phone: 'Número de Teléfono',
+        phone: 'Número de teléfono',
         phonePlaceholder: 'Ingresa el número de teléfono',
         phoneError: 'Por favor ingresa un número de teléfono válido',
-        previousClub: 'Club Anterior',
+        previousClub: 'Club anterior',
         previousClubPlaceholder: 'Ingresa el club anterior (opcional)',
         position: 'Posición',
         positionPlaceholder: 'Selecciona la posición',
@@ -214,21 +214,21 @@ export const sharedTranslations = {
           midfielder: 'Centrocampista',
           forward: 'Delantero'
         },
-        notes: 'Notas Adicionales',
+        notes: 'Notas adicionales',
         notesPlaceholder: 'Agrega información adicional (opcional)',
         address: 'Dirección',
         addressPlaceholder: 'Ingresa la dirección',
         city: 'Ciudad',
         cityPlaceholder: 'Ingresa la ciudad',
-        postalCode: 'Código Postal',
+        postalCode: 'Código postal',
         postalCodePlaceholder: 'Ingresa el código postal',
         postalCodeError: 'Por favor ingresa un código postal válido de 5 dígitos',
-        membershipType: 'Tipo de Membresía',
+        membershipType: 'Tipo de membresía',
         membershipTypePlaceholder: 'Selecciona el tipo de membresía',
         membershipTypes: {
-          basic: 'Membresía Básica',
-          premium: 'Membresía Premium',
-          family: 'Membresía Familiar'
+          basic: 'Membresía básica',
+          premium: 'Membresía premium',
+          family: 'Membresía familiar'
         },
         comments: 'Comentarios',
         commentsPlaceholder: 'Agrega comentarios (opcional)',
@@ -245,19 +245,19 @@ export const sharedTranslations = {
       }
     },
     information: {
-      empty: 'Información Próximamente',
+      empty: 'Información próximamente',
       emptyDescription: 'La información y recursos del club estarán disponibles aquí pronto.'
     },
     proposals: {
-      empty: 'Aún No hay Propuestas',
+      empty: 'Aún no hay propuestas',
       emptyDescription: 'Envía tus propuestas o quejas para ayudar a mejorar el club.'
     },
     matches: {
-      empty: 'No hay Partidos Programados',
+      empty: 'No hay partidos programados',
       emptyDescription: 'El calendario de partidos del fin de semana aparecerá aquí cuando esté disponible.'
     },
     partners: {
-      empty: 'No hay Socios Listados',
+      empty: 'No hay socios listados',
       emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
     }
   }
