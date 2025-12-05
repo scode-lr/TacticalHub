@@ -249,12 +249,31 @@ export const sharedTranslations = {
       emptyDescription: 'La información y recursos del club estarán disponibles aquí pronto.'
     },
     proposals: {
-      empty: 'Aún no hay propuestas',
-      emptyDescription: 'Envía tus propuestas o quejas para ayudar a mejorar el club.'
+      title: 'Propuestas',
+      empty: 'No hay propuestas todavía',
+      emptyDescription: 'Envía una propuesta al administrador para mejorar la plataforma.',
+      form: {
+        title: 'Título',
+        titlePlaceholder: 'Introduce el título de la propuesta',
+        titleError: 'El título es obligatorio (min 5 caracteres)',
+        body: 'Descripción',
+        bodyPlaceholder: 'Describe tu propuesta en detalle...',
+        bodyError: 'La descripción es obligatoria (min 20 caracteres)',
+        attachment: 'Adjunto',
+        changeFile: 'Cambiar archivo',
+        uploadText: 'Haz clic para subir archivo',
+        uploadSubtext: 'PDF, DOC, Imágenes (max 5MB)',
+        submit: 'Enviar propuesta',
+        fileTypeError: 'Tipo de archivo no válido. Solo se permiten PDF, DOC, Excel e imágenes',
+        fileSizeError: 'El archivo excede el límite de 5MB'
+      }
     },
     matches: {
-      empty: 'No hay partidos programados',
-      emptyDescription: 'El calendario de partidos del fin de semana aparecerá aquí cuando esté disponible.'
+      title: 'Partidos',
+      empty: 'No hay partidos esta semana',
+      emptyDescription: 'No se han programado partidos para esta semana.',
+      saturday: 'Sábado',
+      sunday: 'Domingo'
     },
     partners: {
       empty: 'No hay socios listados',

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { SHARED_TRANSLATIONS } from '../../i18n/shared';
+import { SHARED_TRANSLATIONS } from '../../../../../projects/shared/i18n';
 import { StorageService } from '../storage.service';
 import { STORAGE_KEYS } from '../../constants/storage-keys';
 import { Device } from '@capacitor/device';

@@ -78,6 +78,7 @@ export class RoleSelectorComponent {
   loadCurrentRole() {
     const role = this.storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
     this.currentRole.set(role);
+    console.log('Current role loaded in RoleSelectorComponent:', role);
   }
 
   getRoleName(roleId: RoleType): string {

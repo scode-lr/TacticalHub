@@ -249,12 +249,31 @@ export const sharedTranslations = {
       emptyDescription: 'La informació i recursos del club estaran disponibles aquí aviat.'
     },
     proposals: {
-      empty: 'Encara no hi ha propostes',
-      emptyDescription: 'Envia les teves propostes o queixes per ajudar a millorar el club.'
+      title: 'Propostes',
+      empty: 'No hi ha propostes encara',
+      emptyDescription: 'Envia una proposta a l\'administrador per millorar la plataforma.',
+      form: {
+        title: 'Títol',
+        titlePlaceholder: 'Introdueix el títol de la proposta',
+        titleError: 'El títol és obligatori (min 5 caràcters)',
+        body: 'Descripció',
+        bodyPlaceholder: 'Descriu la teva proposta en detall...',
+        bodyError: 'La descripció és obligatòria (min 20 caràcters)',
+        attachment: 'Adjunt',
+        changeFile: 'Canviar arxiu',
+        uploadText: 'Fes clic per pujar arxiu',
+        uploadSubtext: 'PDF, DOC, Imatges (max 5MB)',
+        submit: 'Enviar proposta',
+        fileTypeError: 'Tipus d\'arxiu no vàlid. Només es permeten PDF, DOC, Excel i imatges',
+        fileSizeError: 'L\'arxiu excedeix el límit de 5MB'
+      }
     },
     matches: {
-      empty: 'No hi ha partits programats',
-      emptyDescription: 'El calendari de partits del cap de setmana apareixerà aquí quan estigui disponible.'
+      title: 'Partits',
+      empty: 'No hi ha partits aquesta setmana',
+      emptyDescription: 'No s\'han programat partits per aquesta setmana.',
+      saturday: 'Dissabte',
+      sunday: 'Diumenge'
     },
     partners: {
       empty: 'No hi ha socis llistats',

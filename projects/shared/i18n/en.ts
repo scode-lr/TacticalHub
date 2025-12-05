@@ -249,12 +249,31 @@ export const sharedTranslations = {
       emptyDescription: 'Club information and resources will be available here soon.'
     },
     proposals: {
+      title: 'Proposals',
       empty: 'No proposals yet',
-      emptyDescription: 'Submit your proposals or complaints to help improve the club.'
+      emptyDescription: 'Send a proposal to the admin to improve the platform.',
+      form: {
+        title: 'Title',
+        titlePlaceholder: 'Enter proposal title',
+        titleError: 'Title is required (min 5 chars)',
+        body: 'Description',
+        bodyPlaceholder: 'Describe your proposal in detail...',
+        bodyError: 'Description is required (min 20 chars)',
+        attachment: 'Attachment',
+        changeFile: 'Change file',
+        uploadText: 'Click to upload file',
+        uploadSubtext: 'PDF, DOC, Images (max 5MB)',
+        submit: 'Submit proposal',
+        fileTypeError: 'Invalid file type. Only PDF, DOC, Excel, and images are allowed',
+        fileSizeError: 'File size exceeds 5MB limit'
+      }
     },
     matches: {
-      empty: 'No matches scheduled',
-      emptyDescription: 'Weekend match schedule will appear here when available.'
+      title: 'Matches',
+      empty: 'No matches this week',
+      emptyDescription: 'No matches have been scheduled for this week.',
+      saturday: 'Saturday',
+      sunday: 'Sunday'
     },
     partners: {
       empty: 'No partners listed',
