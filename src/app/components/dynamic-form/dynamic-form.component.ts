@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidatorFn } 
 import { IonButton, IonIcon, IonInput, IonTextarea, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { TranslationService } from '@core/services/i18n/translation.service';
-import { FormField } from '@pages/viewer/action/action.config';
+import { FormField } from '@pages/action/action.config';
 
 @Component({
   selector: 'app-dynamic-form',

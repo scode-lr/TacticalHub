@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IonIcon, IonModal, IonContent } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
-import { NewsCardComponent } from '../../components/news-card/news-card.component';
+import { NewsCardComponent } from '@components/news-card/news-card.component';
 import { News, NewsCategory, TimeFilter, VoteType } from '@models/news.model';
 import { mockNews } from '@mocks/news.mock';
 

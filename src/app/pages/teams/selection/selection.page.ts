@@ -71,11 +71,7 @@ export class RoleSelectionPage implements OnInit {
   selectRole(role: Role) {
     this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
     
-    if (role.roleId === RoleType.Viewer) {
-      this.navigationService.navigateTo([`app/${role.roleId}`]);
-    } else {
-      this.navigationService.navigateTo(['layouts/my-teams']);
-    }
+    this.navigationService.navigateTo([`app/${role.roleId}/home`]);
   }
 
   addNewClub() {

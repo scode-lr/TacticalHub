@@ -40,14 +40,11 @@ export class ViewerPage  {
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {
     if (this.isDetailPage()) {
-      const urlSegments = this.router.url.split('/');
-      const roleId = urlSegments[2];
-      
       if (this.router.url.includes('/action-form/')) {
-        return `/app/${roleId}/action`;
+        return `/app/2/action`;
       }
       
-      return `/app/${roleId}/news`;
+      return `/app/2/news`;
     }
     return '';
   });

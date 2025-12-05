@@ -1,9 +1,0 @@
-<div class="language-selector">
-  <ion-button 
-    *ngFor="let lang of availableLanguages" 
-    [fill]="currentLanguage === lang.code ? 'solid' : 'outline'"
-    (click)="changeLanguage(lang.code)"
-    size="small">
-    {{ lang.flag }} {{ lang.name }}
-  </ion-button>
-</div>

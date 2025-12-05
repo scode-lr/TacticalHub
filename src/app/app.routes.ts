@@ -36,7 +36,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: ':roleId',
+        path: '2',
+        data: { roleId: 2 },
         canActivate: [roleAccessGuard],
         loadComponent: () => import('./pages/viewer/viewer.page').then(m => m.ViewerPage),
         children: [
@@ -47,61 +48,44 @@ export const routes: Routes = [
           },
           {
             path: 'home',
-            loadComponent: () => import('./pages/viewer/home/home.page').then(m => m.ViewerHomePage)
+            loadComponent: () => import('./pages/home/home.page').then(m => m.ViewerHomePage)
           },
           {
             path: 'news',
-            loadComponent: () => import('./pages/viewer/news/news/news.page').then(m => m.ViewerNewsPage)
+            loadComponent: () => import('./pages/news/news/news.page').then(m => m.ViewerNewsPage)
           },
           {
             path: 'news/:id',
-            loadComponent: () => import('./pages/viewer/news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
+            loadComponent: () => import('./pages/news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
           },
           {
             path: 'action',
-            loadComponent: () => import('./pages/viewer/action/action.page').then(m => m.ViewerActionPage)
+            loadComponent: () => import('./pages/action/action.page').then(m => m.ViewerActionPage)
           },
           {
             path: 'action-form/:type',
-            loadComponent: () => import('./pages/viewer/action-form/action-form.page').then(m => m.ActionFormPage)
+            loadComponent: () => import('./pages/action-form/action-form.page').then(m => m.ActionFormPage)
           },
           {
             path: 'information',
-            loadComponent: () => import('./pages/viewer/information/information.page').then(m => m.ViewerInformationPage)
+            loadComponent: () => import('./pages/information/information.page').then(m => m.ViewerInformationPage)
           },
           {
             path: 'proposals',
-            loadComponent: () => import('./pages/viewer/proposals/proposals.page').then(m => m.ViewerProposalsPage)
+            loadComponent: () => import('./pages/proposals/proposals.page').then(m => m.ViewerProposalsPage)
           },
           {
             path: 'matches',
-            loadComponent: () => import('./pages/viewer/matches/matches.page').then(m => m.ViewerMatchesPage)
+            loadComponent: () => import('./pages/matches/matches.page').then(m => m.ViewerMatchesPage)
           },
           {
             path: 'partners',
-            loadComponent: () => import('./pages/viewer/partners/partners.page').then(m => m.ViewerPartnersPage)
+            loadComponent: () => import('./pages/partners/partners.page').then(m => m.ViewerPartnersPage)
           }
         ]
       }
     ]
   },
-  {
-    path: 'layouts',
-    loadComponent: () => import('./pages/layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
-    canActivate: [authGuard],
-    children: [
-      {
-        path: '',
-        redirectTo: 'my-teams',
-        pathMatch: 'full',
-      },
-      {
-        path: 'my-teams',
-        loadComponent: () => import('./pages/layouts/my-teams/my-teams.page').then(m => m.MyTeamsPage),
-      }
-    ],
-  },
-
   {
     path: 'teams',
     canActivate: [authGuard],
@@ -120,24 +104,11 @@ export const routes: Routes = [
       }
     ]
   },
-
   {
     path: 'settings',
     loadComponent: () => import('./pages/settings/settings.page').then(m => m.SettingsPage),
     canActivate: [authGuard]
   },
-
-  {
-    path: 'teams-search',
-    loadComponent: () => import('./pages/teams-search/teams-search.page').then(m => m.TeamsSearchPage),
-    canActivate: [authGuard]
-  },
-  {
-    path: 'player-register',
-    loadComponent: () => import('./pages/player-register/player-register.page').then(m => m.PlayerRegisterPage),
-    canActivate: [authGuard]
-  },
-
   {
     path: '**',
     redirectTo: 'auth/welcome',

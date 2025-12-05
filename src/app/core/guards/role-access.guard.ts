@@ -1,13 +1,15 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { UserService } from '@core/services/user.service';
+import { StorageService } from '@core/services/storage.service';
+import { STORAGE_KEYS } from '@core/constants/storage-keys';
+import { Role } from '@core/models/role.model';
 
 export const roleAccessGuard: CanActivateFn = (route, state) => {
-  const userService = inject(UserService);
+  const storageService = inject(StorageService);
   const router = inject(Router);
 
-  const roleIdParam = route.paramMap.get('roleId');
-  
+  const roleIdParam = route.routeConfig?.data?.['roleId'];
+  console.log('Role ID Param:',  roleIdParam);
   if (!roleIdParam) {
     router.navigate(['/teams/selection']);
     return false;
@@ -20,16 +22,14 @@ export const roleAccessGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  const user = userService.getStoredUser();
+  const selectedRole = storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
 
-  if (!user || !user.roles || user.roles.length === 0) {
+  if (!selectedRole) {
     router.navigate(['/teams/selection']);
     return false;
   }
 
-  const hasAccess = user.roles.some(role => role.roleId === roleIdNumber);
-
-  if (!hasAccess) {
+  if (selectedRole.roleId !== roleIdNumber) {
     router.navigate(['/teams/selection']);
     return false;
   }

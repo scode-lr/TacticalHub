@@ -1,5 +1,5 @@
 // Import shared auth styles
-@import '../auth-shared.scss';
+@use '../auth-shared.scss';
 
 // Signin-specific overrides (if any)
 .signin-page {

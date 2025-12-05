@@ -4,7 +4,7 @@ import { mockMatches } from '@mocks/match.mock';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { MatchCardComponent } from '../components/match-card/match-card.component';
+import { MatchCardComponent } from '@components/match-card/match-card.component';
 
 @Component({
   selector: 'app-viewer-matches',
