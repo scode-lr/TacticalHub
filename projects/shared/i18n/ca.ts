@@ -245,8 +245,10 @@ export const sharedTranslations = {
       }
     },
     information: {
-      empty: 'Informació pròximament',
-      emptyDescription: 'La informació i recursos del club estaran disponibles aquí aviat.'
+      title: 'Informació',
+      description: 'Informació important i guies per als membres del club',
+      empty: 'No hi ha informació disponible',
+      emptyDescription: 'La informació del club estarà disponible aviat.'
     },
     proposals: {
       title: 'Propostes',
