@@ -245,8 +245,10 @@ export const sharedTranslations = {
       }
     },
     information: {
-      empty: 'Information coming soon',
-      emptyDescription: 'Club information and resources will be available here soon.'
+      title: 'Information',
+      description: 'Important information and guidelines for club members',
+      empty: 'No information available',
+      emptyDescription: 'Club information will be available soon.'
     },
     proposals: {
       title: 'Proposals',
