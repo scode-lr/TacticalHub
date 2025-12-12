@@ -16,8 +16,8 @@ export class NewsCardComponent {
   readonly news = input.required<News>();
   readonly animationDelay = input<number>(0);
   
-  readonly cardClick = output<string>();
-  readonly voteChange = output<{ newsId: string; voteType: VoteType }>();
+  readonly cardClick = output<number>();
+  readonly voteChange = output<{ newsId: number; voteType: VoteType }>();
   
   getCategoryColor(category: NewsCategory): string {
     const colors: Record<NewsCategory, string> = {

@@ -1,7 +1,7 @@
 export interface NewsComment {
-  id: string;
+  id: number;
   author: {
-    id: string;
+    id: number;
     name: string;
     avatarUrl?: string;
   };
@@ -13,12 +13,12 @@ export interface NewsComment {
 }
 
 export interface News {
-  id: string;
+  id: number;
   title: string;
   body: string;
   imageUrl?: string;
   author: {
-    id: string;
+    id: number;
     name: string;
     avatarUrl?: string;
   };

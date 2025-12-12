@@ -1,6 +1,5 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { IonIcon, IonChip, IonButton, IonImg } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
@@ -18,15 +17,15 @@ import { DefaultImageDirective } from "@core/directives";
   imports: [CommonModule, IonIcon, IonChip, IonButton, TranslatePipe, UpvotesComponent, CommentsComponent, DefaultImageDirective, IonImg]
 })
 export class NewsDetailPage implements OnInit {
-  private route = inject(ActivatedRoute);
   private navigationService = inject(NavigationService);
   
   readonly news = signal<News | null>(null);
   
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.navigationService.findRouteParam('newsId');
+    console.log('News ID:', id);
     if (id) {
-      const foundNews = mockNews.find(n => n.id === id);
+      const foundNews = mockNews.find(n => n.id === Number(id));
       this.news.set(foundNews || null);
     }
   }
@@ -97,11 +96,11 @@ export class NewsDetailPage implements OnInit {
     });
   }
   
-  onVoteComment(event: { commentId: string; voteType: 'up' | 'down'; parentCommentId?: string }): void {
+  onVoteComment(event: { commentId: number; voteType: 'up' | 'down'; parentCommentId?: number }): void {
     this.voteComment(event.commentId, event.voteType, event.parentCommentId);
   }
   
-  voteComment(commentId: string, voteType: 'up' | 'down', parentCommentId?: string): void {
+  voteComment(commentId: number, voteType: 'up' | 'down', parentCommentId?: number): void {
     const currentNews = this.news();
     if (!currentNews) return;
     

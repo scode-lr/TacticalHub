@@ -24,6 +24,8 @@ export class ViewerPage  {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   
+  readonly memberId = signal<string>('');
+  
   readonly viewerMenuConfig: MenuConfig = {
     role: RoleType.Viewer,
     items: [
@@ -41,15 +43,21 @@ export class ViewerPage  {
   readonly backUrl = computed(() => {
     if (this.isDetailPage()) {
       if (this.router.url.includes('/action-form/')) {
-        return `/app/2/action`;
+        return 'action';
       }
       
-      return `/app/2/news`;
+      return 'news';
     }
     return '';
   });
   
   constructor() {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.memberId.set(id);
+      }
+    });
     this.trackRouteChanges();
   }
   

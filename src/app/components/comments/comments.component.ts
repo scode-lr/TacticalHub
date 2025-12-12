@@ -17,9 +17,9 @@ export class CommentsComponent {
   readonly comments = input.required<NewsComment[]>();
   readonly commentCount = input.required<number>();
   
-  readonly voteComment = output<{ commentId: string; voteType: VoteType; parentCommentId?: string }>();
+  readonly voteComment = output<{ commentId: number; voteType: VoteType; parentCommentId?: number }>();
   
-  onVoteComment(commentId: string, voteType: VoteType, parentCommentId?: string): void {
+  onVoteComment(commentId: number, voteType: VoteType, parentCommentId?: number): void {
     this.voteComment.emit({ commentId, voteType, parentCommentId });
   }
 }

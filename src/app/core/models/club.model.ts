@@ -1,7 +1,7 @@
 import { Team } from "./team.model";
 
 export interface Club {
-  id: string;
+  id: number;
   name: string;
   description: string;
   location: string;

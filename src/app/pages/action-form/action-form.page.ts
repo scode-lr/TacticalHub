@@ -29,11 +29,11 @@ export class ActionFormPage implements OnInit {
 
   readonly actionConfig = signal<ActionConfig | null>(null);
   readonly isSubmitting = signal<boolean>(false);
-  private roleId = '';
+  private memberId = '';
 
   ngOnInit(): void {
     const actionType = this.route.snapshot.paramMap.get('type') as ActionType;
-    this.roleId = this.router.url.split('/')[2];
+    this.memberId = this.router.url.split('/')[3];
     
     if (!actionType || !ACTION_CONFIG[actionType]) {
       this.goBack();
@@ -83,6 +83,7 @@ export class ActionFormPage implements OnInit {
   }
 
   private goBack(): void {
-    this.navigationService.navigateTo(['/app', this.roleId, 'action']);
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/action`]);
   }
 }

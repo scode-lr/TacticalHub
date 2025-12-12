@@ -1,36 +1,29 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn } from '@angular/router';
 import { StorageService } from '@core/services/storage.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role } from '@core/models/role.model';
+import { NavigationService } from '@services/navigation.service';
 
-export const roleAccessGuard: CanActivateFn = (route, state) => {
+export const roleAccessGuard: CanActivateFn = (route) => {
   const storageService = inject(StorageService);
-  const router = inject(Router);
+  const navigationService = inject(NavigationService);
 
-  const roleIdParam = route.routeConfig?.data?.['roleId'];
-  console.log('Role ID Param:',  roleIdParam);
-  if (!roleIdParam) {
-    router.navigate(['/teams/selection']);
-    return false;
-  }
-
-  const roleIdNumber = parseInt(roleIdParam, 10);
-  
-  if (isNaN(roleIdNumber)) {
-    router.navigate(['/teams/selection']);
+  const roleType = route.data['roleType'];
+  if (!roleType) {
+    navigationService.navigateTo(['/teams/selection']);
     return false;
   }
 
   const selectedRole = storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
 
   if (!selectedRole) {
-    router.navigate(['/teams/selection']);
+    navigationService.navigateTo(['/teams/selection']);
     return false;
   }
 
-  if (selectedRole.roleId !== roleIdNumber) {
-    router.navigate(['/teams/selection']);
+  if (selectedRole.type !== roleType) {
+    navigationService.navigateTo(['/teams/selection']);
     return false;
   }
 

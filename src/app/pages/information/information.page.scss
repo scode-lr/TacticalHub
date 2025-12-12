@@ -84,6 +84,7 @@
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
+    margin-bottom: 0;
 
     &:hover {
       background: var(--background-secondary, #f8f9fa);

@@ -1,10 +1,10 @@
 import { News, NewsCategory, NewsComment } from '../app/core/models/news.model';
 import { mockAdminUser, mockCoachUser, mockPlayerUser } from './user.mock';
 
-const mockComments: Record<string, NewsComment[]> = {
-  'news-001': [
+const mockComments: Record<number, NewsComment[]> = {
+  1: [
     {
-      id: 'comment-001',
+      id: 1,
       author: {
         id: mockPlayerUser.id,
         name: `${mockPlayerUser.firstName} ${mockPlayerUser.lastName}`,
@@ -16,7 +16,7 @@ const mockComments: Record<string, NewsComment[]> = {
       downvotes: 0,
       replies: [
         {
-          id: 'comment-001-1',
+          id: 10001,
           author: {
             id: mockCoachUser.id,
             name: `${mockCoachUser.firstName} ${mockCoachUser.lastName}`,
@@ -30,7 +30,7 @@ const mockComments: Record<string, NewsComment[]> = {
       ]
     },
     {
-      id: 'comment-002',
+      id: 2,
       author: {
         id: mockAdminUser.id,
         name: `${mockAdminUser.firstName} ${mockAdminUser.lastName}`,
@@ -42,9 +42,9 @@ const mockComments: Record<string, NewsComment[]> = {
       downvotes: 1
     }
   ],
-  'news-003': [
+  3: [
     {
-      id: 'comment-003',
+      id: 3,
       author: {
         id: mockPlayerUser.id,
         name: `${mockPlayerUser.firstName} ${mockPlayerUser.lastName}`,
@@ -60,7 +60,7 @@ const mockComments: Record<string, NewsComment[]> = {
 
 export const mockNews: News[] = [
   {
-    id: 'news-001',
+    id: 1,
     title: 'Great victory in the derby',
     body: 'Our team achieved an impressive 3-1 victory in yesterday\'s derby match. The players showed excellent teamwork and determination throughout the game. Goals were scored by Martinez in the 23rd minute, Rodriguez in the 56th, and Lopez sealed the victory in the 89th minute. The team\'s defensive performance was also outstanding, limiting the opponents to just one goal.',
     imageUrl: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=400&fit=crop',
@@ -75,11 +75,11 @@ export const mockNews: News[] = [
     upvotes: 156,
     downvotes: 3,
     userVote: null,
-    comments: mockComments['news-001'] || [],
+    comments: mockComments[1] || [],
     commentCount: 3
   },
   {
-    id: 'news-002',
+    id: 2,
     title: 'New training schedule for next week',
     body: 'Please note the updated training schedule for next week. Monday and Wednesday sessions will start at 17:00 instead of 18:00. Thursday training is moved to Friday at 16:30 due to facility maintenance. Make sure to arrive 15 minutes early for proper warm-up. Don\'t forget to bring your training gear and water bottles.',
     imageUrl: 'https://images.unsplash.com/photo-1589487391730-58f20eb2c308?w=800&h=400&fit=crop',
@@ -98,7 +98,7 @@ export const mockNews: News[] = [
     commentCount: 0
   },
   {
-    id: 'news-003',
+    id: 3,
     title: 'Team achieves regional championship qualification',
     body: 'Congratulations to our team for securing a spot in the regional championship! After a season of hard work and dedication, we\'ve earned our place among the top 8 teams in the region. The championship will take place in December. This is a testament to the effort and commitment shown by every player, coach, and supporter.',
     imageUrl: 'https://images.unsplash.com/photo-1552667466-07770ae110d0?w=800&h=400&fit=crop',
@@ -113,11 +113,11 @@ export const mockNews: News[] = [
     upvotes: 234,
     downvotes: 2,
     userVote: 'up',
-    comments: mockComments['news-003'] || [],
+    comments: mockComments[3] || [],
     commentCount: 1
   },
   {
-    id: 'news-004',
+    id: 4,
     title: 'Annual club meeting - December 5th',
     body: 'The annual club meeting will be held on December 5th at 19:00 in the main hall. All members are invited to attend. We will discuss the season\'s results, budget updates, and plans for next year. There will also be a Q&A session. Light refreshments will be provided. RSVP by November 30th.',
     author: {
@@ -135,7 +135,7 @@ export const mockNews: News[] = [
     commentCount: 0
   },
   {
-    id: 'news-005',
+    id: 5,
     title: 'Welcome to our new team members',
     body: 'We are excited to welcome three new players to our squad! Please give a warm welcome to Alex Thompson, Sofia Martinez, and David Chen. They bring valuable experience and talent to the team. We look forward to seeing them on the field and wish them success in their journey with us.',
     imageUrl: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&h=400&fit=crop',
@@ -154,7 +154,7 @@ export const mockNews: News[] = [
     commentCount: 0
   },
   {
-    id: 'news-006',
+    id: 6,
     title: 'Important: Updated COVID-19 protocols',
     body: 'In accordance with the latest health guidelines, we have updated our COVID-19 safety protocols. All players and staff must complete a health screening before entering the facility. Masks are required in common areas. If you experience any symptoms, please stay home and notify the coach immediately. Let\'s keep everyone safe.',
     author: {
@@ -172,7 +172,7 @@ export const mockNews: News[] = [
     commentCount: 0
   },
   {
-    id: 'news-007',
+    id: 7,
     title: 'Player of the month: Carlos Rodriguez',
     body: 'Congratulations to Carlos Rodriguez for being named Player of the Month for October! Carlos has shown exceptional performance, scoring 6 goals and providing 4 assists. His leadership on and off the field has been inspirational. Carlos will receive a trophy and a gift voucher. Well done, Carlos!',
     imageUrl: 'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&h=400&fit=crop',
@@ -191,7 +191,7 @@ export const mockNews: News[] = [
     commentCount: 0
   },
   {
-    id: 'news-008',
+    id: 8,
     title: 'Upcoming away match travel details',
     body: 'For the away match on November 25th, the team bus will depart from the club at 13:00 sharp. Please arrive by 12:45 with all your gear. We will return approximately at 21:00. Pack lunch and snacks for the journey. Don\'t forget your ID and any required documentation. Travel safely!',
     author: {

@@ -1,6 +1,6 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IonIcon, IonModal, IonContent } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
@@ -17,7 +17,7 @@ import { mockNews } from '@mocks/news.mock';
 })
 export class ViewerNewsPage {
   private navigationService = inject(NavigationService);
-  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   
   readonly news = signal<News[]>(mockNews);
   readonly selectedCategory = signal<NewsCategory | 'all'>('all');
@@ -124,12 +124,12 @@ export class ViewerNewsPage {
     return colors[category];
   }
   
-  openNews(id: string): void {
-    const roleId = this.router.url.split('/')[2];
-    this.navigationService.navigateTo(['/app', roleId, 'news', id]);
+  openNews(id: number): void {
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}`, 'news', id.toString()]);
   }
   
-  vote(newsId: string, voteType: VoteType): void {
+  vote(newsId: number, voteType: VoteType): void {
     this.news.update(newsList => {
       return newsList.map(news => {
         if (news.id !== newsId) return news;

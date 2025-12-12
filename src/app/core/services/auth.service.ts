@@ -105,8 +105,8 @@ export class AuthService {
           email: userData.email,
           firstName: userData.firstName,
           lastName: userData.lastName,
-          id: '',
-          token: ''
+          id: this.generateId(),
+          token: this.generateToken(),
         };
 
         const mockToken = this.generateToken();
@@ -151,7 +151,7 @@ export class AuthService {
         avatarUrl: 'https://via.placeholder.com/100x100?text=GU',
         roles: [],
         createdAt: new Date(),
-        token: ''
+        token: this.generateToken()
       };
 
       const mockToken = this.generateToken();
@@ -227,8 +227,8 @@ export class AuthService {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  private generateId(): string {
-    return Math.random().toString(36).substr(2, 9);
+  private generateId(): number {
+    return Math.floor(Math.random() * 1000000);
   }
 
   private generateToken(): string {

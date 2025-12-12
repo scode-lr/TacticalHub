@@ -78,11 +78,10 @@ export class RoleSelectorComponent {
   loadCurrentRole() {
     const role = this.storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
     this.currentRole.set(role);
-    console.log('Current role loaded in RoleSelectorComponent:', role);
   }
 
-  getRoleName(roleId: RoleType): string {
-    switch (roleId) {
+  getRoleName(roleType: RoleType): string {
+    switch (roleType) {
       case RoleType.Admin:
         return 'Admin';
       case RoleType.Coach:
@@ -108,8 +107,8 @@ export class RoleSelectorComponent {
     this.closeRoleSelector();
     
     setTimeout(() => {
-      if (role.roleId === RoleType.Viewer) {
-        this.navigationService.navigateTo([`app/${role.roleId}`]);
+      if (role.type === RoleType.Viewer) {
+        this.navigationService.navigateTo([`app/${role.type}`]);
       } else {
         this.navigationService.navigateTo(['layouts/my-teams']);
       }

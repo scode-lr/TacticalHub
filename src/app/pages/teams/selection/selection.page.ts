@@ -70,8 +70,9 @@ export class RoleSelectionPage implements OnInit {
 
   selectRole(role: Role) {
     this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
-    
-    this.navigationService.navigateTo([`app/${role.roleId}/home`]);
+    console.log('Selected Role:', role);
+    console.log('Navigating to role home:', `/app/${role.type}/${role.id}/home`);
+    this.navigationService.navigateTo([`/app/${role.type}/${role.id}/home`]);
   }
 
   addNewClub() {

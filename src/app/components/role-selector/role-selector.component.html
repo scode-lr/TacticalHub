@@ -10,7 +10,7 @@
     }
     <div class="role-name">
       <ion-icon name="briefcase-outline"></ion-icon>
-      <span>{{ getRoleName(currentRole()?.roleId!) }}</span>
+      <span>{{ getRoleName(currentRole()?.type!) }}</span>
     </div>
   </div>
   @if (hasMultipleRoles()) {
@@ -54,7 +54,7 @@
               <h3>{{ role.club.name }}</h3>
               <p>
                 <ion-icon name="briefcase-outline"></ion-icon>
-                <span>{{ getRoleName(role.roleId) }}</span>
+                <span>{{ getRoleName(role.type) }}</span>
                 @if (role.team) {
                   <span class="team-info">({{ role.team }})</span>
                 }

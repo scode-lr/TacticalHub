@@ -36,53 +36,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: '2',
-        data: { roleId: 2 },
+        path: '2/:roleId',
+        data: { roleType: 2 },
         canActivate: [roleAccessGuard],
-        loadComponent: () => import('./pages/viewer/viewer.page').then(m => m.ViewerPage),
-        children: [
-          {
-            path: '',
-            redirectTo: 'home',
-            pathMatch: 'full'
-          },
-          {
-            path: 'home',
-            loadComponent: () => import('./pages/home/home.page').then(m => m.ViewerHomePage)
-          },
-          {
-            path: 'news',
-            loadComponent: () => import('./pages/news/news/news.page').then(m => m.ViewerNewsPage)
-          },
-          {
-            path: 'news/:id',
-            loadComponent: () => import('./pages/news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
-          },
-          {
-            path: 'action',
-            loadComponent: () => import('./pages/action/action.page').then(m => m.ViewerActionPage)
-          },
-          {
-            path: 'action-form/:type',
-            loadComponent: () => import('./pages/action-form/action-form.page').then(m => m.ActionFormPage)
-          },
-          {
-            path: 'information',
-            loadComponent: () => import('./pages/information/information.page').then(m => m.ViewerInformationPage)
-          },
-          {
-            path: 'proposals',
-            loadComponent: () => import('./pages/proposals/proposals.page').then(m => m.ViewerProposalsPage)
-          },
-          {
-            path: 'matches',
-            loadComponent: () => import('./pages/matches/matches.page').then(m => m.ViewerMatchesPage)
-          },
-          {
-            path: 'partners',
-            loadComponent: () => import('./pages/partners/partners.page').then(m => m.ViewerPartnersPage)
-          }
-        ]
+        loadChildren: () => import('./pages/viewer/viewer.routes').then(m => m.viewerRoutes)
       }
     ]
   },

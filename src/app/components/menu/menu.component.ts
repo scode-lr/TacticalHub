@@ -1,6 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { 
   IonIcon,
   IonPopover
@@ -52,17 +52,18 @@ export interface MenuConfig {
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
 
   readonly config = input.required<MenuConfig>();
   
-  readonly selectedMenuItem = signal<string>('');
+  readonly selectedMenuItem = signal<string>('home');
   readonly isPopoverOpen = signal<boolean>(false);
   readonly user = signal<User | null>(null);
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
+  readonly currentRoleId = signal<number>(0);
 
   readonly visibleMenuItems = computed(() => this.config().items.slice(0, 4));
   readonly hiddenMenuItems = computed(() => this.config().items.slice(4));
@@ -70,6 +71,10 @@ export class MenuComponent {
   constructor() {
     this.initializeIcons();
     this.loadUserData();
+    this.subscribeToRouterEvents();
+  }
+
+  ngOnInit(): void {
     this.trackRouteChanges();
   }
 
@@ -96,24 +101,37 @@ export class MenuComponent {
     }
   }
 
-  private trackRouteChanges() {
+  private subscribeToRouterEvents() {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        const urlParts = this.router.url.split('/');
-        const currentRoute = urlParts[urlParts.length - 1];
-        const menuItem = this.config().items.find(item => item.route === currentRoute);
-        if (menuItem) {
-          this.selectedMenuItem.set(menuItem.id);
-        }
+        this.trackRouteChanges();
       });
+  }
+
+  private trackRouteChanges() {
+    const { roleId, roleType } = this.navigationService.extractRoleDetails();
+    const menuId = this.navigationService.getMenuIdFromUrl();
+    console.log('Extracted Role Type:', roleType, 'Role ID:', roleId, 'Menu ID from URL:', menuId);
+    if (menuId) {
+      const menuItem = this.config().items.find(item => item.route === menuId);
+      if (menuItem) {
+        console.log('Setting selected menu item to:', menuItem.id);
+        this.selectedMenuItem.set(menuItem.id);
+      }
+    }
+
+    if (roleId) {
+      this.currentRoleId.set(roleId);
+    }
   }
 
   selectMenuItem(item: MenuItem) {
     this.selectedMenuItem.set(item.id);
     this.isPopoverOpen.set(false);
     const role = this.config().role;
-    this.router.navigate([`/app/${role}/${item.route}`]);
+    console.log(`/app/${role}/${this.currentRoleId()}/${item.route}`);
+    this.navigationService.navigateTo([`/app/${role}/${this.currentRoleId()}/${item.route}`]);
   }
 
   isSelected(itemId: string): boolean {

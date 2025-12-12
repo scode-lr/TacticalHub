@@ -1,7 +1,7 @@
 import { Role } from "./role.model";
 
 export interface AuthUser {
-  id: string;
+  id: number;
   email: string;
   username?: string;
   token?: string;
