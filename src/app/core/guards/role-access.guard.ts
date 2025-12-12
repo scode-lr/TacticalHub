@@ -10,6 +10,8 @@ export const roleAccessGuard: CanActivateFn = (route) => {
   const navigationService = inject(NavigationService);
 
   const roleType = route.data['roleType'];
+  const roleId = route.paramMap.get('roleId');
+  
   if (!roleType) {
     navigationService.navigateTo(['/teams/selection']);
     return false;
@@ -23,6 +25,11 @@ export const roleAccessGuard: CanActivateFn = (route) => {
   }
 
   if (selectedRole.type !== roleType) {
+    navigationService.navigateTo(['/teams/selection']);
+    return false;
+  }
+
+  if (roleId && selectedRole.id !== Number(roleId)) {
     navigationService.navigateTo(['/teams/selection']);
     return false;
   }
