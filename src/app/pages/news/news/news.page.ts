@@ -1,6 +1,5 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { IonIcon, IonModal, IonContent } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
@@ -17,7 +16,6 @@ import { mockNews } from '@mocks/news.mock';
 })
 export class ViewerNewsPage {
   private navigationService = inject(NavigationService);
-  private route = inject(ActivatedRoute);
   
   readonly news = signal<News[]>(mockNews);
   readonly selectedCategory = signal<NewsCategory | 'all'>('all');
