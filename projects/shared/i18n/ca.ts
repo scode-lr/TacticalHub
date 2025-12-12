@@ -96,13 +96,13 @@ export const sharedTranslations = {
     noRolesYet: 'Comença afegint el teu primer club',
     defaultDescription: 'Gestiona les activitats del teu club',
     permissions: 'permisos',
-    addNewClub: 'Afegir nou club',
-    joinOrCreate: 'Uneix-te o crea un nou club',
+    addNewTeam: 'Afegir nou equip',
+    joinOrCreate: 'Uneix-te o crea un nou equip',
     skipForNow: 'Ometre per ara',
     canAddLater: 'Pots afegir clubs en qualsevol moment des del teu perfil',
     pending: 'Pendent',
     pendingRequests: 'Sol·licituds pendents',
-    pendingDescription: 'Aquestes sol·licituds estan esperant l\'aprovació de l\'administrador de l\'equip'
+    pendingDescription: 'Aquestes sol·licituds estan esperant l\'aprovació de l\'administrador de l\'equip',
   },
   joinTeam: {
     title: "Unir-se a un equip",
@@ -123,10 +123,6 @@ export const sharedTranslations = {
     selectTeam: 'Seleccionar equip',
     teamDescription: 'Tria quin equip vols entrenar',
     category: 'Categoria'
-  },
-  roles: {
-    coach: 'Entrenador',
-    viewer: 'Observador'
   },
   viewer: {
     title: 'Portal de l\'observador',
@@ -281,6 +277,11 @@ export const sharedTranslations = {
       empty: 'No hi ha socis llistats',
       emptyDescription: 'Els nostres socis i patrocinadors del club es llistaran aquí.'
     }
+  },
+  roles: {
+    viewer: 'Visualitzador',
+    admin: 'Administrador',
+    coach: 'Entrenador'
   }
 } as const;
 

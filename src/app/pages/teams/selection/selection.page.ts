@@ -63,15 +63,12 @@ export class RoleSelectionPage implements OnInit {
   }
 
   checkRolesStatus() {
-    const totalRoles = this.user()?.roles;
     const activeRolesCount = this.activeRoles().length;
     this.hasRoles.set(activeRolesCount > 0 || this.hasPendingRoles());
   }
 
   selectRole(role: Role) {
     this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
-    console.log('Selected Role:', role);
-    console.log('Navigating to role home:', `/app/${role.type}/${role.id}/home`);
     this.navigationService.navigateTo([`/app/${role.type}/${role.id}/home`]);
   }
 

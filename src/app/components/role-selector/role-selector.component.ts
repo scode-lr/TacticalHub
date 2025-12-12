@@ -23,6 +23,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserService } from '@core/services/user.service';
 import { StorageService } from '@core/services/storage.service';
 import { NavigationService } from '@services/navigation.service';
+import { TranslationService } from '@services/i18n/translation.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role, RoleType, RoleStatus } from '@core/models/role.model';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
@@ -55,6 +56,7 @@ export class RoleSelectorComponent {
   private readonly userService = inject(UserService);
   private readonly storageService = inject(StorageService);
   private readonly navigationService = inject(NavigationService);
+  private readonly translationService = inject(TranslationService);
 
   readonly isModalOpen = signal<boolean>(false);
   readonly currentRole = signal<Role | null>(null);
@@ -81,16 +83,21 @@ export class RoleSelectorComponent {
   }
 
   getRoleName(roleType: RoleType): string {
+    let roleName: string;
     switch (roleType) {
       case RoleType.Admin:
-        return 'Admin';
+        roleName = 'admin';
+        break;
       case RoleType.Coach:
-        return 'Coach';
+        roleName = 'coach';
+        break;
       case RoleType.Viewer:
-        return 'Viewer';
+        roleName = 'viewer';
+        break;
       default:
         return 'Unknown';
     }
+    return this.translationService.instant(`roles.${roleName}`);
   }
 
   openRoleSelector() {

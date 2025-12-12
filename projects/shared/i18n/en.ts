@@ -96,8 +96,8 @@ export const sharedTranslations = {
     noRolesYet: 'Start by adding your first club',
     defaultDescription: 'Manage your club activities',
     permissions: 'permissions',
-    addNewClub: 'Add new club',
-    joinOrCreate: 'Join or create a new club',
+    addNewTeam: 'Add new team',
+    joinOrCreate: 'Join or create a new team',
     skipForNow: 'Skip for now',
     canAddLater: 'You can add clubs anytime from your profile',
     pending: 'Pending',
@@ -123,10 +123,6 @@ export const sharedTranslations = {
     selectTeam: 'Select team',
     teamDescription: 'Choose which team you want to coach',
     category: 'Category'
-  },
-  roles: {
-    coach: 'Coach',
-    viewer: 'Viewer'
   },
   viewer: {
     title: 'Viewer portal',
@@ -281,6 +277,11 @@ export const sharedTranslations = {
       empty: 'No partners listed',
       emptyDescription: 'Our club partners and sponsors will be listed here.'
     }
+  },
+  roles: {
+    viewer: 'Viewer',
+    admin: 'Admin',
+    coach: 'Coach'
   }
 } as const;
 

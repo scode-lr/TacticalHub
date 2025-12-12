@@ -96,8 +96,8 @@ export const sharedTranslations = {
     noRolesYet: 'Comienza agregando tu primer club',
     defaultDescription: 'Gestiona las actividades de tu club',
     permissions: 'permisos',
-    addNewClub: 'Agregar nuevo club',
-    joinOrCreate: 'Únete o crea un nuevo club',
+    addNewTeam: 'Agregar nuevo equipo',
+    joinOrCreate: 'Únete o crea un nuevo equipo',
     skipForNow: 'Omitir por ahora',
     canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil',
     pending: 'Pendiente',
@@ -123,10 +123,6 @@ export const sharedTranslations = {
     selectTeam: 'Seleccionar equipo',
     teamDescription: 'Elige qué equipo quieres entrenar',
     category: 'Categoría'
-  },
-  roles: {
-    coach: 'Entrenador',
-    viewer: 'Observador'
   },
   viewer: {
     title: 'Portal del observador',
@@ -281,7 +277,12 @@ export const sharedTranslations = {
       empty: 'No hay socios listados',
       emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
     }
-  }
+  },
+  roles: {
+      viewer: 'Visualizador',
+      admin: 'Administrador',
+      coach: 'Entrenador'
+    }
 } as const;
 
 export type SharedTranslationKeys = typeof sharedTranslations;
