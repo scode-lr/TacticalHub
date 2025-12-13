@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal, computed, OnInit, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, computed, OnInit, inject, CUSTOM_ELEMENTS_SCHEMA, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidatorFn } from '@angular/forms';
 import { IonButton, IonIcon, IonInput, IonTextarea, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
@@ -37,11 +37,9 @@ export class DynamicFormComponent implements OnInit {
   @Output() formCancel = new EventEmitter<void>();
 
   readonly form = signal<FormGroup | null>(null);
+  readonly formValid = signal<boolean>(false);
 
-  readonly isFormValid = computed(() => {
-    const formValue = this.form();
-    return formValue ? formValue.valid : false;
-  });
+  readonly isFormValid = computed(() => this.formValid());
 
   ngOnInit(): void {
     this.initializeForm();
@@ -77,6 +75,19 @@ export class DynamicFormComponent implements OnInit {
     });
 
     this.form.set(this.fb.group(formGroup));
+    
+    const formInstance = this.form();
+    if (formInstance) {
+      this.formValid.set(formInstance.valid);
+      
+      formInstance.valueChanges.subscribe(() => {
+        this.formValid.set(formInstance.valid);
+      });
+      
+      formInstance.statusChanges.subscribe(() => {
+        this.formValid.set(formInstance.valid);
+      });
+    }
   }
 
   getFieldError(fieldName: string): string | null {

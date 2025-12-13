@@ -1,20 +1,6 @@
 .dynamic-form {
-  background: var(--background-primary, #ffffff);
-  border: 1px solid var(--border-light, #e5e7eb);
-  border-radius: 12px;
-  padding: 2rem;
-  animation: fadeIn 0.4s ease backwards;
-  animation-delay: 0.1s;
-
   .form-field {
     margin-bottom: 1.5rem;
-    animation: fadeIn 0.3s ease backwards;
-
-    @for $i from 1 through 20 {
-      &:nth-child(#{$i}) {
-        animation-delay: #{0.1 + ($i * 0.03)}s;
-      }
-    }
 
     .field-label {
       display: block;
@@ -32,35 +18,34 @@
     ion-input,
     ion-textarea,
     ion-select {
-      --border-radius: 10px;
+      --border-radius: 8px;
       --border-width: 1px;
-      --border-color: var(--border-light, #e5e7eb);
+      --border-color: var(--border-medium, #ced4da);
+      --border-style: solid;
       --background: var(--background-primary, #ffffff);
       --color: var(--text-primary, #111827);
       --placeholder-color: var(--text-light, #9ca3af);
       --padding-start: 1rem;
       --padding-end: 1rem;
-      --padding-top: 0.875rem;
-      --padding-bottom: 0.875rem;
+      --padding-top: 0.75rem;
+      --padding-bottom: 0.75rem;
       font-size: 0.9375rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease;
 
       &.ion-focused {
         --border-color: var(--ion-color-primary, #3880ff);
-        --box-shadow: 0 0 0 3px rgba(56, 128, 255, 0.1);
+        --border-width: 2px;
       }
 
       &.ion-invalid.ion-touched {
         --border-color: var(--ion-color-danger, #eb445a);
-        --background: #fef2f2;
-        --box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+        --border-width: 2px;
       }
     }
 
     ion-textarea {
-      --padding-top: 1rem;
-      --padding-bottom: 1rem;
+      --padding-top: 0.75rem;
+      --padding-bottom: 0.75rem;
     }
 
     ion-select {
@@ -72,13 +57,8 @@
       align-items: center;
       gap: 0.5rem;
       margin-top: 0.5rem;
-      padding: 0.5rem;
-      background: #fef2f2;
-      border: 1px solid var(--ion-color-danger, #eb445a);
-      border-radius: 8px;
       font-size: 0.8125rem;
       color: var(--ion-color-danger, #eb445a);
-      animation: slideDown 0.2s ease;
 
       ion-icon {
         font-size: 1rem;
@@ -91,44 +71,20 @@
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--border-light, #e5e7eb);
-    animation: fadeIn 0.3s ease backwards;
-    animation-delay: 0.5s;
 
     ion-button {
       flex: 1;
-      --border-radius: 10px;
-      --padding-top: 0.875rem;
-      --padding-bottom: 0.875rem;
+      --border-radius: 8px;
+      --padding-top: 0.75rem;
+      --padding-bottom: 0.75rem;
       font-weight: 600;
       font-size: 0.9375rem;
-      transition: all 0.2s ease;
+    }
 
-      &.btn-submit {
-        --background: var(--ion-color-primary, #3880ff);
-        --color: white;
-
-        &:hover:not(.button-disabled) {
-          transform: translateY(-1px);
-          --box-shadow: 0 4px 12px rgba(56, 128, 255, 0.3);
-        }
-
-        &.button-disabled {
-          --background: var(--background-secondary, #f8f9fa);
-          --color: var(--text-light, #adb5bd);
-        }
-      }
-
-      &.btn-cancel {
-        --border-color: var(--border-light, #e5e7eb);
-        --color: var(--text-secondary, #6b7280);
-
-        &:hover:not(.button-disabled) {
-          --border-color: var(--ion-color-primary, #3880ff);
-          --color: var(--ion-color-primary, #3880ff);
-        }
-      }
+    .btn-secondary {
+      --border-color: var(--border-light, #e5e7eb);
     }
   }
 }

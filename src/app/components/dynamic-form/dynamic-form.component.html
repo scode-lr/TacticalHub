@@ -59,14 +59,14 @@
       <ion-button
         type="button"
         fill="outline"
-        class="btn-cancel"
+        class="btn-secondary"
         (click)="onCancel()"
         [disabled]="isSubmitting">
         {{ cancelLabel | translate }}
       </ion-button>
       <ion-button
         type="submit"
-        class="btn-submit"
+        class="btn-primary"
         [disabled]="!isFormValid() || isSubmitting">
         @if (isSubmitting) {
           <ion-icon name="hourglass-outline" slot="start"></ion-icon>

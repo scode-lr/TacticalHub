@@ -3,7 +3,7 @@
 
 // Button classes as mixins that can be extended
 .btn-primary {
-  --background: var(--button-background, var(--ion-color-primary, #3880ff));
+  --background: var(--button-background, var(--button-primary-color, #3880ff));
   --color: white;
   --border-radius: 8px;
   --padding-top: 0.75rem;
@@ -37,7 +37,6 @@
   --padding-top: 0.75rem;
   --padding-bottom: 0.75rem;
   --box-shadow: none;
-  border: 1px solid var(--border-light, #e5e7eb);
   font-weight: 500;
   font-size: 0.9375rem;
   letter-spacing: 0;
