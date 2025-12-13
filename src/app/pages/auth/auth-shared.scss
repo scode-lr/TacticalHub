@@ -3,7 +3,7 @@
 
 // Common page structure
 .auth-page {
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   display: flex;
   overflow: hidden;
@@ -49,7 +49,7 @@
   padding: 3rem;
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 100dvh;
   
   &::before {
     content: '';
@@ -72,7 +72,7 @@
   padding: 3rem 2rem;
   background: var(--background-primary, #ffffff);
   overflow-y: auto;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .form-container {

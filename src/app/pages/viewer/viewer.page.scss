@@ -1,5 +1,5 @@
 .viewer-page {
-  height: 100vh;
+  height: 100dvh;
   background: var(--background-primary, #ffffff);
   overflow: hidden;
 
@@ -56,7 +56,7 @@
 
     .layout-container {
       flex-direction: column;
-      height: calc(100vh - 56px);
+      height: calc(100dvh - 56px);
 
       app-viewer-menu {
         &.hidden-on-detail {
