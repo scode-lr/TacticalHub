@@ -1,6 +1,6 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon, IonModal, IonContent } from '@ionic/angular/standalone';
+import { IonIcon, IonModal } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { NewsCardComponent } from '@components/news-card/news-card.component';
@@ -12,7 +12,7 @@ import { mockNews } from '@mocks/news.mock';
   templateUrl: './news.page.html',
   styleUrls: ['./news.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonModal, IonContent, TranslatePipe, NewsCardComponent]
+  imports: [CommonModule, IonIcon, IonModal, TranslatePipe, NewsCardComponent]
 })
 export class ViewerNewsPage {
   private navigationService = inject(NavigationService);
@@ -22,8 +22,6 @@ export class ViewerNewsPage {
   readonly selectedTimeFilter = signal<TimeFilter>(TimeFilter.All);
   readonly showCategoryModal = signal<boolean>(false);
   readonly showTimeModal = signal<boolean>(false);
-  readonly showCategoryDropdown = signal<boolean>(false);
-  readonly showTimeDropdown = signal<boolean>(false);
   
   readonly TimeFilter = TimeFilter;
   readonly NewsCategory = NewsCategory;
@@ -83,31 +81,11 @@ export class ViewerNewsPage {
   selectCategory(category: NewsCategory | 'all'): void {
     this.selectedCategory.set(category);
     this.showCategoryModal.set(false);
-    this.showCategoryDropdown.set(false);
   }
   
   selectTimeFilter(timeFilter: TimeFilter): void {
     this.selectedTimeFilter.set(timeFilter);
     this.showTimeModal.set(false);
-    this.showTimeDropdown.set(false);
-  }
-  
-  openCategoryFilter(): void {
-    if (window.innerWidth <= 768) {
-      this.showCategoryModal.set(true);
-    } else {
-      this.showCategoryDropdown.set(!this.showCategoryDropdown());
-      this.showTimeDropdown.set(false);
-    }
-  }
-  
-  openTimeFilter(): void {
-    if (window.innerWidth <= 768) {
-      this.showTimeModal.set(true);
-    } else {
-      this.showTimeDropdown.set(!this.showTimeDropdown());
-      this.showCategoryDropdown.set(false);
-    }
   }
   
   getCategoryColor(category: NewsCategory): string {

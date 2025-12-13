@@ -6,6 +6,7 @@ import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleType } from '@core/models/role.model';
 import { filter } from 'rxjs/operators';
+import { NavigationService } from '@services/navigation.service';
 
 @Component({
   selector: 'app-viewer',
@@ -23,6 +24,7 @@ import { filter } from 'rxjs/operators';
 export class ViewerPage  {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   
   readonly memberId = signal<string>('');
   
@@ -41,12 +43,13 @@ export class ViewerPage  {
   
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {
+    const {roleType, roleId} = this.navigationService.extractRoleDetails();
     if (this.isDetailPage()) {
-      if (this.router.url.includes('/action-form/')) {
-        return 'action';
+      if (this.router.url.includes('/action')) {
+        return `app/${roleType}/${roleId}/action`;
       }
       
-      return 'news';
+      return `app/${roleType}/${roleId}/news`;
     }
     return '';
   });
@@ -67,7 +70,7 @@ export class ViewerPage  {
       .subscribe(() => {
         const url = this.router.url;
         const isNewsDetail = url.includes('/news/') && url.split('/').length > 4;
-        const isActionForm = url.includes('/action-form/');
+        const isActionForm = url.includes('/action/');
         const isDetail = isNewsDetail || isActionForm;
         this.isDetailPage.set(isDetail);
         
@@ -78,12 +81,6 @@ export class ViewerPage  {
           }
         }
       });
-      
-    const url = this.router.url;
-    const isNewsDetail = url.includes('/news/') && url.split('/').length > 4;
-    const isActionForm = url.includes('/action-form/');
-    const isDetail = isNewsDetail || isActionForm;
-    this.isDetailPage.set(isDetail);
   }
   
   goBack(): void {

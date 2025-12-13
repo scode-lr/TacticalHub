@@ -4,47 +4,15 @@
     
     <div class="filters-icons">
       <div class="filter-wrapper">
-        <button class="filter-icon" [class.active]="selectedCategory() !== 'all'" (click)="openCategoryFilter()">
+        <button class="filter-icon" [class.active]="selectedCategory() !== 'all'" (click)="showCategoryModal.set(true)">
           <ion-icon name="pricetag-outline"></ion-icon>
         </button>
-        
-        @if (showCategoryDropdown()) {
-          <div class="filter-dropdown" (click)="$event.stopPropagation()">
-            @for (category of categories; track category.value) {
-              <button 
-                class="filter-dropdown-item" 
-                [class.active]="selectedCategory() === category.value"
-                (click)="selectCategory(category.value)">
-                <span>{{ category.label | translate }}</span>
-                @if (selectedCategory() === category.value) {
-                  <ion-icon name="checkmark"></ion-icon>
-                }
-              </button>
-            }
-          </div>
-        }
       </div>
       
       <div class="filter-wrapper">
-        <button class="filter-icon" [class.active]="selectedTimeFilter() !== TimeFilter.All" (click)="openTimeFilter()">
+        <button class="filter-icon" [class.active]="selectedTimeFilter() !== TimeFilter.All" (click)="showTimeModal.set(true)">
           <ion-icon name="time-outline"></ion-icon>
         </button>
-        
-        @if (showTimeDropdown()) {
-          <div class="filter-dropdown" (click)="$event.stopPropagation()">
-            @for (timeFilter of timeFilters; track timeFilter.value) {
-              <button 
-                class="filter-dropdown-item" 
-                [class.active]="selectedTimeFilter() === timeFilter.value"
-                (click)="selectTimeFilter(timeFilter.value)">
-                <span>{{ timeFilter.label | translate }}</span>
-                @if (selectedTimeFilter() === timeFilter.value) {
-                  <ion-icon name="checkmark"></ion-icon>
-                }
-              </button>
-            }
-          </div>
-        }
       </div>
     </div>
   </div>
@@ -52,10 +20,8 @@
   <!-- Category Filter Modal -->
   <ion-modal [isOpen]="showCategoryModal()" (didDismiss)="showCategoryModal.set(false)" [breakpoints]="[0, 0.6, 0.9]" [initialBreakpoint]="0.6">
     <ng-template>
-      <ion-content class="filter-modal">
-        <div class="modal-header">
-          <h2>{{ 'viewer.news.category' | translate }}</h2>
-        </div>
+      <div class="filter-modal">
+        <h3 class="filter-modal-title">{{ 'viewer.news.category' | translate }}</h3>
         <div class="filter-options">
           @for (category of categories; track category.value) {
             <button 
@@ -69,17 +35,15 @@
             </button>
           }
         </div>
-      </ion-content>
+      </div>
     </ng-template>
   </ion-modal>
   
   <!-- Time Filter Modal -->
   <ion-modal [isOpen]="showTimeModal()" (didDismiss)="showTimeModal.set(false)" [breakpoints]="[0, 0.5, 0.8]" [initialBreakpoint]="0.5">
     <ng-template>
-      <ion-content class="filter-modal">
-        <div class="modal-header">
-          <h2>{{ 'viewer.news.time.title' | translate }}</h2>
-        </div>
+      <div class="filter-modal">
+        <h3 class="filter-modal-title">{{ 'viewer.news.time.title' | translate }}</h3>
         <div class="filter-options">
           @for (timeFilter of timeFilters; track timeFilter.value) {
             <button 
@@ -93,7 +57,7 @@
             </button>
           }
         </div>
-      </ion-content>
+      </div>
     </ng-template>
   </ion-modal>
   

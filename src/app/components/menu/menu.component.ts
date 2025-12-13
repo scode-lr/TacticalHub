@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { 
   IonIcon,
-  IonPopover
+  IonModal
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -16,7 +16,8 @@ import {
   peopleOutline,
   ellipsisHorizontal,
   logOutOutline,
-  settingsOutline
+  settingsOutline,
+  closeOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
@@ -46,7 +47,7 @@ export interface MenuConfig {
   imports: [
     CommonModule,
     IonIcon,
-    IonPopover,
+    IonModal,
     TranslatePipe,
     RoleSelectorComponent
   ],
@@ -60,7 +61,7 @@ export class MenuComponent implements OnInit {
   readonly config = input.required<MenuConfig>();
   
   readonly selectedMenuItem = signal<string>('home');
-  readonly isPopoverOpen = signal<boolean>(false);
+  readonly isModalOpen = signal<boolean>(false);
   readonly user = signal<User | null>(null);
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
   readonly currentRoleId = signal<number>(0);
@@ -89,7 +90,8 @@ export class MenuComponent implements OnInit {
       peopleOutline,
       ellipsisHorizontal,
       logOutOutline,
-      settingsOutline
+      settingsOutline,
+      closeOutline
     });
   }
 
@@ -128,7 +130,7 @@ export class MenuComponent implements OnInit {
 
   selectMenuItem(item: MenuItem) {
     this.selectedMenuItem.set(item.id);
-    this.isPopoverOpen.set(false);
+    this.isModalOpen.set(false);
     const role = this.config().role;
     console.log(`/app/${role}/${this.currentRoleId()}/${item.route}`);
     this.navigationService.navigateTo([`/app/${role}/${this.currentRoleId()}/${item.route}`]);
@@ -138,12 +140,12 @@ export class MenuComponent implements OnInit {
     return this.selectedMenuItem() === itemId;
   }
 
-  togglePopover() {
-    this.isPopoverOpen.set(!this.isPopoverOpen());
+  toggleModal() {
+    this.isModalOpen.set(!this.isModalOpen());
   }
 
-  closePopover() {
-    this.isPopoverOpen.set(false);
+  closeModal() {
+    this.isModalOpen.set(false);
   }
 
   goToSettings() {

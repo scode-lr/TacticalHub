@@ -187,6 +187,15 @@
 
 .filter-modal {
   --background: var(--background-primary, #ffffff);
+  padding: 1.5rem 0 0.5rem 0;
+  
+  .filter-modal-title {
+    margin: 0 0 1rem 0;
+    padding: 0 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #000000;
+  }
   
   .modal-header {
     padding: 1.5rem 1.5rem 1rem 1.5rem;
@@ -234,7 +243,6 @@
         background: var(--background-secondary, #f8f9fa);
         
         span {
-          color: var(--ion-color-primary, #3880ff);
           font-weight: 600;
         }
       }
