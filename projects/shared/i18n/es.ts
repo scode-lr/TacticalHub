@@ -39,7 +39,8 @@ export const sharedTranslations = {
     submit: 'Enviar',
     close: 'Cerrar',
     submitting: 'Enviando...',
-    settings: 'Ajustes'
+    settings: 'Ajustes',
+    profile: 'Perfil'
   },
   settings: {
     title: 'Ajustes',
@@ -49,8 +50,18 @@ export const sharedTranslations = {
     spanish: 'Español',
     catalan: 'Catalán',
     languageChanged: 'Idioma cambiado correctamente'
-  },
-  validation: {
+  },  profile: {
+    title: 'Mi perfil',
+    editProfile: 'Editar perfil',
+    personalInfo: 'Información personal',
+    email: 'Correo electrónico',
+    username: 'Nombre de usuario',
+    firstName: 'Nombre',
+    lastName: 'Apellido',
+    saveChanges: 'Guardar cambios',
+    saving: 'Guardando...',
+    profileUpdated: 'Perfil actualizado correctamente'
+  },  validation: {
     required: 'Este campo es obligatorio',
     invalidEmail: 'Dirección de correo inválida',
     minLength: 'Se requieren mínimo {min} caracteres',

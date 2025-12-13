@@ -1,0 +1,80 @@
+<div class="profile-header">
+  <app-user-header [showBackButton]="true" (backClick)="goBack()"></app-user-header>
+</div>
+
+<ion-content>
+  <div class="page-container">
+    <div class="section-header">
+      <h1 class="section-title">{{ 'profile.title' | translate }}</h1>
+    </div>
+
+    <div class="content-section">
+      <div class="profile-avatar-section">
+        <ion-avatar class="profile-avatar">
+          <ion-img [src]="avatarUrl()" [alt]="user()?.username" (ionError)="onAvatarError()"></ion-img>
+        </ion-avatar>
+      </div>
+
+      <div class="section-content">
+        <h2 class="subsection-title">{{ 'profile.personalInfo' | translate }}</h2>
+        
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+          <div class="form-group">
+            <label class="form-label">{{ 'profile.email' | translate }}</label>
+            <ion-input
+              class="form-input"
+              formControlName="email"
+              type="email"
+              readonly>
+            </ion-input>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'profile.username' | translate }}</label>
+            <ion-input
+              class="form-input"
+              formControlName="username"
+              type="text"
+              [placeholder]="'profile.username' | translate">
+            </ion-input>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'profile.firstName' | translate }}</label>
+            <ion-input
+              class="form-input"
+              formControlName="firstName"
+              type="text"
+              [placeholder]="'profile.firstName' | translate">
+            </ion-input>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'profile.lastName' | translate }}</label>
+            <ion-input
+              class="form-input"
+              formControlName="lastName"
+              type="text"
+              [placeholder]="'profile.lastName' | translate">
+            </ion-input>
+          </div>
+
+          <div class="form-actions">
+            <ion-button
+              class="btn-primary"
+              type="submit"
+              [disabled]="profileForm.invalid || isSaving()"
+              expand="block">
+              @if (isSaving()) {
+                <ion-icon slot="start" name="hourglass-outline"></ion-icon>
+                {{ 'profile.saving' | translate }}
+              } @else {
+                {{ 'profile.saveChanges' | translate }}
+              }
+            </ion-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>

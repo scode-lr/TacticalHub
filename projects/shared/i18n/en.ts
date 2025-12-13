@@ -39,7 +39,8 @@ export const sharedTranslations = {
     submit: 'Submit',
     close: 'Close',
     submitting: 'Submitting...',
-    settings: 'Settings'
+    settings: 'Settings',
+    profile: 'Profile'
   },
   settings: {
     title: 'Settings',
@@ -49,6 +50,18 @@ export const sharedTranslations = {
     spanish: 'Spanish',
     catalan: 'Catalan',
     languageChanged: 'Language changed successfully'
+  },
+  profile: {
+    title: 'My profile',
+    editProfile: 'Edit profile',
+    personalInfo: 'Personal information',
+    email: 'Email',
+    username: 'Username',
+    firstName: 'First name',
+    lastName: 'Last name',
+    saveChanges: 'Save changes',
+    saving: 'Saving...',
+    profileUpdated: 'Profile updated successfully'
   },
   validation: {
     required: 'This field is required',

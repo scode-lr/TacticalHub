@@ -39,7 +39,8 @@ export const sharedTranslations = {
     submit: 'Enviar',
     close: 'Tancar',
     submitting: 'Enviant...',
-    settings: 'Configuració'
+    settings: 'Configuració',
+    profile: 'Perfil'
   },
   settings: {
     title: 'Configuració',
@@ -49,8 +50,18 @@ export const sharedTranslations = {
     spanish: 'Espanyol',
     catalan: 'Català',
     languageChanged: 'Idioma canviat correctament'
-  },
-  validation: {
+  },  profile: {
+    title: 'El meu perfil',
+    editProfile: 'Editar perfil',
+    personalInfo: 'Informació personal',
+    email: 'Correu electrònic',
+    username: 'Nom d\'usuari',
+    firstName: 'Nom',
+    lastName: 'Cognom',
+    saveChanges: 'Desar canvis',
+    saving: 'Desant...',
+    profileUpdated: 'Perfil actualitzat correctament'
+  },  validation: {
     required: 'Aquest camp és obligatori',
     invalidEmail: 'Adreça de correu invàlida',
     minLength: 'Es requereixen mínim {min} caràcters',

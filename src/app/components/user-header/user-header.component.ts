@@ -62,6 +62,16 @@ export class UserHeaderComponent {
     this.showUserMenu.set(!this.showUserMenu());
   }
 
+  onUserClick(event: MouseEvent) {
+    const isDesktop = window.innerWidth > 768;
+    
+    if (isDesktop) {
+      this.goToProfile();
+    } else {
+      this.toggleUserMenu();
+    }
+  }
+
   onBackClick() {
     const url = this.backUrl();
     if (url) {
@@ -69,6 +79,11 @@ export class UserHeaderComponent {
     } else {
       this.backClick.emit();
     }
+  }
+
+  goToProfile() {
+    this.showUserMenu.set(false);
+    this.navigationService.navigateTo(['/profile']);
   }
 
   goToSettings() {

@@ -11,7 +11,7 @@
       </div>
     }
     
-    <div class="user-menu" (click)="toggleUserMenu()" [class.menu-open]="showUserMenu()">
+    <div class="user-menu" (click)="onUserClick($event)" [class.menu-open]="showUserMenu()">
       <ion-avatar class="user-avatar">
         <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>
       </ion-avatar>
@@ -19,6 +19,10 @@
     
     @if (showUserMenu()) {
       <div class="user-dropdown">
+        <button class="dropdown-item" (click)="goToProfile()">
+          <ion-icon name="person-outline"></ion-icon>
+          <span>{{ 'common.profile' | translate }}</span>
+        </button>
         <button class="dropdown-item" (click)="goToSettings()">
           <ion-icon name="settings-outline"></ion-icon>
           <span>{{ 'common.settings' | translate }}</span>
