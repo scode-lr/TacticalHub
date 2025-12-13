@@ -73,7 +73,8 @@
     margin-top: 2rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--border-light, #e5e7eb);
-
+    margin-bottom: 1rem;
+    
     ion-button {
       flex: 1;
       --border-radius: 8px;
@@ -81,10 +82,6 @@
       --padding-bottom: 0.75rem;
       font-weight: 600;
       font-size: 0.9375rem;
-    }
-
-    .btn-secondary {
-      --border-color: var(--border-light, #e5e7eb);
     }
   }
 }
@@ -113,8 +110,6 @@
 
 @media (max-width: 768px) {
   .dynamic-form {
-    padding: 1.5rem;
-
     .form-actions {
       flex-direction: column;
 

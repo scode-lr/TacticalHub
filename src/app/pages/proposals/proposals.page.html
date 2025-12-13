@@ -3,60 +3,56 @@
     <h1 class="section-title">{{ 'viewer.proposals.title' | translate }}</h1>
   </div>
 
-  <div class="content-card">
-    <form [formGroup]="proposalForm" (ngSubmit)="onSubmit()">
-      
-      <div class="form-group">
-        <label for="title">{{ 'viewer.proposals.form.title' | translate }}</label>
-        <ion-input 
-          id="title" 
-          formControlName="title"
-          [placeholder]="'viewer.proposals.form.titlePlaceholder' | translate"
-          fill="outline">
-        </ion-input>
-      </div>
+  <form [formGroup]="proposalForm" (ngSubmit)="onSubmit()" class="proposal-form">
+    
+    <div class="form-field">
+      <label class="field-label">{{ 'viewer.proposals.form.title' | translate }}</label>
+      <ion-input 
+        formControlName="title"
+        [placeholder]="'viewer.proposals.form.titlePlaceholder' | translate">
+      </ion-input>
+    </div>
 
-      <div class="form-group">
-        <label for="content">{{ 'viewer.proposals.form.body' | translate }}</label>
-        <ion-textarea 
-          id="content" 
-          formControlName="content" 
-          [rows]="6"
-          [placeholder]="'viewer.proposals.form.bodyPlaceholder' | translate"
-          fill="outline">
-        </ion-textarea>
-      </div>
+    <div class="form-field">
+      <label class="field-label">{{ 'viewer.proposals.form.body' | translate }}</label>
+      <ion-textarea 
+        formControlName="content" 
+        [rows]="6"
+        [placeholder]="'viewer.proposals.form.bodyPlaceholder' | translate">
+      </ion-textarea>
+    </div>
 
-      <div class="form-group">
-        <label>{{ 'viewer.proposals.form.attachment' | translate }}</label>
-        <div class="file-upload" (click)="fileInput.click()">
-          <input #fileInput type="file" (change)="onFileSelected($event)" hidden>
-          
-          <div class="upload-content">
-            <ion-icon name="cloud-upload-outline"></ion-icon>
-            @if (selectedFileName()) {
-              <span class="file-name">{{ selectedFileName() }}</span>
-              <span class="file-hint">{{ 'viewer.proposals.form.changeFile' | translate }}</span>
-            } @else {
-              <span class="upload-label">{{ 'viewer.proposals.form.uploadText' | translate }}</span>
-              <span class="file-hint">{{ 'viewer.proposals.form.uploadSubtext' | translate }}</span>
-            }
-          </div>
+    <div class="form-field">
+      <label class="field-label">{{ 'viewer.proposals.form.attachment' | translate }}</label>
+      <div class="file-upload" (click)="fileInput.click()">
+        <input #fileInput type="file" (change)="onFileSelected($event)" hidden>
+        
+        <div class="upload-content">
+          <ion-icon name="cloud-upload-outline"></ion-icon>
+          @if (selectedFileName()) {
+            <span class="file-name">{{ selectedFileName() }}</span>
+            <span class="file-hint">{{ 'viewer.proposals.form.changeFile' | translate }}</span>
+          } @else {
+            <span class="upload-label">{{ 'viewer.proposals.form.uploadText' | translate }}</span>
+            <span class="file-hint">{{ 'viewer.proposals.form.uploadSubtext' | translate }}</span>
+          }
         </div>
       </div>
+    </div>
 
+    <div class="form-actions">
       <ion-button 
         type="submit" 
-        expand="block" 
         class="btn-primary"
         [disabled]="!canSubmit() || isSubmitting()">
         @if (isSubmitting()) {
           <ion-spinner name="dots"></ion-spinner>
+          {{ 'viewer.proposals.form.submitting' | translate }}
         } @else {
-          <span>{{ 'viewer.proposals.form.submit' | translate }}</span>
+          {{ 'viewer.proposals.form.submit' | translate }}
         }
       </ion-button>
+    </div>
 
-    </form>
-  </div>
+  </form>
 </div>

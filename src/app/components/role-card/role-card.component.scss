@@ -12,8 +12,12 @@
   text-align: center;
   gap: 1rem;
   position: relative;
-  height: 180px;
+  height: 100px;
   animation: fadeIn 0.3s ease backwards;
+
+  @media (min-width: 769px) {
+    height: 180px;
+  }
 
   &.pending {
     background: var(--background-secondary, #f8f9fa);
@@ -177,6 +181,7 @@
   padding: 1.5rem 2rem;
   background: var(--background-primary, #ffffff);
   border: 2px dashed var(--border-light, #e5e7eb);
+  height: 180px;
   
   .add-club-content {
     display: flex;

@@ -113,7 +113,7 @@
         @if (selectedRole() && (selectedRole() === 'Viewer' || (selectedRole() === 'Coach' && selectedTeam()))) {
           <ion-button
             expand="block"
-            class="submit-button"
+            class="btn-primary submit-button"
             [disabled]="!isFormValid() || isSubmitting()"
             (click)="submitJoinRequest()"
           >

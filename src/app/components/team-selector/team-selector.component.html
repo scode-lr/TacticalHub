@@ -4,11 +4,15 @@
   </ion-avatar>
   <div class="team-info" [class.compact]="compact">
     <h3>{{ getTeamName(currentTeam) }}</h3>
-    <span class="selector-hint" *ngIf="!compact">
-      <ion-icon name="chevron-down-outline"></ion-icon>
-      Switch Team
-    </span>
-    <ion-icon class="dropdown-icon" *ngIf="compact" name="chevron-down-outline"></ion-icon>
+    @if (!compact) {
+      <span class="selector-hint">
+        <ion-icon name="chevron-down-outline"></ion-icon>
+        Switch Team
+      </span>
+    }
+    @if (compact) {
+      <ion-icon class="dropdown-icon" name="chevron-down-outline"></ion-icon>
+    }
   </div>
 </div>
 
@@ -30,9 +34,8 @@
 
     <ion-content class="ion-padding">
       <ion-list lines="none">
-
+        @for (club of organizations; track club.id) {
           <ion-item button detail="false" 
-                    *ngFor="let club of organizations" 
                     [class.selected]="getTeamId(currentTeam) === club.id"
                     (click)="selectClub(club)">
             <ion-avatar slot="start">
@@ -48,6 +51,7 @@
               </p>
             </ion-label>
           </ion-item>
+        }
       </ion-list>
     </ion-content>
   </ng-template>

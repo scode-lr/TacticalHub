@@ -9,7 +9,7 @@
   --padding-top: 0.75rem;
   --padding-bottom: 0.75rem;
   --box-shadow: none;
-  font-weight: 500;
+  font-weight: normal;
   font-size: 0.9375rem;
   letter-spacing: 0;
   text-transform: none;
@@ -37,15 +37,15 @@
   --padding-top: 0.75rem;
   --padding-bottom: 0.75rem;
   --box-shadow: none;
-  font-weight: 500;
+  font-weight: normal;
   font-size: 0.9375rem;
   letter-spacing: 0;
   text-transform: none;
   transition: background 0.15s ease;
+  --border-color: none;
 
   &:hover:not(.button-disabled) {
     --background: var(--background-tertiary, #e9ecef);
-    border-color: var(--border-medium, #ced4da);
   }
 
   &:active:not(.button-disabled) {
