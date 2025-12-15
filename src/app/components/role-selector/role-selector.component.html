@@ -21,37 +21,35 @@
 <ion-modal 
   [isOpen]="isModalOpen()" 
   (didDismiss)="closeRoleSelector()"
-  [backdropDismiss]="true"
-  class="role-selector-modal">
+  [breakpoints]="[0, 1]"
+  [initialBreakpoint]="1">
   <ng-template>
-    <ion-header class="ion-no-border">
-      <ion-toolbar>
-        <div class="modal-title">
-          <h2>{{ 'roleSelection.switchRole' | translate }}</h2>
-        </div>
-        <ion-buttons slot="end">
-          <ion-button (click)="closeRoleSelector()">
-            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+    <div class="modal-role-selector">
+      <div class="modal-header">
+        <h2>{{ 'roleSelection.switchRole' | translate }}</h2>
+        <button class="close-button" (click)="closeRoleSelector()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
 
-    <ion-content class="ion-padding">
-      <ion-list lines="none">
+      <div class="modal-content">
         @for (role of availableRoles(); track role.id) {
-          <ion-item 
-            button 
-            detail="false" 
+          <button 
+            class="role-item"
             [class.selected]="currentRole()?.id === role.id"
             (click)="selectRole(role)">
-            <ion-avatar slot="start">
+            <ion-avatar class="role-avatar">
               <img [src]="role.club.logoUrl || 'assets/image-non-available.svg'" 
                    [alt]="role.club.name"
                    appDefaultImage="assets/image-non-available.svg">
             </ion-avatar>
-            <ion-label>
-              <h3>{{ role.club.name }}</h3>
+            <div class="role-details">
+              <div class="role-header">
+                <h3>{{ role.club.name }}</h3>
+                @if (role.status === 'pending') {
+                  <ion-badge color="warning" class="pending-badge">{{ 'roleSelection.pending' | translate }}</ion-badge>
+                }
+              </div>
               <p>
                 <ion-icon name="briefcase-outline"></ion-icon>
                 <span>{{ getRoleName(role.type) }}</span>
@@ -59,24 +57,20 @@
                   <span class="team-info">({{ role.team }})</span>
                 }
               </p>
-            </ion-label>
-          </ion-item>
+            </div>
+          </button>
         }
         
-        <ion-item 
-          button 
-          detail="false" 
-          class="add-team-item"
-          (click)="addNewTeam()">
-          <ion-avatar slot="start" class="add-avatar">
+        <button class="role-item add-team" (click)="addNewTeam()">
+          <ion-avatar class="role-avatar add-avatar">
             <ion-icon name="add-outline"></ion-icon>
           </ion-avatar>
-          <ion-label>
+          <div class="role-details">
             <h3>{{ 'roleSelection.addNewTeam' | translate }}</h3>
             <p>{{ 'roleSelection.joinOrCreate' | translate }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
+          </div>
+        </button>
+      </div>
+    </div>
   </ng-template>
 </ion-modal>

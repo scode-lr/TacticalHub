@@ -2,16 +2,9 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   IonModal,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonButton,
   IonIcon,
-  IonContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonAvatar
+  IonAvatar,
+  IonBadge
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -38,16 +31,9 @@ import { environment } from '@environment';
   imports: [
     CommonModule,
     IonModal,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonButton,
     IonIcon,
-    IonContent,
-    IonList,
-    IonItem,
-    IonLabel,
     IonAvatar,
+    IonBadge,
     TranslatePipe,
     DefaultImageDirective
   ]
@@ -62,9 +48,7 @@ export class RoleSelectorComponent {
   readonly currentRole = signal<Role | null>(null);
   readonly availableRoles = computed(() => {
     const user = this.userService.getStoredUser();
-    return user?.roles?.filter(role => 
-      role.id !== this.currentRole()?.id
-    ) || [];
+    return user?.roles || [];
   });
   readonly privateApp = environment.private;
 
@@ -123,7 +107,7 @@ export class RoleSelectorComponent {
   }
 
   hasMultipleRoles(): boolean {
-    return this.availableRoles().length > 1;
+    return this.availableRoles().length > 0;
   }
 
   addNewTeam() {
