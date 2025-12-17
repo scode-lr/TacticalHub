@@ -3,7 +3,7 @@
 
 // Common page structure
 .auth-page {
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   display: flex;
   overflow: hidden;
@@ -35,18 +35,21 @@
   }
 }
 
+.auth-background {
+  background: linear-gradient(135deg, var(--ion-color-primary, #3880ff) 0%, #000000 100%);
+}
+
 // Left Side - Branding
 .branding-section {
   flex: 0 0 50%; // Fixed 50% width
   min-width: 50%;
-  background: linear-gradient(135deg, var(--ion-color-primary, #3880ff) 0%, #000000 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 3rem;
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 100dvh;
   
   &::before {
     content: '';
@@ -55,7 +58,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
     opacity: 0.4;
   }
 }
@@ -70,7 +72,7 @@
   padding: 3rem 2rem;
   background: var(--background-primary, #ffffff);
   overflow-y: auto;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .form-container {

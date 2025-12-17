@@ -21,7 +21,7 @@
       <div class="role-container">
         <ion-icon [name]="getRoleIcon(role()?.name || '')" class="role-icon"></ion-icon>
         <p class="role-name">
-          {{ role()?.name }}@if (role()?.team) { <span class="team-name">({{ role()?.team }})</span>}
+          {{ ('roles.' + (role()?.name || '').toLowerCase()) | translate }}@if (role()?.team) { <span class="team-name">({{ role()?.team }})</span>}
         </p>
       </div>
     </div>
@@ -36,7 +36,7 @@
       <div class="add-icon">
         <ion-icon name="add"></ion-icon>
       </div>
-      <h3>{{ 'roleSelection.addNewClub' | translate }}</h3>
+      <h3>{{ 'roleSelection.addNewTeam' | translate }}</h3>
       <p>{{ 'roleSelection.joinOrCreate' | translate }}</p>
     </div>
   </div>

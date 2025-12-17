@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
 import { UserService } from '@core/services/user.service';
+import { NavigationService } from '@services/navigation.service';
+import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
 
 @Component({
   selector: 'app-user-header',
@@ -15,13 +17,17 @@ import { UserService } from '@core/services/user.service';
     IonAvatar,
     IonIcon,
     IonImg,
-    TranslatePipe
+    TranslatePipe,
+    RoleSelectorComponent
   ]
 })
 export class UserHeaderComponent {
   private readonly userService = inject(UserService);
+  private readonly navigationService = inject(NavigationService);
   
   readonly showBackButton = input<boolean>(false);
+  readonly showRoleSelector = input<boolean>(true);
+  readonly backUrl = input<string | string[]>();
   readonly backClick = output<void>();
   
   user: User | null = null;
@@ -56,8 +62,33 @@ export class UserHeaderComponent {
     this.showUserMenu.set(!this.showUserMenu());
   }
 
+  onUserClick(event: MouseEvent) {
+    const isDesktop = window.innerWidth > 768;
+    
+    if (isDesktop) {
+      this.goToProfile();
+    } else {
+      this.toggleUserMenu();
+    }
+  }
+
   onBackClick() {
-    this.backClick.emit();
+    const url = this.backUrl();
+    if (url) {
+      this.navigationService.navigateTo(Array.isArray(url) ? url : [url]);
+    } else {
+      this.backClick.emit();
+    }
+  }
+
+  goToProfile() {
+    this.showUserMenu.set(false);
+    this.navigationService.navigateTo(['/profile']);
+  }
+
+  goToSettings() {
+    this.showUserMenu.set(false);
+    this.navigationService.navigateTo(['/settings']);
   }
 
   logout() {

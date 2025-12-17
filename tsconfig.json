@@ -28,7 +28,10 @@
       "@pages/*": ["src/app/pages/*"],
       "@shared/*": ["src/app/shared/*"],
       "@assets/*": ["src/assets/*"],
-      "@core/*": ["src/app/core/*"]
+      "@core/*": ["src/app/core/*"],
+      "@models/*": ["src/app/core/models/*"],
+      "@mocks/*": ["src/mocks/*"],
+      "@directives/*": ["src/app/core/directives/*"]
     }
   },
   "angularCompilerOptions": {

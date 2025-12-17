@@ -74,7 +74,7 @@ export class MyComponent implements OnInit {
 
 ## Translation Files
 
-### **Shared Translations** (`src/app/core/i18n/shared/en.ts`)
+### **Shared Translations** (`projects/shared/i18n/en.ts`)
 
 Contains common strings used across ALL projects:
 
@@ -154,7 +154,7 @@ Example:
 
 ### 1. **Adding to Shared** (if common across projects)
 
-Edit `src/app/core/i18n/shared/en.ts`:
+Edit `projects/shared/i18n/en.ts`:
 
 ```typescript
 export const sharedTranslations = {

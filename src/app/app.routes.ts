@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
+import { roleAccessGuard } from '@core/guards/role-access.guard';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,8 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
+    canActivate: [authGuard],
+    data: { requiresAuth: false },
     children: [
       {
         path: 'welcome',
@@ -30,26 +33,16 @@ export const routes: Routes = [
   },
   {
     path: 'app',
-    redirectTo: 'layouts/my-teams',
-    pathMatch: 'full',
-  },
-  {
-    path: 'layouts',
-    loadComponent: () => import('./pages/layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
     canActivate: [authGuard],
     children: [
       {
-        path: '',
-        redirectTo: 'my-teams',
-        pathMatch: 'full',
-      },
-      {
-        path: 'my-teams',
-        loadComponent: () => import('./pages/layouts/my-teams/my-teams.page').then(m => m.MyTeamsPage),
+        path: '2/:roleId',
+        data: { roleType: 2 },
+        canActivate: [roleAccessGuard],
+        loadChildren: () => import('./pages/viewer/viewer.routes').then(m => m.viewerRoutes)
       }
-    ],
+    ]
   },
-
   {
     path: 'teams',
     canActivate: [authGuard],
@@ -68,18 +61,16 @@ export const routes: Routes = [
       }
     ]
   },
-
   {
-    path: 'teams-search',
-    loadComponent: () => import('./pages/teams-search/teams-search.page').then(m => m.TeamsSearchPage),
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.page').then(m => m.SettingsPage),
     canActivate: [authGuard]
   },
   {
-    path: 'player-register',
-    loadComponent: () => import('./pages/player-register/player-register.page').then(m => m.PlayerRegisterPage),
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage),
     canActivate: [authGuard]
   },
-
   {
     path: '**',
     redirectTo: 'auth/welcome',

@@ -3,13 +3,13 @@
 
 // Button classes as mixins that can be extended
 .btn-primary {
-  --background: var(--button-background, var(--ion-color-primary, #3880ff));
+  --background: var(--button-background, var(--button-primary-color, #3880ff));
   --color: white;
   --border-radius: 8px;
   --padding-top: 0.75rem;
   --padding-bottom: 0.75rem;
   --box-shadow: none;
-  font-weight: 500;
+  font-weight: normal;
   font-size: 0.9375rem;
   letter-spacing: 0;
   text-transform: none;
@@ -37,16 +37,15 @@
   --padding-top: 0.75rem;
   --padding-bottom: 0.75rem;
   --box-shadow: none;
-  border: 1px solid var(--border-light, #e5e7eb);
-  font-weight: 500;
+  font-weight: normal;
   font-size: 0.9375rem;
   letter-spacing: 0;
   text-transform: none;
   transition: background 0.15s ease;
+  --border-color: none;
 
   &:hover:not(.button-disabled) {
     --background: var(--background-tertiary, #e9ecef);
-    border-color: var(--border-medium, #ced4da);
   }
 
   &:active:not(.button-disabled) {

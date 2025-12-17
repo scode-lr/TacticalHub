@@ -1,0 +1,15 @@
+<div class="page-container viewer-action-page">
+  <div class="section-header">
+    <h1 class="section-title">{{ 'viewer.menu.action' | translate }}</h1>
+  </div>
+  <div class="grid-auto-fill action-grid">
+    @for (action of actions; track action.type) {
+      <app-action-card
+        [icon]="action.icon"
+        [title]="action.title"
+        [description]="action.description"
+        (cardClick)="onActionSelect(action.type)">
+      </app-action-card>
+    }
+  </div>
+</div>

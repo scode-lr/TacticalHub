@@ -1,10 +1,10 @@
+import { Team } from "./team.model";
+
 export interface Club {
-  id: string;
+  id: number;
   name: string;
   description: string;
   location: string;
   logoUrl: string;
-  level?: string;
-  membersCount?: number;
-  teamsCount?: number;
+  teams?: Team[];
 }

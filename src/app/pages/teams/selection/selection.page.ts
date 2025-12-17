@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
-import { Role, RoleStatus } from '@core/models/role.model';
+import { Role, RoleStatus, RoleType } from '@core/models/role.model';
 import { UserService } from '@core/services/user.service';
 import { StorageService } from '@core/services/storage.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
@@ -63,14 +63,13 @@ export class RoleSelectionPage implements OnInit {
   }
 
   checkRolesStatus() {
-    const totalRoles = this.user()?.roles;
     const activeRolesCount = this.activeRoles().length;
     this.hasRoles.set(activeRolesCount > 0 || this.hasPendingRoles());
   }
 
   selectRole(role: Role) {
     this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
-    this.navigationService.navigateTo(['layouts/my-teams']);
+    this.navigationService.navigateTo([`/app/${role.type}/${role.id}/home`]);
   }
 
   addNewClub() {

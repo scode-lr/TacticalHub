@@ -1,0 +1,119 @@
+import { Component, inject, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { 
+  IonModal,
+  IonIcon,
+  IonAvatar,
+  IonBadge
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { 
+  chevronDownOutline,
+  closeOutline,
+  briefcaseOutline
+} from 'ionicons/icons';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { UserService } from '@core/services/user.service';
+import { StorageService } from '@core/services/storage.service';
+import { NavigationService } from '@services/navigation.service';
+import { TranslationService } from '@services/i18n/translation.service';
+import { STORAGE_KEYS } from '@core/constants/storage-keys';
+import { Role, RoleType, RoleStatus } from '@core/models/role.model';
+import { DefaultImageDirective } from '@core/directives/default-image.directive';
+import { environment } from '@environment';
+
+
+@Component({
+  selector: 'app-role-selector',
+  templateUrl: './role-selector.component.html',
+  styleUrls: ['./role-selector.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    IonModal,
+    IonIcon,
+    IonAvatar,
+    IonBadge,
+    TranslatePipe,
+    DefaultImageDirective
+  ]
+})
+export class RoleSelectorComponent {
+  private readonly userService = inject(UserService);
+  private readonly storageService = inject(StorageService);
+  private readonly navigationService = inject(NavigationService);
+  private readonly translationService = inject(TranslationService);
+
+  readonly isModalOpen = signal<boolean>(false);
+  readonly currentRole = signal<Role | null>(null);
+  readonly availableRoles = computed(() => {
+    const user = this.userService.getStoredUser();
+    return user?.roles || [];
+  });
+  readonly privateApp = environment.private;
+
+  constructor() {
+    addIcons({
+      chevronDownOutline,
+      closeOutline,
+      briefcaseOutline
+    });
+    this.loadCurrentRole();
+  }
+
+  loadCurrentRole() {
+    const role = this.storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
+    this.currentRole.set(role);
+  }
+
+  getRoleName(roleType: RoleType): string {
+    let roleName: string;
+    switch (roleType) {
+      case RoleType.Admin:
+        roleName = 'admin';
+        break;
+      case RoleType.Coach:
+        roleName = 'coach';
+        break;
+      case RoleType.Viewer:
+        roleName = 'viewer';
+        break;
+      default:
+        return 'Unknown';
+    }
+    return this.translationService.instant(`roles.${roleName}`);
+  }
+
+  openRoleSelector() {
+    this.isModalOpen.set(true);
+  }
+
+  closeRoleSelector() {
+    this.isModalOpen.set(false);
+  }
+
+  selectRole(role: Role) {
+    this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
+    this.currentRole.set(role);
+    this.closeRoleSelector();
+    
+    setTimeout(() => {
+      if (role.type === RoleType.Viewer) {
+        this.navigationService.navigateTo([`app/${role.type}`]);
+      } else {
+        this.navigationService.navigateTo(['layouts/my-teams']);
+      }
+    }, 200);
+  }
+
+  hasMultipleRoles(): boolean {
+    return this.availableRoles().length > 0;
+  }
+
+  addNewTeam() {
+    this.closeRoleSelector();
+    setTimeout(() => {
+      this.navigationService.navigateTo(['teams/join']);
+    }, 200);
+  }
+}

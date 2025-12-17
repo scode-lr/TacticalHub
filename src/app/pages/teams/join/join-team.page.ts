@@ -7,7 +7,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { UserService } from '@core/services/user.service';
 import { Team } from '@core/models/team.model';
-import { RoleStatus } from '@core/models/role.model';
+import { Role, RoleStatus, RoleType } from '@core/models/role.model';
 import { mockTeams } from '../../../../mocks';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline } from 'ionicons/icons';
@@ -40,7 +40,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   readonly codeDigits = signal<string[]>(['', '', '', '', '']);
   readonly code = computed(() => this.codeDigits().join(''));
   readonly selectedRole = signal<string>('');
-  readonly selectedTeam = signal<string>('');
+  readonly selectedTeam = signal<number>(0);
   readonly isSubmitting = signal<boolean>(false);
   readonly matchedTeam = signal<{ name: string; clubName: string } | null>(null);
   readonly showConfirmation = signal<boolean>(false);
@@ -200,25 +200,25 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   selectRole(role: string) {
     this.selectedRole.set(role);
     if (role !== 'Coach') {
-      this.selectedTeam.set('');
+      this.selectedTeam.set(0);
     } else {
       this.scrollToTeams();
     }
   }
 
-  selectTeam(teamId: string) {
+  selectTeam(teamId: number) {
     this.selectedTeam.set(teamId);
   }
 
   isFormValid(): boolean {
     if (this.isPrivateApp) {
       if (this.selectedRole() === 'Coach') {
-        return this.selectedRole() !== '' && this.selectedTeam() !== '';
+        return this.selectedRole() !== '' && this.selectedTeam() !== 0;
       }
       return this.selectedRole() !== '';
     }
     if (this.selectedRole() === 'Coach') {
-      return this.code().length === 5 && this.selectedRole() !== '' && this.selectedTeam() !== '' && this.matchedTeam() !== null;
+      return this.code().length === 5 && this.selectedRole() !== '' && this.selectedTeam() !== 0 && this.matchedTeam() !== null;
     }
     return this.code().length === 5 && this.selectedRole() !== '' && this.matchedTeam() !== null;
   }
@@ -252,11 +252,12 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
           const selectedTeamData = this.availableTeams().find(t => t.id === this.selectedTeam());
           const teamName = selectedTeamData ? `${selectedTeamData.name} ${selectedTeamData.category}` : undefined;
           
-          const pendingRole = {
-            id: `pending-${Date.now()}`,
+          const pendingRole : Role = {
+            id: Math.floor(Math.random() * 1000000),
             name: 'Coach',
+            type: RoleType.Coach,
             club: {
-              id: 'temp-club',
+              id: Math.floor(Math.random() * 1000000),
               name: this.matchedTeam()?.clubName || 'Club',
               logoUrl: '',
               description: '',

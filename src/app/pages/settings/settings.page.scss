@@ -1,0 +1,70 @@
+.settings-header {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      min-height: 56px;
+      padding: 0.5rem 1rem;
+      background: var(--background-primary, #ffffff);
+      border-bottom: 1px solid var(--border-light, #e5e7eb);
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+
+      app-user-header {
+        flex: 1;
+        
+        ::ng-deep .page-header {
+          padding: 0;
+          border-bottom: none;
+          position: static;
+
+          .header-content {
+            padding: 0;
+            min-height: auto;
+          }
+        }
+      }
+    }
+
+.section-content {
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .setting-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary, #6b7280);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .language-select {
+    --border-radius: 10px;
+    --border-width: 1px;
+    --border-color: var(--border-light, #e5e7eb);
+    --border-style: solid;
+    --background: var(--background-primary, #ffffff);
+    --color: var(--text-primary, #111827);
+    --placeholder-color: var(--text-light, #9ca3af);
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --padding-top: 0.875rem;
+    --padding-bottom: 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    width: 100%;
+    border: 1px solid var(--border-light, #e5e7eb);
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+}

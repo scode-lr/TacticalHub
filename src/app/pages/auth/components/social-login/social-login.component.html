@@ -6,7 +6,7 @@
   <div class="social-buttons">
     <ion-button 
       fill="clear" 
-      class="social-btn google-btn"
+      class="btn-secondary"
       (click)="onGoogleClick()"
       [disabled]="isLoading">
       <ion-spinner name="dots" *ngIf="isProviderLoading('google')"></ion-spinner>
@@ -15,7 +15,7 @@
 
     <ion-button 
       fill="clear" 
-      class="social-btn apple-btn"
+      class="btn-secondary"
       (click)="onAppleClick()"
       [disabled]="isLoading">
       <ion-spinner name="dots" *ngIf="isProviderLoading('apple')"></ion-spinner>

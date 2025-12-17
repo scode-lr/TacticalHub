@@ -1,53 +1,53 @@
 import { User } from '../app/core/models/user.model';
-import { Role } from '../app/core/models/role.model';
+import { Role, RoleType } from '../app/core/models/role.model';
 import { Club } from '../app/core/models/club.model';
 import { Team } from '../app/core/models/team.model';
 
-// Mock Club
-export const mockClub: Club = {
-  id: 'club-001',
-  name: 'Voltregà CF',
-  description: 'Professional football club',
-  location: 'SHV',
-  logoUrl: '/assets/logo.svg',
-  level: 'Professional',
-  membersCount: 50,
-  teamsCount: 3
-};
 
 // Mock Teams
 export const mockTeamJuvenilB: Team = {
-  id: 'team-001',
+  id: 1,
   name: 'Juvenil',
   category: 'B',
-  clubId: 'club-001'
+  clubId: 1
 };
 
 export const mockTeamJuvenilC: Team = {
-  id: 'team-002',
+  id: 2,
   name: 'Juvenil',
   category: 'C',
-  clubId: 'club-001'
+  clubId: 1
 };
 
 export const mockTeamAlevinB: Team = {
-  id: 'team-003',
+  id: 3,
   name: 'Alevin',
   category: 'B',
-  clubId: 'club-001'
+  clubId: 1
 };
 
 export const mockTeamAlevinC: Team = {
-  id: 'team-004',
+  id: 4,
   name: 'Alevin',
   category: 'C',
-  clubId: 'club-001'
+  clubId: 1
+};
+
+// Mock Club
+export const mockClub: Club = {
+  id: 1,
+  name: 'Voltregà CF',
+  description: 'Professional football club',
+  location: 'SHV',
+  logoUrl: 'https://pbs.twimg.com/profile_images/1808725237573304320/mSo6RtAd_400x400.jpg',
+  teams: [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC]
 };
 
 // Mock Roles
 export const mockPlayerRole: Role = {
-  id: 'role-001',
+  id: 1,
   name: 'Player',
+  type: RoleType.Viewer,
   club: mockClub,
   description: 'Regular player role',
   permissions: ['view_teams', 'join_teams', 'view_matches', 'view_trainings'],
@@ -55,8 +55,9 @@ export const mockPlayerRole: Role = {
 };
 
 export const mockCoachRole: Role = {
-  id: 'role-002',
+  id: 2,
   name: 'Coach',
+  type: RoleType.Coach,
   club: mockClub,
   team: 'U-19',
   description: 'Team coach role',
@@ -65,8 +66,9 @@ export const mockCoachRole: Role = {
 };
 
 export const mockAdminRole: Role = {
-  id: 'role-003',
+  id: 3,
   name: 'Admin',
+  type: RoleType.Admin,
   club: mockClub,
   description: 'Administrator role',
   permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_users', 'manage_roles', 'manage_club'],
@@ -74,8 +76,9 @@ export const mockAdminRole: Role = {
 };
 
 export const mockViewerRole: Role = {
-  id: 'role-005',
+  id: 4,
   name: 'Viewer',
+  type: RoleType.Viewer,
   club: mockClub,
   description: 'Viewer role with read-only access',
   permissions: ['view_teams', 'view_matches', 'view_trainings'],
@@ -83,8 +86,9 @@ export const mockViewerRole: Role = {
 };
 
 export const mockCoachSeniorRole: Role = {
-  id: 'role-004',
+  id: 5,
   name: 'Coach',
+  type: RoleType.Coach,
   club: mockClub,
   team: 'Senior Team',
   description: 'Senior team coach role',
@@ -95,7 +99,7 @@ export const mockCoachSeniorRole: Role = {
 // Mock Users
 // Scenario 1: User with only ONE role - should redirect directly to home
 export const mockPlayerUser: User = {
-  id: 'user-001',
+  id: 1,
   username: 'johndoe',
   email: 'john.doe@example.com',
   roles: [mockPlayerRole],
@@ -110,7 +114,7 @@ export const mockPlayerUser: User = {
 
 // Scenario 2: User with MULTIPLE roles - should show role selection with all cards
 export const mockCoachUser: User = {
-  id: 'user-002',
+  id: 2,
   username: 'mariagarcia',
   email: 'maria.garcia@example.com',
   roles: [],
@@ -124,7 +128,7 @@ export const mockCoachUser: User = {
 };
 
 export const mockAdminUser: User = {
-  id: 'user-003',
+  id: 3,
   username: 'adminuser',
   email: 'admin@example.com',
   roles: [mockAdminRole, mockCoachRole, mockCoachSeniorRole, mockViewerRole],
@@ -139,7 +143,7 @@ export const mockAdminUser: User = {
 
 // Scenario 3: User with NO roles - should show role selection with only "add club" card and skip button
 export const mockNewUser: User = {
-  id: 'user-004',
+  id: 4,
   username: 'newuser',
   email: 'new.user@example.com',
   roles: [],

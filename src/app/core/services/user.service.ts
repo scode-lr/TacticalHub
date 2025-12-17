@@ -57,7 +57,7 @@ export class UserService {
     return !!(token && user);
   }
 
-  async fetchUserProfile(userId: string): Promise<User | null> {   
+  async fetchUserProfile(userId: number): Promise<User | null> {   
     const authUser: User | null = mockUsers.find(user => user.id === userId) ?? null;
     
     if (authUser) {

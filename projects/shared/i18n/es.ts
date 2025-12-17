@@ -1,29 +1,29 @@
 export const sharedTranslations = {
   welcome: {
-    createAccount: 'Crear Cuenta',
-    signIn: 'Iniciar Sesión',
+    createAccount: 'Crear cuenta',
+    signIn: 'Iniciar sesión',
     signUpTagline: 'Regístrate para comenzar a gestionar tus equipos',
     terms: 'Al continuar, aceptas nuestros',
-    termsOfService: 'Términos de Servicio',
+    termsOfService: 'Términos de servicio',
     and: 'y',
-    privacyPolicy: 'Política de Privacidad'
+    privacyPolicy: 'Política de privacidad'
   },
   auth: {
-    email: 'Correo Electrónico',
+    email: 'Correo electrónico',
     password: 'Contraseña',
-    confirmPassword: 'Confirmar Contraseña',
+    confirmPassword: 'Confirmar contraseña',
     firstName: 'Nombre',
     lastName: 'Apellido',
-    forgotPassword: '¿Olvidaste tu Contraseña?',
-    signInButton: 'Iniciar Sesión',
+    forgotPassword: '¿Olvidaste tu contraseña?',
+    signInButton: 'Iniciar sesión',
     signUpButton: 'Registrarse',
-    signOut: 'Cerrar Sesión',
+    signOut: 'Cerrar sesión',
     or: 'o',
     continueWithGoogle: 'Continuar con Google',
     continueWithApple: 'Continuar con Apple',
     alreadyHaveAccount: '¿Ya tienes una cuenta?',
     dontHaveAccount: '¿No tienes una cuenta?',
-    continueAsGuest: 'Continuar como Invitado'
+    continueAsGuest: 'Continuar como invitado'
   },
   common: {
     loading: 'Cargando...',
@@ -34,13 +34,34 @@ export const sharedTranslations = {
     save: 'Guardar',
     delete: 'Eliminar',
     edit: 'Editar',
-    back: 'Atrás',
+    back: 'Volver',
     next: 'Siguiente',
     submit: 'Enviar',
     close: 'Cerrar',
-    submitting: 'Enviando...'
+    submitting: 'Enviando...',
+    settings: 'Ajustes',
+    profile: 'Perfil'
   },
-  validation: {
+  settings: {
+    title: 'Ajustes',
+    language: 'Idioma',
+    selectLanguage: 'Seleccionar idioma',
+    english: 'Inglés',
+    spanish: 'Español',
+    catalan: 'Catalán',
+    languageChanged: 'Idioma cambiado correctamente'
+  },  profile: {
+    title: 'Mi perfil',
+    editProfile: 'Editar perfil',
+    personalInfo: 'Información personal',
+    email: 'Correo electrónico',
+    username: 'Nombre de usuario',
+    firstName: 'Nombre',
+    lastName: 'Apellido',
+    saveChanges: 'Guardar cambios',
+    saving: 'Guardando...',
+    profileUpdated: 'Perfil actualizado correctamente'
+  },  validation: {
     required: 'Este campo es obligatorio',
     invalidEmail: 'Dirección de correo inválida',
     minLength: 'Se requieren mínimo {min} caracteres',
@@ -80,43 +101,199 @@ export const sharedTranslations = {
   },
   roleSelection: {
     welcome: 'Bienvenido de nuevo',
-    selectRole: 'Selecciona tu Rol',
+    selectRole: 'Selecciona tu rol',
+    switchRole: 'Cambiar rol',
     chooseClub: 'Elige un club para continuar',
     noRolesYet: 'Comienza agregando tu primer club',
     defaultDescription: 'Gestiona las actividades de tu club',
     permissions: 'permisos',
-    addNewClub: 'Agregar Nuevo Club',
-    joinOrCreate: 'Únete o crea un nuevo club',
+    addNewTeam: 'Agregar nuevo equipo',
+    joinOrCreate: 'Únete o crea un nuevo equipo',
     skipForNow: 'Omitir por ahora',
     canAddLater: 'Puedes agregar clubes en cualquier momento desde tu perfil',
     pending: 'Pendiente',
-    pendingRequests: 'Solicitudes Pendientes',
+    pendingRequests: 'Solicitudes pendientes',
     pendingDescription: 'Estas solicitudes están esperando aprobación del administrador del equipo'
   },
   joinTeam: {
-    title: 'Unirse a un Equipo',
+    title: 'Unirse a un equipo',
     subtitle: 'Introduce el código del equipo y selecciona tu rol para unirte',
     subtitlePrivate: 'Selecciona tu rol para unirte al equipo',
-    enterCode: 'Introducir Código del Equipo',
+    enterCode: 'Introducir código del equipo',
     codeDescription: 'Introduce el código de 5 dígitos proporcionado por el administrador del equipo',
-    selectRole: 'Selecciona tu Rol',
+    selectRole: 'Selecciona tu rol',
     roleDescription: 'Elige cómo quieres participar en este equipo',
     coachDescription: 'Crear y gestionar actividades del equipo, sesiones de entrenamiento y partidos',
     viewerDescription: 'Ver información del equipo, horarios y resultados de partidos',
-    submitRequest: 'Enviar Solicitud',
-    joinInstant: 'Unirse Instantáneamente',
+    submitRequest: 'Enviar solicitud',
+    joinInstant: 'Unirse instantáneamente',
     joiningInstant: 'Uniéndose...',
-    teamFound: '¡Equipo Encontrado!',
+    teamFound: '¡Equipo encontrado!',
     confirmMatch: 'Selecciona tu rol a continuación para unirte a este equipo',
-    tryDifferentCode: 'Probar Otro Código',
-    selectTeam: 'Seleccionar Equipo',
+    tryDifferentCode: 'Probar otro código',
+    selectTeam: 'Seleccionar equipo',
     teamDescription: 'Elige qué equipo quieres entrenar',
     category: 'Categoría'
   },
+  viewer: {
+    title: 'Portal del observador',
+    subtitle: 'Accede a información y servicios del club',
+    menu: {
+      home: 'Inicio',
+      news: 'Noticias',
+      action: 'Acciones',
+      information: 'Información',
+      proposals: 'Propuestas y quejas',
+      matches: 'Partidos del fin de semana',
+      partners: 'Socios',
+      more: 'Más'
+    },
+    description: {
+      home: 'Bienvenido a tu portal del club',
+      news: 'Últimas actualizaciones y anuncios',
+      action: 'Registra jugadores o hazte socio',
+      information: 'Información y recursos del club',
+      proposals: 'Envía propuestas o quejas',
+      matches: 'Ver próximos partidos del fin de semana',
+      partners: 'Nuestros socios y patrocinadores del club'
+    },
+    home: {
+      welcome: '¡Bienvenido al club!',
+      description: 'Aquí puedes acceder a todos los servicios del club y mantenerte actualizado con las últimas noticias y eventos.'
+    },
+    news: {
+      title: 'Noticias',
+      category: 'Categoría',
+      empty: 'No hay noticias disponibles',
+      emptyDescription: 'No hay artículos de noticias en este momento. Vuelve más tarde para actualizaciones.',
+      author: 'Autor',
+      notFound: 'Noticia no encontrada',
+      comments: 'Comentarios',
+      noComments: '¡Aún no hay comentarios. Sé el primero en comentar!',
+      time: {
+        title: 'Tiempo',
+        all: 'Todo el tiempo',
+        today: 'Hoy',
+        week: 'Esta semana',
+        month: 'Este mes',
+        year: 'Este año'
+      },
+      categories: {
+        all: 'Todas',
+        general: 'General',
+        match: 'Partido',
+        training: 'Entrenamiento',
+        event: 'Evento',
+        announcement: 'Anuncio',
+        achievement: 'Logro'
+      }
+    },
+    action: {
+      registerPlayer: 'Registrar un jugador',
+      registerPlayerDesc: 'Registra un nuevo jugador para unirse al club',
+      register: 'Registrar',
+      becomeMember: 'Hacerse socio',
+      becomeMemberDesc: 'Únete como socio oficial del club',
+      join: 'Unirse ahora',
+      form: {
+        submit: 'Enviar',
+        cancel: 'Cancelar',
+        submitting: 'Enviando...',
+        firstName: 'Nombre',
+        firstNamePlaceholder: 'Ingresa el nombre',
+        lastName: 'Apellido',
+        lastNamePlaceholder: 'Ingresa el apellido',
+        dateOfBirth: 'Fecha de nacimiento',
+        dateOfBirthPlaceholder: 'Selecciona fecha de nacimiento',
+        email: 'Correo electrónico',
+        emailPlaceholder: 'Ingresa el correo electrónico',
+        emailError: 'Por favor ingresa un correo electrónico válido',
+        phone: 'Número de teléfono',
+        phonePlaceholder: 'Ingresa el número de teléfono',
+        phoneError: 'Por favor ingresa un número de teléfono válido',
+        previousClub: 'Club anterior',
+        previousClubPlaceholder: 'Ingresa el club anterior (opcional)',
+        position: 'Posición',
+        positionPlaceholder: 'Selecciona la posición',
+        positions: {
+          goalkeeper: 'Portero',
+          defender: 'Defensa',
+          midfielder: 'Centrocampista',
+          forward: 'Delantero'
+        },
+        notes: 'Notas adicionales',
+        notesPlaceholder: 'Agrega información adicional (opcional)',
+        address: 'Dirección',
+        addressPlaceholder: 'Ingresa la dirección',
+        city: 'Ciudad',
+        cityPlaceholder: 'Ingresa la ciudad',
+        postalCode: 'Código postal',
+        postalCodePlaceholder: 'Ingresa el código postal',
+        postalCodeError: 'Por favor ingresa un código postal válido de 5 dígitos',
+        membershipType: 'Tipo de membresía',
+        membershipTypePlaceholder: 'Selecciona el tipo de membresía',
+        membershipTypes: {
+          basic: 'Membresía básica',
+          premium: 'Membresía premium',
+          family: 'Membresía familiar'
+        },
+        comments: 'Comentarios',
+        commentsPlaceholder: 'Agrega comentarios (opcional)',
+        registerPlayerSuccess: '¡Registro de jugador enviado exitosamente!',
+        becomeMemberSuccess: '¡Solicitud de membresía enviada exitosamente!',
+        errors: {
+          required: 'Este campo es obligatorio',
+          email: 'Por favor ingresa un correo electrónico válido',
+          pattern: 'Por favor ingresa un formato válido',
+          minLength: 'Se requieren mínimo {min} caracteres',
+          maxLength: 'Se permiten máximo {max} caracteres',
+          submitError: 'Ocurrió un error. Por favor intenta de nuevo.'
+        }
+      }
+    },
+    information: {
+      title: 'Información',
+      description: 'Información importante y guías para los miembros del club',
+      empty: 'No hay información disponible',
+      emptyDescription: 'La información del club estará disponible pronto.'
+    },
+    proposals: {
+      title: 'Propuestas',
+      empty: 'No hay propuestas todavía',
+      emptyDescription: 'Envía una propuesta al administrador para mejorar la plataforma.',
+      form: {
+        title: 'Título',
+        titlePlaceholder: 'Introduce el título de la propuesta',
+        titleError: 'El título es obligatorio (min 5 caracteres)',
+        body: 'Descripción',
+        bodyPlaceholder: 'Describe tu propuesta en detalle...',
+        bodyError: 'La descripción es obligatoria (min 20 caracteres)',
+        attachment: 'Adjunto',
+        changeFile: 'Cambiar archivo',
+        uploadText: 'Haz clic para subir archivo',
+        uploadSubtext: 'PDF, DOC, Imágenes (max 5MB)',
+        submit: 'Enviar propuesta',
+        fileTypeError: 'Tipo de archivo no válido. Solo se permiten PDF, DOC, Excel e imágenes',
+        fileSizeError: 'El archivo excede el límite de 5MB'
+      }
+    },
+    matches: {
+      title: 'Partidos',
+      empty: 'No hay partidos esta semana',
+      emptyDescription: 'No se han programado partidos para esta semana.',
+      saturday: 'Sábado',
+      sunday: 'Domingo'
+    },
+    partners: {
+      empty: 'No hay socios listados',
+      emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
+    }
+  },
   roles: {
-    coach: 'Entrenador',
-    viewer: 'Observador'
-  }
+      viewer: 'Visualizador',
+      admin: 'Administrador',
+      coach: 'Entrenador'
+    }
 } as const;
 
 export type SharedTranslationKeys = typeof sharedTranslations;

@@ -1,0 +1,33 @@
+import { Component, signal, computed, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonIcon } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { ParametersService } from '@core/services/parameters.service';
+import { InformationParameter } from '@core/models/parameters/information-param.model';
+
+@Component({
+  selector: 'app-viewer-information',
+  templateUrl: './information.page.html',
+  styleUrls: ['./information.page.scss'],
+  standalone: true,
+  imports: [CommonModule, IonIcon, TranslatePipe]
+})
+export class ViewerInformationPage {
+  private parametersService = inject(ParametersService);
+
+  readonly sections = signal<InformationParameter[]>(
+    this.parametersService.getParameterValue<InformationParameter[]>('information-sections') ?? []
+  );
+
+  readonly isEmpty = computed(() => this.sections()?.length === 0);
+
+  toggleSection(sectionId: number): void {
+    this.sections.update(sections => 
+      sections.map(section => 
+        section.id === sectionId 
+          ? { ...section, isExpanded: !section.isExpanded }
+          : section
+      )
+    );
+  }
+}

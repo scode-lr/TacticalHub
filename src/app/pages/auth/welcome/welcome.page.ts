@@ -19,7 +19,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.page.html',
-  styleUrls: ['./welcome.page.scss'],
+  styleUrls: ['./welcome.page.scss', '../auth-shared.scss'],
   standalone: true,
   imports: [
     CommonModule,

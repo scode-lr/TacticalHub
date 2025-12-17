@@ -1,0 +1,95 @@
+.upvotes-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  .vote-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--border-light, #e5e7eb);
+    border-radius: 8px;
+    background: var(--background-primary, #ffffff);
+    color: var(--text-secondary, #6b7280);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    ion-icon {
+      font-size: 1rem;
+    }
+    
+    &:hover {
+      border-color: var(--ion-color-primary, #3880ff);
+      color: var(--ion-color-primary, #3880ff);
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+    
+    &.active {
+      background: var(--ion-color-primary, #3880ff);
+      border-color: var(--ion-color-primary, #3880ff);
+      color: white;
+      
+      &:hover {
+        background: var(--ion-color-primary-shade, #3171e0);
+      }
+    }
+  }
+  
+  .vote-score {
+    min-width: 2rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-secondary, #6b7280);
+    
+    &.positive {
+      color: var(--ion-color-success, #10b981);
+    }
+    
+    &.negative {
+      color: var(--ion-color-danger, #eb445a);
+    }
+  }
+  
+  &.size-small {
+    gap: 0.25rem;
+    
+    .vote-button {
+      width: 1.5rem;
+      height: 1.5rem;
+      
+      ion-icon {
+        font-size: 0.75rem;
+      }
+    }
+    
+    .vote-score {
+      min-width: 1.5rem;
+      font-size: 0.8125rem;
+    }
+  }
+  
+  &.size-large {
+    gap: 0.75rem;
+    
+    .vote-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      
+      ion-icon {
+        font-size: 1.25rem;
+      }
+    }
+    
+    .vote-score {
+      min-width: 2.5rem;
+      font-size: 1.125rem;
+    }
+  }
+}

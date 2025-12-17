@@ -1,6 +1,6 @@
 export interface Team {
-  id: string;
+  id: number;
   name: string;
   category: string;
-  clubId: string;
+  clubId: number;
 }

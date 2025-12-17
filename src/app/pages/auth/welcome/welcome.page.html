@@ -1,4 +1,4 @@
-<div class="welcome-page">
+<div class="welcome-page auth-background">
   <!-- Branding Section -->
   <div class="brand-section">
     <app-auth-branding></app-auth-branding>
@@ -9,7 +9,7 @@
     <!-- Sign Up Button (Primary) -->
     <ion-button 
       expand="block" 
-      class="signup-btn"
+      class="btn-primary"
       (click)="navigateToSignUp()">
       <ion-icon name="person-add-outline" slot="start"></ion-icon>
       {{ 'welcome.createAccount' | translate }}
@@ -19,7 +19,7 @@
     <ion-button 
       expand="block" 
       fill="outline"
-      class="signin-btn"
+      class="btn-secondary"
       (click)="navigateToSignIn()">
       <ion-icon name="log-in-outline" slot="start"></ion-icon>
       {{ 'welcome.signIn' | translate }}

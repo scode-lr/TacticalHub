@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { IonContent, IonSpinner } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -18,7 +18,6 @@ import { STORAGE_KEYS } from '@core/constants/storage-keys';
   imports: [
     CommonModule,
     IonContent,
-    IonSpinner,
     AuthBrandingComponent,
     TranslatePipe
   ]
@@ -68,8 +67,9 @@ export class LoadingPage implements OnInit {
       return null;
     }
 
+    await this.delay(1800);
     this.loadingMessageKey.set('loading.preparingWorkspace');
-    await this.delay(800);
+    await this.delay(1800);
     return fullUser;
 
   }

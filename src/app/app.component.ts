@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { TranslationService } from '@services/i18n/translation.service';
+import { UserService } from '@services/user.service';
 import { environment } from '@environment';
 
 @Component({
@@ -10,13 +11,24 @@ import { environment } from '@environment';
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent implements OnInit {
-  constructor(private translationService: TranslationService) {}
+  private readonly translationService = inject(TranslationService);
+  private readonly userService = inject(UserService);
 
-  ngOnInit() {
-    this.translationService.initialize({
+  async ngOnInit() {
+    await this.translationService.initialize({
       translations: environment.translations,
       supportedLanguages: environment.supportedLanguages,
       defaultLanguage: environment.defaultLanguage
     });
+
+    await this.refreshUserData();
+  }
+
+  private async refreshUserData(): Promise<void> {
+    const currentUser = this.userService.getCurrentUser();
+    
+    if (currentUser?.id) {
+      await this.userService.fetchUserProfile(currentUser.id);
+    }
   }
 }

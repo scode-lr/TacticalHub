@@ -100,19 +100,16 @@ export const translations = {
 ## 📁 File Organization
 
 ```
-src/
-├── app/core/i18n/shared/
+projects/
+├── shared/i18n/
 │   └── en.ts              ← 🌍 Shared (100+ keys)
 │       ├── welcome { }
 │       ├── auth { }
 │       ├── common { }
-│       └── validation { }
+│       ├── validation { }
+│       ├── viewer { }
+│       └── roleSelection { }
 │
-└── i18n/
-    └── en.ts              ← 📦 Default (2 keys)
-        └── app { name, tagline }
-
-projects/
 ├── tactical.hub/i18n/
 │   └── en.ts              ← 📦 Tactical (2 keys)
 │       └── app { name, tagline }

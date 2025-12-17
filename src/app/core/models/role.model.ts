@@ -6,9 +6,16 @@ export enum RoleStatus {
   Draft = 'draft'
 }
 
+export enum RoleType {
+  Admin = 0,
+  Coach = 1,
+  Viewer = 2
+}
+
 export interface Role {
-  id: string;
+  id: number;
   name: string;
+  type: RoleType;
   club: Club;
   description: string;
   permissions: string[];

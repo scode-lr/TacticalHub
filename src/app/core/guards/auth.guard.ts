@@ -7,13 +7,21 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   const user = userService.getStoredUser();
+  const requiresAuth = route.data?.['requiresAuth'] !== false;
 
-  if (user) {
-    return true;
+  if (requiresAuth) {
+    if (user) {
+      return true;
+    }
+    router.navigate(['/auth/signin'], {
+      queryParams: { returnUrl: state.url }
+    });
+    return false;
+  } else {
+    if (!user) {
+      return true;
+    }
+    router.navigate(['/teams/selection']);
+    return false;
   }
-
-  router.navigate(['/signin'], {
-    queryParams: { returnUrl: state.url }
-  });
-  return false;
 };

@@ -1,5 +1,5 @@
 // Import shared auth styles
-@import '../auth-shared.scss';
+@use '../auth-shared.scss';
 
 // Signup-specific styles
 .signup-page {
