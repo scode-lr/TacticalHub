@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   IonModal,
@@ -45,12 +45,19 @@ export class RoleSelectorComponent {
   private readonly translationService = inject(TranslationService);
 
   readonly isModalOpen = signal<boolean>(false);
-  readonly currentRole = signal<Role | null>(null);
+  readonly currentRole = input<Role | null>();
   readonly availableRoles = computed(() => {
     const user = this.userService.getStoredUser();
     return user?.roles || [];
   });
   readonly privateApp = environment.private;
+
+  readonly currentRoleName = computed(() => {
+    const role = this.currentRole();
+    if (!role?.type) return 'Unknown';
+    
+    return this.getRoleName(role.type);
+  });
 
   constructor() {
     addIcons({
@@ -58,12 +65,7 @@ export class RoleSelectorComponent {
       closeOutline,
       briefcaseOutline
     });
-    this.loadCurrentRole();
-  }
-
-  loadCurrentRole() {
-    const role = this.storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
-    this.currentRole.set(role);
+    console.log('role-selector component initialized', this.currentRole());
   }
 
   getRoleName(roleType: RoleType): string {
@@ -93,16 +95,13 @@ export class RoleSelectorComponent {
   }
 
   selectRole(role: Role) {
+    console.log('Selecting role:', role);
     this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
-    this.currentRole.set(role);
+    
     this.closeRoleSelector();
     
     setTimeout(() => {
-      if (role.type === RoleType.Viewer) {
-        this.navigationService.navigateTo([`app/${role.type}`]);
-      } else {
-        this.navigationService.navigateTo(['layouts/my-teams']);
-      }
+        this.navigationService.navigateTo([`app/${role.type}/${role.id}/home`]);
     }, 200);
   }
 

@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { roleAccessGuard } from '@core/guards/role-access.guard';
 
-export const viewerRoutes: Routes = [
+export const adminRoutes: Routes = [
   {
     path: '',
     canActivate: [roleAccessGuard],
-    loadComponent: () => import('./viewer.page').then(m => m.ViewerPage),
+    loadComponent: () => import('./admin.page').then(m => m.AdminPage),
     children: [
       {
         path: '',
@@ -25,28 +25,28 @@ export const viewerRoutes: Routes = [
         loadComponent: () => import('../news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
       },
       {
-        path: 'action',
-        loadComponent: () => import('../action/action.page').then(m => m.ViewerActionPage)
+        path: 'params',
+        loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
       },
       {
-        path: 'action/:type',
-        loadComponent: () => import('../action-form/action-form.page').then(m => m.ActionFormPage)
+        path: 'teams',
+        loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
       },
       {
-        path: 'information',
-        loadComponent: () => import('../information/information.page').then(m => m.ViewerInformationPage)
-      },
-      {
-        path: 'proposals',
-        loadComponent: () => import('../proposals/proposals.page').then(m => m.ViewerProposalsPage)
+        path: 'club',
+        loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
       },
       {
         path: 'matches',
         loadComponent: () => import('../matches/matches.page').then(m => m.ViewerMatchesPage)
       },
       {
-        path: 'partners',
-        loadComponent: () => import('../partners/partners.page').then(m => m.ViewerPartnersPage)
+        path: 'matches/:matchId',
+        loadComponent: () => import('../news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
       }
     ]
   }

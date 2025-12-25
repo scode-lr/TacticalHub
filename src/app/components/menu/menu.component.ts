@@ -25,7 +25,7 @@ import { RoleSelectorComponent } from '@components/role-selector/role-selector.c
 import { UserService } from '@core/services/user.service';
 import { User } from '@core/models/user.model';
 import { NavigationService } from '@services/navigation.service';
-import { RoleType } from '@core/models/role.model';
+import { Role, RoleType } from '@core/models/role.model';
 
 export interface MenuItem {
   id: string;
@@ -59,12 +59,12 @@ export class MenuComponent implements OnInit {
   private readonly navigationService = inject(NavigationService);
 
   readonly config = input.required<MenuConfig>();
+  readonly currentRole = input<Role | null>();
   
   readonly selectedMenuItem = signal<string>('home');
   readonly isModalOpen = signal<boolean>(false);
   readonly user = signal<User | null>(null);
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
-  readonly currentRoleId = signal<number>(0);
 
   readonly visibleMenuItems = computed(() => this.config().items.slice(0, 4));
   readonly hiddenMenuItems = computed(() => this.config().items.slice(4));
@@ -122,18 +122,16 @@ export class MenuComponent implements OnInit {
         this.selectedMenuItem.set(menuItem.id);
       }
     }
-
-    if (roleId) {
-      this.currentRoleId.set(roleId);
-    }
   }
 
   selectMenuItem(item: MenuItem) {
     this.selectedMenuItem.set(item.id);
     this.isModalOpen.set(false);
-    const role = this.config().role;
-    console.log(`/app/${role}/${this.currentRoleId()}/${item.route}`);
-    this.navigationService.navigateTo([`/app/${role}/${this.currentRoleId()}/${item.route}`]);
+    const role = this.currentRole();
+    if (role) {
+      console.log(`/app/${role.type}/${role.id}/${item.route}`);
+      this.navigationService.navigateTo([`/app/${role.type}/${role.id}/${item.route}`]);
+    }
   }
 
   isSelected(itemId: string): boolean {

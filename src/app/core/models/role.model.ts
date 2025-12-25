@@ -7,9 +7,9 @@ export enum RoleStatus {
 }
 
 export enum RoleType {
-  Admin = 0,
-  Coach = 1,
-  Viewer = 2
+  Admin = 1,
+  Coach = 2,
+  Viewer = 3
 }
 
 export interface Role {

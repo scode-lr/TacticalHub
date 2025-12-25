@@ -36,8 +36,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: '2/:roleId',
-        data: { roleType: 2 },
+        path: '1/:roleId',
+        data: { roleType: 1 },
+        canActivate: [roleAccessGuard],
+        loadChildren: () => import('./pages/admin/admin.routes').then(m => m.adminRoutes)
+      },
+      {
+        path: '3/:roleId',
+        data: { roleType: 3 },
         canActivate: [roleAccessGuard],
         loadChildren: () => import('./pages/viewer/viewer.routes').then(m => m.viewerRoutes)
       }

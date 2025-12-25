@@ -40,7 +40,9 @@ export const sharedTranslations = {
     close: 'Cerrar',
     submitting: 'Enviando...',
     settings: 'Ajustes',
-    profile: 'Perfil'
+    profile: 'Perfil',
+    comingSoon: 'Próximamente',
+    pageUnderConstruction: 'Esta página está en construcción y estará disponible pronto.'
   },
   settings: {
     title: 'Ajustes',
@@ -134,6 +136,28 @@ export const sharedTranslations = {
     selectTeam: 'Seleccionar equipo',
     teamDescription: 'Elige qué equipo quieres entrenar',
     category: 'Categoría'
+  },
+  admin: {
+    title: 'Portal de administración',
+    subtitle: 'Gestiona las operaciones y configuraciones del club',
+    menu: {
+      home: 'Inicio',
+      news: 'Noticias',
+      params: 'Parámetros',
+      teams: 'Equipos',
+      club: 'Club',
+      matches: 'Partidos',
+      users: 'Usuarios'
+    },
+    description: {
+      home: 'Panel de administración',
+      news: 'Gestionar noticias y anuncios',
+      params: 'Configurar parámetros del sistema',
+      teams: 'Gestionar equipos y plantillas',
+      club: 'Editar información del club',
+      matches: 'Gestionar calendarios de partidos',
+      users: 'Gestión de usuarios y permisos'
+    }
   },
   viewer: {
     title: 'Portal del observador',

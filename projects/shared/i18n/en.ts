@@ -40,7 +40,9 @@ export const sharedTranslations = {
     close: 'Close',
     submitting: 'Submitting...',
     settings: 'Settings',
-    profile: 'Profile'
+    profile: 'Profile',
+    comingSoon: 'Coming Soon',
+    pageUnderConstruction: 'This page is under construction and will be available soon.'
   },
   settings: {
     title: 'Settings',
@@ -136,6 +138,28 @@ export const sharedTranslations = {
     selectTeam: 'Select team',
     teamDescription: 'Choose which team you want to coach',
     category: 'Category'
+  },
+  admin: {
+    title: 'Admin portal',
+    subtitle: 'Manage club operations and settings',
+    menu: {
+      home: 'Home',
+      news: 'News',
+      params: 'Parameters',
+      teams: 'Teams',
+      club: 'Club',
+      matches: 'Matches',
+      users: 'Users'
+    },
+    description: {
+      home: 'Admin dashboard',
+      news: 'Manage news and announcements',
+      params: 'Configure system parameters',
+      teams: 'Manage teams and rosters',
+      club: 'Edit club information',
+      matches: 'Manage match schedules',
+      users: 'User management and permissions'
+    }
   },
   viewer: {
     title: 'Viewer portal',

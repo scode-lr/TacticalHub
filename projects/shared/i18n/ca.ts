@@ -40,7 +40,9 @@ export const sharedTranslations = {
     close: 'Tancar',
     submitting: 'Enviant...',
     settings: 'Configuració',
-    profile: 'Perfil'
+    profile: 'Perfil',
+    comingSoon: 'Properament',
+    pageUnderConstruction: 'Aquesta pàgina està en construcció i estarà disponible aviat.'
   },
   settings: {
     title: 'Configuració',
@@ -134,6 +136,28 @@ export const sharedTranslations = {
     selectTeam: 'Seleccionar equip',
     teamDescription: 'Tria quin equip vols entrenar',
     category: 'Categoria'
+  },
+  admin: {
+    title: 'Portal d\'administració',
+    subtitle: 'Gestiona les operacions i configuracions del club',
+    menu: {
+      home: 'Inici',
+      news: 'Notícies',
+      params: 'Paràmetres',
+      teams: 'Equips',
+      club: 'Club',
+      matches: 'Partits',
+      users: 'Usuaris'
+    },
+    description: {
+      home: 'Panell d\'administració',
+      news: 'Gestionar notícies i anuncis',
+      params: 'Configurar paràmetres del sistema',
+      teams: 'Gestionar equips i plantilles',
+      club: 'Editar informació del club',
+      matches: 'Gestionar calendaris de partits',
+      users: 'Gestió d\'usuaris i permisos'
+    }
   },
   viewer: {
     title: 'Portal de l\'observador',

@@ -4,9 +4,10 @@ import { RouterModule, ActivatedRoute, Router, NavigationEnd } from '@angular/ro
 import { IonContent } from '@ionic/angular/standalone';
 import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
-import { RoleType } from '@core/models/role.model';
+import { RoleType, Role } from '@core/models/role.model';
 import { filter } from 'rxjs/operators';
 import { NavigationService } from '@services/navigation.service';
+import { UserService } from '@core/services/user.service';
 
 @Component({
   selector: 'app-viewer',
@@ -25,8 +26,10 @@ export class ViewerPage  {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
+  private readonly userService = inject(UserService);
   
   readonly memberId = signal<string>('');
+  readonly currentRole = signal<Role | null>(null);
   
   readonly viewerMenuConfig: MenuConfig = {
     role: RoleType.Viewer,
@@ -55,32 +58,13 @@ export class ViewerPage  {
   });
   
   constructor() {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.memberId.set(id);
-      }
-    });
-    this.trackRouteChanges();
+    this.loadCurrentRole();
   }
   
-  private trackRouteChanges() {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        const url = this.router.url;
-        const isNewsDetail = url.includes('/news/') && url.split('/').length > 4;
-        const isActionForm = url.includes('/action/');
-        const isDetail = isNewsDetail || isActionForm;
-        this.isDetailPage.set(isDetail);
-        
-        if (isDetail) {
-          const contentContainer = document.querySelector('.content-container');
-          if (contentContainer) {
-            contentContainer.scrollTo(0, 0);
-          }
-        }
-      });
+  private loadCurrentRole(): void {
+    const role = this.userService.getCurrentRole();
+    this.currentRole.set(role);
+    console.log('ViewerPage loaded current role:', role);
   }
   
   goBack(): void {
