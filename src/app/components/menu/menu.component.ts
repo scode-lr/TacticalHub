@@ -27,6 +27,7 @@ import { User } from '@core/models/user.model';
 import { NavigationService } from '@services/navigation.service';
 import { Role, RoleType } from '@core/models/role.model';
 import { InboxService } from '@core/services/inbox.service';
+import { NotificationsService } from '@core/services/notifications.service';
 
 export interface MenuItem {
   id: string;
@@ -60,6 +61,7 @@ export class MenuComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
   private readonly inboxService = inject(InboxService);
+  private readonly notificationsService = inject(NotificationsService);
 
   readonly config = input.required<MenuConfig>();
   readonly currentRole = input<Role | null>();
@@ -73,7 +75,7 @@ export class MenuComponent implements OnInit {
   readonly hiddenMenuItems = computed(() => this.config().items.slice(4));
 
   readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
-  readonly notificationsBadge = computed(() => 0); // TODO: implement notifications service
+  readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
 
   readonly menuItemsWithBadges = computed(() => {
     return this.config().items.map(item => ({

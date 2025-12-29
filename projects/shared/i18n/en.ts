@@ -167,6 +167,12 @@ export const sharedTranslations = {
       users: 'User management and permissions'
     }
   },
+  notifications: {
+    teamJoinRequests: 'Team join requests',
+    actionRequests: 'Action requests',
+    pendingRequest: 'pending request',
+    pendingRequests: 'pending requests'
+  },
   viewer: {
     title: 'Viewer portal',
     subtitle: 'Access club information and services',

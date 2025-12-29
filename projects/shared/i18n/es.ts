@@ -165,6 +165,12 @@ export const sharedTranslations = {
       users: 'Gestión de usuarios y permisos'
     }
   },
+  notifications: {
+    teamJoinRequests: 'Solicitudes de unión al equipo',
+    actionRequests: 'Solicitudes de acción',
+    pendingRequest: 'solicitud pendiente',
+    pendingRequests: 'solicitudes pendientes'
+  },
   viewer: {
     title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',

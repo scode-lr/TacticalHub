@@ -1,0 +1,84 @@
+@if (approvalRequests().length > 0) {
+  <div class="team-join-requests-card" (click)="openModal()">
+    <div class="request-icon">
+      <ion-icon name="people-outline"></ion-icon>
+    </div>
+    
+    <div class="request-content">
+      <h3 class="request-title">{{ 'notifications.teamJoinRequests' | translate }}</h3>
+      <p class="request-count">{{ approvalRequests().length }} {{ (approvalRequests().length === 1 ? 'notifications.pendingRequest' : 'notifications.pendingRequests') | translate }}</p>
+    </div>
+    
+    <ion-button fill="clear" class="request-arrow">
+      <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <ion-modal 
+    [isOpen]="isModalOpen()" 
+    (didDismiss)="closeModal()"
+    class="requests-modal">
+    <ng-template>
+      <div class="modal-container">
+        <div class="modal-header">
+          <div class="header-info">
+            <div class="header-icon">
+              <ion-icon name="people-outline"></ion-icon>
+            </div>
+            <div class="header-text">
+              <h2 class="header-title">{{ 'notifications.teamJoinRequests' | translate }}</h2>
+              <p class="header-subtitle">{{ approvalRequests().length }} {{ (approvalRequests().length === 1 ? 'notifications.pendingRequest' : 'notifications.pendingRequests') | translate }}</p>
+            </div>
+          </div>
+          <button class="close-button" (click)="closeModal()">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <div class="modal-content">
+          <div class="requests-list">
+            @for (request of approvalRequests(); track request.id) {
+              <div class="request-item">
+                @if (request.user) {
+                  <ion-avatar class="request-avatar">
+                    <ion-img [src]="request.user.avatarUrl || 'assets/default-avatar.png'" [alt]="request.user.firstName" />
+                  </ion-avatar>
+                }
+                
+                <div class="request-info">
+                  <h4 class="request-user-name">{{ request.user?.firstName }} {{ request.user?.lastName }}</h4>
+                  <p class="request-message">{{ request.message }}</p>
+                  <span class="request-date">{{ formatDate(request.createdAt) }}</span>
+                </div>
+                
+                <div class="request-actions">
+                  @if (request.metadata?.rejected) {
+                    <ion-button 
+                      fill="clear" 
+                      color="medium"
+                      (click)="handleUndo(request); $event.stopPropagation()">
+                      <ion-icon slot="icon-only" name="arrow-undo-outline"></ion-icon>
+                    </ion-button>
+                  } @else {
+                    <ion-button 
+                      fill="clear" 
+                      color="success"
+                      (click)="handleApprove(request); $event.stopPropagation()">
+                      <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button 
+                      fill="clear" 
+                      color="danger"
+                      (click)="handleReject(request); $event.stopPropagation()">
+                      <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+                    </ion-button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+}
