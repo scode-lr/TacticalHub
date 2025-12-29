@@ -1,4 +1,4 @@
-.placeholder-container {
+.page-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +31,6 @@
 
     p {
       font-size: 0.9375rem;
-      font-weight: 400;
       color: var(--text-secondary, #6b7280);
       margin: 0;
       line-height: 1.5;
@@ -51,7 +50,7 @@
 }
 
 @media (max-width: 768px) {
-  .placeholder-container {
+  .page-container {
     padding: 1.5rem;
 
     .placeholder-content {

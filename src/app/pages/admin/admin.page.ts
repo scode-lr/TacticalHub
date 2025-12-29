@@ -33,12 +33,15 @@ export class AdminPage {
     role: RoleType.Admin,
     items: [
       { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
-      { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
+      { id: 'messages', label: 'admin.menu.messages', icon: 'mail-outline', route: 'messages' },
+      { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
+      { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
       { id: 'params', label: 'admin.menu.params', icon: 'settings-outline', route: 'params' },
       { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
       { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
       { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
-      { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' }
+      { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
+      { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' }
     ]
   };
   
@@ -46,6 +49,15 @@ export class AdminPage {
   readonly backUrl = computed(() => {
     const {roleType, roleId} = this.navigationService.extractRoleDetails();
     if (this.isDetailPage()) {
+      if (this.router.url.includes('/messages')) {
+        return `app/${roleType}/${roleId}/messages`;
+      }
+      if (this.router.url.includes('/notifications')) {
+        return `app/${roleType}/${roleId}/notifications`;
+      }
+      if (this.router.url.includes('/membership')) {
+        return `app/${roleType}/${roleId}/membership`;
+      }
       if (this.router.url.includes('/news')) {
         return `app/${roleType}/${roleId}/news`;
       }

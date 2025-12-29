@@ -17,6 +17,18 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../home/home.page').then(m => m.ViewerHomePage)
       },
       {
+        path: 'messages',
+        loadComponent: () => import('../messages/messages.page').then(m => m.MessagesPage)
+      },
+      {
+        path: 'notifications',
+        loadComponent: () => import('../notifications/notifications.page').then(m => m.NotificationsPage)
+      },
+      {
+        path: 'membership',
+        loadComponent: () => import('../membership/membership.page').then(m => m.MembershipPage)
+      },
+      {
         path: 'news',
         loadComponent: () => import('../news/news/news.page').then(m => m.ViewerNewsPage)
       },

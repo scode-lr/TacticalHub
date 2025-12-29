@@ -144,6 +144,9 @@ export const sharedTranslations = {
     subtitle: 'Manage club operations and settings',
     menu: {
       home: 'Home',
+      messages: 'Messages',
+      notifications: 'Notifications',
+      membership: 'Membership',
       news: 'News',
       params: 'Parameters',
       teams: 'Teams',
@@ -153,6 +156,9 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Admin dashboard',
+      messages: 'Manage received messages',
+      notifications: 'Configure and send notifications',
+      membership: 'Manage members and memberships',
       news: 'Manage news and announcements',
       params: 'Configure system parameters',
       teams: 'Manage teams and rosters',
