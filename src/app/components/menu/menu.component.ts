@@ -26,12 +26,14 @@ import { UserService } from '@core/services/user.service';
 import { User } from '@core/models/user.model';
 import { NavigationService } from '@services/navigation.service';
 import { Role, RoleType } from '@core/models/role.model';
+import { InboxService } from '@core/services/inbox.service';
 
 export interface MenuItem {
   id: string;
   label: string;
   icon: string;
   route: string;
+  badge?: number;
 }
 
 export interface MenuConfig {
@@ -57,6 +59,7 @@ export class MenuComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
+  private readonly inboxService = inject(InboxService);
 
   readonly config = input.required<MenuConfig>();
   readonly currentRole = input<Role | null>();
@@ -68,6 +71,21 @@ export class MenuComponent implements OnInit {
 
   readonly visibleMenuItems = computed(() => this.config().items.slice(0, 4));
   readonly hiddenMenuItems = computed(() => this.config().items.slice(4));
+
+  readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
+  readonly notificationsBadge = computed(() => 0); // TODO: implement notifications service
+
+  readonly menuItemsWithBadges = computed(() => {
+    return this.config().items.map(item => ({
+      ...item,
+      badge: item.id === 'inbox' ? this.inboxBadge() : 
+             item.id === 'notifications' ? this.notificationsBadge() : 
+             undefined
+    }));
+  });
+
+  readonly visibleMenuItemsWithBadges = computed(() => this.menuItemsWithBadges().slice(0, 4));
+  readonly hiddenMenuItemsWithBadges = computed(() => this.menuItemsWithBadges().slice(4));
 
   constructor() {
     this.initializeIcons();

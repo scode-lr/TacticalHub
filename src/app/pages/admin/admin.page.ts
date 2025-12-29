@@ -33,7 +33,7 @@ export class AdminPage {
     role: RoleType.Admin,
     items: [
       { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
-      { id: 'messages', label: 'admin.menu.messages', icon: 'mail-outline', route: 'messages' },
+      { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
       { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
       { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
       { id: 'params', label: 'admin.menu.params', icon: 'settings-outline', route: 'params' },
@@ -49,8 +49,8 @@ export class AdminPage {
   readonly backUrl = computed(() => {
     const {roleType, roleId} = this.navigationService.extractRoleDetails();
     if (this.isDetailPage()) {
-      if (this.router.url.includes('/messages')) {
-        return `app/${roleType}/${roleId}/messages`;
+      if (this.router.url.includes('/inbox')) {
+        return `app/${roleType}/${roleId}/inbox`;
       }
       if (this.router.url.includes('/notifications')) {
         return `app/${roleType}/${roleId}/notifications`;

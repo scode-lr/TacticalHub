@@ -17,8 +17,8 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../home/home.page').then(m => m.ViewerHomePage)
       },
       {
-        path: 'messages',
-        loadComponent: () => import('../messages/messages.page').then(m => m.MessagesPage)
+        path: 'inbox',
+        loadComponent: () => import('../inbox/inbox.page').then(m => m.InboxPage)
       },
       {
         path: 'notifications',

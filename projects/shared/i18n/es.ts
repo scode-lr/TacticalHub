@@ -142,7 +142,7 @@ export const sharedTranslations = {
     subtitle: 'Gestiona las operaciones y configuraciones del club',
     menu: {
       home: 'Inicio',
-      messages: 'Mensajes',
+      inbox: 'Mensajes',
       notifications: 'Notificaciones',
       membership: 'Socios',
       news: 'Noticias',
@@ -154,7 +154,7 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Panel de administración',
-      messages: 'Gestionar mensajes recibidos',
+      inbox: 'Gestionar mensajes recibidos',
       notifications: 'Configurar y enviar notificaciones',
       membership: 'Gestionar socios y membresías',
       news: 'Gestionar noticias y anuncios',

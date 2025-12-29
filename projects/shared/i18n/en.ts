@@ -144,7 +144,7 @@ export const sharedTranslations = {
     subtitle: 'Manage club operations and settings',
     menu: {
       home: 'Home',
-      messages: 'Messages',
+      inbox: 'Inbox',
       notifications: 'Notifications',
       membership: 'Membership',
       news: 'News',
@@ -156,7 +156,7 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Admin dashboard',
-      messages: 'Manage received messages',
+      inbox: 'Manage received messages',
       notifications: 'Configure and send notifications',
       membership: 'Manage members and memberships',
       news: 'Manage news and announcements',
