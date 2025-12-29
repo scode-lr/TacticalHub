@@ -19,7 +19,7 @@
   <div class="matches-container">
     @if (saturdayMatches().length > 0) {
     <div class="day-group">
-      <h2 class="heading-4 day-title">{{ 'viewer.matches.saturday' | translate }}</h2>
+      <h2 class="heading-4 day-title">{{ 'viewer.matches.saturday' | translate }} ({{ saturdayDate() }})</h2>
       <div class="grid-auto-fill matches-grid">
         @for (match of saturdayMatches(); track match.id) {
         <app-match-card [match]="match"></app-match-card>
@@ -30,7 +30,7 @@
 
     @if (sundayMatches().length > 0) {
     <div class="day-group">
-      <h2 class="heading-4 day-title">{{ 'viewer.matches.sunday' | translate }}</h2>
+      <h2 class="heading-4 day-title">{{ 'viewer.matches.sunday' | translate }} ({{ sundayDate() }})</h2>
       <div class="grid-auto-fill matches-grid">
         @for (match of sundayMatches(); track match.id) {
         <app-match-card [match]="match"></app-match-card>

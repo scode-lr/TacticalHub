@@ -64,7 +64,6 @@ export class ViewerPage  {
   private loadCurrentRole(): void {
     const role = this.userService.getCurrentRole();
     this.currentRole.set(role);
-    console.log('ViewerPage loaded current role:', role);
   }
   
   goBack(): void {

@@ -1,0 +1,70 @@
+@if (relatedMatches().length > 0) {
+  <div class="related-matches-container">
+    @if (previousMatches.length > 0) {
+      <div class="matches-section">
+        <h3 class="section-title">{{ 'viewer.match.previousMatches' | translate }}</h3>
+        <div class="matches-list">
+          @for (match of previousMatches; track match.id) {
+            <div class="match-card" (click)="goToMatch(match.id)">
+              <div class="match-date">
+                <span class="date">{{ getFormattedDate(match.date) }}</span>
+                <span class="time">{{ getFormattedTime(match.date) }}</span>
+              </div>
+              <div class="match-teams">
+                <div class="team">
+                  <span class="team-name">{{ match.team }}</span>
+                  <span class="score" [class.winner]="match.resultLocal > match.resultAway && hasStarted(match)">
+                    {{ getDisplayScore(match.resultLocal, match) }}
+                  </span>
+                </div>
+                <div class="vs">vs</div>
+                <div class="team">
+                  <span class="team-name">{{ match.teamVersus }}</span>
+                  <span class="score" [class.winner]="match.resultAway > match.resultLocal && hasStarted(match)">
+                    {{ getDisplayScore(match.resultAway, match) }}
+                  </span>
+                </div>
+              </div>
+              <div class="match-competition">{{ match.competition }}</div>
+              <ion-icon name="chevron-forward-outline" class="nav-icon"></ion-icon>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (upcomingMatches.length > 0) {
+      <div class="matches-section">
+        <h3 class="section-title">{{ 'viewer.match.upcomingMatches' | translate }}</h3>
+        <div class="matches-list">
+          @for (match of upcomingMatches; track match.id) {
+            <div class="match-card upcoming" (click)="goToMatch(match.id)">
+              <div class="match-date">
+                <span class="date">{{ getFormattedDate(match.date) }}</span>
+                <span class="time">{{ getFormattedTime(match.date) }}</span>
+              </div>
+              <div class="match-teams">
+                <div class="team">
+                  <span class="team-name">{{ match.team }}</span>
+                  <span class="score">{{ getDisplayScore(match.resultLocal, match) }}</span>
+                </div>
+                <div class="vs">vs</div>
+                <div class="team">
+                  <span class="team-name">{{ match.teamVersus }}</span>
+                  <span class="score">{{ getDisplayScore(match.resultAway, match) }}</span>
+                </div>
+              </div>
+              <div class="match-competition">{{ match.competition }}</div>
+              <ion-icon name="chevron-forward-outline" class="nav-icon"></ion-icon>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="empty-message">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <p>{{ 'viewer.match.noRelatedMatches' | translate }}</p>
+  </div>
+}

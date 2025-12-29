@@ -1,0 +1,217 @@
+.standings-container {
+  overflow-x: auto;
+
+  .standings-table {
+    min-width: 600px;
+    background: var(--background-primary, #ffffff);
+    border: 1px solid var(--border-light, #e5e7eb);
+    border-radius: 10px;
+    overflow: hidden;
+
+    .table-header {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr repeat(6, 2.5rem) 3.5rem;
+      gap: 0.375rem;
+      padding: 0.625rem 0.75rem;
+      background: var(--background-secondary, #f8f9fa);
+      border-bottom: 1px solid var(--border-light, #e5e7eb);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary, #6b7280);
+
+      .col-pos { text-align: center; }
+      .col-team { text-align: left; }
+      .col-stat { text-align: center; }
+      .col-points { text-align: center; }
+    }
+
+    .table-body {
+      .table-row {
+        display: grid;
+        grid-template-columns: 2.5rem 1fr repeat(6, 2.5rem) 3.5rem;
+        gap: 0.375rem;
+        padding: 0.625rem 0.75rem;
+        border-bottom: 1px solid var(--border-light, #e5e7eb);
+        transition: all 0.2s ease;
+        align-items: center;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background: var(--background-secondary, #f8f9fa);
+        }
+
+        &.highlighted {
+          background: rgba(56, 128, 255, 0.05);
+          border-left: 3px solid var(--ion-color-primary, #3880ff);
+
+          &:hover {
+            background: rgba(56, 128, 255, 0.08);
+          }
+
+          .team-name {
+            font-weight: 700;
+            color: var(--ion-color-primary, #3880ff);
+          }
+        }
+
+        .col-pos {
+          display: flex;
+          justify-content: center;
+
+          .position-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--background-secondary, #f8f9fa);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-primary, #111827);
+
+            &.top {
+              background: var(--ion-color-primary, #3880ff);
+              color: white;
+            }
+          }
+        }
+
+        .col-team {
+          .team-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary, #111827);
+          }
+        }
+
+        .col-stat {
+          text-align: center;
+          font-size: 0.8125rem;
+          color: var(--text-secondary, #6b7280);
+
+          &.positive {
+            color: var(--ion-color-success, #10b981);
+            font-weight: 600;
+          }
+
+          &.negative {
+            color: var(--ion-color-danger, #eb445a);
+            font-weight: 600;
+          }
+        }
+
+        .col-points {
+          display: flex;
+          justify-content: center;
+
+          .points-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.25rem;
+            height: 1.625rem;
+            padding: 0 0.375rem;
+            background: var(--ion-color-primary, #3880ff);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}
+
+.empty-message {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary, #6b7280);
+
+  ion-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .standings-container {
+    margin: -0.25rem;
+
+    .standings-table {
+      min-width: 500px;
+      font-size: 0.75rem;
+
+      .table-header {
+        grid-template-columns: 2rem 1fr repeat(6, 2rem) 3rem;
+        gap: 0.25rem;
+        padding: 0.5rem 0.5rem;
+        font-size: 0.625rem;
+      }
+
+      .table-body {
+        .table-row {
+          grid-template-columns: 2rem 1fr repeat(6, 2rem) 3rem;
+          gap: 0.25rem;
+          padding: 0.5rem 0.5rem;
+
+          &.highlighted {
+            border-left-width: 2px;
+          }
+
+          .col-pos {
+            .position-badge {
+              width: 1.25rem;
+              height: 1.25rem;
+              font-size: 0.6875rem;
+            }
+          }
+
+          .col-team {
+            .team-name {
+              font-size: 0.8125rem;
+            }
+          }
+
+          .col-stat {
+            font-size: 0.75rem;
+          }
+
+          .col-points {
+            .points-badge {
+              min-width: 2rem;
+              height: 1.5rem;
+              padding: 0 0.25rem;
+              font-size: 0.8125rem;
+              border-radius: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .empty-message {
+    padding: 2rem 1rem;
+
+    ion-icon {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 0.875rem;
+    }
+  }
+}

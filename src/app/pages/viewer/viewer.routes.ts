@@ -45,6 +45,10 @@ export const viewerRoutes: Routes = [
         loadComponent: () => import('../matches/matches.page').then(m => m.ViewerMatchesPage)
       },
       {
+        path: 'matches/:matchId',
+        loadComponent: () => import('../match-detail/match-detail.page').then(m => m.MatchDetailPage)
+      },
+      {
         path: 'partners',
         loadComponent: () => import('../partners/partners.page').then(m => m.ViewerPartnersPage)
       }
