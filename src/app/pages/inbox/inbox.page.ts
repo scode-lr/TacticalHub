@@ -1,9 +1,12 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {  IonAvatar, IonImg } from '@ionic/angular/standalone';
+import { IonAvatar, IonImg, IonModal, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { InboxService } from '@core/services/inbox.service';
 import { DefaultImageDirective } from "@core/directives";
+import { Message } from '@core/models';
+import { addIcons } from 'ionicons';
+import { closeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-inbox',
@@ -13,15 +16,35 @@ import { DefaultImageDirective } from "@core/directives";
   imports: [
     CommonModule,
     IonAvatar,
-    TranslatePipe,
     IonImg,
-    DefaultImageDirective
-]
+    IonModal,
+    IonIcon,
+    TranslatePipe
+  ]
 })
 export class InboxPage {
   private inboxService = inject(InboxService);
   
   readonly messages = computed(() => this.inboxService.getMessages());
+  readonly isModalOpen = signal<boolean>(false);
+  readonly selectedMessage = signal<Message | null>(null);
+
+  constructor() {
+    addIcons({ closeOutline });
+  }
+
+  openMessage(message: Message): void {
+    this.selectedMessage.set(message);
+    this.isModalOpen.set(true);
+    if (message.status === 'unread') {
+      this.inboxService.markAsRead(message.id);
+    }
+  }
+
+  closeModal(): void {
+    this.isModalOpen.set(false);
+    setTimeout(() => this.selectedMessage.set(null), 300);
+  }
 
   formatDate(date: Date): string {
     const now = new Date();

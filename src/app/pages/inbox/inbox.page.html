@@ -5,7 +5,7 @@
 
     <div class="messages-list">
       @for (message of messages(); track message.id) {
-        <div class="message-item" [class.read]="message.status === 'read'">
+        <div class="message-item" [class.read]="message.status === 'read'" (click)="openMessage(message)">
           @if (message.status === 'unread') {
             <span class="new-badge"></span>
           }
@@ -27,4 +27,40 @@
         </div>
       }
     </div>
+
+    <!-- Message Detail Modal -->
+    <ion-modal 
+      [isOpen]="isModalOpen()"
+      (didDismiss)="closeModal()"
+      [breakpoints]="[0, 1]"
+      [initialBreakpoint]="1"
+      class="message-modal">
+      <ng-template>
+        @if (selectedMessage()) {
+          <div class="modal-container">
+            <div class="modal-header">
+              <div class="header-info">
+                <ion-avatar class="sender-avatar">
+                  <ion-img [src]="selectedMessage()!.sender.avatarUrl || 'assets/default-avatar.png'" />
+                </ion-avatar>
+                <div class="sender-info">
+                  <h2 class="sender-name">{{ selectedMessage()!.sender.firstName }} {{ selectedMessage()!.sender.lastName }}</h2>
+                  <p class="message-timestamp">{{ selectedMessage()!.sentAt | date:'medium' }}</p>
+                </div>
+              </div>
+              <button class="close-button" (click)="closeModal()">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+            </div>
+
+            <div class="modal-content">
+              <h1 class="message-subject">{{ selectedMessage()!.subject }}</h1>
+              <div class="message-full-content">
+                <p>{{ selectedMessage()!.content }}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </ng-template>
+    </ion-modal>
   </div>
