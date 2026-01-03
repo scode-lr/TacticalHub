@@ -1,0 +1,239 @@
+<ion-modal 
+  [isOpen]="isOpen()" 
+  (didDismiss)="closeModal()"
+  (didPresent)="onModalOpen()"
+  class="parameter-modal">
+  <ng-template>
+    @if (parameter()) {
+      <div class="modal-container">
+        <div class="modal-header">
+          <div class="header-text">
+            <h2 class="header-title">{{ parameter()!.name }}</h2>
+            <p class="header-subtitle">{{ parameter()!.description }}</p>
+          </div>
+          <div class="header-actions">
+            <button class="toggle-view-button" (click)="toggleViewMode()" [title]="uxMode() ? 'Switch to JSON editor' : 'Switch to form editor'">
+              <ion-icon [name]="uxMode() ? 'code-outline' : 'list-outline'"></ion-icon>
+            </button>
+            <button class="close-button" (click)="closeModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-content">
+          @if (uxMode()) {
+            <div class="array-container">
+              @for (item of editedArray(); track $index; let i = $index) {
+                <div class="array-item">
+                  <div class="array-item-header">
+                    <div class="array-item-info" (click)="toggleArrayItem(i)">
+                      <span class="array-item-index">#{{ i + 1 }}</span>
+                      <span class="array-item-title">{{ getArrayItemTitle(item) }}</span>
+                      <ion-icon [name]="expandedItems().has(i) ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+                    </div>
+                    <button class="delete-item-button" (click)="deleteArrayItem(i)" title="Delete item">
+                      <ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                  </div>
+                  @if (expandedItems().has(i)) {
+                    <div class="array-item-content">
+                      @for (key of getObjectKeys(item); track key) {
+                        <div class="field-group">
+                          <label class="field-label">{{ ('fieldLabels.' + key) | translate }}</label>
+                          @if (isNestedArray(item[key])) {
+                            <div class="nested-array-container">
+                              <div class="nested-array">
+                                @for (nestedItem of asArray(item[key]); track $index; let j = $index) {
+                                  <div class="nested-item">
+                                    <span class="nested-item-label">{{ getNestedItemLabel(nestedItem, j) }}</span>
+                                    <div class="nested-item-actions">
+                                      <button class="nested-edit-button" (click)="editNestedArrayItem(i, key, j)" title="Edit">
+                                        <ion-icon name="create-outline"></ion-icon>
+                                      </button>
+                                      <button class="nested-delete-button" (click)="deleteNestedArrayItem(i, key, j)" title="Delete">
+                                        <ion-icon name="close-outline"></ion-icon>
+                                      </button>
+                                    </div>
+                                  </div>
+                                }
+                              </div>
+                              @if (isShowingFormFor(i, key)) {
+                                <div class="add-nested-form">
+                                  <div class="form-grid-compact">
+                                    <div class="form-field">
+                                      <label class="form-label-small">{{ 'fieldLabels.name' | translate }}</label>
+                                      <input 
+                                        type="text" 
+                                        class="field-input field-input-small"
+                                        [value]="getNestedFieldValue('name')"
+                                        (input)="onNewNestedFieldChange('name', $any($event.target).value)"
+                                        placeholder="firstName">
+                                    </div>
+                                    <div class="form-field">
+                                      <label class="form-label-small">{{ 'fieldLabels.label' | translate }}</label>
+                                      <input 
+                                        type="text" 
+                                        class="field-input field-input-small"
+                                        [value]="getNestedFieldValue('label')"
+                                        (input)="onNewNestedFieldChange('label', $any($event.target).value)"
+                                        placeholder="First Name">
+                                    </div>
+                                    <div class="form-field">
+                                      <label class="form-label-small">{{ 'fieldLabels.type' | translate }}</label>
+                                      <select 
+                                        class="field-input field-input-small"
+                                        [value]="getNestedFieldValue('type')"
+                                        (change)="onNewNestedFieldChange('type', $any($event.target).value)">
+                                        <option value="text">Text</option>
+                                        <option value="email">Email</option>
+                                        <option value="tel">Tel</option>
+                                        <option value="date">Date</option>
+                                        <option value="textarea">Textarea</option>
+                                        <option value="select">Select</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-field">
+                                      <label class="form-label-small">{{ 'fieldLabels.placeholder' | translate }}</label>
+                                      <input 
+                                        type="text" 
+                                        class="field-input field-input-small"
+                                        [value]="getNestedFieldValue('placeholder')"
+                                        (input)="onNewNestedFieldChange('placeholder', $any($event.target).value)"
+                                        placeholder="Enter value">
+                                    </div>
+                                    <div class="form-field">
+                                      <label class="form-label-small">{{ 'fieldLabels.minLength' | translate }}</label>
+                                      <input 
+                                        type="number" 
+                                        class="field-input field-input-small"
+                                        [value]="getNestedFieldValue('minLength')"
+                                        (input)="onNewNestedFieldChange('minLength', $any($event.target).value)">
+                                    </div>
+                                    <div class="form-field">
+                                      <label class="form-label-small">{{ 'fieldLabels.maxLength' | translate }}</label>
+                                      <input 
+                                        type="number" 
+                                        class="field-input field-input-small"
+                                        [value]="getNestedFieldValue('maxLength')"
+                                        (input)="onNewNestedFieldChange('maxLength', $any($event.target).value)">
+                                    </div>
+                                    <div class="form-field form-field-full">
+                                      <label class="form-label-small">{{ 'fieldLabels.required' | translate }}</label>
+                                      <button 
+                                        class="toggle-button toggle-button-small" 
+                                        [class.active]="getNestedFieldValue('required')"
+                                        (click)="onNewNestedFieldChange('required', !getNestedFieldValue('required'))">
+                                        <span class="toggle-label">{{ getNestedFieldValue('required') ? ('common.yes' | translate) : ('common.no' | translate) }}</span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div class="form-actions-small">
+                                    <button class="btn-cancel-small" (click)="cancelAddNestedField()">
+                                      {{ 'common.cancel' | translate }}
+                                    </button>
+                                    <button class="btn-confirm-small" (click)="confirmAddNestedField()">
+                                      {{ 'common.confirm' | translate }}
+                                    </button>
+                                  </div>
+                                </div>
+                              }
+                              <button class="add-nested-button" (click)="addNestedArrayItem(i, key)">
+                                <ion-icon name="add-outline"></ion-icon>
+                                <span>{{ 'common.addItem' | translate }}</span>
+                              </button>
+                            </div>
+                          } @else if (isObject(item[key])) {
+                            <div class="nested-object">
+                              @for (nestedKey of getObjectKeys(asObject(item[key])); track nestedKey) {
+                                <div class="nested-field">
+                                  <span class="nested-label">{{ nestedKey }}:</span>
+                                  <input 
+                                    type="text" 
+                                    class="field-input nested-input"
+                                    [value]="getNestedValue(item[key], nestedKey)"
+                                    (input)="onNestedFieldChange(i, key, nestedKey, $event)">
+                                </div>
+                              }
+                            </div>
+                          } @else if (isBoolean(item[key])) {
+                            <div class="toggle-container">
+                              <button 
+                                class="toggle-button" 
+                                [class.active]="item[key]"
+                                (click)="onBooleanFieldChange(i, key)">
+                                <span class="toggle-label">{{ item[key] ? ('common.yes' | translate) : ('common.no' | translate) }}</span>
+                              </button>
+                            </div>
+                          } @else if (isTypeField(key)) {
+                            <select 
+                              class="field-input type-select"
+                              [value]="item[key]"
+                              (change)="onArrayFieldChange(i, key, $event)">
+                              @for (actionType of availableActionTypes; track actionType.value) {
+                                <option [value]="actionType.value">{{ actionType.label }}</option>
+                              }
+                            </select>
+                          } @else if (isIconField(key)) {
+                            <div class="icon-selector-container">
+                              <div class="icon-preview">
+                                <ion-icon [name]="item[key]"></ion-icon>
+                              </div>
+                              <select 
+                                class="field-input icon-select"
+                                [value]="item[key]"
+                                (change)="onArrayFieldChange(i, key, $event)">
+                                @for (icon of availableIcons; track icon) {
+                                  <option [value]="icon">{{ icon }}</option>
+                                }
+                              </select>
+                            </div>
+                          } @else if (isContentField(key)) {
+                            <textarea 
+                              class="field-input field-textarea"
+                              [value]="item[key]"
+                              (input)="onArrayFieldChange(i, key, $event)"
+                              rows="4">
+                            </textarea>
+                          } @else {
+                            <input 
+                              type="text" 
+                              class="field-input"
+                              [value]="item[key]"
+                              (input)="onArrayFieldChange(i, key, $event)">
+                          }
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              <button class="add-item-button" (click)="addArrayItem()">
+                <ion-icon name="add-outline"></ion-icon>
+                <span>{{ 'common.addNewItem' | translate }}</span>
+              </button>
+            </div>
+          } @else {
+            <div class="textarea-container">
+              <textarea 
+                class="json-editor"
+                [value]="editedValue || getFormattedValue()"
+                (input)="onValueChange($event)"
+                spellcheck="false">
+              </textarea>
+            </div>
+          }
+        </div>
+
+        <div class="modal-footer">
+          <ion-button class="btn-secondary" fill="outline" color="medium" (click)="closeModal()">
+            {{ 'common.cancel' | translate }}
+          </ion-button>
+          <ion-button class="btn-primary" fill="solid" color="primary" (click)="saveParameter()">
+            {{ 'common.save' | translate }}
+          </ion-button>
+        </div>
+      </div>
+    }
+  </ng-template>
+</ion-modal>

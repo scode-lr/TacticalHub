@@ -42,7 +42,30 @@ export const sharedTranslations = {
     settings: 'Settings',
     profile: 'Profile',
     comingSoon: 'Coming Soon',
-    pageUnderConstruction: 'This page is under construction and will be available soon.'
+    pageUnderConstruction: 'This page is under construction and will be available soon.',
+    yes: 'Yes',
+    no: 'No',
+    addItem: 'Add item',
+    addNewItem: 'Add new item'
+  },
+  fieldLabels: {
+    type: 'Type',
+    icon: 'Icon',
+    title: 'Title',
+    description: 'Description',
+    fields: 'Fields',
+    name: 'Name',
+    label: 'Label',
+    required: 'Required',
+    placeholder: 'Placeholder',
+    minLength: 'Minimum Length',
+    maxLength: 'Maximum Length',
+    options: 'Options',
+    value: 'Value',
+    text: 'Text',
+    order: 'Order',
+    content: 'Content',
+    isExpanded: 'Expanded'
   },
   settings: {
     title: 'Settings',
@@ -165,6 +188,9 @@ export const sharedTranslations = {
       club: 'Edit club information',
       matches: 'Manage match schedules',
       users: 'User management and permissions'
+    },
+    parameters: {
+      title: 'Parameters',
     }
   },
   notifications: {

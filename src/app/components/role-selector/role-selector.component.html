@@ -5,9 +5,7 @@
          appDefaultImage="assets/image-non-available.svg">
   </ion-avatar>
   <div class="role-info">
-    @if(!privateApp){
-      <div class="club-name">{{ currentRole()?.club?.name || 'No Club' }}</div>
-    }
+    <div class="club-name">{{ currentRole()?.club?.name || 'No Club' }}</div>
     <div class="role-name">
       <ion-icon name="briefcase-outline"></ion-icon>
       <span>{{ currentRoleName() }}</span>

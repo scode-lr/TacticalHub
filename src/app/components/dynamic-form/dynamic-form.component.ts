@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidatorFn } 
 import { IonButton, IonIcon, IonInput, IonTextarea, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { TranslationService } from '@core/services/i18n/translation.service';
-import { FormField } from '@pages/action/action.config';
+import { FormField } from '@core/models/parameters/action-param.model';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -63,10 +63,6 @@ export class DynamicFormComponent implements OnInit {
         validators.push(Validators.maxLength(field.maxLength));
       }
 
-      if (field.pattern) {
-        validators.push(Validators.pattern(field.pattern));
-      }
-
       if (field.type === 'email') {
         validators.push(Validators.email);
       }
@@ -104,11 +100,7 @@ export class DynamicFormComponent implements OnInit {
     }
 
     if (control.errors['email']) {
-      return field?.errorMessage || this.translationService.instant('viewer.action.form.errors.email');
-    }
-
-    if (control.errors['pattern']) {
-      return field?.errorMessage || this.translationService.instant('viewer.action.form.errors.pattern');
+      return this.translationService.instant('viewer.action.form.errors.email');
     }
 
     if (control.errors['minlength']) {

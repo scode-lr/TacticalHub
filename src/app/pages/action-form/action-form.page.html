@@ -7,8 +7,6 @@
 
     <app-dynamic-form
       [fields]="config.fields"
-      [submitLabel]="config.submitButtonLabel"
-      [cancelLabel]="'viewer.action.form.cancel'"
       [isSubmitting]="isSubmitting()"
       (formSubmit)="onFormSubmit($event)"
       (formCancel)="onFormCancel()">

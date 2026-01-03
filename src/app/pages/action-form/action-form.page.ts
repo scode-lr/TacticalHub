@@ -5,8 +5,10 @@ import { ToastController } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@core/services/navigation.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
-import { ACTION_CONFIG, ActionConfig, ActionType } from '../action/action.config';
 import { DynamicFormComponent } from '@components/dynamic-form/dynamic-form.component';
+import { ActionParameter, ActionType } from '@core/models/parameters/action-param.model';
+import { ParametersService } from '@services/parameters.service';
+import { ParameterType } from '@core/models/parameters/parameter-type.enum';
 
 @Component({
   selector: 'app-action-form',
@@ -26,21 +28,24 @@ export class ActionFormPage implements OnInit {
   private navigationService = inject(NavigationService);
   private translationService = inject(TranslationService);
   private toastController = inject(ToastController);
+  private parametersServices = inject(ParametersService);
 
-  readonly actionConfig = signal<ActionConfig | null>(null);
+  readonly actionConfig = signal<ActionParameter | null>(null);
   readonly isSubmitting = signal<boolean>(false);
   private memberId = '';
 
   ngOnInit(): void {
     const actionType = this.route.snapshot.paramMap.get('type') as ActionType;
     this.memberId = this.router.url.split('/')[3];
-    
-    if (!actionType || !ACTION_CONFIG[actionType]) {
+
+    const parameter = this.parametersServices.getParameter<ActionParameter[]>(ParameterType.ActionCards);
+    const actionParameter = parameter?.value.find(param => param.type === actionType);
+    if (!actionType || !actionParameter) {
       this.goBack();
       return;
     }
 
-    const config = ACTION_CONFIG[actionType];
+    const config = actionParameter;
     this.actionConfig.set(config);
   }
 
@@ -54,7 +59,7 @@ export class ActionFormPage implements OnInit {
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       const toast = await this.toastController.create({
-        message: this.translationService.instant(config.successMessage),
+        message: this.translationService.instant('viewer.action.form.success.submitMessage'),
         duration: 3000,
         position: 'top',
         color: 'success',

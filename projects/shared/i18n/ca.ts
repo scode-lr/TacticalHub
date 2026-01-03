@@ -42,7 +42,30 @@ export const sharedTranslations = {
     settings: 'Configuració',
     profile: 'Perfil',
     comingSoon: 'Properament',
-    pageUnderConstruction: 'Aquesta pàgina està en construcció i estarà disponible aviat.'
+    pageUnderConstruction: 'Aquesta pàgina està en construcció i estarà disponible aviat.',
+    yes: 'Sí',
+    no: 'No',
+    addItem: 'Afegir element',
+    addNewItem: 'Afegir nou element'
+  },
+  fieldLabels: {
+    type: 'Tipus',
+    icon: 'Icona',
+    title: 'Títol',
+    description: 'Descripció',
+    fields: 'Camps',
+    name: 'Nom',
+    label: 'Etiqueta',
+    required: 'Requerit',
+    placeholder: 'Marcador de posició',
+    minLength: 'Longitud mínima',
+    maxLength: 'Longitud màxima',
+    options: 'Opcions',
+    value: 'Valor',
+    text: 'Text',
+    order: 'Ordre',
+    content: 'Contingut',
+    isExpanded: 'Expandit'
   },
   settings: {
     title: 'Configuració',
@@ -163,6 +186,9 @@ export const sharedTranslations = {
       club: 'Editar informació del club',
       matches: 'Gestionar calendaris de partits',
       users: 'Gestió d\'usuaris i permisos'
+    },
+    parameters: {
+      title: 'Paràmetres',
     }
   },
   notifications: {

@@ -54,7 +54,7 @@
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
     "baseline-browser-mapping": "^2.9.3",
-    "eslint": "^9.35.0",
+    "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^48.11.0",
     "eslint-plugin-prefer-arrow": "^1.2.2",

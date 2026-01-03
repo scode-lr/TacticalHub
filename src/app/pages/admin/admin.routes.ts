@@ -38,7 +38,7 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'params',
-        loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
+        loadComponent: () => import('../parameters/parameters.page').then(m => m.ParametersPage)
       },
       {
         path: 'teams',

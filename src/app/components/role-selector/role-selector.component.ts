@@ -50,7 +50,6 @@ export class RoleSelectorComponent {
     const user = this.userService.getStoredUser();
     return user?.roles || [];
   });
-  readonly privateApp = environment.private;
 
   readonly currentRoleName = computed(() => {
     const role = this.currentRole();

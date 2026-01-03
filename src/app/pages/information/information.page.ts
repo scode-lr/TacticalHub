@@ -4,6 +4,7 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { ParametersService } from '@core/services/parameters.service';
 import { InformationParameter } from '@core/models/parameters/information-param.model';
+import { ParameterType } from '@core/models/parameters/parameter-type.enum';
 
 @Component({
   selector: 'app-viewer-information',
@@ -16,7 +17,7 @@ export class ViewerInformationPage {
   private parametersService = inject(ParametersService);
 
   readonly sections = signal<InformationParameter[]>(
-    this.parametersService.getParameterValue<InformationParameter[]>('information-sections') ?? []
+    this.parametersService.getParameterValue<InformationParameter[]>(ParameterType.InformationSections) ?? []
   );
 
   readonly isEmpty = computed(() => this.sections()?.length === 0);

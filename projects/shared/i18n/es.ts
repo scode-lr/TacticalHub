@@ -42,7 +42,30 @@ export const sharedTranslations = {
     settings: 'Ajustes',
     profile: 'Perfil',
     comingSoon: 'Próximamente',
-    pageUnderConstruction: 'Esta página está en construcción y estará disponible pronto.'
+    pageUnderConstruction: 'Esta página está en construcción y estará disponible pronto.',
+    yes: 'Sí',
+    no: 'No',
+    addItem: 'Agregar elemento',
+    addNewItem: 'Agregar nuevo elemento'
+  },
+  fieldLabels: {
+    type: 'Tipo',
+    icon: 'Icono',
+    title: 'Título',
+    description: 'Descripción',
+    fields: 'Campos',
+    name: 'Nombre',
+    label: 'Etiqueta',
+    required: 'Requerido',
+    placeholder: 'Marcador de posición',
+    minLength: 'Longitud mínima',
+    maxLength: 'Longitud máxima',
+    options: 'Opciones',
+    value: 'Valor',
+    text: 'Texto',
+    order: 'Orden',
+    content: 'Contenido',
+    isExpanded: 'Expandido'
   },
   settings: {
     title: 'Ajustes',
@@ -163,6 +186,9 @@ export const sharedTranslations = {
       club: 'Editar información del club',
       matches: 'Gestionar calendarios de partidos',
       users: 'Gestión de usuarios y permisos'
+    },
+    parameters: {
+      title: 'Parámetros',
     }
   },
   notifications: {
@@ -222,69 +248,6 @@ export const sharedTranslations = {
         event: 'Evento',
         announcement: 'Anuncio',
         achievement: 'Logro'
-      }
-    },
-    action: {
-      registerPlayer: 'Registrar un jugador',
-      registerPlayerDesc: 'Registra un nuevo jugador para unirse al club',
-      register: 'Registrar',
-      becomeMember: 'Hacerse socio',
-      becomeMemberDesc: 'Únete como socio oficial del club',
-      join: 'Unirse ahora',
-      form: {
-        submit: 'Enviar',
-        cancel: 'Cancelar',
-        submitting: 'Enviando...',
-        firstName: 'Nombre',
-        firstNamePlaceholder: 'Ingresa el nombre',
-        lastName: 'Apellido',
-        lastNamePlaceholder: 'Ingresa el apellido',
-        dateOfBirth: 'Fecha de nacimiento',
-        dateOfBirthPlaceholder: 'Selecciona fecha de nacimiento',
-        email: 'Correo electrónico',
-        emailPlaceholder: 'Ingresa el correo electrónico',
-        emailError: 'Por favor ingresa un correo electrónico válido',
-        phone: 'Número de teléfono',
-        phonePlaceholder: 'Ingresa el número de teléfono',
-        phoneError: 'Por favor ingresa un número de teléfono válido',
-        previousClub: 'Club anterior',
-        previousClubPlaceholder: 'Ingresa el club anterior (opcional)',
-        position: 'Posición',
-        positionPlaceholder: 'Selecciona la posición',
-        positions: {
-          goalkeeper: 'Portero',
-          defender: 'Defensa',
-          midfielder: 'Centrocampista',
-          forward: 'Delantero'
-        },
-        notes: 'Notas adicionales',
-        notesPlaceholder: 'Agrega información adicional (opcional)',
-        address: 'Dirección',
-        addressPlaceholder: 'Ingresa la dirección',
-        city: 'Ciudad',
-        cityPlaceholder: 'Ingresa la ciudad',
-        postalCode: 'Código postal',
-        postalCodePlaceholder: 'Ingresa el código postal',
-        postalCodeError: 'Por favor ingresa un código postal válido de 5 dígitos',
-        membershipType: 'Tipo de membresía',
-        membershipTypePlaceholder: 'Selecciona el tipo de membresía',
-        membershipTypes: {
-          basic: 'Membresía básica',
-          premium: 'Membresía premium',
-          family: 'Membresía familiar'
-        },
-        comments: 'Comentarios',
-        commentsPlaceholder: 'Agrega comentarios (opcional)',
-        registerPlayerSuccess: '¡Registro de jugador enviado exitosamente!',
-        becomeMemberSuccess: '¡Solicitud de membresía enviada exitosamente!',
-        errors: {
-          required: 'Este campo es obligatorio',
-          email: 'Por favor ingresa un correo electrónico válido',
-          pattern: 'Por favor ingresa un formato válido',
-          minLength: 'Se requieren mínimo {min} caracteres',
-          maxLength: 'Se permiten máximo {max} caracteres',
-          submitError: 'Ocurrió un error. Por favor intenta de nuevo.'
-        }
       }
     },
     information: {
