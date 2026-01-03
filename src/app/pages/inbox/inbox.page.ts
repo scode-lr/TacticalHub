@@ -43,7 +43,7 @@ export class InboxPage {
 
   closeModal(): void {
     this.isModalOpen.set(false);
-    setTimeout(() => this.selectedMessage.set(null), 300);
+    this.selectedMessage.set(null);
   }
 
   formatDate(date: Date): string {
