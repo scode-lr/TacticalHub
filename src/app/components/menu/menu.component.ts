@@ -134,11 +134,9 @@ export class MenuComponent implements OnInit {
   private trackRouteChanges() {
     const { roleId, roleType } = this.navigationService.extractRoleDetails();
     const menuId = this.navigationService.getMenuIdFromUrl();
-    console.log('Extracted Role Type:', roleType, 'Role ID:', roleId, 'Menu ID from URL:', menuId);
     if (menuId) {
       const menuItem = this.config().items.find(item => item.route === menuId);
       if (menuItem) {
-        console.log('Setting selected menu item to:', menuItem.id);
         this.selectedMenuItem.set(menuItem.id);
       }
     }

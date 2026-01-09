@@ -1,0 +1,289 @@
+.team-detail-page {
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light, #e5e7eb);
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+  }
+
+  .back-button {
+    width: 36px;
+    height: 36px;
+    background: var(--background-secondary, #f8f9fa);
+    border: 1px solid var(--border-light, #e5e7eb);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 1.125rem;
+      color: var(--text-primary, #111827);
+    }
+
+    &:hover {
+      border-color: var(--ion-color-primary, #3880ff);
+      background: var(--background-primary, #ffffff);
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .header-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .team-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+    margin: 0;
+    line-height: 1.2;
+
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+
+  .team-category {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .player-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--background-secondary, #f8f9fa);
+    border-radius: 8px;
+
+    @media (max-width: 768px) {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+  }
+
+  .add-player-btn {
+    width: 36px;
+    height: 36px;
+    background: var(--ion-color-primary, #3880ff);
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 1.25rem;
+      color: white;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .count-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ion-color-primary, #3880ff);
+    line-height: 1;
+  }
+
+  .count-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+  }
+
+  .players-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .position-group {
+    animation: fadeIn 0.3s ease backwards;
+
+    @for $i from 1 through 4 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
+    }
+  }
+
+  .position-header {
+    margin-bottom: 0.5rem;
+  }
+
+  .position-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .players-table {
+    background: var(--background-primary, #ffffff);
+    border: 1px solid var(--border-light, #e5e7eb);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .table-header {
+    display: flex;
+    align-items: center;
+    padding: 0.625rem 1rem;
+    background: var(--background-secondary, #f8f9fa);
+    border-bottom: 1px solid var(--border-light, #e5e7eb);
+
+    span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary, #6b7280);
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+  }
+
+  .col-number {
+    width: 48px;
+    flex-shrink: 0;
+  }
+
+  .col-name {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .col-position {
+    width: 60px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .player-row {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-light, #e5e7eb);
+    transition: background 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: var(--background-secondary, #f8f9fa);
+    }
+  }
+
+  .player-number {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ion-color-primary, #3880ff);
+  }
+
+  .player-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary, #111827);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .player-position {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+  }
+
+  .captain-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: var(--ion-color-warning, #ffc409);
+    color: var(--text-primary, #111827);
+    border-radius: 4px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+
+    .empty-icon {
+      font-size: 3rem;
+      color: var(--text-light, #adb5bd);
+      margin-bottom: 1rem;
+    }
+
+    .empty-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-secondary, #6b7280);
+      margin: 0 0 1.5rem 0;
+    }
+
+    .btn-back {
+      background: var(--ion-color-primary, #3880ff);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

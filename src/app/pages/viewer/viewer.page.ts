@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
@@ -6,6 +6,7 @@ import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleType, Role } from '@core/models/role.model';
 import { filter } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 
@@ -22,7 +23,7 @@ import { UserService } from '@core/services/user.service';
     UserHeaderComponent
   ],
 })
-export class ViewerPage  {
+export class ViewerPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
@@ -34,12 +35,12 @@ export class ViewerPage  {
   readonly viewerMenuConfig: MenuConfig = {
     role: RoleType.Viewer,
     items: [
-      { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
+      // { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
       { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'action', label: 'viewer.menu.action', icon: 'add-circle-outline', route: 'action' },
+      { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
       { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
     ]
   };
@@ -59,6 +60,31 @@ export class ViewerPage  {
   
   constructor() {
     this.loadCurrentRole();
+    this.subscribeToRouterEvents();
+  }
+
+  ngOnInit(): void {
+    this.checkIfDetailPage();
+  }
+
+  private subscribeToRouterEvents(): void {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntilDestroyed()
+      )
+      .subscribe(() => {
+        this.checkIfDetailPage();
+      });
+  }
+
+  private checkIfDetailPage(): void {
+    const url = this.router.url;
+    const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
+                     url.includes('/matches/') && url.split('/').length > 5 ||
+                     url.includes('/action/') ||
+                     url.includes('/teams/') && url.split('/').length > 5;
+    this.isDetailPage.set(isDetail);
   }
   
   private loadCurrentRole(): void {

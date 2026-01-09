@@ -11,7 +11,6 @@ export const roleAccessGuard: CanActivateFn = (route, state) => {
 
   const roleType = route.data['roleType'];
   const roleId = route.paramMap.get('roleId');
-  console.log('Role Access Guard: Checking access for roleType=', roleType, 'roleId=', roleId);
   if (!roleType && roleType !== 0) {
     navigationService.navigateTo(['/teams/selection']);
     return false;

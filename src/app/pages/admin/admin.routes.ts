@@ -42,7 +42,11 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'teams',
-        loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
+        loadComponent: () => import('../teams/teams.page').then(m => m.TeamsPage)
+      },
+      {
+        path: 'teams/:teamId',
+        loadComponent: () => import('../teams/team-detail/team-detail.page').then(m => m.TeamDetailPage)
       },
       {
         path: 'club',

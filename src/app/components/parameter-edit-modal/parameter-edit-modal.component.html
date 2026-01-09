@@ -171,7 +171,7 @@
                               [value]="item[key]"
                               (change)="onArrayFieldChange(i, key, $event)">
                               @for (actionType of availableActionTypes; track actionType.value) {
-                                <option [value]="actionType.value">{{ actionType.label }}</option>
+                                <option [value]="actionType.value" [selected]="item[key] === actionType.value">{{ actionType.labelKey | translate }}</option>
                               }
                             </select>
                           } @else if (isIconField(key)) {

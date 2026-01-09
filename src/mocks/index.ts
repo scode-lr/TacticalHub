@@ -4,3 +4,4 @@ export * from './news.mock';
 export * from './parameters.mock';
 export * from './message.mock';
 export * from './notification.mock';
+export * from './team.mock';

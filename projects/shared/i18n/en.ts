@@ -46,7 +46,8 @@ export const sharedTranslations = {
     yes: 'Yes',
     no: 'No',
     addItem: 'Add item',
-    addNewItem: 'Add new item'
+    addNewItem: 'Add new item',
+    selectSeason: 'Select Season'
   },
   fieldLabels: {
     type: 'Type',
@@ -66,6 +67,10 @@ export const sharedTranslations = {
     order: 'Order',
     content: 'Content',
     isExpanded: 'Expanded'
+  },
+  actionTypes: {
+    registerPlayer: 'Register Player',
+    becomeMember: 'Become Member'
   },
   settings: {
     title: 'Settings',
@@ -191,6 +196,32 @@ export const sharedTranslations = {
     },
     parameters: {
       title: 'Parameters',
+    }
+  },
+  modals: {
+    player: {
+      title: 'Add Player',
+      playerName: 'Player Name',
+      playerNamePlaceholder: 'Enter player name',
+      number: 'Number',
+      numberPlaceholder: '1-99',
+      position: 'Position',
+      positionPlaceholder: 'Select position',
+      goalkeeper: 'Goalkeeper',
+      defender: 'Defender',
+      midfielder: 'Midfielder',
+      forward: 'Forward',
+      teamCaptain: 'Team Captain',
+      addPlayer: 'Add Player'
+    },
+    team: {
+      title: 'Create Team',
+      subtitle: 'Add a new team to your club',
+      teamName: 'Team Name',
+      teamNamePlaceholder: 'Enter team name',
+      category: 'Category',
+      categoryPlaceholder: 'Select category',
+      createTeam: 'Create Team'
     }
   },
   notifications: {

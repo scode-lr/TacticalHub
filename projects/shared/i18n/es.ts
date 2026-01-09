@@ -46,7 +46,8 @@ export const sharedTranslations = {
     yes: 'Sí',
     no: 'No',
     addItem: 'Agregar elemento',
-    addNewItem: 'Agregar nuevo elemento'
+    addNewItem: 'Agregar nuevo elemento',
+    selectSeason: 'Seleccionar Temporada'
   },
   fieldLabels: {
     type: 'Tipo',
@@ -66,6 +67,10 @@ export const sharedTranslations = {
     order: 'Orden',
     content: 'Contenido',
     isExpanded: 'Expandido'
+  },
+  actionTypes: {
+    registerPlayer: 'Registrar jugador',
+    becomeMember: 'Hacerse socio'
   },
   settings: {
     title: 'Ajustes',
@@ -189,6 +194,32 @@ export const sharedTranslations = {
     },
     parameters: {
       title: 'Parámetros',
+    }
+  },
+  modals: {
+    player: {
+      title: 'Añadir Jugador',
+      playerName: 'Nombre del Jugador',
+      playerNamePlaceholder: 'Introduce el nombre del jugador',
+      number: 'Número',
+      numberPlaceholder: '1-99',
+      position: 'Posición',
+      positionPlaceholder: 'Seleccionar posición',
+      goalkeeper: 'Portero',
+      defender: 'Defensa',
+      midfielder: 'Centrocampista',
+      forward: 'Delantero',
+      teamCaptain: 'Capitán del Equipo',
+      addPlayer: 'Añadir Jugador'
+    },
+    team: {
+      title: 'Crear Equipo',
+      subtitle: 'Añade un nuevo equipo a tu club',
+      teamName: 'Nombre del Equipo',
+      teamNamePlaceholder: 'Introduce el nombre del equipo',
+      category: 'Categoría',
+      categoryPlaceholder: 'Seleccionar categoría',
+      createTeam: 'Crear Equipo'
     }
   },
   notifications: {

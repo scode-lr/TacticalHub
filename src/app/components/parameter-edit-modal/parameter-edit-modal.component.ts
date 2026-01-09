@@ -200,8 +200,8 @@ export class ParameterEditModalComponent {
   ];
 
   readonly availableActionTypes = [
-    { value: 'register-player', label: 'Register Player' },
-    { value: 'become-member', label: 'Become Member' }
+    { value: 'register-player', labelKey: 'actionTypes.registerPlayer' },
+    { value: 'become-member', labelKey: 'actionTypes.becomeMember' }
   ];
 
   asArray(value: unknown): unknown[] {

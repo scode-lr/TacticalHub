@@ -192,4 +192,4 @@ export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser, 
 export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockCoachSeniorRole, mockAdminRole, mockViewerRole];
 
 // Helper to get all mock teams
-export const mockTeams: Team[] = [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC];
+export const mockUserTeams: Team[] = [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC];
