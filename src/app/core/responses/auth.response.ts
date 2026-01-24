@@ -7,6 +7,26 @@ export interface AuthResponse {
   expiresIn: number;
 }
 
+export interface SignInResponse {
+  success: boolean;
+  message: string;
+  data?: {
+    user: User;
+    token: string;
+    refreshToken?: string;
+  };
+}
+
+export interface SignUpResponse {
+  success: boolean;
+  message: string;
+  data?: {
+    user: User;
+    token: string;
+    refreshToken?: string;
+  };
+}
+
 export interface RefreshTokenResponse {
   accessToken: string;
   refreshToken: string;

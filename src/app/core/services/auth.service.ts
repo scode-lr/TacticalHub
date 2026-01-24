@@ -1,10 +1,12 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
-import { AuthUser, User } from '../models';
+import { Injectable, signal, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { User } from '../models';
 import { SignInRequest, SignUpRequest } from '../requests/auth.request';
-import { mockUsers } from '../../../mocks/user.mock';
+import { SignInResponse, SignUpResponse } from '../responses/auth.response';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { TranslationService } from './i18n/translation.service';
 import { StorageService } from './storage.service';
+import { ApiService } from './api.service';
 
 export interface IAuthState {
   isAuthenticated: boolean;
@@ -23,6 +25,7 @@ export interface IAuthResponse {
 export class AuthService {
   private readonly translationService = inject(TranslationService);
   private readonly storageService = inject(StorageService);
+  private readonly apiService = inject(ApiService);
   private readonly _token = signal<string | null>(null);
   private readonly _isLoading = signal<boolean>(false);
   readonly isLoading = this._isLoading.asReadonly();
@@ -46,7 +49,6 @@ export class AuthService {
   async signIn(credentials: SignInRequest): Promise<IAuthResponse> {
     try {
       this._isLoading.set(true);
-      await this.delay(1500);
       
       if (!credentials.email || credentials.password.length < 6) {
         this._isLoading.set(false);
@@ -56,41 +58,40 @@ export class AuthService {
         };
       }
 
-      const authenticatedUser = mockUsers.find(user => user.email === credentials.email);
-      
-      if (!authenticatedUser) {
+      const response = await firstValueFrom(
+        this.apiService.post<SignInResponse>('/auth/login', {
+          email: credentials.email,
+          password: credentials.password,
+          rememberMe: credentials.rememberMe
+        })
+      );
+
+      if (response.success && response.data) {
+        const { user, token } = response.data;
+
+        this.storageService.set<User>(STORAGE_KEYS.USER, user);
+        this.storageService.setString(STORAGE_KEYS.TOKEN, token);
+        
+        this._currentUser.set(user);
+        this._token.set(token);
+        this._isLoading.set(false);
+
+        return { 
+          success: true, 
+          message: response.message || this.translationService.instant('messages.signInSuccess')
+        };
+      } else {
         this._isLoading.set(false);
         return { 
           success: false, 
-          message: this.translationService.instant('messages.signInError') 
+          message: response.message || this.translationService.instant('messages.signInError')
         };
       }
-
-      const mockToken = this.generateToken();
-
-      const authUser: AuthUser = {
-        id: authenticatedUser.id,
-        email: authenticatedUser.email,
-        username: authenticatedUser.username,
-        token: mockToken
-      };
-      
-      this.storageService.set<AuthUser>(STORAGE_KEYS.USER, authUser);
-      this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
-      
-      this._currentUser.set(authUser);
-      this._token.set(mockToken);
-      this._isLoading.set(false);
-
-      return { 
-        success: true, 
-        message: this.translationService.instant('messages.googleSignInSuccess') 
-      };
-    } catch (error) {
+    } catch (error: any) {
       this._isLoading.set(false);
       return { 
         success: false, 
-        message: this.translationService.instant('messages.signInError') 
+        message: error.message || this.translationService.instant('messages.signInError')
       };
     }
   }
@@ -98,140 +99,88 @@ export class AuthService {
   async signUp(userData: SignUpRequest): Promise<IAuthResponse> {
     try {
       this._isLoading.set(true);
-      await this.delay(2000);
       
-      if (userData.email && userData.password.length >= 6) {
-        const newUser: User = {
+      if (!userData.email || userData.password.length < 6) {
+        this._isLoading.set(false);
+        return { 
+          success: false, 
+          message: this.translationService.instant('validation.fillAllFields')
+        };
+      }
+
+      const response = await firstValueFrom(
+        this.apiService.post<SignUpResponse>('/auth/register', {
           email: userData.email,
+          password: userData.password,
           firstName: userData.firstName,
           lastName: userData.lastName,
-          id: this.generateId(),
-          token: this.generateToken(),
-        };
+          username: userData.username
+        })
+      );
 
-        const mockToken = this.generateToken();
+      if (response.success && response.data) {
+        const { user, token } = response.data;
+
+        this.storageService.set<User>(STORAGE_KEYS.USER, user);
+        this.storageService.setString(STORAGE_KEYS.TOKEN, token);
         
-        this.storageService.set<User>(STORAGE_KEYS.USER, newUser);
-        this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
-        
-        this._currentUser.set(newUser);
-        this._token.set(mockToken);
+        this._currentUser.set(user);
+        this._token.set(token);
         this._isLoading.set(false);
 
         return { 
           success: true, 
-          message: this.translationService.instant('messages.accountCreatedSuccess') 
+          message: response.message || this.translationService.instant('messages.accountCreatedSuccess')
         };
       } else {
         this._isLoading.set(false);
         return { 
           success: false, 
-          message: this.translationService.instant('validation.fillAllFields') 
+          message: response.message || this.translationService.instant('messages.signUpError')
         };
       }
-    } catch (error) {
+    } catch (error: any) {
       this._isLoading.set(false);
       return { 
         success: false, 
-        message: this.translationService.instant('messages.signUpError') 
+        message: error.message || this.translationService.instant('messages.signUpError')
       };
     }
   }
 
   async signInWithGoogle(): Promise<IAuthResponse> {
-    try {
-      this._isLoading.set(true);
-      await this.delay(1500);
-      
-      const googleUser: User = {
-        id: this.generateId(),
-        email: 'user@gmail.com',
-        firstName: 'Google',
-        lastName: 'User',
-        avatarUrl: 'https://via.placeholder.com/100x100?text=GU',
-        roles: [],
-        createdAt: new Date(),
-        token: this.generateToken()
-      };
-
-      const mockToken = this.generateToken();
-      
-      this.storageService.set<User>(STORAGE_KEYS.USER, googleUser);
-      this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
-      
-      this._currentUser.set(googleUser);
-      this._token.set(mockToken);
-      this._isLoading.set(false);
-
-      return { 
-        success: true, 
-        message: this.translationService.instant('messages.googleSignInSuccess') 
-      };
-    } catch (error) {
-      this._isLoading.set(false);
-      return { 
-        success: false, 
-        message: this.translationService.instant('messages.googleSignInFailed') 
-      };
-    }
+    return {
+      success: false,
+      message: 'Google Sign-In not implemented yet'
+    };
   }
 
   async signInWithApple(): Promise<IAuthResponse> {
-    try {
-      this._isLoading.set(true);
-      await this.delay(1500);
-      
-      const appleUser: User = {
-        id: this.generateId(),
-        email: 'user@icloud.com',
-        firstName: 'Apple',
-        lastName: 'User',
-        avatarUrl: 'https://via.placeholder.com/100x100?text=AU',
-        roles: [],
-        createdAt: new Date(),
-        token: ''
-      };
-
-      const mockToken = this.generateToken();
-      
-      this.storageService.set<User>(STORAGE_KEYS.USER, appleUser);
-      this.storageService.setString(STORAGE_KEYS.TOKEN, mockToken);
-      
-      this._currentUser.set(appleUser);
-      this._token.set(mockToken);
-      this._isLoading.set(false);
-
-      return { 
-        success: true, 
-        message: this.translationService.instant('messages.appleSignInSuccess') 
-      };
-    } catch (error) {
-      this._isLoading.set(false);
-      return { 
-        success: false, 
-        message: this.translationService.instant('messages.appleSignInFailed') 
-      };
-    }
+    return {
+      success: false,
+      message: 'Apple Sign-In not implemented yet'
+    };
   }
 
   async signOut(): Promise<void> {
-    this.storageService.remove(STORAGE_KEYS.USER);
-    this.storageService.remove(STORAGE_KEYS.TOKEN);
-    this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
-    
-    this._currentUser.set(null);
-    this._token.set(null);
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  private generateId(): number {
-    return Math.floor(Math.random() * 1000000);
-  }
-
-  private generateToken(): string {
-    return Math.random().toString(36).substr(2, 16);
+    try {
+      // Optional: call logout endpoint on backend
+      // await firstValueFrom(this.apiService.post('/auth/logout', {}));
+      
+      this.storageService.remove(STORAGE_KEYS.USER);
+      this.storageService.remove(STORAGE_KEYS.TOKEN);
+      this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
+      
+      this._currentUser.set(null);
+      this._token.set(null);
+    } catch (error) {
+      // Perform local logout even if backend fails
+      this.storageService.remove(STORAGE_KEYS.USER);
+      this.storageService.remove(STORAGE_KEYS.TOKEN);
+      this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
+      
+      this._currentUser.set(null);
+      this._token.set(null);
+    }
   }
 }
