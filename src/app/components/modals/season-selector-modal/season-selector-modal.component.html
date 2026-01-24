@@ -1,0 +1,31 @@
+<ion-modal 
+  [isOpen]="isOpen()"
+  (didDismiss)="closeModal()"
+  [breakpoints]="isMobile() ? [0, 1] : undefined"
+  [initialBreakpoint]="isMobile() ? 1 : undefined"
+  [cssClass]="isMobile() ? 'season-modal-mobile' : 'season-modal-web'"
+  class="season-selector-modal">
+  <ng-template>
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">{{ 'common.selectSeason' | translate }}</h2>
+        <button class="close-button" (click)="closeModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="modal-content">
+        @for (season of seasons(); track season) {
+          <button 
+            class="season-option" 
+            [class.selected]="selectedSeason() === season"
+            (click)="selectSeason(season)">
+            <span class="season-label">{{ season }}</span>
+            @if (selectedSeason() === season) {
+              <ion-icon name="checkmark-outline" class="check-icon"></ion-icon>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

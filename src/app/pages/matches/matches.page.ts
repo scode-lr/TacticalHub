@@ -40,6 +40,20 @@ export class ViewerMatchesPage {
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   });
 
+  readonly saturdayDate = computed(() => {
+    const start = this.currentWeekStart();
+    const saturday = new Date(start);
+    saturday.setDate(start.getDate() + 6);
+    return saturday.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' });
+  });
+
+  readonly sundayDate = computed(() => {
+    const start = this.currentWeekStart();
+    const sunday = new Date(start);
+    sunday.setDate(start.getDate() + 7);
+    return sunday.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' });
+  });
+
   readonly weekLabel = computed(() => {
     const start = this.currentWeekStart();
     const end = new Date(start);

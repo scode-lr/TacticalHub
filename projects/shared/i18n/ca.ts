@@ -40,7 +40,37 @@ export const sharedTranslations = {
     close: 'Tancar',
     submitting: 'Enviant...',
     settings: 'Configuració',
-    profile: 'Perfil'
+    profile: 'Perfil',
+    comingSoon: 'Properament',
+    pageUnderConstruction: 'Aquesta pàgina està en construcció i estarà disponible aviat.',
+    yes: 'Sí',
+    no: 'No',
+    addItem: 'Afegir element',
+    addNewItem: 'Afegir nou element',
+    selectSeason: 'Seleccionar Temporada'
+  },
+  fieldLabels: {
+    type: 'Tipus',
+    icon: 'Icona',
+    title: 'Títol',
+    description: 'Descripció',
+    fields: 'Camps',
+    name: 'Nom',
+    label: 'Etiqueta',
+    required: 'Requerit',
+    placeholder: 'Marcador de posició',
+    minLength: 'Longitud mínima',
+    maxLength: 'Longitud màxima',
+    options: 'Opcions',
+    value: 'Valor',
+    text: 'Text',
+    order: 'Ordre',
+    content: 'Contingut',
+    isExpanded: 'Expandit'
+  },
+  actionTypes: {
+    registerPlayer: 'Registrar jugador',
+    becomeMember: 'Fer-se soci'
   },
   settings: {
     title: 'Configuració',
@@ -135,6 +165,69 @@ export const sharedTranslations = {
     teamDescription: 'Tria quin equip vols entrenar',
     category: 'Categoria'
   },
+  admin: {
+    title: 'Portal d\'administració',
+    subtitle: 'Gestiona les operacions i configuracions del club',
+    menu: {
+      home: 'Inici',
+      inbox: 'Missatges',
+      notifications: 'Notificacions',
+      membership: 'Socis',
+      news: 'Notícies',
+      params: 'Paràmetres',
+      teams: 'Equips',
+      club: 'Club',
+      matches: 'Partits',
+      users: 'Usuaris'
+    },
+    description: {
+      home: 'Panell d\'administració',
+      inbox: 'Gestionar missatges rebuts',
+      notifications: 'Configurar i enviar notificacions',
+      membership: 'Gestionar socis i membres',
+      news: 'Gestionar notícies i anuncis',
+      params: 'Configurar paràmetres del sistema',
+      teams: 'Gestionar equips i plantilles',
+      club: 'Editar informació del club',
+      matches: 'Gestionar calendaris de partits',
+      users: 'Gestió d\'usuaris i permisos'
+    },
+    parameters: {
+      title: 'Paràmetres',
+    }
+  },
+  modals: {
+    player: {
+      title: 'Afegir Jugador',
+      playerName: 'Nom del Jugador',
+      playerNamePlaceholder: 'Introdueix el nom del jugador',
+      number: 'Número',
+      numberPlaceholder: '1-99',
+      position: 'Posició',
+      positionPlaceholder: 'Seleccionar posició',
+      goalkeeper: 'Porter',
+      defender: 'Defensa',
+      midfielder: 'Migcampista',
+      forward: 'Davanter',
+      teamCaptain: 'Capità de l\'Equip',
+      addPlayer: 'Afegir Jugador'
+    },
+    team: {
+      title: 'Crear Equip',
+      subtitle: 'Afegeix un nou equip al teu club',
+      teamName: 'Nom de l\'Equip',
+      teamNamePlaceholder: 'Introdueix el nom de l\'equip',
+      category: 'Categoria',
+      categoryPlaceholder: 'Seleccionar categoria',
+      createTeam: 'Crear Equip'
+    }
+  },
+  notifications: {
+    teamJoinRequests: 'Sol·licituds d\'unió a l\'equip',
+    actionRequests: 'Sol·licituds d\'acció',
+    pendingRequest: 'sol·licitud pendent',
+    pendingRequests: 'sol·licituds pendents'
+  },
   viewer: {
     title: 'Portal de l\'observador',
     subtitle: 'Accedeix a informació i serveis del club',
@@ -144,7 +237,7 @@ export const sharedTranslations = {
       action: 'Accions',
       information: 'Informació',
       proposals: 'Propostes i queixes',
-      matches: 'Partits del cap de setmana',
+      matches: 'Partits',
       partners: 'Socis',
       more: 'Més'
     },
@@ -283,6 +376,35 @@ export const sharedTranslations = {
       emptyDescription: 'No s\'han programat partits per aquesta setmana.',
       saturday: 'Dissabte',
       sunday: 'Diumenge'
+    },
+    match: {
+      notFound: 'Partit no trobat',
+      referee: 'Àrbitre',
+      attendance: 'Assistència',
+      lineup: 'Alineació',
+      goals: 'Gols',
+      standings: 'Classificació',
+      matches: 'Partits',
+      homeTeam: 'Equip Local',
+      awayTeam: 'Equip Visitant',
+      starters: 'Titulars',
+      substitutes: 'Suplents',
+      noLineup: 'Alineació no disponible',
+      noGoals: 'No s\'han marcat gols',
+      penalty: 'Penal',
+      ownGoal: 'Autogol',
+      position: 'Pos',
+      team: 'Equip',
+      played: 'PJ',
+      won: 'PG',
+      drawn: 'PE',
+      lost: 'PP',
+      gd: 'DG',
+      points: 'Pts',
+      noStandings: 'Classificació no disponible',
+      previousMatches: 'Partits Anteriors',
+      upcomingMatches: 'Pròxims Partits',
+      noRelatedMatches: 'No hi ha partits relacionats'
     },
     partners: {
       empty: 'No hi ha socis llistats',

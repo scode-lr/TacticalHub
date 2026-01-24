@@ -40,7 +40,37 @@ export const sharedTranslations = {
     close: 'Close',
     submitting: 'Submitting...',
     settings: 'Settings',
-    profile: 'Profile'
+    profile: 'Profile',
+    comingSoon: 'Coming Soon',
+    pageUnderConstruction: 'This page is under construction and will be available soon.',
+    yes: 'Yes',
+    no: 'No',
+    addItem: 'Add item',
+    addNewItem: 'Add new item',
+    selectSeason: 'Select Season'
+  },
+  fieldLabels: {
+    type: 'Type',
+    icon: 'Icon',
+    title: 'Title',
+    description: 'Description',
+    fields: 'Fields',
+    name: 'Name',
+    label: 'Label',
+    required: 'Required',
+    placeholder: 'Placeholder',
+    minLength: 'Minimum Length',
+    maxLength: 'Maximum Length',
+    options: 'Options',
+    value: 'Value',
+    text: 'Text',
+    order: 'Order',
+    content: 'Content',
+    isExpanded: 'Expanded'
+  },
+  actionTypes: {
+    registerPlayer: 'Register Player',
+    becomeMember: 'Become Member'
   },
   settings: {
     title: 'Settings',
@@ -137,6 +167,69 @@ export const sharedTranslations = {
     teamDescription: 'Choose which team you want to coach',
     category: 'Category'
   },
+  admin: {
+    title: 'Admin portal',
+    subtitle: 'Manage club operations and settings',
+    menu: {
+      home: 'Home',
+      inbox: 'Inbox',
+      notifications: 'Notifications',
+      membership: 'Membership',
+      news: 'News',
+      params: 'Parameters',
+      teams: 'Teams',
+      club: 'Club',
+      matches: 'Matches',
+      users: 'Users'
+    },
+    description: {
+      home: 'Admin dashboard',
+      inbox: 'Manage received messages',
+      notifications: 'Configure and send notifications',
+      membership: 'Manage members and memberships',
+      news: 'Manage news and announcements',
+      params: 'Configure system parameters',
+      teams: 'Manage teams and rosters',
+      club: 'Edit club information',
+      matches: 'Manage match schedules',
+      users: 'User management and permissions'
+    },
+    parameters: {
+      title: 'Parameters',
+    }
+  },
+  modals: {
+    player: {
+      title: 'Add Player',
+      playerName: 'Player Name',
+      playerNamePlaceholder: 'Enter player name',
+      number: 'Number',
+      numberPlaceholder: '1-99',
+      position: 'Position',
+      positionPlaceholder: 'Select position',
+      goalkeeper: 'Goalkeeper',
+      defender: 'Defender',
+      midfielder: 'Midfielder',
+      forward: 'Forward',
+      teamCaptain: 'Team Captain',
+      addPlayer: 'Add Player'
+    },
+    team: {
+      title: 'Create Team',
+      subtitle: 'Add a new team to your club',
+      teamName: 'Team Name',
+      teamNamePlaceholder: 'Enter team name',
+      category: 'Category',
+      categoryPlaceholder: 'Select category',
+      createTeam: 'Create Team'
+    }
+  },
+  notifications: {
+    teamJoinRequests: 'Team join requests',
+    actionRequests: 'Action requests',
+    pendingRequest: 'pending request',
+    pendingRequests: 'pending requests'
+  },
   viewer: {
     title: 'Viewer portal',
     subtitle: 'Access club information and services',
@@ -146,7 +239,7 @@ export const sharedTranslations = {
       action: 'Actions',
       information: 'Information',
       proposals: 'Proposals & complaints',
-      matches: 'Weekend matches',
+      matches: 'Matches',
       partners: 'Partners',
       more: 'More'
     },
@@ -285,6 +378,35 @@ export const sharedTranslations = {
       emptyDescription: 'No matches have been scheduled for this week.',
       saturday: 'Saturday',
       sunday: 'Sunday'
+    },
+    match: {
+      notFound: 'Match not found',
+      referee: 'Referee',
+      attendance: 'Attendance',
+      lineup: 'Lineup',
+      goals: 'Goals',
+      standings: 'Standings',
+      matches: 'Matches',
+      homeTeam: 'Home Team',
+      awayTeam: 'Away Team',
+      starters: 'Starters',
+      substitutes: 'Substitutes',
+      noLineup: 'Lineup not available',
+      noGoals: 'No goals scored',
+      penalty: 'Penalty',
+      ownGoal: 'Own Goal',
+      position: 'Pos',
+      team: 'Team',
+      played: 'P',
+      won: 'W',
+      drawn: 'D',
+      lost: 'L',
+      gd: 'GD',
+      points: 'Pts',
+      noStandings: 'Standings not available',
+      previousMatches: 'Previous Matches',
+      upcomingMatches: 'Upcoming Matches',
+      noRelatedMatches: 'No related matches'
     },
     partners: {
       empty: 'No partners listed',

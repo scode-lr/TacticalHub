@@ -1,5 +1,6 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { User, AuthUser } from '../models';
+import { Role, RoleType } from '../models/role.model';
 import { mockUsers } from '../../../mocks/user.mock';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { StorageService } from './storage.service';
@@ -55,6 +56,20 @@ export class UserService {
     const token = this.getStoredToken();
     const user = this.getStoredUser();
     return !!(token && user);
+  }
+
+  getCurrentRole(): Role | null {
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    const user = this.getStoredUser();
+    console.log('UserService: Getting current role for roleType=', roleType, 'roleId=', roleId, 'user=', user);
+    
+    if (user && roleId) {
+      const role = user.roles?.find(r => r.type === roleType && r.id === roleId);
+      console.log('UserService: Found current role:', role);
+      return role || null;
+    }
+    
+    return null;
   }
 
   async fetchUserProfile(userId: number): Promise<User | null> {   

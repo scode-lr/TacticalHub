@@ -1,5 +1,5 @@
 export interface Match {
-    id: string;
+    id: number;
     team: string;
     resultLocal: number;
     resultAway: number;
@@ -7,4 +7,5 @@ export interface Match {
     date: Date;
     location: 'home' | 'away';
     additionalData?: string;
+    competition?: string;
 }

@@ -3,6 +3,7 @@ import { IonAvatar, IonIcon, IonImg } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
+import { Role } from '@core/models/role.model';
 import { UserService } from '@core/services/user.service';
 import { NavigationService } from '@services/navigation.service';
 import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
@@ -27,6 +28,7 @@ export class UserHeaderComponent {
   
   readonly showBackButton = input<boolean>(false);
   readonly showRoleSelector = input<boolean>(true);
+  readonly currentRole = input<Role | null>(null);
   readonly backUrl = input<string | string[]>();
   readonly backClick = output<void>();
   

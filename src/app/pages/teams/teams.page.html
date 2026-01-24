@@ -1,0 +1,51 @@
+<div class="page-container teams-page">
+  <div class="section-header">
+    <div class="header-info">
+      <h1 class="section-title">{{ 'admin.menu.teams' | translate }}</h1>
+      <button class="season-button" (click)="openSeasonSelector()">
+        <span class="season-text">{{ selectedSeason() }}</span>
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </button>
+      <button class="add-team-btn" (click)="createNewTeam()">
+        <p>{{ 'roleSelection.addNewTeam' | translate }} </p>
+        <ion-icon name="add-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="teams-section">
+    @for (group of groupedTeams(); track group.category) {
+      <div class="category-group">
+        <div class="category-header">
+          <h2 class="category-title">{{ group.category }}</h2>
+        </div>
+        <div class="teams-table">
+          <div class="table-header">
+            <span class="col-name">Team</span>
+            <span class="col-count">Players</span>
+          </div>
+          @for (team of group.teams; track team.id) {
+            <div class="team-row" (click)="openTeam(team)">
+              <span class="col-name team-name">{{ team.name }}</span>
+              <span class="col-count team-count">-</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<app-team-form-modal
+  [isOpen]="isModalOpen()"
+  (didDismiss)="closeModal()"
+  (teamAdded)="onTeamAdded($event)">
+</app-team-form-modal>
+
+<app-season-selector-modal
+  [isOpen]="isSeasonModalOpen()"
+  [seasons]="seasons"
+  [selectedSeason]="selectedSeason()"
+  (didDismiss)="closeSeasonModal()"
+  (seasonSelected)="selectSeason($event)">
+</app-season-selector-modal>

@@ -7,7 +7,7 @@
       </button>
     } @else if (showRoleSelector()) {
       <div class="role-selector-wrapper">
-        <app-role-selector></app-role-selector>
+        <app-role-selector [currentRole]="currentRole()"></app-role-selector>
       </div>
     }
     

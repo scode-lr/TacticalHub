@@ -1,0 +1,27 @@
+<div class="page-container">
+  <div class="section-header">
+    <h1 class="section-title">{{ 'admin.parameters.title' | translate }}</h1>
+  </div>
+
+  <div class="parameters-list">
+    @for (item of parameters(); track item.id) {
+      <div class="parameter-item">
+        <div class="parameter-info">
+          <h3 class="parameter-name">{{ item.name }}</h3>
+          <p class="parameter-description">{{ item.description }}</p>
+        </div>
+        <button class="edit-button" (click)="openEditModal(item)">
+          <ion-icon name="create-outline"></ion-icon>
+        </button>
+      </div>
+    }
+  </div>
+
+  <app-parameter-edit-modal
+    [(isOpen)]="isModalOpen"
+    [parameter]="selectedParameter()"
+    (save)="onSaveParameter($event)"
+    (cancel)="closeModal()">
+  </app-parameter-edit-modal>
+</div>
+

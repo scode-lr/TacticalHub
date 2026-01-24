@@ -82,7 +82,7 @@ export class LoadingPage implements OnInit {
     } else if (rolesCount === 1) {
       const selectedRole = user.roles![0];
       this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, selectedRole);
-      this.navigationService.navigateTo(['layouts/my-teams']);
+      this.navigationService.navigateTo([`/app/${selectedRole.type}/${selectedRole.id}/home`]);
     } else {
       this.navigationService.navigateTo(['teams/selection']);
     }

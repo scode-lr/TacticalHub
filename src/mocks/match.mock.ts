@@ -28,7 +28,7 @@ nextSunday.setDate(sunday.getDate() + 7);
 export const mockMatches: Match[] = [
     // Current Week
     {
-        id: '1',
+        id: 1,
         team: 'Juvenil A',
         resultLocal: 3,
         resultAway: 1,
@@ -38,7 +38,7 @@ export const mockMatches: Match[] = [
         additionalData: 'League Match'
     },
     {
-        id: '2',
+        id: 2,
         team: 'Cadet B',
         resultLocal: 2,
         resultAway: 2,
@@ -48,7 +48,7 @@ export const mockMatches: Match[] = [
         additionalData: 'Friendly'
     },
     {
-        id: '3',
+        id: 3,
         team: 'Infantil A',
         resultLocal: 0,
         resultAway: 4,
@@ -58,7 +58,7 @@ export const mockMatches: Match[] = [
         additionalData: 'Cup Match'
     },
     {
-        id: '4',
+        id: 4,
         team: 'Aleví C',
         resultLocal: 5,
         resultAway: 2,
@@ -69,7 +69,7 @@ export const mockMatches: Match[] = [
 
     // Previous Week
     {
-        id: '5',
+        id: 5,
         team: 'Juvenil A',
         resultLocal: 1,
         resultAway: 0,
@@ -78,7 +78,7 @@ export const mockMatches: Match[] = [
         location: 'away'
     },
     {
-        id: '6',
+        id: 6,
         team: 'Cadet B',
         resultLocal: 4,
         resultAway: 1,
@@ -89,7 +89,7 @@ export const mockMatches: Match[] = [
 
     // Next Week
     {
-        id: '7',
+        id: 7,
         team: 'Juvenil A',
         resultLocal: 0,
         resultAway: 0,
@@ -98,7 +98,7 @@ export const mockMatches: Match[] = [
         location: 'home'
     },
     {
-        id: '8',
+        id: 8,
         team: 'Infantil A',
         resultLocal: 0,
         resultAway: 0,

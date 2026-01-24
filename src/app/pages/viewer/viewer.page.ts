@@ -1,12 +1,14 @@
-import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
-import { RoleType } from '@core/models/role.model';
+import { RoleType, Role } from '@core/models/role.model';
 import { filter } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationService } from '@services/navigation.service';
+import { UserService } from '@core/services/user.service';
 
 @Component({
   selector: 'app-viewer',
@@ -21,22 +23,24 @@ import { NavigationService } from '@services/navigation.service';
     UserHeaderComponent
   ],
 })
-export class ViewerPage  {
+export class ViewerPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
+  private readonly userService = inject(UserService);
   
   readonly memberId = signal<string>('');
+  readonly currentRole = signal<Role | null>(null);
   
   readonly viewerMenuConfig: MenuConfig = {
     role: RoleType.Viewer,
     items: [
-      { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
+      // { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
       { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'action', label: 'viewer.menu.action', icon: 'add-circle-outline', route: 'action' },
+      { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
       { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
     ]
   };
@@ -55,32 +59,37 @@ export class ViewerPage  {
   });
   
   constructor() {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.memberId.set(id);
-      }
-    });
-    this.trackRouteChanges();
+    this.loadCurrentRole();
+    this.subscribeToRouterEvents();
+  }
+
+  ngOnInit(): void {
+    this.checkIfDetailPage();
+  }
+
+  private subscribeToRouterEvents(): void {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntilDestroyed()
+      )
+      .subscribe(() => {
+        this.checkIfDetailPage();
+      });
+  }
+
+  private checkIfDetailPage(): void {
+    const url = this.router.url;
+    const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
+                     url.includes('/matches/') && url.split('/').length > 5 ||
+                     url.includes('/action/') ||
+                     url.includes('/teams/') && url.split('/').length > 5;
+    this.isDetailPage.set(isDetail);
   }
   
-  private trackRouteChanges() {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        const url = this.router.url;
-        const isNewsDetail = url.includes('/news/') && url.split('/').length > 4;
-        const isActionForm = url.includes('/action/');
-        const isDetail = isNewsDetail || isActionForm;
-        this.isDetailPage.set(isDetail);
-        
-        if (isDetail) {
-          const contentContainer = document.querySelector('.content-container');
-          if (contentContainer) {
-            contentContainer.scrollTo(0, 0);
-          }
-        }
-      });
+  private loadCurrentRole(): void {
+    const role = this.userService.getCurrentRole();
+    this.currentRole.set(role);
   }
   
   goBack(): void {

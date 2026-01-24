@@ -1,14 +1,14 @@
-<div class="match-card">
+<div class="match-card" (click)="goToDetail()">
     <div class="match-time">{{ match.date | date:'HH:mm' }}</div>
     <div class="match-content">
         <div class="teams">
             <div class="team local" [class.winner]="match.resultLocal > match.resultAway">
                 <span class="name">{{ match.location === 'home' ? match.team : match.teamVersus }}</span>
-                <span class="score">{{ match.resultLocal }}</span>
+                <span class="score">{{ displayLocalScore }}</span>
             </div>
             <div class="team away" [class.winner]="match.resultAway > match.resultLocal">
                 <span class="name">{{ match.location === 'away' ? match.team : match.teamVersus }}</span>
-                <span class="score">{{ match.resultAway }}</span>
+                <span class="score">{{ displayAwayScore }}</span>
             </div>
         </div>
         <div class="match-footer">

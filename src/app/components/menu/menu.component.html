@@ -1,16 +1,19 @@
 <div class="menu-container">
   <!-- Desktop Role Selector -->
-  <app-role-selector class="desktop-only"></app-role-selector>
+  <app-role-selector [currentRole]="currentRole()" class="desktop-only" ></app-role-selector>
 
   <!-- Desktop Menu Nav -->
   <nav class="menu-nav">
-    @for (item of config().items; track item.id) {
+    @for (item of menuItemsWithBadges(); track item.id) {
       <button 
         class="menu-item" 
         [class.active]="isSelected(item.id)"
         (click)="selectMenuItem(item)">
         <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
         <span class="menu-label">{{ item.label | translate }}</span>
+        @if (item.badge && item.badge > 0) {
+          <span class="menu-badge"></span>
+        }
       </button>
     }
   </nav>
@@ -32,12 +35,17 @@
 
   <!-- Mobile Menu Nav -->
   <nav class="menu-nav-mobile">
-    @for (item of visibleMenuItems(); track item.id) {
+    @for (item of visibleMenuItemsWithBadges(); track item.id) {
       <button 
         class="menu-item" 
         [class.active]="isSelected(item.id)"
         (click)="selectMenuItem(item)">
-        <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
+        <div class="menu-icon-wrapper">
+          <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
+          @if (item.badge && item.badge > 0) {
+            <span class="menu-badge-mobile"></span>
+          }
+        </div>
         <span class="menu-label">{{ item.label | translate }}</span>
       </button>
     }
@@ -58,12 +66,17 @@
       <ng-template>
         <div class="modal-menu">
           <div class="modal-content">
-            @for (item of hiddenMenuItems(); track item.id) {
+            @for (item of hiddenMenuItemsWithBadges(); track item.id) {
               <button 
                 class="modal-item"
                 [class.active]="isSelected(item.id)"
                 (click)="selectMenuItem(item)">
-                <ion-icon [name]="item.icon" class="modal-icon"></ion-icon>
+                <div class="modal-icon-wrapper">
+                  <ion-icon [name]="item.icon" class="modal-icon"></ion-icon>
+                  @if (item.badge && item.badge > 0) {
+                    <span class="menu-badge-mobile"></span>
+                  }
+                </div>
                 <span class="modal-label">{{ item.label | translate }}</span>
               </button>
             }

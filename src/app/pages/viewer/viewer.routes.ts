@@ -4,7 +4,6 @@ import { roleAccessGuard } from '@core/guards/role-access.guard';
 export const viewerRoutes: Routes = [
   {
     path: '',
-    data: { roleId: 2 },
     canActivate: [roleAccessGuard],
     loadComponent: () => import('./viewer.page').then(m => m.ViewerPage),
     children: [
@@ -44,6 +43,14 @@ export const viewerRoutes: Routes = [
       {
         path: 'matches',
         loadComponent: () => import('../matches/matches.page').then(m => m.ViewerMatchesPage)
+      },
+      {
+        path: 'matches/:matchId',
+        loadComponent: () => import('../match-detail/match-detail.page').then(m => m.MatchDetailPage)
+      },
+      {
+        path: 'teams',
+        loadComponent: () => import('../teams/teams.page').then(m => m.TeamsPage)
       },
       {
         path: 'partners',

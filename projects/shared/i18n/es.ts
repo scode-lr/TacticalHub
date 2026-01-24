@@ -40,7 +40,37 @@ export const sharedTranslations = {
     close: 'Cerrar',
     submitting: 'Enviando...',
     settings: 'Ajustes',
-    profile: 'Perfil'
+    profile: 'Perfil',
+    comingSoon: 'Próximamente',
+    pageUnderConstruction: 'Esta página está en construcción y estará disponible pronto.',
+    yes: 'Sí',
+    no: 'No',
+    addItem: 'Agregar elemento',
+    addNewItem: 'Agregar nuevo elemento',
+    selectSeason: 'Seleccionar Temporada'
+  },
+  fieldLabels: {
+    type: 'Tipo',
+    icon: 'Icono',
+    title: 'Título',
+    description: 'Descripción',
+    fields: 'Campos',
+    name: 'Nombre',
+    label: 'Etiqueta',
+    required: 'Requerido',
+    placeholder: 'Marcador de posición',
+    minLength: 'Longitud mínima',
+    maxLength: 'Longitud máxima',
+    options: 'Opciones',
+    value: 'Valor',
+    text: 'Texto',
+    order: 'Orden',
+    content: 'Contenido',
+    isExpanded: 'Expandido'
+  },
+  actionTypes: {
+    registerPlayer: 'Registrar jugador',
+    becomeMember: 'Hacerse socio'
   },
   settings: {
     title: 'Ajustes',
@@ -135,6 +165,69 @@ export const sharedTranslations = {
     teamDescription: 'Elige qué equipo quieres entrenar',
     category: 'Categoría'
   },
+  admin: {
+    title: 'Portal de administración',
+    subtitle: 'Gestiona las operaciones y configuraciones del club',
+    menu: {
+      home: 'Inicio',
+      inbox: 'Mensajes',
+      notifications: 'Notificaciones',
+      membership: 'Socios',
+      news: 'Noticias',
+      params: 'Parámetros',
+      teams: 'Equipos',
+      club: 'Club',
+      matches: 'Partidos',
+      users: 'Usuarios'
+    },
+    description: {
+      home: 'Panel de administración',
+      inbox: 'Gestionar mensajes recibidos',
+      notifications: 'Configurar y enviar notificaciones',
+      membership: 'Gestionar socios y membresías',
+      news: 'Gestionar noticias y anuncios',
+      params: 'Configurar parámetros del sistema',
+      teams: 'Gestionar equipos y plantillas',
+      club: 'Editar información del club',
+      matches: 'Gestionar calendarios de partidos',
+      users: 'Gestión de usuarios y permisos'
+    },
+    parameters: {
+      title: 'Parámetros',
+    }
+  },
+  modals: {
+    player: {
+      title: 'Añadir Jugador',
+      playerName: 'Nombre del Jugador',
+      playerNamePlaceholder: 'Introduce el nombre del jugador',
+      number: 'Número',
+      numberPlaceholder: '1-99',
+      position: 'Posición',
+      positionPlaceholder: 'Seleccionar posición',
+      goalkeeper: 'Portero',
+      defender: 'Defensa',
+      midfielder: 'Centrocampista',
+      forward: 'Delantero',
+      teamCaptain: 'Capitán del Equipo',
+      addPlayer: 'Añadir Jugador'
+    },
+    team: {
+      title: 'Crear Equipo',
+      subtitle: 'Añade un nuevo equipo a tu club',
+      teamName: 'Nombre del Equipo',
+      teamNamePlaceholder: 'Introduce el nombre del equipo',
+      category: 'Categoría',
+      categoryPlaceholder: 'Seleccionar categoría',
+      createTeam: 'Crear Equipo'
+    }
+  },
+  notifications: {
+    teamJoinRequests: 'Solicitudes de unión al equipo',
+    actionRequests: 'Solicitudes de acción',
+    pendingRequest: 'solicitud pendiente',
+    pendingRequests: 'solicitudes pendientes'
+  },
   viewer: {
     title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',
@@ -144,7 +237,7 @@ export const sharedTranslations = {
       action: 'Acciones',
       information: 'Información',
       proposals: 'Propuestas y quejas',
-      matches: 'Partidos del fin de semana',
+      matches: 'Partidos',
       partners: 'Socios',
       more: 'Más'
     },
@@ -188,69 +281,6 @@ export const sharedTranslations = {
         achievement: 'Logro'
       }
     },
-    action: {
-      registerPlayer: 'Registrar un jugador',
-      registerPlayerDesc: 'Registra un nuevo jugador para unirse al club',
-      register: 'Registrar',
-      becomeMember: 'Hacerse socio',
-      becomeMemberDesc: 'Únete como socio oficial del club',
-      join: 'Unirse ahora',
-      form: {
-        submit: 'Enviar',
-        cancel: 'Cancelar',
-        submitting: 'Enviando...',
-        firstName: 'Nombre',
-        firstNamePlaceholder: 'Ingresa el nombre',
-        lastName: 'Apellido',
-        lastNamePlaceholder: 'Ingresa el apellido',
-        dateOfBirth: 'Fecha de nacimiento',
-        dateOfBirthPlaceholder: 'Selecciona fecha de nacimiento',
-        email: 'Correo electrónico',
-        emailPlaceholder: 'Ingresa el correo electrónico',
-        emailError: 'Por favor ingresa un correo electrónico válido',
-        phone: 'Número de teléfono',
-        phonePlaceholder: 'Ingresa el número de teléfono',
-        phoneError: 'Por favor ingresa un número de teléfono válido',
-        previousClub: 'Club anterior',
-        previousClubPlaceholder: 'Ingresa el club anterior (opcional)',
-        position: 'Posición',
-        positionPlaceholder: 'Selecciona la posición',
-        positions: {
-          goalkeeper: 'Portero',
-          defender: 'Defensa',
-          midfielder: 'Centrocampista',
-          forward: 'Delantero'
-        },
-        notes: 'Notas adicionales',
-        notesPlaceholder: 'Agrega información adicional (opcional)',
-        address: 'Dirección',
-        addressPlaceholder: 'Ingresa la dirección',
-        city: 'Ciudad',
-        cityPlaceholder: 'Ingresa la ciudad',
-        postalCode: 'Código postal',
-        postalCodePlaceholder: 'Ingresa el código postal',
-        postalCodeError: 'Por favor ingresa un código postal válido de 5 dígitos',
-        membershipType: 'Tipo de membresía',
-        membershipTypePlaceholder: 'Selecciona el tipo de membresía',
-        membershipTypes: {
-          basic: 'Membresía básica',
-          premium: 'Membresía premium',
-          family: 'Membresía familiar'
-        },
-        comments: 'Comentarios',
-        commentsPlaceholder: 'Agrega comentarios (opcional)',
-        registerPlayerSuccess: '¡Registro de jugador enviado exitosamente!',
-        becomeMemberSuccess: '¡Solicitud de membresía enviada exitosamente!',
-        errors: {
-          required: 'Este campo es obligatorio',
-          email: 'Por favor ingresa un correo electrónico válido',
-          pattern: 'Por favor ingresa un formato válido',
-          minLength: 'Se requieren mínimo {min} caracteres',
-          maxLength: 'Se permiten máximo {max} caracteres',
-          submitError: 'Ocurrió un error. Por favor intenta de nuevo.'
-        }
-      }
-    },
     information: {
       title: 'Información',
       description: 'Información importante y guías para los miembros del club',
@@ -283,6 +313,35 @@ export const sharedTranslations = {
       emptyDescription: 'No se han programado partidos para esta semana.',
       saturday: 'Sábado',
       sunday: 'Domingo'
+    },
+    match: {
+      notFound: 'Partido no encontrado',
+      referee: 'Árbitro',
+      attendance: 'Asistencia',
+      lineup: 'Alineación',
+      goals: 'Goles',
+      standings: 'Clasificación',
+      matches: 'Partidos',
+      homeTeam: 'Equipo Local',
+      awayTeam: 'Equipo Visitante',
+      starters: 'Titulares',
+      substitutes: 'Suplentes',
+      noLineup: 'Alineación no disponible',
+      noGoals: 'No se han marcado goles',
+      penalty: 'Penalti',
+      ownGoal: 'Autogol',
+      position: 'Pos',
+      team: 'Equipo',
+      played: 'PJ',
+      won: 'PG',
+      drawn: 'PE',
+      lost: 'PP',
+      gd: 'DG',
+      points: 'Pts',
+      noStandings: 'Clasificación no disponible',
+      previousMatches: 'Partidos Anteriores',
+      upcomingMatches: 'Próximos Partidos',
+      noRelatedMatches: 'No hay partidos relacionados'
     },
     partners: {
       empty: 'No hay socios listados',

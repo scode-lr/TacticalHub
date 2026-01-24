@@ -1,22 +1,176 @@
 import { InformationParameter } from '@core/models/parameters/information-param.model';
 import { Parameter } from '../app/core/models/parameters/parameter.model';
 import { ActionParameter } from '@core/models/parameters/action-param.model';
-
+import { ParameterType } from '../app/core/models/parameters/parameter-type.enum';
 
 export const mockActionCards: ActionParameter[] = [
   {
     id: 1,
     type: 'register-player',
     icon: 'person-add-outline',
-    title: 'viewer.action.registerPlayer',
-    description: 'viewer.action.registerPlayerDesc'
+    title: 'Registrar jugador',
+    description: 'Registrar un nou jugador al club de futbol',
+    fields: [
+    {
+      name: 'firstName',
+      label: 'Nombre del jugador',
+      type: 'text',
+      required: true,
+      placeholder: 'Nombre del jugador',
+      minLength: 2,
+      maxLength: 50
+    },
+    {
+      name: 'lastName',
+      label: 'Apellido del jugador',
+      type: 'text',
+      required: true,
+      placeholder: 'Apellido del jugador',
+      minLength: 2,
+      maxLength: 50
+    },
+    {
+      name: 'dateOfBirth',
+      label: 'Fecha de nacimiento',
+      type: 'date',
+      required: true,
+      placeholder: 'Selecciona fecha de nacimiento'
+    },
+    {
+      name: 'email',
+      label: 'Correo electrónico',
+      type: 'email',
+      required: true,
+      placeholder: 'Correo electrónico',
+    },
+    {
+      name: 'phone',
+      label: 'Teléfono',
+      type: 'tel',
+      required: true,
+      placeholder: 'Teléfono',
+    },
+    {
+      name: 'previousClub',
+      label: 'Club anterior',
+      type: 'text',
+      required: false,
+      placeholder: 'Club anterior',
+      maxLength: 100
+    },
+    {
+      name: 'position',
+      label: 'Posición',
+      type: 'select',
+      required: true,
+      placeholder: 'Posición',
+      options: [
+        { value: 'goalkeeper', label: 'Portero' },
+        { value: 'defender', label: 'Defensor' },
+        { value: 'midfielder', label: 'Mediocampista' },
+        { value: 'forward', label: 'Delantero' }
+      ]
+    },
+    {
+      name: 'notes',
+      label: 'Notas adicionales',
+      type: 'textarea',
+      required: false,
+      placeholder: 'Notas adicionales',
+      maxLength: 500
+    }
+  ]
   },
   {
     id: 2,
     type: 'become-member',
     icon: 'card-outline',
-    title: 'viewer.action.becomeMember',
-    description: 'viewer.action.becomeMemberDesc'
+    title: 'Hacerse miembro',
+    description: 'Hacerse miembro del club para beneficios exclusivos',
+    fields: [
+    {
+      name: 'firstName',
+      label: 'Nombre',
+      type: 'text',
+      required: true,
+      placeholder: 'Nombre',
+      minLength: 2,
+      maxLength: 50
+    },
+    {
+      name: 'lastName',
+      label: 'Apellido',
+      type: 'text',
+      required: true,
+      placeholder: 'Apellido',
+      minLength: 2,
+      maxLength: 50
+    },
+    {
+      name: 'dateOfBirth',
+      label: 'Fecha de nacimiento',
+      type: 'date',
+      required: true,
+      placeholder: 'Selecciona fecha de nacimiento'
+    },
+    {
+      name: 'email',
+      label: 'Correo electrónico',
+      type: 'email',
+      required: true,
+      placeholder: 'Correo electrónico',
+    },
+    {
+      name: 'phone',
+      label: 'Teléfono',
+      type: 'tel',
+      required: true,
+      placeholder: 'Teléfono',
+    },
+    {
+      name: 'address',
+      label: 'Dirección',
+      type: 'text',
+      required: true,
+      placeholder: 'Dirección',
+      maxLength: 200
+    },
+    {
+      name: 'city',
+      label: 'Ciudad',
+      type: 'text',
+      required: true,
+      placeholder: 'Ciudad',
+      maxLength: 100
+    },
+    {
+      name: 'postalCode',
+      label: 'Código postal',
+      type: 'text',
+      required: true,
+      placeholder: 'Código postal',
+    },
+    {
+      name: 'membershipType',
+      label: 'Tipo de membresía',
+      type: 'select',
+      required: true,
+      placeholder: 'Selecciona tipo de membresía',
+      options: [
+        { value: 'basic', label: 'Básica' },
+        { value: 'premium', label: 'Premium' },
+        { value: 'family', label: 'Familiar' }
+      ]
+    },
+    {
+      name: 'comments',
+      label: 'Comentarios',
+      type: 'textarea',
+      required: false,
+      placeholder: 'viewer.action.form.commentsPlaceholder',
+      maxLength: 500
+    }
+  ]
   }
 ];
 
@@ -60,9 +214,9 @@ export const mockInformationSections: InformationParameter[] = [
 
 export const mockParameters = new Map<string, Parameter>([
   [
-    'action-cards',
+    ParameterType.ActionCards,
     {
-      id: 'action-cards',
+      id: ParameterType.ActionCards,
       name: 'Action Cards',
       description: 'Available action cards for viewer role',
       timeCreated: new Date('2024-01-01'),
@@ -71,9 +225,9 @@ export const mockParameters = new Map<string, Parameter>([
     }
   ],
   [
-    'information-sections',
+    ParameterType.InformationSections,
     {
-      id: 'information-sections',
+      id: ParameterType.InformationSections,
       name: 'Information Sections',
       description: 'FAQ and information sections for viewers',
       timeCreated: new Date('2024-01-01'),

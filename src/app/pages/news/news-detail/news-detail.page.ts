@@ -23,7 +23,6 @@ export class NewsDetailPage implements OnInit {
   
   ngOnInit() {
     const id = this.navigationService.findRouteParam('newsId');
-    console.log('News ID:', id);
     if (id) {
       const foundNews = mockNews.find(n => n.id === Number(id));
       this.news.set(foundNews || null);

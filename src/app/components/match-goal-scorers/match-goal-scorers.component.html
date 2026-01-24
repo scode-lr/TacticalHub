@@ -1,0 +1,64 @@
+@if (goalScorers().length > 0) {
+  <div class="goal-scorers-container">
+    @if (localGoals.length > 0) {
+      <div class="goals-section">
+        <h3 class="section-title">{{ 'viewer.match.homeTeam' | translate }}</h3>
+        <div class="goals-list">
+          @for (goal of localGoals; track goal.id) {
+            <div class="goal-item">
+              <div class="goal-icon">
+                <ion-icon name="football-outline"></ion-icon>
+              </div>
+              <div class="goal-info">
+                <div class="player-details">
+                  <span class="player-number">#{{ goal.playerNumber }}</span>
+                  <span class="player-name">{{ goal.playerName }}</span>
+                  @if (goal.isPenalty) {
+                    <span class="goal-badge penalty">{{ 'viewer.match.penalty' | translate }}</span>
+                  }
+                  @if (goal.isOwnGoal) {
+                    <span class="goal-badge own-goal">{{ 'viewer.match.ownGoal' | translate }}</span>
+                  }
+                </div>
+              </div>
+              <div class="goal-minute">{{ goal.minute }}'</div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (awayGoals.length > 0) {
+      <div class="goals-section">
+        <h3 class="section-title">{{ 'viewer.match.awayTeam' | translate }}</h3>
+        <div class="goals-list">
+          @for (goal of awayGoals; track goal.id) {
+            <div class="goal-item">
+              <div class="goal-icon">
+                <ion-icon name="football-outline"></ion-icon>
+              </div>
+              <div class="goal-info">
+                <div class="player-details">
+                  <span class="player-number">#{{ goal.playerNumber }}</span>
+                  <span class="player-name">{{ goal.playerName }}</span>
+                  @if (goal.isPenalty) {
+                    <span class="goal-badge penalty">{{ 'viewer.match.penalty' | translate }}</span>
+                  }
+                  @if (goal.isOwnGoal) {
+                    <span class="goal-badge own-goal">{{ 'viewer.match.ownGoal' | translate }}</span>
+                  }
+                </div>
+              </div>
+              <div class="goal-minute">{{ goal.minute }}'</div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="empty-message">
+    <ion-icon name="football-outline"></ion-icon>
+    <p>{{ 'viewer.match.noGoals' | translate }}</p>
+  </div>
+}

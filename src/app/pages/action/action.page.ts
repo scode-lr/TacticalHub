@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@core/services/navigation.service';
 import { ParametersService } from '@core/services/parameters.service';
-import { ActionType } from './action.config';
 import { ActionCardComponent } from '@components/action-card/action-card.component';
-import { ActionParameter } from '@core/models/parameters/action-param.model';
+import { ActionParameter, ActionType } from '@core/models/parameters/action-param.model';
+import { ParameterType } from '@core/models/parameters/parameter-type.enum';
 
 @Component({
   selector: 'app-viewer-action',
@@ -19,7 +19,7 @@ export class ViewerActionPage {
   private navigationService = inject(NavigationService);
   private parametersService = inject(ParametersService);
 
-  readonly actions: ActionParameter[] = this.parametersService.getParameterValue<ActionParameter[]>('action-cards') ?? [];
+  readonly actions: ActionParameter[] = this.parametersService.getParameterValue<ActionParameter[]>(ParameterType.ActionCards) ?? [];
 
   onActionSelect(actionType: ActionType): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();

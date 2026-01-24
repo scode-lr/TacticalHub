@@ -5,14 +5,13 @@ import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role } from '@core/models/role.model';
 import { NavigationService } from '@services/navigation.service';
 
-export const roleAccessGuard: CanActivateFn = (route) => {
+export const roleAccessGuard: CanActivateFn = (route, state) => {
   const storageService = inject(StorageService);
   const navigationService = inject(NavigationService);
 
   const roleType = route.data['roleType'];
   const roleId = route.paramMap.get('roleId');
-  
-  if (!roleType) {
+  if (!roleType && roleType !== 0) {
     navigationService.navigateTo(['/teams/selection']);
     return false;
   }

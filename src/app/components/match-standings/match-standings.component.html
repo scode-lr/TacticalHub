@@ -1,0 +1,43 @@
+@if (standings().length > 0) {
+  <div class="standings-container">
+    <div class="standings-table">
+      <div class="table-header">
+        <div class="col-pos">{{ 'viewer.match.position' | translate }}</div>
+        <div class="col-team">{{ 'viewer.match.team' | translate }}</div>
+        <div class="col-stat">{{ 'viewer.match.played' | translate }}</div>
+        <div class="col-stat">{{ 'viewer.match.won' | translate }}</div>
+        <div class="col-stat">{{ 'viewer.match.drawn' | translate }}</div>
+        <div class="col-stat">{{ 'viewer.match.lost' | translate }}</div>
+        <div class="col-stat">{{ 'viewer.match.gd' | translate }}</div>
+        <div class="col-points">{{ 'viewer.match.points' | translate }}</div>
+      </div>
+      <div class="table-body">
+        @for (standing of standings(); track standing.position) {
+          <div class="table-row" [class.highlighted]="standing.team === 'Juvenil A'">
+            <div class="col-pos">
+              <span class="position-badge" [class.top]="standing.position <= 3">{{ standing.position }}</span>
+            </div>
+            <div class="col-team">
+              <span class="team-name">{{ standing.team }}</span>
+            </div>
+            <div class="col-stat">{{ standing.played }}</div>
+            <div class="col-stat">{{ standing.won }}</div>
+            <div class="col-stat">{{ standing.drawn }}</div>
+            <div class="col-stat">{{ standing.lost }}</div>
+            <div class="col-stat" [class.positive]="standing.goalDifference > 0" [class.negative]="standing.goalDifference < 0">
+              {{ standing.goalDifference > 0 ? '+' : '' }}{{ standing.goalDifference }}
+            </div>
+            <div class="col-points">
+              <span class="points-badge">{{ standing.points }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="empty-message">
+    <ion-icon name="trophy-outline"></ion-icon>
+    <p>{{ 'viewer.match.noStandings' | translate }}</p>
+  </div>
+}

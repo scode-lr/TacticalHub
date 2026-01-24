@@ -105,7 +105,7 @@ export const mockPlayerUser: User = {
   roles: [mockPlayerRole],
   firstName: 'John',
   lastName: 'Doe',
-  avatarUrl: 'https://example.com/avatar-john.jpg',
+  avatarUrl: 'https://i.pravatar.cc/150?img=12',
   prefixPhoneNumber: '+34',
   phoneNumber: '612345678',
   dateOfBirth: new Date('1995-06-15'),
@@ -120,7 +120,7 @@ export const mockCoachUser: User = {
   roles: [],
   firstName: 'Maria',
   lastName: 'Garcia',
-  avatarUrl: 'https://example.com/avatar-maria.jpg',
+  avatarUrl: 'https://i.pravatar.cc/150?img=5',
   prefixPhoneNumber: '+34',
   phoneNumber: '698765432',
   dateOfBirth: new Date('1985-03-20'),
@@ -156,11 +156,40 @@ export const mockNewUser: User = {
   createdAt: new Date('2024-03-01')
 };
 
+// Additional mock users for messages
+export const mockPlayerUser2: User = {
+  id: 5,
+  username: 'sarahwilliams',
+  email: 'sarah.williams@example.com',
+  roles: [mockPlayerRole],
+  firstName: 'Sarah',
+  lastName: 'Williams',
+  avatarUrl: 'https://i.pravatar.cc/150?img=47',
+  prefixPhoneNumber: '+34',
+  phoneNumber: '611222333',
+  dateOfBirth: new Date('1997-08-10'),
+  createdAt: new Date('2024-02-01')
+};
+
+export const mockPlayerUser3: User = {
+  id: 6,
+  username: 'michaelbrown',
+  email: 'michael.brown@example.com',
+  roles: [mockPlayerRole],
+  firstName: 'Michael',
+  lastName: 'Brown',
+  avatarUrl: 'https://i.pravatar.cc/150?img=68',
+  prefixPhoneNumber: '+34',
+  phoneNumber: '699888777',
+  dateOfBirth: new Date('1996-04-25'),
+  createdAt: new Date('2024-01-20')
+};
+
 // Helper to get all mock users
-export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser, mockNewUser];
+export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser, mockNewUser, mockPlayerUser2, mockPlayerUser3];
 
 // Helper to get all mock roles
 export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockCoachSeniorRole, mockAdminRole, mockViewerRole];
 
 // Helper to get all mock teams
-export const mockTeams: Team[] = [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC];
+export const mockUserTeams: Team[] = [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC];
