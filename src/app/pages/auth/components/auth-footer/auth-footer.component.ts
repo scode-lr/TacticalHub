@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { IonText, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
+import { AuthService } from '@services/auth.service';
 import { SocialLoginComponent, SocialLoginResult } from '../social-login/social-login.component';
 import { addIcons } from 'ionicons';
 import { eyeOutline } from 'ionicons/icons';
@@ -18,6 +19,7 @@ export class AuthFooterComponent {
   readonly mode = input.required<'signin' | 'signup'>();
   
   private readonly navigationService = inject(NavigationService);
+  private readonly authService = inject(AuthService);
 
   constructor() {
     addIcons({ eyeOutline });
@@ -31,11 +33,17 @@ export class AuthFooterComponent {
     this.navigationService.navigateTo(['/auth/signup']);
   }
 
-  onContinueAsGuest(): void {
-    if (environment.private) {
-      this.navigationService.navigateTo(['/layouts/my-teams']);
-    } else {
-      this.navigationService.navigateTo(['/teams/join'], { queryParams: { guest: 'true' } });
+  async onContinueAsGuest(): Promise<void> {
+    const response = await this.authService.signInAsGuest();
+    
+    if (response.success) {
+      if (environment.private) {
+        // to loading page -> create virtual link to teams selection -> redirect home
+        this.navigationService.navigateTo(['/teams/selection']);
+      } else {
+        console.log('Navigating to join team as guest...');
+        this.navigationService.navigateTo(['/teams/join'], { queryParams: { guest: 'true' } });
+      }
     }
   }
 

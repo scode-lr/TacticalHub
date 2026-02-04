@@ -162,6 +162,41 @@ export class AuthService {
     };
   }
 
+  async signInAsGuest(): Promise<IAuthResponse> {
+    let message;
+    let success;
+
+    try {
+      this._isLoading.set(true);
+
+      const response = await firstValueFrom(
+        this.apiService.post<SignInResponse>('/auth/guest', {})
+      );
+
+      if (response.success && response.data) {
+        const { user, token } = response.data;
+
+        this.storageService.set<User>(STORAGE_KEYS.USER, user);
+        this.storageService.setString(STORAGE_KEYS.TOKEN, token);
+        
+        this._currentUser.set(user);
+        this._token.set(token);
+      }
+
+      message = response.message;
+      success = response.success;
+    } catch (error: any) {
+      message = error.message || this.translationService.instant('messages.guestLoginError');
+      success = false;
+    }
+    this._isLoading.set(false);
+
+    return { 
+      success, 
+      message
+    };
+  }
+
   async signOut(): Promise<void> {
     try {
       // Optional: call logout endpoint on backend
