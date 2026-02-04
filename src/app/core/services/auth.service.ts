@@ -59,13 +59,14 @@ export class AuthService {
       }
 
       const response = await firstValueFrom(
-        this.apiService.post<SignInResponse>('/auth/login', {
+        this.apiService.post<SignInResponse>('/auth/signin', {
           email: credentials.email,
           password: credentials.password,
           rememberMe: credentials.rememberMe
         })
       );
 
+      console.log('SignIn Response:', response);
       if (response.success && response.data) {
         const { user, token } = response.data;
 
@@ -97,6 +98,9 @@ export class AuthService {
   }
 
   async signUp(userData: SignUpRequest): Promise<IAuthResponse> {
+    let message;
+    let success;
+
     try {
       this._isLoading.set(true);
       
@@ -109,43 +113,39 @@ export class AuthService {
       }
 
       const response = await firstValueFrom(
-        this.apiService.post<SignUpResponse>('/auth/register', {
+        this.apiService.post<SignUpResponse>('/auth/signup', {
           email: userData.email,
           password: userData.password,
           firstName: userData.firstName,
           lastName: userData.lastName,
+          birthDate: userData.birthDate,
           username: userData.username
         })
       );
 
       if (response.success && response.data) {
         const { user, token } = response.data;
-
         this.storageService.set<User>(STORAGE_KEYS.USER, user);
         this.storageService.setString(STORAGE_KEYS.TOKEN, token);
         
         this._currentUser.set(user);
         this._token.set(token);
-        this._isLoading.set(false);
-
-        return { 
-          success: true, 
-          message: response.message || this.translationService.instant('messages.accountCreatedSuccess')
-        };
-      } else {
-        this._isLoading.set(false);
-        return { 
-          success: false, 
-          message: response.message || this.translationService.instant('messages.signUpError')
-        };
       }
+
+      message = response.message;
+      success = response.success;
+      
     } catch (error: any) {
-      this._isLoading.set(false);
-      return { 
-        success: false, 
-        message: error.message || this.translationService.instant('messages.signUpError')
-      };
+      message = error.message || this.translationService.instant('messages.signUpError');
+      success = false;
     }
+    
+    this._isLoading.set(false);
+
+    return { 
+        success, 
+        message
+      };
   }
 
   async signInWithGoogle(): Promise<IAuthResponse> {

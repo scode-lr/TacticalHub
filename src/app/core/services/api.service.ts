@@ -91,6 +91,8 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
+    console.log('[GET]', url, { params: options?.params });
+    
     return this.http.get<T>(url, {
       headers,
       params: options?.params,
@@ -104,6 +106,8 @@ export class ApiService {
   post<T = any>(endpoint: string, body: any, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
+    
+    console.log('[POST]', url, { body, params: options?.params });
     
     return this.http.post<T>(url, body, {
       headers,
@@ -119,6 +123,8 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
+    console.log('[PUT]', url, { body, params: options?.params });
+    
     return this.http.put<T>(url, body, {
       headers,
       params: options?.params,
@@ -132,6 +138,8 @@ export class ApiService {
   patch<T = any>(endpoint: string, body: any, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
+    
+    console.log('[PATCH]', url, { body, params: options?.params });
     
     return this.http.patch<T>(url, body, {
       headers,
@@ -147,6 +155,8 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
+    console.log('[DELETE]', url, { params: options?.params });
+    
     return this.http.delete<T>(url, {
       headers,
       params: options?.params,
@@ -159,6 +169,8 @@ export class ApiService {
 
   upload<T = any>(endpoint: string, formData: FormData, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
+    
+    console.log('[UPLOAD]', url, { formData, params: options?.params });
     
     let headers = new HttpHeaders();
     const token = localStorage.getItem('token');
