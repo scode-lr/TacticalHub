@@ -4,7 +4,6 @@ export interface AuthUser {
   id: number;
   email: string;
   username?: string;
-  token?: string;
   createdAt?: Date;
 }
 

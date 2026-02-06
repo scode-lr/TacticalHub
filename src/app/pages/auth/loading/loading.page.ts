@@ -33,6 +33,7 @@ export class LoadingPage implements OnInit {
 
   async ngOnInit() {
     const user = await this.loadUserData();
+
     if (!user) {
       this.authService.signOut();
       this.navigationService.navigateTo(['auth/signin']);
@@ -60,17 +61,11 @@ export class LoadingPage implements OnInit {
     }
     
     this.loadingMessageKey.set('loading.loadingProfile');
-    const fullUser = await this.userService.fetchUserProfile(storedUser.id);
-    
-    if (!fullUser) {
-      this.navigationService.navigateTo(['auth/signin']);
-      return null;
-    }
 
     await this.delay(1800);
     this.loadingMessageKey.set('loading.preparingWorkspace');
     await this.delay(1800);
-    return fullUser;
+    return storedUser;
 
   }
 

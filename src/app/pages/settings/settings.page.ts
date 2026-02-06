@@ -17,7 +17,6 @@ import { UserHeaderComponent } from '@components/user-header/user-header.compone
     IonSelectOption,
     TranslatePipe,
     UserHeaderComponent,
-    IonContent
 ]
 })
 export class SettingsPage {

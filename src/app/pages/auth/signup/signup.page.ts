@@ -6,10 +6,12 @@ import {
   IonIcon,
   IonInput,
   IonSpinner,
-  IonToast
+  IonToast,
+  IonDatetime,
+  IonModal
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionicons/icons';
+import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline, calendarOutline, close } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -30,6 +32,8 @@ import { AuthService } from '@services/auth.service';
     IonInput,
     IonSpinner,
     IonToast,
+    IonDatetime,
+    IonModal,
     AuthBrandingComponent,
     AuthFooterComponent,
     TranslatePipe
@@ -47,14 +51,17 @@ export class SignupPage {
   readonly toastMessage = signal<string>('');
   readonly appName = environment.name;
   readonly formSubmitted = signal<boolean>(false);
+  readonly showBirthDateModal = signal<boolean>(false);
+  readonly maxDate = new Date().toISOString();
 
   constructor() {
-    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline });
+    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline, calendarOutline, close });
     
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
+      birthDate: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, {
@@ -93,8 +100,11 @@ export class SignupPage {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        birthDate: formData.birthDate?.split('T')[0],
         password: formData.password
       });
+      
+      console.log('SignUp Response:', response);
       
       if (response.success) {
         this.showToastMessage(this.translationService.instant('messages.accountCreatedSuccess'));
@@ -116,6 +126,26 @@ export class SignupPage {
 
   onToastDismiss(): void {
     this.showToast.set(false);
+  }
+
+  openBirthDatePicker(): void {
+    this.showBirthDateModal.set(true);
+  }
+
+  onBirthDateChange(event: any): void {
+    const selectedDate = event.detail.value;
+    if (selectedDate) {
+      this.signupForm.patchValue({ birthDate: selectedDate });
+    }
+    this.showBirthDateModal.set(false);
+  }
+
+  getFormattedBirthDate(): string {
+    const birthDate = this.signupForm.get('birthDate')?.value;
+    if (!birthDate) return '';
+    
+    const date = new Date(birthDate);
+    return date.toLocaleDateString();
   }
 
   get firstName() { return this.signupForm.get('firstName'); }

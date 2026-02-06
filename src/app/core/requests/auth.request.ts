@@ -1,6 +1,7 @@
 export interface SignInRequest {
   email: string;
   password: string;
+  rememberMe?: boolean;
 }
 
 export interface SignUpRequest {
@@ -8,6 +9,8 @@ export interface SignUpRequest {
   password: string;
   firstName: string;
   lastName: string;
+  birthDate?: string;
+  username?: string;
 }
 
 export interface SocialAuthRequest {

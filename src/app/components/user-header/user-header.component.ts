@@ -65,13 +65,8 @@ export class UserHeaderComponent {
   }
 
   onUserClick(event: MouseEvent) {
-    const isDesktop = window.innerWidth > 768;
-    
-    if (isDesktop) {
-      this.goToProfile();
-    } else {
-      this.toggleUserMenu();
-    }
+    event.stopPropagation();
+    this.toggleUserMenu();
   }
 
   onBackClick() {
