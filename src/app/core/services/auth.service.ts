@@ -2,7 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { User } from '../models';
 import { SignInRequest, SignUpRequest } from '../requests/auth.request';
-import { SignInResponse, SignUpResponse } from '../responses/auth.response';
+import { AuthResponse } from '../responses/auth.response';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { TranslationService } from './i18n/translation.service';
 import { StorageService } from './storage.service';
@@ -59,7 +59,7 @@ export class AuthService {
       }
 
       const response = await firstValueFrom(
-        this.apiService.post<SignInResponse>('/auth/signin', {
+        this.apiService.post<AuthResponse>('/auth/signin', {
           email: credentials.email,
           password: credentials.password,
           rememberMe: credentials.rememberMe
@@ -113,7 +113,7 @@ export class AuthService {
       }
 
       const response = await firstValueFrom(
-        this.apiService.post<SignUpResponse>('/auth/signup', {
+        this.apiService.post<AuthResponse>('/auth/signup', {
           email: userData.email,
           password: userData.password,
           firstName: userData.firstName,
@@ -170,7 +170,7 @@ export class AuthService {
       this._isLoading.set(true);
 
       const response = await firstValueFrom(
-        this.apiService.post<SignInResponse>('/auth/guest', {})
+        this.apiService.post<AuthResponse>('/auth/guest', {})
       );
 
       if (response.success && response.data) {
