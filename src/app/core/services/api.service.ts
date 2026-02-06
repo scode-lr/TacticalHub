@@ -166,25 +166,4 @@ export class ApiService {
       catchError(this.handleError)
     );
   }
-
-  upload<T = any>(endpoint: string, formData: FormData, options?: ApiRequestOptions): Observable<T> {
-    const url = this.buildUrl(endpoint);
-    
-    console.log('[UPLOAD]', url, { formData, params: options?.params });
-    
-    let headers = new HttpHeaders();
-    const token = localStorage.getItem('token');
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
-
-    return this.http.post<T>(url, formData, {
-      headers,
-      params: options?.params,
-      withCredentials: options?.withCredentials
-    }).pipe(
-      timeout(options?.timeout || this.defaultTimeout),
-      catchError(this.handleError)
-    );
-  }
 }
