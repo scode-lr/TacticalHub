@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { roleAccessGuard } from '@core/guards/role-access.guard';
 
-export const viewerRoutes: Routes = [
+export const guestRoutes: Routes = [
   {
     path: '',
     canActivate: [roleAccessGuard],
-    loadComponent: () => import('./viewer.page').then(m => m.ViewerPage),
+    loadComponent: () => import('./guest.page').then(m => m.GuestPage),
     children: [
       {
         path: '',
@@ -25,32 +25,12 @@ export const viewerRoutes: Routes = [
         loadComponent: () => import('../news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
       },
       {
-        path: 'action',
-        loadComponent: () => import('../action/action.page').then(m => m.ViewerActionPage)
-      },
-      {
-        path: 'action/:type',
-        loadComponent: () => import('../action-form/action-form.page').then(m => m.ActionFormPage)
-      },
-      {
         path: 'information',
         loadComponent: () => import('../information/information.page').then(m => m.InformationPage)
       },
       {
-        path: 'proposals',
-        loadComponent: () => import('../proposals/proposals.page').then(m => m.ViewerProposalsPage)
-      },
-      {
         path: 'matches',
         loadComponent: () => import('../matches/matches.page').then(m => m.MatchesPage)
-      },
-      {
-        path: 'matches/:matchId',
-        loadComponent: () => import('../match-detail/match-detail.page').then(m => m.MatchDetailPage)
-      },
-      {
-        path: 'teams',
-        loadComponent: () => import('../teams/teams.page').then(m => m.TeamsPage)
       },
       {
         path: 'partners',

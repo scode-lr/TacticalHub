@@ -5,6 +5,7 @@ export const PROJECT_CONFIG = {
   taglineKey: 'app.tagline',
   appId: 'com.voltregacf.hub',
   clubId: 'voltrega-cf',
+  selectedClubId: 1,
   private: true,
   translations: {
     en: translationsEn,

@@ -128,6 +128,8 @@ export const sharedTranslations = {
     pleaseWait: 'Por favor espera mientras preparamos todo',
     loadingProfile: 'Cargando tu perfil...',
     preparingWorkspace: 'Preparando espacio de trabajo...',
+    preparingGuest: 'Preparando acceso de invitado...',
+    loadingClub: 'Cargando información del club...',
     allSet: '¡Todo listo!',
     redirecting: 'Redirigiendo...'
   },
@@ -350,11 +352,30 @@ export const sharedTranslations = {
       emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
     }
   },
-  roles: {
-      viewer: 'Visualizador',
-      admin: 'Administrador',
-      coach: 'Entrenador'
+  guest: {
+    title: 'Portal del invitado',
+    subtitle: 'Accede a información pública del club',
+    menu: {
+      home: 'Inicio',
+      news: 'Noticias',
+      information: 'Información',
+      matches: 'Partidos',
+      partners: 'Socios'
+    },
+    description: {
+      home: 'Bienvenido al portal público del club',
+      news: 'Últimas noticias y anuncios',
+      information: 'Información del club',
+      matches: 'Ver próximos partidos',
+      partners: 'Socios y patrocinadores del club'
     }
+  },
+  roles: {
+    viewer: 'Visualizador',
+    admin: 'Administrador',
+    coach: 'Entrenador',
+    guest: 'Invitado'
+  }
 } as const;
 
 export type SharedTranslationKeys = typeof sharedTranslations;

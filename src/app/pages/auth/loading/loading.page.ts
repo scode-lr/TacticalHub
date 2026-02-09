@@ -1,14 +1,10 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, computed } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { AuthBrandingComponent } from '../components/auth-branding/auth-branding.component';
-import { AuthService } from '@services/auth.service';
-import { UserService } from '@services/user.service';
-import { StorageService } from '@services/storage.service';
-import { User } from '@core/models/user.model';
-import { STORAGE_KEYS } from '@core/constants/storage-keys';
+import { LoadingService } from '@services/loading.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-loading',
@@ -23,67 +19,19 @@ import { STORAGE_KEYS } from '@core/constants/storage-keys';
   ]
 })
 export class LoadingPage implements OnInit {
-  private readonly navigationService = inject(NavigationService);
-  private readonly userService = inject(UserService);
-  private readonly authService = inject(AuthService);
-  private readonly storageService = inject(StorageService);
-  
-  readonly loadingMessageKey = signal<string>('loading.signingIn');
-  readonly loadingSubMessageKey = signal<string>('loading.pleaseWait');
+  private readonly loadingService = inject(LoadingService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  readonly loadingMessageKey = computed(() => this.loadingService.state().messageKey);
+  readonly loadingSubMessageKey = computed(() => this.loadingService.state().subMessageKey);
 
   async ngOnInit() {
-    const user = await this.loadUserData();
-
-    if (!user) {
-      this.authService.signOut();
-      this.navigationService.navigateTo(['auth/signin']);
-      return;
-    }
-    
-    this.loadingMessageKey.set('loading.allSet');
-    this.loadingSubMessageKey.set('loading.redirecting');
-    await this.delay(500);
-
-    this.determineNavigation(user);
-  }
-
-  private async loadUserData(): Promise<User | null> {
-    if (!this.userService.isAuthenticated()) {
-      this.authService.signOut();
-      this.navigationService.navigateTo(['auth/signin']);
-      return null;
-    }
-
-    const storedUser = this.userService.getCurrentUser();
-    if (!storedUser) {
-      this.navigationService.navigateTo(['auth/signin']);
-      return null;
-    }
-    
-    this.loadingMessageKey.set('loading.loadingProfile');
-
-    await this.delay(1800);
-    this.loadingMessageKey.set('loading.preparingWorkspace');
-    await this.delay(1800);
-    return storedUser;
-
-  }
-
-  private determineNavigation(user: User): void {
-    const rolesCount = user.roles?.length || 0;
-
-    if (rolesCount === 0) {
-      this.navigationService.navigateTo(['teams/join']);
-    } else if (rolesCount === 1) {
-      const selectedRole = user.roles![0];
-      this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, selectedRole);
-      this.navigationService.navigateTo([`/app/${selectedRole.type}/${selectedRole.id}/home`]);
+    const isGuest = this.activatedRoute.snapshot.queryParamMap.get('guest') === 'true';
+    console.log('LoadingPage initialized with guest access:', isGuest);
+    if (isGuest) {
+      await this.loadingService.handleGuestAccess();
     } else {
-      this.navigationService.navigateTo(['teams/selection']);
+      await this.loadingService.handleUserAccess();
     }
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

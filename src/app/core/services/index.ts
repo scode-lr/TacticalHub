@@ -6,3 +6,5 @@ export * from './navigation.service';
 export * from './storage.service';
 export * from './inbox.service';
 export * from './notifications.service';
+export * from './club.service';
+export * from './loading.service';

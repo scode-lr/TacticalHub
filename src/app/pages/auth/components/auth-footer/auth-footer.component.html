@@ -5,12 +5,7 @@
 </app-social-login>
 
 <div class="form-footer">
-    <ion-text class="footer-text">
-    <span class="footer-link" (click)="onContinueAsGuest()">
-      <ion-icon name="eye-outline"></ion-icon>
-      {{ 'auth.continueAsGuest' | translate }}
-    </span>
-  </ion-text>
+  <app-auth-guest></app-auth-guest>
   
   @if (mode() === 'signin') {
     <ion-text class="footer-text">

@@ -7,13 +7,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { MatchCardComponent } from '@components/match-card/match-card.component';
 
 @Component({
-  selector: 'app-viewer-matches',
+  selector: 'app-matches',
   templateUrl: './matches.page.html',
   styleUrls: ['./matches.page.scss'],
   standalone: true,
   imports: [CommonModule, IonIcon, TranslatePipe, MatchCardComponent]
 })
-export class ViewerMatchesPage {
+export class MatchesPage {
   readonly currentWeekStart = signal<Date>(this.getStartOfWeek(new Date()));
   readonly matches = signal<Match[]>(mockMatches);
 

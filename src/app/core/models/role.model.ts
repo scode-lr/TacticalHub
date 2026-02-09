@@ -9,7 +9,8 @@ export enum RoleStatus {
 export enum RoleType {
   Admin = 1,
   Coach = 2,
-  Viewer = 3
+  Viewer = 3,
+  Guest = 4
 }
 
 export interface Role {
@@ -17,8 +18,8 @@ export interface Role {
   name: string;
   type: RoleType;
   club: Club;
-  description: string;
-  permissions: string[];
+  description?: string;
+  permissions?: string[];
   team?: string;
   createdAt: Date;
   status?: RoleStatus;

@@ -259,6 +259,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
             club: {
               id: Math.floor(Math.random() * 1000000),
               name: this.matchedTeam()?.clubName || 'Club',
+              code: '',
               logoUrl: '',
               description: '',
               location: ''

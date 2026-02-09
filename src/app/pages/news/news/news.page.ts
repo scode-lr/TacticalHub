@@ -8,13 +8,13 @@ import { News, NewsCategory, TimeFilter, VoteType } from '@models/news.model';
 import { mockNews } from '@mocks/news.mock';
 
 @Component({
-  selector: 'app-viewer-news',
+  selector: 'app-news',
   templateUrl: './news.page.html',
   styleUrls: ['./news.page.scss'],
   standalone: true,
   imports: [CommonModule, IonIcon, IonModal, TranslatePipe, NewsCardComponent]
 })
-export class ViewerNewsPage {
+export class NewsPage {
   private navigationService = inject(NavigationService);
   
   readonly news = signal<News[]>(mockNews);

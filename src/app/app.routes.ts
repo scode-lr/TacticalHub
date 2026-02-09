@@ -46,6 +46,12 @@ export const routes: Routes = [
         data: { roleType: 3 },
         canActivate: [roleAccessGuard],
         loadChildren: () => import('./pages/viewer/viewer.routes').then(m => m.viewerRoutes)
+      },
+      {
+        path: '4/:clubId',
+        data: { roleType: 4 },
+        canActivate: [roleAccessGuard],
+        loadChildren: () => import('./pages/guest/guest.routes').then(m => m.guestRoutes)
       }
     ]
   },
