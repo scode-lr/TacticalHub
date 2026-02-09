@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Voltrega Hub</string>
+    <string name="title_activity_main">Voltrega Hub</string>
+    <string name="package_name">com.voltregacf.hub</string>
+    <string name="custom_url_scheme">com.voltregacf.hub</string>
+</resources>

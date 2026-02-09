@@ -70,3 +70,17 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Capacitor - Tactical Hub
+projects/tactical.hub/ios/App/Podfile.lock
+projects/tactical.hub/android/.gradle
+projects/tactical.hub/android/app/build
+projects/tactical.hub/android/build
+projects/tactical.hub/android/.idea
+
+# Capacitor - Voltrega Hub
+projects/voltregacf.hub/ios/App/Podfile.lock
+projects/voltregacf.hub/android/.gradle
+projects/voltregacf.hub/android/app/build
+projects/voltregacf.hub/android/build
+projects/voltregacf.hub/android/.idea
