@@ -4,10 +4,10 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
-  selector: 'app-viewer-home',
+  selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [CommonModule, IonIcon, TranslatePipe]
 })
-export class ViewerHomePage {}
+export class HomePage {}

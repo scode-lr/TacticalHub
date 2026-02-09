@@ -202,20 +202,20 @@ export class AuthService {
       // Optional: call logout endpoint on backend
       // await firstValueFrom(this.apiService.post('/auth/logout', {}));
       
-      this.storageService.remove(STORAGE_KEYS.USER);
-      this.storageService.remove(STORAGE_KEYS.TOKEN);
-      this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
+      this.cleanSesion();
       
-      this._currentUser.set(null);
-      this._token.set(null);
     } catch (error) {
       // Perform local logout even if backend fails
-      this.storageService.remove(STORAGE_KEYS.USER);
-      this.storageService.remove(STORAGE_KEYS.TOKEN);
-      this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
-      
-      this._currentUser.set(null);
-      this._token.set(null);
+      this.cleanSesion()  
     }
+  }
+
+  private cleanSesion() {
+    this.storageService.remove(STORAGE_KEYS.USER);
+    this.storageService.remove(STORAGE_KEYS.TOKEN);
+    this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
+    this.storageService.remove(STORAGE_KEYS.CLUB_INFO);
+    this._currentUser.set(null);
+    this._token.set(null);
   }
 }

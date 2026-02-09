@@ -14,7 +14,7 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'home',
-        loadComponent: () => import('../home/home.page').then(m => m.ViewerHomePage)
+        loadComponent: () => import('../home/home.page').then(m => m.HomePage)
       },
       {
         path: 'inbox',
@@ -30,7 +30,7 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'news',
-        loadComponent: () => import('../news/news/news.page').then(m => m.ViewerNewsPage)
+        loadComponent: () => import('../news/news/news.page').then(m => m.NewsPage)
       },
       {
         path: 'news/:newsId',
@@ -54,7 +54,7 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'matches',
-        loadComponent: () => import('../matches/matches.page').then(m => m.ViewerMatchesPage)
+        loadComponent: () => import('../matches/matches.page').then(m => m.MatchesPage)
       },
       {
         path: 'matches/:matchId',

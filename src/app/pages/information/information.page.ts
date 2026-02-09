@@ -7,13 +7,13 @@ import { InformationParameter } from '@core/models/parameters/information-param.
 import { ParameterType } from '@core/models/parameters/parameter-type.enum';
 
 @Component({
-  selector: 'app-viewer-information',
+  selector: 'app-information',
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
   standalone: true,
   imports: [CommonModule, IonIcon, TranslatePipe]
 })
-export class ViewerInformationPage {
+export class InformationPage {
   private parametersService = inject(ParametersService);
 
   readonly sections = signal<InformationParameter[]>(

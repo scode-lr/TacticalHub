@@ -4,10 +4,10 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
-  selector: 'app-viewer-partners',
+  selector: 'app-partners',
   templateUrl: './partners.page.html',
   styleUrls: ['./partners.page.scss'],
   standalone: true,
   imports: [CommonModule, IonIcon, TranslatePipe]
 })
-export class ViewerPartnersPage {}
+export class PartnersPage {}

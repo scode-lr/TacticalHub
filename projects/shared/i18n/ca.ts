@@ -128,6 +128,8 @@ export const sharedTranslations = {
     pleaseWait: 'Si us plau espera mentre ho preparem tot',
     loadingProfile: 'Carregant el teu perfil...',
     preparingWorkspace: "Preparant espai de treball...",
+    preparingGuest: "Preparant accés de convidat...",
+    loadingClub: "Carregant informació del club...",
     allSet: 'Tot llest!',
     redirecting: 'Redirigint...'
   },
@@ -413,10 +415,29 @@ export const sharedTranslations = {
       emptyDescription: 'Els nostres socis i patrocinadors del club es llistaran aquí.'
     }
   },
+  guest: {
+    title: 'Portal del convidat',
+    subtitle: 'Accedeix a informació pública del club',
+    menu: {
+      home: 'Inici',
+      news: 'Notícies',
+      information: 'Informació',
+      matches: 'Partits',
+      partners: 'Socis'
+    },
+    description: {
+      home: 'Benvingut al portal públic del club',
+      news: 'Últimes notícies i anuncis',
+      information: 'Informació del club',
+      matches: 'Veure pròxims partits',
+      partners: 'Socis i patrocinadors del club'
+    }
+  },
   roles: {
     viewer: 'Visualitzador',
     admin: 'Administrador',
-    coach: 'Entrenador'
+    coach: 'Entrenador',
+    guest: 'Convidat'
   }
 } as const;
 

@@ -130,6 +130,8 @@ export const sharedTranslations = {
     pleaseWait: 'Please wait while we prepare everything',
     loadingProfile: 'Loading your profile...',
     preparingWorkspace: 'Preparing workspace...',
+    preparingGuest: 'Preparing guest access...',
+    loadingClub: 'Loading club information...',
     allSet: 'All set!',
     redirecting: 'Redirecting...'
   },
@@ -415,10 +417,29 @@ export const sharedTranslations = {
       emptyDescription: 'Our club partners and sponsors will be listed here.'
     }
   },
+  guest: {
+    title: 'Guest Portal',
+    subtitle: 'Access public club information',
+    menu: {
+      home: 'Home',
+      news: 'News',
+      information: 'Information',
+      matches: 'Matches',
+      partners: 'Partners'
+    },
+    description: {
+      home: 'Welcome to the public club portal',
+      news: 'Latest news and announcements',
+      information: 'Club information',
+      matches: 'View upcoming matches',
+      partners: 'Club partners and sponsors'
+    }
+  },
   roles: {
     viewer: 'Viewer',
     admin: 'Admin',
-    coach: 'Coach'
+    coach: 'Coach',
+    guest: 'Guest'
   }
 } as const;
 
