@@ -1,4 +1,4 @@
-package com.getcapacitor.myapp;
+package com.voltregacf.hub;
 
 import static org.junit.Assert.*;
 
