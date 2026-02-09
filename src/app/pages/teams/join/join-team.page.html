@@ -62,15 +62,14 @@
             <div class="role-cards">
               @if (!isGuestMode()) {
                 <div 
-                  class="role-card" 
-                  [class.selected]="selectedRole() === 'Coach'"
-                  (click)="selectRole('Coach')"
+                  class="role-card disabled" 
                 >
                   <div class="role-icon">
                     <ion-icon name="clipboard-outline"></ion-icon>
                   </div>
                   <h3>{{ 'roles.coach' | translate }}</h3>
                   <p>{{ 'joinTeam.coachDescription' | translate }}</p>
+                  <div class="coming-soon-badge">{{ 'common.comingSoon' | translate }}</div>
                 </div>
               }
 
