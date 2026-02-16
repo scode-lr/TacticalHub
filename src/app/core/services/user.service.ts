@@ -1,11 +1,12 @@
 import { Injectable, signal, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { User, AuthUser } from '../models';
 import { Role, RoleType } from '../models/role.model';
-import { mockUsers } from '../../../mocks/user.mock';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { StorageService } from './storage.service';
 import { NavigationService } from './navigation.service';
 import { AuthService } from './auth.service';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class UserService {
   private readonly storageService = inject(StorageService);
   private readonly navigationService = inject(NavigationService);
   private readonly authService = inject(AuthService);
+  private readonly apiService = inject(ApiService);
 
   constructor() {
     this.loadStoredUser();
@@ -72,16 +74,19 @@ export class UserService {
     return null;
   }
 
-  async fetchUserProfile(userId: number): Promise<User | null> {   
-    const authUser: User | null = mockUsers.find(user => user.id === userId) ?? null;
-    
-    if (authUser) {
-      this.authService._currentUser.set(authUser);
-      this.setUser(authUser);
-      return authUser;
+  async fetchUserProfile(): Promise<User | null> {
+    try {
+      const authUser = await firstValueFrom(this.apiService.get<User>(`/users/me`));
+
+      if (authUser) {
+        this.setUser(authUser);
+        return authUser;
+      }
+
+      return null;
+    } catch (error) {
+      return null;
     }
-    
-    return null;
   }
   
   logout() {

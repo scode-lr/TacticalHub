@@ -25,10 +25,6 @@ export class AppComponent implements OnInit {
   }
 
   private async refreshUserData(): Promise<void> {
-    const currentUser = this.userService.getCurrentUser();
-    
-    if (currentUser?.id) {
-      await this.userService.fetchUserProfile(currentUser.id);
-    }
+    await this.userService.fetchUserProfile();    
   }
 }

@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { ClubService } from './club.service';
 import { StorageService } from './storage.service';
 import { User } from '@core/models/user.model';
-import { Role, RoleType } from '@core/models/role.model';
+import { Role, RoleStatus, RoleType } from '@core/models/role.model';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { environment } from '@environment';
 
@@ -57,6 +57,11 @@ export class LoadingService {
       return;
     }
 
+    if(this.isPrivateApp() && (user?.roles && user.roles.length === 1 && user.roles[0].status === RoleStatus.Active)) {
+      this.redirectToRoleHome(user.roles[0]);
+      return;
+    }
+
     if (this.isPrivateApp()) {
       await this.loadPrivateClubForUser();
     }
@@ -65,6 +70,11 @@ export class LoadingService {
     await this.delay(1000);
 
     this.determineUserNavigation(user);
+  }
+
+  private redirectToRoleHome(role: Role) {
+    this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, role);
+    this.navigationService.navigateTo([`/app/${role.type}/${role.id}/home`]);
   }
 
   private async loadPrivateClubForGuest(guestUser: User): Promise<void> {
@@ -118,18 +128,18 @@ export class LoadingService {
     }
 
     this.updateState('loading.loadingProfile', 'loading.pleaseWait');
-    // const fullUser = await this.userService.fetchUserProfile(storedUser.id);
+    const fullUser = await this.userService.fetchUserProfile();
 
-    // if (!fullUser) {
-    //   this.redirectToSignIn();
-    //   return null;
-    // }
+    if (!fullUser) {
+      this.redirectToSignIn();
+      return null;
+    }
 
     await this.delay(1000);
     this.updateState('loading.preparingWorkspace', 'loading.pleaseWait');
     await this.delay(1000);
 
-    return storedUser; // Return stored user for now, can replace with fullUser when API is ready
+    return fullUser;
   }
 
   private async loadPrivateClubForUser(): Promise<void> {

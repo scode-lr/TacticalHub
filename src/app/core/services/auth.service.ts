@@ -66,7 +66,6 @@ export class AuthService {
         })
       );
 
-      console.log('SignIn Response:', response);
       if (response.success && response.data) {
         const { user, token } = response.data;
 

@@ -1,9 +1,9 @@
 import { Club } from "./club.model";
 
 export enum RoleStatus {
-  Active = 'active',
-  Pending = 'pending',
-  Draft = 'draft'
+  Active = 'AC',
+  Pending = 'P',
+  Draft = 'D'
 }
 
 export enum RoleType {
