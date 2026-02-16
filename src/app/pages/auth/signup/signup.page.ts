@@ -6,12 +6,10 @@ import {
   IonIcon,
   IonInput,
   IonSpinner,
-  IonToast,
-  IonDatetime,
-  IonModal
+  IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline, calendarOutline, close } from 'ionicons/icons';
+import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -32,8 +30,6 @@ import { AuthService } from '@services/auth.service';
     IonInput,
     IonSpinner,
     IonToast,
-    IonDatetime,
-    IonModal,
     AuthBrandingComponent,
     AuthFooterComponent,
     TranslatePipe
@@ -51,17 +47,15 @@ export class SignupPage {
   readonly toastMessage = signal<string>('');
   readonly appName = environment.name;
   readonly formSubmitted = signal<boolean>(false);
-  readonly showBirthDateModal = signal<boolean>(false);
-  readonly maxDate = new Date().toISOString();
 
   constructor() {
-    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline, calendarOutline, close });
+    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline });
     
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      birthDate: ['', [Validators.required]],
+      birthDate: ['', [Validators.required, this.dateValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, {
@@ -71,6 +65,42 @@ export class SignupPage {
 
   goBack(): void {
     this.navigationService.navigateTo(['/auth/welcome']);
+  }
+
+  private dateValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+    const match = value.match(dateRegex);
+    
+    if (!match) {
+      return { invalidDate: true };
+    }
+
+    const [, day, month, year] = match;
+    const dayNum = parseInt(day, 10);
+    const monthNum = parseInt(month, 10);
+    const yearNum = parseInt(year, 10);
+
+    if (monthNum < 1 || monthNum > 12) {
+      return { invalidDate: true };
+    }
+
+    if (dayNum < 1 || dayNum > 31) {
+      return { invalidDate: true };
+    }
+
+    const date = new Date(yearNum, monthNum - 1, dayNum);
+    if (date.getDate() !== dayNum || date.getMonth() !== monthNum - 1 || date.getFullYear() !== yearNum) {
+      return { invalidDate: true };
+    }
+
+    if (date > new Date()) {
+      return { futureDate: true };
+    }
+
+    return null;
   }
 
   passwordMatchValidator(formGroup: AbstractControl): ValidationErrors | null {
@@ -96,11 +126,17 @@ export class SignupPage {
     try {
       const formData = this.signupForm.value;
       
+      let birthDateString: string | undefined;
+      if (formData.birthDate) {
+        const [day, month, year] = formData.birthDate.split('/');
+        birthDateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      }
+      
       const response = await this.authService.signUp({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        birthDate: formData.birthDate?.split('T')[0],
+        birthDate: birthDateString,
         password: formData.password
       });
       
@@ -128,24 +164,18 @@ export class SignupPage {
     this.showToast.set(false);
   }
 
-  openBirthDatePicker(): void {
-    this.showBirthDateModal.set(true);
-  }
-
-  onBirthDateChange(event: any): void {
-    const selectedDate = event.detail.value;
-    if (selectedDate) {
-      this.signupForm.patchValue({ birthDate: selectedDate });
-    }
-    this.showBirthDateModal.set(false);
-  }
-
-  getFormattedBirthDate(): string {
-    const birthDate = this.signupForm.get('birthDate')?.value;
-    if (!birthDate) return '';
+  onDateInput(event: any): void {
+    let value = event.target.value.replace(/\D/g, '');
     
-    const date = new Date(birthDate);
-    return date.toLocaleDateString();
+    if (value.length >= 2) {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+    if (value.length >= 5) {
+      value = value.slice(0, 5) + '/' + value.slice(5, 9);
+    }
+    
+    this.signupForm.patchValue({ birthDate: value }, { emitEvent: false });
+    event.target.value = value;
   }
 
   get firstName() { return this.signupForm.get('firstName'); }

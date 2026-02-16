@@ -4,8 +4,7 @@ export const PROJECT_CONFIG = {
   name: 'Voltrega CF',
   taglineKey: 'app.tagline',
   appId: 'com.voltregacf.hub',
-  clubId: 'voltrega-cf',
-  selectedClubId: 1,
+  clubId: 1,
   private: true,
   translations: {
     en: translationsEn,
