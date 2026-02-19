@@ -7,6 +7,7 @@ import { StorageService } from './storage.service';
 import { NavigationService } from './navigation.service';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class UserService {
   private readonly navigationService = inject(NavigationService);
   private readonly authService = inject(AuthService);
   private readonly apiService = inject(ApiService);
+  private readonly tokenService = inject(TokenService);
 
   constructor() {
     this.loadStoredUser();
@@ -45,8 +47,13 @@ export class UserService {
     return this.storageService.get<User>(STORAGE_KEYS.USER);
   }
 
+  /**
+   * Returns the in-memory access token.
+   * Do NOT use for storage reads — the token is never persisted to
+   * localStorage. Use TokenService directly when possible.
+   */
   getStoredToken(): string | null {
-    return this.storageService.getString(STORAGE_KEYS.TOKEN);
+    return this.tokenService.getAccessToken();
   }
 
   setUser(user: User): void {
@@ -55,9 +62,11 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.getStoredToken();
-    const user = this.getStoredUser();
-    return !!(token && user);
+    // Access token lives in memory only; its presence proves the session is
+    // still valid (it was issued or refreshed on this app load).
+    const hasToken = !!this.tokenService.getAccessToken();
+    const user     = this.getStoredUser();
+    return hasToken && !!user;
   }
 
   getCurrentRole(): Role | null {
@@ -89,8 +98,7 @@ export class UserService {
     }
   }
   
-  logout() {
-    this.authService.signOut();
-    this.navigationService.navigateTo(['signin']);
+  async logout() {
+    await this.authService.signOut();
   }
 }

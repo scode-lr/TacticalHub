@@ -170,7 +170,6 @@ export class LoadingService {
 
   private redirectToSignIn(): void {
     this.authService.signOut();
-    this.navigationService.navigateTo(['auth/signin']);
   }
 
   private isPrivateApp(): boolean {

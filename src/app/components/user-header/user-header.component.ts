@@ -88,8 +88,8 @@ export class UserHeaderComponent {
     this.navigationService.navigateTo(['/settings']);
   }
 
-  logout() {
+  async logout() {
     this.showUserMenu.set(false);
-    this.userService.logout();
+    await this.userService.logout();
   }
 }

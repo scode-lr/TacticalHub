@@ -1,8 +1,9 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, provideAppInitializer, inject } from '@angular/core';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthService } from './core/services/auth.service';
 import { Animation, AnimationController } from '@ionic/angular/standalone';
 
 import { routes } from './app.routes';
@@ -30,5 +31,12 @@ export const appConfig: ApplicationConfig = {
     }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authInterceptor])),
+    /**
+     * Runs before any route guard is evaluated.
+     * Attempts a silent token refresh via the HttpOnly refresh-token cookie.
+     * On success the access token is in memory; on failure the stale cache
+     * is cleared and the auth guard redirects to sign-in.
+     */
+    provideAppInitializer(() => inject(AuthService).initializeAuth()),
   ],
 };
