@@ -1,11 +1,11 @@
 <div class="role-selector" (click)="openRoleSelector()">
   <ion-avatar class="club-logo">
-    <img [src]="currentRole()?.club?.logoUrl || 'assets/image-non-available.svg'" 
-         [alt]="currentRole()?.club?.name || 'Club'"
+    <img [src]="currentRole()?.clubLogo || 'assets/image-non-available.svg'" 
+         [alt]="currentRole()?.clubName || 'Club'"
          appDefaultImage="assets/image-non-available.svg">
   </ion-avatar>
   <div class="role-info">
-    <div class="club-name">{{ currentRole()?.club?.name || 'No Club' }}</div>
+    <div class="club-name">{{ currentRole()?.clubName || 'No Club' }}</div>
     <div class="role-name">
       <ion-icon name="briefcase-outline"></ion-icon>
       <span>{{ currentRoleName() }}</span>
@@ -37,22 +37,22 @@
             [class.selected]="currentRole()?.id === role.id"
             (click)="selectRole(role)">
             <ion-avatar class="role-avatar">
-              <img [src]="role.club.logoUrl || 'assets/image-non-available.svg'" 
-                   [alt]="role.club.name"
+              <img [src]="role.clubLogo || 'assets/image-non-available.svg'" 
+                   [alt]="role.clubName || 'Club'"
                    appDefaultImage="assets/image-non-available.svg">
             </ion-avatar>
             <div class="role-details">
               <div class="role-header">
-                <h3>{{ role.club.name }}</h3>
+                <h3>{{ role.clubName }}</h3>
                 @if (role.status === 'P') {
                   <ion-badge color="warning" class="pending-badge">{{ 'roleSelection.pending' | translate }}</ion-badge>
                 }
               </div>
               <p>
                 <ion-icon name="briefcase-outline"></ion-icon>
-                <span>{{ getRoleName(role.type) }}</span>
-                @if (role.team) {
-                  <span class="team-info">({{ role.team }})</span>
+                <span>{{ getRoleName(role.roleId) }}</span>
+                @if (role.teamName) {
+                  <span class="team-info">({{ role.teamName }})</span>
                 }
               </p>
             </div>

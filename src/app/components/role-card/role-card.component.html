@@ -7,9 +7,9 @@
       </div>
     }
     <div class="club-logo">
-      @if (!showDefaultIcon() && role()?.club?.logoUrl) {
+      @if (!showDefaultIcon() && role()?.clubLogo) {
         <ion-avatar class="club-avatar">
-          <ion-img [src]="role()?.club?.logoUrl" [alt]="role()?.id" (ionError)="onLogoError()"></ion-img>
+          <ion-img [src]="role()?.clubLogo" [alt]="role()?.id" (ionError)="onLogoError()"></ion-img>
         </ion-avatar>
       } @else {
         <ion-icon name="shield-outline" class="default-shield"></ion-icon>
@@ -17,11 +17,11 @@
     </div>
     
     <div class="club-info">
-      <h3 class="club-name">{{ role()?.club?.name }}</h3>
+      <h3 class="club-name">{{ role()?.clubName }}</h3>
       <div class="role-container">
-        <ion-icon [name]="getRoleIcon(role()?.name || '')" class="role-icon"></ion-icon>
+        <ion-icon [name]="getRoleIcon(role()?.roleId)" class="role-icon"></ion-icon>
         <p class="role-name">
-          {{ ('roles.' + (role()?.name || '').toLowerCase()) | translate }}@if (role()?.team) { <span class="team-name">({{ role()?.team }})</span>}
+          {{ getRoleDisplayName(role()) }}
         </p>
       </div>
     </div>

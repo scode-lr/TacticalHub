@@ -15,12 +15,12 @@ export enum RoleType {
 
 export interface Role {
   id: number;
-  name: string;
-  type: RoleType;
-  club: Club;
+  clubName: string;
+  clubId: number;
+  clubLogo?: string;
+  roleId: RoleType;
   description?: string;
-  permissions?: string[];
-  team?: string;
+  teamName?: string;
   createdAt: Date;
   status?: RoleStatus;
 }

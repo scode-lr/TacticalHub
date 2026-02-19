@@ -35,7 +35,7 @@ export const roleAccessGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  if (selectedRole.type !== roleType) {
+  if (selectedRole.roleId !== roleType) {
     navigationService.navigateTo(['/teams/selection']);
     return false;
   }

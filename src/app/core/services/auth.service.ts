@@ -95,7 +95,6 @@ export class AuthService {
           // Keep user in sync if the response carries updated data.
           if (response.data.user) {
             this._currentUser.set(response.data.user);
-            this.storageService.set<User>(STORAGE_KEYS.USER, response.data.user);
           }
           return response.data.token;
         }

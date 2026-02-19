@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { IonContent, IonButton } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '@services/navigation.service';
@@ -26,7 +26,7 @@ import { environment } from '@environment';
     RoleCardComponent
   ]
 })
-export class RoleSelectionPage implements OnInit {
+export class RoleSelectionPage {
   private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
   private readonly storageService = inject(StorageService);
@@ -43,11 +43,6 @@ export class RoleSelectionPage implements OnInit {
   readonly hasPendingRoles = computed(() => this.pendingRoles().length > 0);
   readonly hasActiveRoles = computed(() => this.activeRoles().length > 0);
 
-  ngOnInit() {
-    this.loadUserData();
-    this.checkRolesStatus();
-  }
-
   ionViewWillEnter() {
     this.loadUserData();
     this.checkRolesStatus();
@@ -57,6 +52,7 @@ export class RoleSelectionPage implements OnInit {
     const storedUser = this.userService.getStoredUser();
     if (storedUser) {
       this.user.set(storedUser);
+      console.log('Loaded user from storage:', storedUser);
     } else {
       this.navigationService.navigateTo(['signin']);
     }
@@ -69,7 +65,7 @@ export class RoleSelectionPage implements OnInit {
 
   selectRole(role: Role) {
     this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
-    this.navigationService.navigateTo([`/app/${role.type}/${role.id}/home`]);
+    this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
   }
 
   addNewClub() {

@@ -75,7 +75,7 @@ export class UserService {
     console.log('UserService: Getting current role for roleType=', roleType, 'roleId=', roleId, 'user=', user);
     
     if (user && roleId) {
-      const role = user.roles?.find(r => r.type === roleType && r.id === roleId);
+      const role = user.roles?.find(r => r.roleId === roleType && r.id === roleId);
       console.log('UserService: Found current role:', role);
       return role || null;
     }

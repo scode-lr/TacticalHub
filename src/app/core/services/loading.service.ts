@@ -74,7 +74,7 @@ export class LoadingService {
 
   private redirectToRoleHome(role: Role) {
     this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, role);
-    this.navigationService.navigateTo([`/app/${role.type}/${role.id}/home`]);
+    this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
   }
 
   private async loadPrivateClubForGuest(guestUser: User): Promise<void> {
@@ -96,9 +96,9 @@ export class LoadingService {
 
     const guestRole: Role = {
       id: club.id,
-      name: 'Guest',
-      type: RoleType.Guest,
-      club: club,
+      clubName: 'Guest',
+      roleId: RoleType.Guest,
+      clubId: club.id,
       createdAt: new Date()
     };
 
@@ -162,7 +162,7 @@ export class LoadingService {
     } else if (rolesCount === 1) {
       const selectedRole = user.roles![0];
       this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, selectedRole);
-      this.navigationService.navigateTo([`/app/${selectedRole.type}/${selectedRole.id}/home`]);
+      this.navigationService.navigateTo([`/app/${selectedRole.roleId}/${selectedRole.id}/home`]);
     } else {
       this.navigationService.navigateTo(['teams/selection']);
     }

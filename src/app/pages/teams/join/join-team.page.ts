@@ -254,19 +254,19 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
           
           const pendingRole : Role = {
             id: Math.floor(Math.random() * 1000000),
-            name: 'Coach',
-            type: RoleType.Coach,
-            club: {
-              id: Math.floor(Math.random() * 1000000),
-              name: this.matchedTeam()?.clubName || 'Club',
-              code: '',
-              logoUrl: '',
-              description: '',
-              location: ''
-            },
+            clubName: 'Coach',
+            roleId: RoleType.Coach,
+            clubId: 1,
+            // club: {
+            //   id: Math.floor(Math.random() * 1000000),
+            //   name: this.matchedTeam()?.clubName || 'Club',
+            //   code: '',
+            //   logoUrl: '',
+            //   description: '',
+            //   location: ''
+            // },
             description: 'Pending approval',
-            permissions: [],
-            team: teamName,
+            teamName: teamName,
             createdAt: new Date(),
             status: RoleStatus.Pending
           };

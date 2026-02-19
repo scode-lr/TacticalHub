@@ -53,9 +53,9 @@ export class RoleSelectorComponent {
 
   readonly currentRoleName = computed(() => {
     const role = this.currentRole();
-    if (!role?.type) return 'Unknown';
+    if (!role?.roleId) return 'Unknown';
     
-    return this.getRoleName(role.type);
+    return this.getRoleName(role.roleId);
   });
 
   constructor() {
@@ -100,7 +100,7 @@ export class RoleSelectorComponent {
     this.closeRoleSelector();
     
     setTimeout(() => {
-        this.navigationService.navigateTo([`app/${role.type}/${role.id}/home`]);
+        this.navigationService.navigateTo([`app/${role.roleId}/${role.id}/home`]);
     }, 200);
   }
 
