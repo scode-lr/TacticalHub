@@ -40,11 +40,12 @@ export class ClubService {
   }
 
   getSelectedClubId(): number | null {
-    return ((environment as Record<string, unknown>)['selectedClubId'] as number) ?? null;
+    console.log('Getting selected club ID from environment:', environment);
+    return ((environment as Record<string, unknown>)['clubId'] as number) ?? null;
   }
 
   getClubCode(): string | null {
-    return ((environment as Record<string, unknown>)['clubId'] as string) ?? null;
+    return ((environment as Record<string, unknown>)['clubCode'] as string) ?? null;
   }
 
   private delay(ms: number): Promise<void> {

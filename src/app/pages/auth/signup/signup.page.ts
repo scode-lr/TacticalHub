@@ -1,4 +1,4 @@
-import { Component, signal, computed, inject } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { 
@@ -13,6 +13,7 @@ import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionic
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
+import { ToastService } from '@services/toast.service';
 import { AuthBrandingComponent, AuthFooterComponent } from '../components';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { AuthService } from '@services/auth.service';
@@ -40,11 +41,12 @@ export class SignupPage {
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
   private readonly authService = inject(AuthService);
+  private readonly toastService = inject(ToastService);
 
   readonly signupForm: FormGroup;
   readonly isLoading = this.authService.isLoading;
-  readonly showToast = signal<boolean>(false);
-  readonly toastMessage = signal<string>('');
+  readonly showToast = this.toastService.showToast;
+  readonly toastMessage = this.toastService.toastMessage;
   readonly appName = environment.name;
   readonly formSubmitted = signal<boolean>(false);
 
@@ -119,7 +121,7 @@ export class SignupPage {
     this.formSubmitted.set(true);
     
     if (!this.signupForm.valid) {
-      this.showToastMessage(this.translationService.instant('validation.fillAllFields'));
+      this.toastService.show(this.translationService.instant('validation.fillAllFields'));
       return;
     }
 
@@ -143,25 +145,20 @@ export class SignupPage {
       console.log('SignUp Response:', response);
       
       if (response.success) {
-        this.showToastMessage(this.translationService.instant('messages.accountCreatedSuccess'));
+        this.toastService.show(this.translationService.instant('messages.accountCreatedSuccess'));
         setTimeout(() => {
           this.navigationService.navigateTo(['/auth/loading']);
         }, 1000);
       } else {
-        this.showToastMessage(response.message);
+        this.toastService.show(response.message);
       }
     } catch (error) {
-      this.showToastMessage(this.translationService.instant('messages.signUpError'));
+      this.toastService.show(this.translationService.instant('messages.signUpError'));
     }
   }
 
-  private showToastMessage(message: string): void {
-    this.toastMessage.set(message);
-    this.showToast.set(true);
-  }
-
   onToastDismiss(): void {
-    this.showToast.set(false);
+    this.toastService.hide();
   }
 
   onDateInput(event: any): void {

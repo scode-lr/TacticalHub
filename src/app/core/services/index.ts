@@ -1,6 +1,5 @@
 export * from './api.service';
 export * from './auth.service';
-export * from './token.service';
 export * from './user.service';
 export * from './teams.service';
 export * from './navigation.service';
@@ -9,3 +8,6 @@ export * from './inbox.service';
 export * from './notifications.service';
 export * from './club.service';
 export * from './loading.service';
+export * from './toast.service';
+export * from './snackbar.service';
+export * from './token.service';

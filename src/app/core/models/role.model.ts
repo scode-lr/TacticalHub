@@ -1,5 +1,3 @@
-import { Club } from "./club.model";
-
 export enum RoleStatus {
   Active = 'AC',
   Pending = 'P',
@@ -15,12 +13,13 @@ export enum RoleType {
 
 export interface Role {
   id: number;
-  clubName: string;
+  clubName?: string;
   clubId: number;
   clubLogo?: string;
   roleId: RoleType;
   description?: string;
   teamName?: string;
-  createdAt: Date;
+  createdAt?: Date;
   status?: RoleStatus;
+  userId?: number;
 }
