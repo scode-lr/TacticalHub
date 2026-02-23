@@ -1,12 +1,12 @@
 import { Injectable, signal, inject } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { User, AuthUser } from '../models';
 import { Role, RoleType } from '../models/role.model';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { StorageService } from './storage.service';
 import { NavigationService } from './navigation.service';
 import { AuthService } from './auth.service';
-import { ApiService } from './api.service';
+import { ApiResponse, ApiService } from './api.service';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -72,12 +72,13 @@ export class UserService {
   getCurrentRole(): Role | null {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     const user = this.getStoredUser();
-    console.log('UserService: Getting current role for roleType=', roleType, 'roleId=', roleId, 'user=', user);
-    
+
+    if(user?.isGuest){
+      return user.roles?.[0] || null;
+    }
+
     if (user && roleId) {
-      const role = user.roles?.find(r => r.roleId === roleType && r.id === roleId);
-      console.log('UserService: Found current role:', role);
-      return role || null;
+      return user.roles?.find(r => r.roleId === roleType && r.id === roleId) || null;
     }
     
     return null;
@@ -85,7 +86,9 @@ export class UserService {
 
   async fetchUserProfile(): Promise<User | null> {
     try {
-      const authUser = await firstValueFrom(this.apiService.get<User>(`/users/me`));
+      const authUser = await firstValueFrom(this.apiService.get<ApiResponse<User>>(`/users/me`).pipe(
+        map(response => response.data)
+      ));
 
       if (authUser) {
         this.setUser(authUser);

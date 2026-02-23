@@ -47,7 +47,6 @@ export class AuthService {
    */
   initializeAuth(): Promise<boolean> {
     const storedUser = this.storageService.get<User>(STORAGE_KEYS.USER);
-
     if (!storedUser) {
       // No cached session — nothing to restore.
       return Promise.resolve(false);
@@ -228,11 +227,7 @@ export class AuthService {
 
       if (response.success && response.data) {
         const { user, token } = response.data;
-
-        // Guest sessions are ephemeral — the access token lives in memory only.
-        // We intentionally do NOT persist the user to localStorage so that
-        // initializeAuth() won't attempt a cookie refresh on the next page load
-        // and the guest session ends cleanly when the tab is closed.
+        this.storageService.set<User>(STORAGE_KEYS.USER, user);
         this.tokenService.setAccessToken(token);
         this._currentUser.set(user);
         this._isLoading.set(false);

@@ -1,4 +1,4 @@
-<div class="role-selector" (click)="openRoleSelector()">
+<div class="role-selector" (click)="openRoleSelector()" [attr.aria-disabled]="isRoleSelectorDisabled()">
   <ion-avatar class="club-logo">
     <img [src]="currentRole()?.clubLogo || 'assets/image-non-available.svg'" 
          [alt]="currentRole()?.clubName || 'Club'"
@@ -11,7 +11,7 @@
       <span>{{ currentRoleName() }}</span>
     </div>
   </div>
-  @if (hasMultipleRoles()) {
+  @if (hasMultipleRoles() && !isRoleSelectorDisabled()) {
     <ion-icon name="chevron-down-outline" class="dropdown-icon"></ion-icon>
   }
 </div>
@@ -38,8 +38,7 @@
             (click)="selectRole(role)">
             <ion-avatar class="role-avatar">
               <img [src]="role.clubLogo || 'assets/image-non-available.svg'" 
-                   [alt]="role.clubName || 'Club'"
-                   appDefaultImage="assets/image-non-available.svg">
+                   [alt]="role.clubName || 'Club'">
             </ion-avatar>
             <div class="role-details">
               <div class="role-header">

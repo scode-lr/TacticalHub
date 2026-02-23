@@ -46,6 +46,7 @@ export class RoleSelectorComponent {
 
   readonly isModalOpen = signal<boolean>(false);
   readonly currentRole = input<Role | null>();
+  readonly isRoleSelectorDisabled = computed(() => this.currentRole()?.roleId === RoleType.Guest);
   readonly availableRoles = computed(() => {
     const user = this.userService.getStoredUser();
     return user?.roles || [];
@@ -64,7 +65,6 @@ export class RoleSelectorComponent {
       closeOutline,
       briefcaseOutline
     });
-    console.log('role-selector component initialized', this.currentRole());
   }
 
   getRoleName(roleType: RoleType): string {
@@ -79,6 +79,9 @@ export class RoleSelectorComponent {
       case RoleType.Viewer:
         roleName = 'viewer';
         break;
+      case RoleType.Guest:
+        roleName = 'guest';
+        break;
       default:
         return 'Unknown';
     }
@@ -86,6 +89,9 @@ export class RoleSelectorComponent {
   }
 
   openRoleSelector() {
+    if (this.isRoleSelectorDisabled()) {
+      return;
+    }
     this.isModalOpen.set(true);
   }
 
@@ -94,7 +100,6 @@ export class RoleSelectorComponent {
   }
 
   selectRole(role: Role) {
-    console.log('Selecting role:', role);
     this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
     
     this.closeRoleSelector();

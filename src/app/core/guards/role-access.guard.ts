@@ -16,7 +16,7 @@ export const roleAccessGuard: CanActivateFn = (route, state) => {
   const clubId = route.paramMap.get('clubId');
 
   if(clubId) {
-    const selectedClubId = clubService.getSelectedClubId();
+    const selectedClubId = clubService.getInternalClubId();
     if (!selectedClubId || selectedClubId !== Number(clubId)) {
       navigationService.navigateTo(['/teams/selection']);
       return false;

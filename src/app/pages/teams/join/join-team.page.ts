@@ -54,7 +54,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   readonly showBackButton = signal<boolean>(false);
   readonly isGuestMode = signal<boolean>(false);
   readonly availableTeams = signal<Team[]>(mockTeams);
-  readonly clubId = computed(() => this.isPrivateApp ? this.clubService.getSelectedClubId() ?? 0 : 0);
+  readonly clubId = computed(() => this.isPrivateApp ? this.clubService.getInternalClubId() ?? 0 : 0);
 
   readonly buttonText = computed(() => {
     const roleId = this.selectedRole();

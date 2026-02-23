@@ -32,6 +32,7 @@ export class RoleCardComponent {
   getRoleDisplayName(role: Role | null | undefined): string {
     const key = this.getRoleNameKey(role?.roleId);
     const translated = this.translationService.instant('roles.' + key);
+    console.log('Translate', translated)
     return role?.teamName ? `${translated} (${role.teamName})` : translated;
   }
 

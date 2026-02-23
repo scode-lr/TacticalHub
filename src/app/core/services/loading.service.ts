@@ -8,6 +8,7 @@ import { User } from '@core/models/user.model';
 import { Role, RoleStatus, RoleType } from '@core/models/role.model';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { environment } from '@environment';
+import { Club } from '@core/models';
 
 export interface LoadingState {
   messageKey: string;
@@ -37,9 +38,8 @@ export class LoadingService {
       this.redirectToSignIn();
       return;
     }
-
     if (this.isPrivateApp()) {
-      await this.loadPrivateClubForGuest(guestUser);
+      await this.fetchAndSetupGuestRole(guestUser);
       return;
     }
 
@@ -62,10 +62,6 @@ export class LoadingService {
       return;
     }
 
-    if (this.isPrivateApp()) {
-      await this.loadPrivateClubForUser();
-    }
-
     this.updateState('loading.allSet', 'loading.redirecting');
     await this.delay(1000);
 
@@ -77,28 +73,19 @@ export class LoadingService {
     this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
   }
 
-  private async loadPrivateClubForGuest(guestUser: User): Promise<void> {
-    const clubCode = this.clubService.getClubCode();
-    if (!clubCode) {
-      this.navigationService.navigateTo(['teams/join']);
-      return;
-    }
-
-    this.updateState('loading.loadingClub', 'loading.pleaseWait');
-    const club = await this.clubService.fetchClubByCode(clubCode);
-
+  private async fetchAndSetupGuestRole(guestUser: User): Promise<void> {
+    const club = await this.fetchInternalClub();
     if (!club) {
       this.navigationService.navigateTo(['teams/join']);
       return;
     }
 
-    this.clubService.saveClubInfo(club);
-
     const guestRole: Role = {
       id: club.id,
-      clubName: 'Guest',
+      clubName: club.name,
       roleId: RoleType.Guest,
       clubId: club.id,
+      clubLogo: club.logo,
       createdAt: new Date()
     };
 
@@ -142,16 +129,17 @@ export class LoadingService {
     return fullUser;
   }
 
-  private async loadPrivateClubForUser(): Promise<void> {
-    const clubCode = this.clubService.getClubCode();
-    if (!clubCode) return;
+  private async fetchInternalClub(): Promise<Club | null> {
+    const clubId = this.clubService.getInternalClubId();
+    if (!clubId) return null;
 
     this.updateState('loading.loadingClub', 'loading.pleaseWait');
-    const club = await this.clubService.fetchClubByCode(clubCode);
+    const club = await this.clubService.fetchClubById(clubId);
 
     if (club) {
       this.clubService.saveClubInfo(club);
     }
+    return club
   }
 
   private determineUserNavigation(user: User): void {
