@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonModal, IonIcon, IonInput, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
-import { TeamMockService } from '@services/team-mock.service';
 import { addIcons } from 'ionicons';
 import { closeOutline, peopleOutline } from 'ionicons/icons';
 
@@ -30,8 +29,6 @@ export interface NewTeamData {
   ]
 })
 export class TeamFormModalComponent {
-  private readonly teamMockService = inject(TeamMockService);
-
   readonly isOpen = input.required<boolean>();
   
   readonly didDismiss = output<void>();
@@ -41,7 +38,7 @@ export class TeamFormModalComponent {
   readonly teamCategory = signal<string>('');
   readonly clubId = signal<number>(1);
 
-  readonly categories = this.teamMockService.getAllCategories();
+  readonly categories = []; // This should be populated with actual categories from your service
 
   constructor() {
     addIcons({ closeOutline, peopleOutline });

@@ -5,61 +5,61 @@ export const mockTeams: Team[] = [
   {
     id: 1,
     name: 'Juvenil A',
-    category: 'Juvenil',
+    categoryId: 'Juvenil',
     clubId: 1
   },
   {
     id: 2,
     name: 'Cadet A',
-    category: 'Cadet',
+    categoryId: 'Cadet',
     clubId: 1
   },
   {
     id: 3,
     name: 'Cadet B',
-    category: 'Cadet',
+    categoryId: 'Cadet',
     clubId: 1
   },
   {
     id: 4,
     name: 'Infantil A',
-    category: 'Infantil',
+    categoryId: 'Infantil',
     clubId: 1
   },
   {
     id: 5,
     name: 'Infantil B',
-    category: 'Infantil',
+    categoryId: 'Infantil',
     clubId: 1
   },
   {
     id: 6,
     name: 'Aleví A',
-    category: 'Aleví',
+    categoryId: 'Aleví',
     clubId: 1
   },
   {
     id: 7,
     name: 'Aleví B',
-    category: 'Aleví',
+    categoryId: 'Aleví',
     clubId: 1
   },
   {
     id: 8,
     name: 'Aleví C',
-    category: 'Aleví',
+    categoryId: 'Aleví',
     clubId: 1
   },
   {
     id: 9,
     name: 'Benjamí A',
-    category: 'Benjamí',
+    categoryId: 'Benjamí',
     clubId: 1
   },
   {
     id: 10,
     name: 'Benjamí B',
-    category: 'Benjamí',
+    categoryId: 'Benjamí',
     clubId: 1
   }
 ];

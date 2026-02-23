@@ -52,7 +52,6 @@ export class RoleSelectionPage {
     const storedUser = this.userService.getStoredUser();
     if (storedUser) {
       this.user.set(storedUser);
-      console.log('Loaded user from storage:', storedUser);
     } else {
       this.navigationService.navigateTo(['signin']);
     }

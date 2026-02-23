@@ -8,28 +8,28 @@ import { Team } from '../app/core/models/team.model';
 export const mockTeamJuvenilB: Team = {
   id: 1,
   name: 'Juvenil',
-  category: 'B',
+  categoryId: 'B',
   clubId: 1
 };
 
 export const mockTeamJuvenilC: Team = {
   id: 2,
   name: 'Juvenil',
-  category: 'C',
+  categoryId: 'C',
   clubId: 1
 };
 
 export const mockTeamAlevinB: Team = {
   id: 3,
   name: 'Alevin',
-  category: 'B',
+  categoryId: 'B',
   clubId: 1
 };
 
 export const mockTeamAlevinC: Team = {
   id: 4,
   name: 'Alevin',
-  category: 'C',
+  categoryId: 'C',
   clubId: 1
 };
 

@@ -10,11 +10,11 @@ import { RolesService } from '@core/services/roles.service';
 import { RoleType } from '@core/models/role.model';
 import { Team } from '@core/models/team.model';
 import { RoleUtils } from '@core/utils/role.utils';
-import { mockTeams } from '../../../../mocks';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { ClubService } from '@services/club.service';
+import { TeamsService } from '@services/teams.service';
 
 @Component({
   selector: 'app-join-team',
@@ -36,6 +36,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   private readonly rolesService = inject(RolesService);
   private readonly route = inject(ActivatedRoute);
   private readonly clubService = inject(ClubService);
+  private readonly teamsService = inject(TeamsService);
 
   @ViewChildren('codeInput') codeInputs!: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChild('roleSection', { read: ElementRef }) roleSection?: ElementRef<HTMLElement>;
@@ -53,7 +54,8 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   readonly roleType = RoleType;
   readonly showBackButton = signal<boolean>(false);
   readonly isGuestMode = signal<boolean>(false);
-  readonly availableTeams = signal<Team[]>(mockTeams);
+  readonly availableTeams = signal<Team[]>([]);
+  readonly selectedClubId = signal<number>(0);
   readonly clubId = computed(() => this.isPrivateApp ? this.clubService.getInternalClubId() ?? 0 : 0);
 
   readonly buttonText = computed(() => {
@@ -63,6 +65,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     }
     return roleId !== null && RoleUtils.isViewer(roleId) ? 'joinTeam.joinInstant' : 'joinTeam.submitRequest';
   });
+  readonly hasViewerRole = signal<boolean>(false);
 
   constructor() {
     addIcons({ arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline });
@@ -78,6 +81,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     } else {
       const user = this.userService.getStoredUser();
       const hasRoles = (user?.roles?.length ?? 0) > 0;
+      this.hasViewerRole.set(user?.roles?.some(r => RoleUtils.isViewer(r.roleId) && r.clubId === this.clubId()) ?? false);
       this.showBackButton.set(hasRoles);
     }
   }
@@ -89,6 +93,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
         clubName: environment.name
       });
       this.showConfirmation.set(true);
+      this.selectedClubId.set(this.clubId());
     }
   }
 
@@ -117,6 +122,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     if (this.code().length !== 5) {
       this.matchedTeam.set(null);
       this.showConfirmation.set(false);
+      this.selectedClubId.set(0);
       return;
     }
 
@@ -129,14 +135,17 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
           clubName: 'FC Barcelona'
         });
         this.showConfirmation.set(true);
+        this.selectedClubId.set(1);
         this.scrollToRoles();
       } else {
         this.matchedTeam.set(null);
         this.showConfirmation.set(false);
+        this.selectedClubId.set(0);
       }
     } catch (error) {
       this.matchedTeam.set(null);
       this.showConfirmation.set(false);
+      this.selectedClubId.set(0);
     }
   }
 
@@ -176,6 +185,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
       }
       this.showConfirmation.set(false);
       this.matchedTeam.set(null);
+      this.selectedClubId.set(0);
     } else if (event.key === 'ArrowLeft' && index > 0) {
       const inputs = this.codeInputs.toArray();
       inputs[index - 1]?.nativeElement.focus();
@@ -206,16 +216,26 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     }
   }
 
-  selectRole(role: RoleType) {
+  async selectRole(role: RoleType) {
     this.selectedRole.set(role);
     if (role !== RoleType.Coach) {
       this.selectedTeam.set(0);
+      this.availableTeams.set([]);
     } else {
+      await this.loadTeamsByClubId();
       this.scrollToTeams();
     }
   }
 
+  private async loadTeamsByClubId() {
+    const teamsSeason = await this.teamsService.fetchTeamsByClubId(this.selectedClubId());
+    const teams = teamsSeason ? teamsSeason.teams : [];
+    console.log('Fetched teams for club ID', this.selectedClubId(), teams);
+    this.availableTeams.set(teams);
+  }
+
   selectTeam(teamId: number) {
+    console.log('Selected team ID:', teamId);
     this.selectedTeam.set(teamId);
   }
 
@@ -235,6 +255,8 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   cancelConfirmation() {
     this.showConfirmation.set(false);
     this.matchedTeam.set(null);
+    this.selectedClubId.set(0);
+    this.availableTeams.set([]);
     this.codeDigits.set(['', '', '', '', '']);
     const inputs = this.codeInputs.toArray();
     inputs[0]?.nativeElement.focus();
@@ -255,7 +277,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
 
         const boundRole = await this.rolesService.bindRole({
           roleId: role,
-          clubId: this.clubId(),
+          clubId: this.selectedClubId(),
           teamSeasonId: this.selectedTeam()
         });
         console.log('Bound Role:', boundRole);

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { Team } from '@core/models/team.model';
-import { TeamMockService } from '@core/services/team-mock.service';
 import { NavigationService } from '@core/services/navigation.service';
 import { TeamFormModalComponent, NewTeamData, SeasonSelectorModalComponent } from '@components/modals';
 import { addIcons } from 'ionicons';
@@ -23,10 +22,9 @@ import { addOutline, chevronDownOutline } from 'ionicons/icons';
   ]
 })
 export class TeamsPage {
-  private readonly teamMockService = inject(TeamMockService);
   private readonly navigationService = inject(NavigationService);
 
-  readonly teams = signal<Team[]>(this.teamMockService.getTeams());
+  readonly teams = signal<Team[]>([]);
   readonly selectedSeason = signal<string>('2025-2026');
   
   readonly seasons = ['2025-2026', '2024-2025', '2023-2024', '2022-2023'];
@@ -38,7 +36,7 @@ export class TeamsPage {
     const grouped = new Map<string, Team[]>();
     
     teams.forEach(team => {
-      const category = team.category;
+      const category = team.categoryId;
       if (!grouped.has(category)) {
         grouped.set(category, []);
       }
@@ -82,7 +80,7 @@ export class TeamsPage {
     const newTeam: Team = {
       id: maxId + 1,
       name: teamData.name,
-      category: teamData.category,
+      categoryId: teamData.category,
       clubId: teamData.clubId
     };
 
