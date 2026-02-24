@@ -8,28 +8,28 @@ import { Team } from '../app/core/models/team.model';
 export const mockTeamJuvenilB: Team = {
   id: 1,
   name: 'Juvenil',
-  category: 'B',
+  categoryId: 'B',
   clubId: 1
 };
 
 export const mockTeamJuvenilC: Team = {
   id: 2,
   name: 'Juvenil',
-  category: 'C',
+  categoryId: 'C',
   clubId: 1
 };
 
 export const mockTeamAlevinB: Team = {
   id: 3,
   name: 'Alevin',
-  category: 'B',
+  categoryId: 'B',
   clubId: 1
 };
 
 export const mockTeamAlevinC: Team = {
   id: 4,
   name: 'Alevin',
-  category: 'C',
+  categoryId: 'C',
   clubId: 1
 };
 
@@ -40,60 +40,55 @@ export const mockClub: Club = {
   code: 'voltrega-cf',
   description: 'Professional football club',
   location: 'SHV',
-  logoUrl: 'https://pbs.twimg.com/profile_images/1808725237573304320/mSo6RtAd_400x400.jpg',
+  logo: 'https://pbs.twimg.com/profile_images/1808725237573304320/mSo6RtAd_400x400.jpg',
   teams: [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC]
 };
 
 // Mock Roles
 export const mockPlayerRole: Role = {
   id: 1,
-  name: 'Player',
-  type: RoleType.Viewer,
-  club: mockClub,
+  clubName: 'Voltregà CF',
+  clubId: 1,
+  roleId: RoleType.Viewer,
   description: 'Regular player role',
-  permissions: ['view_teams', 'join_teams', 'view_matches', 'view_trainings'],
   createdAt: new Date('2024-01-01')
 };
 
 export const mockCoachRole: Role = {
   id: 2,
-  name: 'Coach',
-  type: RoleType.Coach,
-  club: mockClub,
-  team: 'U-19',
+  clubName: 'Voltregà CF',
+  clubId: 1,
+  roleId: RoleType.Coach,
+  teamName: 'U-19',
   description: 'Team coach role',
-  permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_trainings', 'view_players'],
   createdAt: new Date('2024-01-01')
 };
 
 export const mockAdminRole: Role = {
   id: 3,
-  name: 'Admin',
-  type: RoleType.Admin,
-  club: mockClub,
+  clubName: 'Voltregà CF',
+  clubId: 1,
+  roleId: RoleType.Admin,
   description: 'Administrator role',
-  permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_users', 'manage_roles', 'manage_club'],
   createdAt: new Date('2024-01-01')
 };
 
 export const mockViewerRole: Role = {
   id: 4,
-  name: 'Viewer',
-  type: RoleType.Viewer,
-  club: mockClub,
+  clubName: 'Voltregà CF',
+  clubId: 1,
+  roleId: RoleType.Viewer,
   description: 'Viewer role with read-only access',
-  permissions: ['view_teams', 'view_matches', 'view_trainings'],
   createdAt: new Date('2024-01-01')
 };
 
 export const mockCoachSeniorRole: Role = {
   id: 5,
-  name: 'Coach',
-  type: RoleType.Coach,
-  club: mockClub,
-  team: 'Senior Team',
+  clubName: 'Voltregà CF',
+  clubId: 1,
+  roleId: RoleType.Coach,
+  teamName: 'Senior Team',
   description: 'Senior team coach role',
-  permissions: ['view_teams', 'manage_teams', 'view_matches', 'create_matches', 'manage_trainings', 'view_players'],
   createdAt: new Date('2024-01-01')
 };
 

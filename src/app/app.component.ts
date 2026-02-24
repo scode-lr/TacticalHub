@@ -25,10 +25,12 @@ export class AppComponent implements OnInit {
   }
 
   private async refreshUserData(): Promise<void> {
-    const currentUser = this.userService.getCurrentUser();
-    
-    if (currentUser?.id) {
-      await this.userService.fetchUserProfile(currentUser.id);
+    const storedUser = this.userService.getStoredUser();
+    console.log('Fetching user profile. Stored user:', storedUser); 
+    if(storedUser?.isGuest) {
+      return;
     }
+
+    await this.userService.fetchUserProfile();    
   }
 }

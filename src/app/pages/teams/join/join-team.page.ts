@@ -6,12 +6,15 @@ import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { UserService } from '@core/services/user.service';
+import { RolesService } from '@core/services/roles.service';
+import { RoleType } from '@core/models/role.model';
 import { Team } from '@core/models/team.model';
-import { Role, RoleStatus, RoleType } from '@core/models/role.model';
-import { mockTeams } from '../../../../mocks';
+import { RoleUtils } from '@core/utils/role.utils';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline } from 'ionicons/icons';
 import { environment } from '@environment';
+import { ClubService } from '@services/club.service';
+import { TeamsService } from '@services/teams.service';
 
 @Component({
   selector: 'app-join-team',
@@ -30,7 +33,10 @@ import { environment } from '@environment';
 export class JoinTeamPage implements OnInit, AfterViewInit {
   private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
+  private readonly rolesService = inject(RolesService);
   private readonly route = inject(ActivatedRoute);
+  private readonly clubService = inject(ClubService);
+  private readonly teamsService = inject(TeamsService);
 
   @ViewChildren('codeInput') codeInputs!: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChild('roleSection', { read: ElementRef }) roleSection?: ElementRef<HTMLElement>;
@@ -39,22 +45,27 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
 
   readonly codeDigits = signal<string[]>(['', '', '', '', '']);
   readonly code = computed(() => this.codeDigits().join(''));
-  readonly selectedRole = signal<string>('');
+  readonly selectedRole = signal<RoleType | null>(null);
   readonly selectedTeam = signal<number>(0);
   readonly isSubmitting = signal<boolean>(false);
   readonly matchedTeam = signal<{ name: string; clubName: string } | null>(null);
   readonly showConfirmation = signal<boolean>(false);
   readonly isPrivateApp = environment.private;
+  readonly roleType = RoleType;
   readonly showBackButton = signal<boolean>(false);
   readonly isGuestMode = signal<boolean>(false);
-  readonly availableTeams = signal<Team[]>(mockTeams);
+  readonly availableTeams = signal<Team[]>([]);
+  readonly selectedClubId = signal<number>(0);
+  readonly clubId = computed(() => this.isPrivateApp ? this.clubService.getInternalClubId() ?? 0 : 0);
 
   readonly buttonText = computed(() => {
+    const roleId = this.selectedRole();
     if (this.isSubmitting()) {
-      return this.selectedRole() === 'Viewer' ? 'joinTeam.joiningInstant' : 'common.submitting';
+      return roleId !== null && RoleUtils.isViewer(roleId) ? 'joinTeam.joiningInstant' : 'common.submitting';
     }
-    return this.selectedRole() === 'Viewer' ? 'joinTeam.joinInstant' : 'joinTeam.submitRequest';
+    return roleId !== null && RoleUtils.isViewer(roleId) ? 'joinTeam.joinInstant' : 'joinTeam.submitRequest';
   });
+  readonly hasViewerRole = signal<boolean>(false);
 
   constructor() {
     addIcons({ arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline });
@@ -64,12 +75,13 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     this.route.queryParams.subscribe(params => {
       this.isGuestMode.set(params['guest'] === 'true');
     });
-
+    
     if (this.isGuestMode()) {
       this.showBackButton.set(false);
     } else {
       const user = this.userService.getStoredUser();
       const hasRoles = (user?.roles?.length ?? 0) > 0;
+      this.hasViewerRole.set(user?.roles?.some(r => RoleUtils.isViewer(r.roleId) && r.clubId === this.clubId()) ?? false);
       this.showBackButton.set(hasRoles);
     }
   }
@@ -81,6 +93,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
         clubName: environment.name
       });
       this.showConfirmation.set(true);
+      this.selectedClubId.set(this.clubId());
     }
   }
 
@@ -104,10 +117,12 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     }, 100);
   }
 
-  async checkTeamCode() {
+  // Todo: Replace with real API call
+  async checkClubCode() {
     if (this.code().length !== 5) {
       this.matchedTeam.set(null);
       this.showConfirmation.set(false);
+      this.selectedClubId.set(0);
       return;
     }
 
@@ -120,14 +135,17 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
           clubName: 'FC Barcelona'
         });
         this.showConfirmation.set(true);
+        this.selectedClubId.set(1);
         this.scrollToRoles();
       } else {
         this.matchedTeam.set(null);
         this.showConfirmation.set(false);
+        this.selectedClubId.set(0);
       }
     } catch (error) {
       this.matchedTeam.set(null);
       this.showConfirmation.set(false);
+      this.selectedClubId.set(0);
     }
   }
 
@@ -144,7 +162,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
         const inputs = this.codeInputs.toArray();
         inputs[index + 1]?.nativeElement.focus();
       } else {
-        this.checkTeamCode();
+        this.checkClubCode();
       }
     }
   }
@@ -167,6 +185,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
       }
       this.showConfirmation.set(false);
       this.matchedTeam.set(null);
+      this.selectedClubId.set(0);
     } else if (event.key === 'ArrowLeft' && index > 0) {
       const inputs = this.codeInputs.toArray();
       inputs[index - 1]?.nativeElement.focus();
@@ -192,46 +211,58 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
       inputs[lastFilledIndex]?.nativeElement.focus();
       
       if (pastedData.length === 5) {
-        this.checkTeamCode();
+        this.checkClubCode();
       }
     }
   }
 
-  selectRole(role: string) {
+  async selectRole(role: RoleType) {
     this.selectedRole.set(role);
-    if (role !== 'Coach') {
+    if (role !== RoleType.Coach) {
       this.selectedTeam.set(0);
+      this.availableTeams.set([]);
     } else {
+      await this.loadTeamsByClubId();
       this.scrollToTeams();
     }
   }
 
+  private async loadTeamsByClubId() {
+    const teamsSeason = await this.teamsService.fetchTeamsByClubId(this.selectedClubId());
+    const teams = teamsSeason ? teamsSeason.teams : [];
+    console.log('Fetched teams for club ID', this.selectedClubId(), teams);
+    this.availableTeams.set(teams);
+  }
+
   selectTeam(teamId: number) {
+    console.log('Selected team ID:', teamId);
     this.selectedTeam.set(teamId);
   }
 
   isFormValid(): boolean {
     if (this.isPrivateApp) {
-      if (this.selectedRole() === 'Coach') {
-        return this.selectedRole() !== '' && this.selectedTeam() !== 0;
+      if (this.selectedRole() === RoleType.Coach) {
+        return this.selectedRole() !== null && this.selectedTeam() !== 0;
       }
-      return this.selectedRole() !== '';
+      return this.selectedRole() !== null;
     }
-    if (this.selectedRole() === 'Coach') {
-      return this.code().length === 5 && this.selectedRole() !== '' && this.selectedTeam() !== 0 && this.matchedTeam() !== null;
+    if (this.selectedRole() === RoleType.Coach) {
+      return this.code().length === 5 && this.selectedRole() !== null && this.selectedTeam() !== 0 && this.matchedTeam() !== null;
     }
-    return this.code().length === 5 && this.selectedRole() !== '' && this.matchedTeam() !== null;
+    return this.code().length === 5 && this.selectedRole() !== null && this.matchedTeam() !== null;
   }
 
   cancelConfirmation() {
     this.showConfirmation.set(false);
     this.matchedTeam.set(null);
+    this.selectedClubId.set(0);
+    this.availableTeams.set([]);
     this.codeDigits.set(['', '', '', '', '']);
     const inputs = this.codeInputs.toArray();
     inputs[0]?.nativeElement.focus();
   }
 
-  async submitJoinRequest() {
+  async submitBind() {
     if (!this.isFormValid()) {
       return;
     }
@@ -240,50 +271,35 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     const role = this.selectedRole();
 
     try {
-      if (role === 'Viewer') {
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        this.navigationService.navigateTo(['teams/selection']);
-      } else {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const currentUser = this.userService.getCurrentUser();
-        if (currentUser) {
-          const selectedTeamData = this.availableTeams().find(t => t.id === this.selectedTeam());
-          const teamName = selectedTeamData ? `${selectedTeamData.name} ${selectedTeamData.category}` : undefined;
-          
-          const pendingRole : Role = {
-            id: Math.floor(Math.random() * 1000000),
-            name: 'Coach',
-            type: RoleType.Coach,
-            club: {
-              id: Math.floor(Math.random() * 1000000),
-              name: this.matchedTeam()?.clubName || 'Club',
-              code: '',
-              logoUrl: '',
-              description: '',
-              location: ''
-            },
-            description: 'Pending approval',
-            permissions: [],
-            team: teamName,
-            createdAt: new Date(),
-            status: RoleStatus.Pending
-          };
-          
-          const updatedUser = {
-            ...currentUser,
-            roles: [...(currentUser.roles || []), pendingRole]
-          };
-          
-          this.userService.setUser(updatedUser);
+        if (role === null) {
+          return;
         }
-        
+
+        const boundRole = await this.rolesService.bindRole({
+          roleId: role,
+          clubId: this.selectedClubId(),
+          teamSeasonId: this.selectedTeam()
+        });
+        console.log('Bound Role:', boundRole);
+        if(!boundRole){
+          return;
+        }
+
+        await this.userService.fetchUserProfile();
+        console.log('User profile updated with new role. Navigating to appropriate page...',RoleUtils.isViewer(boundRole.roleId));
+        if(RoleUtils.isViewer(boundRole.roleId)) {
+          this.navigationService.navigateTo([`app/3/${boundRole.roleId}`]);
+          return;
+        }
         this.navigationService.navigateTo(['teams/selection']);
-      }
     } catch (error) {
+      console.error('Error binding role:', error);
+      return;
     } finally {
       this.isSubmitting.set(false);
+      this.selectedRole.set(null);
+      this.selectedTeam.set(0);
+      this.codeDigits.set(['', '', '', '', '']);
     }
   }
 

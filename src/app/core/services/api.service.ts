@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse, HttpContext } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { skipAuthContext } from '../interceptors/auth.interceptor';
 
 export interface ApiRequestOptions {
   headers?: HttpHeaders | { [header: string]: string | string[] };
@@ -10,6 +11,7 @@ export interface ApiRequestOptions {
   responseType?: 'json' | 'text' | 'blob' | 'arraybuffer';
   withCredentials?: boolean;
   timeout?: number;
+  skipAuth?: boolean;
 }
 
 export interface ApiResponse<T = any> {
@@ -37,11 +39,6 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
-
-    const token = localStorage.getItem('token');
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
 
     if (options?.headers) {
       const customHeaders = options.headers instanceof HttpHeaders 
@@ -91,12 +88,11 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
-    console.log('[GET]', url, { params: options?.params });
-    
     return this.http.get<T>(url, {
       headers,
       params: options?.params,
-      withCredentials: options?.withCredentials
+      withCredentials: options?.withCredentials,
+      context: options?.skipAuth ? skipAuthContext() : undefined
     }).pipe(
       timeout(options?.timeout || this.defaultTimeout),
       catchError(this.handleError)
@@ -107,12 +103,11 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
-    console.log('[POST]', url, { body, params: options?.params });
-    
     return this.http.post<T>(url, body, {
       headers,
       params: options?.params,
-      withCredentials: options?.withCredentials
+      withCredentials: options?.withCredentials,
+      context: options?.skipAuth ? skipAuthContext() : undefined
     }).pipe(
       timeout(options?.timeout || this.defaultTimeout),
       catchError(this.handleError)
@@ -123,12 +118,11 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
-    console.log('[PUT]', url, { body, params: options?.params });
-    
     return this.http.put<T>(url, body, {
       headers,
       params: options?.params,
-      withCredentials: options?.withCredentials
+      withCredentials: options?.withCredentials,
+      context: options?.skipAuth ? skipAuthContext() : undefined
     }).pipe(
       timeout(options?.timeout || this.defaultTimeout),
       catchError(this.handleError)
@@ -139,12 +133,11 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
-    console.log('[PATCH]', url, { body, params: options?.params });
-    
     return this.http.patch<T>(url, body, {
       headers,
       params: options?.params,
-      withCredentials: options?.withCredentials
+      withCredentials: options?.withCredentials,
+      context: options?.skipAuth ? skipAuthContext() : undefined
     }).pipe(
       timeout(options?.timeout || this.defaultTimeout),
       catchError(this.handleError)
@@ -155,12 +148,11 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
-    console.log('[DELETE]', url, { params: options?.params });
-    
     return this.http.delete<T>(url, {
       headers,
       params: options?.params,
-      withCredentials: options?.withCredentials
+      withCredentials: options?.withCredentials,
+      context: options?.skipAuth ? skipAuthContext() : undefined
     }).pipe(
       timeout(options?.timeout || this.defaultTimeout),
       catchError(this.handleError)

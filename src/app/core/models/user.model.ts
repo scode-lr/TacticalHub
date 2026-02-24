@@ -5,6 +5,7 @@ export interface AuthUser {
   email: string;
   username?: string;
   createdAt?: Date;
+  isGuest?: boolean;
 }
 
 export interface User extends AuthUser {

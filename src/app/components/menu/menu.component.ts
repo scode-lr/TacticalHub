@@ -147,8 +147,8 @@ export class MenuComponent implements OnInit {
     this.isModalOpen.set(false);
     const role = this.currentRole();
     if (role) {
-      console.log(`/app/${role.type}/${role.id}/${item.route}`);
-      this.navigationService.navigateTo([`/app/${role.type}/${role.id}/${item.route}`]);
+      console.log(`/app/${role.roleId}/${role.id}/${item.route}`);
+      this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/${item.route}`]);
     }
   }
 

@@ -2,12 +2,12 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { NavigationService } from '@services/navigation.service';
-import { TeamMockService } from '@services/team-mock.service';
 import { Team } from '@models/team.model';
 import { Player, Position } from '@models/match-detail.model';
 import { PlayerFormModalComponent, NewPlayerData } from '@components/modals';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, trophyOutline, addOutline } from 'ionicons/icons';
+import { TeamsService } from '@services/teams.service';
 
 @Component({
   selector: 'app-team-detail',
@@ -18,7 +18,7 @@ import { arrowBackOutline, trophyOutline, addOutline } from 'ionicons/icons';
 })
 export class TeamDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
-  private readonly teamMockService = inject(TeamMockService);
+  private readonly teamService = inject(TeamsService);
   
   readonly team = signal<Team | null>(null);
   readonly players = signal<Player[]>([]);
@@ -32,12 +32,12 @@ export class TeamDetailPage implements OnInit {
   ngOnInit(): void {
     const id = this.navigationService.findRouteParam('teamId');
     if (id) {
-      const foundTeam = this.teamMockService.getTeamById(Number(id));
-      if (foundTeam) {
-        this.team.set(foundTeam);
-        const teamPlayers = this.teamMockService.getTeamPlayers(Number(id));
-        this.players.set(teamPlayers);
-      }
+      // const foundTeam = this.teamService.getTeamById(Number(id));
+      // if (foundTeam) {
+      //   this.team.set(foundTeam);
+      //   const teamPlayers = this.teamService.getTeamPlayers(Number(id));
+      //   this.players.set(teamPlayers);
+      // }
     }
   }
   

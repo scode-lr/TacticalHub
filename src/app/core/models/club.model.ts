@@ -6,6 +6,6 @@ export interface Club {
   code: string;
   description: string;
   location: string;
-  logoUrl: string;
+  logo: string;
   teams?: Team[];
 }

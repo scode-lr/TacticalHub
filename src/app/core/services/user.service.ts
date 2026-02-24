@@ -1,11 +1,13 @@
 import { Injectable, signal, inject } from '@angular/core';
+import { firstValueFrom, map } from 'rxjs';
 import { User, AuthUser } from '../models';
 import { Role, RoleType } from '../models/role.model';
-import { mockUsers } from '../../../mocks/user.mock';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { StorageService } from './storage.service';
 import { NavigationService } from './navigation.service';
 import { AuthService } from './auth.service';
+import { ApiResponse, ApiService } from './api.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,8 @@ export class UserService {
   private readonly storageService = inject(StorageService);
   private readonly navigationService = inject(NavigationService);
   private readonly authService = inject(AuthService);
+  private readonly apiService = inject(ApiService);
+  private readonly tokenService = inject(TokenService);
 
   constructor() {
     this.loadStoredUser();
@@ -43,8 +47,13 @@ export class UserService {
     return this.storageService.get<User>(STORAGE_KEYS.USER);
   }
 
+  /**
+   * Returns the in-memory access token.
+   * Do NOT use for storage reads — the token is never persisted to
+   * localStorage. Use TokenService directly when possible.
+   */
   getStoredToken(): string | null {
-    return this.storageService.getString(STORAGE_KEYS.TOKEN);
+    return this.tokenService.getAccessToken();
   }
 
   setUser(user: User): void {
@@ -53,39 +62,46 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.getStoredToken();
-    const user = this.getStoredUser();
-    return !!(token && user);
+    // Access token lives in memory only; its presence proves the session is
+    // still valid (it was issued or refreshed on this app load).
+    const hasToken = !!this.tokenService.getAccessToken();
+    const user     = this.getStoredUser();
+    return hasToken && !!user;
   }
 
   getCurrentRole(): Role | null {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     const user = this.getStoredUser();
-    console.log('UserService: Getting current role for roleType=', roleType, 'roleId=', roleId, 'user=', user);
-    
+
+    if(user?.isGuest){
+      return user.roles?.[0] || null;
+    }
+
     if (user && roleId) {
-      const role = user.roles?.find(r => r.type === roleType && r.id === roleId);
-      console.log('UserService: Found current role:', role);
-      return role || null;
+      return user.roles?.find(r => r.roleId === roleType && r.id === roleId) || null;
     }
     
     return null;
   }
 
-  async fetchUserProfile(userId: number): Promise<User | null> {   
-    const authUser: User | null = mockUsers.find(user => user.id === userId) ?? null;
-    
-    if (authUser) {
-      this.authService._currentUser.set(authUser);
-      this.setUser(authUser);
-      return authUser;
+  async fetchUserProfile(): Promise<User | null> {
+    try {
+      const authUser = await firstValueFrom(this.apiService.get<ApiResponse<User>>(`/users/me`).pipe(
+        map(response => response.data)
+      ));
+
+      if (authUser) {
+        this.setUser(authUser);
+        return authUser;
+      }
+
+      return null;
+    } catch (error) {
+      return null;
     }
-    
-    return null;
   }
   
-  logout() {
-    this.authService.signOut();
-    this.navigationService.navigateTo(['signin']);
+  async logout() {
+    await this.authService.signOut();
   }
 }

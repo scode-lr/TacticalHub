@@ -1,8 +1,9 @@
-import { Component, input, output, signal, computed } from '@angular/core';
+import { Component, input, output, signal, computed, inject } from '@angular/core';
 import { IonIcon, IonAvatar, IonImg } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { Role, RoleStatus } from '@core/models/role.model';
+import { Role, RoleStatus, RoleType } from '@core/models/role.model';
+import { TranslationService } from '@services/i18n/translation.service';
 
 @Component({
   selector: 'app-role-card',
@@ -18,6 +19,7 @@ import { Role, RoleStatus } from '@core/models/role.model';
   ]
 })
 export class RoleCardComponent {
+  private readonly translationService = inject(TranslationService);
   readonly role = input<Role | null>(null);
   readonly isAddCard = input<boolean>(false);
   readonly cardClicked = output<Role | null>();
@@ -27,14 +29,31 @@ export class RoleCardComponent {
     return roleStatus === RoleStatus.Pending || roleStatus === RoleStatus.Draft;
   });
 
-  getRoleIcon(roleName: string): string {
-    const iconMap: { [key: string]: string } = {
-      'Player': 'football-outline',
-      'Coach': 'clipboard-outline',
-      'Admin': 'shield-checkmark-outline',
-      'Manager': 'briefcase-outline'
+  getRoleDisplayName(role: Role | null | undefined): string {
+    const key = this.getRoleNameKey(role?.roleId);
+    const translated = this.translationService.instant('roles.' + key);
+    console.log('Translate', translated)
+    return role?.teamName ? `${translated} (${role.teamName})` : translated;
+  }
+
+  getRoleNameKey(roleId: RoleType | undefined): string {
+    const nameMap: { [key: number]: string } = {
+      [RoleType.Admin]: 'admin',
+      [RoleType.Coach]: 'coach',
+      [RoleType.Viewer]: 'viewer',
+      [RoleType.Guest]: 'guest'
     };
-    return iconMap[roleName] || 'person-outline';
+    return nameMap[roleId as number] ?? 'viewer';
+  }
+
+  getRoleIcon(roleId: RoleType | undefined): string {
+    const iconMap: { [key: number]: string } = {
+      [RoleType.Admin]: 'shield-checkmark-outline',
+      [RoleType.Coach]: 'clipboard-outline',
+      [RoleType.Viewer]: 'person-outline',
+      [RoleType.Guest]: 'eye-outline'
+    };
+    return iconMap[roleId as number] ?? 'person-outline';
   }
 
   onLogoError() {

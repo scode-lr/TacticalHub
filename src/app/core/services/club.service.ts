@@ -4,31 +4,26 @@ import { StorageService } from './storage.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { mockClub } from '../../../mocks/user.mock';
 import { environment } from '@environment';
+import { ApiResponse, ApiService } from './api.service';
+import { firstValueFrom, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClubService {
   private readonly storageService = inject(StorageService);
+  private readonly apiService = inject(ApiService);
 
   async fetchClubByCode(clubCode: string): Promise<Club | null> {
-    await this.delay(800);
-
-    if (mockClub.code === clubCode) {
-      return mockClub;
-    }
-
-    return null;
+    return await firstValueFrom(this.apiService.get<ApiResponse<Club>>(`/clubs/code/${clubCode}`).pipe(
+      map(response => response.data ?? null)
+    ));
   }
 
   async fetchClubById(clubId: number): Promise<Club | null> {
-    await this.delay(800);
-
-    if (mockClub.id === clubId) {
-      return mockClub;
-    }
-
-    return null;
+    return await firstValueFrom(this.apiService.get<ApiResponse<Club>>(`/clubs/${clubId}`).pipe(
+      map(response => response.data ?? null)
+    ));
   }
 
   saveClubInfo(club: Club): void {
@@ -39,12 +34,8 @@ export class ClubService {
     return this.storageService.get<Club>(STORAGE_KEYS.CLUB_INFO);
   }
 
-  getSelectedClubId(): number | null {
-    return ((environment as Record<string, unknown>)['selectedClubId'] as number) ?? null;
-  }
-
-  getClubCode(): string | null {
-    return ((environment as Record<string, unknown>)['clubId'] as string) ?? null;
+  getInternalClubId(): number | null {
+    return ((environment as Record<string, unknown>)['clubId'] as number) ?? null;
   }
 
   private delay(ms: number): Promise<void> {

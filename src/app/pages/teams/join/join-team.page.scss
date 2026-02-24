@@ -282,6 +282,7 @@
   cursor: pointer;
   transition: all 0.15s ease;
   text-align: center;
+  position: relative;
 
   &:hover {
     border-color: var(--ion-color-primary, #3880ff);
@@ -291,6 +292,39 @@
   &.selected {
     border-color: var(--ion-color-primary, #3880ff);
     background: var(--background-primary, #ffffff);
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    &:hover {
+      border-color: var(--border-light, #e5e7eb);
+      background: var(--background-secondary, #f8f9fa);
+    }
+
+    .role-icon {
+      background: var(--background-secondary, #f8f9fa);
+
+      ion-icon {
+        color: var(--text-light, #adb5bd);
+      }
+    }
+  }
+
+  .coming-soon-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--ion-color-warning, #ffc409);
+    color: var(--text-primary, #111827);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
   }
 
   .role-icon {

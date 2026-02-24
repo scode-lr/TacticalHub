@@ -61,23 +61,21 @@
             
             <div class="role-cards">
               @if (!isGuestMode()) {
-                <div 
-                  class="role-card" 
-                  [class.selected]="selectedRole() === 'Coach'"
-                  (click)="selectRole('Coach')"
-                >
+                <div class="role-card" (click)="selectRole(roleType.Coach)" [class.selected]="selectedRole() === roleType.Coach">
                   <div class="role-icon">
                     <ion-icon name="clipboard-outline"></ion-icon>
                   </div>
                   <h3>{{ 'roles.coach' | translate }}</h3>
                   <p>{{ 'joinTeam.coachDescription' | translate }}</p>
+                  <!-- <div class="coming-soon-badge">{{ 'common.comingSoon' | translate }}</div> -->
                 </div>
               }
 
               <div 
                 class="role-card" 
-                [class.selected]="selectedRole() === 'Viewer'"
-                (click)="selectRole('Viewer')"
+                [class.selected]="selectedRole() === roleType.Viewer"
+                (click)="selectRole(roleType.Viewer)"
+                [class.disabled]="hasViewerRole()"
               >
                 <div class="role-icon">
                   <ion-icon name="eye-outline"></ion-icon>
@@ -90,7 +88,7 @@
         }
 
         <!-- Team Selection Section - Only shown when Coach role is selected -->
-        @if (selectedRole() === 'Coach' && showConfirmation() && matchedTeam()) {
+        @if (selectedRole() === roleType.Coach && showConfirmation() && matchedTeam()) {
           <div class="section team-section" #teamSection>
             <h2 class="section-title">{{ 'joinTeam.selectTeam' | translate }}</h2>
             <p class="section-description">{{ 'joinTeam.teamDescription' | translate }}</p>
@@ -102,7 +100,7 @@
                   [class.selected]="selectedTeam() === team.id"
                   (click)="selectTeam(team.id)"
                 >
-                  <h3>{{ team.name }} {{ team.category }}</h3>
+                  <h3>{{ team.name }} {{ team.squadCode }}</h3>
                 </div>
               }
             </div>
@@ -110,12 +108,12 @@
         }
 
         <!-- Submit Button -->
-        @if (selectedRole() && (selectedRole() === 'Viewer' || (selectedRole() === 'Coach' && selectedTeam()))) {
+        @if (selectedRole() && (selectedRole() === roleType.Viewer || (selectedRole() === roleType.Coach && selectedTeam()))) {
           <ion-button
             expand="block"
             class="btn-primary submit-button"
             [disabled]="!isFormValid() || isSubmitting()"
-            (click)="submitJoinRequest()"
+            (click)="submitBind()"
           >
             <span>{{ buttonText() | translate }}</span>
           </ion-button>

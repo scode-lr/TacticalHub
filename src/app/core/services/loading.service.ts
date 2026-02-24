@@ -5,9 +5,10 @@ import { AuthService } from './auth.service';
 import { ClubService } from './club.service';
 import { StorageService } from './storage.service';
 import { User } from '@core/models/user.model';
-import { Role, RoleType } from '@core/models/role.model';
+import { Role, RoleStatus, RoleType } from '@core/models/role.model';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { environment } from '@environment';
+import { Club } from '@core/models';
 
 export interface LoadingState {
   messageKey: string;
@@ -37,9 +38,8 @@ export class LoadingService {
       this.redirectToSignIn();
       return;
     }
-
     if (this.isPrivateApp()) {
-      await this.loadPrivateClubForGuest(guestUser);
+      await this.fetchAndSetupGuestRole(guestUser);
       return;
     }
 
@@ -57,8 +57,9 @@ export class LoadingService {
       return;
     }
 
-    if (this.isPrivateApp()) {
-      await this.loadPrivateClubForUser();
+    if(this.isPrivateApp() && (user?.roles && user.roles.length === 1 && user.roles[0].status === RoleStatus.Active)) {
+      this.redirectToRoleHome(user.roles[0]);
+      return;
     }
 
     this.updateState('loading.allSet', 'loading.redirecting');
@@ -67,28 +68,24 @@ export class LoadingService {
     this.determineUserNavigation(user);
   }
 
-  private async loadPrivateClubForGuest(guestUser: User): Promise<void> {
-    const clubCode = this.clubService.getClubCode();
-    if (!clubCode) {
-      this.navigationService.navigateTo(['teams/join']);
-      return;
-    }
+  private redirectToRoleHome(role: Role) {
+    this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, role);
+    this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
+  }
 
-    this.updateState('loading.loadingClub', 'loading.pleaseWait');
-    const club = await this.clubService.fetchClubByCode(clubCode);
-
+  private async fetchAndSetupGuestRole(guestUser: User): Promise<void> {
+    const club = await this.fetchInternalClub();
     if (!club) {
       this.navigationService.navigateTo(['teams/join']);
       return;
     }
 
-    this.clubService.saveClubInfo(club);
-
     const guestRole: Role = {
       id: club.id,
-      name: 'Guest',
-      type: RoleType.Guest,
-      club: club,
+      clubName: club.name,
+      roleId: RoleType.Guest,
+      clubId: club.id,
+      clubLogo: club.logo,
       createdAt: new Date()
     };
 
@@ -118,30 +115,31 @@ export class LoadingService {
     }
 
     this.updateState('loading.loadingProfile', 'loading.pleaseWait');
-    // const fullUser = await this.userService.fetchUserProfile(storedUser.id);
+    const fullUser = await this.userService.fetchUserProfile();
 
-    // if (!fullUser) {
-    //   this.redirectToSignIn();
-    //   return null;
-    // }
+    if (!fullUser) {
+      this.redirectToSignIn();
+      return null;
+    }
 
     await this.delay(1000);
     this.updateState('loading.preparingWorkspace', 'loading.pleaseWait');
     await this.delay(1000);
 
-    return storedUser; // Return stored user for now, can replace with fullUser when API is ready
+    return fullUser;
   }
 
-  private async loadPrivateClubForUser(): Promise<void> {
-    const clubCode = this.clubService.getClubCode();
-    if (!clubCode) return;
+  private async fetchInternalClub(): Promise<Club | null> {
+    const clubId = this.clubService.getInternalClubId();
+    if (!clubId) return null;
 
     this.updateState('loading.loadingClub', 'loading.pleaseWait');
-    const club = await this.clubService.fetchClubByCode(clubCode);
+    const club = await this.clubService.fetchClubById(clubId);
 
     if (club) {
       this.clubService.saveClubInfo(club);
     }
+    return club
   }
 
   private determineUserNavigation(user: User): void {
@@ -152,7 +150,7 @@ export class LoadingService {
     } else if (rolesCount === 1) {
       const selectedRole = user.roles![0];
       this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, selectedRole);
-      this.navigationService.navigateTo([`/app/${selectedRole.type}/${selectedRole.id}/home`]);
+      this.navigationService.navigateTo([`/app/${selectedRole.roleId}/${selectedRole.id}/home`]);
     } else {
       this.navigationService.navigateTo(['teams/selection']);
     }
@@ -160,7 +158,6 @@ export class LoadingService {
 
   private redirectToSignIn(): void {
     this.authService.signOut();
-    this.navigationService.navigateTo(['auth/signin']);
   }
 
   private isPrivateApp(): boolean {
