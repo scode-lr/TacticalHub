@@ -31,8 +31,7 @@ export class LoadingService {
   });
 
   async handleGuestAccess(): Promise<void> {
-    await this.delay(1000);
-
+    console.log('Handling guest access');
     const guestUser: User | null = this.userService.getCurrentUser();
     if (!guestUser) {
       this.redirectToSignIn();

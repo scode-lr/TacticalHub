@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -18,20 +18,21 @@ import { ActivatedRoute } from '@angular/router';
     TranslatePipe
   ]
 })
-export class LoadingPage implements OnInit {
+export class LoadingPage {
   private readonly loadingService = inject(LoadingService);
   private readonly activatedRoute = inject(ActivatedRoute);
 
   readonly loadingMessageKey = computed(() => this.loadingService.state().messageKey);
   readonly loadingSubMessageKey = computed(() => this.loadingService.state().subMessageKey);
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     const isGuest = this.activatedRoute.snapshot.queryParamMap.get('guest') === 'true';
-    console.log('LoadingPage initialized with guest access:', isGuest);
     if (isGuest) {
       await this.loadingService.handleGuestAccess();
     } else {
       await this.loadingService.handleUserAccess();
     }
   }
+
+  
 }

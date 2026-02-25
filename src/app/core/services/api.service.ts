@@ -37,8 +37,10 @@ export class ApiService {
   private buildHeaders(options?: ApiRequestOptions): HttpHeaders {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
     });
+    console.log('Building headers with options:', options);
 
     if (options?.headers) {
       const customHeaders = options.headers instanceof HttpHeaders 
