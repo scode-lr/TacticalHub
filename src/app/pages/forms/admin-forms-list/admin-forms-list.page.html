@@ -1,0 +1,124 @@
+<div class="page-container admin-forms-list-page">
+  <div class="section-header">
+    <div class="header-row">
+      <h1 class="section-title">{{ 'forms.admin.title' | translate }}</h1>
+      <ion-button (click)="openCreateModal()">
+        <ion-icon slot="start" name="add-outline"></ion-icon>
+        {{ 'forms.admin.createForm' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  } @else if (error()) {
+    <div class="empty-state">
+      <ion-icon name="alert-circle-outline" class="empty-icon"></ion-icon>
+      <p class="empty-description">{{ error()! | translate }}</p>
+    </div>
+  } @else if (forms().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <h2 class="empty-title">{{ 'forms.admin.empty' | translate }}</h2>
+      <p class="empty-description">{{ 'forms.admin.emptyDescription' | translate }}</p>
+    </div>
+  } @else {
+    <div class="forms-grid">
+      @for (form of forms(); track form.id) {
+        <div class="form-card" (click)="openFormDetail(form.id)">
+          <div class="form-card-header">
+            <ion-icon name="document-text-outline" class="form-icon"></ion-icon>
+            <span class="form-status" [class.active]="isActive(form)">
+              {{ ('forms.status.' + form.status) | translate }}
+            </span>
+          </div>
+          <div class="form-card-body">
+            <h3 class="form-name">{{ form.name }}</h3>
+            @if (form.description) {
+              <p class="form-description">{{ form.description }}</p>
+            }
+            <span class="form-action-badge">
+              <ion-icon name="flash-outline"></ion-icon>
+              {{ ('forms.actions.' + form.action) | translate }}
+            </span>
+          </div>
+          @if (form.fromDate || form.toDate) {
+            <div class="form-card-footer">
+              @if (form.fromDate) {
+                <span class="form-date">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ form.fromDate | date:'dd/MM/yyyy' }}
+                </span>
+              }
+              @if (form.toDate) {
+                <span class="form-date">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ form.toDate | date:'dd/MM/yyyy' }}
+                </span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<ion-modal [isOpen]="showCreateModal()" (didDismiss)="closeCreateModal()">
+  <ng-template>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>{{ 'forms.admin.createFormTitle' | translate }}</h2>
+        <ion-button fill="clear" (click)="closeCreateModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <form [formGroup]="createForm" (ngSubmit)="onCreateForm()" class="modal-form">
+        <div class="field-group">
+          <label class="field-label">
+            {{ 'forms.fields.name' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <ion-input formControlName="name" type="text" fill="outline" [placeholder]="'forms.fields.namePlaceholder' | translate"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">{{ 'forms.fields.description' | translate }}</label>
+          <ion-input formControlName="description" type="text" fill="outline" [placeholder]="'forms.fields.descriptionPlaceholder' | translate"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">{{ 'forms.fields.fromDate' | translate }}</label>
+          <ion-input formControlName="fromDate" type="date" fill="outline"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">{{ 'forms.fields.toDate' | translate }}</label>
+          <ion-input formControlName="toDate" type="date" fill="outline"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">
+            {{ 'forms.fields.action' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <ion-select formControlName="action" fill="outline" [placeholder]="'forms.fields.actionPlaceholder' | translate">
+            @for (action of formActions; track action) {
+              <ion-select-option [value]="action">{{ ('forms.actions.' + action) | translate }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
+        <div class="modal-actions">
+          <ion-button fill="outline" expand="block" (click)="closeCreateModal()" [disabled]="isCreating()">
+            {{ 'common.cancel' | translate }}
+          </ion-button>
+          <ion-button type="submit" expand="block" [disabled]="isCreating()">
+            @if (isCreating()) {
+              <ion-spinner name="crescent" slot="start"></ion-spinner>
+            }
+            {{ 'common.save' | translate }}
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</ion-modal>

@@ -42,6 +42,7 @@ export class AdminPage implements OnInit {
       { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
+      { id: 'forms', label: 'admin.menu.forms', icon: 'document-text-outline', route: 'forms' },
       { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
       { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
     ]
@@ -59,6 +60,9 @@ export class AdminPage implements OnInit {
       }
       if (this.router.url.includes('/matches')) {
         return `app/${roleType}/${roleId}/matches`;
+      }
+      if (this.router.url.includes('/forms')) {
+        return `app/${roleType}/${roleId}/forms`;
       }
     }
     return `app/${roleType}/${roleId}/home`;
@@ -88,7 +92,8 @@ export class AdminPage implements OnInit {
     const url = this.router.url;
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
-                     url.includes('/teams/') && url.split('/').length > 5;
+                     url.includes('/teams/') && url.split('/').length > 5 ||
+                     url.includes('/forms/') && url.split('/').length > 5;
     this.isDetailPage.set(isDetail);
   }
   

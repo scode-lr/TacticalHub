@@ -186,7 +186,8 @@ export const sharedTranslations = {
       teams: 'Equipos',
       club: 'Club',
       matches: 'Partidos',
-      users: 'Usuarios'
+      users: 'Usuarios',
+      forms: 'Formularios'
     },
     description: {
       home: 'Panel de administración',
@@ -198,10 +199,96 @@ export const sharedTranslations = {
       teams: 'Gestionar equipos y plantillas',
       club: 'Editar información del club',
       matches: 'Gestionar calendarios de partidos',
-      users: 'Gestión de usuarios y permisos'
+      users: 'Gestión de usuarios y permisos',
+      forms: 'Gestionar formularios personalizados'
     },
     parameters: {
       title: 'Parámetros',
+    }
+  },
+  forms: {
+    list: {
+      title: 'Formularios',
+      description: 'Rellena los formularios disponibles de tu club',
+      empty: 'No hay formularios disponibles',
+      emptyDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
+    },
+    submit: {
+      success: '¡Formulario enviado correctamente!'
+    },
+    status: {
+      draft: 'Borrador',
+      active: 'Activo',
+      closed: 'Cerrado'
+    },
+    actions: {
+      none: 'Ninguna',
+      register_user: 'Registrar usuario',
+      create_payment: 'Crear pago',
+      trigger_workflow: 'Activar flujo de trabajo'
+    },
+    fieldTypes: {
+      text: 'Texto',
+      number: 'Número',
+      date: 'Fecha',
+      select: 'Selección',
+      checkbox: 'Casilla'
+    },
+    submissionStatus: {
+      draft: 'Borrador',
+      submitted: 'Enviado'
+    },
+    fields: {
+      name: 'Nombre',
+      namePlaceholder: 'Introduce el nombre del formulario',
+      description: 'Descripción',
+      descriptionPlaceholder: 'Introduce una descripción (opcional)',
+      fromDate: 'Fecha de inicio',
+      toDate: 'Fecha de fin',
+      action: 'Acción',
+      actionPlaceholder: 'Seleccionar acción',
+      key: 'Clave del campo',
+      keyPlaceholder: 'p.ej. nombre',
+      label: 'Etiqueta',
+      labelPlaceholder: 'Introduce la etiqueta del campo',
+      type: 'Tipo',
+      order: 'Orden',
+      maxLength: 'Longitud máxima',
+      isRequired: 'Campo obligatorio'
+    },
+    admin: {
+      title: 'Gestión de formularios',
+      createForm: 'Crear formulario',
+      createFormTitle: 'Crear nuevo formulario',
+      createSuccess: '¡Formulario creado correctamente!',
+      addFieldSuccess: '¡Campo añadido correctamente!',
+      empty: 'No hay formularios aún',
+      emptyDescription: 'Crea tu primer formulario para empezar a recopilar datos.',
+      tabs: {
+        fields: 'Campos',
+        submissions: 'Envíos'
+      },
+      fields: {
+        title: 'Campos del formulario',
+        add: 'Añadir campo',
+        addTitle: 'Añadir nuevo campo',
+        empty: 'No hay campos aún',
+        emptyDescription: 'Añade campos para definir qué datos recopilar.',
+        required: 'Obligatorio'
+      },
+      submissions: {
+        title: 'Envíos',
+        empty: 'No hay envíos aún',
+        emptyDescription: 'Los envíos aparecerán aquí cuando los usuarios rellenen el formulario.',
+        userId: 'Usuario',
+        total: 'Total'
+      }
+    },
+    errors: {
+      loadError: 'No se pudieron cargar los formularios. Inténtalo de nuevo.',
+      submitError: 'No se pudo enviar el formulario. Inténtalo de nuevo.',
+      createError: 'No se pudo crear el formulario. Inténtalo de nuevo.',
+      addFieldError: 'No se pudo añadir el campo. Inténtalo de nuevo.'
     }
   },
   modals: {
@@ -247,6 +334,7 @@ export const sharedTranslations = {
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
       partners: 'Socios',
+      forms: 'Formularios',
       more: 'Más'
     },
     description: {
@@ -256,7 +344,8 @@ export const sharedTranslations = {
       information: 'Información y recursos del club',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
-      partners: 'Nuestros socios y patrocinadores del club'
+      partners: 'Nuestros socios y patrocinadores del club',
+      forms: 'Rellena los formularios del club'
     },
     home: {
       welcome: '¡Bienvenido al club!',
