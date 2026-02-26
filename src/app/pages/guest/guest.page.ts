@@ -35,7 +35,6 @@ export class GuestPage implements OnInit {
   readonly guestMenuConfig: MenuConfig = {
     role: RoleType.Guest,
     items: [
-      { id: 'home', label: 'guest.menu.home', icon: 'home-outline', route: 'home' },
       { id: 'news', label: 'guest.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'matches', label: 'guest.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'guest.menu.information', icon: 'information-circle-outline', route: 'information' },
