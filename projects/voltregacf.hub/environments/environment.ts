@@ -2,7 +2,7 @@ import { PROJECT_CONFIG } from '../config';
 
 export const environment = {
   production: false,
-  apiUrl: 'https://foraminiferous-ethnocentric-collette.ngrok-free.dev',
+  apiUrl: 'http://localhost:5197',
   version: '1.0.0',
   ...PROJECT_CONFIG
 };

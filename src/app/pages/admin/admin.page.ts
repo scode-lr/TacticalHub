@@ -44,6 +44,8 @@ export class AdminPage implements OnInit {
       { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
       { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
       { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
+      { id: 'forms', label: 'admin.menu.forms', icon: 'document-text-outline', route: 'forms' },
+      { id: 'settings-forms', label: 'admin.menu.settingsForms', icon: 'settings-outline', route: 'settings-forms' },
     ]
   };
   

@@ -188,7 +188,9 @@ export const sharedTranslations = {
       teams: 'Teams',
       club: 'Club',
       matches: 'Matches',
-      users: 'Users'
+      users: 'Users',
+      forms: 'Forms',
+      settingsForms: 'Form Settings'
     },
     description: {
       home: 'Admin dashboard',
@@ -200,7 +202,9 @@ export const sharedTranslations = {
       teams: 'Manage teams and rosters',
       club: 'Edit club information',
       matches: 'Manage match schedules',
-      users: 'User management and permissions'
+      users: 'User management and permissions',
+      forms: 'Manage forms',
+      settingsForms: 'Configure form settings'
     },
     parameters: {
       title: 'Parameters',

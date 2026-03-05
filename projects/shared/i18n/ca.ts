@@ -186,7 +186,9 @@ export const sharedTranslations = {
       teams: 'Equips',
       club: 'Club',
       matches: 'Partits',
-      users: 'Usuaris'
+      users: 'Usuaris',
+      forms: 'Formularis',
+      settingsForms: 'Configuració de formularis'
     },
     description: {
       home: 'Panell d\'administració',
@@ -198,7 +200,9 @@ export const sharedTranslations = {
       teams: 'Gestionar equips i plantilles',
       club: 'Editar informació del club',
       matches: 'Gestionar calendaris de partits',
-      users: 'Gestió d\'usuaris i permisos'
+      users: 'Gestió d\'usuaris i permisos',
+      forms: 'Gestionar formularis',
+      settingsForms: 'Configurar ajustos de formularis'
     },
     parameters: {
       title: 'Paràmetres',
