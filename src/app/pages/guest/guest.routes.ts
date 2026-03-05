@@ -33,6 +33,10 @@ export const guestRoutes: Routes = [
         loadComponent: () => import('../matches/matches.page').then(m => m.MatchesPage)
       },
       {
+        path: 'matches/:matchId',
+        loadComponent: () => import('../match-detail/match-detail.page').then(m => m.MatchDetailPage)
+      },
+      {
         path: 'partners',
         loadComponent: () => import('../partners/partners.page').then(m => m.PartnersPage)
       }
