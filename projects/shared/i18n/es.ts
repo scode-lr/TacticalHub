@@ -206,6 +206,62 @@ export const sharedTranslations = {
     },
     parameters: {
       title: 'Parámetros',
+    },
+    settingsForms: {
+      addForm: 'Añadir Formulario',
+      newForm: 'Nuevo Formulario',
+      editForm: 'Editar Formulario',
+      noForms: 'Sin formularios',
+      noFormsDescription: 'Crea tu primer formulario para comenzar',
+      period: 'Período',
+      action: 'Acción',
+      updated: 'Actualizado',
+      status: {
+        AC: 'Activo',
+        I: 'Inactivo',
+        P: 'Pendiente',
+        D: 'Borrador',
+        AR: 'Archivado'
+      },
+      fields: {
+        name: 'Nombre',
+        namePlaceholder: 'Introduce el nombre del formulario',
+        nameRequired: 'El nombre es obligatorio',
+        description: 'Descripción',
+        descriptionPlaceholder: 'Introduce una descripción',
+        fromDate: 'Fecha de inicio',
+        toDate: 'Fecha de fin',
+        status: 'Estado',
+        action: 'Acción',
+        actionPlaceholder: 'ej. registro'
+      },
+      section: {
+        general: 'General',
+        fields: 'Campos del formulario'
+      },
+      formFields: {
+        add: 'Añadir campo',
+        empty: 'Sin campos. Añade el primero para definir la estructura del formulario.',
+        key: 'Clave',
+        label: 'Etiqueta',
+        type: 'Tipo',
+        required: 'Obligatorio',
+        description: 'Descripción',
+        descriptionPlaceholder: 'Descripción opcional',
+        length: 'Long. máx.',
+        types: {
+          text: 'Texto',
+          number: 'Número',
+          date: 'Fecha',
+          datetime: 'Fecha y hora',
+          email: 'Email',
+          phone: 'Teléfono',
+          textarea: 'Área de texto',
+          boolean: 'Sí / No',
+          select: 'Desplegable',
+          file: 'Archivo'
+        }
+      }
     }
   },
   modals: {

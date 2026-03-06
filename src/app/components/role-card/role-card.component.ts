@@ -2,8 +2,9 @@ import { Component, input, output, signal, computed, inject } from '@angular/cor
 import { IonIcon, IonAvatar, IonImg } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { Role, RoleStatus, RoleType } from '@core/models/role.model';
+import { Role, RoleType } from '@core/models/role.model';
 import { TranslationService } from '@services/i18n/translation.service';
+import { AppStatus } from '@core/models/app-status.model';
 
 @Component({
   selector: 'app-role-card',
@@ -26,7 +27,7 @@ export class RoleCardComponent {
   readonly showDefaultIcon = signal<boolean>(false);
   readonly isPending = computed(() => {
     const roleStatus = this.role()?.status;
-    return roleStatus === RoleStatus.Pending || roleStatus === RoleStatus.Draft;
+    return roleStatus === AppStatus.Pending || roleStatus === AppStatus.Draft;
   });
 
   getRoleDisplayName(role: Role | null | undefined): string {

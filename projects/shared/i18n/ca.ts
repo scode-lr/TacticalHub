@@ -206,6 +206,62 @@ export const sharedTranslations = {
     },
     parameters: {
       title: 'Paràmetres',
+    },
+    settingsForms: {
+      addForm: 'Afegir Formulari',
+      newForm: 'Nou Formulari',
+      editForm: 'Editar Formulari',
+      noForms: 'Sense formularis',
+      noFormsDescription: 'Crea el teu primer formulari per començar',
+      period: 'Període',
+      action: 'Acció',
+      updated: 'Actualitzat',
+      status: {
+        AC: 'Actiu',
+        I: 'Inactiu',
+        P: 'Pendent',
+        D: 'Esborrany',
+        AR: 'Arxivat'
+      },
+      fields: {
+        name: 'Nom',
+        namePlaceholder: 'Introdueix el nom del formulari',
+        nameRequired: 'El nom és obligatori',
+        description: 'Descripció',
+        descriptionPlaceholder: 'Introdueix una descripció',
+        fromDate: 'Data d\'inici',
+        toDate: 'Data de fi',
+        status: 'Estat',
+        action: 'Acció',
+        actionPlaceholder: 'ex. registre'
+      },
+      section: {
+        general: 'General',
+        fields: 'Camps del formulari'
+      },
+      formFields: {
+        add: 'Afegir camp',
+        empty: 'Sense camps. Afegeix el primer per definir l\'estructura del formulari.',
+        key: 'Clau',
+        label: 'Etiqueta',
+        type: 'Tipus',
+        required: 'Obligatori',
+        description: 'Descripció',
+        descriptionPlaceholder: 'Descripció opcional',
+        length: 'Long. màx.',
+        types: {
+          text: 'Text',
+          number: 'Nombre',
+          date: 'Data',
+          datetime: 'Data i hora',
+          email: 'Email',
+          phone: 'Telèfon',
+          textarea: 'Àrea de text',
+          boolean: 'Sí / No',
+          select: 'Desplegable',
+          file: 'Arxiu'
+        }
+      }
     }
   },
   modals: {

@@ -208,6 +208,62 @@ export const sharedTranslations = {
     },
     parameters: {
       title: 'Parameters',
+    },
+    settingsForms: {
+      addForm: 'Add Form',
+      newForm: 'New Form',
+      editForm: 'Edit Form',
+      noForms: 'No forms yet',
+      noFormsDescription: 'Create your first form to get started',
+      period: 'Period',
+      action: 'Action',
+      updated: 'Updated',
+      status: {
+        AC: 'Active',
+        I: 'Inactive',
+        P: 'Pending',
+        D: 'Draft',
+        AR: 'Archived'
+      },
+      fields: {
+        name: 'Name',
+        namePlaceholder: 'Enter form name',
+        nameRequired: 'Name is required',
+        description: 'Description',
+        descriptionPlaceholder: 'Enter a description',
+        fromDate: 'Start Date',
+        toDate: 'End Date',
+        status: 'Status',
+        action: 'Action',
+        actionPlaceholder: 'e.g. registration'
+      },
+      section: {
+        general: 'General',
+        fields: 'Form Fields'
+      },
+      formFields: {
+        add: 'Add Field',
+        empty: 'No fields yet. Add your first field to define the form structure.',
+        key: 'Key',
+        label: 'Label',
+        type: 'Type',
+        required: 'Required',
+        description: 'Description',
+        descriptionPlaceholder: 'Optional description',
+        length: 'Max length',
+        types: {
+          text: 'Text',
+          number: 'Number',
+          date: 'Date',
+          datetime: 'Date & Time',
+          email: 'Email',
+          phone: 'Phone',
+          textarea: 'Textarea',
+          boolean: 'Yes / No',
+          select: 'Dropdown',
+          file: 'File'
+        }
+      }
     }
   },
   modals: {

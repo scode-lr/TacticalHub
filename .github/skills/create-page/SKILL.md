@@ -1,3 +1,10 @@
+---
+name: create-page
+description: Describe what this skill does and when to use it. Include keywords that help agents identify relevant tasks.
+---
+
+<!-- Tip: Use /create-skill in chat to generate content with agent assistance -->
+
 # Create Page — Step-by-step Guide
 
 Use this guide whenever a new page needs to be added to a role section (admin, viewer, coach, etc.).

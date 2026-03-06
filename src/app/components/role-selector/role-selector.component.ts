@@ -18,9 +18,8 @@ import { StorageService } from '@core/services/storage.service';
 import { NavigationService } from '@services/navigation.service';
 import { TranslationService } from '@services/i18n/translation.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
-import { Role, RoleType, RoleStatus } from '@core/models/role.model';
+import { Role, RoleType } from '@core/models/role.model';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
-import { environment } from '@environment';
 
 
 @Component({

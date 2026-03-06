@@ -5,10 +5,10 @@ import { AuthService } from './auth.service';
 import { ClubService } from './club.service';
 import { StorageService } from './storage.service';
 import { User } from '@core/models/user.model';
-import { Role, RoleStatus, RoleType } from '@core/models/role.model';
+import { Role, RoleType } from '@core/models/role.model';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { environment } from '@environment';
-import { Club } from '@core/models';
+import { AppStatus, Club } from '@core/models';
 
 export interface LoadingState {
   messageKey: string;
@@ -56,7 +56,7 @@ export class LoadingService {
       return;
     }
 
-    if(this.isPrivateApp() && (user?.roles && user.roles.length === 1 && user.roles[0].status === RoleStatus.Active)) {
+    if(this.isPrivateApp() && (user?.roles && user.roles.length === 1 && user.roles[0].status === AppStatus.Active)) {
       this.redirectToRoleHome(user.roles[0]);
       return;
     }
