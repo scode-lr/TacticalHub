@@ -4,48 +4,18 @@
       <h1 class="section-title">{{ 'admin.menu.settingsForms' | translate }}</h1>
       <p class="section-subtitle">{{ 'admin.description.settingsForms' | translate }}</p>
     </div>
+  @if (forms().length > 0) {
     <button class="btn-add" (click)="addForm()">
       <ion-icon name="add-outline"></ion-icon>
       {{ 'admin.settingsForms.addForm' | translate }}
     </button>
+  }
   </div>
 
   @if (forms().length > 0) {
     <div class="forms-grid">
-      @for (form of forms(); track form.id) {
-        <div class="form-card">
-          <div class="form-card-header">
-            <h3 class="form-name">{{ form.name }}</h3>
-            <span class="status-badge status-{{ form.status }}">
-              {{ 'admin.settingsForms.status.' + form.status | translate }}
-            </span>
-          </div>
-          <div class="form-card-body">
-            <p class="form-description">{{ form.description }}</p>
-            <div class="form-meta">
-              <div class="meta-item">
-                <ion-icon name="flash-outline" class="meta-icon"></ion-icon>
-                <span class="meta-label">{{ 'admin.settingsForms.action' | translate }}:</span>
-                <span class="meta-value">{{ form.action }}</span>
-              </div>
-              <div class="meta-item">
-                <ion-icon name="calendar-outline" class="meta-icon"></ion-icon>
-                <span class="meta-label">{{ 'admin.settingsForms.period' | translate }}:</span>
-                <span class="meta-value">
-                  {{ form.fromDate | date:'dd/MM/yyyy' }} &rarr; {{ form.toDate | date:'dd/MM/yyyy' }}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="form-card-footer">
-            <span class="form-updated">
-              {{ 'admin.settingsForms.updated' | translate }}: {{ form.updatedAt | date:'dd/MM/yyyy' }}
-            </span>
-            <button class="edit-button" (click)="editForm(form)">
-              <ion-icon name="create-outline"></ion-icon>
-            </button>
-          </div>
-        </div>
+      @for (form of forms(); track form.id; let i = $index) {
+        <app-form-header [form]="form" [index]="i" [editable]="true" />
       }
     </div>
   } @else {
