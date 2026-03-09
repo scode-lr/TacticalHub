@@ -5,6 +5,9 @@
   overflow: hidden;
   transition: all 0.2s ease;
   animation: fadeIn 0.3s ease backwards;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &:hover {
     border-color: var(--ion-color-primary, #3880ff);
@@ -71,6 +74,7 @@
 
 .form-card-body {
   padding: 1.25rem 1.5rem;
+  flex: 1;
 }
 
 .form-description {
@@ -78,6 +82,10 @@
   font-size: 0.875rem;
   color: var(--text-secondary, #6b7280);
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .form-meta {
@@ -144,7 +152,6 @@
       font-size: 1rem;
       color: var(--text-secondary, #6b7280);
     }
-
   }
 
   &--answer {

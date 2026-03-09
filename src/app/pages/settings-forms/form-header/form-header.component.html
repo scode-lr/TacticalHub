@@ -11,13 +11,17 @@
       <div class="meta-item">
         <ion-icon name="flash-outline" class="meta-icon"></ion-icon>
         <span class="meta-label">{{ 'admin.settingsForms.action' | translate }}:</span>
-        <span class="meta-value">{{ form().action }}</span>
+        <span class="meta-value">{{ 'admin.settingsForms.actions.' + form().action | translate }}</span>
       </div>
       <div class="meta-item">
         <ion-icon name="calendar-outline" class="meta-icon"></ion-icon>
         <span class="meta-label">{{ 'admin.settingsForms.period' | translate }}:</span>
         <span class="meta-value">
-          {{ form().fromDate | date:'dd/MM/yyyy' }} &rarr; {{ form().toDate | date:'dd/MM/yyyy' }}
+          @if (form().fromDate || form().toDate) {
+            {{ form().fromDate | date:'dd/MM/yyyy' }} &rarr; {{ form().toDate | date:'dd/MM/yyyy' }}
+          } @else {
+            {{ 'admin.settingsForms.periodAlways' | translate }}
+          }
         </span>
       </div>
     </div>

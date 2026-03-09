@@ -216,6 +216,7 @@ export const sharedTranslations = {
       noForms: 'No forms yet',
       noFormsDescription: 'Create your first form to get started',
       period: 'Period',
+      periodAlways: 'Always',
       action: 'Action',
       updated: 'Updated',
       status: {
@@ -224,6 +225,11 @@ export const sharedTranslations = {
         P: 'Pending',
         D: 'Draft',
         AR: 'Archived'
+      },
+      actions: {
+        simple: 'Simple',
+        'register-player': 'Register player',
+        'become-member': 'Become member'
       },
       fields: {
         name: 'Name',
@@ -234,8 +240,7 @@ export const sharedTranslations = {
         fromDate: 'Start Date',
         toDate: 'End Date',
         status: 'Status',
-        action: 'Action',
-        actionPlaceholder: 'e.g. registration'
+        action: 'Action'
       },
       section: {
         general: 'General',

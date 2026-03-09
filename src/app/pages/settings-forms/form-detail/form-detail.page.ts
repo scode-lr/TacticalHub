@@ -7,8 +7,10 @@ import { NavigationService } from '@services/navigation.service';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
 import { FormFieldType } from '@models/form-field.model';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { addIcons } from 'ionicons';
-import { arrowBackOutline, saveOutline, addOutline, trashOutline } from 'ionicons/icons';
+import { saveOutline, addOutline, trashOutline } from 'ionicons/icons';
+import { FormAction } from '@core/models/form-action.enum';
 
 interface HeaderFormControls {
   name: FormControl<string>;
@@ -25,7 +27,7 @@ interface HeaderFormControls {
   templateUrl: './form-detail.page.html',
   styleUrls: ['./form-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IonIcon, TranslatePipe]
+  imports: [CommonModule, ReactiveFormsModule, IonIcon, TranslatePipe, BackButtonComponent]
 })
 export class FormDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
@@ -46,6 +48,8 @@ export class FormDetailPage implements OnInit {
     AppStatus.Archived
   ];
 
+  readonly actionOptions = Object.values(FormAction);
+
   readonly fieldTypeOptions: FormFieldType[] = [
     'text', 'number', 'date', 'datetime', 'email', 'phone', 'textarea', 'boolean', 'select', 'file'
   ];
@@ -57,7 +61,7 @@ export class FormDetailPage implements OnInit {
   }
 
   constructor() {
-    addIcons({ arrowBackOutline, saveOutline, addOutline, trashOutline });
+    addIcons({ saveOutline, addOutline, trashOutline });
   }
 
   ngOnInit(): void {
@@ -110,16 +114,16 @@ export class FormDetailPage implements OnInit {
     this.form = this.fb.group({
       name: [existing?.name ?? '', [Validators.required, Validators.maxLength(100)]],
       description: [existing?.description ?? '', Validators.maxLength(500)],
-      fromDate: [existing ? this.toInputDate(existing.fromDate) : '', Validators.required],
-      toDate: [existing ? this.toInputDate(existing.toDate) : '', Validators.required],
+      fromDate: [existing ? this.toInputDate(existing.fromDate) : ''],
+      toDate: [existing ? this.toInputDate(existing.toDate) : ''],
       status: [existing?.status ?? AppStatus.Draft, Validators.required],
       action: [existing?.action ?? '', Validators.required],
       fields: this.fb.array([])
     });
   }
 
-  private toInputDate(date: Date): string {
-    return new Date(date).toISOString().split('T')[0];
+  private toInputDate(date: Date | null): string {
+    return date ? new Date(date).toISOString().split('T')[0] : '';
   }
 
   private getMockForm(id: string): FormHeader | null {
@@ -132,7 +136,7 @@ export class FormDetailPage implements OnInit {
         fromDate: new Date('2025-01-01'),
         toDate: new Date('2025-12-31'),
         status: AppStatus.Active,
-        action: 'registration',
+        action: FormAction.BecomeMember,
         settingsJson: {},
         createdAt: new Date('2024-12-01'),
         updatedAt: new Date('2025-01-15')
@@ -145,7 +149,7 @@ export class FormDetailPage implements OnInit {
         fromDate: new Date('2025-06-01'),
         toDate: new Date('2025-08-31'),
         status: AppStatus.Draft,
-        action: 'enrollment',
+        action: FormAction.RegisterPlayer,
         settingsJson: {},
         createdAt: new Date('2025-02-01'),
         updatedAt: new Date('2025-02-10')

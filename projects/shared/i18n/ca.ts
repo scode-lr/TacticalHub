@@ -214,6 +214,7 @@ export const sharedTranslations = {
       noForms: 'Sense formularis',
       noFormsDescription: 'Crea el teu primer formulari per començar',
       period: 'Període',
+      periodAlways: 'Sempre',
       action: 'Acció',
       updated: 'Actualitzat',
       status: {
@@ -222,6 +223,11 @@ export const sharedTranslations = {
         P: 'Pendent',
         D: 'Esborrany',
         AR: 'Arxivat'
+      },
+      actions: {
+        simple: 'Simple',
+        'register-player': 'Registrar jugador',
+        'become-member': 'Fer-se soci'
       },
       fields: {
         name: 'Nom',
@@ -232,8 +238,7 @@ export const sharedTranslations = {
         fromDate: 'Data d\'inici',
         toDate: 'Data de fi',
         status: 'Estat',
-        action: 'Acció',
-        actionPlaceholder: 'ex. registre'
+        action: 'Acció'
       },
       section: {
         general: 'General',

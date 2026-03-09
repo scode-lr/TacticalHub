@@ -214,6 +214,7 @@ export const sharedTranslations = {
       noForms: 'Sin formularios',
       noFormsDescription: 'Crea tu primer formulario para comenzar',
       period: 'Período',
+      periodAlways: 'Siempre',
       action: 'Acción',
       updated: 'Actualizado',
       status: {
@@ -222,6 +223,11 @@ export const sharedTranslations = {
         P: 'Pendiente',
         D: 'Borrador',
         AR: 'Archivado'
+      },
+      actions: {
+        simple: 'Simple',
+        'register-player': 'Registrar jugador',
+        'become-member': 'Hacerse socio'
       },
       fields: {
         name: 'Nombre',
@@ -232,8 +238,7 @@ export const sharedTranslations = {
         fromDate: 'Fecha de inicio',
         toDate: 'Fecha de fin',
         status: 'Estado',
-        action: 'Acción',
-        actionPlaceholder: 'ej. registro'
+        action: 'Acción'
       },
       section: {
         general: 'General',

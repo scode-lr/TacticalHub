@@ -1,8 +1,6 @@
 <div class="page-container-narrow">
   <div class="detail-header">
-    <button class="btn-back" (click)="goBack()">
-      <ion-icon name="arrow-back-outline"></ion-icon>
-    </button>
+    <app-back-button />
     <h1 class="detail-title">{{ pageTitle() | translate }}</h1>
   </div>
 
@@ -48,7 +46,6 @@
           <div class="field-group">
             <label class="field-label" for="fromDate">
               {{ 'admin.settingsForms.fields.fromDate' | translate }}
-              <span class="required-mark">*</span>
             </label>
             <input
               id="fromDate"
@@ -61,7 +58,6 @@
           <div class="field-group">
             <label class="field-label" for="toDate">
               {{ 'admin.settingsForms.fields.toDate' | translate }}
-              <span class="required-mark">*</span>
             </label>
             <input
               id="toDate"
@@ -92,14 +88,18 @@
               {{ 'admin.settingsForms.fields.action' | translate }}
               <span class="required-mark">*</span>
             </label>
-            <input
+            <select
               id="action"
-              type="text"
-              class="field-input"
+              class="field-select"
               [class.field-input--error]="ctrl.action.invalid && ctrl.action.touched"
               formControlName="action"
-              [placeholder]="'admin.settingsForms.fields.actionPlaceholder' | translate"
-            />
+            >
+              @for (option of actionOptions; track option) {
+                <option [value]="option">
+                  {{ 'admin.settingsForms.actions.' + option | translate }}
+                </option>
+              }
+            </select>
           </div>
         </div>
       </div>
