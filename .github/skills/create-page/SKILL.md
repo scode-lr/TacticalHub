@@ -115,6 +115,39 @@ description: {
 
 ---
 
+## Detail pages (new/edit)
+
+When a page is a **detail page** (e.g. `*-detail`, `*-new`, `*-edit`) that allows navigating back:
+
+1. Add `<app-back-button />` as the first child of the header `<div class="detail-header">`.
+2. Import `BackButtonComponent` from `@components/back-button/back-button.component` in the component.
+3. Do **not** add a manual back button or inject `NavigationService` just for navigation — the component handles it.
+
+**Template pattern:**
+```html
+<div class="page-container-narrow">
+  <div class="detail-header">
+    <app-back-button />
+    <h1 class="detail-title">{{ pageTitle() | translate }}</h1>
+  </div>
+  <!-- form / content -->
+</div>
+```
+
+**Component import:**
+```typescript
+import { BackButtonComponent } from '@components/back-button/back-button.component';
+
+@Component({
+  // ...
+  imports: [CommonModule, TranslatePipe, BackButtonComponent]
+})
+```
+
+> The `BackButtonComponent` is automatically hidden on mobile (≤ 768px) — no extra CSS needed.
+
+---
+
 ## Checklist
 
 - [ ] `src/app/pages/<page-name>/<page-name>.page.ts` created

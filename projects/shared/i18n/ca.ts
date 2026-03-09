@@ -254,6 +254,10 @@ export const sharedTranslations = {
         description: 'Descripció',
         descriptionPlaceholder: 'Descripció opcional',
         length: 'Long. màx.',
+        options: 'Opcions',
+        addOption: 'Afegir opció',
+        optionsEmpty: 'Sense opcions. Afegeix-ne almenys una.',
+        optionPlaceholder: 'Valor de l\'opció',
         types: {
           text: 'Text',
           number: 'Nombre',
@@ -262,7 +266,7 @@ export const sharedTranslations = {
           email: 'Email',
           phone: 'Telèfon',
           textarea: 'Àrea de text',
-          boolean: 'Sí / No',
+          boolean: 'Boolean',
           select: 'Desplegable',
           file: 'Arxiu'
         }

@@ -256,6 +256,10 @@ export const sharedTranslations = {
         description: 'Description',
         descriptionPlaceholder: 'Optional description',
         length: 'Max length',
+        options: 'Options',
+        addOption: 'Add option',
+        optionsEmpty: 'No options yet. Add at least one.',
+        optionPlaceholder: 'Option value',
         types: {
           text: 'Text',
           number: 'Number',
@@ -264,7 +268,7 @@ export const sharedTranslations = {
           email: 'Email',
           phone: 'Phone',
           textarea: 'Textarea',
-          boolean: 'Yes / No',
+          boolean: 'Boolean',
           select: 'Dropdown',
           file: 'File'
         }
