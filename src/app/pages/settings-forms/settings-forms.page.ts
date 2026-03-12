@@ -9,6 +9,8 @@ import { FormAction } from '@models/form-action.enum';
 import { FormHeaderComponent } from './form-header/form-header.component';
 import { addIcons } from 'ionicons';
 import { addOutline, documentTextOutline } from 'ionicons/icons';
+import { FormService } from '@services/form.service';
+import { ClubService } from '@services/club.service';
 
 @Component({
   selector: 'app-settings-forms',
@@ -19,38 +21,21 @@ import { addOutline, documentTextOutline } from 'ionicons/icons';
 })
 export class SettingsFormsPage {
   private readonly navigationService = inject(NavigationService);
+  private readonly formService = inject(FormService);
+  private readonly clubService = inject(ClubService);
 
-  readonly forms = signal<FormHeader[]>([
-    {
-      id: 1,
-      name: 'Hacerse socio',
-      description: 'Formulario para que los interesados puedan solicitar hacerse socios del club.',
-      clubId: 1,
-      fromDate: null,
-      toDate: null,
-      status: Status.Active,
-      action: FormAction.BecomeMember,
-      settingsJson: {},
-      createdAt: new Date('2024-12-01'),
-      updatedAt: new Date('2025-01-15')
-    },
-    {
-      id: 2,
-      name: 'Formulario de inscripción de temporada',
-      description: 'Formulario de inscripción de jugadores para la próxima temporada.',
-      clubId: 1,
-      fromDate: new Date('2025-06-01'),
-      toDate: new Date('2025-08-31'),
-      status: Status.Draft,
-      action: FormAction.RegisterPlayer,
-      settingsJson: {},
-      createdAt: new Date('2025-02-01'),
-      updatedAt: new Date('2025-02-10')
-    }
-  ]);
+  readonly forms = signal<FormHeader[]>([]);
 
   constructor() {
     addIcons({ addOutline, documentTextOutline });
+  }
+
+  async ngOnInit(): Promise<void> {
+    const clubId = this.clubService.getCurrentClubId();
+    if (clubId !== null) {
+      const form = await this.formService.getFormsByClubId(clubId);
+      this.forms.set(form);
+    }
   }
 
   addForm(): void {

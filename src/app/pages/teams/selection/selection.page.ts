@@ -6,12 +6,11 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
 import {  Role } from '@core/models/role.model';
 import { UserService } from '@core/services/user.service';
-import { StorageService } from '@core/services/storage.service';
-import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleCardComponent } from '@components/role-card/role-card.component';
 import { environment } from '@environment';
 import { AppStatus } from '@core/models/app-status.model';
+import { RolesService } from '@services/roles.service';
 
 @Component({
   selector: 'app-selection',
@@ -30,7 +29,7 @@ import { AppStatus } from '@core/models/app-status.model';
 export class RoleSelectionPage {
   private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
-  private readonly storageService = inject(StorageService);
+  private readonly rolesService = inject(RolesService);
   
   readonly user = signal<User | null>(null);
   readonly hasRoles = signal<boolean>(true);
@@ -64,7 +63,7 @@ export class RoleSelectionPage {
   }
 
   selectRole(role: Role) {
-    this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
+    this.rolesService.setSelectedRole(role);
     this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
   }
 

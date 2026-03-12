@@ -11,6 +11,11 @@ import { addIcons } from 'ionicons';
 import { saveOutline } from 'ionicons/icons';
 import { FormAction } from '@core/models/form-action.enum';
 import { SettingsFormFieldsComponent } from './settings-form-fields/settings-form-fields.component';
+import { FormService } from '@core/services/form.service';
+import { ToastService } from '@core/services/toast.service';
+import { CreateFormRequest, UpdateFormRequest } from '@core/requests/form.request';
+import { RolesService } from '@services/roles.service';
+import { FormDetail } from '@core/responses/form.response';
 
 interface HeaderFormControls {
   name: FormControl<string>;
@@ -32,9 +37,13 @@ interface HeaderFormControls {
 export class SettingsFormDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly fb = inject(FormBuilder);
+  private readonly formService = inject(FormService);
+  private readonly roleService = inject(RolesService);
+  private readonly toastService = inject(ToastService);
 
   readonly isEditMode = signal<boolean>(false);
   readonly formId = signal<string | null>(null);
+  readonly isSaving = signal<boolean>(false);
 
   readonly pageTitle = computed(() =>
     this.isEditMode() ? 'admin.settingsForms.editForm' : 'admin.settingsForms.newForm'
@@ -60,11 +69,11 @@ export class SettingsFormDetailPage implements OnInit {
     addIcons({ saveOutline });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const id = this.navigationService.findRouteParam('formId');
     this.isEditMode.set(id !== 'new');
     this.formId.set(id);
-    this.buildForm(id !== 'new' ? this.getMockForm(id!) : null);
+    this.buildForm(id !== 'new' ? await this.fetchFormById(id!) : null);
   }
 
   get fieldsArray(): FormArray {
@@ -75,14 +84,78 @@ export class SettingsFormDetailPage implements OnInit {
     this.navigationService.goBack();
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
+
+    const selectedRole = this.roleService.getCurrentRole();
+    const clubId = selectedRole?.clubId;
+    if (!clubId) return;
+
+    const value = this.form.getRawValue();
+    const request: CreateFormRequest = {
+      clubId,
+      name: value.name,
+      description: value.description || null,
+      fromDate: value.fromDate ? new Date(value.fromDate).toISOString() : null,
+      toDate: value.toDate ? new Date(value.toDate).toISOString() : null,
+      action: value.action,
+      fields: (value.fields as any[]).map((f, index) => ({
+        key: f.key,
+        label: f.label,
+        description: f.description || null,
+        type: f.type,
+        isRequired: f.required ?? false,
+        maxLength: f.length ?? null,
+        order: index + 1,
+        validationJson: null
+      }))
+    };
+
+    this.isSaving.set(true);
+    try {
+      if (this.isEditMode() && this.formId()) {
+        const updateRequest: UpdateFormRequest = {
+          name: request.name,
+          description: request.description,
+          fromDate: request.fromDate,
+          toDate: request.toDate,
+          action: request.action,
+          fields: request.fields
+        };
+        await this.formService.updateForm(Number(this.formId()), updateRequest);
+        this.toastService.show('admin.settingsForms.updateSuccess');
+      } else {
+        await this.formService.createForm(request);
+        this.toastService.show('admin.settingsForms.createSuccess');
+      }
+      this.navigationService.goBack();
+    } catch {
+      const errorKey = this.isEditMode() ? 'admin.settingsForms.updateError' : 'admin.settingsForms.createError';
+      this.toastService.show(errorKey, 'danger');
+    } finally {
+      this.isSaving.set(false);
+    }
   }
 
-  private buildForm(existing: FormHeader | null): void {
+  private buildForm(existing: FormDetail | null): void {
+    const fieldsArray = this.fb.array(
+      (existing?.fields ?? []).map(f =>
+        this.fb.group({
+          key: [f.key, [Validators.required, Validators.pattern(/^[a-z][a-z0-9_]*$/)]],
+          label: [f.label, Validators.required],
+          description: [f.description ?? ''],
+          type: [f.type, Validators.required],
+          length: [f.length ?? null],
+          required: [f.required ?? false],
+          order: [f.order],
+          options: this.fb.array([])
+        })
+      )
+    );
+
     this.form = this.fb.group({
       name: [existing?.name ?? '', [Validators.required, Validators.maxLength(100)]],
       description: [existing?.description ?? '', Validators.maxLength(500)],
@@ -90,7 +163,7 @@ export class SettingsFormDetailPage implements OnInit {
       toDate: [existing ? this.toInputDate(existing.toDate) : ''],
       status: [existing?.status ?? AppStatus.Draft, Validators.required],
       action: [existing?.action ?? '', Validators.required],
-      fields: this.fb.array([])
+      fields: fieldsArray
     });
   }
 
@@ -98,35 +171,7 @@ export class SettingsFormDetailPage implements OnInit {
     return date ? new Date(date).toISOString().split('T')[0] : '';
   }
 
-  private getMockForm(id: string): FormHeader | null {
-    const mocks: FormHeader[] = [
-      {
-        id: 1,
-        name: 'Membership Registration 2025',
-        description: 'Annual membership registration form for all club members.',
-        clubId: 1,
-        fromDate: new Date('2025-01-01'),
-        toDate: new Date('2025-12-31'),
-        status: AppStatus.Active,
-        action: FormAction.BecomeMember,
-        settingsJson: {},
-        createdAt: new Date('2024-12-01'),
-        updatedAt: new Date('2025-01-15')
-      },
-      {
-        id: 2,
-        name: 'Season Enrollment Form',
-        description: 'Player enrollment form for the upcoming season.',
-        clubId: 1,
-        fromDate: new Date('2025-06-01'),
-        toDate: new Date('2025-08-31'),
-        status: AppStatus.Draft,
-        action: FormAction.RegisterPlayer,
-        settingsJson: {},
-        createdAt: new Date('2025-02-01'),
-        updatedAt: new Date('2025-02-10')
-      }
-    ];
-    return mocks.find(f => f.id === Number(id)) ?? null;
+  private async fetchFormById(id: string): Promise<FormDetail | null> {
+    return await this.formService.getFormById(Number(id));
   }
 }

@@ -79,12 +79,10 @@
 }
 
 .form-actions {
-  margin-top: 2rem;
   display: flex;
   gap: 1rem;
 
   @media (max-width: 768px) {
-    margin-top: 1.5rem;
     flex-direction: column;
   }
 

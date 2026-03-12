@@ -1,15 +1,14 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
 import { StorageService } from '@core/services/storage.service';
-import { STORAGE_KEYS } from '@core/constants/storage-keys';
-import { Role } from '@core/models/role.model';
 import { NavigationService } from '@services/navigation.service';
 import { ClubService } from '@services/club.service';
+import { RolesService } from '@services/roles.service';
 
 export const roleAccessGuard: CanActivateFn = (route, state) => {
-  const storageService = inject(StorageService);
   const navigationService = inject(NavigationService);
   const clubService = inject(ClubService);
+  const roleService = inject(RolesService);
 
   const roleType = route.data['roleType'];
   const roleId = route.paramMap.get('roleId');
@@ -28,7 +27,7 @@ export const roleAccessGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  const selectedRole = storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
+  const selectedRole = roleService.getCurrentRole();
 
   if (!selectedRole) {
     navigationService.navigateTo(['/teams/selection']);

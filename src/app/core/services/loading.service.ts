@@ -3,12 +3,11 @@ import { NavigationService } from './navigation.service';
 import { UserService } from './user.service';
 import { AuthService } from './auth.service';
 import { ClubService } from './club.service';
-import { StorageService } from './storage.service';
 import { User } from '@core/models/user.model';
 import { Role, RoleType } from '@core/models/role.model';
-import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { environment } from '@environment';
 import { AppStatus, Club } from '@core/models';
+import { RolesService } from './roles.service';
 
 export interface LoadingState {
   messageKey: string;
@@ -23,7 +22,7 @@ export class LoadingService {
   private readonly userService = inject(UserService);
   private readonly authService = inject(AuthService);
   private readonly clubService = inject(ClubService);
-  private readonly storageService = inject(StorageService);
+  private readonly rolesService = inject(RolesService);
 
   readonly state = signal<LoadingState>({
     messageKey: 'loading.signingIn',
@@ -68,7 +67,7 @@ export class LoadingService {
   }
 
   private redirectToRoleHome(role: Role) {
-    this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, role);
+    this.rolesService.setSelectedRole(role);
     this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
   }
 
@@ -94,7 +93,7 @@ export class LoadingService {
     };
 
     this.userService.setUser(userWithRole);
-    this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, guestRole);
+    this.rolesService.setSelectedRole(guestRole);
 
     this.updateState('loading.allSet', 'loading.redirecting');
     await this.delay(1000);
@@ -148,7 +147,7 @@ export class LoadingService {
       this.navigationService.navigateTo(['teams/join']);
     } else if (rolesCount === 1) {
       const selectedRole = user.roles![0];
-      this.storageService.set(STORAGE_KEYS.SELECTED_ROLE, selectedRole);
+      this.rolesService.setSelectedRole(selectedRole)
       this.navigationService.navigateTo([`/app/${selectedRole.roleId}/${selectedRole.id}/home`]);
     } else {
       this.navigationService.navigateTo(['teams/selection']);

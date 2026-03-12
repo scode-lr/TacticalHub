@@ -20,6 +20,7 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role, RoleType } from '@core/models/role.model';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
+import { RolesService } from '@services/roles.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class RoleSelectorComponent {
   private readonly storageService = inject(StorageService);
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
+  private readonly roleService = inject(RolesService);
 
   readonly isModalOpen = signal<boolean>(false);
   readonly currentRole = input<Role | null>();
@@ -99,8 +101,7 @@ export class RoleSelectorComponent {
   }
 
   selectRole(role: Role) {
-    this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
-    
+    this.roleService.setSelectedRole(role);
     this.closeRoleSelector();
     
     setTimeout(() => {
