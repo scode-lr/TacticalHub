@@ -44,6 +44,7 @@ export class SettingsFormDetailPage implements OnInit {
   readonly isEditMode = signal<boolean>(false);
   readonly formId = signal<string | null>(null);
   readonly isSaving = signal<boolean>(false);
+  readonly isLoading = signal<boolean>(false);
 
   readonly pageTitle = computed(() =>
     this.isEditMode() ? 'admin.settingsForms.editForm' : 'admin.settingsForms.newForm'
@@ -73,7 +74,9 @@ export class SettingsFormDetailPage implements OnInit {
     const id = this.navigationService.findRouteParam('formId');
     this.isEditMode.set(id !== 'new');
     this.formId.set(id);
-    this.buildForm(id !== 'new' ? await this.fetchFormById(id!) : null);
+    this.isLoading.set(true);
+    this.buildForm(this.isEditMode() ? await this.fetchFormById(id!) : null);
+    this.isLoading.set(false);
   }
 
   get fieldsArray(): FormArray {
@@ -95,12 +98,14 @@ export class SettingsFormDetailPage implements OnInit {
     if (!clubId) return;
 
     const value = this.form.getRawValue();
+    console.log('Form submission value:', value);
     const request: CreateFormRequest = {
       clubId,
       name: value.name,
       description: value.description || null,
       fromDate: value.fromDate ? new Date(value.fromDate).toISOString() : null,
       toDate: value.toDate ? new Date(value.toDate).toISOString() : null,
+      status: value.status,
       action: value.action,
       fields: (value.fields as any[]).map((f, index) => ({
         key: f.key,
@@ -110,6 +115,7 @@ export class SettingsFormDetailPage implements OnInit {
         isRequired: f.required ?? false,
         maxLength: f.length ?? null,
         order: index + 1,
+        options: f.options?.length ? f.options : null,
         validationJson: null
       }))
     };
@@ -122,6 +128,7 @@ export class SettingsFormDetailPage implements OnInit {
           description: request.description,
           fromDate: request.fromDate,
           toDate: request.toDate,
+          status: request.status,
           action: request.action,
           fields: request.fields
         };
@@ -151,11 +158,12 @@ export class SettingsFormDetailPage implements OnInit {
           length: [f.length ?? null],
           required: [f.required ?? false],
           order: [f.order],
-          options: this.fb.array([])
+          options: this.fb.array((f.options ?? []).map(o => this.fb.control(o, Validators.required)))
         })
       )
     );
 
+    console.log('Existing form data:', existing);
     this.form = this.fb.group({
       name: [existing?.name ?? '', [Validators.required, Validators.maxLength(100)]],
       description: [existing?.description ?? '', Validators.maxLength(500)],

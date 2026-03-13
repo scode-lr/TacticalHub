@@ -21,4 +21,5 @@ export interface FormField {
   required: boolean;
   order: number;
   createdAt: Date;
+  options: string[] | null;
 }

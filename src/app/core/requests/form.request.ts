@@ -1,5 +1,6 @@
 import { FormAction } from '@core/models/form-action.enum';
 import { FormFieldType } from '@core/models/form-field.model';
+import { AppStatus } from '@core/models/app-status.model';
 
 export interface CreateFormFieldRequest {
   key: string;
@@ -9,6 +10,7 @@ export interface CreateFormFieldRequest {
   isRequired: boolean;
   maxLength: number | null;
   order: number;
+  options?: string[] | null;
   validationJson: Record<string, unknown> | null;
 }
 
@@ -18,6 +20,7 @@ export interface CreateFormRequest {
   description: string | null;
   fromDate: string | null;
   toDate: string | null;
+  status: AppStatus;
   action: FormAction;
   fields: CreateFormFieldRequest[];
 }
@@ -27,6 +30,7 @@ export interface UpdateFormRequest {
   description?: string | null;
   fromDate?: string | null;
   toDate?: string | null;
+  status?: AppStatus;
   action?: FormAction;
   fields?: CreateFormFieldRequest[];
 }

@@ -24,83 +24,87 @@
       <div class="field-item" [formGroup]="asFormGroup(i)">
         <div class="field-item-top">
           <span class="field-order-badge">{{ i + 1 }}</span>
-          <div class="field-item-inputs">
-            <div class="field-mini-group">
-              <label class="field-mini-label" [for]="'fkey-' + i">
-                {{ 'admin.settingsForms.formFields.key' | translate }}
-                <span class="required-mark">*</span>
-              </label>
-              <input
-                [id]="'fkey-' + i"
-                type="text"
-                class="field-input field-input--compact"
-                [class.field-input--error]="fieldHasError(i, 'key')"
-                formControlName="key"
-                [placeholder]="'admin.settingsForms.formFields.key' | translate"
-              />
-            </div>
-            <div class="field-mini-group">
-              <label class="field-mini-label" [for]="'flabel-' + i">
-                {{ 'admin.settingsForms.formFields.label' | translate }}
-                <span class="required-mark">*</span>
-              </label>
-              <input
-                [id]="'flabel-' + i"
-                type="text"
-                class="field-input field-input--compact"
-                [class.field-input--error]="fieldHasError(i, 'label')"
-                formControlName="label"
-                [placeholder]="'admin.settingsForms.formFields.label' | translate"
-              />
-            </div>
-            <div class="field-mini-group field-mini-group--narrow">
-              <label class="field-mini-label" [for]="'ftype-' + i">
-                {{ 'admin.settingsForms.formFields.type' | translate }}
-              </label>
-              <select [id]="'ftype-' + i" class="field-select field-select--compact" formControlName="type">
-                @for (type of fieldTypeOptions; track type) {
-                  <option [value]="type">
-                    {{ 'admin.settingsForms.formFields.types.' + type | translate }}
-                  </option>
-                }
-              </select>
-            </div>
-            <div class="field-mini-group field-mini-group--toggle">
-              <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
-              <label class="toggle">
-                <input type="checkbox" formControlName="required" />
-                <span class="toggle-track">
-                  <span class="toggle-thumb"></span>
-                </span>
-              </label>
-            </div>
-            <div class="field-mini-group field-mini-group--stretch">
-              <label class="field-mini-label" [for]="'fdesc-' + i">
-                {{ 'admin.settingsForms.formFields.description' | translate }}
-              </label>
-              <input
-                [id]="'fdesc-' + i"
-                type="text"
-                class="field-input field-input--compact"
-                formControlName="description"
-                [placeholder]="'admin.settingsForms.formFields.descriptionPlaceholder' | translate"
-              />
-            </div>
-            @if (hasLength(i)) {
-              <div class="field-mini-group field-mini-group--short">
-                <label class="field-mini-label" [for]="'flength-' + i">
-                  {{ 'admin.settingsForms.formFields.length' | translate }}
+          <div class="field-rows">
+            <div class="field-row">
+              <div class="field-mini-group">
+                <label class="field-mini-label" [for]="'fkey-' + i">
+                  {{ 'admin.settingsForms.formFields.key' | translate }}
+                  <span class="required-mark">*</span>
                 </label>
                 <input
-                  [id]="'flength-' + i"
-                  type="number"
+                  [id]="'fkey-' + i"
+                  type="text"
                   class="field-input field-input--compact"
-                  formControlName="length"
-                  min="1"
-                  placeholder="—"
+                  [class.field-input--error]="fieldHasError(i, 'key')"
+                  formControlName="key"
+                  [placeholder]="'admin.settingsForms.formFields.key' | translate"
                 />
               </div>
-            }
+              <div class="field-mini-group">
+                <label class="field-mini-label" [for]="'flabel-' + i">
+                  {{ 'admin.settingsForms.formFields.label' | translate }}
+                  <span class="required-mark">*</span>
+                </label>
+                <input
+                  [id]="'flabel-' + i"
+                  type="text"
+                  class="field-input field-input--compact"
+                  [class.field-input--error]="fieldHasError(i, 'label')"
+                  formControlName="label"
+                  [placeholder]="'admin.settingsForms.formFields.label' | translate"
+                />
+              </div>
+              <div class="field-mini-group field-mini-group--narrow">
+                <label class="field-mini-label" [for]="'ftype-' + i">
+                  {{ 'admin.settingsForms.formFields.type' | translate }}
+                </label>
+                <select [id]="'ftype-' + i" class="field-select field-select--compact" formControlName="type">
+                  @for (type of fieldTypeOptions; track type) {
+                    <option [value]="type">
+                      {{ 'admin.settingsForms.formFields.types.' + type | translate }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-mini-group field-mini-group--stretch">
+                <label class="field-mini-label" [for]="'fdesc-' + i">
+                  {{ 'admin.settingsForms.formFields.description' | translate }}
+                </label>
+                <input
+                  [id]="'fdesc-' + i"
+                  type="text"
+                  class="field-input field-input--compact"
+                  formControlName="description"
+                  [placeholder]="'admin.settingsForms.formFields.descriptionPlaceholder' | translate"
+                />
+              </div>
+              <div class="field-mini-group field-mini-group--toggle">
+                <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
+                <label class="toggle">
+                  <input type="checkbox" formControlName="required" />
+                  <span class="toggle-track">
+                    <span class="toggle-thumb"></span>
+                  </span>
+                </label>
+              </div>
+              @if (hasLength(i)) {
+                <div class="field-mini-group field-mini-group--short">
+                  <label class="field-mini-label" [for]="'flength-' + i">
+                    {{ 'admin.settingsForms.formFields.length' | translate }}
+                  </label>
+                  <input
+                    [id]="'flength-' + i"
+                    type="number"
+                    class="field-input field-input--compact"
+                    formControlName="length"
+                    min="1"
+                    placeholder="—"
+                  />
+                </div>
+              }
+            </div>
           </div>
           <button type="button" class="btn-remove-field" (click)="removeField(i)">
             <ion-icon name="trash-outline"></ion-icon>
