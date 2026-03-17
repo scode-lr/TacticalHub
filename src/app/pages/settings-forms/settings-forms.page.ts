@@ -25,6 +25,7 @@ export class SettingsFormsPage {
   private readonly clubService = inject(ClubService);
 
   readonly forms = signal<FormHeader[]>([]);
+  readonly loading = signal<boolean>(true);
 
   constructor() {
     addIcons({ addOutline, documentTextOutline });
@@ -36,6 +37,7 @@ export class SettingsFormsPage {
       const form = await this.formService.getFormsByClubId(clubId);
       this.forms.set(form);
     }
+    this.loading.set(false);
   }
 
   addForm(): void {

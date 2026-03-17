@@ -4,7 +4,7 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormHeader } from '@models/form-header.model';
 import { addIcons } from 'ionicons';
-import { calendarOutline, flashOutline, settingsOutline, pencilOutline } from 'ionicons/icons';
+import { calendarOutline, flashOutline, settingsOutline } from 'ionicons/icons';
 import { NavigationService } from '@core/index';
 
 @Component({
@@ -22,16 +22,12 @@ export class FormHeaderComponent {
   readonly editable = input<boolean>(true);
 
   constructor() {
-    addIcons({ calendarOutline, flashOutline, settingsOutline, pencilOutline });
+    addIcons({ calendarOutline, flashOutline, settingsOutline });
   }
 
-  onEdit(): void {
+  redirect(): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/settings-forms/${this.form().id}`]);
-  }
-
-  onAnswer(): void {
-    const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms/${this.form().id}`]);
+    const route = this.editable() ? 'settings-forms' : 'forms';
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/${route}/${this.form().id}`]);
   }
 }

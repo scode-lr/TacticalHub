@@ -66,7 +66,7 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'forms',
-        loadComponent: () => import('../forms/forms.page').then(m => m.FormsPage)
+        loadComponent: () => import('../submissions/forms.page').then(m => m.FormsPage)
       },
       {
         path: 'settings-forms',

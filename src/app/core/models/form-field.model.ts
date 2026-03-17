@@ -15,11 +15,12 @@ export interface FormField {
   formId: number;
   key: string;
   label: string;
-  description: string;
+  description: string | null;
   type: FormFieldType;
-  length: number | null;
-  required: boolean;
+  maxLength: number | null;
+  isRequired: boolean;
   order: number;
+  validationJson: unknown | null;
   createdAt: Date;
   options: string[] | null;
 }

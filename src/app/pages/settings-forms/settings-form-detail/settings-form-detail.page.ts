@@ -112,8 +112,8 @@ export class SettingsFormDetailPage implements OnInit {
         label: f.label,
         description: f.description || null,
         type: f.type,
-        isRequired: f.required ?? false,
-        maxLength: f.length ?? null,
+        isRequired: f.isRequired ?? false,
+        maxLength: f.maxLength ?? null,
         order: index + 1,
         options: f.options?.length ? f.options : null,
         validationJson: null
@@ -155,15 +155,14 @@ export class SettingsFormDetailPage implements OnInit {
           label: [f.label, Validators.required],
           description: [f.description ?? ''],
           type: [f.type, Validators.required],
-          length: [f.length ?? null],
-          required: [f.required ?? false],
+          length: [f.maxLength ?? null],
+          required: [f.isRequired ?? false],
           order: [f.order],
           options: this.fb.array((f.options ?? []).map(o => this.fb.control(o, Validators.required)))
         })
       )
     );
 
-    console.log('Existing form data:', existing);
     this.form = this.fb.group({
       name: [existing?.name ?? '', [Validators.required, Validators.maxLength(100)]],
       description: [existing?.description ?? '', Validators.maxLength(500)],

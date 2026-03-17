@@ -50,7 +50,8 @@ export const sharedTranslations = {
     no: 'No',
     addItem: 'Add item',
     addNewItem: 'Add new item',
-    selectSeason: 'Select Season'
+    selectSeason: 'Select Season',
+    selectOption: 'Select an option'
   },
   fieldLabels: {
     type: 'Type',
@@ -421,7 +422,9 @@ export const sharedTranslations = {
           maxLength: 'Maximum {max} characters allowed',
           submitError: 'An error occurred. Please try again.'
         }
-      }
+      },
+      noForms: 'No forms available',
+      noFormsDescription: 'There are no active forms at this time. Check back later.'
     },
     information: {
       title: 'Information',

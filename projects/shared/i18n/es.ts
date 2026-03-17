@@ -50,7 +50,8 @@ export const sharedTranslations = {
     no: 'No',
     addItem: 'Agregar elemento',
     addNewItem: 'Agregar nuevo elemento',
-    selectSeason: 'Seleccionar Temporada'
+    selectSeason: 'Seleccionar Temporada',
+    selectOption: 'Seleccionar una opción'
   },
   fieldLabels: {
     type: 'Tipo',
@@ -357,6 +358,10 @@ export const sharedTranslations = {
         announcement: 'Anuncio',
         achievement: 'Logro'
       }
+    },
+    action: {
+      noForms: 'No hay formularios disponibles',
+      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
     },
     information: {
       title: 'Información',

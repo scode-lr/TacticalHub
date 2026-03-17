@@ -58,6 +58,70 @@
   }
 }
 
+.skeleton-card {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+
+  .skeleton-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-light, #e5e7eb);
+  }
+
+  .skeleton-card-body {
+    padding: 1.5rem;
+  }
+
+  .skeleton-card-footer {
+    padding: 1rem 1.5rem;
+    background: var(--background-secondary, #f8f9fa);
+    border-top: 1px solid var(--border-light, #e5e7eb);
+  }
+
+  .skeleton-line {
+    height: 0.875rem;
+    width: 100%;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--background-tertiary, #e9ecef) 25%, var(--background-secondary, #f8f9fa) 50%, var(--background-tertiary, #e9ecef) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--short {
+      width: 65%;
+    }
+  }
+
+  .skeleton-title {
+    height: 1.125rem;
+    width: 60%;
+    border-radius: 8px;
+  }
+
+  .skeleton-subtitle {
+    height: 0.875rem;
+    width: 40%;
+    border-radius: 8px;
+  }
+
+  .skeleton-badge {
+    height: 1.5rem;
+    width: 5rem;
+    border-radius: 8px;
+    margin-bottom: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 .forms-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));

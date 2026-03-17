@@ -50,7 +50,8 @@ export const sharedTranslations = {
     no: 'No',
     addItem: 'Afegir element',
     addNewItem: 'Afegir nou element',
-    selectSeason: 'Seleccionar Temporada'
+    selectSeason: 'Seleccionar Temporada',
+    selectOption: 'Seleccionar una opció'
   },
   fieldLabels: {
     type: 'Tipus',
@@ -419,7 +420,9 @@ export const sharedTranslations = {
           maxLength: 'Es permeten màxim {max} caràcters',
           submitError: 'Ha ocorregut un error. Si us plau intenta de nou.'
         }
-      }
+      },
+      noForms: 'No hi ha formularis disponibles',
+      noFormsDescription: 'No hi ha formularis actius en aquest moment. Torna a comprovar-ho més tard.'
     },
     information: {
       title: 'Informació',

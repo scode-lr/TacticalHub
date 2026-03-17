@@ -3,6 +3,7 @@ import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
 import { FormDetail } from '@core/responses/form.response';
 import { CreateFormRequest, UpdateFormRequest } from '@core/requests/form.request';
+import { AppStatus } from '@core/models';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,14 @@ export class FormService {
     );
   }
 
-  async getFormsByClubId(clubId: number): Promise<FormDetail[]> {
+  async getFormsByClubId(clubId: number, status?: AppStatus): Promise<FormDetail[]> {
+   const params: Record<string, string> = { clubId: String(clubId) };
+   if (status) {
+     params['status'] = status.toString();
+   }
+   
     return await firstValueFrom(
-      this.apiService.get<ApiResponse<FormDetail[]>>('/forms', {
-        params: { clubId: String(clubId) }
-      }).pipe(
+      this.apiService.get<ApiResponse<FormDetail[]>>('/forms', { params }).pipe(
         map(response => response.data ?? [])
       )
     );
