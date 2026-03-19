@@ -151,7 +151,8 @@
   cursor: pointer;
 }
 
-.boolean-checkbox {
+.boolean-checkbox,
+.boolean-radio {
   width: 1.125rem;
   height: 1.125rem;
   accent-color: var(--ion-color-primary, #3880ff);
@@ -165,7 +166,7 @@
   color: var(--text-primary, #111827);
 }
 
-.checkbox-group {
+.radio-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -177,11 +178,11 @@
 
   &--error {
     border-color: var(--ion-color-danger, #eb445a);
-    background: #fef2f2;
+    background: var(--background-danger-subtle, #fef2f2);
   }
 }
 
-.checkbox-option {
+.radio-option {
   display: flex;
   align-items: center;
   gap: 0.625rem;
@@ -194,7 +195,7 @@
   }
 }
 
-.checkbox-text {
+.radio-text {
   font-size: 0.9375rem;
   font-weight: 400;
   color: var(--text-primary, #111827);

@@ -103,15 +103,16 @@
 
             @if (field.type === 'boolean') {
               @if (field.options?.length) {
-                <div class="checkbox-group" [class.checkbox-group--error]="isFieldInvalid(field.key)">
-                  @for (option of field.options; track option; let i = $index) {
-                    <label class="checkbox-option">
+                <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field.key)">
+                  @for (option of field.options; track option) {
+                    <label class="radio-option">
                       <input
-                        type="checkbox"
-                        class="boolean-checkbox"
-                        [formControl]="getBooleanControl(field.key, i)"
+                        type="radio"
+                        class="boolean-radio"
+                        [formControlName]="field.key"
+                        [value]="option"
                       />
-                      <span class="checkbox-text">{{ option }}</span>
+                      <span class="radio-text">{{ option }}</span>
                     </label>
                   }
                 </div>

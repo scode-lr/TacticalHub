@@ -12,3 +12,4 @@ export * from './loading.service';
 export * from './toast.service';
 export * from './snackbar.service';
 export * from './token.service';
+export * from './form-submissions.service';

@@ -317,6 +317,7 @@ export const sharedTranslations = {
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
       partners: 'Socios',
+      forms: 'Formularios',
       more: 'Más'
     },
     description: {
@@ -326,7 +327,8 @@ export const sharedTranslations = {
       information: 'Información y recursos del club',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
-      partners: 'Nuestros socios y patrocinadores del club'
+      partners: 'Nuestros socios y patrocinadores del club',
+      forms: 'Rellena y envía formularios del club'
     },
     home: {
       welcome: '¡Bienvenido al club!',

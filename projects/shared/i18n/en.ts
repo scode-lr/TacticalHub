@@ -319,6 +319,7 @@ export const sharedTranslations = {
       proposals: 'Proposals & complaints',
       matches: 'Matches',
       partners: 'Partners',
+      forms: 'Forms',
       more: 'More'
     },
     description: {
@@ -328,7 +329,8 @@ export const sharedTranslations = {
       information: 'Club information and resources',
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
-      partners: 'Our club partners and sponsors'
+      partners: 'Our club partners and sponsors',
+      forms: 'Fill in and submit club forms'
     },
     home: {
       welcome: 'Welcome to the club!',

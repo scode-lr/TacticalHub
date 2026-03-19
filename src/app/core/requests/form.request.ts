@@ -34,3 +34,9 @@ export interface UpdateFormRequest {
   action?: FormAction;
   fields?: CreateFormFieldRequest[];
 }
+
+export type FormFieldValue = string | number | boolean | string[];
+
+export interface FormSubmissionRequest {
+  values: Record<string, FormFieldValue>;
+}
