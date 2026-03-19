@@ -98,7 +98,6 @@ export class SettingsFormDetailPage implements OnInit {
     if (!clubId) return;
 
     const value = this.form.getRawValue();
-    console.log('Form submission value:', value);
     const request: CreateFormRequest = {
       clubId,
       name: value.name,
