@@ -1,4 +1,22 @@
 export const sharedTranslations = {
+  primeng: {
+    apply: 'Apply',
+    clear: 'Clear',
+    contains: 'Contains',
+    notContains: 'Not contains',
+    startsWith: 'Starts with',
+    endsWith: 'Ends with',
+    equals: 'Equals',
+    notEquals: 'Not equals',
+    noFilter: 'No filter',
+    matchAll: 'Match all',
+    matchAny: 'Match any',
+    addRule: 'Add rule',
+    removeRule: 'Remove rule',
+    choose: 'Choose',
+    upload: 'Upload',
+    cancel: 'Cancel'
+  },
   welcome: {
     createAccount: 'Create account',
     signIn: 'Sign in',
@@ -209,6 +227,28 @@ export const sharedTranslations = {
     },
     parameters: {
       title: 'Parameters',
+    },
+    forms: {
+      selected: 'selected',
+      export: 'Export',
+      assign: 'Assign',
+      clearFilters: 'Clear',
+      searchPlaceholder: 'Search forms...',
+      filterAny: 'Any',
+      openForm: 'Open form',
+      noForms: 'No forms yet',
+      noFormsDescription: 'No forms have been created for this club yet.',
+      paginatorReport: 'Showing {first} to {last} of {totalRecords} entries',
+      columns: {
+        id: 'ID',
+        name: 'Name',
+        action: 'Action',
+        status: 'Status',
+        submissions: 'Submissions',
+        createdAt: 'Created',
+        fromDate: 'From',
+        toDate: 'To'
+      }
     },
     settingsForms: {
       addForm: 'Add Form',

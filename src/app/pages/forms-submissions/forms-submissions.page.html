@@ -6,118 +6,192 @@
     </div>
   </div>
 
-  @if (hasSelection()) {
+  @if (selectedForms.length > 0) {
     <div class="selection-bar">
-      <span class="selection-count">{{ selectedCount() }} {{ 'admin.forms.selected' | translate }}</span>
+      <span class="selection-count">{{ selectedForms.length }} {{ 'admin.forms.selected' | translate }}</span>
       <div class="selection-actions">
         <button class="btn-action">
-          <ion-icon name="download-outline"></ion-icon>
+          <i class="pi pi-download"></i>
           {{ 'admin.forms.export' | translate }}
         </button>
         <button class="btn-action btn-action--assign">
-          <ion-icon name="person-add-outline"></ion-icon>
+          <i class="pi pi-user-plus"></i>
           {{ 'admin.forms.assign' | translate }}
         </button>
       </div>
     </div>
   }
 
-  @if (loading()) {
-    <div class="forms-table forms-table--loading">
-      <div class="table-header">
-        <div class="col-check"></div>
-        <div class="col-id">{{ 'admin.forms.columns.id' | translate }}</div>
-        <div class="col-name">{{ 'admin.forms.columns.name' | translate }}</div>
-        <div class="col-action">{{ 'admin.forms.columns.action' | translate }}</div>
-        <div class="col-submissions">{{ 'admin.forms.columns.submissions' | translate }}</div>
-        <div class="col-nav"></div>
-      </div>
-      @for (i of [1, 2, 3]; track i) {
-        <div class="table-row skeleton-row" [class.skeleton-row--alt]="i % 2 === 0">
-          <div class="col-check">
-            <div class="skeleton-block skeleton-check"></div>
-          </div>
-          <div class="col-id">
-            <div class="skeleton-block skeleton-id"></div>
-          </div>
-          <div class="col-name">
-            <div class="skeleton-block skeleton-name" [class]="'skeleton-name--' + i"></div>
-          </div>
-          <div class="col-action">
-            <div class="skeleton-block skeleton-pill"></div>
-          </div>
-          <div class="col-submissions">
-            <div class="skeleton-block skeleton-count"></div>
-          </div>
-          <div class="col-nav"></div>
-        </div>
-      }
-    </div>
-  } @else if (forms().length > 0) {
-    <div class="forms-table">
-      <div class="table-header">
-        <div class="col-check">
+  <p-table
+    #dt
+    [value]="forms()"
+    [(selection)]="selectedForms"
+    dataKey="id"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading()"
+    [paginator]="true"
+    currentPageReportTemplate="{{ 'admin.forms.paginatorReport' | translate }}"
+    [filterDelay]="0"
+    [globalFilterFields]="['name', 'action', 'status']"
+  >
+    <ng-template #caption>
+      <div class="table-caption">
+        <p-iconField iconPosition="left">
+          <p-inputIcon>
+            <i class="pi pi-search"></i>
+          </p-inputIcon>
           <input
-            type="checkbox"
-            class="row-checkbox"
-            [checked]="allSelected()"
-            (click)="toggleAll($event)"
-            [attr.aria-label]="'admin.forms.selectAll' | translate"
+            pInputText
+            type="text"
+            [(ngModel)]="searchValue"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            [placeholder]="'admin.forms.searchPlaceholder' | translate"
           />
-        </div>
-        <div class="col-id">{{ 'admin.forms.columns.id' | translate }}</div>
-        <div class="col-name">{{ 'admin.forms.columns.name' | translate }}</div>
-        <div class="col-action">{{ 'admin.forms.columns.action' | translate }}</div>
-        <div class="col-submissions">{{ 'admin.forms.columns.submissions' | translate }}</div>
-        <div class="col-nav"></div>
+        </p-iconField>
+        <button class="btn-action" (click)="clear(dt)">
+          <i class="pi pi-filter-slash"></i>
+          {{ 'admin.forms.clearFilters' | translate }}
+        </button>
       </div>
-      @for (form of forms(); track form.id) {
-        <div
-          class="table-row"
-          [class.row--selected]="isSelected(form.id)"
-          (click)="navigateToForm(form.id)"
-          role="row"
-        >
-          <div class="col-check">
-            <input
-              type="checkbox"
-              class="row-checkbox"
-              [checked]="isSelected(form.id)"
-              (click)="toggleSelect(form.id, $event)"
-              [attr.aria-label]="'admin.forms.selectForm' | translate"
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th pSortableColumn="id" style="min-width: 6rem">
+          <div class="col-header">
+            {{ 'admin.forms.columns.id' | translate }}
+            <p-sortIcon field="id" />
+          </div>
+        </th>
+        <th pSortableColumn="name" style="min-width: 14rem">
+          <div class="col-header">
+            {{ 'admin.forms.columns.name' | translate }}
+            <p-sortIcon field="name" />
+            <p-columnFilter
+              type="text"
+              field="name"
+              display="menu"
+              matchMode="contains"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
             />
           </div>
-          <div class="col-id">
-            <span class="form-id">#{{ form.id }}</span>
-          </div>
-          <div class="col-name">
-            <span class="form-name">{{ form.name }}</span>
-          </div>
-          <div class="col-action">
-            <span class="action-badge action-badge--{{ form.action }}">
-              {{ 'admin.settingsForms.actions.' + form.action | translate }}
-            </span>
-          </div>
-          <div class="col-submissions">
-            <span class="submissions-count">{{ form.submissionsCount }}</span>
-          </div>
-          <div class="col-nav">
-            <button
-              class="nav-btn"
-              (click)="navigateToForm(form.id)"
-              [attr.aria-label]="'admin.forms.openForm' | translate"
+        </th>
+        <th pSortableColumn="action" style="min-width: 12rem">
+          <div class="col-header">
+            {{ 'admin.forms.columns.action' | translate }}
+            <p-sortIcon field="action" />
+            <p-columnFilter
+              field="action"
+              matchMode="equals"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
             >
-              <ion-icon name="chevron-forward-outline"></ion-icon>
-            </button>
+              <ng-template #filter let-value let-filter="filterCallback">
+                <p-select
+                  [ngModel]="value"
+                  [options]="actions"
+                  (onChange)="filter($event.value)"
+                  [placeholder]="'admin.forms.filterAny' | translate"
+                  optionLabel="label"
+                  optionValue="value"
+                />
+              </ng-template>
+            </p-columnFilter>
           </div>
-        </div>
-      }
-    </div>
-  } @else {
-    <div class="empty-state">
-      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
-      <h3 class="empty-title">{{ 'admin.forms.noForms' | translate }}</h3>
-      <p class="empty-description">{{ 'admin.forms.noFormsDescription' | translate }}</p>
-    </div>
-  }
-</div>  
+        </th>
+        <th pSortableColumn="status" style="min-width: 10rem">
+          <div class="col-header">
+            {{ 'admin.forms.columns.status' | translate }}
+            <p-sortIcon field="status" />
+            <p-columnFilter
+              field="status"
+              matchMode="equals"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+            >
+              <ng-template #filter let-value let-filter="filterCallback">
+                <p-select
+                  [ngModel]="value"
+                  [options]="statuses"
+                  (onChange)="filter($event.value)"
+                  [placeholder]="'admin.forms.filterAny' | translate"
+                  optionLabel="label"
+                  optionValue="value"
+                />
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="submissionsCount" style="min-width: 8rem">
+          <div class="col-header">
+            {{ 'admin.forms.columns.submissions' | translate }}
+            <p-sortIcon field="submissionsCount" />
+          </div>
+        </th>
+        <th pSortableColumn="createdAt" style="min-width: 10rem" class="col-date">
+          <div class="col-header">
+            {{ 'admin.forms.columns.createdAt' | translate }}
+            <p-sortIcon field="createdAt" />
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-form>
+      <tr class="p-selectable-row" (click)="navigateToForm(form.id)">
+        <td (click)="$event.stopPropagation()">
+          <p-tableCheckbox [value]="form" />
+        </td>
+        <td>
+          <span class="form-id">#{{ form.id }}</span>
+        </td>
+        <td>
+          <span class="form-name">{{ form.name }}</span>
+        </td>
+        <td>
+          <p-tag
+            [value]="'admin.settingsForms.actions.' + form.action | translate"
+            [severity]="getActionSeverity(form.action)"
+          />
+        </td>
+        <td>
+          <p-tag
+            [value]="'admin.settingsForms.status.' + form.status | translate"
+            [severity]="getSeverity(form.status)"
+          />
+        </td>
+        <td class="text-center">
+          {{ form.submissionsCount ?? 0 }}
+        </td>
+        <td class="col-date">
+          {{ form.createdAt | date: 'dd/MM/yyyy' }}
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="8">
+          <div class="empty-state">
+            <i class="pi pi-file-text empty-icon"></i>
+            <h3 class="empty-title">{{ 'admin.forms.noForms' | translate }}</h3>
+            <p class="empty-description">{{ 'admin.forms.noFormsDescription' | translate }}</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

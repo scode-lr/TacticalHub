@@ -1,4 +1,22 @@
 export const sharedTranslations = {
+  primeng: {
+    apply: 'Aplicar',
+    clear: 'Netejar',
+    contains: 'Conté',
+    notContains: 'No conté',
+    startsWith: 'Comença per',
+    endsWith: 'Acaba en',
+    equals: 'Igual a',
+    notEquals: 'Diferent de',
+    noFilter: 'Sense filtre',
+    matchAll: 'Complir tot',
+    matchAny: 'Complir algun',
+    addRule: 'Afegir regla',
+    removeRule: 'Treure regla',
+    choose: 'Triar',
+    upload: 'Pujar',
+    cancel: 'Cancel·lar'
+  },
   welcome: {
     createAccount: 'Crear compte',
     signIn: 'Iniciar sessió',
@@ -207,6 +225,28 @@ export const sharedTranslations = {
     },
     parameters: {
       title: 'Paràmetres',
+    },
+    forms: {
+      selected: 'seleccionats',
+      export: 'Exportar',
+      assign: 'Assignar',
+      clearFilters: 'Netejar',
+      searchPlaceholder: 'Cercar formularis...',
+      filterAny: 'Qualsevol',
+      openForm: 'Obrir formulari',
+      noForms: 'Sense formularis',
+      noFormsDescription: 'Encara no s\'han creat formularis per a aquest club.',
+      paginatorReport: 'Mostrant {first} a {last} de {totalRecords} entrades',
+      columns: {
+        id: 'ID',
+        name: 'Nom',
+        action: 'Acció',
+        status: 'Estat',
+        submissions: 'Enviaments',
+        createdAt: 'Creat',
+        fromDate: 'Des de',
+        toDate: 'Fins a'
+      }
     },
     settingsForms: {
       addForm: 'Afegir Formulari',
