@@ -41,7 +41,7 @@ export class FormDetailPage implements OnInit {
     const formId = this.route.snapshot.paramMap.get('formId');
     this.formId = Number(formId);
     const detail = await this.formService.getFormById(this.formId);
-    const sorted = [...detail.fields].sort((a, b) => a.order - b.order);
+    const sorted = [...detail.fields ?? []].sort((a, b) => a.order - b.order);
     this.formDetail.set(detail);
     this.formFields.set(sorted);
     this.buildDynamicForm(sorted);

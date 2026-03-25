@@ -1,0 +1,123 @@
+<div class="page-container">
+  <div class="section-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'admin.menu.forms' | translate }}</h1>
+      <p class="section-subtitle">{{ 'admin.description.forms' | translate }}</p>
+    </div>
+  </div>
+
+  @if (hasSelection()) {
+    <div class="selection-bar">
+      <span class="selection-count">{{ selectedCount() }} {{ 'admin.forms.selected' | translate }}</span>
+      <div class="selection-actions">
+        <button class="btn-action">
+          <ion-icon name="download-outline"></ion-icon>
+          {{ 'admin.forms.export' | translate }}
+        </button>
+        <button class="btn-action btn-action--assign">
+          <ion-icon name="person-add-outline"></ion-icon>
+          {{ 'admin.forms.assign' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="forms-table forms-table--loading">
+      <div class="table-header">
+        <div class="col-check"></div>
+        <div class="col-id">{{ 'admin.forms.columns.id' | translate }}</div>
+        <div class="col-name">{{ 'admin.forms.columns.name' | translate }}</div>
+        <div class="col-action">{{ 'admin.forms.columns.action' | translate }}</div>
+        <div class="col-submissions">{{ 'admin.forms.columns.submissions' | translate }}</div>
+        <div class="col-nav"></div>
+      </div>
+      @for (i of [1, 2, 3]; track i) {
+        <div class="table-row skeleton-row" [class.skeleton-row--alt]="i % 2 === 0">
+          <div class="col-check">
+            <div class="skeleton-block skeleton-check"></div>
+          </div>
+          <div class="col-id">
+            <div class="skeleton-block skeleton-id"></div>
+          </div>
+          <div class="col-name">
+            <div class="skeleton-block skeleton-name" [class]="'skeleton-name--' + i"></div>
+          </div>
+          <div class="col-action">
+            <div class="skeleton-block skeleton-pill"></div>
+          </div>
+          <div class="col-submissions">
+            <div class="skeleton-block skeleton-count"></div>
+          </div>
+          <div class="col-nav"></div>
+        </div>
+      }
+    </div>
+  } @else if (forms().length > 0) {
+    <div class="forms-table">
+      <div class="table-header">
+        <div class="col-check">
+          <input
+            type="checkbox"
+            class="row-checkbox"
+            [checked]="allSelected()"
+            (click)="toggleAll($event)"
+            [attr.aria-label]="'admin.forms.selectAll' | translate"
+          />
+        </div>
+        <div class="col-id">{{ 'admin.forms.columns.id' | translate }}</div>
+        <div class="col-name">{{ 'admin.forms.columns.name' | translate }}</div>
+        <div class="col-action">{{ 'admin.forms.columns.action' | translate }}</div>
+        <div class="col-submissions">{{ 'admin.forms.columns.submissions' | translate }}</div>
+        <div class="col-nav"></div>
+      </div>
+      @for (form of forms(); track form.id) {
+        <div
+          class="table-row"
+          [class.row--selected]="isSelected(form.id)"
+          (click)="navigateToForm(form.id)"
+          role="row"
+        >
+          <div class="col-check">
+            <input
+              type="checkbox"
+              class="row-checkbox"
+              [checked]="isSelected(form.id)"
+              (click)="toggleSelect(form.id, $event)"
+              [attr.aria-label]="'admin.forms.selectForm' | translate"
+            />
+          </div>
+          <div class="col-id">
+            <span class="form-id">#{{ form.id }}</span>
+          </div>
+          <div class="col-name">
+            <span class="form-name">{{ form.name }}</span>
+          </div>
+          <div class="col-action">
+            <span class="action-badge action-badge--{{ form.action }}">
+              {{ 'admin.settingsForms.actions.' + form.action | translate }}
+            </span>
+          </div>
+          <div class="col-submissions">
+            <span class="submissions-count">{{ form.submissionsCount }}</span>
+          </div>
+          <div class="col-nav">
+            <button
+              class="nav-btn"
+              (click)="navigateToForm(form.id)"
+              [attr.aria-label]="'admin.forms.openForm' | translate"
+            >
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <h3 class="empty-title">{{ 'admin.forms.noForms' | translate }}</h3>
+      <p class="empty-description">{{ 'admin.forms.noFormsDescription' | translate }}</p>
+    </div>
+  }
+</div>  

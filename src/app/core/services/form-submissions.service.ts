@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
 import { FormSubmissionRequest } from '@core/requests/form.request';
-import { FormSubmissionResult } from '@core/responses/form.response';
+import { FormSubmissionResult, SubmissionDetail, SubmissionPage } from '@core/responses/form.response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,24 @@ export class FormSubmissionsService {
   async submitForm(formId: number, request: FormSubmissionRequest): Promise<FormSubmissionResult> {
     return await firstValueFrom(
       this.apiService.post<ApiResponse<FormSubmissionResult>>(`/forms/${formId}/submit`, request).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async getSubmissions(formId: number, page = 1, pageSize = 20): Promise<SubmissionPage> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<SubmissionPage>>(`/forms/${formId}/submissions`, {
+        params: { page: String(page), pageSize: String(pageSize) }
+      }).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async getSubmission(submissionId: number): Promise<SubmissionDetail> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<SubmissionDetail>>(`/forms/submissions/${submissionId}`).pipe(
         map(response => response.data!)
       )
     );

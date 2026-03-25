@@ -27,12 +27,15 @@ export class FormService {
     );
   }
 
-  async getFormsByClubId(clubId: number, status?: AppStatus): Promise<FormDetail[]> {
+  async getFormsByClubId(clubId: number, status?: AppStatus, submissionsCount?: boolean): Promise<FormDetail[]> {
    const params: Record<string, string> = { clubId: String(clubId) };
    if (status) {
      params['status'] = status.toString();
    }
-   
+   if (submissionsCount) {
+     params['includeSubmissionsCount'] = submissionsCount.toString();
+   }
+
     return await firstValueFrom(
       this.apiService.get<ApiResponse<FormDetail[]>>('/forms', { params }).pipe(
         map(response => response.data ?? [])
