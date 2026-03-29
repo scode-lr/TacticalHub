@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
@@ -6,7 +6,9 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { FormService } from '@core/services/form.service';
 import { ClubService } from '@core/services/club.service';
 import { NavigationService } from '@core/services/navigation.service';
+import { FormSubmissionsService } from '@core/services/form-submissions.service';
 import { FormDetail } from '@core/responses/form.response';
+import { FormSubmission } from '@core/models/form-submission.model';
 import { AppStatus } from '@core/models/app-status.model';
 import { FormAction } from '@core/models/form-action.enum';
 import { Table, TableModule } from 'primeng/table';
@@ -29,12 +31,27 @@ export class FormsSubmissionsPage {
   private readonly clubService = inject(ClubService);
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
+  private readonly formSubmissionsService = inject(FormSubmissionsService);
 
   readonly forms = signal<FormDetail[]>([]);
   readonly loading = signal<boolean>(true);
+  readonly viewState = signal<'list' | 'detail'>('list');
+  readonly selectedFormId = signal<number | null>(null);
+  readonly submissions = signal<FormSubmission[]>([]);
+  readonly submissionsLoading = signal<boolean>(false);
 
   selectedForms: FormDetail[] = [];
   searchValue = '';
+
+  readonly selectedForm = computed(() => {
+    const formId = this.selectedFormId();
+    return formId ? this.forms().find(f => f.id === formId) : null;
+  });
+
+  readonly filteredSubmissions = computed(() => {
+    const formId = this.selectedFormId();
+    return formId ? this.submissions().filter(s => s.formId === formId) : [];
+  });
 
   get statuses() {
     return [
@@ -63,9 +80,26 @@ export class FormsSubmissionsPage {
     this.loading.set(false);
   }
 
-  navigateToForm(formId: number): void {
-    const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms-submissions/${formId}`]);
+  async selectForm(formId: number): Promise<void> {
+    this.selectedFormId.set(formId);
+    this.viewState.set('detail');
+    this.submissionsLoading.set(true);
+    
+    try {
+      const submissionsPage = await this.formSubmissionsService.getSubmissions(formId, 1, 100);
+      this.submissions.set(submissionsPage.submissions);
+    } catch (error) {
+      console.error('Error loading submissions:', error);
+      this.submissions.set([]);
+    } finally {
+      this.submissionsLoading.set(false);
+    }
+  }
+
+  backToList(): void {
+    this.viewState.set('list');
+    this.selectedFormId.set(null);
+    this.submissions.set([]);
   }
 
   clear(dt: Table): void {

@@ -237,6 +237,7 @@ export const sharedTranslations = {
       noForms: 'Sin formularios',
       noFormsDescription: 'Aún no se han creado formularios para este club.',
       paginatorReport: 'Mostrando {first} a {last} de {totalRecords} entradas',
+      submissions: 'Envíos',
       columns: {
         id: 'ID',
         name: 'Nombre',
@@ -246,6 +247,17 @@ export const sharedTranslations = {
         createdAt: 'Creado',
         fromDate: 'Desde',
         toDate: 'Hasta'
+      },
+      submissionTable: {
+        columns: {
+          id: 'ID',
+          userId: 'ID Usuario',
+          status: 'Estado',
+          submittedAt: 'Enviado',
+          createdAt: 'Creado'
+        },
+        noSubmissions: 'Sin envíos aún',
+        noSubmissionsDescription: 'Aún no se han recibido envíos para este formulario.'
       }
     },
     settingsForms: {
