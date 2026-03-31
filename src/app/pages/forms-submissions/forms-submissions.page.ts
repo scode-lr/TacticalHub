@@ -11,7 +11,7 @@ import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
 import { AppStatus } from '@core/models/app-status.model';
 import { FormAction } from '@core/models/form-action.enum';
-import { Table, TableModule } from 'primeng/table';
+import { Table, TableModule, TableLazyLoadEvent } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -34,11 +34,17 @@ export class FormsSubmissionsPage {
   private readonly formSubmissionsService = inject(FormSubmissionsService);
 
   readonly forms = signal<FormDetail[]>([]);
+  readonly totalForms = signal<number>(0);
   readonly loading = signal<boolean>(true);
+  readonly formsLimit = signal<number>(10);
+  readonly formsOffset = signal<number>(0);
   readonly viewState = signal<'list' | 'detail'>('list');
   readonly selectedFormId = signal<number | null>(null);
   readonly submissions = signal<FormSubmission[]>([]);
   readonly submissionsLoading = signal<boolean>(false);
+  readonly pageSize = signal<number>(10);
+  readonly currentPage = signal<number>(1);
+  readonly totalSubmissions = signal<number>(0);
 
   selectedForms: FormDetail[] = [];
   searchValue = '';
@@ -46,11 +52,6 @@ export class FormsSubmissionsPage {
   readonly selectedForm = computed(() => {
     const formId = this.selectedFormId();
     return formId ? this.forms().find(f => f.id === formId) : null;
-  });
-
-  readonly filteredSubmissions = computed(() => {
-    const formId = this.selectedFormId();
-    return formId ? this.submissions().filter(s => s.formId === formId) : [];
   });
 
   get statuses() {
@@ -72,21 +73,50 @@ export class FormsSubmissionsPage {
   }
 
   async ngOnInit(): Promise<void> {
+    await this.loadForms();
+  }
+
+  async onFormsPage(event: { first: number; rows: number }): Promise<void> {
+    const rowsChanged = event.rows !== this.formsLimit();
+    this.formsLimit.set(event.rows);
+    this.formsOffset.set(rowsChanged ? 0 : event.first);
+    await this.loadForms();
+  }
+
+  private async loadForms(): Promise<void> {
+    this.loading.set(true);
     const clubId = this.clubService.getCurrentClubId();
     if (clubId !== null) {
-      const data = await this.formService.getFormsByClubId(clubId, undefined, true);
-      this.forms.set(data);
+      const result = await this.formService.getFormsByClubId(clubId, undefined, true, this.formsLimit(), this.formsOffset());
+      this.forms.set(result);
     }
     this.loading.set(false);
   }
 
   async selectForm(formId: number): Promise<void> {
     this.selectedFormId.set(formId);
+    this.pageSize.set(10);
+    this.currentPage.set(1);
     this.viewState.set('detail');
+    const form = this.forms().find(f => f.id === formId);
+    if (!form) return;
+    this.totalSubmissions.set(form.submissionsCount ?? 0);
+  }
+
+  async onLazyLoad(event: TableLazyLoadEvent): Promise<void> {
+    const formId = this.selectedFormId();
+    if (formId === null) return;
+    const rows = event.rows ?? this.pageSize();
+    const rowsChanged = rows !== this.pageSize();
+    this.pageSize.set(rows);
+    this.currentPage.set(rowsChanged ? 1 : Math.floor((event.first ?? 0) / rows) + 1);
+    await this.loadSubmissions(formId);
+  }
+
+  private async loadSubmissions(formId: number): Promise<void> {
     this.submissionsLoading.set(true);
-    
     try {
-      const submissionsPage = await this.formSubmissionsService.getSubmissions(formId, 1, 100);
+      const submissionsPage = await this.formSubmissionsService.getSubmissions(formId, this.currentPage(), this.pageSize());
       this.submissions.set(submissionsPage.submissions);
     } catch (error) {
       console.error('Error loading submissions:', error);
@@ -100,6 +130,7 @@ export class FormsSubmissionsPage {
     this.viewState.set('list');
     this.selectedFormId.set(null);
     this.submissions.set([]);
+    this.totalSubmissions.set(0);
   }
 
   clear(dt: Table): void {

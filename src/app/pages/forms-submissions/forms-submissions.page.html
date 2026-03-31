@@ -15,10 +15,6 @@
             <i class="pi pi-download"></i>
             {{ 'admin.forms.export' | translate }}
           </button>
-          <button class="btn-action btn-action--assign">
-            <i class="pi pi-user-plus"></i>
-            {{ 'admin.forms.assign' | translate }}
-          </button>
         </div>
       </div>
     }
@@ -29,12 +25,13 @@
       [(selection)]="selectedForms"
       dataKey="id"
       [rowHover]="true"
-      [rows]="10"
+      [rows]="formsLimit()"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 25, 50]"
       [loading]="loading()"
       [paginator]="true"
       currentPageReportTemplate="{{ 'admin.forms.paginatorReport' | translate }}"
+      (onPage)="onFormsPage($event)"
       [filterDelay]="0"
       [globalFilterFields]="['name', 'action', 'status']"
     >
@@ -200,7 +197,7 @@
     <div class="detail-header">
       <div class="detail-title-group">
         <h2 class="detail-form-title">{{ selectedForm()?.name }}</h2>
-        <span class="detail-count">{{ filteredSubmissions().length }} {{ 'admin.forms.submissions' | translate }}</span>
+        <span class="detail-count">{{ totalSubmissions() }} {{ 'admin.forms.submissions' | translate }}</span>
       </div>
       <button class="back-link" (click)="backToList()">
         <i class="pi pi-arrow-left"></i>
@@ -209,13 +206,16 @@
     </div>
 
     <p-table
-      [value]="filteredSubmissions()"
+      [value]="submissions()"
       [loading]="submissionsLoading()"
-      [rows]="10"
+      [rows]="pageSize()"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="true"
+      [lazy]="true"
+      [totalRecords]="totalSubmissions()"
       currentPageReportTemplate="{{ 'admin.forms.paginatorReport' | translate }}"
+      (onLazyLoad)="onLazyLoad($event)"
     >
       <ng-template #header>
         <tr>
@@ -225,7 +225,7 @@
               <p-sortIcon field="id" />
             </div>
           </th>
-          <th pSortableColumn="userId" style="min-width: 8rem">
+          <th pSortableColumn="userId" style="min-width: 8rem" class="col-user-id">
             <div class="col-header">
               {{ 'admin.forms.submissionTable.columns.userId' | translate }}
               <p-sortIcon field="userId" />
@@ -237,7 +237,7 @@
               <p-sortIcon field="userName" />
             </div>
           </th>
-          <th pSortableColumn="submittedAt" style="min-width: 10rem" class="col-date">
+          <th pSortableColumn="submittedAt" style="min-width: 10rem">
             <div class="col-header">
               {{ 'admin.forms.submissionTable.columns.submittedAt' | translate }}
               <p-sortIcon field="submittedAt" />
@@ -251,13 +251,13 @@
           <td>
             <span class="submission-id">#{{ submission.id }}</span>
           </td>
-          <td>
+          <td class="col-user-id">
             <span class="user-id">{{ submission.userId }}</span>
           </td>
           <td>
             <span>{{ submission.userName }}</span>
           </td>
-          <td class="col-date">
+          <td>
             {{ submission.submittedAt | date: 'dd/MM/yyyy HH:mm' }}
           </td>
         </tr>

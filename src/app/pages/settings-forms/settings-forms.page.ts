@@ -34,8 +34,8 @@ export class SettingsFormsPage {
   async ngOnInit(): Promise<void> {
     const clubId = this.clubService.getCurrentClubId();
     if (clubId !== null) {
-      const form = await this.formService.getFormsByClubId(clubId);
-      this.forms.set(form);
+      const result = await this.formService.getFormsByClubId(clubId);
+      this.forms.set(result);
     }
     this.loading.set(false);
   }

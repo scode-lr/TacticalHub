@@ -31,8 +31,8 @@ export class FormsPage implements OnInit {
   async ngOnInit(): Promise<void> {
     const clubId = this.clubService.getCurrentClubId();
     if (clubId !== null) {
-      const forms = await this.formService.getFormsByClubId(clubId, AppStatus.Active);
-      this.forms.set(forms);
+      const result = await this.formService.getFormsByClubId(clubId, AppStatus.Active);
+      this.forms.set(result);
     }
     this.loading.set(false);
   }

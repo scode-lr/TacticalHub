@@ -32,3 +32,10 @@ export interface SubmissionPage {
   page: number;
   pageSize: number;
 }
+
+export interface FormsPage {
+  forms: FormDetail[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}

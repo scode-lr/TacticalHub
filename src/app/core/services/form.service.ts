@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
-import { FormDetail } from '@core/responses/form.response';
+import { FormDetail, FormsPage } from '@core/responses/form.response';
 import { CreateFormRequest, UpdateFormRequest } from '@core/requests/form.request';
 import { AppStatus } from '@core/models';
 
@@ -27,14 +27,14 @@ export class FormService {
     );
   }
 
-  async getFormsByClubId(clubId: number, status?: AppStatus, submissionsCount?: boolean): Promise<FormDetail[]> {
-   const params: Record<string, string> = { clubId: String(clubId) };
-   if (status) {
-     params['status'] = status.toString();
-   }
-   if (!!submissionsCount) {
-     params['submissionsCount'] = submissionsCount.toString();
-   }
+  async getFormsByClubId(clubId: number, status?: AppStatus, submissionsCount?: boolean, limit = 10, offset = 0): Promise<FormDetail[]> {
+    const params: Record<string, string> = { clubId: String(clubId), limit: String(limit), offset: String(offset) };
+    if (status) {
+      params['status'] = status.toString();
+    }
+    if (!!submissionsCount) {
+      params['submissionsCount'] = submissionsCount.toString();
+    }
 
     return await firstValueFrom(
       this.apiService.get<ApiResponse<FormDetail[]>>('/forms', { params }).pipe(
