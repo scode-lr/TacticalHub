@@ -32,8 +32,8 @@ export class FormService {
    if (status) {
      params['status'] = status.toString();
    }
-   if (submissionsCount) {
-     params['includeSubmissionsCount'] = submissionsCount.toString();
+   if (!!submissionsCount) {
+     params['submissionsCount'] = submissionsCount.toString();
    }
 
     return await firstValueFrom(

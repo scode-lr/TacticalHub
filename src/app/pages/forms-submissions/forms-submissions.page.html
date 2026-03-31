@@ -197,12 +197,15 @@
   }
 
   @if (viewState() === 'detail') {
-    <div class="detail-subheader">
-      <button class="back-button" (click)="backToList()">
+    <div class="detail-header">
+      <div class="detail-title-group">
+        <h2 class="detail-form-title">{{ selectedForm()?.name }}</h2>
+        <span class="detail-count">{{ filteredSubmissions().length }} {{ 'admin.forms.submissions' | translate }}</span>
+      </div>
+      <button class="back-link" (click)="backToList()">
         <i class="pi pi-arrow-left"></i>
-        {{ 'common.back' | translate }}
+        {{ 'admin.forms.allForms' | translate }}
       </button>
-      <span class="detail-form-name">{{ selectedForm()?.name }}</span>
     </div>
 
     <p-table
@@ -228,22 +231,16 @@
               <p-sortIcon field="userId" />
             </div>
           </th>
-          <th pSortableColumn="status" style="min-width: 8rem">
+          <th pSortableColumn="userName" style="min-width: 8rem">
             <div class="col-header">
-              {{ 'admin.forms.submissionTable.columns.status' | translate }}
-              <p-sortIcon field="status" />
+              {{ 'admin.forms.submissionTable.columns.userName' | translate }}
+              <p-sortIcon field="userName" />
             </div>
           </th>
           <th pSortableColumn="submittedAt" style="min-width: 10rem" class="col-date">
             <div class="col-header">
               {{ 'admin.forms.submissionTable.columns.submittedAt' | translate }}
               <p-sortIcon field="submittedAt" />
-            </div>
-          </th>
-          <th pSortableColumn="createdAt" style="min-width: 10rem" class="col-date">
-            <div class="col-header">
-              {{ 'admin.forms.submissionTable.columns.createdAt' | translate }}
-              <p-sortIcon field="createdAt" />
             </div>
           </th>
         </tr>
@@ -258,16 +255,10 @@
             <span class="user-id">{{ submission.userId }}</span>
           </td>
           <td>
-            <p-tag
-              [value]="'admin.settingsForms.status.' + submission.status | translate"
-              [severity]="getSeverity(submission.status)"
-            />
+            <span>{{ submission.userName }}</span>
           </td>
           <td class="col-date">
             {{ submission.submittedAt | date: 'dd/MM/yyyy HH:mm' }}
-          </td>
-          <td class="col-date">
-            {{ submission.createdAt | date: 'dd/MM/yyyy HH:mm' }}
           </td>
         </tr>
       </ng-template>

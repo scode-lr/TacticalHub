@@ -240,6 +240,7 @@ export const sharedTranslations = {
       noFormsDescription: 'No forms have been created for this club yet.',
       paginatorReport: 'Showing {first} to {last} of {totalRecords} entries',
       submissions: 'Submissions',
+      allForms: 'All forms',
       columns: {
         id: 'ID',
         name: 'Name',
@@ -254,7 +255,7 @@ export const sharedTranslations = {
         columns: {
           id: 'ID',
           userId: 'User ID',
-          status: 'Status',
+          userName: 'User',
           submittedAt: 'Submitted',
           createdAt: 'Created'
         },

@@ -238,6 +238,7 @@ export const sharedTranslations = {
       noFormsDescription: 'Encara no s\'han creat formularis per a aquest club.',
       paginatorReport: 'Mostrant {first} a {last} de {totalRecords} entrades',
       submissions: 'Enviaments',
+      allForms: 'Tots els formularis',
       columns: {
         id: 'ID',
         name: 'Nom',
@@ -252,7 +253,7 @@ export const sharedTranslations = {
         columns: {
           id: 'ID',
           userId: 'ID Usuari',
-          status: 'Estat',
+          userName: 'Usuari',
           submittedAt: 'Enviat',
           createdAt: 'Creat'
         },
