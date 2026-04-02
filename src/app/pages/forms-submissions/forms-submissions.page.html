@@ -6,6 +6,14 @@
     </div>
   </div>
 
+  
+  <div class="detail-header">
+    <p-breadcrumb [model]="breadcrumbItems()" />
+    @if (viewState() === 'detail') {
+    <span class="detail-count">{{ totalSubmissions() }} {{ 'admin.forms.submissions' | translate }}</span>
+    }
+  </div>
+
   @if (viewState() === 'list') {
     @if (selectedForms.length > 0) {
       <div class="selection-bar">
@@ -44,6 +52,7 @@
             <input
               pInputText
               type="text"
+              style="padding-inline-start: 1rem"
               [(ngModel)]="searchValue"
               (input)="dt.filterGlobal($any($event.target).value, 'contains')"
               [placeholder]="'admin.forms.searchPlaceholder' | translate"
@@ -58,96 +67,42 @@
 
       <ng-template #header>
         <tr>
-          <th style="width: 3rem">
+          <th style="width: 3rem" class="no-padding-top-bottom">
             <p-tableHeaderCheckbox />
           </th>
-          <th pSortableColumn="id" style="min-width: 4rem" class="col-desktop">
+          <th style="min-width: 4rem" class="col-desktop">
             <div class="col-header">
               {{ 'admin.forms.columns.id' | translate }}
-              <p-sortIcon field="id" />
             </div>
           </th>
-          <th pSortableColumn="name" style="min-width: 8rem">
+          <th style="min-width: 8rem">
             <div class="col-header">
               {{ 'admin.forms.columns.name' | translate }}
-              <p-sortIcon field="name" />
-              <p-columnFilter
-                type="text"
-                field="name"
-                display="menu"
-                matchMode="contains"
-                [showMatchModes]="false"
-                [showOperator]="false"
-                [showAddButton]="false"
-              />
             </div>
           </th>
-          <th pSortableColumn="action" style="min-width: 8rem" class="col-desktop">
+          <th style="min-width: 8rem" class="col-desktop no-padding-top-bottom">
             <div class="col-header">
               {{ 'admin.forms.columns.action' | translate }}
-              <p-sortIcon field="action" />
-              <p-columnFilter
-                field="action"
-                matchMode="equals"
-                display="menu"
-                [showMatchModes]="false"
-                [showOperator]="false"
-                [showAddButton]="false"
-              >
-                <ng-template #filter let-value let-filter="filterCallback">
-                  <p-select
-                    [ngModel]="value"
-                    [options]="actions"
-                    (onChange)="filter($event.value)"
-                    [placeholder]="'admin.forms.filterAny' | translate"
-                    optionLabel="label"
-                    optionValue="value"
-                  />
-                </ng-template>
-              </p-columnFilter>
             </div>
           </th>
-          <th pSortableColumn="status" style="min-width: 8rem">
+          <th style="min-width: 6rem" class="no-padding-top-bottom">
             <div class="col-header">
               {{ 'admin.forms.columns.status' | translate }}
-              <p-sortIcon field="status" />
-              <p-columnFilter
-                field="status"
-                matchMode="equals"
-                display="menu"
-                [showMatchModes]="false"
-                [showOperator]="false"
-                [showAddButton]="false"
-              >
-                <ng-template #filter let-value let-filter="filterCallback">
-                  <p-select
-                    [ngModel]="value"
-                    [options]="statuses"
-                    (onChange)="filter($event.value)"
-                    [placeholder]="'admin.forms.filterAny' | translate"
-                    optionLabel="label"
-                    optionValue="value"
-                  />
-                </ng-template>
-              </p-columnFilter>
             </div>
           </th>
-          <th pSortableColumn="submissionsCount" style="min-width: 4rem">
+          <th style="min-width: 4rem">
             <div class="col-header">
               {{ 'admin.forms.columns.submissions' | translate }}
-              <p-sortIcon field="submissionsCount" />
             </div>
           </th>
-          <th pSortableColumn="fromDate" style="min-width: 8rem" class="col-desktop">
+          <th style="min-width: 8rem" class="col-desktop">
             <div class="col-header">
               {{ 'admin.forms.columns.fromDate' | translate }}
-              <p-sortIcon field="fromDate" />
             </div>
           </th>
-          <th pSortableColumn="toDate" style="min-width: 8rem" class="col-desktop">
+          <th style="min-width: 8rem" class="col-desktop">
             <div class="col-header">
               {{ 'admin.forms.columns.toDate' | translate }}
-              <p-sortIcon field="toDate" />
             </div>
           </th>
         </tr>
@@ -155,22 +110,22 @@
 
       <ng-template #body let-form>
         <tr class="p-selectable-row" (click)="selectForm(form.id)">
-          <td (click)="$event.stopPropagation()">
+          <td (click)="$event.stopPropagation()" class="no-padding-top-bottom">
             <p-tableCheckbox [value]="form" />
           </td>
           <td class="col-desktop">
-            <span class="form-id">#{{ form.id }}</span>
+            <span>#{{ form.id }}</span>
           </td>
           <td>
-            <span class="form-name">{{ form.name }}</span>
+            <span>{{ form.name }}</span>
           </td>
-          <td class="col-desktop">
+          <td class="col-desktop no-padding-top-bottom">
             <p-tag
               [value]="'admin.settingsForms.actions.' + form.action | translate"
               [severity]="getActionSeverity(form.action)"
             />
           </td>
-          <td>
+          <td class="no-padding-top-bottom">
             <p-tag
               [value]="'admin.settingsForms.status.' + form.status | translate"
               [severity]="getSeverity(form.status)"
@@ -203,11 +158,6 @@
   }
 
   @if (viewState() === 'detail') {
-    <div class="detail-header">
-      <p-breadcrumb [model]="breadcrumbItems()" />
-      <span class="detail-count">{{ totalSubmissions() }} {{ 'admin.forms.submissions' | translate }}</span>
-    </div>
-
     <p-table
       #dtSubmissions
       [value]="submissions()"
@@ -229,6 +179,7 @@
             </p-inputIcon>
             <input
               pInputText
+              style="padding-inline-start: 1rem"
               type="text"
               [(ngModel)]="submissionsSearchValue"
               (input)="onSubmissionsSearch()"
@@ -264,7 +215,7 @@
       </ng-template>
 
       <ng-template #body let-submission>
-        <tr>
+        <tr class="p-selectable-row" (click)="navigateToSubmission(submission.id)">
           <td>
             <span class="submission-id">#{{ submission.id }}</span>
           </td>

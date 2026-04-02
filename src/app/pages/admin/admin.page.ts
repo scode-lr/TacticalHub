@@ -65,6 +65,9 @@ export class AdminPage implements OnInit {
       if (this.router.url.includes('/settings-forms')) {
         return `app/${roleType}/${roleId}/settings-forms`;
       }
+      if(this.router.url.includes('/forms-submissions')) {
+        return `app/${roleType}/${roleId}/forms-submissions`;
+      }
     }
     return `app/${roleType}/${roleId}/home`;
   });
@@ -94,7 +97,8 @@ export class AdminPage implements OnInit {
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
                      url.includes('/teams/') && url.split('/').length > 5 ||
-                     url.includes('/settings-forms/') && url.split('/').length > 5;
+                     url.includes('/settings-forms/') && url.split('/').length > 5 ||
+                     url.includes('/forms-submissions/') && url.split('/').length > 5;
     this.isDetailPage.set(isDetail);
   }
   

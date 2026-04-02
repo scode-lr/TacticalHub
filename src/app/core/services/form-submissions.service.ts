@@ -3,12 +3,31 @@ import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
 import { FormSubmissionRequest } from '@core/requests/form.request';
 import { FormSubmissionResult, SubmissionDetail, SubmissionPage } from '@core/responses/form.response';
+import { FormDetail } from '@core/responses/form.response';
+import { FormSubmission } from '@core/models/form-submission.model';
+
+export interface FormsSubmissionsPageState {
+  viewState: 'list' | 'detail';
+  selectedFormId: number | null;
+  forms: FormDetail[];
+  formsLimit: number;
+  formsOffset: number;
+  searchValue: string;
+  submissions: FormSubmission[];
+  totalSubmissions: number;
+  pageSize: number;
+  currentPage: number;
+  currentSort: string | undefined;
+  submissionsSearchValue: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormSubmissionsService {
   private readonly apiService = inject(ApiService);
+
+  savedPageState: FormsSubmissionsPageState | null = null;
 
   async submitForm(formId: number, request: FormSubmissionRequest): Promise<FormSubmissionResult> {
     return await firstValueFrom(

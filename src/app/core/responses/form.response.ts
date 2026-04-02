@@ -23,6 +23,7 @@ export type SubmissionSummary = FormSubmission;
 export type SubmissionValueEntry = SubmissionValue;
 
 export interface SubmissionDetail extends FormSubmission {
+  formName: string;
   values: SubmissionValue[];
 }
 

@@ -6,6 +6,7 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { FormService } from '@core/services/form.service';
 import { ClubService } from '@core/services/club.service';
 import { FormSubmissionsService } from '@core/services/form-submissions.service';
+import { NavigationService } from '@services/navigation.service';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
 import { AppStatus } from '@core/models/app-status.model';
@@ -32,6 +33,7 @@ export class FormsSubmissionsPage {
   private readonly clubService = inject(ClubService);
   private readonly translationService = inject(TranslationService);
   private readonly formSubmissionsService = inject(FormSubmissionsService);
+  private readonly navigationService = inject(NavigationService);
 
   readonly forms = signal<FormDetail[]>([]);
   readonly totalForms = signal<number>(0);
@@ -80,7 +82,24 @@ export class FormsSubmissionsPage {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadForms();
+    const saved = this.formSubmissionsService.savedPageState;
+    if (saved) {
+      this.formSubmissionsService.savedPageState = null;
+      this.viewState.set(saved.viewState);
+      this.selectedFormId.set(saved.selectedFormId);
+      this.forms.set(saved.forms);
+      this.formsLimit.set(saved.formsLimit);
+      this.formsOffset.set(saved.formsOffset);
+      this.searchValue = saved.searchValue;
+      this.submissions.set(saved.submissions);
+      this.totalSubmissions.set(saved.totalSubmissions);
+      this.pageSize.set(saved.pageSize);
+      this.currentPage.set(saved.currentPage);
+      this.currentSort.set(saved.currentSort);
+      this.submissionsSearchValue = saved.submissionsSearchValue;
+    } else {
+      await this.loadForms();
+    }
   }
 
   async onFormsPage(event: { first: number; rows: number }): Promise<void> {
@@ -155,6 +174,25 @@ export class FormsSubmissionsPage {
     } finally {
       this.submissionsLoading.set(false);
     }
+  }
+
+  navigateToSubmission(submissionId: number): void {
+    this.formSubmissionsService.savedPageState = {
+      viewState: this.viewState(),
+      selectedFormId: this.selectedFormId(),
+      forms: this.forms(),
+      formsLimit: this.formsLimit(),
+      formsOffset: this.formsOffset(),
+      searchValue: this.searchValue,
+      submissions: this.submissions(),
+      totalSubmissions: this.totalSubmissions(),
+      pageSize: this.pageSize(),
+      currentPage: this.currentPage(),
+      currentSort: this.currentSort(),
+      submissionsSearchValue: this.submissionsSearchValue,
+    };
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms-submissions/${submissionId}`]);
   }
 
   backToList(): void {

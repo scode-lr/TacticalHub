@@ -264,7 +264,12 @@ export const sharedTranslations = {
         searchPlaceholder: 'Search by user...'
       },
       submissionDetail: {
-        title: 'Submission Detail'
+        title: 'Submission Detail',
+        sectionInfo: 'Information',
+        sectionValues: 'Submitted values',
+        formName: 'Form',
+        userName: 'User',
+        submittedAt: 'Submitted at'
       }
     },
     settingsForms: {

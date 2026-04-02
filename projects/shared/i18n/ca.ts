@@ -262,7 +262,12 @@ export const sharedTranslations = {
         searchPlaceholder: 'Cerca per usuari...'
       },
       submissionDetail: {
-        title: 'Detall de l\'enviament'
+        title: 'Detall de l\'enviament',
+        sectionInfo: 'Informació',
+        sectionValues: 'Valors enviats',
+        formName: 'Formulari',
+        userName: 'Usuari',
+        submittedAt: 'Enviat el'
       }
     },
     settingsForms: {
