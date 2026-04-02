@@ -18,11 +18,12 @@ export class FormSubmissionsService {
     );
   }
 
-  async getSubmissions(formId: number, page = 1, pageSize = 20): Promise<SubmissionPage> {
+  async getSubmissions(formId: number, limit = 12, offset = 0, username?: string, sort?: string): Promise<SubmissionPage> {
+    const params: Record<string, string> = { limit: String(limit), offset: String(offset) };
+    if (username) params['username'] = username;
+    if (sort) params['sort'] = sort;
     return await firstValueFrom(
-      this.apiService.get<ApiResponse<SubmissionPage>>(`/forms/${formId}/submissions`, {
-        params: { page: String(page), pageSize: String(pageSize) }
-      }).pipe(
+      this.apiService.get<ApiResponse<SubmissionPage>>(`/forms/${formId}/submissions`, { params }).pipe(
         map(response => response.data!)
       )
     );

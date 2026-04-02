@@ -3,14 +3,12 @@ import { SHARED_TRANSLATIONS } from '../../../../../projects/shared/i18n';
 import { StorageService } from '../storage.service';
 import { STORAGE_KEYS } from '../../constants/storage-keys';
 import { Device } from '@capacitor/device';
-import { PRIME_NG_CONFIG } from 'primeng/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslationService {
   private readonly storageService = inject(StorageService);
-  private readonly primeNGConfig = inject(PRIME_NG_CONFIG) as any;
   private translations: any = {};
   private currentLanguage = 'en';
   private projectTranslations: any = {};
@@ -97,10 +95,6 @@ export class TranslationService {
     const projectForLang = this.projectTranslations[lang] || this.projectTranslations.en || {};
 
     this.translations = this.deepMerge(sharedForLang, projectForLang);
-
-    if (this.translations.primeng) {
-      this.primeNGConfig.setTranslation(this.translations.primeng);
-    }
   }
 
   private deepMerge(shared: any, project: any): any {

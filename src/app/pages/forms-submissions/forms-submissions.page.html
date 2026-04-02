@@ -61,13 +61,13 @@
           <th style="width: 3rem">
             <p-tableHeaderCheckbox />
           </th>
-          <th pSortableColumn="id" style="min-width: 6rem">
+          <th pSortableColumn="id" style="min-width: 4rem" class="col-desktop">
             <div class="col-header">
               {{ 'admin.forms.columns.id' | translate }}
               <p-sortIcon field="id" />
             </div>
           </th>
-          <th pSortableColumn="name" style="min-width: 14rem">
+          <th pSortableColumn="name" style="min-width: 8rem">
             <div class="col-header">
               {{ 'admin.forms.columns.name' | translate }}
               <p-sortIcon field="name" />
@@ -82,7 +82,7 @@
               />
             </div>
           </th>
-          <th pSortableColumn="action" style="min-width: 12rem">
+          <th pSortableColumn="action" style="min-width: 8rem" class="col-desktop">
             <div class="col-header">
               {{ 'admin.forms.columns.action' | translate }}
               <p-sortIcon field="action" />
@@ -107,7 +107,7 @@
               </p-columnFilter>
             </div>
           </th>
-          <th pSortableColumn="status" style="min-width: 10rem">
+          <th pSortableColumn="status" style="min-width: 8rem">
             <div class="col-header">
               {{ 'admin.forms.columns.status' | translate }}
               <p-sortIcon field="status" />
@@ -132,16 +132,22 @@
               </p-columnFilter>
             </div>
           </th>
-          <th pSortableColumn="submissionsCount" style="min-width: 8rem">
+          <th pSortableColumn="submissionsCount" style="min-width: 4rem">
             <div class="col-header">
               {{ 'admin.forms.columns.submissions' | translate }}
               <p-sortIcon field="submissionsCount" />
             </div>
           </th>
-          <th pSortableColumn="createdAt" style="min-width: 10rem" class="col-date">
+          <th pSortableColumn="fromDate" style="min-width: 8rem" class="col-desktop">
             <div class="col-header">
-              {{ 'admin.forms.columns.createdAt' | translate }}
-              <p-sortIcon field="createdAt" />
+              {{ 'admin.forms.columns.fromDate' | translate }}
+              <p-sortIcon field="fromDate" />
+            </div>
+          </th>
+          <th pSortableColumn="toDate" style="min-width: 8rem" class="col-desktop">
+            <div class="col-header">
+              {{ 'admin.forms.columns.toDate' | translate }}
+              <p-sortIcon field="toDate" />
             </div>
           </th>
         </tr>
@@ -152,13 +158,13 @@
           <td (click)="$event.stopPropagation()">
             <p-tableCheckbox [value]="form" />
           </td>
-          <td>
+          <td class="col-desktop">
             <span class="form-id">#{{ form.id }}</span>
           </td>
           <td>
             <span class="form-name">{{ form.name }}</span>
           </td>
-          <td>
+          <td class="col-desktop">
             <p-tag
               [value]="'admin.settingsForms.actions.' + form.action | translate"
               [severity]="getActionSeverity(form.action)"
@@ -173,8 +179,11 @@
           <td class="text-center">
             {{ form.submissionsCount ?? 0 }}
           </td>
-          <td class="col-date">
-            {{ form.createdAt | date: 'dd/MM/yyyy' }}
+          <td class="col-desktop">
+            {{ form.fromDate ? (form.fromDate | date: 'dd/MM/yyyy') : '—' }}
+          </td>
+          <td class="col-desktop">
+            {{ form.toDate ? (form.toDate | date: 'dd/MM/yyyy') : '—' }}
           </td>
         </tr>
       </ng-template>
@@ -195,17 +204,12 @@
 
   @if (viewState() === 'detail') {
     <div class="detail-header">
-      <div class="detail-title-group">
-        <h2 class="detail-form-title">{{ selectedForm()?.name }}</h2>
-        <span class="detail-count">{{ totalSubmissions() }} {{ 'admin.forms.submissions' | translate }}</span>
-      </div>
-      <button class="back-link" (click)="backToList()">
-        <i class="pi pi-arrow-left"></i>
-        {{ 'admin.forms.allForms' | translate }}
-      </button>
+      <p-breadcrumb [model]="breadcrumbItems()" />
+      <span class="detail-count">{{ totalSubmissions() }} {{ 'admin.forms.submissions' | translate }}</span>
     </div>
 
     <p-table
+      #dtSubmissions
       [value]="submissions()"
       [loading]="submissionsLoading()"
       [rows]="pageSize()"
@@ -217,24 +221,37 @@
       currentPageReportTemplate="{{ 'admin.forms.paginatorReport' | translate }}"
       (onLazyLoad)="onLazyLoad($event)"
     >
+      <ng-template #caption>
+        <div class="table-caption">
+          <p-iconField iconPosition="left">
+            <p-inputIcon>
+              <i class="pi pi-search"></i>
+            </p-inputIcon>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="submissionsSearchValue"
+              (input)="onSubmissionsSearch()"
+              [placeholder]="'admin.forms.submissionTable.searchPlaceholder' | translate"
+            />
+          </p-iconField>
+          <button class="btn-action" (click)="clearSubmissionsFilter(dtSubmissions)">
+            <i class="pi pi-filter-slash"></i>
+            {{ 'admin.forms.clearFilters' | translate }}
+          </button>
+        </div>
+      </ng-template>
+
       <ng-template #header>
         <tr>
           <th pSortableColumn="id" style="min-width: 6rem">
             <div class="col-header">
               {{ 'admin.forms.submissionTable.columns.id' | translate }}
-              <p-sortIcon field="id" />
-            </div>
-          </th>
-          <th pSortableColumn="userId" style="min-width: 8rem" class="col-user-id">
-            <div class="col-header">
-              {{ 'admin.forms.submissionTable.columns.userId' | translate }}
-              <p-sortIcon field="userId" />
             </div>
           </th>
           <th pSortableColumn="userName" style="min-width: 8rem">
             <div class="col-header">
               {{ 'admin.forms.submissionTable.columns.userName' | translate }}
-              <p-sortIcon field="userName" />
             </div>
           </th>
           <th pSortableColumn="submittedAt" style="min-width: 10rem">
@@ -250,9 +267,6 @@
         <tr>
           <td>
             <span class="submission-id">#{{ submission.id }}</span>
-          </td>
-          <td class="col-user-id">
-            <span class="user-id">{{ submission.userId }}</span>
           </td>
           <td>
             <span>{{ submission.userName }}</span>

@@ -258,7 +258,11 @@ export const sharedTranslations = {
           createdAt: 'Creado'
         },
         noSubmissions: 'Sin envíos aún',
-        noSubmissionsDescription: 'Aún no se han recibido envíos para este formulario.'
+        noSubmissionsDescription: 'Aún no se han recibido envíos para este formulario.',
+        searchPlaceholder: 'Buscar por usuario...'
+      },
+      submissionDetail: {
+        title: 'Detalle del envío'
       }
     },
     settingsForms: {

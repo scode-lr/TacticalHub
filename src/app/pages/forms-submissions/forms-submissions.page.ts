@@ -5,7 +5,6 @@ import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { FormService } from '@core/services/form.service';
 import { ClubService } from '@core/services/club.service';
-import { NavigationService } from '@core/services/navigation.service';
 import { FormSubmissionsService } from '@core/services/form-submissions.service';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
@@ -17,6 +16,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -24,12 +25,11 @@ import { SelectModule } from 'primeng/select';
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule]
 })
 export class FormsSubmissionsPage {
   private readonly formService = inject(FormService);
   private readonly clubService = inject(ClubService);
-  private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
   private readonly formSubmissionsService = inject(FormSubmissionsService);
 
@@ -45,14 +45,21 @@ export class FormsSubmissionsPage {
   readonly pageSize = signal<number>(10);
   readonly currentPage = signal<number>(1);
   readonly totalSubmissions = signal<number>(0);
+  readonly currentSort = signal<string | undefined>(undefined);
 
   selectedForms: FormDetail[] = [];
   searchValue = '';
+  submissionsSearchValue = '';
 
   readonly selectedForm = computed(() => {
     const formId = this.selectedFormId();
     return formId ? this.forms().find(f => f.id === formId) : null;
   });
+
+  readonly breadcrumbItems = computed<MenuItem[]>(() => [
+    { label: this.translationService.instant('admin.forms.allForms'), command: () => this.backToList() },
+    { label: this.selectedForm()?.name ?? '' }
+  ]);
 
   get statuses() {
     return [
@@ -97,6 +104,8 @@ export class FormsSubmissionsPage {
     this.selectedFormId.set(formId);
     this.pageSize.set(10);
     this.currentPage.set(1);
+    this.currentSort.set(undefined);
+    this.submissionsSearchValue = '';
     this.viewState.set('detail');
     const form = this.forms().find(f => f.id === formId);
     if (!form) return;
@@ -110,14 +119,36 @@ export class FormsSubmissionsPage {
     const rowsChanged = rows !== this.pageSize();
     this.pageSize.set(rows);
     this.currentPage.set(rowsChanged ? 1 : Math.floor((event.first ?? 0) / rows) + 1);
+    if (event.sortField) {
+      const field = Array.isArray(event.sortField) ? event.sortField[0] : event.sortField;
+      const dir = event.sortOrder === 1 ? 'asc' : 'desc';
+      this.currentSort.set(`${field};${dir}`);
+    }
+    await this.loadSubmissions(formId);
+  }
+
+  async onSubmissionsSearch(): Promise<void> {
+    const formId = this.selectedFormId();
+    if (formId === null) return;
+    this.currentPage.set(1);
+    await this.loadSubmissions(formId);
+  }
+
+  async clearSubmissionsFilter(dt: Table): Promise<void> {
+    this.submissionsSearchValue = '';
+    dt.reset();
+    const formId = this.selectedFormId();
+    if (formId === null) return;
+    this.currentPage.set(1);
     await this.loadSubmissions(formId);
   }
 
   private async loadSubmissions(formId: number): Promise<void> {
     this.submissionsLoading.set(true);
     try {
-      const submissionsPage = await this.formSubmissionsService.getSubmissions(formId, this.currentPage(), this.pageSize());
+      const submissionsPage = await this.formSubmissionsService.getSubmissions(formId, this.pageSize(), (this.currentPage() - 1) * this.pageSize(), this.submissionsSearchValue || undefined, this.currentSort());
       this.submissions.set(submissionsPage.submissions);
+      this.totalSubmissions.set(submissionsPage.totalCount ?? this.totalSubmissions());
     } catch (error) {
       console.error('Error loading submissions:', error);
       this.submissions.set([]);

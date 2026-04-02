@@ -260,7 +260,11 @@ export const sharedTranslations = {
           createdAt: 'Created'
         },
         noSubmissions: 'No submissions yet',
-        noSubmissionsDescription: 'No submissions have been received for this form yet.'
+        noSubmissionsDescription: 'No submissions have been received for this form yet.',
+        searchPlaceholder: 'Search by user...'
+      },
+      submissionDetail: {
+        title: 'Submission Detail'
       }
     },
     settingsForms: {

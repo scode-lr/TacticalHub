@@ -258,7 +258,11 @@ export const sharedTranslations = {
           createdAt: 'Creat'
         },
         noSubmissions: 'Sense enviaments encara',
-        noSubmissionsDescription: 'Encara no s\'han rebut enviaments per a aquest formulari.'
+        noSubmissionsDescription: 'Encara no s\'han rebut enviaments per a aquest formulari.',
+        searchPlaceholder: 'Cerca per usuari...'
+      },
+      submissionDetail: {
+        title: 'Detall de l\'enviament'
       }
     },
     settingsForms: {
