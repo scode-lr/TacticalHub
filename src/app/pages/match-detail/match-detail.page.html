@@ -1,0 +1,71 @@
+@if (match()) {
+  <div class="page-container-narrow match-detail-page">
+    <article class="card match-detail">
+      <div class="match-header">
+        <div class="match-info">
+          <div class="competition">{{ match()!.competition }}</div>
+          <div class="match-date">{{ getFormattedDate(match()!.date) }} · {{ getFormattedTime(match()!.date) }}</div>
+          <div class="stadium">{{ match()!.stadium }}</div>
+        </div>
+      </div>
+
+      <div class="match-result">
+        <div class="team home-team">
+          <div class="team-name">{{ match()!.team }}</div>
+          <div class="team-score" [class.winner]="match()!.resultLocal > match()!.resultAway && hasStarted()">
+            {{ displayLocalScore }}
+          </div>
+        </div>
+        <div class="vs-separator">VS</div>
+        <div class="team away-team">
+          <div class="team-name">{{ match()!.teamVersus }}</div>
+          <div class="team-score" [class.winner]="match()!.resultAway > match()!.resultLocal && hasStarted()">
+            {{ displayAwayScore }}
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-section">
+        <ion-segment [value]="selectedTab()" (ionChange)="onTabChange($event)">
+          <ion-segment-button value="lineup">
+            <ion-icon name="people-outline"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="goals">
+            <ion-icon name="football-outline"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="standings">
+            <ion-icon name="trophy-outline"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="matches">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      <div class="tab-content">
+        @if (selectedTab() === 'lineup') {
+          <app-match-lineup [matchId]="match()!.id" />
+        }
+        @if (selectedTab() === 'goals') {
+          <app-match-goal-scorers [matchId]="match()!.id" />
+        }
+        @if (selectedTab() === 'standings') {
+          <app-match-standings [matchId]="match()!.id" />
+        }
+        @if (selectedTab() === 'matches') {
+          <app-match-related [matchId]="match()!.id" />
+        }
+      </div>
+    </article>
+  </div>
+} @else {
+  <div class="page-container-narrow match-detail-page">
+    <div class="empty-state">
+      <ion-icon name="football-outline" class="empty-icon"></ion-icon>
+      <h3 class="empty-title">{{ 'viewer.match.notFound' | translate }}</h3>
+      <div class="empty-action">
+        <ion-button class="btn-primary" (click)="goBack()">{{ 'common.back' | translate }}</ion-button>
+      </div>
+    </div>
+  </div>
+}

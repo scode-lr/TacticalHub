@@ -1,0 +1,90 @@
+<div class="menu-container">
+  <!-- Desktop Role Selector -->
+  <app-role-selector [currentRole]="currentRole()" class="desktop-only" ></app-role-selector>
+
+  <!-- Desktop Menu Nav -->
+  <nav class="menu-nav">
+    @for (item of menuItemsWithBadges(); track item.id) {
+      <button 
+        class="menu-item" 
+        [class.active]="isSelected(item.id)"
+        (click)="selectMenuItem(item)">
+        <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
+        <span class="menu-label">{{ item.label | translate }}</span>
+        @if (item.badge && item.badge > 0) {
+          <span class="menu-badge"></span>
+        }
+      </button>
+    }
+  </nav>
+
+  <!-- Desktop User Section -->
+  <div class="user-section desktop-only">
+    <div class="user-info">
+      <img [src]="avatarUrl()" [alt]="user()?.username" (error)="onAvatarError()" class="user-avatar">
+    </div>
+    <div class="action-buttons">
+      <button class="settings-button" (click)="goToSettings()">
+        <ion-icon name="settings-outline"></ion-icon>
+      </button>
+      <button class="logout-button" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Nav -->
+  <nav class="menu-nav-mobile">
+    @for (item of visibleMenuItemsWithBadges(); track item.id) {
+      <button 
+        class="menu-item" 
+        [class.active]="isSelected(item.id)"
+        (click)="selectMenuItem(item)">
+        <div class="menu-icon-wrapper">
+          <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
+          @if (item.badge && item.badge > 0) {
+            <span class="menu-badge-mobile"></span>
+          }
+        </div>
+        <span class="menu-label">{{ item.label | translate }}</span>
+      </button>
+    }
+    
+    @if (hiddenMenuItemsWithBadges().length > 0) {
+      <button 
+        class="menu-item menu-more" 
+        (click)="toggleModal()">
+        <ion-icon name="ellipsis-horizontal" class="menu-icon"></ion-icon>
+        <span class="menu-label">More</span>
+      </button>
+
+      <!-- Mobile Modal Menu -->
+      <ion-modal 
+        [isOpen]="isModalOpen()"
+        (didDismiss)="closeModal()"
+        [breakpoints]="[0, 0.5, 0.9]"
+        [initialBreakpoint]="0.5">
+        <ng-template>
+          <div class="modal-menu">
+            <div class="modal-content">
+              @for (item of hiddenMenuItemsWithBadges(); track item.id) {
+                <button 
+                  class="modal-item"
+                  [class.active]="isSelected(item.id)"
+                  (click)="selectMenuItem(item)">
+                  <div class="modal-icon-wrapper">
+                    <ion-icon [name]="item.icon" class="modal-icon"></ion-icon>
+                    @if (item.badge && item.badge > 0) {
+                      <span class="menu-badge-mobile"></span>
+                    }
+                  </div>
+                  <span class="modal-label">{{ item.label | translate }}</span>
+                </button>
+              }
+            </div>
+          </div>
+        </ng-template>
+      </ion-modal>
+    }
+  </nav>
+</div>

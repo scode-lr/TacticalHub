@@ -1,0 +1,258 @@
+// Unified Button Styles
+// Professional, modern, minimal design
+
+// Button classes as mixins that can be extended
+.btn-primary {
+  --background: var(--button-background, var(--button-primary-color, #3880ff));
+  --color: white;
+  --border-radius: 8px;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  --box-shadow: none;
+  font-weight: normal;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: background 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(.button-disabled) {
+    opacity: 0.9;
+  }
+
+  &:active:not(.button-disabled) {
+    opacity: 0.85;
+  }
+
+  &.button-disabled {
+    --background: var(--background-secondary, #f8f9fa);
+    --color: var(--text-light, #adb5bd);
+    opacity: 1;
+  }
+}
+
+.btn-secondary {
+  --background: var(--background-secondary, #f8f9fa);
+  --color: var(--text-primary, #111827);
+  --border-radius: 8px;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  --box-shadow: none;
+  font-weight: normal;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: background 0.15s ease;
+  --border-color: none;
+
+  &:hover:not(.button-disabled) {
+    --background: var(--background-tertiary, #e9ecef);
+  }
+
+  &:active:not(.button-disabled) {
+    --background: var(--border-light, #e5e7eb);
+  }
+
+  &.button-disabled {
+    --background: var(--background-secondary, #f8f9fa);
+    --color: var(--text-light, #adb5bd);
+    opacity: 1;
+  }
+}
+
+.btn-danger {
+  --background: var(--ion-color-danger, #eb445a);
+  --color: white;
+  --border-radius: 8px;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  --box-shadow: none;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: background 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(.button-disabled) {
+    opacity: 0.9;
+  }
+
+  &:active:not(.button-disabled) {
+    opacity: 0.85;
+  }
+
+  &.button-disabled {
+    --background: var(--background-secondary, #f8f9fa);
+    --color: var(--text-light, #adb5bd);
+    opacity: 1;
+  }
+}
+
+.btn-success {
+  --background: var(--ion-color-success, #10b981);
+  --color: white;
+  --border-radius: 8px;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  --box-shadow: none;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: background 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(.button-disabled) {
+    opacity: 0.9;
+  }
+
+  &:active:not(.button-disabled) {
+    opacity: 0.85;
+  }
+
+  &.button-disabled {
+    --background: var(--background-secondary, #f8f9fa);
+    --color: var(--text-light, #adb5bd);
+    opacity: 1;
+  }
+}
+
+.btn-text {
+  --background: transparent;
+  --color: var(--text-secondary, #6b7280);
+  --border-radius: 8px;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  --box-shadow: none;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: color 0.15s ease;
+
+  &:hover:not(.button-disabled) {
+    --color: var(--ion-color-primary, #3880ff);
+  }
+
+  &:active:not(.button-disabled) {
+    --color: var(--ion-color-primary-shade, #3171e0);
+  }
+
+  &.button-disabled {
+    --color: var(--text-light, #adb5bd);
+    opacity: 1;
+  }
+}
+
+.btn-outline {
+  --background: transparent;
+  --color: var(--ion-color-primary, #3880ff);
+  --border-radius: 8px;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+  --box-shadow: none;
+  border: 1px solid var(--ion-color-primary, #3880ff);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover:not(.button-disabled) {
+    --background: var(--ion-color-primary, #3880ff);
+    --color: white;
+  }
+
+  &:active:not(.button-disabled) {
+    opacity: 0.9;
+  }
+
+  &.button-disabled {
+    --color: var(--text-light, #adb5bd);
+    border-color: var(--border-light, #e5e7eb);
+    opacity: 1;
+  }
+}
+
+.btn-large {
+  --padding-top: 0.875rem;
+  --padding-bottom: 0.875rem;
+  --border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn-small {
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
+  --border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.btn-icon {
+  --border-radius: 8px;
+  --padding-start: 0.625rem;
+  --padding-end: 0.625rem;
+  --padding-top: 0.625rem;
+  --padding-bottom: 0.625rem;
+  --box-shadow: none;
+  
+  ion-icon {
+    font-size: 1.25rem;
+  }
+}
+
+.btn-icon-round {
+  --border-radius: 50%;
+  --padding-start: 0.625rem;
+  --padding-end: 0.625rem;
+  --padding-top: 0.625rem;
+  --padding-bottom: 0.625rem;
+  --box-shadow: none;
+  width: 40px;
+  height: 40px;
+  
+  ion-icon {
+    font-size: 1.125rem;
+  }
+}
+
+// Apply to ion-button elements
+ion-button {
+  &.btn-primary {
+    @extend .btn-primary;
+  }
+
+  &.btn-secondary {
+    @extend .btn-secondary;
+  }
+
+  &.btn-danger {
+    @extend .btn-danger;
+  }
+
+  &.btn-success {
+    @extend .btn-success;
+  }
+
+  &.btn-text {
+    @extend .btn-text;
+  }
+
+  &.btn-outline {
+    @extend .btn-outline;
+  }
+
+  &.btn-large {
+    @extend .btn-large;
+  }
+
+  &.btn-small {
+    @extend .btn-small;
+  }
+
+  &.btn-icon {
+    @extend .btn-icon;
+  }
+
+  &.btn-icon-round {
+    @extend .btn-icon-round;
+  }
+}

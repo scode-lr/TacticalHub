@@ -1,0 +1,68 @@
+@if (team()) {
+  <div class="page-container team-detail-page">
+    <div class="page-header">
+      <button class="back-button" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <div class="header-info">
+        <h1 class="team-name">{{ team()!.name }}</h1>
+        <span class="team-category">{{ team()!.categoryId }}</span>
+      </div>
+      <div class="header-actions">
+        <div class="player-count">
+          <span class="count-value">{{ players().length }}</span>
+          <span class="count-label">Players</span>
+        </div>
+        <button class="add-player-btn" (click)="openAddPlayerModal()">
+          <ion-icon name="add-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="players-section">
+      @for (position of positions; track position) {
+        @if (getPlayersByPosition(position).length > 0) {
+          <div class="position-group">
+            <div class="position-header">
+              <h2 class="position-title">{{ getPositionLabel(position) }}</h2>
+            </div>
+            <div class="players-table">
+              <div class="table-header">
+                <span class="col-number">#</span>
+                <span class="col-name">Name</span>
+                <span class="col-position">Pos</span>
+              </div>
+              @for (player of getPlayersByPosition(position); track player.id) {
+                <div class="player-row">
+                  <span class="col-number player-number">{{ player.number }}</span>
+                  <span class="col-name player-name">
+                    {{ player.name }}
+                    @if (player.isCaptain) {
+                      <span class="captain-badge">C</span>
+                    }
+                  </span>
+                  <span class="col-position player-position">{{ position }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      }
+    </div>
+
+    <app-player-form-modal
+      [isOpen]="isModalOpen()"
+      [teamName]="team()!.name"
+      (didDismiss)="closeModal()"
+      (playerAdded)="onPlayerAdded($event)">
+    </app-player-form-modal>
+  </div>
+} @else {
+  <div class="page-container team-detail-page">
+    <div class="empty-state">
+      <ion-icon name="trophy-outline" class="empty-icon"></ion-icon>
+      <h3 class="empty-title">Team not found</h3>
+      <button class="btn-back" (click)="goBack()">Go Back</button>
+    </div>
+  </div>
+}

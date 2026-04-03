@@ -1,0 +1,15 @@
+// Import shared auth styles
+@use '../auth-shared.scss';
+
+// Signin-specific overrides (if any)
+.signin-page {
+  @extend .auth-page;
+}
+
+.signin-form {
+  @extend .auth-form;
+  
+  .signin-btn {
+    @extend .auth-btn;
+  }
+}

@@ -1,0 +1,48 @@
+<div class="page-container">
+  <div class="section-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'admin.menu.settingsForms' | translate }}</h1>
+      <p class="section-subtitle">{{ 'admin.description.settingsForms' | translate }}</p>
+    </div>
+  @if (!loading() && forms().length > 0) {
+    <button class="btn-add" (click)="addForm()">
+      <ion-icon name="add-outline"></ion-icon>
+      {{ 'admin.settingsForms.addForm' | translate }}
+    </button>
+  }
+  </div>
+
+  @if (loading()) {
+    <div class="forms-grid">
+        <div class="skeleton-card">
+          <div class="skeleton-card-header">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-subtitle"></div>
+          </div>
+          <div class="skeleton-card-body">
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line skeleton-line--short"></div>
+          </div>
+          <div class="skeleton-card-footer">
+            <div class="skeleton-line skeleton-badge"></div>
+          </div>
+        </div>
+    </div>
+  } @else if (forms().length > 0) {
+    <div class="forms-grid">
+      @for (form of forms(); track form.id; let i = $index) {
+        <app-form-header [form]="form" [index]="i" [editable]="true" />
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <h3 class="empty-title">{{ 'admin.settingsForms.noForms' | translate }}</h3>
+      <p class="empty-description">{{ 'admin.settingsForms.noFormsDescription' | translate }}</p>
+      <button class="btn-add" (click)="addForm()">
+        <ion-icon name="add-outline"></ion-icon>
+        {{ 'admin.settingsForms.addForm' | translate }}
+      </button>
+    </div>
+  }
+</div>

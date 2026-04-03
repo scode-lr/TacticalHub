@@ -1,0 +1,73 @@
+@if (actionRequests().length > 0) {
+  <div class="action-requests-card" (click)="openModal()">
+    <div class="request-icon">
+      <ion-icon name="link-outline"></ion-icon>
+    </div>
+    
+    <div class="request-content">
+      <h3 class="request-title">{{ 'notifications.actionRequests' | translate }}</h3>
+      <p class="request-count">{{ actionRequests().length }} {{ (actionRequests().length === 1 ? 'notifications.pendingRequest' : 'notifications.pendingRequests') | translate }}</p>
+    </div>
+    
+    <ion-button fill="clear" class="request-arrow">
+      <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <ion-modal 
+    [isOpen]="isModalOpen()" 
+    (didDismiss)="closeModal()"
+    class="requests-modal">
+    <ng-template>
+      <div class="modal-container">
+        <div class="modal-header">
+          <div class="header-info">
+            <div class="header-icon">
+              <ion-icon name="link-outline"></ion-icon>
+            </div>
+            <div class="header-text">
+              <h2 class="header-title">{{ 'notifications.actionRequests' | translate }}</h2>
+              <p class="header-subtitle">{{ actionRequests().length }} {{ (actionRequests().length === 1 ? 'notifications.pendingRequest' : 'notifications.pendingRequests') | translate }}</p>
+            </div>
+          </div>
+          <button class="close-button" (click)="closeModal()">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <div class="modal-content">
+          <div class="requests-list">
+            @for (request of actionRequests(); track request.id) {
+              <div class="request-item">
+                <div class="request-icon-small">
+                  <ion-icon name="link-outline"></ion-icon>
+                </div>
+                
+                <div class="request-info">
+                  <h4 class="request-title-text">{{ request.title }}</h4>
+                  <p class="request-message">{{ request.message }}</p>
+                  @if (request.action?.data?.playerName) {
+                    <span class="request-player-name">{{ request.action?.data?.playerName }}</span>
+                  }
+                  <span class="request-date">{{ formatDate(request.createdAt) }}</span>
+                </div>
+                
+                <div class="request-actions">
+                  @if (request.action && request.status === 'unread') {
+                    <ion-button 
+                      fill="outline" 
+                      color="primary"
+                      size="small"
+                      (click)="handleAction(request); $event.stopPropagation()">
+                      {{ request.action.label }}
+                    </ion-button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+}

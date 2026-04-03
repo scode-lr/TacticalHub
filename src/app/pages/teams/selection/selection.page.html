@@ -1,0 +1,33 @@
+<div class="role-selection-page">
+  <app-user-header [showRoleSelector]="false"></app-user-header>
+
+  <ion-content class="clubs-content">
+    <div class="clubs-container">
+      <div class="page-title">
+        <h1>{{ 'roleSelection.selectRole' | translate }}</h1>
+        <p class="title-subtitle">{{ hasActiveRoles() ? ('roleSelection.chooseClub' | translate) : ('roleSelection.noRolesYet' | translate) }}</p>
+      </div>
+
+      <div class="clubs-grid">
+        @for (role of activeRoles(); track role.id) {
+          <app-role-card [role]="role" (cardClicked)="selectRole(role)"></app-role-card>
+        }
+
+        @for (role of pendingRoles(); track role.id) {
+          <app-role-card [role]="role" (cardClicked)="selectRole(role)"></app-role-card>
+        }
+        
+        <app-role-card [isAddCard]="true" (cardClicked)="addNewClub()"></app-role-card>
+      </div>
+
+      @if (!hasActiveRoles() && !isPrivateApp && !hasPendingRoles()) {
+        <div class="skip-section">
+          <ion-button fill="clear" class="skip-button" (click)="skipForNow()">
+            {{ 'roleSelection.skipForNow' | translate }}
+          </ion-button>
+          <p class="skip-text">{{ 'roleSelection.canAddLater' | translate }}</p>
+        </div>
+      }
+    </div>
+  </ion-content>
+</div>

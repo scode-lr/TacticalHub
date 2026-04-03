@@ -1,0 +1,38 @@
+.social-section {
+  margin: 2rem 0;
+
+  .divider-line {
+    position: relative;
+    text-align: center;
+    margin: 1.5rem 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--ion-color-medium);
+      opacity: 0.3;
+      transform: translateY(-50%);
+    }
+
+    .divider-text {
+      position: relative;
+      display: inline-block;
+      background: var(--ion-background-color, var(--background-primary, #ffffff));
+      padding: 0 1rem;
+      color: var(--ion-color-medium);
+      font-size: 0.875rem;
+      font-weight: 500;
+      z-index: 1;
+    }
+  }
+
+  .social-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+}

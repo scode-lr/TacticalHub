@@ -1,0 +1,244 @@
+<div class="page-container">
+  <div class="section-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'admin.menu.forms' | translate }}</h1>
+      <p class="section-subtitle">{{ 'admin.description.forms' | translate }}</p>
+    </div>
+  </div>
+
+  
+  <div class="detail-header">
+    <p-breadcrumb [model]="breadcrumbItems()" />
+    @if (viewState() === 'detail') {
+    <span class="detail-count">{{ totalSubmissions() }} {{ 'admin.forms.submissions' | translate }}</span>
+    }
+  </div>
+
+  @if (viewState() === 'list') {
+    @if (selectedForms.length > 0) {
+      <div class="selection-bar">
+        <span class="selection-count">{{ selectedForms.length }} {{ 'admin.forms.selected' | translate }}</span>
+        <div class="selection-actions">
+          <button class="btn-action">
+            <i class="pi pi-download"></i>
+            {{ 'admin.forms.export' | translate }}
+          </button>
+        </div>
+      </div>
+    }
+
+    <p-table
+      #dt
+      [value]="forms()"
+      [(selection)]="selectedForms"
+      dataKey="id"
+      [rowHover]="true"
+      [rows]="formsLimit()"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading()"
+      [paginator]="true"
+      currentPageReportTemplate="{{ 'admin.forms.paginatorReport' | translate }}"
+      (onPage)="onFormsPage($event)"
+      [filterDelay]="0"
+      [globalFilterFields]="['name', 'action', 'status']"
+    >
+      <ng-template #caption>
+        <div class="table-caption">
+          <p-iconField iconPosition="left">
+            <p-inputIcon>
+              <i class="pi pi-search"></i>
+            </p-inputIcon>
+            <input
+              pInputText
+              type="text"
+              style="padding-inline-start: 1rem"
+              [(ngModel)]="searchValue"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              [placeholder]="'admin.forms.searchPlaceholder' | translate"
+            />
+          </p-iconField>
+          <button class="btn-action" (click)="clear(dt)">
+            <i class="pi pi-filter-slash"></i>
+            {{ 'admin.forms.clearFilters' | translate }}
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th style="width: 3rem" class="no-padding-top-bottom">
+            <p-tableHeaderCheckbox />
+          </th>
+          <th style="min-width: 4rem" class="col-desktop">
+            <div class="col-header">
+              {{ 'admin.forms.columns.id' | translate }}
+            </div>
+          </th>
+          <th style="min-width: 8rem">
+            <div class="col-header">
+              {{ 'admin.forms.columns.name' | translate }}
+            </div>
+          </th>
+          <th style="min-width: 8rem" class="col-desktop no-padding-top-bottom">
+            <div class="col-header">
+              {{ 'admin.forms.columns.action' | translate }}
+            </div>
+          </th>
+          <th style="min-width: 6rem" class="no-padding-top-bottom">
+            <div class="col-header">
+              {{ 'admin.forms.columns.status' | translate }}
+            </div>
+          </th>
+          <th style="min-width: 4rem">
+            <div class="col-header">
+              {{ 'admin.forms.columns.submissions' | translate }}
+            </div>
+          </th>
+          <th style="min-width: 8rem" class="col-desktop">
+            <div class="col-header">
+              {{ 'admin.forms.columns.fromDate' | translate }}
+            </div>
+          </th>
+          <th style="min-width: 8rem" class="col-desktop">
+            <div class="col-header">
+              {{ 'admin.forms.columns.toDate' | translate }}
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-form>
+        <tr class="p-selectable-row" (click)="selectForm(form.id)">
+          <td (click)="$event.stopPropagation()" class="no-padding-top-bottom">
+            <p-tableCheckbox [value]="form" />
+          </td>
+          <td class="col-desktop">
+            <span>#{{ form.id }}</span>
+          </td>
+          <td>
+            <span>{{ form.name }}</span>
+          </td>
+          <td class="col-desktop no-padding-top-bottom">
+            <p-tag
+              [value]="'admin.settingsForms.actions.' + form.action | translate"
+              [severity]="getActionSeverity(form.action)"
+            />
+          </td>
+          <td class="no-padding-top-bottom">
+            <p-tag
+              [value]="'admin.settingsForms.status.' + form.status | translate"
+              [severity]="getSeverity(form.status)"
+            />
+          </td>
+          <td class="text-center">
+            {{ form.submissionsCount ?? 0 }}
+          </td>
+          <td class="col-desktop">
+            {{ form.fromDate ? (form.fromDate | date: 'dd/MM/yyyy') : '—' }}
+          </td>
+          <td class="col-desktop">
+            {{ form.toDate ? (form.toDate | date: 'dd/MM/yyyy') : '—' }}
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="8">
+            <div class="empty-state">
+              <i class="pi pi-file-text empty-icon"></i>
+              <h3 class="empty-title">{{ 'admin.forms.noForms' | translate }}</h3>
+              <p class="empty-description">{{ 'admin.forms.noFormsDescription' | translate }}</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+
+  @if (viewState() === 'detail') {
+    <p-table
+      #dtSubmissions
+      [value]="submissions()"
+      [loading]="submissionsLoading()"
+      [rows]="pageSize()"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      [lazy]="true"
+      [totalRecords]="totalSubmissions()"
+      currentPageReportTemplate="{{ 'admin.forms.paginatorReport' | translate }}"
+      (onLazyLoad)="onLazyLoad($event)"
+    >
+      <ng-template #caption>
+        <div class="table-caption">
+          <p-iconField iconPosition="left">
+            <p-inputIcon>
+              <i class="pi pi-search"></i>
+            </p-inputIcon>
+            <input
+              pInputText
+              style="padding-inline-start: 1rem"
+              type="text"
+              [(ngModel)]="submissionsSearchValue"
+              (input)="onSubmissionsSearch()"
+              [placeholder]="'admin.forms.submissionTable.searchPlaceholder' | translate"
+            />
+          </p-iconField>
+          <button class="btn-action" (click)="clearSubmissionsFilter(dtSubmissions)">
+            <i class="pi pi-filter-slash"></i>
+            {{ 'admin.forms.clearFilters' | translate }}
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="id" style="min-width: 6rem">
+            <div class="col-header">
+              {{ 'admin.forms.submissionTable.columns.id' | translate }}
+            </div>
+          </th>
+          <th pSortableColumn="userName" style="min-width: 8rem">
+            <div class="col-header">
+              {{ 'admin.forms.submissionTable.columns.userName' | translate }}
+            </div>
+          </th>
+          <th pSortableColumn="submittedAt" style="min-width: 10rem">
+            <div class="col-header">
+              {{ 'admin.forms.submissionTable.columns.submittedAt' | translate }}
+              <p-sortIcon field="submittedAt" />
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-submission>
+        <tr class="p-selectable-row" (click)="navigateToSubmission(submission.id)">
+          <td>
+            <span class="submission-id">#{{ submission.id }}</span>
+          </td>
+          <td>
+            <span>{{ submission.userName }}</span>
+          </td>
+          <td>
+            {{ submission.submittedAt | date: 'dd/MM/yyyy HH:mm' }}
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="5">
+            <div class="empty-state">
+              <i class="pi pi-file-text empty-icon"></i>
+              <h3 class="empty-title">{{ 'admin.forms.submissionTable.noSubmissions' | translate }}</h3>
+              <p class="empty-description">{{ 'admin.forms.submissionTable.noSubmissionsDescription' | translate }}</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+

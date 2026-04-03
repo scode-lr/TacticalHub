@@ -1,0 +1,181 @@
+<div class="page-container">
+  <div class="section-header-with-back-button">
+  <app-back-button />
+    <h1 class="section-title">{{ pageTitle() | translate }}</h1>
+  </div>
+
+  @if (loading()) {
+    <div class="form-skeleton">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-description"></div>
+        <div class="skeleton-field"></div>
+    </div>
+  }
+
+  @if (!loading()) {
+    <div class="form-wrapper">
+      @if (formDetail(); as detail) {
+        <div class="form-header">
+          @if (detail.description) {
+            <p class="form-description">{{ detail.description }}</p>
+          }
+        </div>
+      }
+
+      <form [formGroup]="dynamicForm" (ngSubmit)="onFormSubmit()" class="dynamic-form" novalidate>
+        @for (field of formFields(); track field.id) {
+          <div class="field-group" [class.field-group--boolean]="field.type === 'boolean' && !field.options?.length">
+
+            @if (field.type !== 'boolean' || field.options?.length) {
+              <label class="field-label" [for]="field.key">
+                {{ field.label }}
+                @if (field.isRequired) {
+                  <span class="required-mark">*</span>
+                }
+              </label>
+            }
+
+            @if (field.description) {
+              <p class="field-hint">{{ field.description }}</p>
+            }
+
+            @if (field.type === 'text') {
+              <input
+                [id]="field.key"
+                type="text"
+                class="field-input"
+                [class.field-input--error]="isFieldInvalid(field.key)"
+                [formControlName]="field.key"
+                [attr.maxlength]="field.maxLength"
+              />
+            }
+
+            @if (field.type === 'number') {
+              <input
+                [id]="field.key"
+                type="number"
+                class="field-input"
+                [class.field-input--error]="isFieldInvalid(field.key)"
+                [formControlName]="field.key"
+              />
+            }
+
+            @if (field.type === 'date') {
+              <input
+                [id]="field.key"
+                type="date"
+                class="field-input"
+                [class.field-input--error]="isFieldInvalid(field.key)"
+                [formControlName]="field.key"
+              />
+            }
+
+            @if (field.type === 'email') {
+              <input
+                [id]="field.key"
+                type="email"
+                class="field-input"
+                [class.field-input--error]="isFieldInvalid(field.key)"
+                [formControlName]="field.key"
+              />
+            }
+
+            @if (field.type === 'phone') {
+              <input
+                [id]="field.key"
+                type="tel"
+                class="field-input"
+                [class.field-input--error]="isFieldInvalid(field.key)"
+                [formControlName]="field.key"
+              />
+            }
+
+            @if (field.type === 'textarea') {
+              <textarea
+                [id]="field.key"
+                class="field-textarea"
+                [class.field-textarea--error]="isFieldInvalid(field.key)"
+                [formControlName]="field.key"
+                rows="4"
+                [attr.maxlength]="field.maxLength"
+              ></textarea>
+            }
+
+            @if (field.type === 'boolean') {
+              @if (field.options?.length) {
+                <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field.key)">
+                  @for (option of field.options; track option) {
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        class="boolean-radio"
+                        [formControlName]="field.key"
+                        [value]="option"
+                      />
+                      <span class="radio-text">{{ option }}</span>
+                    </label>
+                  }
+                </div>
+              } @else {
+                <label class="boolean-label">
+                  <input
+                    type="checkbox"
+                    class="boolean-checkbox"
+                    [formControlName]="field.key"
+                  />
+                  <span class="boolean-text">
+                    {{ field.label }}
+                    @if (field.isRequired) {
+                      <span class="required-mark">*</span>
+                    }
+                  </span>
+                </label>
+              }
+            }
+
+            @if (field.type === 'select') {
+              <select
+                [id]="field.key"
+                class="field-select"
+                [class.field-select--error]="isFieldInvalid(field.key)"
+                [formControlName]="field.key"
+              >
+                <option [ngValue]="null">{{ 'common.selectOption' | translate }}</option>
+                @for (option of field.options ?? []; track option) {
+                  <option [value]="option">{{ option }}</option>
+                }
+              </select>
+            }
+
+            @if (field.type === 'file') {
+              <input
+                [id]="field.key"
+                type="file"
+                class="field-file"
+                [class.field-file--error]="isFieldInvalid(field.key)"
+                (change)="onFileChange(field.key, $event)"
+              />
+            }
+
+            @if (isFieldInvalid(field.key)) {
+              <span class="field-error">{{ 'validation.required' | translate }}</span>
+            }
+          </div>
+        }
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="onFormCancel()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+            @if (isSubmitting()) {
+              {{ 'common.submitting' | translate }}
+            } @else {
+              {{ 'common.submit' | translate }}
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

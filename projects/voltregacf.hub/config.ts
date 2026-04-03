@@ -1,0 +1,16 @@
+import { translationsEn, translationsEs, translationsCa } from './i18n';
+
+export const PROJECT_CONFIG = {
+  name: 'Voltregà CF',
+  taglineKey: 'app.tagline',
+  appId: 'com.voltregacf.hub',
+  clubId: 1,
+  private: true, 
+  translations: {
+    en: translationsEn,
+    es: translationsEs,
+    ca: translationsCa
+  },
+  supportedLanguages: ['en', 'es', 'ca'] as string[],
+  defaultLanguage: 'ca' as string
+};

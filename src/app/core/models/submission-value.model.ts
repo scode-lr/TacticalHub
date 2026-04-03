@@ -1,0 +1,12 @@
+import { FormFieldType } from './form-field.model';
+
+export interface SubmissionValue {
+  fieldId: number;
+  fieldKey: string;
+  fieldLabel: string;
+  fieldType: FormFieldType;
+  valueText: string | null;
+  valueNumber: number | null;
+  valueDate: string | null;
+  valueBoolean: boolean | null;
+}

@@ -1,0 +1,136 @@
+<div class="join-team-page">
+  <app-user-header [showBackButton]="showBackButton()" [showRoleSelector]="false" (backClick)="goBack()"></app-user-header>
+
+  <ion-content class="content">
+    <div class="container">
+      <!-- Page Title -->
+      <div class="page-title">
+        <h1>{{ 'joinTeam.title' | translate }}</h1>
+        <p class="subtitle">{{ isPrivateApp ? ('joinTeam.subtitlePrivate' | translate) : ('joinTeam.subtitle' | translate) }}</p>
+      </div>
+
+      <!-- Form Container -->
+      <div class="form-container">
+        <!-- Code Input Section - Hidden for private apps -->
+        @if (!isPrivateApp) {
+          <div class="section">
+            <h2 class="section-title">{{ 'joinTeam.enterCode' | translate }}</h2>
+            <p class="section-description">{{ 'joinTeam.codeDescription' | translate }}</p>
+            
+            <div class="code-inputs">
+              @for (digit of codeDigits(); track $index) {
+                <input
+                  #codeInput
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="1"
+                  [value]="digit"
+                  (input)="onDigitInput($event, $index)"
+                  (keydown)="onDigitKeydown($event, $index)"
+                  (paste)="onCodePaste($event)"
+                  class="code-box"
+                />
+              }
+            </div>
+
+            @if (showConfirmation() && matchedTeam()) {
+              <div class="team-match-confirmation">
+                <div class="confirmation-icon">
+                  <ion-icon name="checkmark-circle"></ion-icon>
+                </div>
+                <h3>{{ 'joinTeam.teamFound' | translate }}</h3>
+                <div class="team-info">
+                  <p class="team-name">{{ matchedTeam()?.name }}</p>
+                  <p class="club-name">{{ matchedTeam()?.clubName }}</p>
+                </div>
+                <p class="confirmation-message">{{ 'joinTeam.confirmMatch' | translate }}</p>
+                <button class="cancel-button" (click)="cancelConfirmation()">
+                  <ion-icon name="close-outline"></ion-icon>
+                  <span>{{ 'joinTeam.tryDifferentCode' | translate }}</span>
+                </button>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Role Selection Section - Always shown for private apps, shown after team match for public apps -->
+        @if (showConfirmation() && matchedTeam()) {
+          <div class="section role-section" #roleSection>
+            <h2 class="section-title">{{ 'joinTeam.selectRole' | translate }}</h2>
+            <p class="section-description">{{ 'joinTeam.roleDescription' | translate }}</p>
+            
+            <div class="role-cards">
+              @if (!isGuestMode()) {
+                <div class="role-card" (click)="selectRole(roleType.Coach)" [class.selected]="selectedRole() === roleType.Coach">
+                  <div class="role-icon">
+                    <ion-icon name="clipboard-outline"></ion-icon>
+                  </div>
+                  <h3>{{ 'roles.coach' | translate }}</h3>
+                  <p>{{ 'joinTeam.coachDescription' | translate }}</p>
+                  <!-- <div class="coming-soon-badge">{{ 'common.comingSoon' | translate }}</div> -->
+                </div>
+              }
+
+              <div 
+                class="role-card" 
+                [class.selected]="selectedRole() === roleType.Viewer"
+                (click)="selectRole(roleType.Viewer)"
+                [class.disabled]="hasViewerRole()"
+              >
+                <div class="role-icon">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+                <h3>{{ 'roles.viewer' | translate }}</h3>
+                <p>{{ 'joinTeam.viewerDescription' | translate }}</p>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Team Selection Section - Only shown when Coach role is selected -->
+        @if (selectedRole() === roleType.Coach && showConfirmation() && matchedTeam()) {
+          <div class="section team-section" #teamSection>
+            <h2 class="section-title">{{ 'joinTeam.selectTeam' | translate }}</h2>
+            <p class="section-description">{{ 'joinTeam.teamDescription' | translate }}</p>
+            
+            <div class="team-cards">
+              @for (team of availableTeams(); track team.id) {
+                <div 
+                  class="team-card" 
+                  [class.selected]="selectedTeam() === team.id"
+                  (click)="selectTeam(team.id)"
+                >
+                  <h3>{{ team.name }} {{ team.squadCode }}</h3>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Submit Button -->
+        @if (selectedRole() && (selectedRole() === roleType.Viewer || (selectedRole() === roleType.Coach && selectedTeam()))) {
+          <ion-button
+            expand="block"
+            class="btn-primary submit-button"
+            [disabled]="!isFormValid() || isSubmitting()"
+            (click)="submitBind()"
+          >
+            <span>{{ buttonText() | translate }}</span>
+          </ion-button>
+        }
+
+        <!-- Skip Button (only for new users without roles and not private app) -->
+        @if (!showBackButton() && !selectedRole() && !isPrivateApp) {
+          <ion-button
+            expand="block"
+            fill="clear"
+            class="skip-button"
+            (click)="skipForNow()"
+          >
+            <span>{{ 'roleSelection.skipForNow' | translate }}</span>
+          </ion-button>
+        }
+      </div>
+    </div>
+  </ion-content>
+</div>

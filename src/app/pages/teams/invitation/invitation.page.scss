@@ -1,0 +1,451 @@
+.invitation-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 20px;
+  background: #f8f9fa;
+  overflow: hidden;
+}
+
+/* Loading State */
+.loading-container {
+  text-align: center;
+  color: #1f2937;
+
+  .large-spinner {
+    width: 60px;
+    height: 60px;
+    --color: #667eea;
+  }
+
+  .loading-text {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4b5563;
+  }
+}
+
+/* Error State */
+.error-container {
+  text-align: center;
+  max-width: 400px;
+  padding: 40px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .error-icon {
+    ion-icon {
+      font-size: 80px;
+    }
+  }
+
+  h2 {
+    margin: 20px 0 10px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  p {
+    margin-bottom: 30px;
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  ion-button {
+    margin-top: 10px;
+    --border-radius: 12px;
+    height: 48px;
+    font-weight: 600;
+  }
+}
+
+/* Invitation Content */
+.invitation-content {
+  width: 100%;
+  max-width: 500px;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Club Card */
+.club-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  border: 1px solid #e5e7eb;
+
+  .club-avatar-container {
+    margin-bottom: 20px;
+
+    .club-avatar {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      border: 3px solid #f3f4f6;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .club-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 12px;
+  }
+
+  .club-location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #6b7280;
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-weight: 500;
+
+    ion-icon {
+      font-size: 18px;
+    }
+  }
+
+  .club-description {
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    padding: 0 10px;
+  }
+
+  .club-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 600;
+
+      ion-icon {
+        font-size: 20px;
+        color: #667eea;
+      }
+    }
+  }
+
+  .invited-by {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+
+    strong {
+      color: #667eea;
+      font-weight: 700;
+    }
+  }
+}
+
+/* Action Button */
+.accept-button {
+  height: 56px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  --border-radius: 12px;
+  --background: var(--button-primary-color, #667eea);
+  --background-hover: var(--button-primary-color, #5568d3);
+  --background-activated: var(--button-primary-color, #4c5fd6);
+  --color: var(--button-primary-contrast, white);
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .invitation-content {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 768px) {
+  .invitation-page {
+    padding: 16px;
+  }
+
+  .invitation-content {
+    max-width: 100%;
+  }
+
+  .club-card {
+    padding: 32px 24px;
+
+    .club-avatar-container {
+      .club-avatar {
+        width: 90px;
+        height: 90px;
+      }
+    }
+
+    .club-name {
+      font-size: 22px;
+    }
+
+    .club-location {
+      font-size: 14px;
+      
+      ion-icon {
+        font-size: 16px;
+      }
+    }
+
+    .club-description {
+      font-size: 14px;
+      padding: 0 5px;
+    }
+
+    .club-stats {
+      gap: 24px;
+      padding: 16px 0;
+
+      .stat-item {
+        font-size: 13px;
+
+        ion-icon {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .invited-by {
+      font-size: 13px;
+    }
+  }
+
+  .accept-button {
+    height: 52px;
+    font-size: 15px;
+  }
+
+  .error-container {
+    padding: 32px 24px;
+
+    h2 {
+      font-size: 24px;
+    }
+
+    .error-icon ion-icon {
+      font-size: 70px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    ion-button {
+      height: 46px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .invitation-page {
+    padding: 12px;
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  .loading-container {
+    .large-spinner {
+      width: 50px;
+      height: 50px;
+    }
+
+    .loading-text {
+      font-size: 15px;
+    }
+  }
+
+  .club-card {
+    padding: 24px 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+
+    .club-avatar-container {
+      margin-bottom: 16px;
+
+      .club-avatar {
+        width: 80px;
+        height: 80px;
+        border-width: 2px;
+      }
+    }
+
+    .club-name {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .club-location {
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .club-description {
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      padding: 0;
+    }
+
+    .club-stats {
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 14px 0;
+      margin-bottom: 16px;
+
+      .stat-item {
+        font-size: 12px;
+
+        ion-icon {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .invited-by {
+      font-size: 12px;
+    }
+  }
+
+  .accept-button {
+    height: 50px;
+    font-size: 14px;
+    --border-radius: 10px;
+  }
+
+  .error-container {
+    padding: 28px 20px;
+    border-radius: 12px;
+
+    .error-icon ion-icon {
+      font-size: 60px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 16px 0 8px;
+    }
+
+    p {
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    ion-button {
+      height: 44px;
+      --border-radius: 10px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .invitation-page {
+    padding: 10px;
+    padding-top: 30px;
+  }
+
+  .club-card {
+    padding: 20px 14px;
+
+    .club-avatar-container {
+      margin-bottom: 14px;
+
+      .club-avatar {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    .club-name {
+      font-size: 17px;
+    }
+
+    .club-location {
+      font-size: 12px;
+    }
+
+    .club-description {
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .club-stats {
+      gap: 12px;
+      padding: 12px 0;
+      margin-bottom: 14px;
+
+      .stat-item {
+        font-size: 11px;
+        gap: 6px;
+
+        ion-icon {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .invited-by {
+      font-size: 11px;
+    }
+  }
+
+  .accept-button {
+    height: 48px;
+    font-size: 13px;
+  }
+
+  .error-container {
+    padding: 24px 16px;
+
+    .error-icon ion-icon {
+      font-size: 50px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+
+    ion-button {
+      height: 42px;
+    }
+  }
+}

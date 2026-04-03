@@ -1,0 +1,25 @@
+<div class="social-section">
+  <div class="divider-line">
+    <span class="divider-text">{{ 'auth.or' | translate }}</span>
+  </div>
+
+  <div class="social-buttons">
+    <ion-button 
+      fill="clear" 
+      class="btn-secondary"
+      (click)="onGoogleClick()"
+      [disabled]="isLoading">
+      <ion-spinner name="dots" *ngIf="isProviderLoading('google')"></ion-spinner>
+      <ion-icon name="logo-google" slot="icon-only" *ngIf="!isProviderLoading('google')"></ion-icon>
+    </ion-button>
+
+    <ion-button 
+      fill="clear" 
+      class="btn-secondary"
+      (click)="onAppleClick()"
+      [disabled]="isLoading">
+      <ion-spinner name="dots" *ngIf="isProviderLoading('apple')"></ion-spinner>
+      <ion-icon name="logo-apple" slot="icon-only" *ngIf="!isProviderLoading('apple')"></ion-icon>
+    </ion-button>
+  </div>
+</div>

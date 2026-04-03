@@ -1,0 +1,17 @@
+<div class="upvotes-container" [class.size-small]="size() === 'small'" [class.size-large]="size() === 'large'">
+  <button 
+    class="vote-button" 
+    [class.active]="userVote() === 'up'"
+    (click)="vote('up')">
+    <ion-icon name="arrow-up"></ion-icon>
+  </button>
+  <span class="vote-score" [class.positive]="voteScore > 0" [class.negative]="voteScore < 0">
+    {{ voteScore }}
+  </span>
+  <button 
+    class="vote-button" 
+    [class.active]="userVote() === 'down'"
+    (click)="vote('down')">
+    <ion-icon name="arrow-down"></ion-icon>
+  </button>
+</div>

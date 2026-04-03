@@ -1,0 +1,43 @@
+<div class="page-container viewer-matches-page">
+  <div class="week-navigation">
+    <button class="nav-button" (click)="prevWeek()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </button>
+    <div class="week-label">{{ weekLabel() }}</div>
+    <button class="nav-button" (click)="nextWeek()">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </button>
+  </div>
+
+  @if (currentWeekMatches().length === 0) {
+  <div class="empty-state">
+    <ion-icon name="football-outline" class="empty-icon"></ion-icon>
+    <h3 class="empty-title">{{ 'viewer.matches.empty' | translate }}</h3>
+    <p class="empty-description">{{ 'viewer.matches.emptyDescription' | translate }}</p>
+  </div>
+  } @else {
+  <div class="matches-container">
+    @if (saturdayMatches().length > 0) {
+    <div class="day-group">
+      <h2 class="heading-4 day-title">{{ 'viewer.matches.saturday' | translate }} ({{ saturdayDate() }})</h2>
+      <div class="grid-auto-fill matches-grid">
+        @for (match of saturdayMatches(); track match.id) {
+        <app-match-card [match]="match"></app-match-card>
+        }
+      </div>
+    </div>
+    }
+
+    @if (sundayMatches().length > 0) {
+    <div class="day-group">
+      <h2 class="heading-4 day-title">{{ 'viewer.matches.sunday' | translate }} ({{ sundayDate() }})</h2>
+      <div class="grid-auto-fill matches-grid">
+        @for (match of sundayMatches(); track match.id) {
+        <app-match-card [match]="match"></app-match-card>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

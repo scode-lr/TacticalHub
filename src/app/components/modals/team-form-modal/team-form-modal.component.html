@@ -1,0 +1,60 @@
+<ion-modal 
+  [isOpen]="isOpen()"
+  (didDismiss)="closeModal()"
+  [breakpoints]="[0, 1]"
+  [initialBreakpoint]="1"
+  class="team-form-modal">
+  <ng-template>
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="header-info">
+          <ion-icon name="people-outline" class="header-icon"></ion-icon>
+          <div class="header-text">
+            <h2 class="modal-title">{{ 'modals.team.title' | translate }}</h2>
+            <span class="modal-subtitle">{{ 'modals.team.subtitle' | translate }}</span>
+          </div>
+        </div>
+        <button class="close-button" (click)="closeModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <div class="form-group">
+          <label class="form-label">{{ 'modals.team.teamName' | translate }}</label>
+          <ion-input
+            type="text"
+            [placeholder]="'modals.team.teamNamePlaceholder' | translate"
+            [value]="teamName()"
+            (ionInput)="onNameChange($event)"
+            class="form-input">
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">{{ 'modals.team.category' | translate }}</label>
+          <ion-select
+            [value]="teamCategory()"
+            (ionChange)="onCategoryChange($event)"
+            interface="popover"
+            [placeholder]="'modals.team.categoryPlaceholder' | translate"
+            class="form-select">
+            @for (category of categories; track category) {
+              <ion-select-option [value]="category">{{ category }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeModal()">{{ 'common.cancel' | translate }}</button>
+        <button 
+          class="btn-submit" 
+          [disabled]="!isFormValid()"
+          (click)="submitTeam()">
+          {{ 'modals.team.createTeam' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

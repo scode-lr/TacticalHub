@@ -1,0 +1,84 @@
+<div class="signin-page auth-background">
+  <!-- Back Button (Mobile Only) -->
+  <ion-button 
+    fill="clear" 
+    class="back-btn"
+    (click)="goBack()">
+    <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+  </ion-button>
+
+  <div class="branding-section">
+    <app-auth-branding></app-auth-branding>
+  </div>
+  <!-- Right Side - Form -->
+  <div class="form-section">
+    <div class="form-container">
+      <div class="form-header">
+        <h1>{{ 'welcome.signIn' | translate }}</h1>
+      </div>
+      <form [formGroup]="signinForm" (ngSubmit)="onSignIn()" class="signin-form">
+        <!-- Email Input -->
+        <div class="input-group">
+          <ion-input 
+            type="email" 
+            formControlName="email"
+            [placeholder]="'auth.email' | translate"
+            fill="outline"
+            class="modern-input"
+            [class.ion-invalid]="signinForm.get('email')?.invalid && formSubmitted()">
+          </ion-input>
+          @if (emailError(); as error) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ error }}</span>
+            </div>
+          }
+        </div>
+        
+        <!-- Password Input -->
+        <div class="input-group">
+          <ion-input 
+            type="password" 
+            formControlName="password"
+            [placeholder]="'auth.password' | translate"
+            fill="outline"
+            class="modern-input"
+            [class.ion-invalid]="signinForm.get('password')?.invalid && formSubmitted()">
+          </ion-input>
+          @if (passwordError(); as error) {
+            <div class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <span>{{ error }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Sign In Button -->
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          class="signin-btn"
+          [disabled]="isLoading() || !signinForm.valid">
+          @if (isLoading()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            <span>{{ 'auth.signInButton' | translate }}</span>
+          }
+        </ion-button>
+      </form>
+
+      <!-- Footer with Social Login -->
+      <app-auth-footer mode="signin"></app-auth-footer>
+    </div>
+  </div>
+
+  <!-- Toast for messages -->
+  <ion-toast
+    [isOpen]="showToast()"
+    [message]="toastMessage()"
+    [color]="toastColor()"
+    duration="3000"
+    position="top"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
+</div>
