@@ -19,10 +19,10 @@ log.txt
 
 # Ionic
 /.ionic
-/www
+# /www
 /platforms
 /plugins
-projects/*/www
+# projects/*/www
 
 # Compiled output
 /dist
