@@ -35,17 +35,17 @@ export class AdminPage implements OnInit {
     role: RoleType.Admin,
     items: [
       // { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
-      { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
-      { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
+      // { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
+      // { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
       { id: 'forms-submissions', label: 'admin.menu.forms', icon: 'document-text-outline', route: 'forms-submissions' },
       { id: 'settings-forms', label: 'admin.menu.settingsForms', icon: 'settings-outline', route: 'settings-forms' },
-      { id: 'params', label: 'admin.menu.params', icon: 'settings-outline', route: 'params' },
-      { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
-      { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
-      { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
-      { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
-      { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
-      { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
+      // { id: 'params', label: 'admin.menu.params', icon: 'settings-outline', route: 'params' },
+      // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
+      // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
+      // { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
+      // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
+      // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
+      // { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
     ]
   };
   
