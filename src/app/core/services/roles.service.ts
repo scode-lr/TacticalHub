@@ -3,6 +3,8 @@ import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
 import { SnackbarService } from './snackbar.service';
 import { Role } from '@core/models';
+import { STORAGE_KEYS } from '@core/constants/storage-keys';
+import { StorageService } from './storage.service';
 
 export interface BindRoleRequest {
   roleId: number;
@@ -16,6 +18,7 @@ export interface BindRoleRequest {
 export class RolesService {
   private readonly apiService = inject(ApiService);
   private readonly snackbarService = inject(SnackbarService);
+  private readonly storageService = inject(StorageService);
 
   async bindRole(request: BindRoleRequest): Promise<Role> {
     try {
@@ -27,5 +30,13 @@ export class RolesService {
       this.snackbarService.show(message, 'danger');
       throw error;
     }
+  }
+
+  getCurrentRole(): Role | null {
+    return this.storageService.get<Role>(STORAGE_KEYS.SELECTED_ROLE);
+  }
+  
+  setSelectedRole(role: Role) {
+    this.storageService.set<Role>(STORAGE_KEYS.SELECTED_ROLE, role);
   }
 }

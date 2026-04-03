@@ -1,4 +1,22 @@
 export const sharedTranslations = {
+  primeng: {
+    apply: 'Aplicar',
+    clear: 'Netejar',
+    contains: 'Conté',
+    notContains: 'No conté',
+    startsWith: 'Comença per',
+    endsWith: 'Acaba en',
+    equals: 'Igual a',
+    notEquals: 'Diferent de',
+    noFilter: 'Sense filtre',
+    matchAll: 'Complir tot',
+    matchAny: 'Complir algun',
+    addRule: 'Afegir regla',
+    removeRule: 'Treure regla',
+    choose: 'Triar',
+    upload: 'Pujar',
+    cancel: 'Cancel·lar'
+  },
   welcome: {
     createAccount: 'Crear compte',
     signIn: 'Iniciar sessió',
@@ -50,7 +68,8 @@ export const sharedTranslations = {
     no: 'No',
     addItem: 'Afegir element',
     addNewItem: 'Afegir nou element',
-    selectSeason: 'Seleccionar Temporada'
+    selectSeason: 'Seleccionar Temporada',
+    selectOption: 'Seleccionar una opció'
   },
   fieldLabels: {
     type: 'Tipus',
@@ -186,7 +205,9 @@ export const sharedTranslations = {
       teams: 'Equips',
       club: 'Club',
       matches: 'Partits',
-      users: 'Usuaris'
+      users: 'Usuaris',
+      forms: 'Formularis',
+      settingsForms: 'Configuració de formularis'
     },
     description: {
       home: 'Panell d\'administració',
@@ -198,10 +219,121 @@ export const sharedTranslations = {
       teams: 'Gestionar equips i plantilles',
       club: 'Editar informació del club',
       matches: 'Gestionar calendaris de partits',
-      users: 'Gestió d\'usuaris i permisos'
+      users: 'Gestió d\'usuaris i permisos',
+      forms: 'Gestionar formularis',
+      settingsForms: 'Configurar ajustos de formularis'
     },
     parameters: {
       title: 'Paràmetres',
+    },
+    forms: {
+      selected: 'seleccionats',
+      export: 'Exportar',
+      assign: 'Assignar',
+      clearFilters: 'Netejar',
+      searchPlaceholder: 'Cercar formularis...',
+      filterAny: 'Qualsevol',
+      openForm: 'Obrir formulari',
+      noForms: 'Sense formularis',
+      noFormsDescription: 'Encara no s\'han creat formularis per a aquest club.',
+      paginatorReport: 'Mostrant {first} a {last} de {totalRecords} entrades',
+      submissions: 'Enviaments',
+      allForms: 'Tots els formularis',
+      columns: {
+        id: 'ID',
+        name: 'Nom',
+        action: 'Acció',
+        status: 'Estat',
+        submissions: 'Enviaments',
+        createdAt: 'Creat',
+        fromDate: 'Des de',
+        toDate: 'Fins a'
+      },
+      submissionTable: {
+        columns: {
+          id: 'ID',
+          userId: 'ID Usuari',
+          userName: 'Usuari',
+          submittedAt: 'Enviat',
+          createdAt: 'Creat'
+        },
+        noSubmissions: 'Sense enviaments encara',
+        noSubmissionsDescription: 'Encara no s\'han rebut enviaments per a aquest formulari.',
+        searchPlaceholder: 'Cerca per usuari...'
+      },
+      submissionDetail: {
+        title: 'Detall de l\'enviament',
+        sectionInfo: 'Informació',
+        sectionValues: 'Valors enviats',
+        formName: 'Formulari',
+        userName: 'Usuari',
+        submittedAt: 'Enviat el'
+      }
+    },
+    settingsForms: {
+      addForm: 'Afegir Formulari',
+      newForm: 'Nou Formulari',
+      editForm: 'Editar Formulari',
+      noForms: 'Sense formularis',
+      noFormsDescription: 'Crea el teu primer formulari per començar',
+      period: 'Període',
+      periodAlways: 'Sempre',
+      action: 'Acció',
+      updated: 'Actualitzat',
+      status: {
+        AC: 'Actiu',
+        I: 'Inactiu',
+        P: 'Pendent',
+        D: 'Esborrany',
+        AR: 'Arxivat'
+      },
+      actions: {
+        simple: 'Simple',
+        'register-player': 'Registrar jugador',
+        'become-member': 'Fer-se soci'
+      },
+      fields: {
+        name: 'Nom',
+        namePlaceholder: 'Introdueix el nom del formulari',
+        nameRequired: 'El nom és obligatori',
+        description: 'Descripció',
+        descriptionPlaceholder: 'Introdueix una descripció',
+        fromDate: 'Data d\'inici',
+        toDate: 'Data de fi',
+        status: 'Estat',
+        action: 'Acció'
+      },
+      section: {
+        general: 'General',
+        fields: 'Camps del formulari'
+      },
+      formFields: {
+        add: 'Afegir camp',
+        empty: 'Sense camps. Afegeix el primer per definir l\'estructura del formulari.',
+        key: 'Clau',
+        label: 'Etiqueta',
+        type: 'Tipus',
+        required: 'Obligatori',
+        description: 'Descripció',
+        descriptionPlaceholder: 'Descripció opcional',
+        length: 'Long. màx.',
+        options: 'Opcions',
+        addOption: 'Afegir opció',
+        optionsEmpty: 'Sense opcions. Afegeix-ne almenys una.',
+        optionPlaceholder: 'Valor de l\'opció',
+        types: {
+          text: 'Text',
+          number: 'Nombre',
+          date: 'Data',
+          datetime: 'Data i hora',
+          email: 'Email',
+          phone: 'Telèfon',
+          textarea: 'Àrea de text',
+          boolean: 'Boolean',
+          select: 'Desplegable',
+          file: 'Arxiu'
+        }
+      }
     }
   },
   modals: {
@@ -247,6 +379,7 @@ export const sharedTranslations = {
       proposals: 'Propostes i queixes',
       matches: 'Partits',
       partners: 'Socis',
+      forms: 'Formularis',
       more: 'Més'
     },
     description: {
@@ -256,7 +389,8 @@ export const sharedTranslations = {
       information: 'Informació i recursos del club',
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
-      partners: 'Els nostres socis i patrocinadors del club'
+      partners: 'Els nostres socis i patrocinadors del club',
+      forms: 'Omple i envia formularis del club'
     },
     home: {
       welcome: 'Benvingut al club!',
@@ -350,7 +484,9 @@ export const sharedTranslations = {
           maxLength: 'Es permeten màxim {max} caràcters',
           submitError: 'Ha ocorregut un error. Si us plau intenta de nou.'
         }
-      }
+      },
+      noForms: 'No hi ha formularis disponibles',
+      noFormsDescription: 'No hi ha formularis actius en aquest moment. Torna a comprovar-ho més tard.'
     },
     information: {
       title: 'Informació',

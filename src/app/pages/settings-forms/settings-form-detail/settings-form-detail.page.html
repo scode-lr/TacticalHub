@@ -1,0 +1,128 @@
+<div class="page-container">
+  <div class="section-header-with-back-button">
+    <app-back-button />
+    <h1 class="section-title">{{ pageTitle() | translate }}</h1>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"></div>
+  }
+
+  @if (!isLoading()) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="detail-form">
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <h2 class="card-section-title">{{ 'admin.settingsForms.section.general' | translate }}</h2>
+      </div>
+      <div class="form-card-body">
+        <div class="field-group">
+          <label class="field-label" for="name">
+            {{ 'admin.settingsForms.fields.name' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <input
+            id="name"
+            type="text"
+            class="field-input"
+            [class.field-input--error]="ctrl.name.invalid && ctrl.name.touched"
+            formControlName="name"
+            [placeholder]="'admin.settingsForms.fields.namePlaceholder' | translate"
+          />
+          @if (ctrl.name.invalid && ctrl.name.touched) {
+            <span class="field-error">{{ 'admin.settingsForms.fields.nameRequired' | translate }}</span>
+          }
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="description">
+            {{ 'admin.settingsForms.fields.description' | translate }}
+          </label>
+          <textarea
+            id="description"
+            class="field-textarea"
+            formControlName="description"
+            rows="3"
+            [placeholder]="'admin.settingsForms.fields.descriptionPlaceholder' | translate"
+          ></textarea>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="fromDate">
+              {{ 'admin.settingsForms.fields.fromDate' | translate }}
+            </label>
+            <input
+              id="fromDate"
+              type="date"
+              class="field-input"
+              [class.field-input--error]="ctrl.fromDate.invalid && ctrl.fromDate.touched"
+              formControlName="fromDate"
+            />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="toDate">
+              {{ 'admin.settingsForms.fields.toDate' | translate }}
+            </label>
+            <input
+              id="toDate"
+              type="date"
+              class="field-input"
+              [class.field-input--error]="ctrl.toDate.invalid && ctrl.toDate.touched"
+              formControlName="toDate"
+            />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="status">
+              {{ 'admin.settingsForms.fields.status' | translate }}
+              <span class="required-mark">*</span>
+            </label>
+            <select id="status" class="field-select" formControlName="status">
+              @for (option of statusOptions; track option) {
+                <option [value]="option">
+                  {{ 'admin.settingsForms.status.' + option | translate }}
+                </option>
+              }
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="action">
+              {{ 'admin.settingsForms.fields.action' | translate }}
+              <span class="required-mark">*</span>
+            </label>
+            <select
+              id="action"
+              class="field-select"
+              [class.field-input--error]="ctrl.action.invalid && ctrl.action.touched"
+              formControlName="action"
+            >
+              @for (option of actionOptions; track option) {
+                <option [value]="option">
+                  {{ 'admin.settingsForms.actions.' + option | translate }}
+                </option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-settings-form-fields [fields]="fieldsArray" />
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="goBack()">
+        {{ 'common.cancel' | translate }}
+      </button>
+      <button type="submit" class="btn-save">
+        <ion-icon name="save-outline"></ion-icon>
+        {{ 'common.save' | translate }}
+      </button>
+    </div>
+
+  </form>
+  }
+</div>
+

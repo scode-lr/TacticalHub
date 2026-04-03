@@ -37,7 +37,7 @@ export class ViewerPage implements OnInit {
     items: [
       // { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
       { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
-      { id: 'action', label: 'viewer.menu.action', icon: 'add-circle-outline', route: 'action' },
+      { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' },
       { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
       { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
@@ -49,8 +49,8 @@ export class ViewerPage implements OnInit {
   readonly backUrl = computed(() => {
     const {roleType, roleId} = this.navigationService.extractRoleDetails();
     if (this.isDetailPage()) {
-      if (this.router.url.includes('/action')) {
-        return `app/${roleType}/${roleId}/action`;
+      if (this.router.url.includes('/forms')) {
+        return `app/${roleType}/${roleId}/forms`;
       }
       
       return `app/${roleType}/${roleId}/news`;
@@ -82,7 +82,7 @@ export class ViewerPage implements OnInit {
     const url = this.router.url;
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
-                     url.includes('/action/') ||
+                     url.includes('/forms/') && url.split('/').length > 5 ||
                      url.includes('/teams/') && url.split('/').length > 5;
     this.isDetailPage.set(isDetail);
   }

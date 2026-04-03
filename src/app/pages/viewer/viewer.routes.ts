@@ -25,12 +25,12 @@ export const viewerRoutes: Routes = [
         loadComponent: () => import('../news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
       },
       {
-        path: 'action',
-        loadComponent: () => import('../action/action.page').then(m => m.ViewerActionPage)
+        path: 'forms',
+        loadComponent: () => import('../forms/forms.page').then(m => m.FormsPage)
       },
       {
-        path: 'action/:type',
-        loadComponent: () => import('../action-form/action-form.page').then(m => m.ActionFormPage)
+        path: 'forms/:formId',
+        loadComponent: () => import('../form-detail/form-detail.page').then(m => m.FormDetailPage)
       },
       {
         path: 'information',

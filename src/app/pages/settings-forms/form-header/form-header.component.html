@@ -1,0 +1,41 @@
+<div class="form-card" (click)="redirect()" >
+  <div class="form-card-header">
+    <h3 class="form-name">{{ form().name }}</h3>
+    @if (editable()) {
+    <span class="status-badge status-{{ form().status }}">
+      {{ 'admin.settingsForms.status.' + form().status | translate }}
+    </span>
+  }
+  </div>
+  <div class="form-card-body">
+    <p class="form-description">{{ form().description }}</p>
+    <div class="form-meta">
+      <div class="meta-item">
+        <ion-icon name="flash-outline" class="meta-icon"></ion-icon>
+        <span class="meta-label">{{ 'admin.settingsForms.action' | translate }}:</span>
+        <span class="meta-value">{{ 'admin.settingsForms.actions.' + form().action | translate }}</span>
+      </div>
+      <div class="meta-item">
+        <ion-icon name="calendar-outline" class="meta-icon"></ion-icon>
+        <span class="meta-label">{{ 'admin.settingsForms.period' | translate }}:</span>
+        <span class="meta-value">
+          @if (form().fromDate || form().toDate) {
+            {{ form().fromDate | date:'dd/MM/yyyy' }} &rarr; {{ form().toDate | date:'dd/MM/yyyy' }}
+          } @else {
+            {{ 'admin.settingsForms.periodAlways' | translate }}
+          }
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="form-card-footer">
+    <span class="form-updated">
+      {{ 'admin.settingsForms.updated' | translate }}: {{ form().updatedAt | date:'dd/MM/yyyy' }}
+    </span>
+    @if (editable()) {
+      <button class="action-button action-button--edit">
+        <ion-icon name="settings-outline"></ion-icon>
+      </button>
+    }
+  </div>
+</div>
