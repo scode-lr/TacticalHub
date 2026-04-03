@@ -11,13 +11,14 @@ import { addIcons } from 'ionicons';
 import { addOutline, documentTextOutline } from 'ionicons/icons';
 import { FormService } from '@services/form.service';
 import { ClubService } from '@services/club.service';
+import { DataView } from 'primeng/dataview';
 
 @Component({
   selector: 'app-settings-forms',
   templateUrl: './settings-forms.page.html',
   styleUrls: ['./settings-forms.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent]
+  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent, DataView]
 })
 export class SettingsFormsPage {
   private readonly navigationService = inject(NavigationService);

@@ -7,17 +7,14 @@ import { NavigationService } from '@services/navigation.service';
 import { SubmissionDetail } from '@core/responses/form.response';
 import { SubmissionValue } from '@core/models/submission-value.model';
 import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
 import { CheckboxModule } from 'primeng/checkbox';
-import { IftaLabelModule } from 'primeng/iftalabel';
 
 @Component({
   selector: 'app-forms-submission-detail',
   templateUrl: './forms-submission-detail.page.html',
   styleUrls: ['./forms-submission-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, BackButtonComponent, InputTextModule, TextareaModule, CheckboxModule, IftaLabelModule]
+  imports: [CommonModule, FormsModule, TranslatePipe, BackButtonComponent, CheckboxModule]
 })
 export class FormsSubmissionDetailPage implements OnInit {
   private readonly formSubmissionsService = inject(FormSubmissionsService);

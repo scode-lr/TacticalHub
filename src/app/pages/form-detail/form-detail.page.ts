@@ -1,6 +1,6 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -10,14 +10,33 @@ import { FormService } from '@services/form.service';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { FormField } from '@core/models/form-field.model';
 import { FormDetail } from '@core/responses/form.response';
-import { BackButtonComponent } from "@components/index";
+import { BackButtonComponent } from '@components/index';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-form-detail',
   templateUrl: './form-detail.page.html',
   styleUrls: ['./form-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe, BackButtonComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslatePipe,
+    BackButtonComponent,
+    InputTextModule,
+    TextareaModule,
+    SelectModule,
+    DatePickerModule,
+    ToggleSwitchModule,
+    RadioButtonModule,
+    ButtonModule,
+  ]
 })
 export class FormDetailPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -82,7 +101,9 @@ export class FormDetailPage implements OnInit {
       const rawValues = this.dynamicForm.value as Record<string, unknown>;
       const values = Object.keys(rawValues).reduce<Record<string, string | number | boolean | string[]>>((acc, key) => {
         const v = rawValues[key];
-        if (v !== null && v !== undefined) {
+        if (v instanceof Date) {
+          acc[key] = v.toISOString();
+        } else if (v !== null && v !== undefined) {
           acc[key] = v as string | number | boolean | string[];
         }
         return acc;
@@ -117,11 +138,10 @@ export class FormDetailPage implements OnInit {
 
   private goBack(): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/action`]);
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms`]);
   }
 
   pageTitle(): string {
-   return this.formDetail()?.name ?? '';
+    return this.formDetail()?.name ?? '';
   }
 }
-

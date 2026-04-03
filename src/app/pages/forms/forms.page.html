@@ -2,33 +2,39 @@
   <div class="section-header">
     <h1 class="section-title">{{ 'viewer.menu.forms' | translate }}</h1>
   </div>
+
   @if (loading()) {
     <div class="forms-grid">
-        <div class="skeleton-card">
-          <div class="skeleton-card-header">
-            <div class="skeleton-line skeleton-title"></div>
-            <div class="skeleton-line skeleton-subtitle"></div>
-          </div>
-          <div class="skeleton-card-body">
-            <div class="skeleton-line"></div>
-            <div class="skeleton-line skeleton-line--short"></div>
-          </div>
-          <div class="skeleton-card-footer">
-            <div class="skeleton-line skeleton-badge"></div>
-          </div>
+      <div class="skeleton-card">
+        <div class="skeleton-card-header">
+          <div class="skeleton-line skeleton-title"></div>
+          <div class="skeleton-line skeleton-subtitle"></div>
         </div>
-    </div>
-  } @else if (forms().length > 0) {
-    <div class="forms-grid">
-      @for (form of forms(); track form.id) {
-        <app-form-header [form]="form" [editable]="false" />
-      }
+        <div class="skeleton-card-body">
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line skeleton-line--short"></div>
+        </div>
+        <div class="skeleton-card-footer">
+          <div class="skeleton-line skeleton-badge"></div>
+        </div>
+      </div>
     </div>
   } @else {
-    <div class="empty-state">
-      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
-      <h3 class="empty-title">{{ 'viewer.action.noForms' | translate }}</h3>
-      <p class="empty-description">{{ 'viewer.action.noFormsDescription' | translate }}</p>
-    </div>
+    <p-dataview [value]="forms()" styleClass="forms-dataview">
+      <ng-template #list let-items>
+        <div class="forms-grid">
+          @for (item of items; track item.id) {
+            <app-form-header [form]="item" [editable]="false" />
+          }
+        </div>
+      </ng-template>
+      <ng-template #empty>
+        <div class="empty-state">
+          <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+          <h3 class="empty-title">{{ 'viewer.action.noForms' | translate }}</h3>
+          <p class="empty-description">{{ 'viewer.action.noFormsDescription' | translate }}</p>
+        </div>
+      </ng-template>
+    </p-dataview>
   }
 </div>

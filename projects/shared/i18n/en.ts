@@ -303,7 +303,10 @@ export const sharedTranslations = {
         fromDate: 'Start Date',
         toDate: 'End Date',
         status: 'Status',
-        action: 'Action'
+        action: 'Action',
+        email: 'Email',
+        emailPlaceholder: 'Enter an email to send the submissions',
+        emailInvalid: 'Please enter a valid email address'
       },
       section: {
         general: 'General',

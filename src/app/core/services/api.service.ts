@@ -40,7 +40,6 @@ export class ApiService {
       'Accept': 'application/json',
       'ngrok-skip-browser-warning': 'true'
     });
-    console.log('Building headers with options:', options);
 
     if (options?.headers) {
       const customHeaders = options.headers instanceof HttpHeaders 

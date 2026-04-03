@@ -1,18 +1,21 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormHeader } from '@models/form-header.model';
+import { AppStatus } from '@models/app-status.model';
 import { addIcons } from 'ionicons';
-import { calendarOutline, flashOutline, settingsOutline } from 'ionicons/icons';
+import { calendarOutline, flashOutline } from 'ionicons/icons';
 import { NavigationService } from '@core/index';
+import { Tag } from 'primeng/tag';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-form-header',
   templateUrl: './form-header.component.html',
   styleUrls: ['./form-header.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe]
+  imports: [CommonModule, IonIcon, TranslatePipe, Tag, Button]
 })
 export class FormHeaderComponent {
   private readonly navigationService = inject(NavigationService);
@@ -21,8 +24,19 @@ export class FormHeaderComponent {
   readonly index = input<number>(0);
   readonly editable = input<boolean>(true);
 
+  readonly statusSeverity = computed((): 'success' | 'info' | 'warn' | 'secondary' => {
+    switch (this.form().status) {
+      case AppStatus.Active:   return 'success';
+      case AppStatus.Pending:  return 'info';
+      case AppStatus.Draft:    return 'warn';
+      case AppStatus.Inactive: return 'secondary';
+      case AppStatus.Archived: return 'secondary';
+      default:                 return 'secondary';
+    }
+  });
+
   constructor() {
-    addIcons({ calendarOutline, flashOutline, settingsOutline });
+    addIcons({ calendarOutline, flashOutline });
   }
 
   redirect(): void {

@@ -1,14 +1,12 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, AbstractControl, Validators } from '@angular/forms';
-import { IonIcon } from '@ionic/angular/standalone';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
+import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
-import { addIcons } from 'ionicons';
-import { saveOutline } from 'ionicons/icons';
 import { FormAction } from '@core/models/form-action.enum';
 import { SettingsFormFieldsComponent } from './settings-form-fields/settings-form-fields.component';
 import { FormService } from '@core/services/form.service';
@@ -16,14 +14,21 @@ import { ToastService } from '@core/services/toast.service';
 import { CreateFormRequest, UpdateFormRequest } from '@core/requests/form.request';
 import { RolesService } from '@services/roles.service';
 import { FormDetail } from '@core/responses/form.response';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
+import { SelectModule } from 'primeng/select';
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
 
 interface HeaderFormControls {
   name: FormControl<string>;
   description: FormControl<string>;
-  fromDate: FormControl<string>;
-  toDate: FormControl<string>;
+  fromDate: FormControl<Date | null>;
+  toDate: FormControl<Date | null>;
   status: FormControl<AppStatus>;
   action: FormControl<string>;
+  email: FormControl<string>;
   fields: FormArray;
 }
 
@@ -32,7 +37,19 @@ interface HeaderFormControls {
   templateUrl: './settings-form-detail.page.html',
   styleUrls: ['./settings-form-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IonIcon, TranslatePipe, BackButtonComponent, SettingsFormFieldsComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslatePipe,
+    BackButtonComponent,
+    SettingsFormFieldsComponent,
+    InputTextModule,
+    TextareaModule,
+    SelectModule,
+    IftaLabelModule,
+    ButtonModule,
+    DatePickerModule,
+  ]
 })
 export class SettingsFormDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
@@ -40,6 +57,7 @@ export class SettingsFormDetailPage implements OnInit {
   private readonly formService = inject(FormService);
   private readonly roleService = inject(RolesService);
   private readonly toastService = inject(ToastService);
+  private readonly translationService = inject(TranslationService);
 
   readonly isEditMode = signal<boolean>(false);
   readonly formId = signal<string | null>(null);
@@ -50,24 +68,28 @@ export class SettingsFormDetailPage implements OnInit {
     this.isEditMode() ? 'admin.settingsForms.editForm' : 'admin.settingsForms.newForm'
   );
 
-  readonly statusOptions = [
-    AppStatus.Active,
-    AppStatus.Inactive,
-    AppStatus.Pending,
-    AppStatus.Draft,
-    AppStatus.Archived
-  ];
+  get statusItems() {
+    return [
+      { label: this.translationService.instant('admin.settingsForms.status.AC'), value: AppStatus.Active },
+      { label: this.translationService.instant('admin.settingsForms.status.I'), value: AppStatus.Inactive },
+      { label: this.translationService.instant('admin.settingsForms.status.P'), value: AppStatus.Pending },
+      { label: this.translationService.instant('admin.settingsForms.status.D'), value: AppStatus.Draft },
+      { label: this.translationService.instant('admin.settingsForms.status.AR'), value: AppStatus.Archived },
+    ];
+  }
 
-  readonly actionOptions = Object.values(FormAction);
+  get actionItems() {
+    return [
+      { label: this.translationService.instant('admin.settingsForms.actions.simple'), value: FormAction.Simple },
+      { label: this.translationService.instant('admin.settingsForms.actions.register-player'), value: FormAction.RegisterPlayer },
+      { label: this.translationService.instant('admin.settingsForms.actions.become-member'), value: FormAction.BecomeMember },
+    ];
+  }
 
   form!: FormGroup;
 
   get ctrl(): HeaderFormControls {
     return this.form.controls as unknown as HeaderFormControls;
-  }
-
-  constructor() {
-    addIcons({ saveOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -102,10 +124,11 @@ export class SettingsFormDetailPage implements OnInit {
       clubId,
       name: value.name,
       description: value.description || null,
-      fromDate: value.fromDate ? new Date(value.fromDate).toISOString() : null,
-      toDate: value.toDate ? new Date(value.toDate).toISOString() : null,
+      fromDate: value.fromDate ? (value.fromDate as Date).toISOString() : null,
+      toDate: value.toDate ? (value.toDate as Date).toISOString() : null,
       status: value.status,
       action: value.action,
+      email: value.email || null,
       fields: (value.fields as any[]).map((f, index) => ({
         key: f.key,
         label: f.label,
@@ -129,6 +152,7 @@ export class SettingsFormDetailPage implements OnInit {
           toDate: request.toDate,
           status: request.status,
           action: request.action,
+          email: request.email,
           fields: request.fields
         };
         await this.formService.updateForm(Number(this.formId()), updateRequest);
@@ -165,16 +189,13 @@ export class SettingsFormDetailPage implements OnInit {
     this.form = this.fb.group({
       name: [existing?.name ?? '', [Validators.required, Validators.maxLength(100)]],
       description: [existing?.description ?? '', Validators.maxLength(500)],
-      fromDate: [existing ? this.toInputDate(existing.fromDate) : ''],
-      toDate: [existing ? this.toInputDate(existing.toDate) : ''],
+      fromDate: [existing?.fromDate ? new Date(existing.fromDate) : null],
+      toDate: [existing?.toDate ? new Date(existing.toDate) : null],
       status: [existing?.status ?? AppStatus.Draft, Validators.required],
       action: [existing?.action ?? '', Validators.required],
+      email: [existing?.email ?? '', Validators.email],
       fields: fieldsArray
     });
-  }
-
-  private toInputDate(date: Date | null): string {
-    return date ? new Date(date).toISOString().split('T')[0] : '';
   }
 
   private async fetchFormById(id: string): Promise<FormDetail | null> {

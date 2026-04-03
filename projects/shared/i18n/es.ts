@@ -301,7 +301,10 @@ export const sharedTranslations = {
         fromDate: 'Fecha de inicio',
         toDate: 'Fecha de fin',
         status: 'Estado',
-        action: 'Acción'
+        action: 'Acción',
+        email: 'Email',
+        emailPlaceholder: 'Introduce un email para enviar las respuestas',
+        emailInvalid: 'Por favor, introduce un email válido'
       },
       section: {
         general: 'General',

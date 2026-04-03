@@ -96,6 +96,8 @@ export class FormsSubmissionsPage {
       this.pageSize.set(saved.pageSize);
       this.currentPage.set(saved.currentPage);
       this.currentSort.set(saved.currentSort);
+      this.loading.set(false);
+      this.submissionsLoading.set(false);
       this.submissionsSearchValue = saved.submissionsSearchValue;
     } else {
       await this.loadForms();
@@ -171,6 +173,7 @@ export class FormsSubmissionsPage {
     } catch (error) {
       console.error('Error loading submissions:', error);
       this.submissions.set([]);
+      this.submissionsLoading.set(false);
     } finally {
       this.submissionsLoading.set(false);
     }

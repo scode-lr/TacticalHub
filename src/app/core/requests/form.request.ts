@@ -22,6 +22,7 @@ export interface CreateFormRequest {
   toDate: string | null;
   status: AppStatus;
   action: FormAction;
+  email: string | null;
   fields: CreateFormFieldRequest[];
 }
 
@@ -32,6 +33,7 @@ export interface UpdateFormRequest {
   toDate?: string | null;
   status?: AppStatus;
   action?: FormAction;
+  email?: string | null;
   fields?: CreateFormFieldRequest[];
 }
 
