@@ -43,7 +43,7 @@
               <span class="field-key">{{ value.fieldLabel }}</span>
               @if (value.fieldType === 'boolean') {
                 <div class="field-value field-value--boolean">
-                  <p-checkbox [ngModel]="value.valueBoolean" [binary]="true" [disabled]="true" [inputId]="'field-' + value.fieldId" />
+                  <p-checkbox [ngModel]="true"  [binary]="true" [disabled]="true" [inputId]="'field-' + value.fieldId" />
                   @if (value.valueText) {
                     <span>{{ value.valueText }}</span>
                   }
