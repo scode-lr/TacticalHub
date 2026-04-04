@@ -1,21 +1,22 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { calendarOutline, chevronForwardOutline, flashOutline, settingsOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
-import { addIcons } from 'ionicons';
-import { calendarOutline, flashOutline } from 'ionicons/icons';
 import { NavigationService } from '@core/index';
 import { Tag } from 'primeng/tag';
 import { Button } from 'primeng/button';
+import { Chip } from 'primeng/chip';
 
 @Component({
   selector: 'app-form-header',
   templateUrl: './form-header.component.html',
   styleUrls: ['./form-header.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, Tag, Button]
+  imports: [CommonModule, IonIcon, TranslatePipe, Tag, Button, Chip]
 })
 export class FormHeaderComponent {
   private readonly navigationService = inject(NavigationService);
@@ -36,7 +37,7 @@ export class FormHeaderComponent {
   });
 
   constructor() {
-    addIcons({ calendarOutline, flashOutline });
+    addIcons({ flashOutline, calendarOutline, settingsOutline, chevronForwardOutline });
   }
 
   redirect(): void {

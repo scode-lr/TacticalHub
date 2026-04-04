@@ -9,6 +9,11 @@
   }
 }
 
+::ng-deep .p-dataview,
+::ng-deep .p-dataview-content {
+  background: transparent !important;
+}
+
 .skeleton-card {
   background: var(--background-primary, #ffffff);
   border: 1px solid var(--border-light, #e5e7eb);

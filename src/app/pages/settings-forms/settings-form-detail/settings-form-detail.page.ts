@@ -1,5 +1,8 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { saveOutline, syncOutline } from 'ionicons/icons';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
@@ -49,6 +52,7 @@ interface HeaderFormControls {
     IftaLabelModule,
     ButtonModule,
     DatePickerModule,
+    IonIcon,
   ]
 })
 export class SettingsFormDetailPage implements OnInit {
@@ -90,6 +94,10 @@ export class SettingsFormDetailPage implements OnInit {
 
   get ctrl(): HeaderFormControls {
     return this.form.controls as unknown as HeaderFormControls;
+  }
+
+  constructor() {
+    addIcons({ saveOutline, syncOutline });
   }
 
   async ngOnInit(): Promise<void> {

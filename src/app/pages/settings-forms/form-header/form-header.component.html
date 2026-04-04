@@ -1,47 +1,47 @@
 <div class="form-card" (click)="redirect()">
-  <div class="form-card-header">
-    <h3 class="form-name">{{ form().name }}</h3>
-    @if (editable()) {
-      <p-tag
-        [value]="'admin.settingsForms.status.' + form().status | translate"
-        [severity]="statusSeverity()"
-        styleClass="form-status-tag"
-      />
+  <div class="status-bar" [attr.data-status]="form().status"></div>
+
+  <div class="card-body">
+    <div class="card-header">
+      <h3 class="form-name">{{ form().name }}</h3>
+      @if (editable()) {
+        <p-tag
+          [value]="'admin.settingsForms.status.' + form().status | translate"
+          [severity]="statusSeverity()"
+          styleClass="status-tag"
+        />
+      }
+    </div>
+
+    @if (form().description) {
+      <p class="form-description">{{ form().description }}</p>
     }
-  </div>
-  <div class="form-card-body">
-    <p class="form-description">{{ form().description }}</p>
-    <div class="form-meta">
-      <div class="meta-item">
-        <ion-icon name="flash-outline" class="meta-icon"></ion-icon>
-        <span class="meta-label">{{ 'admin.settingsForms.action' | translate }}:</span>
-        <span class="meta-value">{{ 'admin.settingsForms.actions.' + form().action | translate }}</span>
-      </div>
-      <div class="meta-item">
-        <ion-icon name="calendar-outline" class="meta-icon"></ion-icon>
-        <span class="meta-label">{{ 'admin.settingsForms.period' | translate }}:</span>
-        <span class="meta-value">
+
+    <div class="card-chips">
+      <p-chip styleClass="meta-chip">
+        <ion-icon name="flash-outline"></ion-icon>
+        <span>{{ 'admin.settingsForms.actions.' + form().action | translate }}</span>
+      </p-chip>
+      <p-chip styleClass="meta-chip">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>
           @if (form().fromDate || form().toDate) {
-            {{ form().fromDate | date:'dd/MM/yyyy' }} &rarr; {{ form().toDate | date:'dd/MM/yyyy' }}
+            {{ form().fromDate | date:'dd/MM/yy' }} &rarr; {{ form().toDate | date:'dd/MM/yy' }}
           } @else {
             {{ 'admin.settingsForms.periodAlways' | translate }}
           }
         </span>
-      </div>
+      </p-chip>
     </div>
-  </div>
-  <div class="form-card-footer">
-    <span class="form-updated">
-      {{ 'admin.settingsForms.updated' | translate }}: {{ form().updatedAt | date:'dd/MM/yyyy' }}
-    </span>
+
     @if (editable()) {
-      <p-button
-        icon="pi pi-cog"
-        [rounded]="true"
-        [text]="true"
-        severity="secondary"
-        size="small"
-      />
+      <div class="card-footer">       
+          <ion-icon name="settings-outline"></ion-icon>
+      </div>
     }
+  </div>
+
+  <div class="card-chevron">
+    <ion-icon name="chevron-forward-outline"></ion-icon>
   </div>
 </div>

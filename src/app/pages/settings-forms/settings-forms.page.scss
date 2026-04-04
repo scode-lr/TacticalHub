@@ -28,8 +28,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem 1.25rem;
-  background: var(--ion-color-primary, #3880ff);
-  color: #ffffff;
+  background: var(--button-primary-color, #3880ff);
+  color: var(--button-primary-contrast, #ffffff);
   border: none;
   border-radius: 10px;
   font-size: 0.9375rem;
@@ -42,16 +42,7 @@
   ion-icon {
     font-size: 1.125rem;
   }
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(56, 128, 255, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
+  
   @media (max-width: 768px) {
     width: 100%;
     justify-content: center;
@@ -131,6 +122,11 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+}
+
+::ng-deep .p-dataview,
+::ng-deep .p-dataview-content {
+  background: transparent !important;
 }
 
 .empty-state {

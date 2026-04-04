@@ -120,12 +120,18 @@ export class FormsSubmissionsPage {
 
   private async loadForms(): Promise<void> {
     this.loading.set(true);
-    const clubId = this.clubService.getCurrentClubId();
-    if (clubId !== null) {
-      const result = await this.formService.getFormsByClubId(clubId, undefined, true, this.formsLimit(), this.formsOffset());
-      this.forms.set(result);
+    try {
+      const clubId = this.clubService.getCurrentClubId();
+      if (clubId !== null) {
+        const result = await this.formService.getFormsByClubId(clubId, undefined, true, this.formsLimit(), this.formsOffset());
+        this.forms.set(result);
+      }
+    } catch (error) {
+      console.error(error);
+      this.submissions.set([]);
+    } finally {
+      this.loading.set(false);
     }
-    this.loading.set(false);
   }
 
   async selectForm(formId: number): Promise<void> {

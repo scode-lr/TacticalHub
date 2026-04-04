@@ -118,18 +118,17 @@
     <app-settings-form-fields [fields]="fieldsArray" />
 
     <div class="form-actions">
-      <p-button
-        type="button"
-        severity="secondary"
-        [label]="'common.cancel' | translate"
-        (onClick)="goBack()"
-      />
-      <p-button
-        type="submit"
-        icon="pi pi-save"
-        [label]="'common.save' | translate"
-        [loading]="isSaving()"
-      />
+      <button type="button" class="btn-secondary" (click)="goBack()">
+        {{ 'common.cancel' | translate }}
+      </button>
+      <button type="submit" class="btn-primary" [disabled]="isSaving()">
+        @if (isSaving()) {
+          <ion-icon name="sync-outline" class="spin"></ion-icon>
+        } @else {
+          <ion-icon name="save-outline"></ion-icon>
+        }
+        {{ 'common.save' | translate }}
+      </button>
     </div>
 
   </form>

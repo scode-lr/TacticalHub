@@ -160,17 +160,12 @@
         }
 
         <div class="form-actions">
-          <p-button
-            type="button"
-            severity="secondary"
-            [label]="'common.cancel' | translate"
-            (onClick)="onFormCancel()"
-          />
-          <p-button
-            type="submit"
-            [label]="'common.submit' | translate"
-            [loading]="isSubmitting()"
-          />
+          <button type="button" class="btn-secondary" (click)="onFormCancel()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+            {{ 'common.submit' | translate }}
+          </button>
         </div>
       </form>
     </div>

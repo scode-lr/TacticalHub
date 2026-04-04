@@ -55,7 +55,6 @@ export class FormDetailPage implements OnInit {
   readonly loading = signal<boolean>(true);
 
   dynamicForm!: FormGroup;
-
   async ngOnInit(): Promise<void> {
     const formId = this.route.snapshot.paramMap.get('formId');
     this.formId = Number(formId);
