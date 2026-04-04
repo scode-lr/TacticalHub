@@ -19,6 +19,9 @@ import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline } from 'ionicons/icons';
 
 
 @Component({
@@ -26,7 +29,7 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule, IonIcon]
 })
 export class FormsSubmissionsPage {
   private readonly formService = inject(FormService);
@@ -34,6 +37,10 @@ export class FormsSubmissionsPage {
   private readonly translationService = inject(TranslationService);
   private readonly formSubmissionsService = inject(FormSubmissionsService);
   private readonly navigationService = inject(NavigationService);
+
+  constructor() {
+    addIcons({ downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline });
+  }
 
   readonly forms = signal<FormDetail[]>([]);
   readonly totalForms = signal<number>(0);

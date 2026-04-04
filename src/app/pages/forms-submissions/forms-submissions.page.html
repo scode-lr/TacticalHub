@@ -20,7 +20,7 @@
         <span class="selection-count">{{ selectedForms.length }} {{ 'admin.forms.selected' | translate }}</span>
         <div class="selection-actions">
           <button class="btn-action">
-            <i class="pi pi-download"></i>
+            <ion-icon name="download-outline"></ion-icon>
             {{ 'admin.forms.export' | translate }}
           </button>
         </div>
@@ -46,9 +46,6 @@
       <ng-template #caption>
         <div class="table-caption">
           <p-iconField iconPosition="left">
-            <p-inputIcon>
-              <i class="pi pi-search"></i>
-            </p-inputIcon>
             <input
               pInputText
               type="text"
@@ -57,11 +54,12 @@
               (input)="dt.filterGlobal($any($event.target).value, 'contains')"
               [placeholder]="'admin.forms.searchPlaceholder' | translate"
             />
+            @if (searchValue) {
+              <p-inputIcon (click)="clear(dt)" style="cursor: pointer">
+                <ion-icon name="close-outline"></ion-icon>
+              </p-inputIcon>
+            }
           </p-iconField>
-          <button class="btn-action" (click)="clear(dt)">
-            <i class="pi pi-filter-slash"></i>
-            {{ 'admin.forms.clearFilters' | translate }}
-          </button>
         </div>
       </ng-template>
 
@@ -147,7 +145,7 @@
         <tr>
           <td colspan="8">
             <div class="empty-state">
-              <i class="pi pi-file-text empty-icon"></i>
+              <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
               <h3 class="empty-title">{{ 'admin.forms.noForms' | translate }}</h3>
               <p class="empty-description">{{ 'admin.forms.noFormsDescription' | translate }}</p>
             </div>
@@ -174,9 +172,6 @@
       <ng-template #caption>
         <div class="table-caption">
           <p-iconField iconPosition="left">
-            <p-inputIcon>
-              <i class="pi pi-search"></i>
-            </p-inputIcon>
             <input
               pInputText
               style="padding-inline-start: 1rem"
@@ -185,11 +180,18 @@
               (input)="onSubmissionsSearch()"
               [placeholder]="'admin.forms.submissionTable.searchPlaceholder' | translate"
             />
+            @if (submissionsSearchValue) {
+              <p-inputIcon (click)="clearSubmissionsFilter(dtSubmissions)" style="cursor: pointer">
+                <ion-icon name="close-outline"></ion-icon>
+              </p-inputIcon>
+            }
           </p-iconField>
-          <button class="btn-action" (click)="clearSubmissionsFilter(dtSubmissions)">
-            <i class="pi pi-filter-slash"></i>
-            {{ 'admin.forms.clearFilters' | translate }}
-          </button>
+          @if (submissionsSearchValue || currentSort()) {
+            <button class="btn-action" (click)="clearSubmissionsFilter(dtSubmissions)">
+              <ion-icon name="funnel-outline"></ion-icon>
+              {{ 'admin.forms.clearFilters' | translate }}
+            </button>
+          }
         </div>
       </ng-template>
 
@@ -232,7 +234,7 @@
         <tr>
           <td colspan="5">
             <div class="empty-state">
-              <i class="pi pi-file-text empty-icon"></i>
+              <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
               <h3 class="empty-title">{{ 'admin.forms.submissionTable.noSubmissions' | translate }}</h3>
               <p class="empty-description">{{ 'admin.forms.submissionTable.noSubmissionsDescription' | translate }}</p>
             </div>
