@@ -332,8 +332,8 @@ export const sharedTranslations = {
           email: 'Email',
           phone: 'Telèfon',
           textarea: 'Àrea de text',
-          boolean: 'Boolean',
-          select: 'Desplegable',
+          boolean: 'Checkbox',
+          select: 'Selecció',
           file: 'Arxiu'
         }
       }

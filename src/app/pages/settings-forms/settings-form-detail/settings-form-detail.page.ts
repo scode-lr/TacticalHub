@@ -1,13 +1,11 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { saveOutline, syncOutline } from 'ionicons/icons';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
-import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { FormAction } from '@core/models/form-action.enum';
@@ -52,7 +50,6 @@ interface HeaderFormControls {
     IftaLabelModule,
     ButtonModule,
     DatePickerModule,
-    IonIcon,
   ]
 })
 export class SettingsFormDetailPage implements OnInit {

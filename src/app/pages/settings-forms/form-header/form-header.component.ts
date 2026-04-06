@@ -8,7 +8,6 @@ import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
 import { NavigationService } from '@core/index';
 import { Tag } from 'primeng/tag';
-import { Button } from 'primeng/button';
 import { Chip } from 'primeng/chip';
 
 @Component({
@@ -16,7 +15,7 @@ import { Chip } from 'primeng/chip';
   templateUrl: './form-header.component.html',
   styleUrls: ['./form-header.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, Tag, Button, Chip]
+  imports: [CommonModule, IonIcon, TranslatePipe, Tag, Chip]
 })
 export class FormHeaderComponent {
   private readonly navigationService = inject(NavigationService);

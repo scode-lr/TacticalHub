@@ -60,10 +60,10 @@
   align-items: center;
   gap: 0.375rem;
   padding: 0.5rem 0.875rem;
-  border: 1.5px dashed var(--ion-color-primary, #3880ff);
+  border: 1.5px dashed var(--button-primary-color, #3880ff);
   border-radius: 8px;
   background: transparent;
-  color: var(--ion-color-primary, #3880ff);
+  color: var(--button-primary-color, #3880ff);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;

@@ -19,6 +19,14 @@
         </div>
       </div>
     </div>
+  } @else if (forms().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon-wrap">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </div>
+      <h3 class="empty-title">{{ 'viewer.action.noForms' | translate }}</h3>
+      <p class="empty-description">{{ 'viewer.action.noFormsDescription' | translate }}</p>
+    </div>
   } @else {
     <p-dataview [value]="forms()" styleClass="forms-dataview">
       <ng-template #list let-items>
@@ -26,13 +34,6 @@
           @for (item of items; track item.id) {
             <app-form-header [form]="item" [editable]="false" />
           }
-        </div>
-      </ng-template>
-      <ng-template #empty>
-        <div class="empty-state">
-          <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
-          <h3 class="empty-title">{{ 'viewer.action.noForms' | translate }}</h3>
-          <p class="empty-description">{{ 'viewer.action.noFormsDescription' | translate }}</p>
         </div>
       </ng-template>
     </p-dataview>

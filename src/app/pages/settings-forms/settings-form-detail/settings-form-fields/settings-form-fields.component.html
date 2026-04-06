@@ -91,22 +91,6 @@
                 <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
                 <p-toggleswitch formControlName="required" />
               </div>
-              @if (false) {
-                <div class="field-mini-group field-mini-group--short">
-                  <label class="field-mini-label" [for]="'flength-' + i">
-                    {{ 'admin.settingsForms.formFields.length' | translate }}
-                  </label>
-                  <input
-                    pInputText
-                    [id]="'flength-' + i"
-                    type="number"
-                    formControlName="length"
-                    min="1"
-                    placeholder="—"
-                    pSize="small"
-                  />
-                </div>
-              }
             </div>
           </div>
           <button type="button" class="btn-remove-field" (click)="removeField(i)">

@@ -24,7 +24,7 @@ export class SettingsFormFieldsComponent {
   private readonly translationService = inject(TranslationService);
 
   readonly fieldTypeOptions: FormFieldType[] = [
-    'text', 'number', 'date', 'email', 'phone', 'textarea', 'boolean', 'select', 'file'
+    'text', 'number', 'date', 'email', 'textarea', 'boolean', 'select'
   ];
 
   get fieldTypeItems() {

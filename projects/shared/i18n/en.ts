@@ -334,8 +334,8 @@ export const sharedTranslations = {
           email: 'Email',
           phone: 'Phone',
           textarea: 'Textarea',
-          boolean: 'Boolean',
-          select: 'Dropdown',
+          boolean: 'Checkbox',
+          select: 'Selection',
           file: 'File'
         }
       }
