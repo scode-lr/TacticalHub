@@ -6,7 +6,6 @@
         <span class="fields-count-badge">{{ fields().length }}</span>
       }
     </div>
-    
   </div>
 
   <div class="form-card-body fields-body">
@@ -32,12 +31,14 @@
                   <span class="required-mark">*</span>
                 </label>
                 <input
+                  pInputText
                   [id]="'fkey-' + i"
                   type="text"
-                  class="field-input field-input--compact"
-                  [class.field-input--error]="fieldHasError(i, 'key')"
+                  [class.ng-invalid]="fieldHasError(i, 'key')"
+                  [class.ng-dirty]="fieldHasError(i, 'key')"
                   formControlName="key"
                   [placeholder]="'admin.settingsForms.formFields.key' | translate"
+                  pSize="small"
                 />
               </div>
               <div class="field-mini-group">
@@ -46,25 +47,30 @@
                   <span class="required-mark">*</span>
                 </label>
                 <input
+                  pInputText
                   [id]="'flabel-' + i"
                   type="text"
-                  class="field-input field-input--compact"
-                  [class.field-input--error]="fieldHasError(i, 'label')"
+                  [class.ng-invalid]="fieldHasError(i, 'label')"
+                  [class.ng-dirty]="fieldHasError(i, 'label')"
                   formControlName="label"
                   [placeholder]="'admin.settingsForms.formFields.label' | translate"
+                  pSize="small"
                 />
               </div>
               <div class="field-mini-group field-mini-group--narrow">
                 <label class="field-mini-label" [for]="'ftype-' + i">
                   {{ 'admin.settingsForms.formFields.type' | translate }}
                 </label>
-                <select [id]="'ftype-' + i" class="field-select field-select--compact" formControlName="type">
-                  @for (type of fieldTypeOptions; track type) {
-                    <option [value]="type">
-                      {{ 'admin.settingsForms.formFields.types.' + type | translate }}
-                    </option>
-                  }
-                </select>
+                <p-select
+                  [inputId]="'ftype-' + i"
+                  formControlName="type"
+                  [options]="fieldTypeItems"
+                  optionLabel="label"
+                  optionValue="value"
+                  [fluid]="true"
+                  size="small"
+                  appendTo="body"
+                />
               </div>
             </div>
             <div class="field-row">
@@ -73,37 +79,18 @@
                   {{ 'admin.settingsForms.formFields.description' | translate }}
                 </label>
                 <input
+                  pInputText
                   [id]="'fdesc-' + i"
                   type="text"
-                  class="field-input field-input--compact"
                   formControlName="description"
                   [placeholder]="'admin.settingsForms.formFields.descriptionPlaceholder' | translate"
+                  pSize="small"
                 />
               </div>
               <div class="field-mini-group field-mini-group--toggle">
                 <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
-                <label class="toggle">
-                  <input type="checkbox" formControlName="required" />
-                  <span class="toggle-track">
-                    <span class="toggle-thumb"></span>
-                  </span>
-                </label>
+                <p-toggleswitch formControlName="required" />
               </div>
-              @if (hasLength(i)) {
-                <div class="field-mini-group field-mini-group--short">
-                  <label class="field-mini-label" [for]="'flength-' + i">
-                    {{ 'admin.settingsForms.formFields.length' | translate }}
-                  </label>
-                  <input
-                    [id]="'flength-' + i"
-                    type="number"
-                    class="field-input field-input--compact"
-                    formControlName="length"
-                    min="1"
-                    placeholder="—"
-                  />
-                </div>
-              }
             </div>
           </div>
           <button type="button" class="btn-remove-field" (click)="removeField(i)">
@@ -126,10 +113,11 @@
               <div class="option-row">
                 <span class="option-index">{{ j + 1 }}</span>
                 <input
+                  pInputText
                   type="text"
-                  class="field-input field-input--compact option-input"
                   [formControl]="$any(optCtrl)"
                   [placeholder]="'admin.settingsForms.formFields.optionPlaceholder' | translate"
+                  pSize="small"
                 />
                 <button type="button" class="btn-remove-option" (click)="removeOption(i, j)" [attr.aria-label]="'common.remove' | translate">
                   <ion-icon name="close-outline"></ion-icon>
@@ -142,10 +130,10 @@
     }
 
     @if (fields().length > 0) {
-        <button type="button" class="btn-add-field" (click)="addField()">
-            <ion-icon name="add-outline"></ion-icon>
-            {{ 'admin.settingsForms.formFields.add' | translate }}
-        </button>
+      <button type="button" class="btn-add-field" (click)="addField()">
+        <ion-icon name="add-outline"></ion-icon>
+        {{ 'admin.settingsForms.formFields.add' | translate }}
+      </button>
     }
   </div>
 </div>

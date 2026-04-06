@@ -19,6 +19,9 @@ import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline } from 'ionicons/icons';
 
 
 @Component({
@@ -26,7 +29,7 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule, IonIcon]
 })
 export class FormsSubmissionsPage {
   private readonly formService = inject(FormService);
@@ -34,6 +37,10 @@ export class FormsSubmissionsPage {
   private readonly translationService = inject(TranslationService);
   private readonly formSubmissionsService = inject(FormSubmissionsService);
   private readonly navigationService = inject(NavigationService);
+
+  constructor() {
+    addIcons({ downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline });
+  }
 
   readonly forms = signal<FormDetail[]>([]);
   readonly totalForms = signal<number>(0);
@@ -96,6 +103,8 @@ export class FormsSubmissionsPage {
       this.pageSize.set(saved.pageSize);
       this.currentPage.set(saved.currentPage);
       this.currentSort.set(saved.currentSort);
+      this.loading.set(false);
+      this.submissionsLoading.set(false);
       this.submissionsSearchValue = saved.submissionsSearchValue;
     } else {
       await this.loadForms();
@@ -111,12 +120,18 @@ export class FormsSubmissionsPage {
 
   private async loadForms(): Promise<void> {
     this.loading.set(true);
-    const clubId = this.clubService.getCurrentClubId();
-    if (clubId !== null) {
-      const result = await this.formService.getFormsByClubId(clubId, undefined, true, this.formsLimit(), this.formsOffset());
-      this.forms.set(result);
+    try {
+      const clubId = this.clubService.getCurrentClubId();
+      if (clubId !== null) {
+        const result = await this.formService.getFormsByClubId(clubId, undefined, true, this.formsLimit(), this.formsOffset());
+        this.forms.set(result);
+      }
+    } catch (error) {
+      console.error(error);
+      this.submissions.set([]);
+    } finally {
+      this.loading.set(false);
     }
-    this.loading.set(false);
   }
 
   async selectForm(formId: number): Promise<void> {
@@ -171,6 +186,7 @@ export class FormsSubmissionsPage {
     } catch (error) {
       console.error('Error loading submissions:', error);
       this.submissions.set([]);
+      this.submissionsLoading.set(false);
     } finally {
       this.submissionsLoading.set(false);
     }

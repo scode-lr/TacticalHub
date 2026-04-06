@@ -16,108 +16,112 @@
         <h2 class="card-section-title">{{ 'admin.settingsForms.section.general' | translate }}</h2>
       </div>
       <div class="form-card-body">
-        <div class="field-group">
-          <label class="field-label" for="name">
-            {{ 'admin.settingsForms.fields.name' | translate }}
-            <span class="required-mark">*</span>
-          </label>
+
+        <p-iftalabel>
           <input
+            pInputText
             id="name"
-            type="text"
-            class="field-input"
-            [class.field-input--error]="ctrl.name.invalid && ctrl.name.touched"
             formControlName="name"
+            [invalid]="ctrl.name.invalid && ctrl.name.touched"
             [placeholder]="'admin.settingsForms.fields.namePlaceholder' | translate"
           />
-          @if (ctrl.name.invalid && ctrl.name.touched) {
-            <span class="field-error">{{ 'admin.settingsForms.fields.nameRequired' | translate }}</span>
-          }
-        </div>
+          <label for="name">{{ 'admin.settingsForms.fields.name' | translate }} <span class="required-mark">*</span></label>
+        </p-iftalabel>
+        @if (ctrl.name.invalid && ctrl.name.touched) {
+          <small class="p-error">{{ 'admin.settingsForms.fields.nameRequired' | translate }}</small>
+        }
 
-        <div class="field-group">
-          <label class="field-label" for="description">
-            {{ 'admin.settingsForms.fields.description' | translate }}
-          </label>
+        <p-iftalabel>
           <textarea
+            pTextarea
             id="description"
-            class="field-textarea"
             formControlName="description"
             rows="3"
             [placeholder]="'admin.settingsForms.fields.descriptionPlaceholder' | translate"
           ></textarea>
-        </div>
+          <label for="description">{{ 'admin.settingsForms.fields.description' | translate }}</label>
+        </p-iftalabel>
 
         <div class="field-row">
-          <div class="field-group">
-            <label class="field-label" for="fromDate">
-              {{ 'admin.settingsForms.fields.fromDate' | translate }}
-            </label>
-            <input
-              id="fromDate"
-              type="date"
-              class="field-input"
-              [class.field-input--error]="ctrl.fromDate.invalid && ctrl.fromDate.touched"
+          <p-iftalabel>
+            <p-datepicker
+              inputId="fromDate"
               formControlName="fromDate"
+              dateFormat="dd/mm/yy"
+              [fluid]="true"
+              [showIcon]="true"
+              [invalid]="ctrl.fromDate.invalid && ctrl.fromDate.touched"
+              appendTo="body"
             />
-          </div>
-          <div class="field-group">
-            <label class="field-label" for="toDate">
-              {{ 'admin.settingsForms.fields.toDate' | translate }}
-            </label>
-            <input
-              id="toDate"
-              type="date"
-              class="field-input"
-              [class.field-input--error]="ctrl.toDate.invalid && ctrl.toDate.touched"
+            <label for="fromDate">{{ 'admin.settingsForms.fields.fromDate' | translate }}</label>
+          </p-iftalabel>
+          <p-iftalabel>
+            <p-datepicker
+              inputId="toDate"
               formControlName="toDate"
+              dateFormat="dd/mm/yy"
+              [fluid]="true"
+              [showIcon]="true"
+              [invalid]="ctrl.toDate.invalid && ctrl.toDate.touched"
+              appendTo="body"
             />
-          </div>
+            <label for="toDate">{{ 'admin.settingsForms.fields.toDate' | translate }}</label>
+          </p-iftalabel>
         </div>
 
         <div class="field-row">
-          <div class="field-group">
-            <label class="field-label" for="status">
-              {{ 'admin.settingsForms.fields.status' | translate }}
-              <span class="required-mark">*</span>
-            </label>
-            <select id="status" class="field-select" formControlName="status">
-              @for (option of statusOptions; track option) {
-                <option [value]="option">
-                  {{ 'admin.settingsForms.status.' + option | translate }}
-                </option>
-              }
-            </select>
-          </div>
-          <div class="field-group">
-            <label class="field-label" for="action">
-              {{ 'admin.settingsForms.fields.action' | translate }}
-              <span class="required-mark">*</span>
-            </label>
-            <select
-              id="action"
-              class="field-select"
-              [class.field-input--error]="ctrl.action.invalid && ctrl.action.touched"
+          <p-iftalabel>
+            <p-select
+              inputId="status"
+              formControlName="status"
+              [options]="statusItems"
+              optionLabel="label"
+              optionValue="value"
+              [fluid]="true"
+              appendTo="body"
+            />
+            <label for="status">{{ 'admin.settingsForms.fields.status' | translate }} <span class="required-mark">*</span></label>
+          </p-iftalabel>
+          <p-iftalabel>
+            <p-select
+              inputId="action"
               formControlName="action"
-            >
-              @for (option of actionOptions; track option) {
-                <option [value]="option">
-                  {{ 'admin.settingsForms.actions.' + option | translate }}
-                </option>
-              }
-            </select>
-          </div>
+              [options]="actionItems"
+              optionLabel="label"
+              optionValue="value"
+              [fluid]="true"
+              [invalid]="ctrl.action.invalid && ctrl.action.touched"
+              appendTo="body"
+            />
+            <label for="action">{{ 'admin.settingsForms.fields.action' | translate }} <span class="required-mark">*</span></label>
+          </p-iftalabel>
         </div>
+
+        <p-iftalabel>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            formControlName="email"
+            [invalid]="ctrl.email.invalid && ctrl.email.touched"
+            [placeholder]="'admin.settingsForms.fields.emailPlaceholder' | translate"
+          />
+          <label for="email">{{ 'admin.settingsForms.fields.email' | translate }}</label>
+        </p-iftalabel>
+        @if (ctrl.email.invalid && ctrl.email.touched) {
+          <small class="p-error">{{ 'admin.settingsForms.fields.emailInvalid' | translate }}</small>
+        }
+
       </div>
     </div>
 
     <app-settings-form-fields [fields]="fieldsArray" />
 
     <div class="form-actions">
-      <button type="button" class="btn-cancel" (click)="goBack()">
+      <button type="button" class="btn-secondary" (click)="goBack()">
         {{ 'common.cancel' | translate }}
       </button>
-      <button type="submit" class="btn-save">
-        <ion-icon name="save-outline"></ion-icon>
+      <button type="submit" class="btn-primary" [disabled]="isSaving()">
         {{ 'common.save' | translate }}
       </button>
     </div>
@@ -125,4 +129,3 @@
   </form>
   }
 </div>
-

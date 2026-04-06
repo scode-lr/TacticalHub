@@ -10,6 +10,7 @@ export interface FormHeader {
   toDate: Date | null;
   status: AppStatus;
   action: FormAction;
+  email: string | null;
   settingsJson: Record<string, unknown>;
   createdAt: Date;
   updatedAt: Date;

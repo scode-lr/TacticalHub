@@ -17,18 +17,18 @@
         </div>
         <div class="form-card-body">
           <div class="field-row">
-            <p-iftalabel>
-              <input pInputText id="formName" disabled [value]="submission()!.formName" />
-              <label for="formName">{{ 'admin.forms.submissionDetail.formName' | translate }}</label>
-            </p-iftalabel>
-            <p-iftalabel>
-              <input pInputText id="userName" disabled [value]="submission()!.userName" />
-              <label for="userName">{{ 'admin.forms.submissionDetail.userName' | translate }}</label>
-            </p-iftalabel>
-            <p-iftalabel>
-              <input pInputText id="submittedAt" disabled [value]="submission()!.submittedAt | date: 'dd/MM/yyyy HH:mm'" />
-              <label for="submittedAt">{{ 'admin.forms.submissionDetail.submittedAt' | translate }}</label>
-            </p-iftalabel>
+            <div class="field-display">
+              <span class="field-key">{{ 'admin.forms.submissionDetail.formName' | translate }}</span>
+              <span class="field-value">{{ submission()!.formName }}</span>
+            </div>
+            <div class="field-display">
+              <span class="field-key">{{ 'admin.forms.submissionDetail.userName' | translate }}</span>
+              <span class="field-value">{{ submission()!.userName }}</span>
+            </div>
+            <div class="field-display">
+              <span class="field-key">{{ 'admin.forms.submissionDetail.submittedAt' | translate }}</span>
+              <span class="field-value">{{ submission()!.submittedAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -39,22 +39,21 @@
         </div>
         <div class="form-card-body">
           @for (value of submission()!.values; track value.fieldId) {
-            @if (value.fieldType === 'textarea') {
-              <p-iftalabel class="full-width">
-                <textarea pTextarea [id]="'field-' + value.fieldId" disabled rows="3">{{ getDisplayValue(value) }}</textarea>
-                <label [for]="'field-' + value.fieldId">{{ value.fieldLabel }}</label>
-              </p-iftalabel>
-            } @else if (value.fieldType === 'boolean') {
-              <div class="checkbox-field">
-                <p-checkbox [ngModel]="value.valueBoolean" [binary]="true" [disabled]="true" [inputId]="'field-' + value.fieldId" />
-                <label [for]="'field-' + value.fieldId" class="checkbox-label">{{ value.fieldLabel }}</label>
-              </div>
-            } @else {
-              <p-iftalabel class="full-width">
-                <input pInputText [id]="'field-' + value.fieldId" disabled [value]="getDisplayValue(value)" />
-                <label [for]="'field-' + value.fieldId">{{ value.fieldLabel }}</label>
-              </p-iftalabel>
-            }
+            <div class="field-display">
+              <span class="field-key">{{ value.fieldLabel }}</span>
+              @if (value.fieldType === 'boolean') {
+                <div class="field-value field-value--boolean">
+                  <p-checkbox [ngModel]="true"  [binary]="true" [disabled]="true" [inputId]="'field-' + value.fieldId" />
+                  @if (value.valueText) {
+                    <span>{{ value.valueText }}</span>
+                  }
+                </div>
+              } @else if (value.fieldType === 'textarea') {
+                <span class="field-value field-value--multiline">{{ getDisplayValue(value) }}</span>
+              } @else {
+                <span class="field-value">{{ getDisplayValue(value) }}</span>
+              }
+            </div>
           }
         </div>
       </div>

@@ -301,7 +301,10 @@ export const sharedTranslations = {
         fromDate: 'Fecha de inicio',
         toDate: 'Fecha de fin',
         status: 'Estado',
-        action: 'Acción'
+        action: 'Acción',
+        email: 'Email',
+        emailPlaceholder: 'Introduce un email para enviar las respuestas',
+        emailInvalid: 'Por favor, introduce un email válido'
       },
       section: {
         general: 'General',
@@ -329,8 +332,8 @@ export const sharedTranslations = {
           email: 'Email',
           phone: 'Teléfono',
           textarea: 'Área de texto',
-          boolean: 'Boolean',
-          select: 'Desplegable',
+          boolean: 'Checkbox',
+          select: 'Selección',
           file: 'Archivo'
         }
       }

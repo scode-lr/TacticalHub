@@ -1,6 +1,6 @@
 <div class="page-container">
   <div class="section-header-with-back-button">
-  <app-back-button />
+    <app-back-button />
     <h1 class="section-title">{{ pageTitle() | translate }}</h1>
   </div>
 
@@ -8,7 +8,7 @@
     <div class="form-skeleton">
       <div class="skeleton-title"></div>
       <div class="skeleton-description"></div>
-        <div class="skeleton-field"></div>
+      <div class="skeleton-field"></div>
     </div>
   }
 
@@ -41,61 +41,63 @@
 
             @if (field.type === 'text') {
               <input
+                pInputText
                 [id]="field.key"
                 type="text"
-                class="field-input"
-                [class.field-input--error]="isFieldInvalid(field.key)"
                 [formControlName]="field.key"
+                [invalid]="isFieldInvalid(field.key)"
                 [attr.maxlength]="field.maxLength"
               />
             }
 
             @if (field.type === 'number') {
               <input
+                pInputText
                 [id]="field.key"
                 type="number"
-                class="field-input"
-                [class.field-input--error]="isFieldInvalid(field.key)"
                 [formControlName]="field.key"
+                [invalid]="isFieldInvalid(field.key)"
               />
             }
 
             @if (field.type === 'date') {
-              <input
-                [id]="field.key"
-                type="date"
-                class="field-input"
-                [class.field-input--error]="isFieldInvalid(field.key)"
+              <p-datepicker
+                [inputId]="field.key"
                 [formControlName]="field.key"
+                dateFormat="dd/mm/yy"
+                [fluid]="true"
+                [showIcon]="true"
+                [invalid]="isFieldInvalid(field.key)"
+                appendTo="body"
               />
             }
 
             @if (field.type === 'email') {
               <input
+                pInputText
                 [id]="field.key"
                 type="email"
-                class="field-input"
-                [class.field-input--error]="isFieldInvalid(field.key)"
                 [formControlName]="field.key"
+                [invalid]="isFieldInvalid(field.key)"
               />
             }
 
             @if (field.type === 'phone') {
               <input
+                pInputText
                 [id]="field.key"
                 type="tel"
-                class="field-input"
-                [class.field-input--error]="isFieldInvalid(field.key)"
                 [formControlName]="field.key"
+                [invalid]="isFieldInvalid(field.key)"
               />
             }
 
             @if (field.type === 'textarea') {
               <textarea
+                pTextarea
                 [id]="field.key"
-                class="field-textarea"
-                [class.field-textarea--error]="isFieldInvalid(field.key)"
                 [formControlName]="field.key"
+                [invalid]="isFieldInvalid(field.key)"
                 rows="4"
                 [attr.maxlength]="field.maxLength"
               ></textarea>
@@ -105,24 +107,20 @@
               @if (field.options?.length) {
                 <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field.key)">
                   @for (option of field.options; track option) {
-                    <label class="radio-option">
-                      <input
-                        type="radio"
-                        class="boolean-radio"
+                    <div class="radio-option">
+                      <p-radiobutton
+                        [inputId]="field.key + '_' + option"
                         [formControlName]="field.key"
+                        [name]="field.key"
                         [value]="option"
                       />
-                      <span class="radio-text">{{ option }}</span>
-                    </label>
+                      <label [for]="field.key + '_' + option" class="radio-text">{{ option }}</label>
+                    </div>
                   }
                 </div>
               } @else {
                 <label class="boolean-label">
-                  <input
-                    type="checkbox"
-                    class="boolean-checkbox"
-                    [formControlName]="field.key"
-                  />
+                  <p-toggleswitch [formControlName]="field.key" />
                   <span class="boolean-text">
                     {{ field.label }}
                     @if (field.isRequired) {
@@ -134,17 +132,15 @@
             }
 
             @if (field.type === 'select') {
-              <select
-                [id]="field.key"
-                class="field-select"
-                [class.field-select--error]="isFieldInvalid(field.key)"
+              <p-select
+                [inputId]="field.key"
                 [formControlName]="field.key"
-              >
-                <option [ngValue]="null">{{ 'common.selectOption' | translate }}</option>
-                @for (option of field.options ?? []; track option) {
-                  <option [value]="option">{{ option }}</option>
-                }
-              </select>
+                [options]="field.options ?? []"
+                [fluid]="true"
+                [invalid]="isFieldInvalid(field.key)"
+                [placeholder]="'common.selectOption' | translate"
+                appendTo="body"
+              />
             }
 
             @if (field.type === 'file') {
@@ -158,7 +154,7 @@
             }
 
             @if (isFieldInvalid(field.key)) {
-              <span class="field-error">{{ 'validation.required' | translate }}</span>
+              <small class="p-error">{{ 'validation.required' | translate }}</small>
             }
           </div>
         }
@@ -168,11 +164,7 @@
             {{ 'common.cancel' | translate }}
           </button>
           <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
-            @if (isSubmitting()) {
-              {{ 'common.submitting' | translate }}
-            } @else {
-              {{ 'common.submit' | translate }}
-            }
+            {{ 'common.submit' | translate }}
           </button>
         </div>
       </form>
