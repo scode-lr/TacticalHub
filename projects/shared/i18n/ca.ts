@@ -326,7 +326,7 @@ export const sharedTranslations = {
         optionPlaceholder: 'Valor de l\'opció',
         types: {
           text: 'Text',
-          number: 'Nombre',
+          number: 'Numero',
           date: 'Data',
           datetime: 'Data i hora',
           email: 'Email',
@@ -479,6 +479,9 @@ export const sharedTranslations = {
         commentsPlaceholder: 'Afegeix comentaris (opcional)',
         registerPlayerSuccess: 'Registre de jugador enviat amb èxit!',
         becomeMemberSuccess: 'Sol·licitud de membresía enviada amb èxit!',
+        success: {
+          submitMessage: 'El formulari s\'ha enviat correctament'
+        },
         errors: {
           required: 'Aquest camp és obligatori',
           email: 'Si us plau introdueix un correu electrònic vàlid',

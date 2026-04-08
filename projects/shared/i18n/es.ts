@@ -428,7 +428,12 @@ export const sharedTranslations = {
     },
     action: {
       noForms: 'No hay formularios disponibles',
-      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
+      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.',
+      form: {
+        success: {
+          submitMessage: 'El formulario se ha enviado correctamente'
+        }
+      }
     },
     information: {
       title: 'Información',
