@@ -121,11 +121,21 @@
       <button type="button" class="btn-secondary" (click)="goBack()">
         {{ 'common.cancel' | translate }}
       </button>
+      <button type="button" class="btn-secondary" (click)="openPreview()">
+        {{ 'admin.settingsForms.preview.button' | translate }}
+      </button>
       <button type="submit" class="btn-primary" [disabled]="isSaving()">
         {{ 'common.save' | translate }}
       </button>
     </div>
 
   </form>
+
+  <app-form-preview-modal
+    [isOpen]="previewOpen()"
+    [fields]="previewFields"
+    [formName]="form.get('name')?.value"
+    (didDismiss)="previewOpen.set(false)"
+  />
   }
 </div>

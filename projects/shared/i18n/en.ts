@@ -338,6 +338,12 @@ export const sharedTranslations = {
           select: 'Selection',
           file: 'File'
         }
+      },
+      preview: {
+        button: 'Preview',
+        title: 'Form Preview',
+        notice: 'This is a preview. Submitting is disabled.',
+        noFields: 'No fields added yet.'
       }
     }
   },

@@ -336,6 +336,12 @@ export const sharedTranslations = {
           select: 'Selección',
           file: 'Archivo'
         }
+      },
+      preview: {
+        button: 'Vista previa',
+        title: 'Vista previa del formulario',
+        notice: 'Esto es una vista previa. El envío está desactivado.',
+        noFields: 'Aún no se han añadido campos.'
       }
     }
   },

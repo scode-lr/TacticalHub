@@ -336,6 +336,12 @@ export const sharedTranslations = {
           select: 'Selecció',
           file: 'Arxiu'
         }
+      },
+      preview: {
+        button: 'Previsualitza',
+        title: 'Previsualització del formulari',
+        notice: 'Això és una previsualització. L\'enviament està desactivat.',
+        noFields: 'Encara no s\'han afegit camps.'
       }
     }
   },

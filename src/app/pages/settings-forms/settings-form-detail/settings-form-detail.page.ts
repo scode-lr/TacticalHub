@@ -8,6 +8,8 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { AppStatus } from '@models/app-status.model';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { FormPreviewModalComponent } from '@components/modals/form-preview-modal/form-preview-modal.component';
+import { FormField } from '@core/models/form-field.model';
 import { FormAction } from '@core/models/form-action.enum';
 import { SettingsFormFieldsComponent } from './settings-form-fields/settings-form-fields.component';
 import { FormService } from '@core/services/form.service';
@@ -44,6 +46,7 @@ interface HeaderFormControls {
     TranslatePipe,
     BackButtonComponent,
     SettingsFormFieldsComponent,
+    FormPreviewModalComponent,
     InputTextModule,
     TextareaModule,
     SelectModule,
@@ -64,6 +67,7 @@ export class SettingsFormDetailPage implements OnInit {
   readonly formId = signal<string | null>(null);
   readonly isSaving = signal<boolean>(false);
   readonly isLoading = signal<boolean>(false);
+  readonly previewOpen = signal<boolean>(false);
 
   readonly pageTitle = computed(() =>
     this.isEditMode() ? 'admin.settingsForms.editForm' : 'admin.settingsForms.newForm'
@@ -108,6 +112,34 @@ export class SettingsFormDetailPage implements OnInit {
 
   get fieldsArray(): FormArray {
     return this.form.get('fields') as FormArray;
+  }
+
+  get previewFields(): FormField[] {
+    return this.fieldsArray.controls.map((ctrl, index) => {
+      const v = ctrl.value as {
+        key: string; label: string; description: string;
+        type: FormField['type']; length: number | null;
+        required: boolean; order: number; options: string[];
+      };
+      return {
+        id: index,
+        formId: 0,
+        key: v.key || `field_${index}`,
+        label: v.label || '',
+        description: v.description || null,
+        type: v.type || 'text',
+        maxLength: v.length ?? null,
+        isRequired: v.required ?? false,
+        order: v.order ?? index + 1,
+        options: v.options?.length ? v.options : null,
+        validationJson: null,
+        createdAt: new Date(),
+      };
+    });
+  }
+
+  openPreview(): void {
+    this.previewOpen.set(true);
   }
 
   goBack(): void {
