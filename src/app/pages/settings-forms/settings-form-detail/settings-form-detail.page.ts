@@ -77,9 +77,7 @@ export class SettingsFormDetailPage implements OnInit {
     return [
       { label: this.translationService.instant('admin.settingsForms.status.AC'), value: AppStatus.Active },
       { label: this.translationService.instant('admin.settingsForms.status.I'), value: AppStatus.Inactive },
-      { label: this.translationService.instant('admin.settingsForms.status.P'), value: AppStatus.Pending },
       { label: this.translationService.instant('admin.settingsForms.status.D'), value: AppStatus.Draft },
-      { label: this.translationService.instant('admin.settingsForms.status.AR'), value: AppStatus.Archived },
     ];
   }
 
