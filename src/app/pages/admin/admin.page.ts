@@ -34,7 +34,7 @@ export class AdminPage implements OnInit {
   readonly adminMenuConfig: MenuConfig = {
     role: RoleType.Admin,
     items: [
-      // { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
       // { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
       // { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
       { id: 'forms-submissions', label: 'admin.menu.forms', icon: 'document-text-outline', route: 'forms-submissions' },

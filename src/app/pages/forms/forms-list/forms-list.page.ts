@@ -5,7 +5,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { FormsService } from '@services/forms.service';
 import { ClubService } from '@services/club.service';
-import { Form, FormStatus } from '@core/models/form.model';
+import { Form } from '@core/models/form.model';
+import { AppStatus } from '@core/models/app-status.model';
 
 @Component({
   selector: 'app-forms-list',
@@ -49,6 +50,6 @@ export class FormsListPage implements OnInit {
   }
 
   isActive(form: Form): boolean {
-    return form.status === FormStatus.Active;
+    return form.status === AppStatus.Active;
   }
 }

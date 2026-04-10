@@ -35,14 +35,13 @@ export class ViewerPage implements OnInit {
   readonly viewerMenuConfig: MenuConfig = {
     role: RoleType.Viewer,
     items: [
-      // { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
       // { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' },
       // { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
-      { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
-      { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' },
-      { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' }
+      // { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
+      // { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      // { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' },
       // { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
       // { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
     ]

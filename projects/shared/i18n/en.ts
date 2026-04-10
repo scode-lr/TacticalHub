@@ -587,6 +587,17 @@ export const sharedTranslations = {
       noForms: 'No forms available',
       noFormsDescription: 'There are no active forms at this time. Check back later.'
     },
+    forms: {
+      submission: {
+        title: 'My submissions',
+        statusSubmitted: 'Submitted',
+        statusUnderReview: 'Under Review',
+        statusApproved: 'Approved',
+        statusRejected: 'Rejected',
+        fillAgain: 'Fill again',
+        detailTitle: 'My submission'
+      }
+    },
     information: {
       title: 'Information',
       description: 'Important information and guidelines for club members',

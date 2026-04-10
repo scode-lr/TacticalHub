@@ -4,3 +4,4 @@ export { RoleCardComponent } from './role-card/role-card.component';
 export { TeamJoinRequestsComponent } from './team-join-requests/team-join-requests.component';
 export { ActionRequestsComponent } from './action-requests/action-requests.component';
 export { BackButtonComponent } from './back-button/back-button.component';
+export { FormSubmissionCardComponent } from './form-submission-card/form-submission-card.component';

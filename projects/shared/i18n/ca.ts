@@ -585,6 +585,17 @@ export const sharedTranslations = {
       noForms: 'No hi ha formularis disponibles',
       noFormsDescription: 'No hi ha formularis actius en aquest moment. Torna a comprovar-ho més tard.'
     },
+    forms: {
+      submission: {
+        title: 'Els meus enviaments',
+        statusSubmitted: 'Enviat',
+        statusUnderReview: 'En revisió',
+        statusApproved: 'Aprovat',
+        statusRejected: 'Rebutjat',
+        fillAgain: 'Tornar a omplir',
+        detailTitle: 'El meu enviament'
+      }
+    },
     information: {
       title: 'Informació',
       description: 'Informació important i guies per als membres del club',

@@ -526,6 +526,17 @@ export const sharedTranslations = {
         }
       }
     },
+    forms: {
+      submission: {
+        title: 'Mis envíos',
+        statusSubmitted: 'Enviado',
+        statusUnderReview: 'En revisión',
+        statusApproved: 'Aprobado',
+        statusRejected: 'Rechazado',
+        fillAgain: 'Volver a rellenar',
+        detailTitle: 'Mi envío'
+      }
+    },
     information: {
       title: 'Información',
       description: 'Información importante y guías para los miembros del club',
