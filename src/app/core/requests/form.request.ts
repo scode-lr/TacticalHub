@@ -1,24 +1,32 @@
-import { FormAction, FormFieldType } from '../models/form.model';
-
-export interface CreateFormRequest {
-  name: string;
-  description?: string;
-  fromDate?: string;
-  toDate?: string;
-  action: FormAction;
-}
-
 export interface AddFormFieldRequest {
   key: string;
   label: string;
-  description?: string;
-  type: FormFieldType;
+  description?: string | null;
+  type: string;
   isRequired: boolean;
-  maxLength?: number;
+  maxLength?: number | null;
   order: number;
-  validationJson?: Record<string, unknown>;
+  options?: string[] | null;
+  validationJson?: Record<string, unknown> | null;
 }
 
-export interface SubmitFormRequest {
-  values: Record<string, string | number | boolean | null>;
+export interface FormRequest {
+  name: string;
+  description?: string | null;
+  fromDate?: string | null;
+  toDate?: string | null;
+  status?: string;
+  action: string;
+  email?: string | null;
+  fields?: AddFormFieldRequest[];
 }
+
+export type CreateFormRequest = FormRequest & { clubId?: number };
+export type UpdateFormRequest = FormRequest;
+
+export interface SubmitFormRequest {
+  values: Record<string, string | number | boolean | string[] | null>;
+}
+
+/** Alias kept for backward compatibility */
+export type FormSubmissionRequest = SubmitFormRequest;

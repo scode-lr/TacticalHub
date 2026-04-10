@@ -1,8 +1,4 @@
-export enum FormStatus {
-  Draft = 'draft',
-  Active = 'active',
-  Closed = 'closed'
-}
+import { AppStatus } from "./app-status.model";
 
 export enum FormAction {
   None = 'none',
@@ -19,10 +15,6 @@ export enum FormFieldType {
   Checkbox = 'checkbox'
 }
 
-export enum FormSubmissionStatus {
-  Draft = 'draft',
-  Submitted = 'submitted'
-}
 
 export interface Form {
   id: number;
@@ -31,7 +23,7 @@ export interface Form {
   clubId: number;
   fromDate?: string;
   toDate?: string;
-  status: FormStatus;
+  status: AppStatus;
   action: FormAction;
   createdBy: number;
   createdAt: string;
@@ -57,7 +49,7 @@ export interface FormSubmission {
   id: number;
   formId: number;
   userId: number;
-  status: FormSubmissionStatus;
+  status: AppStatus;
   submittedAt?: string;
   createdAt: string;
   values?: FormSubmissionValue[];

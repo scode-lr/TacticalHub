@@ -155,6 +155,7 @@ export class SettingsFormDetailPage implements OnInit {
     if (!clubId) return;
 
     const value = this.form.getRawValue();
+    console.log('Form Value', value);
     const request: CreateFormRequest = {
       clubId,
       name: value.name,
@@ -169,7 +170,7 @@ export class SettingsFormDetailPage implements OnInit {
         label: f.label,
         description: f.description || null,
         type: f.type,
-        isRequired: f.isRequired ?? false,
+        isRequired: f.required ?? false,
         maxLength: f.maxLength ?? null,
         order: index + 1,
         options: f.options?.length ? f.options : null,
