@@ -347,6 +347,91 @@ export const sharedTranslations = {
       }
     }
   },
+  forms: {
+    list: {
+      title: 'Forms',
+      description: 'Fill in the available forms for your club',
+      empty: 'No forms available',
+      emptyDescription: 'There are no active forms at this time. Check back later.'
+    },
+    submit: {
+      success: 'Form submitted successfully!'
+    },
+    status: {
+      draft: 'Draft',
+      active: 'Active',
+      closed: 'Closed'
+    },
+    actions: {
+      none: 'None',
+      register_user: 'Register user',
+      create_payment: 'Create payment',
+      trigger_workflow: 'Trigger workflow'
+    },
+    fieldTypes: {
+      text: 'Text',
+      number: 'Number',
+      date: 'Date',
+      select: 'Select',
+      checkbox: 'Checkbox'
+    },
+    submissionStatus: {
+      draft: 'Draft',
+      submitted: 'Submitted'
+    },
+    fields: {
+      name: 'Name',
+      namePlaceholder: 'Enter form name',
+      description: 'Description',
+      descriptionPlaceholder: 'Enter description (optional)',
+      fromDate: 'From date',
+      toDate: 'To date',
+      action: 'Action',
+      actionPlaceholder: 'Select action',
+      key: 'Field key',
+      keyPlaceholder: 'e.g. first_name',
+      label: 'Label',
+      labelPlaceholder: 'Enter field label',
+      type: 'Type',
+      order: 'Order',
+      maxLength: 'Max length',
+      isRequired: 'Required field'
+    },
+    admin: {
+      title: 'Form management',
+      createForm: 'Create form',
+      createFormTitle: 'Create new form',
+      createSuccess: 'Form created successfully!',
+      addFieldSuccess: 'Field added successfully!',
+      empty: 'No forms yet',
+      emptyDescription: 'Create your first form to start collecting data.',
+      tabs: {
+        fields: 'Fields',
+        submissions: 'Submissions'
+      },
+      fields: {
+        title: 'Form fields',
+        add: 'Add field',
+        addTitle: 'Add new field',
+        empty: 'No fields yet',
+        emptyDescription: 'Add fields to define what data to collect.',
+        required: 'Required'
+      },
+      submissions: {
+        title: 'Submissions',
+        empty: 'No submissions yet',
+        emptyDescription: 'Submissions will appear here once users fill in the form.',
+        userId: 'User',
+        total: 'Total'
+      }
+    },
+    errors: {
+      loadError: 'Could not load forms. Please try again.',
+      submitError: 'Could not submit form. Please try again.',
+      createError: 'Could not create form. Please try again.',
+      addFieldError: 'Could not add field. Please try again.'
+    }
+  },
   modals: {
     player: {
       title: 'Add Player',

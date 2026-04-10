@@ -1,0 +1,219 @@
+<div class="page-container admin-form-detail-page">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  } @else if (error()) {
+    <div class="empty-state">
+      <ion-icon name="alert-circle-outline" class="empty-icon"></ion-icon>
+      <p class="empty-description">{{ error()! | translate }}</p>
+    </div>
+  } @else if (form(); as formData) {
+    <div class="section-header">
+      <div class="header-row">
+        <div>
+          <h1 class="section-title">{{ formData.name }}</h1>
+          @if (formData.description) {
+            <p class="section-description">{{ formData.description }}</p>
+          }
+        </div>
+        <span class="form-status-badge" [class.active]="formData.status === 'active'">
+          {{ ('forms.status.' + formData.status) | translate }}
+        </span>
+      </div>
+      <div class="form-meta">
+        <span class="meta-item">
+          <ion-icon name="flash-outline"></ion-icon>
+          {{ ('forms.actions.' + formData.action) | translate }}
+        </span>
+        @if (formData.fromDate) {
+          <span class="meta-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            {{ formData.fromDate | date:'dd/MM/yyyy' }}
+          </span>
+        }
+        @if (formData.toDate) {
+          <span class="meta-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            {{ formData.toDate | date:'dd/MM/yyyy' }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn" [class.active]="activeTab() === 'fields'" (click)="setTab('fields')">
+        <ion-icon name="list-outline"></ion-icon>
+        {{ 'forms.admin.tabs.fields' | translate }}
+      </button>
+      <button class="tab-btn" [class.active]="activeTab() === 'submissions'" (click)="setTab('submissions')">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        {{ 'forms.admin.tabs.submissions' | translate }}
+      </button>
+    </div>
+
+    @if (activeTab() === 'fields') {
+      <div class="tab-content">
+        <div class="tab-header">
+          <h2 class="tab-title">{{ 'forms.admin.fields.title' | translate }}</h2>
+          <ion-button (click)="openAddFieldModal()">
+            <ion-icon slot="start" name="add-outline"></ion-icon>
+            {{ 'forms.admin.fields.add' | translate }}
+          </ion-button>
+        </div>
+
+        @if (getSortedFields().length === 0) {
+          <div class="empty-state">
+            <ion-icon name="list-outline" class="empty-icon"></ion-icon>
+            <h2 class="empty-title">{{ 'forms.admin.fields.empty' | translate }}</h2>
+            <p class="empty-description">{{ 'forms.admin.fields.emptyDescription' | translate }}</p>
+          </div>
+        } @else {
+          <div class="fields-list">
+            @for (field of getSortedFields(); track field.id) {
+              <div class="field-item">
+                <span class="field-order">{{ field.order }}</span>
+                <div class="field-info">
+                  <div class="field-header">
+                    <span class="field-label">{{ field.label }}</span>
+                    <span class="field-key">{{ field.key }}</span>
+                  </div>
+                  <div class="field-meta">
+                    <span class="field-type-badge">{{ ('forms.fieldTypes.' + field.type) | translate }}</span>
+                    @if (field.isRequired) {
+                      <span class="required-badge">{{ 'forms.admin.fields.required' | translate }}</span>
+                    }
+                    @if (field.maxLength) {
+                      <span class="meta-badge">max: {{ field.maxLength }}</span>
+                    }
+                  </div>
+                  @if (field.description) {
+                    <p class="field-description">{{ field.description }}</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    @if (activeTab() === 'submissions') {
+      <div class="tab-content">
+        <div class="tab-header">
+          <h2 class="tab-title">{{ 'forms.admin.submissions.title' | translate }}</h2>
+        </div>
+
+        @if (isLoadingSubmissions()) {
+          <div class="loading-state">
+            <ion-spinner name="crescent"></ion-spinner>
+            <p>{{ 'common.loading' | translate }}</p>
+          </div>
+        } @else if (!submissions() || submissions()!.items.length === 0) {
+          <div class="empty-state">
+            <ion-icon name="checkmark-circle-outline" class="empty-icon"></ion-icon>
+            <h2 class="empty-title">{{ 'forms.admin.submissions.empty' | translate }}</h2>
+            <p class="empty-description">{{ 'forms.admin.submissions.emptyDescription' | translate }}</p>
+          </div>
+        } @else {
+          <div class="submissions-list">
+            @for (submission of submissions()!.items; track submission.id) {
+              <div class="submission-item">
+                <div class="submission-header">
+                  <span class="submission-id">#{{ submission.id }}</span>
+                  <span class="submission-status" [class.submitted]="submission.status === 'submitted'">
+                    {{ ('forms.submissionStatus.' + submission.status) | translate }}
+                  </span>
+                </div>
+                <div class="submission-meta">
+                  <span class="meta-item">
+                    <ion-icon name="person-outline"></ion-icon>
+                    {{ 'forms.admin.submissions.userId' | translate }}: {{ submission.userId }}
+                  </span>
+                  @if (submission.submittedAt) {
+                    <span class="meta-item">
+                      <ion-icon name="time-outline"></ion-icon>
+                      {{ submission.submittedAt | date:'dd/MM/yyyy HH:mm' }}
+                    </span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+          <p class="pagination-info">
+            {{ 'forms.admin.submissions.total' | translate }}: {{ submissions()!.total }}
+          </p>
+        }
+      </div>
+    }
+  }
+</div>
+
+<ion-modal [isOpen]="showAddFieldModal()" (didDismiss)="closeAddFieldModal()">
+  <ng-template>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>{{ 'forms.admin.fields.addTitle' | translate }}</h2>
+        <ion-button fill="clear" (click)="closeAddFieldModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <form [formGroup]="addFieldForm" (ngSubmit)="onAddField()" class="modal-form">
+        <div class="field-group">
+          <label class="field-label">
+            {{ 'forms.fields.key' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <ion-input formControlName="key" type="text" fill="outline" [placeholder]="'forms.fields.keyPlaceholder' | translate"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">
+            {{ 'forms.fields.label' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <ion-input formControlName="label" type="text" fill="outline" [placeholder]="'forms.fields.labelPlaceholder' | translate"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">{{ 'forms.fields.description' | translate }}</label>
+          <ion-input formControlName="description" type="text" fill="outline" [placeholder]="'forms.fields.descriptionPlaceholder' | translate"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">
+            {{ 'forms.fields.type' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <ion-select formControlName="type" fill="outline">
+            @for (type of fieldTypes; track type) {
+              <ion-select-option [value]="type">{{ ('forms.fieldTypes.' + type) | translate }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">{{ 'forms.fields.order' | translate }}</label>
+          <ion-input formControlName="order" type="number" fill="outline"></ion-input>
+        </div>
+        <div class="field-group">
+          <label class="field-label">{{ 'forms.fields.maxLength' | translate }}</label>
+          <ion-input formControlName="maxLength" type="number" fill="outline"></ion-input>
+        </div>
+        <div class="field-group checkbox-group">
+          <ion-checkbox formControlName="isRequired" labelPlacement="end">
+            {{ 'forms.fields.isRequired' | translate }}
+          </ion-checkbox>
+        </div>
+        <div class="modal-actions">
+          <ion-button fill="outline" expand="block" (click)="closeAddFieldModal()" [disabled]="isAddingField()">
+            {{ 'common.cancel' | translate }}
+          </ion-button>
+          <ion-button type="submit" expand="block" [disabled]="isAddingField()">
+            @if (isAddingField()) {
+              <ion-spinner name="crescent" slot="start"></ion-spinner>
+            }
+            {{ 'common.save' | translate }}
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</ion-modal>

@@ -1,0 +1,93 @@
+.form-submit-page {
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 0;
+    color: var(--text-secondary, #6b7280);
+  }
+
+  .form-content {
+    max-width: 640px;
+
+    .fields-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .field-label {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--text-primary, #111827);
+
+        .required-mark {
+          color: var(--ion-color-danger, #eb445a);
+          margin-left: 0.25rem;
+        }
+      }
+
+      .field-description {
+        font-size: 0.8125rem;
+        color: var(--text-secondary, #6b7280);
+        margin: 0;
+      }
+
+      ion-input {
+        --border-radius: 10px;
+        --border-width: 1px;
+        --border-color: var(--border-light, #e5e7eb);
+        --background: var(--background-primary, #ffffff);
+        --color: var(--text-primary, #111827);
+        --placeholder-color: var(--text-light, #9ca3af);
+        --padding-start: 1rem;
+        --padding-end: 1rem;
+        --padding-top: 0.875rem;
+        --padding-bottom: 0.875rem;
+        font-size: 0.9375rem;
+      }
+
+      ion-checkbox {
+        --size: 20px;
+        font-size: 0.9375rem;
+        color: var(--text-primary, #111827);
+      }
+
+      .field-error {
+        font-size: 0.8125rem;
+        color: var(--ion-color-danger, #eb445a);
+        margin: 0;
+      }
+
+      &.invalid {
+        ion-input {
+          --border-color: var(--ion-color-danger, #eb445a);
+        }
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+
+      ion-button {
+        flex: 1;
+        --border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9375rem;
+      }
+
+      @media (max-width: 768px) {
+        flex-direction: column-reverse;
+      }
+    }
+  }
+}

@@ -345,6 +345,91 @@ export const sharedTranslations = {
       }
     }
   },
+  forms: {
+    list: {
+      title: 'Formularis',
+      description: 'Omple els formularis disponibles del teu club',
+      empty: 'No hi ha formularis disponibles',
+      emptyDescription: 'No hi ha formularis actius en aquest moment. Torna més tard.'
+    },
+    submit: {
+      success: 'Formulari enviat correctament!'
+    },
+    status: {
+      draft: 'Esborrany',
+      active: 'Actiu',
+      closed: 'Tancat'
+    },
+    actions: {
+      none: 'Cap',
+      register_user: 'Registrar usuari',
+      create_payment: 'Crear pagament',
+      trigger_workflow: 'Activar flux de treball'
+    },
+    fieldTypes: {
+      text: 'Text',
+      number: 'Número',
+      date: 'Data',
+      select: 'Selecció',
+      checkbox: 'Casella'
+    },
+    submissionStatus: {
+      draft: 'Esborrany',
+      submitted: 'Enviat'
+    },
+    fields: {
+      name: 'Nom',
+      namePlaceholder: 'Introdueix el nom del formulari',
+      description: 'Descripció',
+      descriptionPlaceholder: 'Introdueix una descripció (opcional)',
+      fromDate: 'Data d\'inici',
+      toDate: 'Data de fi',
+      action: 'Acció',
+      actionPlaceholder: 'Seleccionar acció',
+      key: 'Clau del camp',
+      keyPlaceholder: 'p.ex. nom',
+      label: 'Etiqueta',
+      labelPlaceholder: 'Introdueix l\'etiqueta del camp',
+      type: 'Tipus',
+      order: 'Ordre',
+      maxLength: 'Longitud màxima',
+      isRequired: 'Camp obligatori'
+    },
+    admin: {
+      title: 'Gestió de formularis',
+      createForm: 'Crear formulari',
+      createFormTitle: 'Crear nou formulari',
+      createSuccess: 'Formulari creat correctament!',
+      addFieldSuccess: 'Camp afegit correctament!',
+      empty: 'No hi ha formularis encara',
+      emptyDescription: 'Crea el teu primer formulari per començar a recollir dades.',
+      tabs: {
+        fields: 'Camps',
+        submissions: 'Enviaments'
+      },
+      fields: {
+        title: 'Camps del formulari',
+        add: 'Afegir camp',
+        addTitle: 'Afegir nou camp',
+        empty: 'No hi ha camps encara',
+        emptyDescription: 'Afegeix camps per definir quines dades recollir.',
+        required: 'Obligatori'
+      },
+      submissions: {
+        title: 'Enviaments',
+        empty: 'No hi ha enviaments encara',
+        emptyDescription: 'Els enviaments apareixeran aquí quan els usuaris omplin el formulari.',
+        userId: 'Usuari',
+        total: 'Total'
+      }
+    },
+    errors: {
+      loadError: 'No s\'han pogut carregar els formularis. Torna-ho a intentar.',
+      submitError: 'No s\'ha pogut enviar el formulari. Torna-ho a intentar.',
+      createError: 'No s\'ha pogut crear el formulari. Torna-ho a intentar.',
+      addFieldError: 'No s\'ha pogut afegir el camp. Torna-ho a intentar.'
+    }
+  },
   modals: {
     player: {
       title: 'Afegir Jugador',
@@ -399,7 +484,7 @@ export const sharedTranslations = {
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
       partners: 'Els nostres socis i patrocinadors del club',
-      forms: 'Omple i envia formularis del club'
+      forms: 'Omple els formularis del club'
     },
     home: {
       welcome: 'Benvingut al club!',

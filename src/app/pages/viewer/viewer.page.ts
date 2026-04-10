@@ -40,6 +40,9 @@ export class ViewerPage implements OnInit {
       { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' },
       // { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
+      { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' },
+      { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' }
       // { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
       // { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
     ]
@@ -49,6 +52,9 @@ export class ViewerPage implements OnInit {
   readonly backUrl = computed(() => {
     const {roleType, roleId} = this.navigationService.extractRoleDetails();
     if (this.isDetailPage()) {
+      if (this.router.url.includes('/forms')) {
+        return `app/${roleType}/${roleId}/forms`;
+      }
       if (this.router.url.includes('/forms')) {
         return `app/${roleType}/${roleId}/forms`;
       }
@@ -82,6 +88,7 @@ export class ViewerPage implements OnInit {
     const url = this.router.url;
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
+                     url.includes('/action/') ||
                      url.includes('/forms/') && url.split('/').length > 5 ||
                      url.includes('/teams/') && url.split('/').length > 5;
     this.isDetailPage.set(isDetail);
