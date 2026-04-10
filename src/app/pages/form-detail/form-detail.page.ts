@@ -10,13 +10,7 @@ import { FormService } from '@services/form.service';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { FormField } from '@core/models/form-field.model';
 import { FormDetail } from '@core/responses/form.response';
-import { BackButtonComponent } from '@components/index';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
-import { SelectModule } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import { BackButtonComponent, DynamicFormFieldsComponent } from '@components/index';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -29,12 +23,7 @@ import { ButtonModule } from 'primeng/button';
     ReactiveFormsModule,
     TranslatePipe,
     BackButtonComponent,
-    InputTextModule,
-    TextareaModule,
-    SelectModule,
-    DatePickerModule,
-    ToggleSwitchModule,
-    RadioButtonModule,
+    DynamicFormFieldsComponent,
     ButtonModule,
   ]
 })
@@ -77,16 +66,6 @@ export class FormDetailPage implements OnInit {
       group[field.key] = this.fb.control(defaultValue, validators);
     }
     this.dynamicForm = this.fb.group(group);
-  }
-
-  onFileChange(key: string, event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.dynamicForm.get(key)?.setValue(input.files?.[0] ?? null);
-  }
-
-  isFieldInvalid(key: string): boolean {
-    const ctrl = this.dynamicForm.get(key);
-    return !!(ctrl?.invalid && ctrl?.touched);
   }
 
   async onFormSubmit(): Promise<void> {

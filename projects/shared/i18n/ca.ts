@@ -326,7 +326,7 @@ export const sharedTranslations = {
         optionPlaceholder: 'Valor de l\'opció',
         types: {
           text: 'Text',
-          number: 'Nombre',
+          number: 'Numero',
           date: 'Data',
           datetime: 'Data i hora',
           email: 'Email',
@@ -336,6 +336,12 @@ export const sharedTranslations = {
           select: 'Selecció',
           file: 'Arxiu'
         }
+      },
+      preview: {
+        button: 'Previsualitza',
+        title: 'Previsualització del formulari',
+        notice: 'Això és una previsualització. L\'enviament està desactivat.',
+        noFields: 'Encara no s\'han afegit camps.'
       }
     }
   },
@@ -479,6 +485,9 @@ export const sharedTranslations = {
         commentsPlaceholder: 'Afegeix comentaris (opcional)',
         registerPlayerSuccess: 'Registre de jugador enviat amb èxit!',
         becomeMemberSuccess: 'Sol·licitud de membresía enviada amb èxit!',
+        success: {
+          submitMessage: 'El formulari s\'ha enviat correctament'
+        },
         errors: {
           required: 'Aquest camp és obligatori',
           email: 'Si us plau introdueix un correu electrònic vàlid',

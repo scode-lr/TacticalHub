@@ -338,6 +338,12 @@ export const sharedTranslations = {
           select: 'Selection',
           file: 'File'
         }
+      },
+      preview: {
+        button: 'Preview',
+        title: 'Form Preview',
+        notice: 'This is a preview. Submitting is disabled.',
+        noFields: 'No fields added yet.'
       }
     }
   },
@@ -481,6 +487,9 @@ export const sharedTranslations = {
         commentsPlaceholder: 'Add any comments (optional)',
         registerPlayerSuccess: 'Player registration submitted successfully!',
         becomeMemberSuccess: 'Membership application submitted successfully!',
+        success: {
+          submitMessage: 'The form has been submitted successfully'
+        },
         errors: {
           required: 'This field is required',
           email: 'Please enter a valid email address',

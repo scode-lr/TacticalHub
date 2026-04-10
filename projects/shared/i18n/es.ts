@@ -336,6 +336,12 @@ export const sharedTranslations = {
           select: 'Selección',
           file: 'Archivo'
         }
+      },
+      preview: {
+        button: 'Vista previa',
+        title: 'Vista previa del formulario',
+        notice: 'Esto es una vista previa. El envío está desactivado.',
+        noFields: 'Aún no se han añadido campos.'
       }
     }
   },
@@ -428,7 +434,12 @@ export const sharedTranslations = {
     },
     action: {
       noForms: 'No hay formularios disponibles',
-      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
+      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.',
+      form: {
+        success: {
+          submitMessage: 'El formulario se ha enviado correctamente'
+        }
+      }
     },
     information: {
       title: 'Información',
