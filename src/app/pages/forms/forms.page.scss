@@ -1,0 +1,119 @@
+.forms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+::ng-deep .p-dataview,
+::ng-deep .p-dataview-content {
+  background: transparent !important;
+}
+
+.skeleton-card {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+
+  .skeleton-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-light, #e5e7eb);
+  }
+
+  .skeleton-card-body {
+    padding: 1.5rem;
+  }
+
+  .skeleton-card-footer {
+    padding: 1rem 1.5rem;
+    background: var(--background-secondary, #f8f9fa);
+    border-top: 1px solid var(--border-light, #e5e7eb);
+  }
+
+  .skeleton-line {
+    height: 0.875rem;
+    width: 100%;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--background-tertiary, #e9ecef) 25%, var(--background-secondary, #f8f9fa) 50%, var(--background-tertiary, #e9ecef) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--short {
+      width: 65%;
+    }
+  }
+
+  .skeleton-title {
+    height: 1.125rem;
+    width: 60%;
+    border-radius: 8px;
+  }
+
+  .skeleton-subtitle {
+    height: 0.875rem;
+    width: 40%;
+    border-radius: 8px;
+  }
+
+  .skeleton-badge {
+    height: 1.5rem;
+    width: 5rem;
+    border-radius: 8px;
+    margin-bottom: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.empty-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ion-color-primary, #3880ff) 10%, transparent);
+  margin-bottom: 0.5rem;
+
+  ion-icon {
+    font-size: 2.25rem;
+    color: var(--ion-color-primary, #3880ff);
+  }
+}
+
+.empty-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+}
+
+.empty-description {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text-secondary, #6b7280);
+  max-width: 280px;
+}

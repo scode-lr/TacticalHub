@@ -1,0 +1,139 @@
+<div class="form-card">
+  <div class="form-card-header">
+    <div class="card-section-header">
+      <h2 class="card-section-title">{{ 'admin.settingsForms.section.fields' | translate }}</h2>
+      @if (fields().length > 0) {
+        <span class="fields-count-badge">{{ fields().length }}</span>
+      }
+    </div>
+  </div>
+
+  <div class="form-card-body fields-body">
+    @if (fields().length === 0) {
+      <div class="fields-empty">
+        <p>{{ 'admin.settingsForms.formFields.empty' | translate }}</p>
+        <button type="button" class="btn-add-field" (click)="addField()">
+          <ion-icon name="add-outline"></ion-icon>
+          {{ 'admin.settingsForms.formFields.add' | translate }}
+        </button>
+      </div>
+    }
+
+    @for (fieldCtrl of fields().controls; track $index; let i = $index) {
+      <div class="field-item" [formGroup]="asFormGroup(i)">
+        <div class="field-item-top">
+          <span class="field-order-badge">{{ i + 1 }}</span>
+          <div class="field-rows">
+            <div class="field-row">
+              <div class="field-mini-group">
+                <label class="field-mini-label" [for]="'fkey-' + i">
+                  {{ 'admin.settingsForms.formFields.key' | translate }}
+                  <span class="required-mark">*</span>
+                </label>
+                <input
+                  pInputText
+                  [id]="'fkey-' + i"
+                  type="text"
+                  [class.ng-invalid]="fieldHasError(i, 'key')"
+                  [class.ng-dirty]="fieldHasError(i, 'key')"
+                  formControlName="key"
+                  [placeholder]="'admin.settingsForms.formFields.key' | translate"
+                  pSize="small"
+                />
+              </div>
+              <div class="field-mini-group">
+                <label class="field-mini-label" [for]="'flabel-' + i">
+                  {{ 'admin.settingsForms.formFields.label' | translate }}
+                  <span class="required-mark">*</span>
+                </label>
+                <input
+                  pInputText
+                  [id]="'flabel-' + i"
+                  type="text"
+                  [class.ng-invalid]="fieldHasError(i, 'label')"
+                  [class.ng-dirty]="fieldHasError(i, 'label')"
+                  formControlName="label"
+                  [placeholder]="'admin.settingsForms.formFields.label' | translate"
+                  pSize="small"
+                />
+              </div>
+              <div class="field-mini-group field-mini-group--narrow">
+                <label class="field-mini-label" [for]="'ftype-' + i">
+                  {{ 'admin.settingsForms.formFields.type' | translate }}
+                </label>
+                <p-select
+                  [inputId]="'ftype-' + i"
+                  formControlName="type"
+                  [options]="fieldTypeItems"
+                  optionLabel="label"
+                  optionValue="value"
+                  [fluid]="true"
+                  size="small"
+                  appendTo="body"
+                />
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-mini-group field-mini-group--stretch">
+                <label class="field-mini-label" [for]="'fdesc-' + i">
+                  {{ 'admin.settingsForms.formFields.description' | translate }}
+                </label>
+                <input
+                  pInputText
+                  [id]="'fdesc-' + i"
+                  type="text"
+                  formControlName="description"
+                  [placeholder]="'admin.settingsForms.formFields.descriptionPlaceholder' | translate"
+                  pSize="small"
+                />
+              </div>
+              <div class="field-mini-group field-mini-group--toggle">
+                <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
+                <p-toggleswitch formControlName="required" />
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn-remove-field" (click)="removeField(i)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+        @if (hasOptions(i)) {
+          <div class="field-item-options">
+            <div class="options-header">
+              <span class="options-label">{{ 'admin.settingsForms.formFields.options' | translate }}</span>
+              <button type="button" class="btn-add-option" (click)="addOption(i)">
+                <ion-icon name="add-outline"></ion-icon>
+                {{ 'admin.settingsForms.formFields.addOption' | translate }}
+              </button>
+            </div>
+            @if (getOptionsArray(i).length === 0) {
+              <p class="options-empty">{{ 'admin.settingsForms.formFields.optionsEmpty' | translate }}</p>
+            }
+            @for (optCtrl of getOptionsArray(i).controls; track $index; let j = $index) {
+              <div class="option-row">
+                <span class="option-index">{{ j + 1 }}</span>
+                <input
+                  pInputText
+                  type="text"
+                  [formControl]="$any(optCtrl)"
+                  [placeholder]="'admin.settingsForms.formFields.optionPlaceholder' | translate"
+                  pSize="small"
+                />
+                <button type="button" class="btn-remove-option" (click)="removeOption(i, j)" [attr.aria-label]="'common.remove' | translate">
+                  <ion-icon name="close-outline"></ion-icon>
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    @if (fields().length > 0) {
+      <button type="button" class="btn-add-field" (click)="addField()">
+        <ion-icon name="add-outline"></ion-icon>
+        {{ 'admin.settingsForms.formFields.add' | translate }}
+      </button>
+    }
+  </div>
+</div>

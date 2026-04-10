@@ -1,8 +1,4 @@
-export enum RoleStatus {
-  Active = 'AC',
-  Pending = 'P',
-  Draft = 'D'
-}
+import { AppStatus } from './app-status.model';
 
 export enum RoleType {
   Admin = 1,
@@ -20,6 +16,6 @@ export interface Role {
   description?: string;
   teamName?: string;
   createdAt?: Date;
-  status?: RoleStatus;
+  status?: AppStatus;
   userId?: number;
 }

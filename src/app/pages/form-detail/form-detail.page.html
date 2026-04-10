@@ -1,0 +1,42 @@
+<div class="page-container">
+  <div class="section-header-with-back-button">
+    <app-back-button />
+    <h1 class="section-title">{{ pageTitle() | translate }}</h1>
+  </div>
+
+  @if (loading()) {
+    <div class="form-skeleton">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-description"></div>
+      <div class="skeleton-field"></div>
+    </div>
+  }
+
+  @if (!loading()) {
+    <div class="form-wrapper">
+      @if (formDetail(); as detail) {
+        <div class="form-header">
+          @if (detail.description) {
+            <p class="form-description">{{ detail.description }}</p>
+          }
+        </div>
+      }
+
+      <form [formGroup]="dynamicForm" (ngSubmit)="onFormSubmit()" class="dynamic-form" novalidate>
+        <app-dynamic-form-fields
+          [fields]="formFields()"
+          [form]="dynamicForm"
+        />
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="onFormCancel()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+            {{ 'common.submit' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

@@ -5,6 +5,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
 import { Animation, AnimationController } from '@ionic/angular/standalone';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 import { routes } from './app.routes';
 
@@ -38,5 +40,13 @@ export const appConfig: ApplicationConfig = {
      * is cleared and the auth guard redirects to sign-in.
      */
     provideAppInitializer(() => inject(AuthService).initializeAuth()),
+    providePrimeNG({
+            theme: {
+                preset: Aura,
+                options: {
+                    darkModeSelector: false
+                }
+            }
+        })
   ],
 };

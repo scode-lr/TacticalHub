@@ -1,4 +1,22 @@
 export const sharedTranslations = {
+  primeng: {
+    apply: 'Aplicar',
+    clear: 'Limpiar',
+    contains: 'Contiene',
+    notContains: 'No contiene',
+    startsWith: 'Empieza con',
+    endsWith: 'Termina con',
+    equals: 'Igual a',
+    notEquals: 'Diferente de',
+    noFilter: 'Sin filtro',
+    matchAll: 'Cumplir todo',
+    matchAny: 'Cumplir alguno',
+    addRule: 'Agregar regla',
+    removeRule: 'Quitar regla',
+    choose: 'Elegir',
+    upload: 'Subir',
+    cancel: 'Cancelar'
+  },
   welcome: {
     createAccount: 'Crear cuenta',
     signIn: 'Iniciar sesión',
@@ -50,7 +68,8 @@ export const sharedTranslations = {
     no: 'No',
     addItem: 'Agregar elemento',
     addNewItem: 'Agregar nuevo elemento',
-    selectSeason: 'Seleccionar Temporada'
+    selectSeason: 'Seleccionar Temporada',
+    selectOption: 'Seleccionar una opción'
   },
   fieldLabels: {
     type: 'Tipo',
@@ -187,7 +206,8 @@ export const sharedTranslations = {
       club: 'Club',
       matches: 'Partidos',
       users: 'Usuarios',
-      forms: 'Formularios'
+      forms: 'Formularios',
+      settingsForms: 'Configuración de formularios'
     },
     description: {
       home: 'Panel de administración',
@@ -200,10 +220,129 @@ export const sharedTranslations = {
       club: 'Editar información del club',
       matches: 'Gestionar calendarios de partidos',
       users: 'Gestión de usuarios y permisos',
-      forms: 'Gestionar formularios personalizados'
+      forms: 'Gestionar formularios',
+      settingsForms: 'Configurar ajustes de formularios'
     },
     parameters: {
       title: 'Parámetros',
+    },
+    forms: {
+      selected: 'seleccionados',
+      export: 'Exportar',
+      assign: 'Asignar',
+      clearFilters: 'Limpiar',
+      searchPlaceholder: 'Buscar formularios...',
+      filterAny: 'Cualquiera',
+      openForm: 'Abrir formulario',
+      noForms: 'Sin formularios',
+      noFormsDescription: 'Aún no se han creado formularios para este club.',
+      paginatorReport: 'Mostrando {first} a {last} de {totalRecords} entradas',
+      submissions: 'Envíos',
+      allForms: 'Todos los formularios',
+      columns: {
+        id: 'ID',
+        name: 'Nombre',
+        action: 'Acción',
+        status: 'Estado',
+        submissions: 'Envíos',
+        createdAt: 'Creado',
+        fromDate: 'Desde',
+        toDate: 'Hasta'
+      },
+      submissionTable: {
+        columns: {
+          id: 'ID',
+          userId: 'ID Usuario',
+          userName: 'Usuario',
+          submittedAt: 'Enviado',
+          createdAt: 'Creado'
+        },
+        noSubmissions: 'Sin envíos aún',
+        noSubmissionsDescription: 'Aún no se han recibido envíos para este formulario.',
+        searchPlaceholder: 'Buscar por usuario...'
+      },
+      submissionDetail: {
+        title: 'Detalle del envío',
+        sectionInfo: 'Información',
+        sectionValues: 'Valores enviados',
+        formName: 'Formulario',
+        userName: 'Usuario',
+        submittedAt: 'Enviado el'
+      }
+    },
+    settingsForms: {
+      addForm: 'Añadir Formulario',
+      newForm: 'Nuevo Formulario',
+      editForm: 'Editar Formulario',
+      noForms: 'Sin formularios',
+      noFormsDescription: 'Crea tu primer formulario para comenzar',
+      period: 'Período',
+      periodAlways: 'Siempre',
+      action: 'Acción',
+      updated: 'Actualizado',
+      status: {
+        AC: 'Activo',
+        I: 'Inactivo',
+        P: 'Pendiente',
+        D: 'Borrador',
+        AR: 'Archivado'
+      },
+      actions: {
+        simple: 'Simple',
+        'register-player': 'Registrar jugador',
+        'become-member': 'Hacerse socio'
+      },
+      fields: {
+        name: 'Nombre',
+        namePlaceholder: 'Introduce el nombre del formulario',
+        nameRequired: 'El nombre es obligatorio',
+        description: 'Descripción',
+        descriptionPlaceholder: 'Introduce una descripción',
+        fromDate: 'Fecha de inicio',
+        toDate: 'Fecha de fin',
+        status: 'Estado',
+        action: 'Acción',
+        email: 'Email',
+        emailPlaceholder: 'Introduce un email para enviar las respuestas',
+        emailInvalid: 'Por favor, introduce un email válido'
+      },
+      section: {
+        general: 'General',
+        fields: 'Campos del formulario'
+      },
+      formFields: {
+        add: 'Añadir campo',
+        empty: 'Sin campos. Añade el primero para definir la estructura del formulario.',
+        key: 'Clave',
+        label: 'Etiqueta',
+        type: 'Tipo',
+        required: 'Obligatorio',
+        description: 'Descripción',
+        descriptionPlaceholder: 'Descripción opcional',
+        length: 'Long. máx.',
+        options: 'Opciones',
+        addOption: 'Añadir opción',
+        optionsEmpty: 'Sin opciones. Añade al menos una.',
+        optionPlaceholder: 'Valor de opción',
+        types: {
+          text: 'Texto',
+          number: 'Número',
+          date: 'Fecha',
+          datetime: 'Fecha y hora',
+          email: 'Email',
+          phone: 'Teléfono',
+          textarea: 'Área de texto',
+          boolean: 'Checkbox',
+          select: 'Selección',
+          file: 'Archivo'
+        }
+      },
+      preview: {
+        button: 'Vista previa',
+        title: 'Vista previa del formulario',
+        notice: 'Esto es una vista previa. El envío está desactivado.',
+        noFields: 'Aún no se han añadido campos.'
+      }
     }
   },
   forms: {
@@ -376,6 +515,15 @@ export const sharedTranslations = {
         event: 'Evento',
         announcement: 'Anuncio',
         achievement: 'Logro'
+      }
+    },
+    action: {
+      noForms: 'No hay formularios disponibles',
+      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.',
+      form: {
+        success: {
+          submitMessage: 'El formulario se ha enviado correctamente'
+        }
       }
     },
     information: {

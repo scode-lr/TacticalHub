@@ -278,7 +278,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
         const boundRole = await this.rolesService.bindRole({
           roleId: role,
           clubId: this.selectedClubId(),
-          teamSeasonId: this.selectedTeam()
+          teamSeasonId: this.selectedTeam() 
         });
         console.log('Bound Role:', boundRole);
         if(!boundRole){

@@ -1,11 +1,11 @@
 import { translationsEn, translationsEs, translationsCa } from './i18n';
 
 export const PROJECT_CONFIG = {
-  name: 'Voltrega CF',
+  name: 'Voltregà CF',
   taglineKey: 'app.tagline',
   appId: 'com.voltregacf.hub',
-  clubId: 2,
-  private: true,
+  clubId: 1,
+  private: true, 
   translations: {
     en: translationsEn,
     es: translationsEs,

@@ -71,6 +71,20 @@ export const adminRoutes: Routes = [
       {
         path: 'forms/:formId',
         loadComponent: () => import('../forms/admin-form-detail/admin-form-detail.page').then(m => m.AdminFormDetailPage)
+        path: 'forms-submissions',
+        loadComponent: () => import('../forms-submissions/forms-submissions.page').then(m => m.FormsSubmissionsPage)
+      },
+      {
+        path: 'forms-submissions/:idSubmision',
+        loadComponent: () => import('../forms-submissions/forms-submission-detail/forms-submission-detail.page').then(m => m.FormsSubmissionDetailPage)
+      },
+      {
+        path: 'settings-forms',
+        loadComponent: () => import('../settings-forms/settings-forms.page').then(m => m.SettingsFormsPage)
+      },
+      {
+        path: 'settings-forms/:formId',
+        loadComponent: () => import('../settings-forms/settings-form-detail/settings-form-detail.page').then(m => m.SettingsFormDetailPage)
       }
     ]
   }

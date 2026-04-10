@@ -1,4 +1,22 @@
 export const sharedTranslations = {
+  primeng: {
+    apply: 'Apply',
+    clear: 'Clear',
+    contains: 'Contains',
+    notContains: 'Not contains',
+    startsWith: 'Starts with',
+    endsWith: 'Ends with',
+    equals: 'Equals',
+    notEquals: 'Not equals',
+    noFilter: 'No filter',
+    matchAll: 'Match all',
+    matchAny: 'Match any',
+    addRule: 'Add rule',
+    removeRule: 'Remove rule',
+    choose: 'Choose',
+    upload: 'Upload',
+    cancel: 'Cancel'
+  },
   welcome: {
     createAccount: 'Create account',
     signIn: 'Sign in',
@@ -50,7 +68,8 @@ export const sharedTranslations = {
     no: 'No',
     addItem: 'Add item',
     addNewItem: 'Add new item',
-    selectSeason: 'Select Season'
+    selectSeason: 'Select Season',
+    selectOption: 'Select an option'
   },
   fieldLabels: {
     type: 'Type',
@@ -189,7 +208,8 @@ export const sharedTranslations = {
       club: 'Club',
       matches: 'Matches',
       users: 'Users',
-      forms: 'Forms'
+      forms: 'Forms',
+      settingsForms: 'Form Settings'
     },
     description: {
       home: 'Admin dashboard',
@@ -202,10 +222,129 @@ export const sharedTranslations = {
       club: 'Edit club information',
       matches: 'Manage match schedules',
       users: 'User management and permissions',
-      forms: 'Manage custom forms'
+      forms: 'Manage forms',
+      settingsForms: 'Configure form settings'
     },
     parameters: {
       title: 'Parameters',
+    },
+    forms: {
+      selected: 'selected',
+      export: 'Export',
+      assign: 'Assign',
+      clearFilters: 'Clear',
+      searchPlaceholder: 'Search forms...',
+      filterAny: 'Any',
+      openForm: 'Open form',
+      noForms: 'No forms yet',
+      noFormsDescription: 'No forms have been created for this club yet.',
+      paginatorReport: 'Showing {first} to {last} of {totalRecords} entries',
+      submissions: 'Submissions',
+      allForms: 'All forms',
+      columns: {
+        id: 'ID',
+        name: 'Name',
+        action: 'Action',
+        status: 'Status',
+        submissions: 'Submissions',
+        createdAt: 'Created',
+        fromDate: 'From',
+        toDate: 'To'
+      },
+      submissionTable: {
+        columns: {
+          id: 'ID',
+          userId: 'User ID',
+          userName: 'User',
+          submittedAt: 'Submitted',
+          createdAt: 'Created'
+        },
+        noSubmissions: 'No submissions yet',
+        noSubmissionsDescription: 'No submissions have been received for this form yet.',
+        searchPlaceholder: 'Search by user...'
+      },
+      submissionDetail: {
+        title: 'Submission Detail',
+        sectionInfo: 'Information',
+        sectionValues: 'Submitted values',
+        formName: 'Form',
+        userName: 'User',
+        submittedAt: 'Submitted at'
+      }
+    },
+    settingsForms: {
+      addForm: 'Add Form',
+      newForm: 'New Form',
+      editForm: 'Edit Form',
+      noForms: 'No forms yet',
+      noFormsDescription: 'Create your first form to get started',
+      period: 'Period',
+      periodAlways: 'Always',
+      action: 'Action',
+      updated: 'Updated',
+      status: {
+        AC: 'Active',
+        I: 'Inactive',
+        P: 'Pending',
+        D: 'Draft',
+        AR: 'Archived'
+      },
+      actions: {
+        simple: 'Simple',
+        'register-player': 'Register player',
+        'become-member': 'Become member'
+      },
+      fields: {
+        name: 'Name',
+        namePlaceholder: 'Enter form name',
+        nameRequired: 'Name is required',
+        description: 'Description',
+        descriptionPlaceholder: 'Enter a description',
+        fromDate: 'Start Date',
+        toDate: 'End Date',
+        status: 'Status',
+        action: 'Action',
+        email: 'Email',
+        emailPlaceholder: 'Enter an email to send the submissions',
+        emailInvalid: 'Please enter a valid email address'
+      },
+      section: {
+        general: 'General',
+        fields: 'Form Fields'
+      },
+      formFields: {
+        add: 'Add Field',
+        empty: 'No fields yet. Add your first field to define the form structure.',
+        key: 'Key',
+        label: 'Label',
+        type: 'Type',
+        required: 'Required',
+        description: 'Description',
+        descriptionPlaceholder: 'Optional description',
+        length: 'Max length',
+        options: 'Options',
+        addOption: 'Add option',
+        optionsEmpty: 'No options yet. Add at least one.',
+        optionPlaceholder: 'Option value',
+        types: {
+          text: 'Text',
+          number: 'Number',
+          date: 'Date',
+          datetime: 'Date & Time',
+          email: 'Email',
+          phone: 'Phone',
+          textarea: 'Textarea',
+          boolean: 'Checkbox',
+          select: 'Selection',
+          file: 'File'
+        }
+      },
+      preview: {
+        button: 'Preview',
+        title: 'Form Preview',
+        notice: 'This is a preview. Submitting is disabled.',
+        noFields: 'No fields added yet.'
+      }
     }
   },
   forms: {
@@ -347,7 +486,7 @@ export const sharedTranslations = {
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
       partners: 'Our club partners and sponsors',
-      forms: 'Fill in club forms'
+      forms: 'Fill in and submit club forms'
     },
     home: {
       welcome: 'Welcome to the club!',
@@ -433,6 +572,9 @@ export const sharedTranslations = {
         commentsPlaceholder: 'Add any comments (optional)',
         registerPlayerSuccess: 'Player registration submitted successfully!',
         becomeMemberSuccess: 'Membership application submitted successfully!',
+        success: {
+          submitMessage: 'The form has been submitted successfully'
+        },
         errors: {
           required: 'This field is required',
           email: 'Please enter a valid email address',
@@ -441,7 +583,9 @@ export const sharedTranslations = {
           maxLength: 'Maximum {max} characters allowed',
           submitError: 'An error occurred. Please try again.'
         }
-      }
+      },
+      noForms: 'No forms available',
+      noFormsDescription: 'There are no active forms at this time. Check back later.'
     },
     information: {
       title: 'Information',

@@ -2,10 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { Club } from '@core/models/club.model';
 import { StorageService } from './storage.service';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
-import { mockClub } from '../../../mocks/user.mock';
 import { environment } from '@environment';
 import { ApiResponse, ApiService } from './api.service';
 import { firstValueFrom, map } from 'rxjs';
+import { RolesService } from './roles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ import { firstValueFrom, map } from 'rxjs';
 export class ClubService {
   private readonly storageService = inject(StorageService);
   private readonly apiService = inject(ApiService);
+  private readonly roleService = inject(RolesService);
 
   async fetchClubByCode(clubCode: string): Promise<Club | null> {
     return await firstValueFrom(this.apiService.get<ApiResponse<Club>>(`/clubs/code/${clubCode}`).pipe(
@@ -32,6 +33,11 @@ export class ClubService {
 
   getStoredClub(): Club | null {
     return this.storageService.get<Club>(STORAGE_KEYS.CLUB_INFO);
+  }
+
+  getCurrentClubId(): number | null {
+    const currentRole = this.roleService.getCurrentRole();
+    return currentRole ? currentRole.clubId : null;
   }
 
   getInternalClubId(): number | null {

@@ -1,0 +1,141 @@
+<div class="page-container">
+  <div class="section-header-with-back-button">
+    <app-back-button />
+    <h1 class="section-title">{{ pageTitle() | translate }}</h1>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"></div>
+  }
+
+  @if (!isLoading()) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="detail-form">
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <h2 class="card-section-title">{{ 'admin.settingsForms.section.general' | translate }}</h2>
+      </div>
+      <div class="form-card-body">
+
+        <p-iftalabel>
+          <input
+            pInputText
+            id="name"
+            formControlName="name"
+            [invalid]="ctrl.name.invalid && ctrl.name.touched"
+            [placeholder]="'admin.settingsForms.fields.namePlaceholder' | translate"
+          />
+          <label for="name">{{ 'admin.settingsForms.fields.name' | translate }} <span class="required-mark">*</span></label>
+        </p-iftalabel>
+        @if (ctrl.name.invalid && ctrl.name.touched) {
+          <small class="p-error">{{ 'admin.settingsForms.fields.nameRequired' | translate }}</small>
+        }
+
+        <p-iftalabel>
+          <textarea
+            pTextarea
+            id="description"
+            formControlName="description"
+            rows="3"
+            [placeholder]="'admin.settingsForms.fields.descriptionPlaceholder' | translate"
+          ></textarea>
+          <label for="description">{{ 'admin.settingsForms.fields.description' | translate }}</label>
+        </p-iftalabel>
+
+        <div class="field-row">
+          <p-iftalabel>
+            <p-datepicker
+              inputId="fromDate"
+              formControlName="fromDate"
+              dateFormat="dd/mm/yy"
+              [fluid]="true"
+              [showIcon]="true"
+              [invalid]="ctrl.fromDate.invalid && ctrl.fromDate.touched"
+              appendTo="body"
+            />
+            <label for="fromDate">{{ 'admin.settingsForms.fields.fromDate' | translate }}</label>
+          </p-iftalabel>
+          <p-iftalabel>
+            <p-datepicker
+              inputId="toDate"
+              formControlName="toDate"
+              dateFormat="dd/mm/yy"
+              [fluid]="true"
+              [showIcon]="true"
+              [invalid]="ctrl.toDate.invalid && ctrl.toDate.touched"
+              appendTo="body"
+            />
+            <label for="toDate">{{ 'admin.settingsForms.fields.toDate' | translate }}</label>
+          </p-iftalabel>
+        </div>
+
+        <div class="field-row">
+          <p-iftalabel>
+            <p-select
+              inputId="status"
+              formControlName="status"
+              [options]="statusItems"
+              optionLabel="label"
+              optionValue="value"
+              [fluid]="true"
+              appendTo="body"
+            />
+            <label for="status">{{ 'admin.settingsForms.fields.status' | translate }} <span class="required-mark">*</span></label>
+          </p-iftalabel>
+          <p-iftalabel>
+            <p-select
+              inputId="action"
+              formControlName="action"
+              [options]="actionItems"
+              optionLabel="label"
+              optionValue="value"
+              [fluid]="true"
+              [invalid]="ctrl.action.invalid && ctrl.action.touched"
+              appendTo="body"
+            />
+            <label for="action">{{ 'admin.settingsForms.fields.action' | translate }} <span class="required-mark">*</span></label>
+          </p-iftalabel>
+        </div>
+
+        <p-iftalabel>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            formControlName="email"
+            [invalid]="ctrl.email.invalid && ctrl.email.touched"
+            [placeholder]="'admin.settingsForms.fields.emailPlaceholder' | translate"
+          />
+          <label for="email">{{ 'admin.settingsForms.fields.email' | translate }}</label>
+        </p-iftalabel>
+        @if (ctrl.email.invalid && ctrl.email.touched) {
+          <small class="p-error">{{ 'admin.settingsForms.fields.emailInvalid' | translate }}</small>
+        }
+
+      </div>
+    </div>
+
+    <app-settings-form-fields [fields]="fieldsArray" />
+
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" (click)="goBack()">
+        {{ 'common.cancel' | translate }}
+      </button>
+      <button type="button" class="btn-secondary" (click)="openPreview()">
+        {{ 'admin.settingsForms.preview.button' | translate }}
+      </button>
+      <button type="submit" class="btn-primary" [disabled]="isSaving()">
+        {{ 'common.save' | translate }}
+      </button>
+    </div>
+
+  </form>
+
+  <app-form-preview-modal
+    [isOpen]="previewOpen()"
+    [fields]="previewFields"
+    [formName]="form.get('name')?.value"
+    (didDismiss)="previewOpen.set(false)"
+  />
+  }
+</div>

@@ -1,0 +1,1 @@
+var n=(function(r){return r.Unread="unread",r.Read="read",r.Archived="archived",r})(n||{}),o=(function(r){return r.User="user",r.System="system",r.Admin="admin",r.Coach="coach",r.Team="team",r})(o||{}),c=(function(r){return r.Low="low",r.Normal="normal",r.High="high",r.Urgent="urgent",r})(c||{});export{n as a,o as b,c};
