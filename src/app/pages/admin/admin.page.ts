@@ -36,7 +36,7 @@ export class AdminPage implements OnInit {
     items: [
       { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
       // { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
-      // { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
+      { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
       { id: 'forms-submissions', label: 'admin.menu.forms', icon: 'document-text-outline', route: 'forms-submissions' },
       { id: 'settings-forms', label: 'admin.menu.settingsForms', icon: 'settings-outline', route: 'settings-forms' },
       // { id: 'params', label: 'admin.menu.params', icon: 'settings-outline', route: 'params' },

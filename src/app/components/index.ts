@@ -5,3 +5,4 @@ export { TeamJoinRequestsComponent } from './team-join-requests/team-join-reques
 export { ActionRequestsComponent } from './action-requests/action-requests.component';
 export { BackButtonComponent } from './back-button/back-button.component';
 export { FormSubmissionCardComponent } from './form-submission-card/form-submission-card.component';
+export { EmptyStateComponent } from './empty-state/empty-state.component';

@@ -7,6 +7,25 @@
 
   <app-action-requests></app-action-requests>
 
+  <!-- Loading state (initial load) -->
+  @if (isLoading() && notifications().length === 0) {
+    <div class="loading-state">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (hasError()) {
+    <div class="error-state">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>Could not load notifications. Pull down to retry.</p>
+    </div>
+  }
+
+  @if (!isLoading() && !hasError() && notifications().length === 0) {
+    <app-empty-state />
+  }
+
   <div class="notifications-list">
     @for (notification of notifications(); track notification.id) {
       <div 
@@ -73,4 +92,16 @@
       </div>
     }
   </div>
+
+  <!-- Load more -->
+  @if (hasMore() && !isLoading()) {
+    <ion-button expand="block" fill="clear" (click)="loadMore()">
+      Load more
+    </ion-button>
+  }
+  @if (isLoading() && notifications().length > 0) {
+    <div class="loading-more">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  }
 </div>

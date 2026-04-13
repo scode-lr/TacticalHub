@@ -26,9 +26,11 @@ export class ActionRequestsComponent {
   readonly isModalOpen = signal<boolean>(false);
   
   readonly actionRequests = computed(() => 
-    this.notificationsService.getNotifications()
-      .filter(n => n.type === NotificationType.Action && n.status !== 'completed')
-  );
+    {
+      console.log('Computing action requests...', this.notificationsService.getNotifications());
+      return this.notificationsService.getNotifications()
+        .filter(n => n.type === NotificationType.Action && n.status !== 'completed');
+    });
 
   constructor() {
     addIcons({ chevronForwardOutline, closeOutline, linkOutline });

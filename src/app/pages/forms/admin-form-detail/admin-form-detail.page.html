@@ -18,7 +18,7 @@
             <p class="section-description">{{ formData.description }}</p>
           }
         </div>
-        <span class="form-status-badge" [class.active]="formData.status === 'active'">
+        <span class="form-status-badge" [class.active]="formData.status === AppStatus.Active">
           {{ ('forms.status.' + formData.status) | translate }}
         </span>
       </div>
@@ -122,7 +122,7 @@
               <div class="submission-item">
                 <div class="submission-header">
                   <span class="submission-id">#{{ submission.id }}</span>
-                  <span class="submission-status" [class.submitted]="submission.status === 'submitted'">
+                  <span class="submission-status" [class.submitted]="submission.status === AppStatus.Submitted">
                     {{ ('forms.submissionStatus.' + submission.status) | translate }}
                   </span>
                 </div>

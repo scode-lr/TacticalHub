@@ -69,7 +69,11 @@ export const sharedTranslations = {
     addItem: 'Afegir element',
     addNewItem: 'Afegir nou element',
     selectSeason: 'Seleccionar Temporada',
-    selectOption: 'Seleccionar una opció'
+    selectOption: 'Seleccionar una opció',
+    emptyState: {
+      title: 'Res per aquí encara',
+      message: 'No hi ha notificacions per mostrar.'
+    }
   },
   fieldLabels: {
     type: 'Tipus',
@@ -467,6 +471,7 @@ export const sharedTranslations = {
     subtitle: 'Accedeix a informació i serveis del club',
     menu: {
       home: 'Inici',
+      notifications: 'Notificacions',
       news: 'Notícies',
       action: 'Accions',
       information: 'Informació',
@@ -478,6 +483,7 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Benvingut al teu portal del club',
+      notifications: 'Les teves notificacions i alertes',
       news: 'Últimes actualitzacions i anuncis',
       action: 'Registra jugadors o fes-te soci',
       information: 'Informació i recursos del club',

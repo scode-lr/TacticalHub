@@ -17,6 +17,10 @@ export const viewerRoutes: Routes = [
         loadComponent: () => import('../home/home.page').then(m => m.HomePage)
       },
       {
+        path: 'notifications',
+        loadComponent: () => import('../notifications/notifications.page').then(m => m.NotificationsPage)
+      },
+      {
         path: 'news',
         loadComponent: () => import('../news/news/news.page').then(m => m.NewsPage)
       },

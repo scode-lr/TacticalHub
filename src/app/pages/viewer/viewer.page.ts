@@ -36,6 +36,7 @@ export class ViewerPage implements OnInit {
     role: RoleType.Viewer,
     items: [
       { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'notifications', label: 'viewer.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
       // { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' },
       // { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },

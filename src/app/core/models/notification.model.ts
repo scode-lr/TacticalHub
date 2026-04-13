@@ -2,7 +2,7 @@ import { User } from './user.model';
 
 export enum NotificationType {
   Info = 'info',
-  Action = 'action',
+  Action = 'submission_pending',
   Approval = 'approval'
 }
 
@@ -30,4 +30,24 @@ export interface Notification {
   user?: User;
   action?: NotificationAction;
   metadata?: any;
+}
+
+// --- API response types ---
+
+export interface ApiNotificationSummary {
+  id: number;
+  title: string;
+  type: string;          // 'submission_pending' | 'publication_request' | ...
+  priority: string;      // 'H' | 'M' | 'L'
+  status: string;        // 'P' | 'A' | 'R' | 'RS'
+  isRead: boolean;
+  readAt?: string;
+  createdAt: string;
+}
+
+export interface ApiGetNotificationsResponse {
+  items: ApiNotificationSummary[];
+  totalCount: number;
+  limit: number;
+  offset: number;
 }

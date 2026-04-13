@@ -69,7 +69,11 @@ export const sharedTranslations = {
     addItem: 'Add item',
     addNewItem: 'Add new item',
     selectSeason: 'Select Season',
-    selectOption: 'Select an option'
+    selectOption: 'Select an option',
+    emptyState: {
+      title: 'Nothing here yet',
+      message: 'There are no notifications to show.'
+    }
   },
   fieldLabels: {
     type: 'Type',
@@ -469,6 +473,7 @@ export const sharedTranslations = {
     subtitle: 'Access club information and services',
     menu: {
       home: 'Home',
+      notifications: 'Notifications',
       news: 'News',
       action: 'Actions',
       information: 'Information',
@@ -480,6 +485,7 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Welcome to your club portal',
+      notifications: 'Your notifications and alerts',
       news: 'Latest updates and announcements',
       action: 'Register players or become a member',
       information: 'Club information and resources',

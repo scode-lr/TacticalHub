@@ -8,6 +8,7 @@ import { NavigationService } from '@services/navigation.service';
 import { FormsService } from '@services/forms.service';
 import { SnackbarService } from '@services/snackbar.service';
 import { Form, FormField, FormFieldType, FormSubmission } from '@core/models/form.model';
+import { AppStatus } from '@core/models/app-status.model';
 import { AddFormFieldRequest } from '@core/requests/form.request';
 import { PaginatedResponse } from '@core/responses/api.response';
 
@@ -47,6 +48,7 @@ export class AdminFormDetailPage implements OnInit {
   readonly error = signal<string | null>(null);
 
   readonly FormFieldType = FormFieldType;
+  readonly AppStatus = AppStatus;
   readonly fieldTypes = Object.values(FormFieldType);
 
   readonly addFieldForm = this.fb.group({

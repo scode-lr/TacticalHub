@@ -69,7 +69,11 @@ export const sharedTranslations = {
     addItem: 'Agregar elemento',
     addNewItem: 'Agregar nuevo elemento',
     selectSeason: 'Seleccionar Temporada',
-    selectOption: 'Seleccionar una opción'
+    selectOption: 'Seleccionar una opción',
+    emptyState: {
+      title: 'Nada por aquí todavía',
+      message: 'No hay notificaciones que mostrar.'
+    }
   },
   fieldLabels: {
     type: 'Tipo',
@@ -467,6 +471,7 @@ export const sharedTranslations = {
     subtitle: 'Accede a información y servicios del club',
     menu: {
       home: 'Inicio',
+      notifications: 'Notificaciones',
       news: 'Noticias',
       action: 'Acciones',
       information: 'Información',
@@ -478,6 +483,7 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Bienvenido a tu portal del club',
+      notifications: 'Tus notificaciones y alertas',
       news: 'Últimas actualizaciones y anuncios',
       action: 'Registra jugadores o hazte socio',
       information: 'Información y recursos del club',

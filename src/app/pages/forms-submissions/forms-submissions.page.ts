@@ -122,7 +122,7 @@ export class FormsSubmissionsPage {
     try {
       const clubId = this.clubService.getCurrentClubId();
       if (clubId !== null) {
-        const result = await this.formService.getFormsByClubId(clubId, undefined, true, this.formsLimit(), this.formsOffset());
+        const result = await this.formService.getFormsByClubId(clubId, AppStatus.Active, true, this.formsLimit(), this.formsOffset());
         this.forms.set(result);
       }
     } catch (error) {
