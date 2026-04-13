@@ -9,34 +9,54 @@
       <div class="skeleton-title"></div>
       <div class="skeleton-description"></div>
       <div class="skeleton-field"></div>
+      <div class="skeleton-field"></div>
     </div>
   }
 
   @if (!loading()) {
-    <div class="form-wrapper">
-      @if (formDetail(); as detail) {
-        <div class="form-header">
-          @if (detail.description) {
-            <p class="form-description">{{ detail.description }}</p>
+    @if (formDetail(); as detail) {
+      @if (detail.description) {
+        <p class="form-description">{{ detail.description }}</p>
+      }
+    }
+
+    <!-- Submissions view -->
+    @if (viewMode() === 'submissions') {
+      <div class="submissions-section">
+        <div class="submissions-header">
+          <h2 class="submissions-title">{{ 'viewer.forms.submission.title' | translate }}</h2>
+          <button type="button" class="btn-primary" (click)="onFillAgain()">
+            {{ 'viewer.forms.submission.fillAgain' | translate }}
+          </button>
+        </div>
+
+        <div class="submissions-list">
+          @for (submission of mySubmissions(); track submission.id) {
+            <app-form-submission-card [submission]="submission" [formFields]="formFields()" />
           }
         </div>
-      }
+      </div>
+    }
 
-      <form [formGroup]="dynamicForm" (ngSubmit)="onFormSubmit()" class="dynamic-form" novalidate>
-        <app-dynamic-form-fields
-          [fields]="formFields()"
-          [form]="dynamicForm"
-        />
+    <!-- Form view -->
+    @if (viewMode() === 'form') {
+      <div class="form-wrapper">
+        <form [formGroup]="dynamicForm" (ngSubmit)="onFormSubmit()" class="dynamic-form" novalidate>
+          <app-dynamic-form-fields
+            [fields]="formFields()"
+            [form]="dynamicForm"
+          />
 
-        <div class="form-actions">
-          <button type="button" class="btn-secondary" (click)="onFormCancel()">
-            {{ 'common.cancel' | translate }}
-          </button>
-          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
-            {{ 'common.submit' | translate }}
-          </button>
-        </div>
-      </form>
-    </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="onFormCancel()">
+              {{ 'common.cancel' | translate }}
+            </button>
+            <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+              {{ 'common.submit' | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    }
   }
 </div>

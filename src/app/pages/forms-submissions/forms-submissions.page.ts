@@ -76,7 +76,6 @@ export class FormsSubmissionsPage {
       { label: this.translationService.instant('admin.settingsForms.status.I'), value: AppStatus.Inactive },
       { label: this.translationService.instant('admin.settingsForms.status.P'), value: AppStatus.Pending },
       { label: this.translationService.instant('admin.settingsForms.status.D'), value: AppStatus.Draft },
-      { label: this.translationService.instant('admin.settingsForms.status.AR'), value: AppStatus.Archived },
     ];
   }
 
@@ -229,7 +228,6 @@ export class FormsSubmissionsPage {
       case AppStatus.Pending: return 'warn';
       case AppStatus.Draft: return 'info';
       case AppStatus.Inactive: return 'danger';
-      case AppStatus.Archived: return 'secondary';
       default: return undefined;
     }
   }

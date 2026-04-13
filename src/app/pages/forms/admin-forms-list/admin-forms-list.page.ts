@@ -7,8 +7,9 @@ import { NavigationService } from '@services/navigation.service';
 import { FormsService } from '@services/forms.service';
 import { ClubService } from '@services/club.service';
 import { SnackbarService } from '@services/snackbar.service';
-import { Form, FormStatus, FormAction } from '@core/models/form.model';
+import { Form, FormAction } from '@core/models/form.model';
 import { CreateFormRequest } from '@core/requests/form.request';
+import { AppStatus } from '@core/models/app-status.model';
 
 @Component({
   selector: 'app-admin-forms-list',
@@ -41,7 +42,7 @@ export class AdminFormsListPage implements OnInit {
   readonly showCreateModal = signal<boolean>(false);
   readonly error = signal<string | null>(null);
 
-  readonly FormStatus = FormStatus;
+  readonly FormStatus = AppStatus;
   readonly FormAction = FormAction;
 
   readonly createForm = this.fb.group({
@@ -118,6 +119,6 @@ export class AdminFormsListPage implements OnInit {
   }
 
   isActive(form: Form): boolean {
-    return form.status === FormStatus.Active;
+    return form.status === AppStatus.Active;
   }
 }

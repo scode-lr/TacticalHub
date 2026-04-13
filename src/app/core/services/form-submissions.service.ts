@@ -55,4 +55,12 @@ export class FormSubmissionsService {
       )
     );
   }
+
+  async getMySubmissions(formId: number): Promise<FormSubmission[]> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<{ submissions: FormSubmission[] }>>(`/forms/${formId}/my-submissions`).pipe(
+        map(response => response.data?.submissions ?? [])
+      )
+    );
+  }
 }

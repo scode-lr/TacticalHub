@@ -8,7 +8,8 @@
       "mcp__primeng__read_text_file",
       "mcp__primeng__search_files",
       "mcp__primeng__list_allowed_directories",
-      "mcp__primeng__list_directory"
+      "mcp__primeng__list_directory",
+      "mcp__primeng__read_file"
     ]
   },
   "enabledMcpjsonServers": [

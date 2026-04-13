@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,8 @@ import { FormService } from '@services/form.service';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { FormField } from '@core/models/form-field.model';
 import { FormDetail } from '@core/responses/form.response';
-import { BackButtonComponent, DynamicFormFieldsComponent } from '@components/index';
+import { FormSubmission } from '@core/models/form-submission.model';
+import { BackButtonComponent, DynamicFormFieldsComponent, FormSubmissionCardComponent } from '@components/index';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -24,6 +25,7 @@ import { ButtonModule } from 'primeng/button';
     TranslatePipe,
     BackButtonComponent,
     DynamicFormFieldsComponent,
+    FormSubmissionCardComponent,
     ButtonModule,
   ]
 })
@@ -40,17 +42,31 @@ export class FormDetailPage implements OnInit {
 
   readonly formDetail = signal<FormDetail | null>(null);
   readonly formFields = signal<FormField[]>([]);
+  readonly mySubmissions = signal<FormSubmission[]>([]);
   readonly isSubmitting = signal<boolean>(false);
   readonly loading = signal<boolean>(true);
+  readonly showForm = signal<boolean>(false);
+
+  readonly hasSubmissions = computed(() => this.mySubmissions().length > 0);
+  readonly viewMode = computed<'submissions' | 'form'>(() =>
+    this.hasSubmissions() && !this.showForm() ? 'submissions' : 'form'
+  );
 
   dynamicForm!: FormGroup;
+
   async ngOnInit(): Promise<void> {
     const formId = this.route.snapshot.paramMap.get('formId');
     this.formId = Number(formId);
-    const detail = await this.formService.getFormById(this.formId);
+
+    const [detail, submissions] = await Promise.all([
+      this.formService.getFormById(this.formId),
+      this.formSubmissionsService.getMySubmissions(this.formId).catch(() => [] as FormSubmission[]),
+    ]);
+
     const sorted = [...detail.fields ?? []].sort((a, b) => a.order - b.order);
     this.formDetail.set(detail);
     this.formFields.set(sorted);
+    this.mySubmissions.set(submissions);
     this.buildDynamicForm(sorted);
     this.loading.set(false);
   }
@@ -66,6 +82,11 @@ export class FormDetailPage implements OnInit {
       group[field.key] = this.fb.control(defaultValue, validators);
     }
     this.dynamicForm = this.fb.group(group);
+  }
+
+  onFillAgain(): void {
+    this.dynamicForm.reset();
+    this.showForm.set(true);
   }
 
   async onFormSubmit(): Promise<void> {
@@ -86,7 +107,14 @@ export class FormDetailPage implements OnInit {
         }
         return acc;
       }, {});
+
       await this.formSubmissionsService.submitForm(this.formId, { values });
+
+      // Reload submissions to show the new one
+      const submissions = await this.formSubmissionsService.getMySubmissions(this.formId).catch(() => this.mySubmissions());
+      this.mySubmissions.set(submissions);
+      this.showForm.set(false);
+
       const toast = await this.toastController.create({
         message: this.translationService.instant('viewer.action.form.success.submitMessage'),
         duration: 3000,
@@ -95,7 +123,6 @@ export class FormDetailPage implements OnInit {
         icon: 'checkmark-circle-outline'
       });
       await toast.present();
-      this.goBack();
     } catch {
       const toast = await this.toastController.create({
         message: this.translationService.instant('viewer.action.form.errors.submitError'),
@@ -111,7 +138,11 @@ export class FormDetailPage implements OnInit {
   }
 
   onFormCancel(): void {
-    this.goBack();
+    if (this.hasSubmissions()) {
+      this.showForm.set(false);
+    } else {
+      this.goBack();
+    }
   }
 
   private goBack(): void {
