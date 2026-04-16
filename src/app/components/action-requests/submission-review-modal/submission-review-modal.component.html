@@ -24,7 +24,7 @@
         }
 
         @if (!isLoading() && submission()) {
-          <app-submission-detail-view [submission]="submission()!" />
+          <app-submission-detail-view [submission]="submission()!" (fieldStatesChange)="onFieldStatesChange($event)" />
 
           <div class="review-comment">
             <label class="review-comment-label">{{ 'notifications.reviewComment' | translate }}</label>
@@ -40,7 +40,7 @@
 
       @if (!isLoading() && submission()) {
         <div class="detail-footer">
-          <button class="btn-secondary" [disabled]="isReviewing()" (click)="rejected.emit(comment)">
+          <button class="btn-secondary" [disabled]="isReviewing()" (click)="rejected.emit({ comment, fieldStates: fieldStates() })">
             @if (isReviewing()) {
               <ion-spinner name="dots"></ion-spinner>
             } @else {
@@ -48,7 +48,7 @@
             }
             {{ 'common.reject' | translate }}
           </button>
-          <button class="btn-primary" [disabled]="isReviewing()" (click)="approved.emit(comment)">
+          <button class="btn-primary" [disabled]="isReviewing()" (click)="approved.emit({ comment, fieldStates: fieldStates() })">
             @if (isReviewing()) {
               <ion-spinner name="dots"></ion-spinner>
             } @else {

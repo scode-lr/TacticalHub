@@ -9,6 +9,7 @@ import { TranslationService } from '@core/services/i18n/translation.service';
 import { FormService } from '@services/form.service';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { FormField } from '@core/models/form-field.model';
+import { AppStatus } from '@core/models/app-status.model';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
 import { BackButtonComponent, DynamicFormFieldsComponent, FormSubmissionCardComponent } from '@components/index';
@@ -47,10 +48,19 @@ export class FormDetailPage implements OnInit {
   readonly loading = signal<boolean>(true);
   readonly showForm = signal<boolean>(false);
 
+  readonly rejectedFieldStatuses = signal<Record<string, AppStatus>>({});
+
   readonly hasSubmissions = computed(() => this.mySubmissions().length > 0);
   readonly viewMode = computed<'submissions' | 'form'>(() =>
     this.hasSubmissions() && !this.showForm() ? 'submissions' : 'form'
   );
+  readonly activeFormFields = computed<FormField[]>(() => {
+    const statuses = this.rejectedFieldStatuses();
+    if (!Object.keys(statuses).length) return this.formFields();
+    return this.formFields().map(f =>
+      statuses[f.key] ? { ...f, status: statuses[f.key] } : f
+    );
+  });
 
   dynamicForm!: FormGroup;
 
@@ -85,7 +95,27 @@ export class FormDetailPage implements OnInit {
   }
 
   onFillAgain(): void {
+    this.rejectedFieldStatuses.set({});
     this.dynamicForm.reset();
+    this.showForm.set(true);
+  }
+
+  async onEditRejected(submission: FormSubmission): Promise<void> {
+    const detail = await this.formSubmissionsService.getSubmission(submission.id);
+    this.dynamicForm.reset();
+
+    const prefill: Record<string, unknown> = {};
+    const statuses: Record<string, AppStatus> = {};
+    for (const v of detail.values) {
+      const value = v.valueText ?? v.valueNumber ?? v.valueDate ?? v.valueBoolean ?? null;
+      if (value !== null) prefill[v.fieldKey] = value;
+      if (v.status) statuses[v.fieldKey] = v.status;
+    }
+
+    this.dynamicForm.patchValue(prefill);
+    console.log('status', statuses);
+    console.log('detail', detail);
+    this.rejectedFieldStatuses.set(statuses);
     this.showForm.set(true);
   }
 
@@ -113,6 +143,7 @@ export class FormDetailPage implements OnInit {
       // Reload submissions to show the new one
       const submissions = await this.formSubmissionsService.getMySubmissions(this.formId).catch(() => this.mySubmissions());
       this.mySubmissions.set(submissions);
+      this.rejectedFieldStatuses.set({});
       this.showForm.set(false);
 
       const toast = await this.toastController.create({
@@ -138,6 +169,7 @@ export class FormDetailPage implements OnInit {
   }
 
   onFormCancel(): void {
+    this.rejectedFieldStatuses.set({});
     if (this.hasSubmissions()) {
       this.showForm.set(false);
     } else {

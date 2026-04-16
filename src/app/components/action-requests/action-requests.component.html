@@ -27,6 +27,6 @@
     [isLoading]="isDetailLoading()"
     [isReviewing]="isReviewing()"
     (dismissed)="closeDetailModal()"
-    (approved)="handleApprove()"
-    (rejected)="handleReject()" />
+    (approved)="handleApprove($event)"
+    (rejected)="handleReject($event)" />
 }

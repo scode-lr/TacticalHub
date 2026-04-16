@@ -134,6 +134,56 @@ $marker-size: 1.75rem;
   &--rejected  { color: #b91c1c; font-weight: 600; }
 }
 
+// ── Rejection footer ──────────────────────────────────────
+
+.rejection-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #fecaca;
+}
+
+.rejection-comment {
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  background: #fef2f2;
+  border-left: 3px solid #dc2626;
+  border-radius: 0 8px 8px 0;
+
+  &__icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+    color: #dc2626;
+    margin-top: 0.0625rem;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #dc2626;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  &__text {
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.5;
+    margin: 0;
+    word-break: break-word;
+  }
+}
+
 // ── Animation ─────────────────────────────────────────────
 
 @keyframes fadeIn {

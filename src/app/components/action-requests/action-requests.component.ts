@@ -4,9 +4,12 @@ import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NotificationsService } from '@core/services/notifications.service';
 import { FormSubmissionsService } from '@core/services/form-submissions.service';
 import { Notification, NotificationType } from '@core/models';
+import { AppStatus } from '@core/models/app-status.model';
+import { ResolveNotificationRequest } from '@core/requests/notification.request';
 import { SubmissionDetail } from '@core/responses/form.response';
 import { ActionRequestsListModalComponent } from './action-requests-list-modal/action-requests-list-modal.component';
-import { SubmissionReviewModalComponent } from './submission-review-modal/submission-review-modal.component';
+import { SubmissionReviewModalComponent, ReviewResult } from './submission-review-modal/submission-review-modal.component';
+import { FieldReviewState } from '@components/submission-detail-view/submission-detail-view.component';
 import { addIcons } from 'ionicons';
 import { chevronForwardOutline, documentTextOutline } from 'ionicons/icons';
 
@@ -73,23 +76,36 @@ export class ActionRequestsComponent {
     this.selectedSubmission.set(null);
   }
 
-  async handleApprove(): Promise<void> {
-    await this.review(true);
+  async handleApprove(result: ReviewResult): Promise<void> {
+    await this.review(true, result.comment, result.fieldStates);
   }
 
-  async handleReject(): Promise<void> {
-    await this.review(false);
+  async handleReject(result: ReviewResult): Promise<void> {
+    await this.review(false, result.comment, result.fieldStates);
   }
 
-  private async review(approved: boolean): Promise<void> {
+  private async review(approved: boolean, comment: string, fieldStates: Record<number, FieldReviewState>): Promise<void> {
     const submission = this.selectedSubmission();
     const notification = this.selectedNotification();
     if (!submission || !notification || this.isReviewing()) return;
 
+    const fieldStatuses: Record<number, AppStatus> = {};
+    for (const [id, state] of Object.entries(fieldStates)) {
+      if (state === 'ok') fieldStatuses[+id] = AppStatus.Approved;
+      else if (state === 'nok') fieldStatuses[+id] = AppStatus.Rejected;
+    }
+
+    const request: ResolveNotificationRequest = {
+      status: approved ? AppStatus.Approved : AppStatus.Rejected,
+      comment: comment || undefined,
+      formId: submission.formId,
+      submissionId: submission.id,
+      ...(Object.keys(fieldStatuses).length > 0 && { fieldStatuses })
+    };
+
     this.isReviewing.set(true);
     try {
-      await this.formSubmissionsService.reviewSubmission(submission.id, approved);
-      this.notificationsService.markAsCompleted(notification.id);
+      await this.notificationsService.resolveNotification(notification.id, request);
       this.closeDetailModal();
     } finally {
       this.isReviewing.set(false);

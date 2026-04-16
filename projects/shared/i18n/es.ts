@@ -544,7 +544,9 @@ export const sharedTranslations = {
         statusApproved: 'Aprobado',
         statusRejected: 'Rechazado',
         fillAgain: 'Volver a rellenar',
-        detailTitle: 'Mi envío'
+        detailTitle: 'Mi envío',
+        rejectionComment: 'Comentario del coordinador',
+        editAndResend: 'Editar y reenviar'
       }
     },
     information: {

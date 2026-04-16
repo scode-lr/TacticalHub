@@ -1,4 +1,5 @@
 import { FormFieldType } from './form-field.model';
+import { AppStatus } from './app-status.model';
 
 export interface SubmissionValue {
   fieldId: number;
@@ -9,4 +10,5 @@ export interface SubmissionValue {
   valueNumber: number | null;
   valueDate: string | null;
   valueBoolean: boolean | null;
+  status?: AppStatus | null;
 }

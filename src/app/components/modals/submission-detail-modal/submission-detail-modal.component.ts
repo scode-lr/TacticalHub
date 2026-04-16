@@ -86,6 +86,7 @@ export class SubmissionDetailModalComponent {
       order,
       validationJson: null,
       createdAt: new Date(),
+      status: val.status ?? undefined,
       // For select/radio: provide stored value as the only option so p-select renders it
       options: (val.fieldType === 'select' || (val.fieldType === 'boolean' && val.valueText !== null))
         ? (val.valueText !== null ? [val.valueText] : [])

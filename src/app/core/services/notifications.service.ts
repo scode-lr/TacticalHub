@@ -8,6 +8,7 @@ import {
   ApiGetNotificationsResponse,
   ApiNotificationSummary
 } from '@models/notification.model';
+import { ResolveNotificationRequest } from '@core/requests/notification.request';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationsService {
@@ -94,6 +95,11 @@ export class NotificationsService {
     } finally {
       this.isLoading.set(false);
     }
+  }
+
+  async resolveNotification(id: number, request: ResolveNotificationRequest): Promise<void> {
+    await firstValueFrom(this.apiService.put(`/notifications/${id}/resolve`, request));
+    this.markAsCompleted(id);
   }
 
   async markAsRead(id: number): Promise<void> {

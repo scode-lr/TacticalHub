@@ -605,7 +605,9 @@ export const sharedTranslations = {
         statusApproved: 'Approved',
         statusRejected: 'Rejected',
         fillAgain: 'Fill again',
-        detailTitle: 'My submission'
+        detailTitle: 'My submission',
+        rejectionComment: 'Coordinator\'s comment',
+        editAndResend: 'Edit and resend'
       }
     },
     information: {

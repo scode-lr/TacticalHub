@@ -603,7 +603,9 @@ export const sharedTranslations = {
         statusApproved: 'Aprovat',
         statusRejected: 'Rebutjat',
         fillAgain: 'Tornar a omplir',
-        detailTitle: 'El meu enviament'
+        detailTitle: 'El meu enviament',
+        rejectionComment: 'Comentari del coordinador',
+        editAndResend: 'Editar i reenviar'
       }
     },
     information: {
