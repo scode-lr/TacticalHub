@@ -1,6 +1,6 @@
 import { Component, inject, computed, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonAvatar, IonImg, IonIcon, IonButton, IonSpinner } from '@ionic/angular/standalone';
+import { IonAvatar, IonImg, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NotificationsService } from '@core/services/notifications.service';
 import { Notification, NotificationType } from '@core/models';
@@ -17,7 +17,7 @@ import { checkmarkOutline, closeOutline } from 'ionicons/icons';
   standalone: true,
   imports: [
     CommonModule,
-    IonAvatar, IonImg, IonIcon, IonButton, IonSpinner,
+    IonAvatar, IonImg, IonIcon, IonSpinner,
     TranslatePipe,
     TeamJoinRequestsComponent,
     ActionRequestsComponent,
@@ -36,6 +36,7 @@ export class NotificationsPage implements OnInit, OnDestroy {
       .filter(n => n.type !== NotificationType.Approval && n.type !== NotificationType.Action)
   );
   readonly NotificationType = NotificationType;
+  readonly defaultAvatar = 'assets/default-avatar.svg';
 
   constructor() {
     addIcons({ checkmarkOutline, closeOutline });
@@ -85,6 +86,11 @@ export class NotificationsPage implements OnInit, OnDestroy {
 
   handleReject(notification: Notification): void {
     this.notificationsService.handleApproval(notification.id, false);
+  }
+
+  onAvatarError(event: Event): void {
+    const img = (event.target as HTMLIonImgElement).shadowRoot?.querySelector('img');
+    if (img) img.src = this.defaultAvatar;
   }
 
   markAsRead(notification: Notification): void {

@@ -218,10 +218,18 @@ export class NotificationsService {
       status: item.isRead ? NotificationStatus.Read : NotificationStatus.Unread,
       createdAt: new Date(item.createdAt),
       readAt: item.readAt ? new Date(item.readAt) : undefined,
+      user: item.createdByUserName ? {
+        id: 0,
+        email: '',
+        username: item.createdByUserName,
+        avatarUrl: item.createdByAvatar
+      } : undefined,
       metadata: {
         apiType: item.type,
         apiStatus: item.status,
-        priority: item.priority
+        priority: item.priority,
+        relatedEntityId: item.relatedEntityId,
+        relatedEntityType: item.relatedEntityType
       }
     };
   }

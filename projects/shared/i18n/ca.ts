@@ -70,6 +70,8 @@ export const sharedTranslations = {
     addNewItem: 'Afegir nou element',
     selectSeason: 'Seleccionar Temporada',
     selectOption: 'Seleccionar una opció',
+    approve: 'Aprovar',
+    reject: 'Rebutjar',
     emptyState: {
       title: 'Res per aquí encara',
       message: 'No hi ha notificacions per mostrar.'
@@ -464,7 +466,9 @@ export const sharedTranslations = {
     teamJoinRequests: 'Sol·licituds d\'unió a l\'equip',
     actionRequests: 'Sol·licituds d\'acció',
     pendingRequest: 'sol·licitud pendent',
-    pendingRequests: 'sol·licituds pendents'
+    pendingRequests: 'sol·licituds pendents',
+    reviewComment: 'Comentari',
+    reviewCommentPlaceholder: 'Afegeix un comentari (opcional)'
   },
   viewer: {
     title: 'Portal de l\'observador',

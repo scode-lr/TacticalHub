@@ -78,9 +78,9 @@
       display: flex;
       gap: 1rem;
 
-      ion-button {
+      button {
         flex: 1;
-        --border-radius: 10px;
+        border-radius: 10px;
         font-weight: 600;
         font-size: 0.9375rem;
       }

@@ -2,10 +2,10 @@
   <div class="section-header">
     <div class="header-row">
       <h1 class="section-title">{{ 'forms.admin.title' | translate }}</h1>
-      <ion-button (click)="openCreateModal()">
-        <ion-icon slot="start" name="add-outline"></ion-icon>
+      <button class="btn-primary" (click)="openCreateModal()">
+        <ion-icon name="add-outline"></ion-icon>
         {{ 'forms.admin.createForm' | translate }}
-      </ion-button>
+      </button>
     </div>
   </div>
 
@@ -72,9 +72,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2>{{ 'forms.admin.createFormTitle' | translate }}</h2>
-        <ion-button fill="clear" (click)="closeCreateModal()">
+        <button class="btn-icon" (click)="closeCreateModal()">
           <ion-icon name="close-outline"></ion-icon>
-        </ion-button>
+        </button>
       </div>
       <form [formGroup]="createForm" (ngSubmit)="onCreateForm()" class="modal-form">
         <div class="field-group">
@@ -108,15 +108,15 @@
           </ion-select>
         </div>
         <div class="modal-actions">
-          <ion-button fill="outline" expand="block" (click)="closeCreateModal()" [disabled]="isCreating()">
+          <button class="btn-outline btn-block" (click)="closeCreateModal()" [disabled]="isCreating()">
             {{ 'common.cancel' | translate }}
-          </ion-button>
-          <ion-button type="submit" expand="block" [disabled]="isCreating()">
+          </button>
+          <button type="submit" class="btn-primary btn-block" [disabled]="isCreating()">
             @if (isCreating()) {
-              <ion-spinner name="crescent" slot="start"></ion-spinner>
+              <ion-spinner name="crescent"></ion-spinner>
             }
             {{ 'common.save' | translate }}
-          </ion-button>
+          </button>
         </div>
       </form>
     </div>

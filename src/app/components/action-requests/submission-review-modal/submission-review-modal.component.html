@@ -1,0 +1,63 @@
+<ion-modal
+  [isOpen]="isOpen()"
+  (didDismiss)="dismissed.emit()"
+  class="requests-modal detail-modal">
+  <ng-template>
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="header-text">
+          <h2 class="header-title">{{ notification()?.title }}</h2>
+          @if (notification()?.user?.username) {
+            <p class="header-subtitle">{{ notification()!.user!.username }}</p>
+          }
+        </div>
+        <button class="close-button" (click)="dismissed.emit()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        @if (isLoading()) {
+          <div class="detail-loading">
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+        }
+
+        @if (!isLoading() && submission()) {
+          <app-submission-detail-view [submission]="submission()!" />
+
+          <div class="review-comment">
+            <label class="review-comment-label">{{ 'notifications.reviewComment' | translate }}</label>
+            <textarea
+              class="review-comment-input"
+              rows="3"
+              [placeholder]="'notifications.reviewCommentPlaceholder' | translate"
+              [(ngModel)]="comment"
+            ></textarea>
+          </div>
+        }
+      </div>
+
+      @if (!isLoading() && submission()) {
+        <div class="detail-footer">
+          <button class="btn-secondary" [disabled]="isReviewing()" (click)="rejected.emit(comment)">
+            @if (isReviewing()) {
+              <ion-spinner name="dots"></ion-spinner>
+            } @else {
+              <ion-icon name="close-circle-outline"></ion-icon>
+            }
+            {{ 'common.reject' | translate }}
+          </button>
+          <button class="btn-primary" [disabled]="isReviewing()" (click)="approved.emit(comment)">
+            @if (isReviewing()) {
+              <ion-spinner name="dots"></ion-spinner>
+            } @else {
+              <ion-icon name="checkmark-outline"></ion-icon>
+            }
+            {{ 'common.approve' | translate }}
+          </button>
+        </div>
+      }
+    </div>
+  </ng-template>
+</ion-modal>

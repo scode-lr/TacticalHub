@@ -43,6 +43,10 @@ export interface ApiNotificationSummary {
   isRead: boolean;
   readAt?: string;
   createdAt: string;
+  createdByUserName?: string;
+  createdByAvatar?: string;
+  relatedEntityId?: number;
+  relatedEntityType?: string;
 }
 
 export interface ApiGetNotificationsResponse {

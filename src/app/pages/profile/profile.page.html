@@ -60,18 +60,17 @@
           </div>
 
           <div class="form-actions">
-            <ion-button
-              class="btn-primary"
+            <button
               type="submit"
-              [disabled]="profileForm.invalid || isSaving()"
-              expand="block">
+              class="btn-primary btn-block"
+              [disabled]="profileForm.invalid || isSaving()">
               @if (isSaving()) {
-                <ion-icon slot="start" name="hourglass-outline"></ion-icon>
+                <ion-icon name="hourglass-outline"></ion-icon>
                 {{ 'profile.saving' | translate }}
               } @else {
                 {{ 'profile.saveChanges' | translate }}
               }
-            </ion-button>
+            </button>
           </div>
         </form>
       </div>

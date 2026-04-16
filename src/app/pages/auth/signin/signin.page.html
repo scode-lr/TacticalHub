@@ -1,11 +1,8 @@
 <div class="signin-page auth-background">
   <!-- Back Button (Mobile Only) -->
-  <ion-button 
-    fill="clear" 
-    class="back-btn"
-    (click)="goBack()">
-    <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-  </ion-button>
+  <button class="btn-icon back-btn" (click)="goBack()">
+    <ion-icon name="arrow-back"></ion-icon>
+  </button>
 
   <div class="branding-section">
     <app-auth-branding></app-auth-branding>
@@ -54,17 +51,16 @@
         </div>
 
         <!-- Sign In Button -->
-        <ion-button 
-          expand="block" 
-          type="submit" 
-          class="signin-btn"
+        <button
+          type="submit"
+          class="btn-primary btn-block signin-btn"
           [disabled]="isLoading() || !signinForm.valid">
           @if (isLoading()) {
             <ion-spinner name="dots"></ion-spinner>
           } @else {
             <span>{{ 'auth.signInButton' | translate }}</span>
           }
-        </ion-button>
+        </button>
       </form>
 
       <!-- Footer with Social Login -->

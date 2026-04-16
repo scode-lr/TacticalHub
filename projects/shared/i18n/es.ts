@@ -70,6 +70,8 @@ export const sharedTranslations = {
     addNewItem: 'Agregar nuevo elemento',
     selectSeason: 'Seleccionar Temporada',
     selectOption: 'Seleccionar una opción',
+    approve: 'Aprobar',
+    reject: 'Rechazar',
     emptyState: {
       title: 'Nada por aquí todavía',
       message: 'No hay notificaciones que mostrar.'
@@ -464,7 +466,9 @@ export const sharedTranslations = {
     teamJoinRequests: 'Solicitudes de unión al equipo',
     actionRequests: 'Solicitudes de acción',
     pendingRequest: 'solicitud pendiente',
-    pendingRequests: 'solicitudes pendientes'
+    pendingRequests: 'solicitudes pendientes',
+    reviewComment: 'Comentario',
+    reviewCommentPlaceholder: 'Añade un comentario (opcional)'
   },
   viewer: {
     title: 'Portal del observador',

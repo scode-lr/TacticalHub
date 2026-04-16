@@ -1,11 +1,14 @@
 import { Component, inject, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonButton, IonIcon, IonModal } from '@ionic/angular/standalone';
+import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NotificationsService } from '@core/services/notifications.service';
+import { FormSubmissionsService } from '@core/services/form-submissions.service';
 import { Notification, NotificationType } from '@core/models';
+import { SubmissionDetail } from '@core/responses/form.response';
+import { ActionRequestsListModalComponent } from './action-requests-list-modal/action-requests-list-modal.component';
+import { SubmissionReviewModalComponent } from './submission-review-modal/submission-review-modal.component';
 import { addIcons } from 'ionicons';
-import { chevronForwardOutline, closeOutline, linkOutline } from 'ionicons/icons';
+import { chevronForwardOutline, documentTextOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-action-requests',
@@ -13,62 +16,83 @@ import { chevronForwardOutline, closeOutline, linkOutline } from 'ionicons/icons
   styleUrls: ['./action-requests.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    IonButton,
     IonIcon,
-    IonModal,
-    TranslatePipe
+    TranslatePipe,
+    ActionRequestsListModalComponent,
+    SubmissionReviewModalComponent
   ]
 })
 export class ActionRequestsComponent {
-  private notificationsService = inject(NotificationsService);
-  
-  readonly isModalOpen = signal<boolean>(false);
-  
-  readonly actionRequests = computed(() => 
-    {
-      console.log('Computing action requests...', this.notificationsService.getNotifications());
-      return this.notificationsService.getNotifications()
-        .filter(n => n.type === NotificationType.Action && n.status !== 'completed');
-    });
+  private readonly notificationsService = inject(NotificationsService);
+  private readonly formSubmissionsService = inject(FormSubmissionsService);
+
+  readonly isListModalOpen = signal<boolean>(false);
+  readonly isDetailModalOpen = signal<boolean>(false);
+  readonly selectedNotification = signal<Notification | null>(null);
+  readonly selectedSubmission = signal<SubmissionDetail | null>(null);
+  readonly isDetailLoading = signal<boolean>(false);
+  readonly isReviewing = signal<boolean>(false);
+
+  readonly actionRequests = computed(() =>
+    this.notificationsService.getNotifications()
+      .filter(n => n.type === NotificationType.Action && n.status !== 'completed')
+  );
 
   constructor() {
-    addIcons({ chevronForwardOutline, closeOutline, linkOutline });
+    addIcons({ chevronForwardOutline, documentTextOutline });
   }
 
-  openModal(): void {
-    this.isModalOpen.set(true);
+  openListModal(): void {
+    this.isListModalOpen.set(true);
   }
 
-  closeModal(): void {
-    this.isModalOpen.set(false);
+  closeListModal(): void {
+    this.isListModalOpen.set(false);
   }
 
-  handleAction(notification: Notification): void {
-    if (notification.action) {
-      this.notificationsService.handleAction(
-        notification.id, 
-        notification.action.actionType, 
-        notification.action.data
-      );
+  async openDetail(notification: Notification): Promise<void> {
+    const submissionId = notification.metadata?.relatedEntityId;
+    if (!submissionId) return;
+
+    this.selectedNotification.set(notification);
+    this.selectedSubmission.set(null);
+    this.isDetailModalOpen.set(true);
+    this.isDetailLoading.set(true);
+
+    try {
+      const submission = await this.formSubmissionsService.getSubmission(submissionId);
+      this.selectedSubmission.set(submission);
+    } finally {
+      this.isDetailLoading.set(false);
     }
   }
 
-  formatDate(date: Date): string {
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / (1000 * 60));
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  closeDetailModal(): void {
+    this.isDetailModalOpen.set(false);
+    this.selectedNotification.set(null);
+    this.selectedSubmission.set(null);
+  }
 
-    if (diffMins < 60) {
-      return `${diffMins}m`;
-    } else if (diffHours < 24) {
-      return `${diffHours}h`;
-    } else if (diffDays < 7) {
-      return `${diffDays}d`;
-    } else {
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  async handleApprove(): Promise<void> {
+    await this.review(true);
+  }
+
+  async handleReject(): Promise<void> {
+    await this.review(false);
+  }
+
+  private async review(approved: boolean): Promise<void> {
+    const submission = this.selectedSubmission();
+    const notification = this.selectedNotification();
+    if (!submission || !notification || this.isReviewing()) return;
+
+    this.isReviewing.set(true);
+    try {
+      await this.formSubmissionsService.reviewSubmission(submission.id, approved);
+      this.notificationsService.markAsCompleted(notification.id);
+      this.closeDetailModal();
+    } finally {
+      this.isReviewing.set(false);
     }
   }
 }

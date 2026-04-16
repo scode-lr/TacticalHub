@@ -70,6 +70,8 @@ export const sharedTranslations = {
     addNewItem: 'Add new item',
     selectSeason: 'Select Season',
     selectOption: 'Select an option',
+    approve: 'Approve',
+    reject: 'Reject',
     emptyState: {
       title: 'Nothing here yet',
       message: 'There are no notifications to show.'
@@ -466,7 +468,9 @@ export const sharedTranslations = {
     teamJoinRequests: 'Team join requests',
     actionRequests: 'Action requests',
     pendingRequest: 'pending request',
-    pendingRequests: 'pending requests'
+    pendingRequests: 'pending requests',
+    reviewComment: 'Comment',
+    reviewCommentPlaceholder: 'Add a comment (optional)'
   },
   viewer: {
     title: 'Viewer portal',

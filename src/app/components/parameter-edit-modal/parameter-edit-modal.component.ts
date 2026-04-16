@@ -1,6 +1,6 @@
 import { Component, input, output, model, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon, IonButton, IonModal } from '@ionic/angular/standalone';
+import { IonIcon, IonModal } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   closeOutline,
@@ -41,7 +41,7 @@ interface FieldData {
   templateUrl: './parameter-edit-modal.component.html',
   styleUrls: ['./parameter-edit-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonButton, IonModal, TranslatePipe]
+  imports: [CommonModule, IonIcon, IonModal, TranslatePipe]
 })
 export class ParameterEditModalComponent {
   readonly isOpen = model.required<boolean>();

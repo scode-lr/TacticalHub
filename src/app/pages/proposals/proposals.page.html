@@ -41,8 +41,8 @@
     </div>
 
     <div class="form-actions">
-      <ion-button 
-        type="submit" 
+      <button
+        type="submit"
         class="btn-primary"
         [disabled]="!canSubmit() || isSubmitting()">
         @if (isSubmitting()) {
@@ -51,7 +51,7 @@
         } @else {
           {{ 'viewer.proposals.form.submit' | translate }}
         }
-      </ion-button>
+      </button>
     </div>
 
   </form>

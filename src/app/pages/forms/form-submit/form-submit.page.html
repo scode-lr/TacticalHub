@@ -79,24 +79,23 @@
         </div>
 
         <div class="form-actions">
-          <ion-button
-            fill="outline"
-            expand="block"
+          <button
+            class="btn-outline btn-block"
             (click)="onCancel()"
             [disabled]="isSubmitting()">
             {{ 'common.cancel' | translate }}
-          </ion-button>
-          <ion-button
+          </button>
+          <button
             type="submit"
-            expand="block"
+            class="btn-primary btn-block"
             [disabled]="isSubmitting()">
             @if (isSubmitting()) {
-              <ion-spinner name="crescent" slot="start"></ion-spinner>
+              <ion-spinner name="crescent"></ion-spinner>
               {{ 'common.submitting' | translate }}
             } @else {
               {{ 'common.submit' | translate }}
             }
-          </ion-button>
+          </button>
         </div>
       </form>
     }
