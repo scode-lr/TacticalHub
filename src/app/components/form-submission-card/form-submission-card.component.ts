@@ -8,6 +8,7 @@ import { SubmissionDetailModalComponent } from '@components/modals/submission-de
 import { FormSubmission } from '@core/models/form-submission.model';
 import { FormField } from '@core/models/form-field.model';
 import { AppStatus } from '@core/models/app-status.model';
+import { latestComment } from '@core/utils/submission-comment.util';
 
 export interface SubmissionTimelineStep {
   labelKey: string;
@@ -33,6 +34,7 @@ export class FormSubmissionCardComponent {
   readonly editRequested = output<void>();
 
   readonly isRejected = computed(() => this.submission().status === AppStatus.Rejected);
+  readonly rejectionComment = computed(() => latestComment(this.submission().comment));
 
   constructor() {
     addIcons({ documentTextOutline, createOutline, chatbubbleOutline });

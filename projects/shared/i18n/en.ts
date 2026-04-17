@@ -583,7 +583,8 @@ export const sharedTranslations = {
         registerPlayerSuccess: 'Player registration submitted successfully!',
         becomeMemberSuccess: 'Membership application submitted successfully!',
         success: {
-          submitMessage: 'The form has been submitted successfully'
+          submitMessage: 'The form has been submitted successfully',
+          resubmitMessage: 'Your form has been resubmitted successfully'
         },
         errors: {
           required: 'This field is required',
@@ -607,7 +608,11 @@ export const sharedTranslations = {
         fillAgain: 'Fill again',
         detailTitle: 'My submission',
         rejectionComment: 'Coordinator\'s comment',
-        editAndResend: 'Edit and resend'
+        editAndResend: 'Edit and resend',
+        resend: 'Resend',
+        rejectionFeedback: 'Coordinator\'s feedback',
+        viewHistory: 'View history',
+        commentHistory: 'Comment history'
       }
     },
     information: {

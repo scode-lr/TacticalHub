@@ -50,18 +50,25 @@ export class ViewerPage implements OnInit {
   
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {
-    const {roleType, roleId} = this.navigationService.extractRoleDetails();
-    if (this.isDetailPage()) {
-      if (this.router.url.includes('/forms')) {
-        return `app/${roleType}/${roleId}/forms`;
-      }
-      if (this.router.url.includes('/forms')) {
-        return `app/${roleType}/${roleId}/forms`;
-      }
-      
-      return `app/${roleType}/${roleId}/news`;
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    if (!this.isDetailPage()) return '';
+
+    const url = this.router.url;
+
+    const formSubmissionMatch = url.match(/\/forms\/(\d+)\/(-?\d+)/);
+    if (formSubmissionMatch) {
+      return `/app/${roleType}/${roleId}/forms/${formSubmissionMatch[1]}`;
     }
-    return '';
+    if (url.includes('/forms/')) {
+      return `/app/${roleType}/${roleId}/forms`;
+    }
+    if (url.includes('/news/')) {
+      return `/app/${roleType}/${roleId}/news`;
+    }
+    if (url.includes('/matches/')) {
+      return `/app/${roleType}/${roleId}/matches`;
+    }
+    return `/app/${roleType}/${roleId}/home`;
   });
   
   constructor() {

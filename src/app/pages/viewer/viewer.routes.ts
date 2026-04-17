@@ -37,6 +37,10 @@ export const viewerRoutes: Routes = [
         loadComponent: () => import('../form-detail/form-detail.page').then(m => m.FormDetailPage)
       },
       {
+        path: 'forms/:formId/:submissionId',
+        loadComponent: () => import('../form-detail-submission/form-detail-submission.page').then(m => m.FormDetailSubmissionPage)
+      },
+      {
         path: 'information',
         loadComponent: () => import('../information/information.page').then(m => m.InformationPage)
       },

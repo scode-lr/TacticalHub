@@ -40,12 +40,12 @@
 
   @if (isRejected()) {
     <div class="rejection-footer">
-      @if (submission().comment) {
+      @if (rejectionComment()) {
         <div class="rejection-comment">
           <ion-icon name="chatbubble-outline" class="rejection-comment__icon"></ion-icon>
           <div class="rejection-comment__body">
             <span class="rejection-comment__label">{{ 'viewer.forms.submission.rejectionComment' | translate }}</span>
-            <p class="rejection-comment__text">{{ submission().comment }}</p>
+            <p class="rejection-comment__text">{{ rejectionComment() }}</p>
           </div>
         </div>
       }

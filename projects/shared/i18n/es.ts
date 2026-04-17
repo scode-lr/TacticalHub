@@ -532,7 +532,8 @@ export const sharedTranslations = {
       noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.',
       form: {
         success: {
-          submitMessage: 'El formulario se ha enviado correctamente'
+          submitMessage: 'El formulario se ha enviado correctamente',
+          resubmitMessage: 'Tu formulario ha sido reenviado correctamente'
         }
       }
     },
@@ -546,7 +547,11 @@ export const sharedTranslations = {
         fillAgain: 'Volver a rellenar',
         detailTitle: 'Mi envío',
         rejectionComment: 'Comentario del coordinador',
-        editAndResend: 'Editar y reenviar'
+        editAndResend: 'Editar y reenviar',
+        resend: 'Reenviar',
+        rejectionFeedback: 'Comentario del coordinador',
+        viewHistory: 'Ver historial',
+        commentHistory: 'Historial de comentarios'
       }
     },
     information: {

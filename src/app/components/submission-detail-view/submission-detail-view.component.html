@@ -44,14 +44,16 @@
               <span class="field-value">{{ getDisplayValue(value) }}</span>
             }
           </div>
-          <button
-            class="field-review-btn"
-            [class.field-review-btn--ok]="fieldStates[value.fieldId] === 'ok'"
-            [class.field-review-btn--nok]="fieldStates[value.fieldId] === 'nok'"
-            (click)="toggleField(value.fieldId)"
-            type="button">
-            <ion-icon [name]="getFieldIcon(value.fieldId)"></ion-icon>
-          </button>
+          @if (reviewMode()) {
+            <button
+              class="field-review-btn"
+              [class.field-review-btn--ok]="fieldStates[value.fieldId] === 'ok'"
+              [class.field-review-btn--nok]="fieldStates[value.fieldId] === 'nok'"
+              (click)="toggleField(value.fieldId)"
+              type="button">
+              <ion-icon [name]="getFieldIcon(value.fieldId)"></ion-icon>
+            </button>
+          }
         </div>
       }
     </div>

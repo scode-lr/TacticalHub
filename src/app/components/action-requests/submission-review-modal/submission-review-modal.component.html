@@ -24,7 +24,7 @@
         }
 
         @if (!isLoading() && submission()) {
-          <app-submission-detail-view [submission]="submission()!" (fieldStatesChange)="onFieldStatesChange($event)" />
+          <app-submission-detail-view [submission]="submission()!" [reviewMode]="true" (fieldStatesChange)="onFieldStatesChange($event)" />
 
           <div class="review-comment">
             <label class="review-comment-label">{{ 'notifications.reviewComment' | translate }}</label>

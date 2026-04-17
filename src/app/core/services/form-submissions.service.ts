@@ -56,6 +56,14 @@ export class FormSubmissionsService {
     );
   }
 
+  async resubmitForm(submissionId: number, request: FormSubmissionRequest): Promise<FormSubmissionResult> {
+    return await firstValueFrom(
+      this.apiService.put<ApiResponse<FormSubmissionResult>>(`/forms/submissions/${submissionId}`, request).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
   async reviewSubmission(submissionId: number, approved: boolean): Promise<void> {
     await firstValueFrom(
       this.apiService.put<ApiResponse<void>>(`/forms/submissions/${submissionId}/review`, { approved })

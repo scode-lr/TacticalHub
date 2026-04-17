@@ -20,6 +20,7 @@ export type FieldReviewState = 'ok' | 'nok' | null;
 })
 export class SubmissionDetailViewComponent {
   readonly submission = input.required<SubmissionDetail>();
+  readonly reviewMode = input<boolean>(false);
   readonly fieldStatesChange = output<Record<number, FieldReviewState>>();
 
   fieldStates: Record<number, FieldReviewState> = {};

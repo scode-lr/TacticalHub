@@ -581,7 +581,8 @@ export const sharedTranslations = {
         registerPlayerSuccess: 'Registre de jugador enviat amb èxit!',
         becomeMemberSuccess: 'Sol·licitud de membresía enviada amb èxit!',
         success: {
-          submitMessage: 'El formulari s\'ha enviat correctament'
+          submitMessage: 'El formulari s\'ha enviat correctament',
+          resubmitMessage: 'El teu formulari s\'ha reenviat correctament'
         },
         errors: {
           required: 'Aquest camp és obligatori',
@@ -605,7 +606,11 @@ export const sharedTranslations = {
         fillAgain: 'Tornar a omplir',
         detailTitle: 'El meu enviament',
         rejectionComment: 'Comentari del coordinador',
-        editAndResend: 'Editar i reenviar'
+        editAndResend: 'Editar i reenviar',
+        resend: 'Reenviar',
+        rejectionFeedback: 'Comentari del coordinador',
+        viewHistory: 'Veure historial',
+        commentHistory: 'Historial de comentaris'
       }
     },
     information: {
