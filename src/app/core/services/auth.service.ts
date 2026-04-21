@@ -2,7 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { Observable, firstValueFrom, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { User } from '../models';
-import { SignInRequest, SignUpRequest } from '../requests/auth.request';
+import { SignInRequest, SignUpRequest, ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest } from '../requests/auth.request';
 import { AuthResponse } from '../responses/auth.response';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { TranslationService } from './i18n/translation.service';
@@ -262,6 +262,67 @@ export class AuthService {
     } finally {
       this.cleanSesion();
       this.navigationService.navigateTo(['auth/signin']);
+    }
+  }
+
+  async updatePassword(data: ChangePasswordRequest): Promise<IAuthResponse> {
+    try {
+      this._isLoading.set(true);
+      const response = await firstValueFrom(
+        this.apiService.put<{ success: boolean; message?: string }>('/auth/password', {
+          currentPassword: data.currentPassword,
+          newPassword: data.newPassword,
+        })
+      );
+      this._isLoading.set(false);
+      return {
+        success: response.success,
+        message: response.message ?? this.translationService.instant(
+          response.success ? 'messages.passwordUpdated' : 'messages.passwordUpdateError'
+        ),
+      };
+    } catch (error: any) {
+      this._isLoading.set(false);
+      return { success: false, message: error.message ?? this.translationService.instant('messages.passwordUpdateError') };
+    }
+  }
+
+  async forgotPassword(data: ForgotPasswordRequest): Promise<IAuthResponse> {
+    try {
+      this._isLoading.set(true);
+      const response = await firstValueFrom(
+        this.apiService.post<{ success: boolean; message?: string }>('/auth/forgot-password', { email: data.email })
+      );
+      this._isLoading.set(false);
+      return {
+        success: response.success,
+        message: response.message ?? this.translationService.instant('messages.forgotPasswordSent'),
+      };
+    } catch (error: any) {
+      this._isLoading.set(false);
+      return { success: false, message: error.message ?? this.translationService.instant('messages.forgotPasswordSent') };
+    }
+  }
+
+  async resetPassword(data: ResetPasswordRequest): Promise<IAuthResponse> {
+    try {
+      this._isLoading.set(true);
+      const response = await firstValueFrom(
+        this.apiService.post<{ success: boolean; message?: string }>('/auth/reset-password', {
+          token: data.token,
+          newPassword: data.newPassword,
+        })
+      );
+      this._isLoading.set(false);
+      return {
+        success: response.success,
+        message: response.message ?? this.translationService.instant(
+          response.success ? 'messages.passwordResetSuccess' : 'messages.invalidResetLink'
+        ),
+      };
+    } catch (error: any) {
+      this._isLoading.set(false);
+      return { success: false, message: error.message ?? this.translationService.instant('messages.invalidResetLink') };
     }
   }
 

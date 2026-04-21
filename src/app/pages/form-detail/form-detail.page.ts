@@ -68,6 +68,11 @@ export class FormDetailPage implements OnInit {
   pageTitle(): string {
     return this.formDetail()?.name ?? '';
   }
+  
+  backRoute(): string {
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    return `/app/${roleType}/${roleId}/forms`;
+  }
 
   private navigateToSubmission(submissionId: number): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();

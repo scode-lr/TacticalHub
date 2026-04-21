@@ -55,3 +55,9 @@ export interface ApiGetNotificationsResponse {
   limit: number;
   offset: number;
 }
+
+export interface ApiMarkAsReadResponse {
+  notificationId: number;
+  userClubRoleId: number;
+  readAt: string;
+}

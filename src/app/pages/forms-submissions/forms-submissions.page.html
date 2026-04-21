@@ -19,7 +19,7 @@
       <div class="selection-bar">
         <span class="selection-count">{{ selectedForms.length }} {{ 'admin.forms.selected' | translate }}</span>
         <div class="selection-actions">
-          <button class="btn-action">
+          <button class="btn-action" (click)="exportSubmissions()">
             <ion-icon name="download-outline"></ion-icon>
             {{ 'admin.forms.export' | translate }}
           </button>
@@ -244,3 +244,12 @@
     </p-table>
   }
 
+  <ion-toast
+    [isOpen]="toastVisible()"
+    [message]="toastMessage()"
+    color="danger"
+    duration="3000"
+    position="top"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
+</div>

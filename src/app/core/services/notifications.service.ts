@@ -9,10 +9,12 @@ import {
   ApiNotificationSummary
 } from '@models/notification.model';
 import { ResolveNotificationRequest } from '@core/requests/notification.request';
+import { RolesService } from '@services/roles.service';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationsService {
   private readonly apiService = inject(ApiService);
+  private readonly rolesService = inject(RolesService);
 
   private readonly _notifications = signal<Notification[]>([]);
   readonly isLoading = signal<boolean>(false);
@@ -23,6 +25,10 @@ export class NotificationsService {
   private _limit = 20;
   private _offset = 0;
   readonly hasMore = computed(() => this._notifications().length < this._totalCount);
+
+  private getUserClubRoleId(): string {
+    return String(this.rolesService.getCurrentRole()?.id ?? '');
+  }
 
   // ── Public read API ──────────────────────────────────────────────
 
@@ -51,6 +57,7 @@ export class NotificationsService {
 
     try {
       const params: Record<string, string> = {
+        userClubRoleId: this.getUserClubRoleId(),
         limit: String(this._limit),
         offset: '0'
       };
@@ -80,7 +87,7 @@ export class NotificationsService {
     try {
       const response = await firstValueFrom(
         this.apiService.get<ApiResponse<ApiGetNotificationsResponse>>('/notifications', {
-          params: { limit: String(this._limit), offset: String(this._offset) }
+          params: { userClubRoleId: this.getUserClubRoleId(), limit: String(this._limit), offset: String(this._offset) }
         })
       );
 
@@ -113,7 +120,7 @@ export class NotificationsService {
     this._notifications.set([...notifications]);
 
     try {
-      await firstValueFrom(this.apiService.put(`/notifications/${id}/read`, {}));
+      await firstValueFrom(this.apiService.put(`/notifications/${id}/read`, {}, { params: { userClubRoleId: this.getUserClubRoleId() } }));
     } catch {
       // Rollback on error
       notification.status = NotificationStatus.Unread;

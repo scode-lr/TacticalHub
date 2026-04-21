@@ -4,12 +4,14 @@ import { ApiResponse, ApiService } from './api.service';
 import { PaginatedResponse } from '@core/responses/api.response';
 import { Form, FormField, FormSubmission } from '@core/models/form.model';
 import { CreateFormRequest, AddFormFieldRequest, SubmitFormRequest } from '@core/requests/form.request';
+import { RolesService } from '@services/roles.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormsService {
   private readonly apiService = inject(ApiService);
+  private readonly rolesService = inject(RolesService);
 
   async getAvailableForms(clubId: number): Promise<Form[]> {
     return await firstValueFrom(
@@ -44,8 +46,9 @@ export class FormsService {
   }
 
   async submitForm(formId: number, request: SubmitFormRequest): Promise<FormSubmission | null> {
+    const userClubRoleId = String(this.rolesService.getCurrentRole()!.id);
     return await firstValueFrom(
-      this.apiService.post<ApiResponse<FormSubmission>>(`/forms/${formId}/submit`, request).pipe(
+      this.apiService.post<ApiResponse<FormSubmission>>(`/forms/${formId}/submit`, request, { params: { userClubRoleId } }).pipe(
         map(response => response.data ?? null)
       )
     );

@@ -84,6 +84,10 @@ export class SigninPage {
     this.navigationService.navigateTo(['welcome']);
   }
 
+  goToForgotPassword(): void {
+    this.navigationService.navigateTo(['auth/forgot-password']);
+  }
+
   async onSignIn(): Promise<void> {
     this.formSubmitted.set(true);
     

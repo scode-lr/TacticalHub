@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
 import { FormSubmissionRequest } from '@core/requests/form.request';
+import { RolesService } from '@services/roles.service';
 import { FormSubmissionResult, SubmissionDetail, SubmissionPage } from '@core/responses/form.response';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
@@ -26,12 +27,14 @@ export interface FormsSubmissionsPageState {
 })
 export class FormSubmissionsService {
   private readonly apiService = inject(ApiService);
+  private readonly rolesService = inject(RolesService);
 
   savedPageState: FormsSubmissionsPageState | null = null;
 
   async submitForm(formId: number, request: FormSubmissionRequest): Promise<FormSubmissionResult> {
+    const userClubRoleId = String(this.rolesService.getCurrentRole()!.id);
     return await firstValueFrom(
-      this.apiService.post<ApiResponse<FormSubmissionResult>>(`/forms/${formId}/submit`, request).pipe(
+      this.apiService.post<ApiResponse<FormSubmissionResult>>(`/forms/${formId}/submit`, request, { params: { userClubRoleId } }).pipe(
         map(response => response.data!)
       )
     );
@@ -57,8 +60,9 @@ export class FormSubmissionsService {
   }
 
   async resubmitForm(submissionId: number, request: FormSubmissionRequest): Promise<FormSubmissionResult> {
+    const userClubRoleId = String(this.rolesService.getCurrentRole()!.id);
     return await firstValueFrom(
-      this.apiService.put<ApiResponse<FormSubmissionResult>>(`/forms/submissions/${submissionId}`, request).pipe(
+      this.apiService.put<ApiResponse<FormSubmissionResult>>(`/forms/submissions/${submissionId}`, request, { params: { userClubRoleId } }).pipe(
         map(response => response.data!)
       )
     );
@@ -76,5 +80,17 @@ export class FormSubmissionsService {
         map(response => response.data?.submissions ?? [])
       )
     );
+  }
+
+  async exportSubmissions(formId: number, formName: string): Promise<void> {
+    const blob = await firstValueFrom(
+      this.apiService.getBlob(`/forms/${formId}/submissions/export`)
+    );
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `${formName}_submissions.csv`;
+    anchor.click();
+    window.URL.revokeObjectURL(url);
   }
 }

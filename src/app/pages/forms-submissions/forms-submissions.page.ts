@@ -19,7 +19,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
-import { IonIcon } from '@ionic/angular/standalone';
+import { IonIcon, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline } from 'ionicons/icons';
 
@@ -29,7 +29,7 @@ import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, clo
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule, IonIcon]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule, IonIcon, IonToast]
 })
 export class FormsSubmissionsPage {
   private readonly formService = inject(FormService);
@@ -55,6 +55,9 @@ export class FormsSubmissionsPage {
   readonly currentPage = signal<number>(1);
   readonly totalSubmissions = signal<number>(0);
   readonly currentSort = signal<string | undefined>(undefined);
+
+  readonly toastVisible = signal<boolean>(false);
+  readonly toastMessage = signal<string>('');
 
   selectedForms: FormDetail[] = [];
   searchValue = '';
@@ -208,6 +211,22 @@ export class FormsSubmissionsPage {
     };
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms-submissions/${submissionId}`]);
+  }
+
+  async exportSubmissions(): Promise<void> {
+    for (const form of this.selectedForms) {
+      try {
+        await this.formSubmissionsService.exportSubmissions(form.id, form.name);
+      } catch {
+        this.toastMessage.set(this.translationService.instant('admin.forms.exportError'));
+        this.toastVisible.set(true);
+        return;
+      }
+    }
+  }
+
+  onToastDismiss(): void {
+    this.toastVisible.set(false);
   }
 
   backToList(): void {

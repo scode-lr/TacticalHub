@@ -148,10 +148,26 @@ export class ApiService {
   delete<T = any>(endpoint: string, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
-    
+
     return this.http.delete<T>(url, {
       headers,
       params: options?.params,
+      withCredentials: options?.withCredentials,
+      context: options?.skipAuth ? skipAuthContext() : undefined
+    }).pipe(
+      timeout(options?.timeout || this.defaultTimeout),
+      catchError(this.handleError)
+    );
+  }
+
+  getBlob(endpoint: string, options?: ApiRequestOptions): Observable<Blob> {
+    const url = this.buildUrl(endpoint);
+    const headers = this.buildHeaders(options);
+
+    return this.http.get(url, {
+      headers,
+      params: options?.params,
+      responseType: 'blob',
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
     }).pipe(
