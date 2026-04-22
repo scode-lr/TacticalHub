@@ -1,1 +1,0 @@
-var t=(function(e){return e.None="none",e.RegisterUser="register_user",e.CreatePayment="create_payment",e.TriggerWorkflow="trigger_workflow",e})(t||{}),r=(function(e){return e.Text="text",e.Number="number",e.Date="date",e.Select="select",e.Checkbox="checkbox",e})(r||{});export{t as a,r as b};
