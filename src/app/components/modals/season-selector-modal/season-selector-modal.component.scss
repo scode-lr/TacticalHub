@@ -1,110 +1,135 @@
 .season-selector-modal {
   &.season-modal-web {
-    --width: 280px;
+    --width: 300px;
     --height: auto;
-    --border-radius: 12px;
+    --border-radius: 14px;
+    --box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
   }
 
   &.season-modal-mobile {
-    --border-radius: 16px 16px 0 0;
+    --border-radius: 20px 20px 0 0;
   }
 
   .modal-container {
     background: var(--background-primary, #ffffff);
     display: flex;
     flex-direction: column;
-    min-height: 200px;
-    max-height: 60vh;
+    overflow: hidden;
   }
 
   .modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border-light, #e5e7eb);
+    padding: 1.125rem 1.25rem 1.125rem 1.375rem;
+    background: #0f172a;
+    background-image: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    flex-shrink: 0;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .header-icon-wrap {
+    width: 22px;
+    height: 22px;
+    color: rgba(255, 255, 255, 0.65);
+    flex-shrink: 0;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .modal-title {
-    font-size: 1.125rem;
+    font-size: 0.9375rem;
     font-weight: 600;
-    color: var(--text-primary, #111827);
+    color: #ffffff;
     margin: 0;
-    line-height: 1.2;
+    letter-spacing: 0.01em;
   }
 
   .close-button {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 7px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.15s ease, border-color 0.15s ease;
 
     ion-icon {
-      font-size: 1.25rem;
-      color: var(--text-secondary, #6b7280);
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
     }
 
     &:hover {
-      background: var(--background-secondary, #f8f9fa);
-
-      ion-icon {
-        color: var(--text-primary, #111827);
-      }
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.25);
     }
   }
 
-  .modal-content {
-    flex: 1;
+  .modal-body {
     overflow-y: auto;
-    padding: 0.5rem;
+    max-height: 55vh;
+    padding: 0.375rem 0;
   }
 
-  .season-option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  ::ng-deep .season-listbox {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
     width: 100%;
-    padding: 0.875rem 1rem;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-bottom: 0.25rem;
 
-    .season-label {
+    .p-listbox-list-container {
+      padding: 0;
+    }
+
+    .p-listbox-list {
+      padding: 0;
+      gap: 0;
+    }
+
+    .p-listbox-option {
+      padding: 0.875rem 1.375rem;
+      border-radius: 0;
       font-size: 0.9375rem;
       font-weight: 500;
-      color: var(--text-primary, #111827);
-      text-align: left;
-    }
+      color: var(--text-primary, #1e293b);
+      transition: background 0.12s ease, color 0.12s ease;
+      border-bottom: 1px solid var(--border-light, #f1f5f9);
 
-    .check-icon {
-      font-size: 1.25rem;
-      color: var(--ion-color-primary, #3880ff);
-    }
+      &:last-child {
+        border-bottom: none;
+      }
 
-    &:hover {
-      background: var(--background-secondary, #f8f9fa);
-    }
+      &:hover,
+      &.p-focus {
+        background: rgba(74, 144, 226, 0.06) !important;
+        color: var(--text-primary, #1e293b) !important;
+      }
 
-    &.selected {
-      background: rgba(56, 128, 255, 0.08);
-
-      .season-label {
-        color: var(--ion-color-primary, #3880ff);
+      &.p-selected {
+        background: rgba(74, 144, 226, 0.09) !important;
+        color: var(--ion-color-primary, #4a90e2) !important;
         font-weight: 600;
       }
     }
 
-    &:active {
-      transform: scale(0.98);
+    .p-listbox-option-check-icon {
+      color: var(--ion-color-primary, #4a90e2);
+      order: 1;
+      margin-left: auto;
+      margin-right: 0;
+      flex-shrink: 0;
     }
   }
 }

@@ -1,13 +1,14 @@
-import { Component, input, computed, signal } from '@angular/core';
+import { Component, input, output, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { documentTextOutline } from 'ionicons/icons';
+import { documentTextOutline, createOutline, chatbubbleOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { SubmissionDetailModalComponent } from '@components/modals/submission-detail-modal/submission-detail-modal.component';
 import { FormSubmission } from '@core/models/form-submission.model';
 import { FormField } from '@core/models/form-field.model';
 import { AppStatus } from '@core/models/app-status.model';
+import { latestComment } from '@core/utils/submission-comment.util';
 
 export interface SubmissionTimelineStep {
   labelKey: string;
@@ -30,9 +31,13 @@ export class FormSubmissionCardComponent {
   readonly formFields = input.required<FormField[]>();
 
   readonly isModalOpen = signal(false);
+  readonly editRequested = output<void>();
+
+  readonly isRejected = computed(() => this.submission().status === AppStatus.Rejected);
+  readonly rejectionComment = computed(() => latestComment(this.submission().comment));
 
   constructor() {
-    addIcons({ documentTextOutline });
+    addIcons({ documentTextOutline, createOutline, chatbubbleOutline });
   }
 
   readonly timelineSteps = computed<SubmissionTimelineStep[]>(() => {

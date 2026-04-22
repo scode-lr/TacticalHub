@@ -17,6 +17,10 @@ export const viewerRoutes: Routes = [
         loadComponent: () => import('../home/home.page').then(m => m.HomePage)
       },
       {
+        path: 'notifications',
+        loadComponent: () => import('../notifications/notifications.page').then(m => m.NotificationsPage)
+      },
+      {
         path: 'news',
         loadComponent: () => import('../news/news/news.page').then(m => m.NewsPage)
       },
@@ -31,6 +35,10 @@ export const viewerRoutes: Routes = [
       {
         path: 'forms/:formId',
         loadComponent: () => import('../form-detail/form-detail.page').then(m => m.FormDetailPage)
+      },
+      {
+        path: 'forms/:formId/:submissionId',
+        loadComponent: () => import('../form-detail-submission/form-detail-submission.page').then(m => m.FormDetailSubmissionPage)
       },
       {
         path: 'information',

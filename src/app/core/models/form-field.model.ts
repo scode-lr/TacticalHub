@@ -1,3 +1,5 @@
+import { AppStatus } from "./app-status.model";
+
 export type FormFieldType =
   | 'text'
   | 'number'
@@ -22,5 +24,6 @@ export interface FormField {
   order: number;
   validationJson: unknown | null;
   createdAt: Date;
+  status?: string;
   options: string[] | null;
 }

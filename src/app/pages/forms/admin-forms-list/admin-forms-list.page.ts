@@ -1,7 +1,7 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonIcon, IonSpinner, IonButton, IonInput, IonModal, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonIcon, IonSpinner, IonInput, IonModal, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { FormsService } from '@services/forms.service';
@@ -21,7 +21,6 @@ import { AppStatus } from '@core/models/app-status.model';
     ReactiveFormsModule,
     IonIcon,
     IonSpinner,
-    IonButton,
     IonInput,
     IonModal,
     IonSelect,

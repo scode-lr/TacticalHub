@@ -12,9 +12,9 @@
     </div>
     <h2>Oops!</h2>
     <p>{{ error }}</p>
-    <ion-button fill="outline" (click)="loadInvitation()">
+    <button class="btn-outline" (click)="loadInvitation()">
       Try Again
-    </ion-button>
+    </button>
   </div>
 
   <!-- Invitation Content -->
@@ -51,15 +51,14 @@
     </div>
 
     <!-- Action Button -->
-    <ion-button 
-      expand="block" 
-      class="accept-button"
+    <button
+      class="btn-primary btn-block accept-button"
       (click)="acceptInvitation()"
       [disabled]="isAccepting">
       <ion-spinner name="dots" *ngIf="isAccepting"></ion-spinner>
       <span *ngIf="!isAccepting">
         Accept Invitation
       </span>
-    </ion-button>
+    </button>
   </div>
 </div>

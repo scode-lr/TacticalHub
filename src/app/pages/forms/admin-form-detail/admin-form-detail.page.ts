@@ -2,12 +2,13 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonIcon, IonSpinner, IonButton, IonInput, IonModal, IonSelect, IonSelectOption, IonCheckbox } from '@ionic/angular/standalone';
+import { IonIcon, IonSpinner, IonInput, IonModal, IonSelect, IonSelectOption, IonCheckbox } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { FormsService } from '@services/forms.service';
 import { SnackbarService } from '@services/snackbar.service';
 import { Form, FormField, FormFieldType, FormSubmission } from '@core/models/form.model';
+import { AppStatus } from '@core/models/app-status.model';
 import { AddFormFieldRequest } from '@core/requests/form.request';
 import { PaginatedResponse } from '@core/responses/api.response';
 
@@ -21,7 +22,6 @@ import { PaginatedResponse } from '@core/responses/api.response';
     ReactiveFormsModule,
     IonIcon,
     IonSpinner,
-    IonButton,
     IonInput,
     IonModal,
     IonSelect,
@@ -47,6 +47,7 @@ export class AdminFormDetailPage implements OnInit {
   readonly error = signal<string | null>(null);
 
   readonly FormFieldType = FormFieldType;
+  readonly AppStatus = AppStatus;
   readonly fieldTypes = Object.values(FormFieldType);
 
   readonly addFieldForm = this.fb.group({

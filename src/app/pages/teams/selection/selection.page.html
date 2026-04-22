@@ -22,9 +22,9 @@
 
       @if (!hasActiveRoles() && !isPrivateApp && !hasPendingRoles()) {
         <div class="skip-section">
-          <ion-button fill="clear" class="skip-button" (click)="skipForNow()">
+          <button class="btn-text skip-button" (click)="skipForNow()">
             {{ 'roleSelection.skipForNow' | translate }}
-          </ion-button>
+          </button>
           <p class="skip-text">{{ 'roleSelection.canAddLater' | translate }}</p>
         </div>
       }

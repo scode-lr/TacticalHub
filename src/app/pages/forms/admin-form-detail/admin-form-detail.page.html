@@ -18,7 +18,7 @@
             <p class="section-description">{{ formData.description }}</p>
           }
         </div>
-        <span class="form-status-badge" [class.active]="formData.status === 'active'">
+        <span class="form-status-badge" [class.active]="formData.status === AppStatus.Active">
           {{ ('forms.status.' + formData.status) | translate }}
         </span>
       </div>
@@ -57,10 +57,10 @@
       <div class="tab-content">
         <div class="tab-header">
           <h2 class="tab-title">{{ 'forms.admin.fields.title' | translate }}</h2>
-          <ion-button (click)="openAddFieldModal()">
-            <ion-icon slot="start" name="add-outline"></ion-icon>
+          <button class="btn-primary" (click)="openAddFieldModal()">
+            <ion-icon name="add-outline"></ion-icon>
             {{ 'forms.admin.fields.add' | translate }}
-          </ion-button>
+          </button>
         </div>
 
         @if (getSortedFields().length === 0) {
@@ -122,7 +122,7 @@
               <div class="submission-item">
                 <div class="submission-header">
                   <span class="submission-id">#{{ submission.id }}</span>
-                  <span class="submission-status" [class.submitted]="submission.status === 'submitted'">
+                  <span class="submission-status" [class.submitted]="submission.status === AppStatus.Submitted">
                     {{ ('forms.submissionStatus.' + submission.status) | translate }}
                   </span>
                 </div>
@@ -155,9 +155,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2>{{ 'forms.admin.fields.addTitle' | translate }}</h2>
-        <ion-button fill="clear" (click)="closeAddFieldModal()">
+        <button class="btn-icon" (click)="closeAddFieldModal()">
           <ion-icon name="close-outline"></ion-icon>
-        </ion-button>
+        </button>
       </div>
       <form [formGroup]="addFieldForm" (ngSubmit)="onAddField()" class="modal-form">
         <div class="field-group">
@@ -203,15 +203,15 @@
           </ion-checkbox>
         </div>
         <div class="modal-actions">
-          <ion-button fill="outline" expand="block" (click)="closeAddFieldModal()" [disabled]="isAddingField()">
+          <button class="btn-outline btn-block" (click)="closeAddFieldModal()" [disabled]="isAddingField()">
             {{ 'common.cancel' | translate }}
-          </ion-button>
-          <ion-button type="submit" expand="block" [disabled]="isAddingField()">
+          </button>
+          <button type="submit" class="btn-primary btn-block" [disabled]="isAddingField()">
             @if (isAddingField()) {
-              <ion-spinner name="crescent" slot="start"></ion-spinner>
+              <ion-spinner name="crescent"></ion-spinner>
             }
             {{ 'common.save' | translate }}
-          </ion-button>
+          </button>
         </div>
       </form>
     </div>

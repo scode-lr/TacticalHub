@@ -1,8 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { 
-  IonButton,
+import {
   IonIcon,
   IonInput,
   IonSpinner,
@@ -26,7 +25,6 @@ import { AuthService } from '@services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonButton,
     IonIcon,
     IonInput,
     IonSpinner,

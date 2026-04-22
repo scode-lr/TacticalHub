@@ -43,7 +43,29 @@ export const sharedTranslations = {
     continueWithApple: 'Continuar amb Apple',
     alreadyHaveAccount: 'Ja tens un compte?',
     dontHaveAccount: 'No tens un compte?',
-    continueAsGuest: 'Continuar com a convidat'
+    continueAsGuest: 'Continuar com a convidat',
+    forgotPasswordTitle: 'Has oblidat la contrasenya?',
+    forgotPasswordSubtitle: "Introdueix el teu correu i t'enviarem un enllaç de restabliment.",
+    sendResetLink: 'Enviar enllaç',
+    sending: 'Enviant…',
+    rememberIt: 'La recordes?',
+    checkYourEmail: 'Revisa el teu correu',
+    checkEmailMessage: "Si {email} està registrat, s'ha enviat un enllaç de restabliment. Revisa la teva safata d'entrada i segueix les instruccions.",
+    backToSignIn: 'Tornar a iniciar sessió',
+    checkSpam: 'No el veus? Revisa la teva carpeta de correu brossa.',
+    setNewPassword: 'Establir nova contrasenya',
+    setNewPasswordSubtitle: 'Tria una contrasenya segura per al teu compte.',
+    newPasswordPlaceholder: 'Nova contrasenya',
+    resetPasswordButton: 'Restablir contrasenya',
+    resetting: 'Restablint…',
+    passwordResetTitle: 'Contrasenya restablerta!',
+    passwordResetRedirecting: "Redirigint a l'inici de sessió…",
+    signInNow: 'Iniciar sessió ara',
+    invalidResetLinkMessage: "Aquest enllaç de restabliment és invàlid o ha caducat. Si us plau, sol·licita'n un de nou.",
+    strengthWeak: 'Feble',
+    strengthFair: 'Regular',
+    strengthGood: 'Bona',
+    strengthStrong: 'Forta'
   },
   common: {
     loading: 'Carregant...',
@@ -69,7 +91,13 @@ export const sharedTranslations = {
     addItem: 'Afegir element',
     addNewItem: 'Afegir nou element',
     selectSeason: 'Seleccionar Temporada',
-    selectOption: 'Seleccionar una opció'
+    selectOption: 'Seleccionar una opció',
+    approve: 'Aprovar',
+    reject: 'Rebutjar',
+    emptyState: {
+      title: 'Res per aquí encara',
+      message: 'No hi ha notificacions per mostrar.'
+    }
   },
   fieldLabels: {
     type: 'Tipus',
@@ -101,7 +129,14 @@ export const sharedTranslations = {
     english: 'Anglès',
     spanish: 'Espanyol',
     catalan: 'Català',
-    languageChanged: 'Idioma canviat correctament'
+    languageChanged: 'Idioma canviat correctament',
+    security: 'Seguretat',
+    changePasswordDescription: 'Canvia la contrasenya del teu compte.',
+    currentPassword: 'Contrasenya actual',
+    currentPasswordPlaceholder: 'Introdueix la teva contrasenya actual',
+    newPassword: 'Nova contrasenya',
+    newPasswordPlaceholder: 'Introdueix la nova contrasenya',
+    updatePassword: 'Actualitzar contrasenya'
   },  profile: {
     title: 'El meu perfil',
     editProfile: 'Editar perfil',
@@ -137,6 +172,11 @@ export const sharedTranslations = {
     accountCreatedSuccess: 'Compte creat amb èxit!',
     signUpError: 'Ha ocorregut un error durant el registre.',
     signInError: 'Ha ocorregut un error',
+    passwordUpdated: 'Contrasenya actualitzada correctament.',
+    passwordUpdateError: 'No s\'ha pogut actualitzar la contrasenya.',
+    forgotPasswordSent: "Si aquest correu està registrat, s'ha enviat un enllaç de restabliment.",
+    passwordResetSuccess: 'Contrasenya restablerta correctament.',
+    invalidResetLink: 'Enllaç invàlid o caducat.',
     googleSignUpSuccess: 'Registre amb Google amb èxit!',
     appleSignUpSuccess: 'Registre amb Apple amb èxit!',
     googleSignUpFailed: 'Registre amb Google ha fallat',
@@ -239,6 +279,7 @@ export const sharedTranslations = {
       paginatorReport: 'Mostrant {first} a {last} de {totalRecords} entrades',
       submissions: 'Enviaments',
       allForms: 'Tots els formularis',
+      exportError: 'No s\'ha pogut exportar les respostes. Si us plau, torna-ho a intentar.',
       columns: {
         id: 'ID',
         name: 'Nom',
@@ -460,13 +501,16 @@ export const sharedTranslations = {
     teamJoinRequests: 'Sol·licituds d\'unió a l\'equip',
     actionRequests: 'Sol·licituds d\'acció',
     pendingRequest: 'sol·licitud pendent',
-    pendingRequests: 'sol·licituds pendents'
+    pendingRequests: 'sol·licituds pendents',
+    reviewComment: 'Comentari',
+    reviewCommentPlaceholder: 'Afegeix un comentari (opcional)'
   },
   viewer: {
     title: 'Portal de l\'observador',
     subtitle: 'Accedeix a informació i serveis del club',
     menu: {
       home: 'Inici',
+      notifications: 'Notificacions',
       news: 'Notícies',
       action: 'Accions',
       information: 'Informació',
@@ -478,6 +522,7 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Benvingut al teu portal del club',
+      notifications: 'Les teves notificacions i alertes',
       news: 'Últimes actualitzacions i anuncis',
       action: 'Registra jugadors o fes-te soci',
       information: 'Informació i recursos del club',
@@ -571,7 +616,8 @@ export const sharedTranslations = {
         registerPlayerSuccess: 'Registre de jugador enviat amb èxit!',
         becomeMemberSuccess: 'Sol·licitud de membresía enviada amb èxit!',
         success: {
-          submitMessage: 'El formulari s\'ha enviat correctament'
+          submitMessage: 'El formulari s\'ha enviat correctament',
+          resubmitMessage: 'El teu formulari s\'ha reenviat correctament'
         },
         errors: {
           required: 'Aquest camp és obligatori',
@@ -593,7 +639,13 @@ export const sharedTranslations = {
         statusApproved: 'Aprovat',
         statusRejected: 'Rebutjat',
         fillAgain: 'Tornar a omplir',
-        detailTitle: 'El meu enviament'
+        detailTitle: 'El meu enviament',
+        rejectionComment: 'Comentari del coordinador',
+        editAndResend: 'Editar i reenviar',
+        resend: 'Reenviar',
+        rejectionFeedback: 'Comentari del coordinador',
+        viewHistory: 'Veure historial',
+        commentHistory: 'Historial de comentaris'
       }
     },
     information: {

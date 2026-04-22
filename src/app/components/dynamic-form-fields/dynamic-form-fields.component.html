@@ -1,6 +1,8 @@
 @for (field of fields(); track field.id) {
-  <div class="field-group" [class.field-group--boolean]="field.type === 'boolean' && !field.options?.length">
-
+  <div class="field-group"
+       [class.field-group--boolean]="field.type === 'boolean' && !field.options?.length"
+       [class.field-group--approved]="field.status === AppStatus.Approved"
+       [class.field-group--rejected]="field.status === AppStatus.Rejected">
     @if (field.type !== 'boolean' || field.options?.length) {
       <label class="field-label" [for]="field.key">
         {{ field.label }}
@@ -20,7 +22,7 @@
         [id]="field.key"
         type="text"
         [formControl]="$any(form().get(field.key))"
-        [invalid]="isFieldInvalid(field.key)"
+        [invalid]="isFieldInvalid(field)"
         [attr.maxlength]="field.maxLength"
       />
     }
@@ -31,7 +33,7 @@
         [id]="field.key"
         type="number"
         [formControl]="$any(form().get(field.key))"
-        [invalid]="isFieldInvalid(field.key)"
+        [invalid]="isFieldInvalid(field)"
       />
     }
 
@@ -42,7 +44,7 @@
         dateFormat="dd/mm/yy"
         [fluid]="true"
         [showIcon]="true"
-        [invalid]="isFieldInvalid(field.key)"
+        [invalid]="isFieldInvalid(field)"
         appendTo="body"
       />
     }
@@ -53,7 +55,7 @@
         [id]="field.key"
         type="email"
         [formControl]="$any(form().get(field.key))"
-        [invalid]="isFieldInvalid(field.key)"
+        [invalid]="isFieldInvalid(field)"
       />
     }
 
@@ -63,7 +65,7 @@
         [id]="field.key"
         type="tel"
         [formControl]="$any(form().get(field.key))"
-        [invalid]="isFieldInvalid(field.key)"
+        [invalid]="isFieldInvalid(field)"
       />
     }
 
@@ -72,7 +74,7 @@
         pTextarea
         [id]="field.key"
         [formControl]="$any(form().get(field.key))"
-        [invalid]="isFieldInvalid(field.key)"
+        [invalid]="isFieldInvalid(field)"
         rows="4"
         [attr.maxlength]="field.maxLength"
       ></textarea>
@@ -80,7 +82,7 @@
 
     @if (field.type === 'boolean') {
       @if (field.options?.length) {
-        <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field.key)">
+        <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field)">
           @for (option of field.options; track option) {
             <div class="radio-option">
               <p-radiobutton
@@ -112,14 +114,11 @@
         [formControl]="$any(form().get(field.key))"
         [options]="field.options ?? []"
         [fluid]="true"
-        [invalid]="isFieldInvalid(field.key)"
+        [invalid]="isFieldInvalid(field)"
         [placeholder]="'common.selectOption' | translate"
         appendTo="body"
       />
     }
 
-    @if (isFieldInvalid(field.key)) {
-      <small class="p-error">{{ 'validation.required' | translate }}</small>
-    }
   </div>
 }

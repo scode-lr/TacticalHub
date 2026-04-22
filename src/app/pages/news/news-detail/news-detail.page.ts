@@ -1,6 +1,6 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon, IonChip, IonButton, IonImg } from '@ionic/angular/standalone';
+import { IonIcon, IonChip, IonImg } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { UpvotesComponent } from '@components/upvotes/upvotes.component';
@@ -14,7 +14,7 @@ import { DefaultImageDirective } from "@core/directives";
   templateUrl: './news-detail.page.html',
   styleUrls: ['./news-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonChip, IonButton, TranslatePipe, UpvotesComponent, CommentsComponent, DefaultImageDirective, IonImg]
+  imports: [CommonModule, IonIcon, IonChip, TranslatePipe, UpvotesComponent, CommentsComponent, DefaultImageDirective, IonImg]
 })
 export class NewsDetailPage implements OnInit {
   private navigationService = inject(NavigationService);

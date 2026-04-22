@@ -1,73 +1,167 @@
-import { Injectable, signal } from '@angular/core';
-import { Notification, NotificationStatus, NotificationType } from '@models/notification.model';
-import { mockNotifications } from '@mocks/notification.mock';
+import { Injectable, inject, signal, computed } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { ApiService, ApiResponse } from '@core/services/api.service';
+import {
+  Notification,
+  NotificationStatus,
+  NotificationType,
+  ApiGetNotificationsResponse,
+  ApiNotificationSummary
+} from '@models/notification.model';
+import { ResolveNotificationRequest } from '@core/requests/notification.request';
+import { RolesService } from '@services/roles.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class NotificationsService {
-  private notifications = signal<Notification[]>(mockNotifications);
+  private readonly apiService = inject(ApiService);
+  private readonly rolesService = inject(RolesService);
+
+  private readonly _notifications = signal<Notification[]>([]);
+  readonly isLoading = signal<boolean>(false);
+  readonly hasError = signal<boolean>(false);
+
+  // Pagination state
+  private _totalCount = 0;
+  private _limit = 20;
+  private _offset = 0;
+  readonly hasMore = computed(() => this._notifications().length < this._totalCount);
+
+  private getUserClubRoleId(): string {
+    return String(this.rolesService.getCurrentRole()?.id ?? '');
+  }
+
+  // ── Public read API ──────────────────────────────────────────────
 
   getNotifications(): Notification[] {
-    return this.notifications();
+    return this._notifications();
   }
 
   getNotificationById(id: number): Notification | undefined {
-    return this.notifications().find(notification => notification.id === id);
+    return this._notifications().find(n => n.id === id);
   }
 
   getUnreadNotifications(): Notification[] {
-    return this.notifications().filter(notification => notification.status === NotificationStatus.Unread);
+    return this._notifications().filter(n => n.status === NotificationStatus.Unread);
   }
 
   getUnreadCount(): number {
     return this.getUnreadNotifications().length;
   }
 
-  markAsRead(id: number): void {
-    const notifications = this.notifications();
+  // ── API calls ────────────────────────────────────────────────────
+
+  async loadNotifications(isRead?: boolean): Promise<void> {
+    this.isLoading.set(true);
+    this.hasError.set(false);
+    this._offset = 0;
+
+    try {
+      const params: Record<string, string> = {
+        userClubRoleId: this.getUserClubRoleId(),
+        limit: String(this._limit),
+        offset: '0'
+      };
+      if (isRead !== undefined) params['isRead'] = String(isRead);
+
+      const response = await firstValueFrom(
+        this.apiService.get<ApiResponse<ApiGetNotificationsResponse>>('/notifications', { params })
+      );
+
+      if (response.success && response.data) {
+        this._totalCount = response.data.totalCount;
+        this._notifications.set(response.data.items.map(this.mapToNotification));
+      }
+    } catch {
+      this.hasError.set(true);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async loadMore(): Promise<void> {
+    if (!this.hasMore() || this.isLoading()) return;
+
+    this._offset += this._limit;
+    this.isLoading.set(true);
+
+    try {
+      const response = await firstValueFrom(
+        this.apiService.get<ApiResponse<ApiGetNotificationsResponse>>('/notifications', {
+          params: { userClubRoleId: this.getUserClubRoleId(), limit: String(this._limit), offset: String(this._offset) }
+        })
+      );
+
+      if (response.success && response.data) {
+        this._notifications.update(existing => [
+          ...existing,
+          ...response.data!.items.map(this.mapToNotification)
+        ]);
+      }
+    } catch {
+      this._offset -= this._limit; // rollback
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async resolveNotification(id: number, request: ResolveNotificationRequest): Promise<void> {
+    await firstValueFrom(this.apiService.put(`/notifications/${id}/resolve`, request));
+    this.markAsCompleted(id);
+  }
+
+  async markAsRead(id: number): Promise<void> {
+    // Optimistic update
+    const notifications = this._notifications();
     const notification = notifications.find(n => n.id === id);
-    if (notification && notification.status === NotificationStatus.Unread) {
-      notification.status = NotificationStatus.Read;
-      notification.readAt = new Date();
-      this.notifications.set([...notifications]);
+    if (!notification || notification.status !== NotificationStatus.Unread) return;
+
+    notification.status = NotificationStatus.Read;
+    notification.readAt = new Date();
+    this._notifications.set([...notifications]);
+
+    try {
+      await firstValueFrom(this.apiService.put(`/notifications/${id}/read`, {}, { params: { userClubRoleId: this.getUserClubRoleId() } }));
+    } catch {
+      // Rollback on error
+      notification.status = NotificationStatus.Unread;
+      notification.readAt = undefined;
+      this._notifications.set([...notifications]);
     }
   }
 
   markAllAsRead(): void {
-    const notifications = this.notifications();
     const now = new Date();
-    const updated = notifications.map(n => {
-      if (n.status === NotificationStatus.Unread) {
-        return { ...n, status: NotificationStatus.Read, readAt: now };
-      }
-      return n;
-    });
-    this.notifications.set(updated);
-  }
-  
-  clearAllNotifications(): void {
-    this.notifications.set([]);
+    this._notifications.set(
+      this._notifications().map(n =>
+        n.status === NotificationStatus.Unread
+          ? { ...n, status: NotificationStatus.Read, readAt: now }
+          : n
+      )
+    );
   }
 
-  markAsCompleted(id: number): void {
-    const notifications = this.notifications();
-    const notification = notifications.find(n => n.id === id);
-    if (notification) {
-      notification.status = NotificationStatus.Completed;
-      this.notifications.set([...notifications]);
-    }
+  clearAllNotifications(): void {
+    this._notifications.set([]);
   }
 
   deleteNotification(id: number): void {
-    const notifications = this.notifications().filter(n => n.id !== id);
-    this.notifications.set(notifications);
+    this._notifications.update(list => list.filter(n => n.id !== id));
+  }
+
+  // ── Existing action/approval methods (unchanged) ─────────────────
+
+  markAsCompleted(id: number): void {
+    const notifications = this._notifications();
+    const notification = notifications.find(n => n.id === id);
+    if (notification) {
+      notification.status = NotificationStatus.Completed;
+      this._notifications.set([...notifications]);
+    }
   }
 
   handleAction(notificationId: number, actionType: string, data?: any): void {
-    const notifications = this.notifications();
+    const notifications = this._notifications();
     const notification = notifications.find(n => n.id === notificationId);
-    
     if (!notification) return;
 
     this.markAsCompleted(notificationId);
@@ -81,20 +175,17 @@ export class NotificationsService {
         status: NotificationStatus.Unread,
         createdAt: new Date()
       };
-
-      this.notifications.set([newNotification, ...notifications]);
+      this._notifications.set([newNotification, ...notifications]);
     }
   }
 
   handleApproval(notificationId: number, approved: boolean): void {
-    const notifications = this.notifications();
+    const notifications = this._notifications();
     const notification = notifications.find(n => n.id === notificationId);
-    
     if (!notification) return;
 
     if (approved) {
       this.markAsCompleted(notificationId);
-
       if (notification.user && notification.metadata?.teamName) {
         const newNotification: Notification = {
           id: Math.max(...notifications.map(n => n.id)) + 1,
@@ -106,30 +197,53 @@ export class NotificationsService {
           userId: notification.userId,
           user: notification.user
         };
-
-        this.notifications.set([newNotification, ...notifications]);
+        this._notifications.set([newNotification, ...notifications]);
       }
     } else {
       notification.metadata = { ...notification.metadata, rejected: true };
-      this.notifications.set([...notifications]);
+      this._notifications.set([...notifications]);
     }
   }
 
   undoRejection(notificationId: number): void {
-    const notifications = this.notifications();
+    const notifications = this._notifications();
     const notification = notifications.find(n => n.id === notificationId);
-    
-    if (notification && notification.metadata?.rejected) {
+    if (notification?.metadata?.rejected) {
       notification.status = NotificationStatus.Unread;
-      const { rejected, ...restMetadata } = notification.metadata;
-      notification.metadata = Object.keys(restMetadata).length > 0 ? restMetadata : undefined;
-      this.notifications.set([...notifications]);
+      const { rejected, ...rest } = notification.metadata;
+      notification.metadata = Object.keys(rest).length > 0 ? rest : undefined;
+      this._notifications.set([...notifications]);
     }
   }
 
   removeRejectedNotifications(): void {
-    const notifications = this.notifications();
-    const filtered = notifications.filter(n => !n.metadata?.rejected);
-    this.notifications.set(filtered);
+    this._notifications.update(list => list.filter(n => !n.metadata?.rejected));
+  }
+
+  // ── Private mapper ───────────────────────────────────────────────
+
+  private mapToNotification(item: ApiNotificationSummary): Notification {
+    return {
+      id: item.id,
+      title: item.title,
+      message: '',           // not present in summary — populated in detail view
+      type: item.type as NotificationType,
+      status: item.isRead ? NotificationStatus.Read : NotificationStatus.Unread,
+      createdAt: new Date(item.createdAt),
+      readAt: item.readAt ? new Date(item.readAt) : undefined,
+      user: item.createdByUserName ? {
+        id: 0,
+        email: '',
+        username: item.createdByUserName,
+        avatarUrl: item.createdByAvatar
+      } : undefined,
+      metadata: {
+        apiType: item.type,
+        apiStatus: item.status,
+        priority: item.priority,
+        relatedEntityId: item.relatedEntityId,
+        relatedEntityType: item.relatedEntityType
+      }
+    };
   }
 }

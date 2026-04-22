@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed, ElementRef, ViewChildren, QueryList, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@services/navigation.service';
@@ -24,7 +24,6 @@ import { TeamsService } from '@services/teams.service';
   imports: [
     CommonModule,
     IonContent,
-    IonButton,
     IonIcon,
     TranslatePipe,
     UserHeaderComponent

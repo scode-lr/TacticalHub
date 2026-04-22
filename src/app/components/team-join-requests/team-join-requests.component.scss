@@ -241,8 +241,8 @@
     gap: 0.25rem;
     flex-shrink: 0;
 
-    ion-button {
-      --border-radius: 8px;
+    button {
+      border-radius: 8px;
       width: 36px;
       height: 36px;
       transition: all 0.2s ease;
@@ -257,14 +257,6 @@
 
       &:active {
         transform: scale(0.95);
-      }
-
-      &[color="success"]:hover {
-        --background: rgba(16, 185, 129, 0.1);
-      }
-
-      &[color="danger"]:hover {
-        --background: rgba(239, 68, 68, 0.1);
       }
     }
   }
@@ -349,7 +341,7 @@
     }
 
     .request-actions {
-      ion-button {
+      button {
         width: 32px;
         height: 32px;
 

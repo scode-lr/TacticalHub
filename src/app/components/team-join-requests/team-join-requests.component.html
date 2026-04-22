@@ -9,9 +9,9 @@
       <p class="request-count">{{ approvalRequests().length }} {{ (approvalRequests().length === 1 ? 'notifications.pendingRequest' : 'notifications.pendingRequests') | translate }}</p>
     </div>
     
-    <ion-button fill="clear" class="request-arrow">
-      <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
-    </ion-button>
+    <button class="btn-icon request-arrow">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </button>
   </div>
 
   <ion-modal 
@@ -53,25 +53,22 @@
                 
                 <div class="request-actions">
                   @if (request.metadata?.rejected) {
-                    <ion-button 
-                      fill="clear" 
-                      color="medium"
+                    <button
+                      class="btn-icon"
                       (click)="handleUndo(request); $event.stopPropagation()">
-                      <ion-icon slot="icon-only" name="arrow-undo-outline"></ion-icon>
-                    </ion-button>
+                      <ion-icon name="arrow-undo-outline"></ion-icon>
+                    </button>
                   } @else {
-                    <ion-button 
-                      fill="clear" 
-                      color="success"
+                    <button
+                      class="btn-icon btn-icon--success"
                       (click)="handleApprove(request); $event.stopPropagation()">
-                      <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
-                    </ion-button>
-                    <ion-button 
-                      fill="clear" 
-                      color="danger"
+                      <ion-icon name="checkmark-outline"></ion-icon>
+                    </button>
+                    <button
+                      class="btn-icon btn-icon--danger"
                       (click)="handleReject(request); $event.stopPropagation()">
-                      <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-                    </ion-button>
+                      <ion-icon name="close-outline"></ion-icon>
+                    </button>
                   }
                 </div>
               </div>

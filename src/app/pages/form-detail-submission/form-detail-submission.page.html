@@ -1,0 +1,92 @@
+<div class="page-container">
+  <div class="section-header-with-back-button">
+    <app-back-button [route]="backRoute()" />
+    <h1 class="section-title">{{ pageTitle() | translate }}</h1>
+  </div>
+
+  @if (loading()) {
+    <div class="form-skeleton">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-description"></div>
+      <div class="skeleton-field"></div>
+      <div class="skeleton-field"></div>
+    </div>
+  }
+
+  @if (!loading()) {
+    @if (formDetail(); as detail) {
+      @if (detail.description) {
+        <p class="form-description">{{ detail.description }}</p>
+      }
+    }
+
+    @if (isEditing() && latestComment()) {
+      <div class="rejection-banner">
+        <div class="rejection-banner__stripe"></div>
+        <div class="rejection-banner__body">
+          <div class="rejection-banner__header">
+            <ion-icon name="alert-circle-outline" class="rejection-banner__icon"></ion-icon>
+            <span class="rejection-banner__label">{{ 'viewer.forms.submission.rejectionFeedback' | translate }}</span>
+            <span class="rejection-banner__date">{{ latestComment()!.date | date:'mediumDate' }}</span>
+          </div>
+          <p class="rejection-banner__text">{{ latestComment()!.text }}</p>
+          @if (rejectionComments().length > 1) {
+            <button type="button" class="rejection-banner__history-btn" (click)="showHistory.set(true)">
+              <ion-icon name="time-outline"></ion-icon>
+              {{ 'viewer.forms.submission.viewHistory' | translate }} ({{ rejectionComments().length }})
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    @if (rejectionComments().length > 1) {
+      <ion-modal [isOpen]="showHistory()" (didDismiss)="showHistory.set(false)" class="comments-history-modal">
+        <ng-template>
+          <div class="history-modal">
+            <div class="history-modal__header">
+              <h2 class="history-modal__title">{{ 'viewer.forms.submission.commentHistory' | translate }}</h2>
+              <button class="history-modal__close" (click)="showHistory.set(false)">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+            </div>
+            <div class="history-modal__content">
+              <p-timeline [value]="rejectionComments()" align="left">
+                <ng-template #marker let-entry>
+                  <div class="history-marker" [class.history-marker--latest]="isLatestComment(entry)">
+                    <ion-icon name="chatbubble-outline"></ion-icon>
+                  </div>
+                </ng-template>
+                <ng-template #opposite let-entry>
+                  <span class="history-date">{{ entry.date | date:'mediumDate' }}</span>
+                </ng-template>
+                <ng-template #content let-entry>
+                  <p class="history-comment" [class.history-comment--latest]="isLatestComment(entry)">{{ entry.text }}</p>
+                </ng-template>
+              </p-timeline>
+            </div>
+          </div>
+        </ng-template>
+      </ion-modal>
+    }
+
+    <div class="form-wrapper">
+      <form [formGroup]="dynamicForm" (ngSubmit)="onFormSubmit()" class="dynamic-form" novalidate>
+        <app-dynamic-form-fields
+          [fields]="activeFormFields()"
+          [form]="dynamicForm"
+          [fieldStates]="rejectedFieldStatuses()"
+        />
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="onFormCancel()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+            {{ (isEditing() ? 'viewer.forms.submission.resend' : 'common.submit') | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>
