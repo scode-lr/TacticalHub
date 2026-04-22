@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git ls-tree:*)",
+      "Bash(npm info:*)",
+      "Bash(npx --yes @modelcontextprotocol/server-filesystem --help)",
+      "mcp__primeng__directory_tree",
+      "mcp__primeng__read_text_file",
+      "mcp__primeng__search_files"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "primeng"
+  ]
+}

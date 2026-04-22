@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+www/
+build/
+
+# Capacitor
+android/
+ios/
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Generated files
+*.d.ts
+
+# Test coverage
+coverage/
+
+# Angular specific
+.angular/

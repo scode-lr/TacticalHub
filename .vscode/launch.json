@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "voltregacf",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:voltregacf"],
+      "console": "integratedTerminal",
+      "restart": true
+    },
+    
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "tactical",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start"],
+      "console": "integratedTerminal",
+      "restart": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "primeng": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:/Projects/tactical/TacticalHub/.primeng"
+      ]
+    }
+  }
+}
