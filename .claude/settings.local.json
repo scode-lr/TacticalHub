@@ -9,7 +9,8 @@
       "mcp__primeng__search_files",
       "mcp__primeng__list_allowed_directories",
       "mcp__primeng__list_directory",
-      "mcp__primeng__read_file"
+      "mcp__primeng__read_file",
+      "Bash(git -C c:/Projects/tactical/TacticalHub remote -v)"
     ]
   },
   "enabledMcpjsonServers": [

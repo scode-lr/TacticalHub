@@ -82,7 +82,11 @@
               "progress": false
             },
             "github-pages": {
-              "baseHref": "/TacticalHub/",
+              "baseHref": "/TacticalHub/tactical/",
+              "outputPath": {
+                "base": "docs/tactical",
+                "browser": ""
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -229,7 +233,11 @@
               "progress": false
             },
             "github-pages": {
-              "baseHref": "/VoltregaCF/",
+              "baseHref": "/TacticalHub/voltrega/",
+              "outputPath": {
+                "base": "docs/voltrega",
+                "browser": ""
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

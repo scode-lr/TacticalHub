@@ -36,7 +36,8 @@
     "ios:voltrega": "npm run build:voltregacf:prod && npm run cap:voltrega:sync:ios && npm run cap:voltrega:open:ios",
     "android:voltrega": "npm run build:voltregacf:prod && npm run cap:voltrega:sync:android && npm run cap:voltrega:open:android",
     "build:gh-pages": "ng build app --configuration github-pages",
-    "build:voltregacf:gh-pages": "ng build voltregacf.hub --configuration github-pages"
+    "build:voltregacf:gh-pages": "ng build voltregacf.hub --configuration github-pages",
+    "build:all:gh-pages": "npm run build:gh-pages && npm run build:voltregacf:gh-pages"
   },
   "private": true,
   "dependencies": {
