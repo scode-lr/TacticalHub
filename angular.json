@@ -80,6 +80,16 @@
             },
             "ci": {
               "progress": false
+            },
+            "github-pages": {
+              "baseHref": "/TacticalHub/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "projects/tactical.hub/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"
