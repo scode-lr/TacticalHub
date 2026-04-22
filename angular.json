@@ -227,6 +227,16 @@
             },
             "ci": {
               "progress": false
+            },
+            "github-pages": {
+              "baseHref": "/VoltregaCF/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "projects/voltregacf.hub/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"
