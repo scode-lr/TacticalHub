@@ -1,1 +1,0 @@
-var e=(function(r){return r.Info="info",r.Action="action",r.Approval="approval",r})(e||{}),n=(function(r){return r.Unread="unread",r.Read="read",r.Completed="completed",r})(n||{});export{e as a,n as b};
