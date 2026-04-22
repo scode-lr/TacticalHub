@@ -6,4 +6,5 @@ export interface FormSubmission {
   status: string;
   submittedAt: string | null;
   createdAt: string;
+  comment?: string | null;
 }

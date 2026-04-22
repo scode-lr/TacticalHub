@@ -28,6 +28,14 @@ export const routes: Routes = [
       {
         path: 'loading',
         loadComponent: () => import('./pages/auth/loading/loading.page').then(m => m.LoadingPage),
+      },
+      {
+        path: 'forgot-password',
+        loadComponent: () => import('./pages/auth/forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage),
+      },
+      {
+        path: 'reset-password',
+        loadComponent: () => import('./pages/auth/reset-password/reset-password.page').then(m => m.ResetPasswordPage),
       }
     ]
   },

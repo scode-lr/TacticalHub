@@ -1,44 +1,32 @@
-import { FormAction } from '@core/models/form-action.enum';
-import { FormFieldType } from '@core/models/form-field.model';
-import { AppStatus } from '@core/models/app-status.model';
-
-export interface CreateFormFieldRequest {
+export interface AddFormFieldRequest {
   key: string;
   label: string;
-  description: string | null;
-  type: FormFieldType;
+  description?: string | null;
+  type: string;
   isRequired: boolean;
-  maxLength: number | null;
+  maxLength?: number | null;
   order: number;
   options?: string[] | null;
-  validationJson: Record<string, unknown> | null;
+  validationJson?: Record<string, unknown> | null;
 }
 
-export interface CreateFormRequest {
-  clubId: number;
+export interface FormRequest {
   name: string;
-  description: string | null;
-  fromDate: string | null;
-  toDate: string | null;
-  status: AppStatus;
-  action: FormAction;
-  email: string | null;
-  fields: CreateFormFieldRequest[];
-}
-
-export interface UpdateFormRequest {
-  name?: string;
   description?: string | null;
   fromDate?: string | null;
   toDate?: string | null;
-  status?: AppStatus;
-  action?: FormAction;
+  status?: string;
+  action: string;
   email?: string | null;
-  fields?: CreateFormFieldRequest[];
+  fields?: AddFormFieldRequest[];
 }
 
-export type FormFieldValue = string | number | boolean | string[];
+export type CreateFormRequest = FormRequest & { clubId?: number };
+export type UpdateFormRequest = FormRequest;
 
-export interface FormSubmissionRequest {
-  values: Record<string, FormFieldValue>;
+export interface SubmitFormRequest {
+  values: Record<string, string | number | boolean | string[] | null>;
 }
+
+/** Alias kept for backward compatibility */
+export type FormSubmissionRequest = SubmitFormRequest;

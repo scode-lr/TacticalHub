@@ -34,9 +34,9 @@ export class AdminPage implements OnInit {
   readonly adminMenuConfig: MenuConfig = {
     role: RoleType.Admin,
     items: [
-      // { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'home', label: 'admin.menu.home', icon: 'home-outline', route: 'home' },
       // { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
-      // { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
+      { id: 'notifications', label: 'admin.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
       { id: 'forms-submissions', label: 'admin.menu.forms', icon: 'document-text-outline', route: 'forms-submissions' },
       { id: 'settings-forms', label: 'admin.menu.settingsForms', icon: 'settings-outline', route: 'settings-forms' },
       // { id: 'params', label: 'admin.menu.params', icon: 'settings-outline', route: 'params' },
@@ -65,8 +65,11 @@ export class AdminPage implements OnInit {
       if (this.router.url.includes('/settings-forms')) {
         return `app/${roleType}/${roleId}/settings-forms`;
       }
-      if(this.router.url.includes('/forms-submissions')) {
+      if (this.router.url.includes('/forms-submissions')) {
         return `app/${roleType}/${roleId}/forms-submissions`;
+      }
+      if (this.router.url.includes('/forms')) {
+        return `app/${roleType}/${roleId}/forms`;
       }
     }
     return `app/${roleType}/${roleId}/home`;
@@ -97,6 +100,7 @@ export class AdminPage implements OnInit {
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
                      url.includes('/teams/') && url.split('/').length > 5 ||
+                     url.includes('/forms/') && url.split('/').length > 5 ||
                      url.includes('/settings-forms/') && url.split('/').length > 5 ||
                      url.includes('/forms-submissions/') && url.split('/').length > 5;
     this.isDetailPage.set(isDetail);

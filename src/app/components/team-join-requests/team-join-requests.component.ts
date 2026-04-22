@@ -1,6 +1,6 @@
 import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonButton, IonIcon, IonModal, IonAvatar, IonImg } from '@ionic/angular/standalone';
+import { IonIcon, IonModal, IonAvatar, IonImg } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NotificationsService } from '@core/services/notifications.service';
 import { Notification, NotificationType } from '@core/models';
@@ -14,7 +14,6 @@ import { chevronForwardOutline, closeOutline, checkmarkOutline, peopleOutline, a
   standalone: true,
   imports: [
     CommonModule,
-    IonButton,
     IonIcon,
     IonModal,
     IonAvatar,

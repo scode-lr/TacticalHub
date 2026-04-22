@@ -7,23 +7,16 @@
   <!-- Action Section -->
   <div class="action-section">
     <!-- Sign Up Button (Primary) -->
-    <ion-button 
-      expand="block" 
-      class="btn-primary"
-      (click)="navigateToSignUp()">
-      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+    <button class="btn-primary btn-block" (click)="navigateToSignUp()">
+      <ion-icon name="person-add-outline"></ion-icon>
       {{ 'welcome.createAccount' | translate }}
-    </ion-button>
+    </button>
 
     <!-- Sign In Button (Secondary) -->
-    <ion-button 
-      expand="block" 
-      fill="outline"
-      class="btn-secondary"
-      (click)="navigateToSignIn()">
-      <ion-icon name="log-in-outline" slot="start"></ion-icon>
+    <button class="btn-secondary btn-block" (click)="navigateToSignIn()">
+      <ion-icon name="log-in-outline"></ion-icon>
       {{ 'welcome.signIn' | translate }}
-    </ion-button>
+    </button>
 
     <!-- Terms Text -->
     <div class="terms-text">

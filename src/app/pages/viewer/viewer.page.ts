@@ -35,11 +35,14 @@ export class ViewerPage implements OnInit {
   readonly viewerMenuConfig: MenuConfig = {
     role: RoleType.Viewer,
     items: [
-      // { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'notifications', label: 'viewer.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
       // { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' },
       // { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
-      { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
+      // { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
+      // { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      // { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' },
       // { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
       // { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
     ]
@@ -47,15 +50,25 @@ export class ViewerPage implements OnInit {
   
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {
-    const {roleType, roleId} = this.navigationService.extractRoleDetails();
-    if (this.isDetailPage()) {
-      if (this.router.url.includes('/forms')) {
-        return `app/${roleType}/${roleId}/forms`;
-      }
-      
-      return `app/${roleType}/${roleId}/news`;
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    if (!this.isDetailPage()) return '';
+
+    const url = this.router.url;
+
+    const formSubmissionMatch = url.match(/\/forms\/(\d+)\/(-?\d+)/);
+    if (formSubmissionMatch) {
+      return `/app/${roleType}/${roleId}/forms/${formSubmissionMatch[1]}`;
     }
-    return '';
+    if (url.includes('/forms/')) {
+      return `/app/${roleType}/${roleId}/forms`;
+    }
+    if (url.includes('/news/')) {
+      return `/app/${roleType}/${roleId}/news`;
+    }
+    if (url.includes('/matches/')) {
+      return `/app/${roleType}/${roleId}/matches`;
+    }
+    return `/app/${roleType}/${roleId}/home`;
   });
   
   constructor() {
@@ -82,6 +95,7 @@ export class ViewerPage implements OnInit {
     const url = this.router.url;
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
+                     url.includes('/action/') ||
                      url.includes('/forms/') && url.split('/').length > 5 ||
                      url.includes('/teams/') && url.split('/').length > 5;
     this.isDetailPage.set(isDetail);

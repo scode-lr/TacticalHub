@@ -43,7 +43,29 @@ export const sharedTranslations = {
     continueWithApple: 'Continuar con Apple',
     alreadyHaveAccount: '¿Ya tienes una cuenta?',
     dontHaveAccount: '¿No tienes una cuenta?',
-    continueAsGuest: 'Continuar como invitado'
+    continueAsGuest: 'Continuar como invitado',
+    forgotPasswordTitle: '¿Olvidaste tu contraseña?',
+    forgotPasswordSubtitle: 'Introduce tu correo y te enviaremos un enlace de restablecimiento.',
+    sendResetLink: 'Enviar enlace',
+    sending: 'Enviando…',
+    rememberIt: '¿La recuerdas?',
+    checkYourEmail: 'Revisa tu correo',
+    checkEmailMessage: 'Si {email} está registrado, se ha enviado un enlace de restablecimiento. Revisa tu bandeja de entrada y sigue las instrucciones.',
+    backToSignIn: 'Volver a iniciar sesión',
+    checkSpam: '¿No lo ves? Revisa tu carpeta de spam.',
+    setNewPassword: 'Establecer nueva contraseña',
+    setNewPasswordSubtitle: 'Elige una contraseña segura para tu cuenta.',
+    newPasswordPlaceholder: 'Nueva contraseña',
+    resetPasswordButton: 'Restablecer contraseña',
+    resetting: 'Restableciendo…',
+    passwordResetTitle: '¡Contraseña restablecida!',
+    passwordResetRedirecting: 'Redirigiendo a inicio de sesión…',
+    signInNow: 'Iniciar sesión ahora',
+    invalidResetLinkMessage: 'Este enlace de restablecimiento es inválido o ha caducado. Por favor, solicita uno nuevo.',
+    strengthWeak: 'Débil',
+    strengthFair: 'Regular',
+    strengthGood: 'Buena',
+    strengthStrong: 'Fuerte'
   },
   common: {
     loading: 'Cargando...',
@@ -69,7 +91,13 @@ export const sharedTranslations = {
     addItem: 'Agregar elemento',
     addNewItem: 'Agregar nuevo elemento',
     selectSeason: 'Seleccionar Temporada',
-    selectOption: 'Seleccionar una opción'
+    selectOption: 'Seleccionar una opción',
+    approve: 'Aprobar',
+    reject: 'Rechazar',
+    emptyState: {
+      title: 'Nada por aquí todavía',
+      message: 'No hay notificaciones que mostrar.'
+    }
   },
   fieldLabels: {
     type: 'Tipo',
@@ -101,7 +129,14 @@ export const sharedTranslations = {
     english: 'Inglés',
     spanish: 'Español',
     catalan: 'Catalán',
-    languageChanged: 'Idioma cambiado correctamente'
+    languageChanged: 'Idioma cambiado correctamente',
+    security: 'Seguridad',
+    changePasswordDescription: 'Cambia la contraseña de tu cuenta.',
+    currentPassword: 'Contraseña actual',
+    currentPasswordPlaceholder: 'Introduce tu contraseña actual',
+    newPassword: 'Nueva contraseña',
+    newPasswordPlaceholder: 'Introduce la nueva contraseña',
+    updatePassword: 'Actualizar contraseña'
   },  profile: {
     title: 'Mi perfil',
     editProfile: 'Editar perfil',
@@ -137,6 +172,11 @@ export const sharedTranslations = {
     accountCreatedSuccess: '¡Cuenta creada exitosamente!',
     signUpError: 'Ocurrió un error durante el registro.',
     signInError: 'Ocurrió un error',
+    passwordUpdated: 'Contraseña actualizada correctamente.',
+    passwordUpdateError: 'No se pudo actualizar la contraseña.',
+    forgotPasswordSent: 'Si ese correo está registrado, se ha enviado un enlace de restablecimiento.',
+    passwordResetSuccess: 'Contraseña restablecida correctamente.',
+    invalidResetLink: 'Enlace inválido o caducado.',
     googleSignUpSuccess: '¡Registro con Google exitoso!',
     appleSignUpSuccess: '¡Registro con Apple exitoso!',
     googleSignUpFailed: 'Registro con Google falló',
@@ -239,6 +279,7 @@ export const sharedTranslations = {
       paginatorReport: 'Mostrando {first} a {last} de {totalRecords} entradas',
       submissions: 'Envíos',
       allForms: 'Todos los formularios',
+      exportError: 'No se pudo exportar las respuestas. Por favor, inténtalo de nuevo.',
       columns: {
         id: 'ID',
         name: 'Nombre',
@@ -345,6 +386,91 @@ export const sharedTranslations = {
       }
     }
   },
+  forms: {
+    list: {
+      title: 'Formularios',
+      description: 'Rellena los formularios disponibles de tu club',
+      empty: 'No hay formularios disponibles',
+      emptyDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
+    },
+    submit: {
+      success: '¡Formulario enviado correctamente!'
+    },
+    status: {
+      draft: 'Borrador',
+      active: 'Activo',
+      closed: 'Cerrado'
+    },
+    actions: {
+      none: 'Ninguna',
+      register_user: 'Registrar usuario',
+      create_payment: 'Crear pago',
+      trigger_workflow: 'Activar flujo de trabajo'
+    },
+    fieldTypes: {
+      text: 'Texto',
+      number: 'Número',
+      date: 'Fecha',
+      select: 'Selección',
+      checkbox: 'Casilla'
+    },
+    submissionStatus: {
+      draft: 'Borrador',
+      submitted: 'Enviado'
+    },
+    fields: {
+      name: 'Nombre',
+      namePlaceholder: 'Introduce el nombre del formulario',
+      description: 'Descripción',
+      descriptionPlaceholder: 'Introduce una descripción (opcional)',
+      fromDate: 'Fecha de inicio',
+      toDate: 'Fecha de fin',
+      action: 'Acción',
+      actionPlaceholder: 'Seleccionar acción',
+      key: 'Clave del campo',
+      keyPlaceholder: 'p.ej. nombre',
+      label: 'Etiqueta',
+      labelPlaceholder: 'Introduce la etiqueta del campo',
+      type: 'Tipo',
+      order: 'Orden',
+      maxLength: 'Longitud máxima',
+      isRequired: 'Campo obligatorio'
+    },
+    admin: {
+      title: 'Gestión de formularios',
+      createForm: 'Crear formulario',
+      createFormTitle: 'Crear nuevo formulario',
+      createSuccess: '¡Formulario creado correctamente!',
+      addFieldSuccess: '¡Campo añadido correctamente!',
+      empty: 'No hay formularios aún',
+      emptyDescription: 'Crea tu primer formulario para empezar a recopilar datos.',
+      tabs: {
+        fields: 'Campos',
+        submissions: 'Envíos'
+      },
+      fields: {
+        title: 'Campos del formulario',
+        add: 'Añadir campo',
+        addTitle: 'Añadir nuevo campo',
+        empty: 'No hay campos aún',
+        emptyDescription: 'Añade campos para definir qué datos recopilar.',
+        required: 'Obligatorio'
+      },
+      submissions: {
+        title: 'Envíos',
+        empty: 'No hay envíos aún',
+        emptyDescription: 'Los envíos aparecerán aquí cuando los usuarios rellenen el formulario.',
+        userId: 'Usuario',
+        total: 'Total'
+      }
+    },
+    errors: {
+      loadError: 'No se pudieron cargar los formularios. Inténtalo de nuevo.',
+      submitError: 'No se pudo enviar el formulario. Inténtalo de nuevo.',
+      createError: 'No se pudo crear el formulario. Inténtalo de nuevo.',
+      addFieldError: 'No se pudo añadir el campo. Inténtalo de nuevo.'
+    }
+  },
   modals: {
     player: {
       title: 'Añadir Jugador',
@@ -375,13 +501,16 @@ export const sharedTranslations = {
     teamJoinRequests: 'Solicitudes de unión al equipo',
     actionRequests: 'Solicitudes de acción',
     pendingRequest: 'solicitud pendiente',
-    pendingRequests: 'solicitudes pendientes'
+    pendingRequests: 'solicitudes pendientes',
+    reviewComment: 'Comentario',
+    reviewCommentPlaceholder: 'Añade un comentario (opcional)'
   },
   viewer: {
     title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',
     menu: {
       home: 'Inicio',
+      notifications: 'Notificaciones',
       news: 'Noticias',
       action: 'Acciones',
       information: 'Información',
@@ -393,13 +522,14 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Bienvenido a tu portal del club',
+      notifications: 'Tus notificaciones y alertas',
       news: 'Últimas actualizaciones y anuncios',
       action: 'Registra jugadores o hazte socio',
       information: 'Información y recursos del club',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
       partners: 'Nuestros socios y patrocinadores del club',
-      forms: 'Rellena y envía formularios del club'
+      forms: 'Rellena los formularios del club'
     },
     home: {
       welcome: '¡Bienvenido al club!',
@@ -437,8 +567,26 @@ export const sharedTranslations = {
       noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.',
       form: {
         success: {
-          submitMessage: 'El formulario se ha enviado correctamente'
+          submitMessage: 'El formulario se ha enviado correctamente',
+          resubmitMessage: 'Tu formulario ha sido reenviado correctamente'
         }
+      }
+    },
+    forms: {
+      submission: {
+        title: 'Mis envíos',
+        statusSubmitted: 'Enviado',
+        statusUnderReview: 'En revisión',
+        statusApproved: 'Aprobado',
+        statusRejected: 'Rechazado',
+        fillAgain: 'Volver a rellenar',
+        detailTitle: 'Mi envío',
+        rejectionComment: 'Comentario del coordinador',
+        editAndResend: 'Editar y reenviar',
+        resend: 'Reenviar',
+        rejectionFeedback: 'Comentario del coordinador',
+        viewHistory: 'Ver historial',
+        commentHistory: 'Historial de comentarios'
       }
     },
     information: {

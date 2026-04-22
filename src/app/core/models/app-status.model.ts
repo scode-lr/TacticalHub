@@ -3,5 +3,7 @@ export enum AppStatus {
   Pending = 'P',
   Draft = 'D',
   Inactive = 'I',
-  Archived = 'AR'
+  Submitted = 'S',
+  Rejected = 'R',
+  Approved = 'A'
 }

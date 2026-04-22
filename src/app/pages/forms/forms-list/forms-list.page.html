@@ -1,0 +1,59 @@
+<div class="page-container forms-list-page">
+  <div class="section-header">
+    <h1 class="section-title">{{ 'forms.list.title' | translate }}</h1>
+    <p class="section-description">{{ 'forms.list.description' | translate }}</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  } @else if (error()) {
+    <div class="empty-state">
+      <ion-icon name="alert-circle-outline" class="empty-icon"></ion-icon>
+      <p class="empty-description">{{ error()! | translate }}</p>
+    </div>
+  } @else if (forms().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <h2 class="empty-title">{{ 'forms.list.empty' | translate }}</h2>
+      <p class="empty-description">{{ 'forms.list.emptyDescription' | translate }}</p>
+    </div>
+  } @else {
+    <div class="forms-grid">
+      @for (form of forms(); track form.id) {
+        <div class="form-card" (click)="openForm(form.id)">
+          <div class="form-card-header">
+            <ion-icon name="document-text-outline" class="form-icon"></ion-icon>
+            <span class="form-status" [class.active]="isActive(form)">
+              {{ ('forms.status.' + form.status) | translate }}
+            </span>
+          </div>
+          <div class="form-card-body">
+            <h3 class="form-name">{{ form.name }}</h3>
+            @if (form.description) {
+              <p class="form-description">{{ form.description }}</p>
+            }
+          </div>
+          @if (form.fromDate || form.toDate) {
+            <div class="form-card-footer">
+              @if (form.fromDate) {
+                <span class="form-date">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ form.fromDate | date:'dd/MM/yyyy' }}
+                </span>
+              }
+              @if (form.toDate) {
+                <span class="form-date">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ form.toDate | date:'dd/MM/yyyy' }}
+                </span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

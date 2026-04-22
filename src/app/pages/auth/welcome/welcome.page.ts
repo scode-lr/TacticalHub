@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 
-  IonButton,
+import {
   IonIcon,
   IonText
 } from '@ionic/angular/standalone';
@@ -23,7 +22,6 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   standalone: true,
   imports: [
     CommonModule,
-    IonButton,
     IonIcon,
     IonText,
     AuthBrandingComponent,

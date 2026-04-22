@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonInput, IonButton, IonAvatar, IonImg, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonInput, IonAvatar, IonImg, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@services/user.service';
@@ -18,7 +18,6 @@ import { User } from '@core/models/user.model';
     ReactiveFormsModule,
     IonContent,
     IonInput,
-    IonButton,
     IonAvatar,
     IonImg,
     IonIcon,

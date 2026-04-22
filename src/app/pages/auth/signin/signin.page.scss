@@ -8,8 +8,30 @@
 
 .signin-form {
   @extend .auth-form;
-  
+
   .signin-btn {
     @extend .auth-btn;
+  }
+}
+
+.forgot-link-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.5rem;
+  margin-bottom: 0.25rem;
+
+  .forgot-link {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+    background: none;
+    border: none;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--ion-color-primary, #3880ff);
+    }
   }
 }

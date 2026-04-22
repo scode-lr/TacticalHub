@@ -30,7 +30,6 @@ export class FormHeaderComponent {
       case AppStatus.Pending:  return 'info';
       case AppStatus.Draft:    return 'warn';
       case AppStatus.Inactive: return 'secondary';
-      case AppStatus.Archived: return 'secondary';
       default:                 return 'secondary';
     }
   });

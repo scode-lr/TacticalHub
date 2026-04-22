@@ -1,11 +1,12 @@
-import { Component, inject, computed, signal, OnDestroy } from '@angular/core';
+import { Component, inject, computed, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonAvatar, IonImg, IonIcon, IonButton } from '@ionic/angular/standalone';
+import { IonAvatar, IonImg, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NotificationsService } from '@core/services/notifications.service';
 import { Notification, NotificationType } from '@core/models';
 import { TeamJoinRequestsComponent } from '@components/team-join-requests/team-join-requests.component';
 import { ActionRequestsComponent } from '@components/action-requests/action-requests.component';
+import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
 import { addIcons } from 'ionicons';
 import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 
@@ -16,26 +17,33 @@ import { checkmarkOutline, closeOutline } from 'ionicons/icons';
   standalone: true,
   imports: [
     CommonModule,
-    IonAvatar,
-    IonImg,
-    IonIcon,
-    IonButton,
+    IonAvatar, IonImg, IonIcon, IonSpinner,
     TranslatePipe,
     TeamJoinRequestsComponent,
-    ActionRequestsComponent
+    ActionRequestsComponent,
+    EmptyStateComponent
   ]
 })
-export class NotificationsPage implements OnDestroy {
+export class NotificationsPage implements OnInit, OnDestroy {
   private notificationsService = inject(NotificationsService);
-  
-  readonly notifications = computed(() => 
+
+  readonly isLoading = this.notificationsService.isLoading;
+  readonly hasError = this.notificationsService.hasError;
+  readonly hasMore = this.notificationsService.hasMore;
+
+  readonly notifications = computed(() =>
     this.notificationsService.getNotifications()
       .filter(n => n.type !== NotificationType.Approval && n.type !== NotificationType.Action)
   );
   readonly NotificationType = NotificationType;
+  readonly defaultAvatar = 'assets/default-avatar.svg';
 
   constructor() {
     addIcons({ checkmarkOutline, closeOutline });
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.notificationsService.loadNotifications();
   }
 
   ngOnDestroy(): void {
@@ -43,6 +51,12 @@ export class NotificationsPage implements OnDestroy {
     this.notificationsService.markAllAsRead();
   }
 
+  async loadMore(): Promise<void> {
+    await this.notificationsService.loadMore();
+  }
+
+
+  // moments
   formatDate(date: Date): string {
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
@@ -50,22 +64,17 @@ export class NotificationsPage implements OnDestroy {
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    if (diffMins < 60) {
-      return `${diffMins}m`;
-    } else if (diffHours < 24) {
-      return `${diffHours}h`;
-    } else if (diffDays < 7) {
-      return `${diffDays}d`;
-    } else {
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    }
+    if (diffMins < 60) return `${diffMins}m`;
+    if (diffHours < 24) return `${diffHours}h`;
+    if (diffDays < 7) return `${diffDays}d`;
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }
 
   handleAction(notification: Notification): void {
     if (notification.action) {
       this.notificationsService.handleAction(
-        notification.id, 
-        notification.action.actionType, 
+        notification.id,
+        notification.action.actionType,
         notification.action.data
       );
     }
@@ -77,6 +86,11 @@ export class NotificationsPage implements OnDestroy {
 
   handleReject(notification: Notification): void {
     this.notificationsService.handleApproval(notification.id, false);
+  }
+
+  onAvatarError(event: Event): void {
+    const img = (event.target as HTMLIonImgElement).shadowRoot?.querySelector('img');
+    if (img) img.src = this.defaultAvatar;
   }
 
   markAsRead(notification: Notification): void {

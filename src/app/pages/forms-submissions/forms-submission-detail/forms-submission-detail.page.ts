@@ -1,20 +1,17 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { SubmissionDetailViewComponent } from '@components/submission-detail-view/submission-detail-view.component';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { NavigationService } from '@services/navigation.service';
 import { SubmissionDetail } from '@core/responses/form.response';
-import { SubmissionValue } from '@core/models/submission-value.model';
-import { FormsModule } from '@angular/forms';
-import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-forms-submission-detail',
   templateUrl: './forms-submission-detail.page.html',
   styleUrls: ['./forms-submission-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, BackButtonComponent, CheckboxModule]
+  imports: [TranslatePipe, BackButtonComponent, SubmissionDetailViewComponent]
 })
 export class FormsSubmissionDetailPage implements OnInit {
   private readonly formSubmissionsService = inject(FormSubmissionsService);
@@ -32,12 +29,5 @@ export class FormsSubmissionDetailPage implements OnInit {
     } finally {
       this.loading.set(false);
     }
-  }
-
-  getDisplayValue(value: SubmissionValue): string {
-    if (value.valueText !== null) return value.valueText;
-    if (value.valueNumber !== null) return String(value.valueNumber);
-    if (value.valueDate !== null) return value.valueDate;
-    return '—';
   }
 }

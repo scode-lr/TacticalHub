@@ -19,7 +19,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
-import { IonIcon } from '@ionic/angular/standalone';
+import { IonIcon, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline } from 'ionicons/icons';
 
@@ -29,7 +29,7 @@ import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, clo
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule, IonIcon]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule, IonIcon, IonToast]
 })
 export class FormsSubmissionsPage {
   private readonly formService = inject(FormService);
@@ -56,6 +56,9 @@ export class FormsSubmissionsPage {
   readonly totalSubmissions = signal<number>(0);
   readonly currentSort = signal<string | undefined>(undefined);
 
+  readonly toastVisible = signal<boolean>(false);
+  readonly toastMessage = signal<string>('');
+
   selectedForms: FormDetail[] = [];
   searchValue = '';
   submissionsSearchValue = '';
@@ -76,7 +79,6 @@ export class FormsSubmissionsPage {
       { label: this.translationService.instant('admin.settingsForms.status.I'), value: AppStatus.Inactive },
       { label: this.translationService.instant('admin.settingsForms.status.P'), value: AppStatus.Pending },
       { label: this.translationService.instant('admin.settingsForms.status.D'), value: AppStatus.Draft },
-      { label: this.translationService.instant('admin.settingsForms.status.AR'), value: AppStatus.Archived },
     ];
   }
 
@@ -123,7 +125,7 @@ export class FormsSubmissionsPage {
     try {
       const clubId = this.clubService.getCurrentClubId();
       if (clubId !== null) {
-        const result = await this.formService.getFormsByClubId(clubId, undefined, true, this.formsLimit(), this.formsOffset());
+        const result = await this.formService.getFormsByClubId(clubId, AppStatus.Active, true, this.formsLimit(), this.formsOffset());
         this.forms.set(result);
       }
     } catch (error) {
@@ -211,6 +213,22 @@ export class FormsSubmissionsPage {
     this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms-submissions/${submissionId}`]);
   }
 
+  async exportSubmissions(): Promise<void> {
+    for (const form of this.selectedForms) {
+      try {
+        await this.formSubmissionsService.exportSubmissions(form.id, form.name);
+      } catch {
+        this.toastMessage.set(this.translationService.instant('admin.forms.exportError'));
+        this.toastVisible.set(true);
+        return;
+      }
+    }
+  }
+
+  onToastDismiss(): void {
+    this.toastVisible.set(false);
+  }
+
   backToList(): void {
     this.viewState.set('list');
     this.selectedFormId.set(null);
@@ -229,7 +247,6 @@ export class FormsSubmissionsPage {
       case AppStatus.Pending: return 'warn';
       case AppStatus.Draft: return 'info';
       case AppStatus.Inactive: return 'danger';
-      case AppStatus.Archived: return 'secondary';
       default: return undefined;
     }
   }

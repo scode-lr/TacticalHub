@@ -43,7 +43,29 @@ export const sharedTranslations = {
     continueWithApple: 'Continuar amb Apple',
     alreadyHaveAccount: 'Ja tens un compte?',
     dontHaveAccount: 'No tens un compte?',
-    continueAsGuest: 'Continuar com a convidat'
+    continueAsGuest: 'Continuar com a convidat',
+    forgotPasswordTitle: 'Has oblidat la contrasenya?',
+    forgotPasswordSubtitle: "Introdueix el teu correu i t'enviarem un enllaç de restabliment.",
+    sendResetLink: 'Enviar enllaç',
+    sending: 'Enviant…',
+    rememberIt: 'La recordes?',
+    checkYourEmail: 'Revisa el teu correu',
+    checkEmailMessage: "Si {email} està registrat, s'ha enviat un enllaç de restabliment. Revisa la teva safata d'entrada i segueix les instruccions.",
+    backToSignIn: 'Tornar a iniciar sessió',
+    checkSpam: 'No el veus? Revisa la teva carpeta de correu brossa.',
+    setNewPassword: 'Establir nova contrasenya',
+    setNewPasswordSubtitle: 'Tria una contrasenya segura per al teu compte.',
+    newPasswordPlaceholder: 'Nova contrasenya',
+    resetPasswordButton: 'Restablir contrasenya',
+    resetting: 'Restablint…',
+    passwordResetTitle: 'Contrasenya restablerta!',
+    passwordResetRedirecting: "Redirigint a l'inici de sessió…",
+    signInNow: 'Iniciar sessió ara',
+    invalidResetLinkMessage: "Aquest enllaç de restabliment és invàlid o ha caducat. Si us plau, sol·licita'n un de nou.",
+    strengthWeak: 'Feble',
+    strengthFair: 'Regular',
+    strengthGood: 'Bona',
+    strengthStrong: 'Forta'
   },
   common: {
     loading: 'Carregant...',
@@ -69,7 +91,13 @@ export const sharedTranslations = {
     addItem: 'Afegir element',
     addNewItem: 'Afegir nou element',
     selectSeason: 'Seleccionar Temporada',
-    selectOption: 'Seleccionar una opció'
+    selectOption: 'Seleccionar una opció',
+    approve: 'Aprovar',
+    reject: 'Rebutjar',
+    emptyState: {
+      title: 'Res per aquí encara',
+      message: 'No hi ha notificacions per mostrar.'
+    }
   },
   fieldLabels: {
     type: 'Tipus',
@@ -101,7 +129,14 @@ export const sharedTranslations = {
     english: 'Anglès',
     spanish: 'Espanyol',
     catalan: 'Català',
-    languageChanged: 'Idioma canviat correctament'
+    languageChanged: 'Idioma canviat correctament',
+    security: 'Seguretat',
+    changePasswordDescription: 'Canvia la contrasenya del teu compte.',
+    currentPassword: 'Contrasenya actual',
+    currentPasswordPlaceholder: 'Introdueix la teva contrasenya actual',
+    newPassword: 'Nova contrasenya',
+    newPasswordPlaceholder: 'Introdueix la nova contrasenya',
+    updatePassword: 'Actualitzar contrasenya'
   },  profile: {
     title: 'El meu perfil',
     editProfile: 'Editar perfil',
@@ -137,6 +172,11 @@ export const sharedTranslations = {
     accountCreatedSuccess: 'Compte creat amb èxit!',
     signUpError: 'Ha ocorregut un error durant el registre.',
     signInError: 'Ha ocorregut un error',
+    passwordUpdated: 'Contrasenya actualitzada correctament.',
+    passwordUpdateError: 'No s\'ha pogut actualitzar la contrasenya.',
+    forgotPasswordSent: "Si aquest correu està registrat, s'ha enviat un enllaç de restabliment.",
+    passwordResetSuccess: 'Contrasenya restablerta correctament.',
+    invalidResetLink: 'Enllaç invàlid o caducat.',
     googleSignUpSuccess: 'Registre amb Google amb èxit!',
     appleSignUpSuccess: 'Registre amb Apple amb èxit!',
     googleSignUpFailed: 'Registre amb Google ha fallat',
@@ -239,6 +279,7 @@ export const sharedTranslations = {
       paginatorReport: 'Mostrant {first} a {last} de {totalRecords} entrades',
       submissions: 'Enviaments',
       allForms: 'Tots els formularis',
+      exportError: 'No s\'ha pogut exportar les respostes. Si us plau, torna-ho a intentar.',
       columns: {
         id: 'ID',
         name: 'Nom',
@@ -345,6 +386,91 @@ export const sharedTranslations = {
       }
     }
   },
+  forms: {
+    list: {
+      title: 'Formularis',
+      description: 'Omple els formularis disponibles del teu club',
+      empty: 'No hi ha formularis disponibles',
+      emptyDescription: 'No hi ha formularis actius en aquest moment. Torna més tard.'
+    },
+    submit: {
+      success: 'Formulari enviat correctament!'
+    },
+    status: {
+      draft: 'Esborrany',
+      active: 'Actiu',
+      closed: 'Tancat'
+    },
+    actions: {
+      none: 'Cap',
+      register_user: 'Registrar usuari',
+      create_payment: 'Crear pagament',
+      trigger_workflow: 'Activar flux de treball'
+    },
+    fieldTypes: {
+      text: 'Text',
+      number: 'Número',
+      date: 'Data',
+      select: 'Selecció',
+      checkbox: 'Casella'
+    },
+    submissionStatus: {
+      draft: 'Esborrany',
+      submitted: 'Enviat'
+    },
+    fields: {
+      name: 'Nom',
+      namePlaceholder: 'Introdueix el nom del formulari',
+      description: 'Descripció',
+      descriptionPlaceholder: 'Introdueix una descripció (opcional)',
+      fromDate: 'Data d\'inici',
+      toDate: 'Data de fi',
+      action: 'Acció',
+      actionPlaceholder: 'Seleccionar acció',
+      key: 'Clau del camp',
+      keyPlaceholder: 'p.ex. nom',
+      label: 'Etiqueta',
+      labelPlaceholder: 'Introdueix l\'etiqueta del camp',
+      type: 'Tipus',
+      order: 'Ordre',
+      maxLength: 'Longitud màxima',
+      isRequired: 'Camp obligatori'
+    },
+    admin: {
+      title: 'Gestió de formularis',
+      createForm: 'Crear formulari',
+      createFormTitle: 'Crear nou formulari',
+      createSuccess: 'Formulari creat correctament!',
+      addFieldSuccess: 'Camp afegit correctament!',
+      empty: 'No hi ha formularis encara',
+      emptyDescription: 'Crea el teu primer formulari per començar a recollir dades.',
+      tabs: {
+        fields: 'Camps',
+        submissions: 'Enviaments'
+      },
+      fields: {
+        title: 'Camps del formulari',
+        add: 'Afegir camp',
+        addTitle: 'Afegir nou camp',
+        empty: 'No hi ha camps encara',
+        emptyDescription: 'Afegeix camps per definir quines dades recollir.',
+        required: 'Obligatori'
+      },
+      submissions: {
+        title: 'Enviaments',
+        empty: 'No hi ha enviaments encara',
+        emptyDescription: 'Els enviaments apareixeran aquí quan els usuaris omplin el formulari.',
+        userId: 'Usuari',
+        total: 'Total'
+      }
+    },
+    errors: {
+      loadError: 'No s\'han pogut carregar els formularis. Torna-ho a intentar.',
+      submitError: 'No s\'ha pogut enviar el formulari. Torna-ho a intentar.',
+      createError: 'No s\'ha pogut crear el formulari. Torna-ho a intentar.',
+      addFieldError: 'No s\'ha pogut afegir el camp. Torna-ho a intentar.'
+    }
+  },
   modals: {
     player: {
       title: 'Afegir Jugador',
@@ -375,13 +501,16 @@ export const sharedTranslations = {
     teamJoinRequests: 'Sol·licituds d\'unió a l\'equip',
     actionRequests: 'Sol·licituds d\'acció',
     pendingRequest: 'sol·licitud pendent',
-    pendingRequests: 'sol·licituds pendents'
+    pendingRequests: 'sol·licituds pendents',
+    reviewComment: 'Comentari',
+    reviewCommentPlaceholder: 'Afegeix un comentari (opcional)'
   },
   viewer: {
     title: 'Portal de l\'observador',
     subtitle: 'Accedeix a informació i serveis del club',
     menu: {
       home: 'Inici',
+      notifications: 'Notificacions',
       news: 'Notícies',
       action: 'Accions',
       information: 'Informació',
@@ -393,13 +522,14 @@ export const sharedTranslations = {
     },
     description: {
       home: 'Benvingut al teu portal del club',
+      notifications: 'Les teves notificacions i alertes',
       news: 'Últimes actualitzacions i anuncis',
       action: 'Registra jugadors o fes-te soci',
       information: 'Informació i recursos del club',
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
       partners: 'Els nostres socis i patrocinadors del club',
-      forms: 'Omple i envia formularis del club'
+      forms: 'Omple els formularis del club'
     },
     home: {
       welcome: 'Benvingut al club!',
@@ -486,7 +616,8 @@ export const sharedTranslations = {
         registerPlayerSuccess: 'Registre de jugador enviat amb èxit!',
         becomeMemberSuccess: 'Sol·licitud de membresía enviada amb èxit!',
         success: {
-          submitMessage: 'El formulari s\'ha enviat correctament'
+          submitMessage: 'El formulari s\'ha enviat correctament',
+          resubmitMessage: 'El teu formulari s\'ha reenviat correctament'
         },
         errors: {
           required: 'Aquest camp és obligatori',
@@ -499,6 +630,23 @@ export const sharedTranslations = {
       },
       noForms: 'No hi ha formularis disponibles',
       noFormsDescription: 'No hi ha formularis actius en aquest moment. Torna a comprovar-ho més tard.'
+    },
+    forms: {
+      submission: {
+        title: 'Els meus enviaments',
+        statusSubmitted: 'Enviat',
+        statusUnderReview: 'En revisió',
+        statusApproved: 'Aprovat',
+        statusRejected: 'Rebutjat',
+        fillAgain: 'Tornar a omplir',
+        detailTitle: 'El meu enviament',
+        rejectionComment: 'Comentari del coordinador',
+        editAndResend: 'Editar i reenviar',
+        resend: 'Reenviar',
+        rejectionFeedback: 'Comentari del coordinador',
+        viewHistory: 'Veure historial',
+        commentHistory: 'Historial de comentaris'
+      }
     },
     information: {
       title: 'Informació',

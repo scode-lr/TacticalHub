@@ -1,7 +1,7 @@
 import { Component, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { IonIcon, IonInput, IonTextarea, IonButton, IonSpinner } from '@ionic/angular/standalone';
+import { IonIcon, IonInput, IonTextarea, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { FileValidationService } from '@services/file-validation.service';
 
@@ -16,7 +16,6 @@ import { FileValidationService } from '@services/file-validation.service';
     IonIcon,
     IonInput,
     IonTextarea,
-    IonButton,
     IonSpinner,
     TranslatePipe
   ]

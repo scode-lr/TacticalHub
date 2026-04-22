@@ -1,6 +1,6 @@
 <div class="page-container">
   <div class="section-header-with-back-button">
-    <app-back-button />
+    <app-back-button [route]="backRoute()" />
     <h1 class="section-title">{{ pageTitle() | translate }}</h1>
   </div>
 
@@ -9,34 +9,30 @@
       <div class="skeleton-title"></div>
       <div class="skeleton-description"></div>
       <div class="skeleton-field"></div>
+      <div class="skeleton-field"></div>
     </div>
   }
 
   @if (!loading()) {
-    <div class="form-wrapper">
-      @if (formDetail(); as detail) {
-        <div class="form-header">
-          @if (detail.description) {
-            <p class="form-description">{{ detail.description }}</p>
-          }
-        </div>
+    @if (formDetail(); as detail) {
+      @if (detail.description) {
+        <p class="form-description">{{ detail.description }}</p>
       }
+    }
 
-      <form [formGroup]="dynamicForm" (ngSubmit)="onFormSubmit()" class="dynamic-form" novalidate>
-        <app-dynamic-form-fields
-          [fields]="formFields()"
-          [form]="dynamicForm"
-        />
+    <div class="submissions-section">
+      <div class="submissions-header">
+        <h2 class="submissions-title">{{ 'viewer.forms.submission.title' | translate }}</h2>
+        <button type="button" class="btn-primary" (click)="onFillAgain()">
+          {{ 'viewer.forms.submission.fillAgain' | translate }}
+        </button>
+      </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn-secondary" (click)="onFormCancel()">
-            {{ 'common.cancel' | translate }}
-          </button>
-          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
-            {{ 'common.submit' | translate }}
-          </button>
-        </div>
-      </form>
+      <div class="submissions-list">
+        @for (submission of mySubmissions(); track submission.id) {
+          <app-form-submission-card [submission]="submission" [formFields]="formFields()" (editRequested)="onEditRejected(submission)" />
+        }
+      </div>
     </div>
   }
 </div>
