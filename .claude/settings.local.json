@@ -10,7 +10,10 @@
       "mcp__primeng__list_allowed_directories",
       "mcp__primeng__list_directory",
       "mcp__primeng__read_file",
-      "Bash(git -C c:/Projects/tactical/TacticalHub remote -v)"
+      "Bash(git -C c:/Projects/tactical/TacticalHub remote -v)",
+      "Bash(python3 -c ' *)",
+      "Bash(python -c ' *)",
+      "Bash(identify c:/Projects/tactical/TacticalHub/projects/voltregacf.hub/resources/icon/icon.png)"
     ]
   },
   "enabledMcpjsonServers": [
