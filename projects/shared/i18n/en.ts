@@ -347,7 +347,8 @@ export const sharedTranslations = {
         action: 'Action',
         email: 'Email',
         emailPlaceholder: 'Enter an email to send the submissions',
-        emailInvalid: 'Please enter a valid email address'
+        emailInvalid: 'Please enter a valid email address',
+        actionRequired: 'Action is required'
       },
       section: {
         general: 'General',
@@ -367,6 +368,8 @@ export const sharedTranslations = {
         addOption: 'Add option',
         optionsEmpty: 'No options yet. Add at least one.',
         optionPlaceholder: 'Option value',
+        moveUp: 'Move up',
+        moveDown: 'Move down',
         types: {
           text: 'Text',
           number: 'Number',
@@ -385,7 +388,8 @@ export const sharedTranslations = {
         title: 'Form Preview',
         notice: 'This is a preview. Submitting is disabled.',
         noFields: 'No fields added yet.'
-      }
+      },
+      formInvalid: 'Please fill in all required fields'
     }
   },
   forms: {

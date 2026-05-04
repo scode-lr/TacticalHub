@@ -17,12 +17,6 @@ import { ToastService } from '@core/services/toast.service';
 import { CreateFormRequest, UpdateFormRequest } from '@core/requests/form.request';
 import { RolesService } from '@services/roles.service';
 import { FormDetail } from '@core/responses/form.response';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
-import { SelectModule } from 'primeng/select';
-import { IftaLabelModule } from 'primeng/iftalabel';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
 
 interface HeaderFormControls {
   name: FormControl<string>;
@@ -47,12 +41,6 @@ interface HeaderFormControls {
     BackButtonComponent,
     SettingsFormFieldsComponent,
     FormPreviewModalComponent,
-    InputTextModule,
-    TextareaModule,
-    SelectModule,
-    IftaLabelModule,
-    ButtonModule,
-    DatePickerModule,
   ]
 })
 export class SettingsFormDetailPage implements OnInit {
@@ -147,6 +135,9 @@ export class SettingsFormDetailPage implements OnInit {
   async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      console.log('Form errors:', this.form.errors);
+      console.log('Fields errors:', this.fieldsArray.controls.map((ctrl, i) => ({ index: i, errors: ctrl.errors, value: ctrl.value })));
+      this.toastService.show('admin.settingsForms.formInvalid', 'danger');
       return;
     }
 
@@ -210,7 +201,8 @@ export class SettingsFormDetailPage implements OnInit {
     const fieldsArray = this.fb.array(
       (existing?.fields ?? []).map(f =>
         this.fb.group({
-          key: [f.key, [Validators.required, Validators.pattern(/^[a-z][a-z0-9_]*$/)]],
+          id: [f.id],
+          key: [f.key],
           label: [f.label, Validators.required],
           description: [f.description ?? ''],
           type: [f.type, Validators.required],
@@ -236,5 +228,25 @@ export class SettingsFormDetailPage implements OnInit {
 
   private async fetchFormById(id: string): Promise<FormDetail | null> {
     return await this.formService.getFormById(Number(id));
+  }
+
+  formatDateForInput(date: Date | null): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  onDateInput(event: Event, controlName: 'fromDate' | 'toDate'): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    if (value) {
+      const date = new Date(value + 'T00:00:00');
+      this.form.get(controlName)?.setValue(date);
+    } else {
+      this.form.get(controlName)?.setValue(null);
+    }
   }
 }
