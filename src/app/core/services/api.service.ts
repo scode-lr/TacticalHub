@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { skipAuthContext } from '../interceptors/auth.interceptor';
+import { ToastService } from './toast.service';
 
 export interface ApiRequestOptions {
   headers?: HttpHeaders | { [header: string]: string | string[] };
@@ -26,6 +27,7 @@ export interface ApiResponse<T = any> {
 })
 export class ApiService {
   private readonly http = inject(HttpClient);
+  private readonly toastService = inject(ToastService);
   private readonly baseUrl = environment.apiUrl;
   private readonly defaultTimeout = 30000;
 
@@ -59,7 +61,7 @@ export class ApiService {
     let errorMessage = 'An unexpected error occurred';
 
     if (error.error instanceof ErrorEvent) {
-      errorMessage = `Error: ${error.error.message}`;
+      errorMessage = error.error.message;
     } else {
       if (error.status === 0) {
         errorMessage = 'Could not connect to the server';
@@ -81,6 +83,8 @@ export class ApiService {
       message: errorMessage,
       error: error.error
     });
+
+    this.toastService.show(errorMessage, 'danger');
 
     return throwError(() => new Error(errorMessage));
   }
