@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "notion": {
+      "type": "remote",
+      "url": "https://mcp.notion.com/mcp",
+      "oauth": {},
+      "environment": {
+        "NOTION_API_TOKEN": "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"
+      }
+    }
+  }
+}

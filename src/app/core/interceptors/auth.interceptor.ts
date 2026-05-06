@@ -101,8 +101,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         }),
         catchError(refreshError => {
           tokenService.completeRefresh(null);
-          authService.signOut();
-          router.navigate(['/auth/signin']);
+          const isAuthError = refreshError instanceof HttpErrorResponse &&
+            (refreshError.status === 401 || refreshError.status === 403);
+          if (isAuthError) {
+            authService.signOut();
+            router.navigate(['/auth/signin']);
+          }
           return throwError(() => refreshError);
         })
       );
