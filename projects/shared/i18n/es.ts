@@ -365,6 +365,8 @@ export const sharedTranslations = {
         addOption: 'Añadir opción',
         optionsEmpty: 'Sin opciones. Añade al menos una.',
         optionPlaceholder: 'Valor de opción',
+        moveUp: 'Mover arriba',
+        moveDown: 'Mover abajo',
         types: {
           text: 'Texto',
           number: 'Número',
@@ -383,7 +385,8 @@ export const sharedTranslations = {
         title: 'Vista previa del formulario',
         notice: 'Esto es una vista previa. El envío está desactivado.',
         noFields: 'Aún no se han añadido campos.'
-      }
+      },
+      formInvalid: 'Por favor, completa todos los campos obligatorios'
     }
   },
   forms: {

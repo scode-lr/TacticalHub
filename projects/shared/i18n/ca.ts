@@ -365,6 +365,8 @@ export const sharedTranslations = {
         addOption: 'Afegir opció',
         optionsEmpty: 'Sense opcions. Afegeix-ne almenys una.',
         optionPlaceholder: 'Valor de l\'opció',
+        moveUp: 'Moure amunt',
+        moveDown: 'Moure avall',
         types: {
           text: 'Text',
           number: 'Numero',
@@ -383,7 +385,8 @@ export const sharedTranslations = {
         title: 'Previsualització del formulari',
         notice: 'Això és una previsualització. L\'enviament està desactivat.',
         noFields: 'Encara no s\'han afegit camps.'
-      }
+      },
+      formInvalid: 'Si us plau, completa tots els camps obligatoris'
     }
   },
   forms: {

@@ -34,7 +34,9 @@
     "ios:tactical": "npm run build && npm run cap:tactical:sync:ios && npm run cap:tactical:open:ios",
     "android:tactical": "npm run build && npm run cap:tactical:sync:android && npm run cap:tactical:open:android",
     "ios:voltrega": "npm run build:voltregacf:prod && npm run cap:voltrega:sync:ios && npm run cap:voltrega:open:ios",
-    "android:voltrega": "npm run build:voltregacf:prod && npm run cap:voltrega:sync:android && npm run cap:voltrega:open:android"
+    "generate:voltrega:icons": "cd projects/voltregacf.hub && npx capacitor-assets generate --android",
+    "android:voltrega": "npm run build:voltregacf:prod && npm run generate:voltrega:icons && npm run cap:voltrega:sync:android && npm run cap:voltrega:open:android",
+    "build:voltregacf:gh-pages": "ng build voltregacf.hub --configuration github-pages"
   },
   "private": true,
   "dependencies": {

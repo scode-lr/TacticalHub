@@ -145,11 +145,20 @@
   }
 }
 
+.field-order-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  padding-top: 0.125rem;
+}
+
 .field-order-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 1.75rem;
+  width: 1.75rem;
   height: 1.75rem;
   border-radius: 6px;
   background: var(--background-secondary, #f8f9fa);
@@ -157,8 +166,46 @@
   color: var(--text-secondary, #6b7280);
   font-size: 0.75rem;
   font-weight: 700;
-  flex-shrink: 0;
-  margin-top: 0.125rem;
+  line-height: 1;
+}
+
+.field-move-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.btn-move {
+  width: 1.75rem;
+  height: 1.125rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-light, #e5e7eb);
+  background: var(--background-secondary, #f8f9fa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+
+  ion-icon {
+    font-size: 0.75rem;
+    color: var(--text-secondary, #6b7280);
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--ion-color-primary, #3880ff);
+    background: rgba(56, 128, 255, 0.06);
+
+    ion-icon {
+      color: var(--ion-color-primary, #3880ff);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 }
 
 .field-rows {
@@ -229,19 +276,109 @@
   margin-left: 0.125rem;
 }
 
-// Make PrimeNG inputs fill their mini-group containers
-input[pInputText] {
+.field-input {
   width: 100%;
+  padding: 0.4375rem 0.625rem;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  color: var(--text-primary, #111827);
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+
+  &:focus {
+    border-color: var(--ion-color-primary, #3880ff);
+    box-shadow: 0 0 0 2px rgba(56, 128, 255, 0.1);
+  }
+
+  &.ng-invalid.ng-dirty {
+    border-color: var(--ion-color-danger, #eb445a);
+  }
 }
 
-p-select {
+.field-textarea {
+  resize: vertical;
+  min-height: 56px;
+}
+
+.field-select {
   width: 100%;
+  padding: 0.4375rem 1.75rem 0.4375rem 0.625rem;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  color: var(--text-primary, #111827);
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 6px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%236b7280' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+
+  &:focus {
+    border-color: var(--ion-color-primary, #3880ff);
+    box-shadow: 0 0 0 2px rgba(56, 128, 255, 0.1);
+  }
+
+  option {
+    color: var(--text-primary, #111827);
+    background: var(--background-primary, #ffffff);
+  }
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .toggle-slider {
+      background: var(--ion-color-primary, #3880ff);
+
+      &::before {
+        transform: translateX(16px);
+      }
+    }
+  }
+
+  .toggle-slider {
+    width: 36px;
+    height: 20px;
+    background: var(--border-light, #e5e7eb);
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.2s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: #ffffff;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
 }
 
 .btn-remove-field {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
   border: 1px solid var(--border-light, #e5e7eb);
   background: var(--background-secondary, #f8f9fa);
   display: flex;
@@ -250,9 +387,11 @@ p-select {
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
+  padding: 0;
+  margin-top: 0.125rem;
 
-  i {
-    font-size: 1rem;
+  ion-icon {
+    font-size: 0.875rem;
     color: var(--text-secondary, #6b7280);
   }
 
@@ -260,7 +399,7 @@ p-select {
     border-color: var(--ion-color-danger, #eb445a);
     background: rgba(235, 68, 90, 0.05);
 
-    i {
+    ion-icon {
       color: var(--ion-color-danger, #eb445a);
     }
   }
@@ -269,6 +408,7 @@ p-select {
     position: absolute;
     top: 0.875rem;
     right: 0.875rem;
+    margin-top: 0;
   }
 }
 
@@ -308,7 +448,7 @@ p-select {
   gap: 0.5rem;
   animation: fieldSlideIn 0.15s ease backwards;
 
-  input[pInputText] {
+  .field-input {
     flex: 1;
   }
 }
