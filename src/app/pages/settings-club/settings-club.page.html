@@ -1,0 +1,26 @@
+<div class="page-container settings-club-page">
+  <div class="settings-header">
+    <ion-icon name="settings-outline" class="page-icon"></ion-icon>
+    <h1 class="page-title">{{ 'admin.settings.title' | translate }}</h1>
+  </div>
+
+  <div class="settings-cards">
+    <div class="settings-card" [routerLink]="getSettingsInformationUrl()">
+      <ion-icon name="information-circle-outline" class="card-icon"></ion-icon>
+      <div class="card-text">
+        <h2 class="card-title">{{ 'admin.settings.information.title' | translate }}</h2>
+        <p class="card-description">{{ 'admin.settings.information.description' | translate }}</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
+
+    <div class="settings-card" [routerLink]="getSettingsFormsUrl()">
+      <ion-icon name="document-text-outline" class="card-icon"></ion-icon>
+      <div class="card-text">
+        <h2 class="card-title">{{ 'admin.settings.forms.title' | translate }}</h2>
+        <p class="card-description">{{ 'admin.settings.forms.description' | translate }}</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
+  </div>
+</div>

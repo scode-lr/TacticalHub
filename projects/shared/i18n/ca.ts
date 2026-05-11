@@ -247,6 +247,7 @@ export const sharedTranslations = {
       matches: 'Partits',
       users: 'Usuaris',
       forms: 'Formularis',
+      settings: 'Configuració',
       settingsForms: 'Configuració de formularis'
     },
     description: {
@@ -261,7 +262,31 @@ export const sharedTranslations = {
       matches: 'Gestionar calendaris de partits',
       users: 'Gestió d\'usuaris i permisos',
       forms: 'Gestionar formularis',
+      settings: 'Gestionar configuració del club',
       settingsForms: 'Configurar ajustos de formularis'
+    },
+    settings: {
+      title: 'Configuració del Club',
+      information: {
+        title: 'Informació del Club',
+        description: 'Gestiona les seccions d\'informació visibles per als membres',
+        empty: 'Sense seccions d\'informació',
+        emptyDescription: 'Afegeix seccions per mostrar informació del club als membres.',
+        add: 'Afegir Secció',
+        edit: 'Editar Secció',
+        form: {
+          title: 'Títol',
+          content: 'Contingut',
+          icon: 'Icona (nom Ionicons)',
+          titlePlaceholder: 'Títol de la secció',
+          contentPlaceholder: 'Contingut de la secció...',
+          iconPlaceholder: 'ex. information-circle-outline'
+        }
+      },
+      forms: {
+        title: 'Configuració de Formularis',
+        description: 'Crear i gestionar formularis del club'
+      }
     },
     parameters: {
       title: 'Paràmetres',

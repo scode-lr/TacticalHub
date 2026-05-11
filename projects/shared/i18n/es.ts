@@ -247,6 +247,7 @@ export const sharedTranslations = {
       matches: 'Partidos',
       users: 'Usuarios',
       forms: 'Formularios',
+      settings: 'Ajustes',
       settingsForms: 'Configuración de formularios'
     },
     description: {
@@ -261,7 +262,31 @@ export const sharedTranslations = {
       matches: 'Gestionar calendarios de partidos',
       users: 'Gestión de usuarios y permisos',
       forms: 'Gestionar formularios',
+      settings: 'Gestionar ajustes del club',
       settingsForms: 'Configurar ajustes de formularios'
+    },
+    settings: {
+      title: 'Ajustes del Club',
+      information: {
+        title: 'Información del Club',
+        description: 'Gestiona las secciones de información visibles para los miembros',
+        empty: 'Sin secciones de información',
+        emptyDescription: 'Añade secciones para mostrar información del club a los miembros.',
+        add: 'Añadir Sección',
+        edit: 'Editar Sección',
+        form: {
+          title: 'Título',
+          content: 'Contenido',
+          icon: 'Icono (nombre Ionicons)',
+          titlePlaceholder: 'Título de la sección',
+          contentPlaceholder: 'Contenido de la sección...',
+          iconPlaceholder: 'ej. information-circle-outline'
+        }
+      },
+      forms: {
+        title: 'Configuración de Formularios',
+        description: 'Crear y gestionar formularios del club'
+      }
     },
     parameters: {
       title: 'Parámetros',

@@ -1,0 +1,95 @@
+<div class="page-container settings-information-page">
+  <div class="page-toolbar">
+    <h2 class="page-title">{{ 'admin.settings.information.title' | translate }}</h2>
+    <ion-button fill="clear" (click)="openCreateModal()">
+      <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  } @else if (sections().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="information-circle-outline" class="empty-icon"></ion-icon>
+      <h3>{{ 'admin.settings.information.empty' | translate }}</h3>
+      <p>{{ 'admin.settings.information.emptyDescription' | translate }}</p>
+      <ion-button fill="outline" (click)="openCreateModal()">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        {{ 'admin.settings.information.add' | translate }}
+      </ion-button>
+    </div>
+  } @else {
+    <ion-reorder-group disabled="false" (ionItemReorder)="onReorder($event)">
+      <ion-list class="sections-list">
+        @for (section of sections(); track section.id; let i = $index) {
+          <ion-item-sliding>
+            <ion-item class="section-item">
+              <ion-reorder slot="start"></ion-reorder>
+              <div class="section-info" (click)="openEditModal(section)">
+                @if (section.icon) {
+                  <ion-icon [name]="section.icon" class="section-icon"></ion-icon>
+                }
+                <div class="section-text">
+                  <span class="section-title">{{ section.title }}</span>
+                  <span class="section-meta">#{{ section.sortOrder + 1 }}</span>
+                </div>
+              </div>
+              <div class="section-actions" slot="end">
+                <ion-button fill="clear" size="small" (click)="moveUp(i)" [disabled]="i === 0">
+                  <ion-icon name="chevron-up-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" size="small" (click)="moveDown(i)" [disabled]="i === sections().length - 1">
+                  <ion-icon name="chevron-down-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="deleteSection(section)">
+                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+              </ion-item-option>
+              <ion-item-option color="primary" (click)="openEditModal(section)">
+                <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        }
+      </ion-list>
+    </ion-reorder-group>
+  }
+
+  <ion-modal [isOpen]="isModalOpen()" (didDismiss)="closeModal()">
+    <ng-template>
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3>{{ editingSection() ? ('admin.settings.information.edit' | translate) : ('admin.settings.information.add' | translate) }}</h3>
+          <ion-button fill="clear" (click)="closeModal()">
+            <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="modal-content">
+          <ion-item>
+            <ion-label position="stacked">{{ 'admin.settings.information.form.title' | translate }}</ion-label>
+            <ion-input [(ngModel)]="formTitle" [placeholder]="'admin.settings.information.form.titlePlaceholder' | translate"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">{{ 'admin.settings.information.form.content' | translate }}</ion-label>
+            <ion-textarea [(ngModel)]="formContent" [placeholder]="'admin.settings.information.form.contentPlaceholder' | translate" rows="8"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">{{ 'admin.settings.information.form.icon' | translate }}</ion-label>
+            <ion-input [(ngModel)]="formIcon" [placeholder]="'admin.settings.information.form.iconPlaceholder' | translate"></ion-input>
+          </ion-item>
+        </div>
+        <div class="modal-footer">
+          <ion-button fill="outline" (click)="closeModal()">{{ 'common.cancel' | translate }}</ion-button>
+          <ion-button (click)="saveSection()">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            {{ 'common.save' | translate }}
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</div>

@@ -249,6 +249,7 @@ export const sharedTranslations = {
       matches: 'Matches',
       users: 'Users',
       forms: 'Forms',
+      settings: 'Settings',
       settingsForms: 'Form Settings'
     },
     description: {
@@ -263,7 +264,31 @@ export const sharedTranslations = {
       matches: 'Manage match schedules',
       users: 'User management and permissions',
       forms: 'Manage forms',
+      settings: 'Manage club settings',
       settingsForms: 'Configure form settings'
+    },
+    settings: {
+      title: 'Club Settings',
+      information: {
+        title: 'Club Information',
+        description: 'Manage information sections visible to club members',
+        empty: 'No information sections',
+        emptyDescription: 'Add sections to display club information to members.',
+        add: 'Add Section',
+        edit: 'Edit Section',
+        form: {
+          title: 'Title',
+          content: 'Content',
+          icon: 'Icon (Ionicons name)',
+          titlePlaceholder: 'Section title',
+          contentPlaceholder: 'Section content...',
+          iconPlaceholder: 'e.g. information-circle-outline'
+        }
+      },
+      forms: {
+        title: 'Form Settings',
+        description: 'Create and manage club forms'
+      }
     },
     parameters: {
       title: 'Parameters',

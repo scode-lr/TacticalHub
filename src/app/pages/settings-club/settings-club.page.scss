@@ -1,0 +1,70 @@
+.settings-club-page {
+  padding: 1rem;
+}
+
+.settings-header {
+  text-align: center;
+  padding: 1.5rem 0;
+
+  .page-icon {
+    font-size: 2.5rem;
+    color: var(--ion-color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.settings-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.settings-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--ion-card-background, #fff);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+
+  &:active {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-icon {
+    font-size: 1.75rem;
+    color: var(--ion-color-primary);
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .card-text {
+    flex: 1;
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem;
+    }
+
+    .card-description {
+      font-size: 0.85rem;
+      color: var(--ion-color-medium);
+      margin: 0;
+    }
+  }
+
+  .card-arrow {
+    font-size: 1.25rem;
+    color: var(--ion-color-medium);
+    flex-shrink: 0;
+  }
+}

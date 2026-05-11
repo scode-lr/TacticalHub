@@ -9,3 +9,4 @@ export * from './notification.model';
 export * from './form.model';
 export * from './form-header.model';
 export * from './submission-value.model';
+export * from './club-information.model';
