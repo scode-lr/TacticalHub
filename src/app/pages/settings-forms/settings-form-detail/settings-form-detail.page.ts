@@ -1,6 +1,7 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
+import { IonToast } from '@ionic/angular/standalone';
 import { saveOutline, syncOutline } from 'ionicons/icons';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
@@ -21,8 +22,8 @@ import { FormDetail } from '@core/responses/form.response';
 interface HeaderFormControls {
   name: FormControl<string>;
   description: FormControl<string>;
-  fromDate: FormControl<Date | null>;
-  toDate: FormControl<Date | null>;
+  fromDate: FormControl<string | null>;
+  toDate: FormControl<string | null>;
   status: FormControl<AppStatus>;
   action: FormControl<string>;
   email: FormControl<string>;
@@ -41,6 +42,7 @@ interface HeaderFormControls {
     BackButtonComponent,
     SettingsFormFieldsComponent,
     FormPreviewModalComponent,
+    IonToast,
   ]
 })
 export class SettingsFormDetailPage implements OnInit {
@@ -57,6 +59,14 @@ export class SettingsFormDetailPage implements OnInit {
   readonly isLoading = signal<boolean>(false);
   readonly previewOpen = signal<boolean>(false);
 
+  readonly showToast = this.toastService.showToast;
+  readonly toastMessage = this.toastService.toastMessage;
+  readonly toastColor = this.toastService.toastColor;
+
+  onToastDismiss(): void {
+    this.toastService.hide();
+  }
+
   readonly pageTitle = computed(() =>
     this.isEditMode() ? 'admin.settingsForms.editForm' : 'admin.settingsForms.newForm'
   );
@@ -65,6 +75,7 @@ export class SettingsFormDetailPage implements OnInit {
     return [
       { label: this.translationService.instant('admin.settingsForms.status.AC'), value: AppStatus.Active },
       { label: this.translationService.instant('admin.settingsForms.status.I'), value: AppStatus.Inactive },
+      { label: this.translationService.instant('admin.settingsForms.status.E'), value: AppStatus.Expired },
       { label: this.translationService.instant('admin.settingsForms.status.D'), value: AppStatus.Draft },
     ];
   }
@@ -135,9 +146,7 @@ export class SettingsFormDetailPage implements OnInit {
   async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      console.log('Form errors:', this.form.errors);
-      console.log('Fields errors:', this.fieldsArray.controls.map((ctrl, i) => ({ index: i, errors: ctrl.errors, value: ctrl.value })));
-      this.toastService.show('admin.settingsForms.formInvalid', 'danger');
+      this.toastService.show(this.translationService.instant('admin.settingsForms.formInvalid'), 'danger');
       return;
     }
 
@@ -151,8 +160,8 @@ export class SettingsFormDetailPage implements OnInit {
       clubId,
       name: value.name,
       description: value.description || null,
-      fromDate: value.fromDate ? (value.fromDate as Date).toISOString() : null,
-      toDate: value.toDate ? (value.toDate as Date).toISOString() : null,
+      fromDate: value.fromDate ? `${value.fromDate}T00:00:00Z` : null,
+      toDate: value.toDate ? `${value.toDate}T00:00:00Z` : null,
       status: value.status,
       action: value.action,
       email: value.email || null,
@@ -183,15 +192,15 @@ export class SettingsFormDetailPage implements OnInit {
           fields: request.fields
         };
         await this.formService.updateForm(Number(this.formId()), updateRequest);
-        this.toastService.show('admin.settingsForms.updateSuccess');
+        this.toastService.show(this.translationService.instant('forms.admin.updateSuccess'));
       } else {
         await this.formService.createForm(request);
-        this.toastService.show('admin.settingsForms.createSuccess');
+        this.toastService.show(this.translationService.instant('forms.admin.createSuccess'));
       }
       this.navigationService.goBack();
     } catch {
-      const errorKey = this.isEditMode() ? 'admin.settingsForms.updateError' : 'admin.settingsForms.createError';
-      this.toastService.show(errorKey, 'danger');
+      const errorKey = this.isEditMode() ? 'forms.admin.updateError' : 'forms.admin.createError';
+      this.toastService.show(this.translationService.instant(errorKey), 'danger');
     } finally {
       this.isSaving.set(false);
     }
@@ -204,7 +213,7 @@ export class SettingsFormDetailPage implements OnInit {
           id: [f.id],
           key: [f.key],
           label: [f.label, Validators.required],
-          description: [f.description ?? ''],
+          description: [f.description ?? '', Validators.maxLength(2000)],
           type: [f.type, Validators.required],
           length: [f.maxLength ?? null],
           required: [f.isRequired ?? false],
@@ -216,9 +225,9 @@ export class SettingsFormDetailPage implements OnInit {
 
     this.form = this.fb.group({
       name: [existing?.name ?? '', [Validators.required, Validators.maxLength(100)]],
-      description: [existing?.description ?? '', Validators.maxLength(500)],
-      fromDate: [existing?.fromDate ? new Date(existing.fromDate) : null],
-      toDate: [existing?.toDate ? new Date(existing.toDate) : null],
+      description: [existing?.description ?? '', Validators.maxLength(2000)],
+      fromDate: [existing?.fromDate ? String(existing.fromDate).substring(0, 10) : null],
+      toDate: [existing?.toDate ? String(existing.toDate).substring(0, 10) : null],
       status: [existing?.status ?? AppStatus.Draft, Validators.required],
       action: [existing?.action ?? '', Validators.required],
       email: [existing?.email ?? '', Validators.email],
@@ -230,23 +239,4 @@ export class SettingsFormDetailPage implements OnInit {
     return await this.formService.getFormById(Number(id));
   }
 
-  formatDateForInput(date: Date | null): string {
-    if (!date) return '';
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
-  onDateInput(event: Event, controlName: 'fromDate' | 'toDate'): void {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
-    if (value) {
-      const date = new Date(value + 'T00:00:00');
-      this.form.get(controlName)?.setValue(date);
-    } else {
-      this.form.get(controlName)?.setValue(null);
-    }
-  }
 }

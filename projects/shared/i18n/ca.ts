@@ -221,7 +221,7 @@ export const sharedTranslations = {
     selectRole: 'Selecciona el teu rol',
     roleDescription: 'Tria com vols participar en aquest equip',
     coachDescription: 'Crear i gestionar activitats de l\'equip, sessions d\'entrenament i partits',
-    viewerDescription: 'Veure informació de l\'equip, horaris i resultats de partits',
+    memberDescription: 'Veure informació de l\'equip, horaris i resultats de partits',
     submitRequest: 'Enviar sol·licitud',
     joinInstant: 'Unir-se instantàniament',
     joiningInstant: 'Unint-se...',
@@ -349,6 +349,7 @@ export const sharedTranslations = {
       status: {
         AC: 'Actiu',
         I: 'Inactiu',
+        E: 'Caducat',
         P: 'Pendent',
         D: 'Esborrany',
         AR: 'Arxivat'
@@ -386,6 +387,7 @@ export const sharedTranslations = {
         description: 'Descripció',
         descriptionPlaceholder: 'Descripció opcional',
         length: 'Long. màx.',
+        descriptionMaxLength: 'La descripció ha de tenir 2000 caràcters o menys',
         options: 'Opcions',
         addOption: 'Afegir opció',
         optionsEmpty: 'Sense opcions. Afegeix-ne almenys una.',
@@ -411,7 +413,7 @@ export const sharedTranslations = {
         notice: 'Això és una previsualització. L\'enviament està desactivat.',
         noFields: 'Encara no s\'han afegit camps.'
       },
-      formInvalid: 'Si us plau, completa tots els camps obligatoris'
+       formInvalid: 'Corregeix els errors de validació abans de desar',
     }
   },
   forms: {
@@ -469,6 +471,9 @@ export const sharedTranslations = {
       createForm: 'Crear formulari',
       createFormTitle: 'Crear nou formulari',
       createSuccess: 'Formulari creat correctament!',
+      updateSuccess: 'Formulari actualitzat correctament!',
+      updateError: 'No s\'ha pogut actualitzar el formulari. Torna-ho a intentar.',
+      createError: 'No s\'ha pogut crear el formulari. Torna-ho a intentar.',
       addFieldSuccess: 'Camp afegit correctament!',
       empty: 'No hi ha formularis encara',
       emptyDescription: 'Crea el teu primer formulari per començar a recollir dades.',
@@ -496,6 +501,7 @@ export const sharedTranslations = {
       loadError: 'No s\'han pogut carregar els formularis. Torna-ho a intentar.',
       submitError: 'No s\'ha pogut enviar el formulari. Torna-ho a intentar.',
       createError: 'No s\'ha pogut crear el formulari. Torna-ho a intentar.',
+      updateError: 'No s\'ha pogut actualitzar el formulari. Torna-ho a intentar.',
       addFieldError: 'No s\'ha pogut afegir el camp. Torna-ho a intentar.'
     }
   },
@@ -533,7 +539,7 @@ export const sharedTranslations = {
     reviewComment: 'Comentari',
     reviewCommentPlaceholder: 'Afegeix un comentari (opcional)'
   },
-  viewer: {
+  member: {
     title: 'Portal de l\'observador',
     subtitle: 'Accedeix a informació i serveis del club',
     menu: {
@@ -762,7 +768,7 @@ export const sharedTranslations = {
     }
   },
   roles: {
-    viewer: 'Visualitzador',
+    member: 'Membre',
     admin: 'Administrador',
     coach: 'Entrenador',
     guest: 'Convidat'

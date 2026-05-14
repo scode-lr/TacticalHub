@@ -3,7 +3,7 @@ import { RoleType } from '@core/models/role.model';
 const ROLE_LABELS: Record<RoleType, string> = {
   [RoleType.Admin]: 'Admin',
   [RoleType.Coach]: 'Coach',
-  [RoleType.Viewer]: 'Viewer',
+  [RoleType.Member]: 'Member',
   [RoleType.Guest]: 'Guest'
 };
 
@@ -25,8 +25,8 @@ export class RoleUtils {
     return roleId === RoleType.Coach;
   }
 
-  static isViewer(roleId: RoleType): boolean {
-    return roleId === RoleType.Viewer;
+  static isMember(roleId: RoleType): boolean {
+    return roleId === RoleType.Member;
   }
 
   static isGuest(roleId: RoleType): boolean {

@@ -57,7 +57,7 @@ export class ApiService {
     return headers;
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
+  private handleError = (error: HttpErrorResponse): Observable<never> => {
     let errorMessage = 'An unexpected error occurred';
 
     if (error.error instanceof ErrorEvent) {

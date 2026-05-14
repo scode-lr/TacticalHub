@@ -61,21 +61,21 @@ export class NewsPage {
   });
   
   readonly categories = [
-    { value: 'all' as const, label: 'viewer.news.categories.all' },
-    { value: NewsCategory.General as const, label: 'viewer.news.categories.general' },
-    { value: NewsCategory.Match as const, label: 'viewer.news.categories.match' },
-    { value: NewsCategory.Training as const, label: 'viewer.news.categories.training' },
-    { value: NewsCategory.Event as const, label: 'viewer.news.categories.event' },
-    { value: NewsCategory.Announcement as const, label: 'viewer.news.categories.announcement' },
-    { value: NewsCategory.Achievement as const, label: 'viewer.news.categories.achievement' }
+    { value: 'all' as const, label: 'member.news.categories.all' },
+    { value: NewsCategory.General as const, label: 'member.news.categories.general' },
+    { value: NewsCategory.Match as const, label: 'member.news.categories.match' },
+    { value: NewsCategory.Training as const, label: 'member.news.categories.training' },
+    { value: NewsCategory.Event as const, label: 'member.news.categories.event' },
+    { value: NewsCategory.Announcement as const, label: 'member.news.categories.announcement' },
+    { value: NewsCategory.Achievement as const, label: 'member.news.categories.achievement' }
   ];
   
   readonly timeFilters = [
-    { value: TimeFilter.All, label: 'viewer.news.time.all' },
-    { value: TimeFilter.Today, label: 'viewer.news.time.today' },
-    { value: TimeFilter.Week, label: 'viewer.news.time.week' },
-    { value: TimeFilter.Month, label: 'viewer.news.time.month' },
-    { value: TimeFilter.Year, label: 'viewer.news.time.year' }
+    { value: TimeFilter.All, label: 'member.news.time.all' },
+    { value: TimeFilter.Today, label: 'member.news.time.today' },
+    { value: TimeFilter.Week, label: 'member.news.time.week' },
+    { value: TimeFilter.Month, label: 'member.news.time.month' },
+    { value: TimeFilter.Year, label: 'member.news.time.year' }
   ];
   
   selectCategory(category: NewsCategory | 'all'): void {

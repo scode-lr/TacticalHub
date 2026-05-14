@@ -3,7 +3,7 @@ import { AppStatus } from './app-status.model';
 export enum RoleType {
   Admin = 1,
   Coach = 2,
-  Viewer = 3,
+  Member = 3,
   Guest = 4
 }
 

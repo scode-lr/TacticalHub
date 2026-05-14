@@ -49,7 +49,7 @@ export const mockPlayerRole: Role = {
   id: 1,
   clubName: 'Voltregà CF',
   clubId: 1,
-  roleId: RoleType.Viewer,
+  roleId: RoleType.Member,
   description: 'Regular player role',
   createdAt: new Date('2024-01-01')
 };
@@ -73,12 +73,12 @@ export const mockAdminRole: Role = {
   createdAt: new Date('2024-01-01')
 };
 
-export const mockViewerRole: Role = {
+export const mockMemberRole: Role = {
   id: 4,
   clubName: 'Voltregà CF',
   clubId: 1,
-  roleId: RoleType.Viewer,
-  description: 'Viewer role with read-only access',
+  roleId: RoleType.Member,
+  description: 'Member role with read-only access',
   createdAt: new Date('2024-01-01')
 };
 
@@ -127,7 +127,7 @@ export const mockAdminUser: User = {
   id: 3,
   username: 'adminuser',
   email: 'admin@example.com',
-  roles: [mockAdminRole, mockCoachRole, mockCoachSeniorRole, mockViewerRole],
+  roles: [mockAdminRole, mockCoachRole, mockCoachSeniorRole, mockMemberRole],
   firstName: 'Elisabeth',
   lastName: 'Portús',
   avatarUrl: 'https://example.com/avatar-carlos.jpg',
@@ -185,7 +185,7 @@ export const mockPlayerUser3: User = {
 export const mockUsers: User[] = [mockPlayerUser, mockCoachUser, mockAdminUser, mockNewUser, mockPlayerUser2, mockPlayerUser3];
 
 // Helper to get all mock roles
-export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockCoachSeniorRole, mockAdminRole, mockViewerRole];
+export const mockRoles: Role[] = [mockPlayerRole, mockCoachRole, mockCoachSeniorRole, mockAdminRole, mockMemberRole];
 
 // Helper to get all mock teams
 export const mockUserTeams: Team[] = [mockTeamJuvenilB, mockTeamJuvenilC, mockTeamAlevinB, mockTeamAlevinC];

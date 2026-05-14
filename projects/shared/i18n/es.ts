@@ -221,7 +221,7 @@ export const sharedTranslations = {
     selectRole: 'Selecciona tu rol',
     roleDescription: 'Elige cómo quieres participar en este equipo',
     coachDescription: 'Crear y gestionar actividades del equipo, sesiones de entrenamiento y partidos',
-    viewerDescription: 'Ver información del equipo, horarios y resultados de partidos',
+    memberDescription: 'Ver información del equipo, horarios y resultados de partidos',
     submitRequest: 'Enviar solicitud',
     joinInstant: 'Unirse instantáneamente',
     joiningInstant: 'Uniéndose...',
@@ -349,6 +349,7 @@ export const sharedTranslations = {
       status: {
         AC: 'Activo',
         I: 'Inactivo',
+        E: 'Caducado',
         P: 'Pendiente',
         D: 'Borrador',
         AR: 'Archivado'
@@ -386,6 +387,7 @@ export const sharedTranslations = {
         description: 'Descripción',
         descriptionPlaceholder: 'Descripción opcional',
         length: 'Long. máx.',
+        descriptionMaxLength: 'La descripción debe tener 2000 caracteres o menos',
         options: 'Opciones',
         addOption: 'Añadir opción',
         optionsEmpty: 'Sin opciones. Añade al menos una.',
@@ -411,7 +413,7 @@ export const sharedTranslations = {
         notice: 'Esto es una vista previa. El envío está desactivado.',
         noFields: 'Aún no se han añadido campos.'
       },
-      formInvalid: 'Por favor, completa todos los campos obligatorios'
+       formInvalid: 'Corrige los errores de validación antes de guardar',
     }
   },
   forms: {
@@ -469,6 +471,9 @@ export const sharedTranslations = {
       createForm: 'Crear formulario',
       createFormTitle: 'Crear nuevo formulario',
       createSuccess: '¡Formulario creado correctamente!',
+      updateSuccess: '¡Formulario actualizado correctamente!',
+      updateError: 'No se pudo actualizar el formulario. Inténtalo de nuevo.',
+      createError: 'No se pudo crear el formulario. Inténtalo de nuevo.',
       addFieldSuccess: '¡Campo añadido correctamente!',
       empty: 'No hay formularios aún',
       emptyDescription: 'Crea tu primer formulario para empezar a recopilar datos.',
@@ -496,6 +501,7 @@ export const sharedTranslations = {
       loadError: 'No se pudieron cargar los formularios. Inténtalo de nuevo.',
       submitError: 'No se pudo enviar el formulario. Inténtalo de nuevo.',
       createError: 'No se pudo crear el formulario. Inténtalo de nuevo.',
+      updateError: 'No se pudo actualizar el formulario. Inténtalo de nuevo.',
       addFieldError: 'No se pudo añadir el campo. Inténtalo de nuevo.'
     }
   },
@@ -533,7 +539,7 @@ export const sharedTranslations = {
     reviewComment: 'Comentario',
     reviewCommentPlaceholder: 'Añade un comentario (opcional)'
   },
-  viewer: {
+  member: {
     title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',
     menu: {
@@ -703,7 +709,7 @@ export const sharedTranslations = {
     }
   },
   roles: {
-    viewer: 'Visualizador',
+    member: 'Miembro',
     admin: 'Administrador',
     coach: 'Entrenador',
     guest: 'Invitado'

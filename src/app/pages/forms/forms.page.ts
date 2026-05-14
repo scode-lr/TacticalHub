@@ -12,7 +12,7 @@ import { AppStatus } from '@core/models';
 import { DataView } from 'primeng/dataview';
 
 @Component({
-  selector: 'app-viewer-forms',
+  selector: 'app-member-forms',
   templateUrl: './forms.page.html',
   styleUrls: ['./forms.page.scss'],
   standalone: true,

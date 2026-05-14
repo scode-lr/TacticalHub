@@ -11,9 +11,9 @@ import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 
 @Component({
-  selector: 'app-viewer',
-  templateUrl: './viewer.page.html',
-  styleUrls: ['./viewer.page.scss'],
+  selector: 'app-member',
+  templateUrl: './member.page.html',
+  styleUrls: ['./member.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -23,7 +23,7 @@ import { UserService } from '@core/services/user.service';
     UserHeaderComponent
   ],
 })
-export class ViewerPage implements OnInit {
+export class MemberPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
@@ -32,19 +32,19 @@ export class ViewerPage implements OnInit {
   readonly memberId = signal<string>('');
   readonly currentRole = signal<Role | null>(null);
   
-  readonly viewerMenuConfig: MenuConfig = {
-    role: RoleType.Viewer,
+  readonly memberMenuConfig: MenuConfig = {
+    role: RoleType.Member,
     items: [
-      { id: 'home', label: 'viewer.menu.home', icon: 'home-outline', route: 'home' },
-      { id: 'notifications', label: 'viewer.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
-      // { id: 'news', label: 'viewer.menu.news', icon: 'newspaper-outline', route: 'news' },
-      { id: 'forms', label: 'viewer.menu.forms', icon: 'document-text-outline', route: 'forms' },
-      // { id: 'matches', label: 'viewer.menu.matches', icon: 'football-outline', route: 'matches' },
-      { id: 'information', label: 'viewer.menu.information', icon: 'information-circle-outline', route: 'information' },
-      // { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      // { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' },
-      // { id: 'proposals', label: 'viewer.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      // { id: 'partners', label: 'viewer.menu.partners', icon: 'people-outline', route: 'partners' }
+      { id: 'home', label: 'member.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'notifications', label: 'member.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
+      // { id: 'news', label: 'member.menu.news', icon: 'newspaper-outline', route: 'news' },
+      { id: 'forms', label: 'member.menu.forms', icon: 'document-text-outline', route: 'forms' },
+      // { id: 'matches', label: 'member.menu.matches', icon: 'football-outline', route: 'matches' },
+      { id: 'information', label: 'member.menu.information', icon: 'information-circle-outline', route: 'information' },
+      // { id: 'proposals', label: 'member.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      // { id: 'partners', label: 'member.menu.partners', icon: 'people-outline', route: 'partners' },
+      // { id: 'proposals', label: 'member.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      // { id: 'partners', label: 'member.menu.partners', icon: 'people-outline', route: 'partners' }
     ]
   };
   

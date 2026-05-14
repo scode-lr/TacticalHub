@@ -1,10 +1,10 @@
 @if (lineup()) {
   <div class="lineup-container">
     <div class="team-lineup">
-      <h3 class="team-title">{{ 'viewer.match.homeTeam' | translate }}</h3>
+      <h3 class="team-title">{{ 'member.match.homeTeam' | translate }}</h3>
       
       <div class="lineup-section">
-        <h4 class="section-title">{{ 'viewer.match.starters' | translate }}</h4>
+        <h4 class="section-title">{{ 'member.match.starters' | translate }}</h4>
         <div class="players-list">
           @for (player of lineup()!.local.starters; track player.id) {
             <div class="player-item">
@@ -24,7 +24,7 @@
       </div>
 
       <div class="lineup-section">
-        <h4 class="section-title">{{ 'viewer.match.substitutes' | translate }}</h4>
+        <h4 class="section-title">{{ 'member.match.substitutes' | translate }}</h4>
         <div class="players-list substitutes">
           @for (player of lineup()!.local.substitutes; track player.id) {
             <div class="player-item">
@@ -42,9 +42,9 @@
     <div class="divider"></div>
 
     <div class="team-lineup">
-      <h3 class="team-title">{{ 'viewer.match.awayTeam' | translate }}</h3>
+      <h3 class="team-title">{{ 'member.match.awayTeam' | translate }}</h3>
       <div class="lineup-section">
-        <h4 class="section-title">{{ 'viewer.match.starters' | translate }}</h4>
+        <h4 class="section-title">{{ 'member.match.starters' | translate }}</h4>
         <div class="players-list">
           @for (player of lineup()!.away.starters; track player.id) {
             <div class="player-item">
@@ -64,7 +64,7 @@
       </div>
 
       <div class="lineup-section">
-        <h4 class="section-title">{{ 'viewer.match.substitutes' | translate }}</h4>
+        <h4 class="section-title">{{ 'member.match.substitutes' | translate }}</h4>
         <div class="players-list substitutes">
           @for (player of lineup()!.away.substitutes; track player.id) {
             <div class="player-item">
@@ -82,6 +82,6 @@
 } @else {
   <div class="empty-message">
     <ion-icon name="people-outline"></ion-icon>
-    <p>{{ 'viewer.match.noLineup' | translate }}</p>
+    <p>{{ 'member.match.noLineup' | translate }}</p>
   </div>
 }

@@ -5,5 +5,7 @@ export enum AppStatus {
   Inactive = 'I',
   Submitted = 'S',
   Rejected = 'R',
-  Approved = 'A'
+  Approved = 'A',
+  Expired = 'E',
+  Archived = 'AR'
 }

@@ -223,7 +223,7 @@ export const sharedTranslations = {
     selectRole: 'Select your role',
     roleDescription: 'Choose how you want to participate in this team',
     coachDescription: 'Create and manage team activities, training sessions, and matches',
-    viewerDescription: 'View team information, schedules, and match results',
+    memberDescription: 'View team information, schedules, and match results',
     submitRequest: 'Submit join request',
     joinInstant: 'Join team instantly',
     joiningInstant: 'Joining...',
@@ -351,6 +351,7 @@ export const sharedTranslations = {
       status: {
         AC: 'Active',
         I: 'Inactive',
+        E: 'Expired',
         P: 'Pending',
         D: 'Draft',
         AR: 'Archived'
@@ -389,6 +390,7 @@ export const sharedTranslations = {
         description: 'Description',
         descriptionPlaceholder: 'Optional description',
         length: 'Max length',
+        descriptionMaxLength: 'Description must be 2000 characters or less',
         options: 'Options',
         addOption: 'Add option',
         optionsEmpty: 'No options yet. Add at least one.',
@@ -414,7 +416,7 @@ export const sharedTranslations = {
         notice: 'This is a preview. Submitting is disabled.',
         noFields: 'No fields added yet.'
       },
-      formInvalid: 'Please fill in all required fields'
+       formInvalid: 'Please fix the validation errors before saving',
     }
   },
   forms: {
@@ -472,6 +474,9 @@ export const sharedTranslations = {
       createForm: 'Create form',
       createFormTitle: 'Create new form',
       createSuccess: 'Form created successfully!',
+      updateSuccess: 'Form updated successfully!',
+      updateError: 'Could not update form. Please try again.',
+      createError: 'Could not create form. Please try again.',
       addFieldSuccess: 'Field added successfully!',
       empty: 'No forms yet',
       emptyDescription: 'Create your first form to start collecting data.',
@@ -499,6 +504,7 @@ export const sharedTranslations = {
       loadError: 'Could not load forms. Please try again.',
       submitError: 'Could not submit form. Please try again.',
       createError: 'Could not create form. Please try again.',
+      updateError: 'Could not update form. Please try again.',
       addFieldError: 'Could not add field. Please try again.'
     }
   },
@@ -536,7 +542,7 @@ export const sharedTranslations = {
     reviewComment: 'Comment',
     reviewCommentPlaceholder: 'Add a comment (optional)'
   },
-  viewer: {
+  member: {
     title: 'Viewer portal',
     subtitle: 'Access club information and services',
     menu: {
@@ -765,7 +771,7 @@ export const sharedTranslations = {
     }
   },
   roles: {
-    viewer: 'Viewer',
+    member: 'Member',
     admin: 'Admin',
     coach: 'Coach',
     guest: 'Guest'

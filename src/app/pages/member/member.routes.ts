@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { roleAccessGuard } from '@core/guards/role-access.guard';
 
-export const viewerRoutes: Routes = [
+export const memberRoutes: Routes = [
   {
     path: '',
     canActivate: [roleAccessGuard],
-    loadComponent: () => import('./viewer.page').then(m => m.ViewerPage),
+    loadComponent: () => import('./member.page').then(m => m.MemberPage),
     children: [
       {
         path: '',
@@ -46,7 +46,7 @@ export const viewerRoutes: Routes = [
       },
       {
         path: 'proposals',
-        loadComponent: () => import('../proposals/proposals.page').then(m => m.ViewerProposalsPage)
+        loadComponent: () => import('../proposals/proposals.page').then(m => m.MemberProposalsPage)
       },
       {
         path: 'matches',

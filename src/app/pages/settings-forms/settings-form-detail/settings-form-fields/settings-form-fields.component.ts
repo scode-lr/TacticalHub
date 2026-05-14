@@ -77,9 +77,9 @@ export class SettingsFormFieldsComponent {
       id: [null],
       key: [''],
       label: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.maxLength(2000)],
       type: ['text', Validators.required],
-      length: [null],
+      length: [null, Validators.min(1)],
       required: [false],
       order: [newIndex + 1],
       options: this.fb.array([])
@@ -146,6 +146,11 @@ export class SettingsFormFieldsComponent {
   fieldHasError(index: number, controlName: string): boolean {
     const ctrl = this.fields().at(index).get(controlName);
     return !!(ctrl?.invalid && ctrl?.touched);
+  }
+
+  fieldHasMaxLengthError(index: number): boolean {
+    const ctrl = this.fields().at(index).get('description');
+    return !!(ctrl?.invalid && ctrl?.dirty && ctrl?.errors?.['maxlength']);
   }
 
   asFormGroup(index: number): FormGroup {
