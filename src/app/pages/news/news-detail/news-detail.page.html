@@ -8,7 +8,7 @@
       <div class="card-body news-content">
         <div class="news-meta">
           <ion-chip [color]="getCategoryColor(news()!.category)" class="category-chip">
-            {{ 'viewer.news.categories.' + news()!.category | translate }}
+            {{ 'member.news.categories.' + news()!.category | translate }}
           </ion-chip>
           <span class="news-date">{{ getFormattedDate(news()!.publishedAt) }}</span>
         </div>
@@ -20,7 +20,7 @@
             <ion-img [src]="news()!.author.avatarUrl || 'assets/default-avatar.svg'" [alt]="news()!.author.name" class="author-avatar" appDefaultImage="assets/default-avatar.svg" />
             <div class="author-details">
               <span class="author-name">{{ news()!.author.name }}</span>
-              <span class="author-role">{{ 'viewer.news.author' | translate }}</span>
+              <span class="author-role">{{ 'member.news.author' | translate }}</span>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
   <div class="page-container-narrow news-detail-page">
     <div class="empty-state">
       <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
-      <h3 class="empty-title">{{ 'viewer.news.notFound' | translate }}</h3>
+      <h3 class="empty-title">{{ 'member.news.notFound' | translate }}</h3>
       <div class="empty-action">
         <button class="btn-primary" (click)="goBack()">{{ 'common.back' | translate }}</button>
       </div>

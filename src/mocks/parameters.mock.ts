@@ -167,7 +167,7 @@ export const mockActionCards: ActionParameter[] = [
       label: 'Comentarios',
       type: 'textarea',
       required: false,
-      placeholder: 'viewer.action.form.commentsPlaceholder',
+      placeholder: 'member.action.form.commentsPlaceholder',
       maxLength: 500
     }
   ]
@@ -218,7 +218,7 @@ export const mockParameters = new Map<string, Parameter>([
     {
       id: ParameterType.ActionCards,
       name: 'Action Cards',
-      description: 'Available action cards for viewer role',
+      description: 'Available action cards for member role',
       timeCreated: new Date('2024-01-01'),
       timeModified: new Date('2024-01-01'),
       value: mockActionCards
@@ -229,7 +229,7 @@ export const mockParameters = new Map<string, Parameter>([
     {
       id: ParameterType.InformationSections,
       name: 'Information Sections',
-      description: 'FAQ and information sections for viewers',
+      description: 'FAQ and information sections for members',
       timeCreated: new Date('2024-01-01'),
       timeModified: new Date('2024-01-01'),
       value: mockInformationSections

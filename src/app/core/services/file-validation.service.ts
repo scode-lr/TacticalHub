@@ -46,7 +46,7 @@ export class FileValidationService {
         if (hasBlockedExtension) {
             return {
                 valid: false,
-                errorKey: 'viewer.proposals.form.fileTypeError'
+                errorKey: 'member.proposals.form.fileTypeError'
             };
         }
 
@@ -54,7 +54,7 @@ export class FileValidationService {
         if (!this.ALLOWED_FILE_TYPES.includes(file.type)) {
             return {
                 valid: false,
-                errorKey: 'viewer.proposals.form.fileTypeError'
+                errorKey: 'member.proposals.form.fileTypeError'
             };
         }
 
@@ -62,7 +62,7 @@ export class FileValidationService {
         if (file.size > this.MAX_FILE_SIZE) {
             return {
                 valid: false,
-                errorKey: 'viewer.proposals.form.fileSizeError'
+                errorKey: 'member.proposals.form.fileSizeError'
             };
         }
 

@@ -53,7 +53,7 @@ export const routes: Routes = [
         path: '3/:roleId',
         data: { roleType: 3 },
         canActivate: [roleAccessGuard],
-        loadChildren: () => import('./pages/viewer/viewer.routes').then(m => m.viewerRoutes)
+        loadChildren: () => import('./pages/member/member.routes').then(m => m.memberRoutes)
       },
       {
         path: '4/:clubId',

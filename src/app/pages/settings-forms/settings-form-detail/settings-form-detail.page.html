@@ -49,8 +49,6 @@
               class="form-input form-date"
               type="date"
               formControlName="fromDate"
-              [value]="formatDateForInput(ctrl.fromDate.value)"
-              (input)="onDateInput($event, 'fromDate')"
             />
           </div>
           <div class="form-field">
@@ -60,8 +58,6 @@
               class="form-input form-date"
               type="date"
               formControlName="toDate"
-              [value]="formatDateForInput(ctrl.toDate.value)"
-              (input)="onDateInput($event, 'toDate')"
             />
           </div>
         </div>
@@ -137,3 +133,12 @@
   />
   }
 </div>
+
+<ion-toast
+  [isOpen]="showToast()"
+  [message]="toastMessage()"
+  [color]="toastColor()"
+  duration="3000"
+  position="top"
+  (didDismiss)="onToastDismiss()">
+</ion-toast>

@@ -6,7 +6,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { FileValidationService } from '@services/file-validation.service';
 
 @Component({
-  selector: 'app-viewer-proposals',
+  selector: 'app-member-proposals',
   templateUrl: './proposals.page.html',
   styleUrls: ['./proposals.page.scss'],
   standalone: true,
@@ -20,7 +20,7 @@ import { FileValidationService } from '@services/file-validation.service';
     TranslatePipe
   ]
 })
-export class ViewerProposalsPage {
+export class MemberProposalsPage {
   private fb = inject(FormBuilder);
   private fileValidationService = inject(FileValidationService);
 
