@@ -7,7 +7,7 @@
   <div class="news-content">
     <div class="news-meta">
       <ion-chip [color]="getCategoryColor(news().category)" class="category-chip">
-        {{ 'viewer.news.categories.' + news().category | translate }}
+        {{ 'member.news.categories.' + news().category | translate }}
       </ion-chip>
       <span class="news-time">{{ getTimeAgo(news().publishedAt) }}</span>
     </div>

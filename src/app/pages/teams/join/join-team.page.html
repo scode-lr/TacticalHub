@@ -73,15 +73,15 @@
 
               <div 
                 class="role-card" 
-                [class.selected]="selectedRole() === roleType.Viewer"
-                (click)="selectRole(roleType.Viewer)"
-                [class.disabled]="hasViewerRole()"
+                [class.selected]="selectedRole() === roleType.Member"
+                (click)="selectRole(roleType.Member)"
+                [class.disabled]="hasMemberRole()"
               >
                 <div class="role-icon">
                   <ion-icon name="eye-outline"></ion-icon>
                 </div>
-                <h3>{{ 'roles.viewer' | translate }}</h3>
-                <p>{{ 'joinTeam.viewerDescription' | translate }}</p>
+                <h3>{{ 'roles.member' | translate }}</h3>
+                <p>{{ 'joinTeam.memberDescription' | translate }}</p>
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@
         }
 
         <!-- Submit Button -->
-        @if (selectedRole() && (selectedRole() === roleType.Viewer || (selectedRole() === roleType.Coach && selectedTeam()))) {
+        @if (selectedRole() && (selectedRole() === roleType.Member || (selectedRole() === roleType.Coach && selectedTeam()))) {
           <button
             class="btn-primary btn-block submit-button"
             [disabled]="!isFormValid() || isSubmitting()"

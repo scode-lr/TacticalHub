@@ -1,4 +1,4 @@
-.viewer-page {
+  .member-page {
   height: 100dvh;
   background: var(--background-primary, #ffffff);
   overflow: hidden;
@@ -25,7 +25,7 @@
 }
 
 @media (max-width: 768px) {
-  .viewer-page {
+.member-page {
     .mobile-header {
       display: flex;
       align-items: center;
@@ -58,7 +58,7 @@
       flex-direction: column;
       height: calc(100dvh - 56px);
 
-      app-viewer-menu {
+      app-member-menu {
         &.hidden-on-detail {
           display: none;
         }

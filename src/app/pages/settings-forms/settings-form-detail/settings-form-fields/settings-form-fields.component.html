@@ -44,6 +44,7 @@
                     class="field-input"
                     [id]="'flabel-' + i"
                     type="text"
+                    maxlength="200"
                     [class.ng-invalid]="fieldHasError(i, 'label')"
                     [class.ng-dirty]="fieldHasError(i, 'label')"
                     formControlName="label"
@@ -73,10 +74,16 @@
                   <textarea
                     class="field-input field-textarea"
                     [id]="'fdesc-' + i"
-                    rows="2"
+                    rows="3"
+                    maxlength="2000"
+                    [class.ng-invalid]="fieldHasMaxLengthError(i)"
+                    [class.ng-dirty]="fieldHasMaxLengthError(i)"
                     formControlName="description"
                     [placeholder]="'admin.settingsForms.formFields.descriptionPlaceholder' | translate"
                   ></textarea>
+                  @if (fieldHasMaxLengthError(i)) {
+                    <span class="field-error">{{ 'admin.settingsForms.formFields.descriptionMaxLength' | translate }}</span>
+                  }
                 </div>
                 <div class="field-mini-group field-mini-group--toggle">
                   <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
@@ -91,6 +98,20 @@
               <ion-icon name="trash-outline"></ion-icon>
             </button>
           </div>
+          @if (hasLength(i)) {
+            <div class="field-item-length">
+              <label class="field-mini-label" [for]="'flength-' + i">
+                {{ 'admin.settingsForms.formFields.length' | translate }}
+              </label>
+              <input
+                class="field-input field-input--narrow"
+                [id]="'flength-' + i"
+                type="number"
+                min="1"
+                formControlName="length"
+              />
+            </div>
+          }
           @if (hasOptions(i)) {
             <div class="field-item-options">
               <div class="options-header">
@@ -108,6 +129,7 @@
                   <span class="option-index">{{ j + 1 }}</span>
                   <input
                     class="field-input"
+                    maxlength="100"
                     type="text"
                     [formControl]="$any(optCtrl)"
                     [placeholder]="'admin.settingsForms.formFields.optionPlaceholder' | translate"

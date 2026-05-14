@@ -77,8 +77,8 @@ export class RoleSelectorComponent {
       case RoleType.Coach:
         roleName = 'coach';
         break;
-      case RoleType.Viewer:
-        roleName = 'viewer';
+      case RoleType.Member:
+        roleName = 'member';
         break;
       case RoleType.Guest:
         roleName = 'guest';

@@ -118,7 +118,7 @@ export class FormDetailSubmissionPage implements OnInit {
     for (const field of fields) {
       const validators = [];
       if (field.isRequired) validators.push(Validators.required);
-      if (field.maxLength) validators.push(Validators.maxLength(field.maxLength));
+      if (field.maxLength && field.maxLength > 0) validators.push(Validators.maxLength(field.maxLength));
       if (field.type === 'email') validators.push(Validators.email);
       const defaultValue = field.type === 'boolean' && !field.options?.length ? false : null;
       group[field.key] = this.fb.control(defaultValue, validators);
@@ -152,8 +152,8 @@ export class FormDetailSubmissionPage implements OnInit {
       }
 
       const successKey = this.isEditing()
-        ? 'viewer.action.form.success.resubmitMessage'
-        : 'viewer.action.form.success.submitMessage';
+        ? 'member.action.form.success.resubmitMessage'
+        : 'member.action.form.success.submitMessage';
       const toast = await this.toastController.create({
         message: this.translationService.instant(successKey),
         duration: 3000,
@@ -165,7 +165,7 @@ export class FormDetailSubmissionPage implements OnInit {
       this.goToFormDetail();
     } catch {
       const toast = await this.toastController.create({
-        message: this.translationService.instant('viewer.action.form.errors.submitError'),
+        message: this.translationService.instant('member.action.form.errors.submitError'),
         duration: 3000,
         position: 'top',
         color: 'danger',
