@@ -1,0 +1,65 @@
+<ion-modal
+  [isOpen]="isOpen()"
+  (didDismiss)="closeModal()"
+  cssClass="icon-picker-modal"
+  class="icon-picker-modal">
+  <ng-template>
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="header-content">
+          <svg class="header-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h2 class="modal-title">Select Icon</h2>
+        </div>
+        <button class="close-button" (click)="closeModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="search-container">
+        <ion-searchbar
+          [placeholder]="'Search'"
+          (ionInput)="onSearchChange($event)"
+          [showClearButton]="'always'"
+          class="icon-search">
+        </ion-searchbar>
+      </div>
+
+      <div class="icon-scroll" style="overflow-y: auto;">
+        @if (filteredCategories().length === 0) {
+          <div class="no-results">
+            <ion-icon name="search-outline" class="no-results-icon"></ion-icon>
+            <p>No icons found</p>
+          </div>
+        } @else {
+          @for (category of filteredCategories(); track category.name) {
+            <div class="icon-category">
+              <h3 class="category-name">{{ category.name }}</h3>
+              <div class="icon-grid">
+                @for (icon of category.icons; track icon) {
+                  <button
+                    class="icon-btn"
+                    [class.selected]="selectedIcon() === icon"
+                    (click)="selectIcon(icon)"
+                    [attr.aria-label]="icon">
+                    <ion-icon [name]="icon" class="icon-preview"></ion-icon>
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        }
+      </div>
+
+      @if (selectedIcon()) {
+        <div class="modal-footer">
+          <button class="btn-clear" (click)="clearSelection()">
+            Clear
+          </button>
+        </div>
+      }
+    </div>
+  </ng-template>
+</ion-modal>

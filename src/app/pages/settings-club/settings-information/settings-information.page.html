@@ -9,7 +9,6 @@
     @if (!loading()) {
       <button class="btn-add" (click)="openCreateModal()">
         <ion-icon name="add-outline"></ion-icon>
-        {{ 'admin.settingsForms.addForm' | translate }}
       </button>
     }
   </div>
@@ -108,7 +107,25 @@
           </div>
           <div class="field-group">
             <label class="field-label">{{ 'admin.settings.information.form.icon' | translate }}</label>
-            <ion-input class="custom-input" [(ngModel)]="formIcon" [placeholder]="'admin.settings.information.form.iconPlaceholder' | translate"></ion-input>
+            <div class="icon-field-wrapper">
+              <div class="icon-preview-wrapper" (click)="openIconPicker()">
+                @if (formIcon()) {
+                  <ion-icon [name]="formIcon()" class="selected-icon-preview"></ion-icon>
+                } @else {
+                  <ion-icon name="apps-outline" class="selected-icon-preview placeholder"></ion-icon>
+                }
+              </div>
+              <ion-input
+                class="custom-input icon-name-input"
+                [(ngModel)]="formIcon"
+                [readonly]="true"
+                [placeholder]="'admin.settings.information.form.iconPlaceholder' | translate"
+                (click)="openIconPicker()">
+              </ion-input>
+              <button class="icon-clear-btn" (click)="clearIcon()" [class.visible]="formIcon()">
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </button>
+            </div>
           </div>
           <div class="modal-actions">
             <button class="btn-secondary" (click)="closeModal()">{{ 'common.cancel' | translate }}</button>
@@ -121,4 +138,11 @@
       </div>
     </ng-template>
   </ion-modal>
+
+  <app-icon-picker-modal
+    [isOpen]="isIconPickerOpen()"
+    [selectedIcon]="formIcon()"
+    (iconSelected)="onIconSelected($event)"
+    (didDismiss)="closeIconPicker()">
+  </app-icon-picker-modal>
 </div>

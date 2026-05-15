@@ -8,15 +8,16 @@ import { BackButtonComponent } from '@components/back-button/back-button.compone
 import { ClubInformationService } from '@services/club-information.service';
 import { ClubService } from '@services/club.service';
 import { ClubInformation, CreateClubInformationRequest, UpdateClubInformationRequest } from '@core/models/club-information.model';
+import { IconPickerModalComponent } from '@components/modals/icon-picker-modal/icon-picker-modal.component';
 import { addIcons } from 'ionicons';
-import { addOutline, createOutline, trashOutline, chevronUpOutline, chevronDownOutline, saveOutline, closeOutline } from 'ionicons/icons';
+import { addOutline, createOutline, trashOutline, chevronUpOutline, chevronDownOutline, saveOutline, closeOutline, closeCircleOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-settings-information',
   templateUrl: './settings-information.page.html',
   styleUrls: ['./settings-information.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonIcon, IonModal, IonButton, IonTextarea, IonInput, IonItem, IonList, IonItemSliding, IonItemOptions, IonItemOption, TranslatePipe, BackButtonComponent]
+  imports: [CommonModule, FormsModule, IonIcon, IonModal, IonButton, IonTextarea, IonInput, IonItem, IonList, IonItemSliding, IonItemOptions, IonItemOption, TranslatePipe, BackButtonComponent, IconPickerModalComponent]
 })
 export class SettingsInformationPage {
   private readonly clubInformationService = inject(ClubInformationService);
@@ -34,7 +35,26 @@ export class SettingsInformationPage {
   private clubId: number | null = null;
 
   constructor() {
-    addIcons({ addOutline, createOutline, trashOutline, chevronUpOutline, chevronDownOutline, saveOutline, closeOutline });
+    addIcons({ addOutline, createOutline, trashOutline, chevronUpOutline, chevronDownOutline, saveOutline, closeOutline, closeCircleOutline });
+  }
+
+  readonly isIconPickerOpen = signal(false);
+
+  openIconPicker(): void {
+    this.isIconPickerOpen.set(true);
+  }
+
+  closeIconPicker(): void {
+    this.isIconPickerOpen.set(false);
+  }
+
+  onIconSelected(icon: string): void {
+    this.formIcon.set(icon);
+    this.closeIconPicker();
+  }
+
+  clearIcon(): void {
+    this.formIcon.set('');
   }
 
   async ngOnInit(): Promise<void> {
