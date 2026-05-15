@@ -1,10 +1,10 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonIcon, IonModal, IonButton, IonTextarea, IonInput, IonItem, IonLabel, IonList, IonReorderGroup, IonReorder, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/angular/standalone';
-import { ItemReorderEventDetail } from '@ionic/core';
+import { IonIcon, IonModal, IonButton, IonTextarea, IonInput, IonItem, IonList, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { ToastService } from '@services/toast.service';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { ClubInformationService } from '@services/club-information.service';
 import { ClubService } from '@services/club.service';
 import { ClubInformation, CreateClubInformationRequest, UpdateClubInformationRequest } from '@core/models/club-information.model';
@@ -16,7 +16,7 @@ import { addOutline, createOutline, trashOutline, chevronUpOutline, chevronDownO
   templateUrl: './settings-information.page.html',
   styleUrls: ['./settings-information.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonIcon, IonModal, IonButton, IonTextarea, IonInput, IonItem, IonLabel, IonList, IonReorderGroup, IonReorder, IonItemSliding, IonItemOptions, IonItemOption, TranslatePipe]
+  imports: [CommonModule, FormsModule, IonIcon, IonModal, IonButton, IonTextarea, IonInput, IonItem, IonList, IonItemSliding, IonItemOptions, IonItemOption, TranslatePipe, BackButtonComponent]
 })
 export class SettingsInformationPage {
   private readonly clubInformationService = inject(ClubInformationService);
@@ -124,16 +124,6 @@ export class SettingsInformationPage {
     newItems[index] = newItems[index + 1];
     newItems[index + 1] = temp;
     this.sections.set(newItems);
-    await this.persistOrder();
-  }
-
-  async onReorder(event: any): Promise<void> {
-    const detail = event.detail as ItemReorderEventDetail;
-    const items = this.sections().slice();
-    const moved = items.splice(detail.from, 1)[0];
-    items.splice(detail.to, 0, moved);
-    this.sections.set(items);
-    event.detail.complete();
     await this.persistOrder();
   }
 

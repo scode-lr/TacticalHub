@@ -35,8 +35,6 @@ export class DynamicFormFieldsComponent {
 
   isFieldInvalid(field: FormField): boolean {
     const ctrl = this.form().get(field.key);
-    console.log('ctrl', this.form());
-    console.log('fieldStates', this.fieldStates());
     return !!(ctrl?.invalid && ctrl?.touched) || field.status === AppStatus.Rejected;
   }
 

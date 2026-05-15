@@ -31,6 +31,31 @@
   width: 100%;
 }
 
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: var(--button-primary-color, #3880ff);
+  color: var(--button-primary-contrast, #ffffff);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 1.125rem;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
 .btn-primary {
   @include btn-base;
   background: var(--button-primary-color, #3880ff);

@@ -63,14 +63,6 @@ export const memberRoutes: Routes = [
       {
         path: 'partners',
         loadComponent: () => import('../partners/partners.page').then(m => m.PartnersPage)
-      },
-      {
-        path: 'forms',
-        loadComponent: () => import('../forms/forms-list/forms-list.page').then(m => m.FormsListPage)
-      },
-      {
-        path: 'forms/:formId',
-        loadComponent: () => import('../forms/form-submit/form-submit.page').then(m => m.FormSubmitPage)
       }
     ]
   }

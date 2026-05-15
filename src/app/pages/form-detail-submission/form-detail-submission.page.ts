@@ -177,17 +177,21 @@ export class FormDetailSubmissionPage implements OnInit {
     }
   }
 
-  onFormCancel(): void {
-    this.goToFormDetail();
-  }
-
   pageTitle(): string {
     return this.formDetail()?.name ?? '';
   }
 
   backRoute(): string {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/forms/${this.formId}`;
+    console.log('hasSubmissions', this.formDetail()?.submissionsCount);
+    if((this.formDetail()?.submissionsCount ?? 0) > 0){
+      return `/app/${roleType}/${roleId}/forms/${this.formId}`;
+    }
+    return `/app/${roleType}/${roleId}/forms`;
+  }
+
+  cancelSubmission(): void {
+    this.navigationService.navigateTo([this.backRoute()]);
   }
 
   private goToFormDetail(): void {

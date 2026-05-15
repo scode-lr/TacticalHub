@@ -1,7 +1,10 @@
 <div class="page-container">
   <div class="section-header">
     <div class="header-content">
-      <h1 class="section-title">{{ 'admin.menu.settingsForms' | translate }}</h1>
+      <div class="section-header-with-back-button">
+        <app-back-button />
+        <h1 class="section-title">{{ 'admin.menu.settingsForms' | translate }}</h1>
+      </div>
       <p class="section-subtitle">{{ 'admin.description.settingsForms' | translate }}</p>
     </div>
     @if (!loading() && forms().length > 0) {
@@ -42,7 +45,7 @@
           <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
           <h3 class="empty-title">{{ 'admin.settingsForms.noForms' | translate }}</h3>
           <p class="empty-description">{{ 'admin.settingsForms.noFormsDescription' | translate }}</p>
-          <button class="btn-add" (click)="addForm()">
+          <button class="btn-primary" (click)="addForm()">
             <ion-icon name="add-outline"></ion-icon>
             {{ 'admin.settingsForms.addForm' | translate }}
           </button>

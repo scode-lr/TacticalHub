@@ -12,13 +12,14 @@ import { addOutline, documentTextOutline } from 'ionicons/icons';
 import { FormService } from '@services/form.service';
 import { ClubService } from '@services/club.service';
 import { DataView } from 'primeng/dataview';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 
 @Component({
   selector: 'app-settings-forms',
   templateUrl: './settings-forms.page.html',
   styleUrls: ['./settings-forms.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent, DataView]
+  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent, DataView, BackButtonComponent]
 })
 export class SettingsFormsPage {
   private readonly navigationService = inject(NavigationService);
