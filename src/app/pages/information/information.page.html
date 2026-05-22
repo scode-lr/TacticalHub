@@ -11,30 +11,6 @@
       <p class="empty-description">{{ 'member.information.emptyDescription' | translate }}</p>
     </div>
   } @else {
-    <div class="sections-container">
-    @for (section of sections(); track section.id) {
-      <div class="section-card" [class.expanded]="section.isExpanded">
-        <button 
-          class="section-header" 
-          (click)="toggleSection(section.id)"
-          type="button">
-          <div class="header-content">
-            <ion-icon [name]="section.icon" class="section-icon"></ion-icon>
-            <h2 class="section-title">{{ section.title }}</h2>
-          </div>
-          <ion-icon 
-            [name]="section.isExpanded ? 'chevron-up-outline' : 'chevron-down-outline'" 
-            class="toggle-icon">
-          </ion-icon>
-        </button>
-        
-        @if (section.isExpanded) {
-          <div class="section-content">
-            <p>{{ section.content }}</p>
-          </div>
-        }
-      </div>
-      }
-    </div>
+    <app-section-display [sections]="displaySections()" />
   }
 </div>

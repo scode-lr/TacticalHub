@@ -5,6 +5,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { ClubInformationService } from '@services/club-information.service';
 import { ClubService } from '@services/club.service';
 import { ClubInformation } from '@core/models/club-information.model';
+import { SectionDisplayComponent, SectionDisplayData } from '@components/section-display/section-display.component';
 import { addIcons } from 'ionicons';
 import { informationCircleOutline } from 'ionicons/icons';
 
@@ -13,7 +14,7 @@ import { informationCircleOutline } from 'ionicons/icons';
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe]
+  imports: [CommonModule, IonIcon, TranslatePipe, SectionDisplayComponent]
 })
 export class InformationPage implements OnInit {
   private clubInformationService = inject(ClubInformationService);
@@ -23,6 +24,14 @@ export class InformationPage implements OnInit {
   readonly loading = signal(true);
   readonly isEmpty = computed(() => !this.loading() && this.sections().length === 0);
 
+  readonly displaySections = computed<SectionDisplayData[]>(() =>
+    this.sections().map(s => ({
+      title: s.title,
+      content: s.content,
+      icon: s.icon ?? '',
+    }))
+  );
+
   constructor() {
     addIcons({ informationCircleOutline });
   }
@@ -31,18 +40,8 @@ export class InformationPage implements OnInit {
     const clubId = this.clubService.getCurrentClubId();
     if (clubId !== null) {
       const data = await this.clubInformationService.getByClubId(clubId);
-      this.sections.set(data.map(s => ({ ...s, isExpanded: false })));
+      this.sections.set(data);
     }
     this.loading.set(false);
-  }
-
-  toggleSection(sectionId: number): void {
-    this.sections.update(sections =>
-      sections.map(section =>
-        section.id === sectionId
-          ? { ...section, isExpanded: !section.isExpanded }
-          : section
-      )
-    );
   }
 }

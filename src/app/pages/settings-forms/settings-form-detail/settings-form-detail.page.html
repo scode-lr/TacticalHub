@@ -9,7 +9,7 @@
   }
 
   @if (!isLoading()) {
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="detail-form">
+  <form [formGroup]="form" class="detail-form">
 
     <div class="form-card">
       <div class="form-card-header">
@@ -111,26 +111,27 @@
 
     <app-settings-form-fields [fields]="fieldsArray" />
 
-    <div class="form-actions">
-      <button type="button" class="btn-secondary" (click)="goBack()">
-        {{ 'common.cancel' | translate }}
-      </button>
-      <button type="button" class="btn-secondary" (click)="openPreview()">
-        {{ 'admin.settingsForms.preview.button' | translate }}
-      </button>
-      <button type="submit" class="btn-primary" [disabled]="isSaving()">
-        {{ 'common.save' | translate }}
-      </button>
-    </div>
+    <app-section-footer-actions
+      [canCancel]="true"
+      [canPreview]="true"
+      [canSave]="!isSaving()"
+      [previewLabel]="'admin.settingsForms.preview.button'"
+      (cancelAction)="goBack()"
+      (previewAction)="openPreview()"
+      (saveAction)="onSubmit()" />
 
   </form>
 
-  <app-form-preview-modal
+  <app-preview-modal
     [isOpen]="previewOpen()"
-    [fields]="previewFields"
-    [formName]="form.get('name')?.value"
-    (didDismiss)="previewOpen.set(false)"
-  />
+    [title]="'admin.settingsForms.preview.title'"
+    [subtitle]="form.get('name')?.value ?? ''"
+    [notice]="'admin.settingsForms.preview.notice'"
+    [emptyMessage]="'admin.settingsForms.preview.noFields'"
+    [isEmpty]="previewFields.length === 0"
+    (didDismiss)="previewOpen.set(false)">
+    <app-form-preview-content [fields]="previewFields" />
+  </app-preview-modal>
   }
 </div>
 

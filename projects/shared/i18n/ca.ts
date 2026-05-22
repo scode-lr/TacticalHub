@@ -274,13 +274,25 @@ export const sharedTranslations = {
         emptyDescription: 'Afegeix seccions per mostrar informació del club als membres.',
         add: 'Afegir Secció',
         edit: 'Editar Secció',
+        untitled: 'Secció sense títol',
+        moveUp: 'Moure secció amunt',
+        moveDown: 'Moure secció avall',
+        preview: 'Vista prèvia',
+        previewNotice: 'Aquesta és una vista prèvia de com veuran les seccions els membres del club.',
+        previewEmpty: 'Res per previsualitzar',
+        previewEmptyDescription: 'Afegeix seccions primer per veure la vista prèvia.',
+        saveSuccess: 'Seccions desades correctament',
+        saveError: 'No s\'han pogut desar les seccions. Torna-ho a intentar.',
+        formInvalid: 'Corregeix els errors de les seccions abans de desar.',
         form: {
           title: 'Títol',
           content: 'Contingut',
-          icon: 'Icona (nom Ionicons)',
+          icon: 'Icona',
           titlePlaceholder: 'Títol de la secció',
           contentPlaceholder: 'Contingut de la secció...',
-          iconPlaceholder: 'ex. information-circle-outline'
+          iconPlaceholder: 'Tria un icona...',
+          titleRequired: 'El títol és obligatori.',
+          contentRequired: 'El contingut és obligatori.'
         }
       },
       forms: {

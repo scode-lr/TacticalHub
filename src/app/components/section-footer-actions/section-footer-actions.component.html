@@ -1,0 +1,13 @@
+<div class="form-actions">
+  <button type="button" class="btn-secondary" (click)="cancelAction.emit()" [disabled]="!canCancel()">
+    {{ cancelLabel() | translate }}
+  </button>
+  <button type="button" class="btn-secondary" (click)="previewAction.emit()" [disabled]="!canPreview()">
+    <ion-icon name="eye-outline"></ion-icon>
+    {{ previewLabel() | translate }}
+  </button>
+  <button type="button" class="btn-primary" (click)="saveAction.emit()" [disabled]="!canSave()">
+    <ion-icon name="save-outline"></ion-icon>
+    {{ saveLabel() | translate }}
+  </button>
+</div>

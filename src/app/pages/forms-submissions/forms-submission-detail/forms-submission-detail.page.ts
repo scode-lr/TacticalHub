@@ -33,6 +33,6 @@ export class FormsSubmissionDetailPage implements OnInit {
 
   backRoute(): string {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/forms`;
+    return `/app/${roleType}/${roleId}/forms-submissions`;
   }
 }

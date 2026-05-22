@@ -1,4 +1,4 @@
-.form-preview-modal {
+.preview-modal {
   --height: 100%;
   --max-height: 100%;
   --border-radius: 0;
@@ -7,7 +7,7 @@
   @media (min-width: 768px) {
     --height: 80vh;
     --max-height: 80vh;
-    --width: 560px;
+    --width: 600px;
     --border-radius: 12px;
   }
 }
@@ -56,7 +56,7 @@
   line-height: 1.2;
 }
 
-.form-subtitle {
+.modal-subtitle {
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-secondary, #6b7280);
@@ -105,12 +105,6 @@
   border-radius: 8px;
   padding: 0.625rem 0.875rem;
   margin-bottom: 1.25rem;
-}
-
-.preview-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
 }
 
 .empty-state {

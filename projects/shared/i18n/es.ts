@@ -274,13 +274,25 @@ export const sharedTranslations = {
         emptyDescription: 'Añade secciones para mostrar información del club a los miembros.',
         add: 'Añadir Sección',
         edit: 'Editar Sección',
+        untitled: 'Sección sin título',
+        moveUp: 'Mover sección arriba',
+        moveDown: 'Mover sección abajo',
+        preview: 'Vista previa',
+        previewNotice: 'Esta es una vista previa de cómo verán las secciones los miembros del club.',
+        previewEmpty: 'Nada que previsualizar',
+        previewEmptyDescription: 'Añade secciones primero para ver la vista previa.',
+        saveSuccess: 'Secciones guardadas correctamente',
+        saveError: 'No se pudieron guardar las secciones. Inténtalo de nuevo.',
+        formInvalid: 'Corrige los errores en las secciones antes de guardar.',
         form: {
           title: 'Título',
           content: 'Contenido',
-          icon: 'Icono (nombre Ionicons)',
+          icon: 'Icono',
           titlePlaceholder: 'Título de la sección',
           contentPlaceholder: 'Contenido de la sección...',
-          iconPlaceholder: 'ej. information-circle-outline'
+          iconPlaceholder: 'Elegir un icono...',
+          titleRequired: 'El título es obligatorio.',
+          contentRequired: 'El contenido es obligatorio.'
         }
       },
       forms: {

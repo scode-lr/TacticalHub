@@ -183,7 +183,6 @@ export class FormDetailSubmissionPage implements OnInit {
 
   backRoute(): string {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    console.log('hasSubmissions', this.formDetail()?.submissionsCount);
     if((this.formDetail()?.submissionsCount ?? 0) > 0){
       return `/app/${roleType}/${roleId}/forms/${this.formId}`;
     }

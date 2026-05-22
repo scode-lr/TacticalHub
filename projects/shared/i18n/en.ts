@@ -276,13 +276,25 @@ export const sharedTranslations = {
         emptyDescription: 'Add sections to display club information to members.',
         add: 'Add Section',
         edit: 'Edit Section',
+        untitled: 'Untitled section',
+        moveUp: 'Move section up',
+        moveDown: 'Move section down',
+        preview: 'Preview',
+        previewNotice: 'This is a preview of how the sections will look to club members.',
+        previewEmpty: 'Nothing to preview',
+        previewEmptyDescription: 'Add sections first to see the preview.',
+        saveSuccess: 'Sections saved successfully',
+        saveError: 'Could not save sections. Please try again.',
+        formInvalid: 'Please fix the errors in the sections before saving.',
         form: {
           title: 'Title',
           content: 'Content',
-          icon: 'Icon (Ionicons name)',
+          icon: 'Icon',
           titlePlaceholder: 'Section title',
           contentPlaceholder: 'Section content...',
-          iconPlaceholder: 'e.g. information-circle-outline'
+          iconPlaceholder: 'Choose an icon...',
+          titleRequired: 'Title is required.',
+          contentRequired: 'Content is required.'
         }
       },
       forms: {
