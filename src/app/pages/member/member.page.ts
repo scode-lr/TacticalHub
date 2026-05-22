@@ -35,16 +35,16 @@ export class MemberPage implements OnInit {
   readonly memberMenuConfig: MenuConfig = {
     role: RoleType.Member,
     items: [
-      { id: 'home', label: 'member.menu.home', icon: 'home-outline', route: 'home' },
-      { id: 'notifications', label: 'member.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
-      // { id: 'news', label: 'member.menu.news', icon: 'newspaper-outline', route: 'news' },
-      { id: 'forms', label: 'member.menu.forms', icon: 'document-text-outline', route: 'forms' },
-      // { id: 'matches', label: 'member.menu.matches', icon: 'football-outline', route: 'matches' },
-      { id: 'information', label: 'member.menu.information', icon: 'information-circle-outline', route: 'information' },
-      // { id: 'proposals', label: 'member.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      // { id: 'partners', label: 'member.menu.partners', icon: 'people-outline', route: 'partners' },
-      // { id: 'proposals', label: 'member.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      // { id: 'partners', label: 'member.menu.partners', icon: 'people-outline', route: 'partners' }
+      { id: 'home', label: 'user.menu.home', icon: 'home-outline', route: 'home' },
+      { id: 'notifications', label: 'user.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
+      // { id: 'news', label: 'user.menu.news', icon: 'newspaper-outline', route: 'news' },
+      { id: 'forms', label: 'user.menu.forms', icon: 'document-text-outline', route: 'forms' },
+      // { id: 'matches', label: 'user.menu.matches', icon: 'football-outline', route: 'matches' },
+      { id: 'information', label: 'user.menu.information', icon: 'information-circle-outline', route: 'information' },
+      // { id: 'proposals', label: 'user.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      // { id: 'partners', label: 'user.menu.partners', icon: 'people-outline', route: 'partners' },
+      // { id: 'proposals', label: 'user.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
+      // { id: 'partners', label: 'user.menu.partners', icon: 'people-outline', route: 'partners' }
     ]
   };
   

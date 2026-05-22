@@ -26,14 +26,14 @@
         <div class="rejection-banner__body">
           <div class="rejection-banner__header">
             <ion-icon name="alert-circle-outline" class="rejection-banner__icon"></ion-icon>
-            <span class="rejection-banner__label">{{ 'member.forms.submission.rejectionFeedback' | translate }}</span>
+            <span class="rejection-banner__label">{{ 'user.forms.submission.rejectionFeedback' | translate }}</span>
             <span class="rejection-banner__date">{{ latestComment()!.date | date:'mediumDate' }}</span>
           </div>
           <p class="rejection-banner__text">{{ latestComment()!.text }}</p>
           @if (rejectionComments().length > 1) {
             <button type="button" class="rejection-banner__history-btn" (click)="showHistory.set(true)">
               <ion-icon name="time-outline"></ion-icon>
-              {{ 'member.forms.submission.viewHistory' | translate }} ({{ rejectionComments().length }})
+              {{ 'user.forms.submission.viewHistory' | translate }} ({{ rejectionComments().length }})
             </button>
           }
         </div>
@@ -45,7 +45,7 @@
         <ng-template>
           <div class="history-modal">
             <div class="history-modal__header">
-              <h2 class="history-modal__title">{{ 'member.forms.submission.commentHistory' | translate }}</h2>
+              <h2 class="history-modal__title">{{ 'user.forms.submission.commentHistory' | translate }}</h2>
               <button class="history-modal__close" (click)="showHistory.set(false)">
                 <ion-icon name="close-outline"></ion-icon>
               </button>
@@ -83,7 +83,7 @@
             {{ 'common.cancel' | translate }}
           </button>
           <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
-            {{ (isEditing() ? 'member.forms.submission.resend' : 'common.submit') | translate }}
+            {{ (isEditing() ? 'user.forms.submission.resend' : 'common.submit') | translate }}
           </button>
         </div>
       </form>

@@ -1,6 +1,6 @@
 <div class="page-container member-news-page">
   <div class="section-header news-header">
-    <h1 class="section-title">{{ 'member.news.title' | translate }}</h1>
+    <h1 class="section-title">{{ 'user.news.title' | translate }}</h1>
     
     <div class="filters-icons">
       <div class="filter-wrapper">
@@ -21,7 +21,7 @@
   <ion-modal [isOpen]="showCategoryModal()" (didDismiss)="showCategoryModal.set(false)" [breakpoints]="[0, 0.6, 0.9]" [initialBreakpoint]="0.6">
     <ng-template>
       <div class="filter-modal">
-        <h3 class="filter-modal-title">{{ 'member.news.category' | translate }}</h3>
+        <h3 class="filter-modal-title">{{ 'user.news.category' | translate }}</h3>
         <div class="filter-options">
           @for (category of categories; track category.value) {
             <button 
@@ -43,7 +43,7 @@
   <ion-modal [isOpen]="showTimeModal()" (didDismiss)="showTimeModal.set(false)" [breakpoints]="[0, 0.5, 0.8]" [initialBreakpoint]="0.5">
     <ng-template>
       <div class="filter-modal">
-        <h3 class="filter-modal-title">{{ 'member.news.time.title' | translate }}</h3>
+        <h3 class="filter-modal-title">{{ 'user.news.time.title' | translate }}</h3>
         <div class="filter-options">
           @for (timeFilter of timeFilters; track timeFilter.value) {
             <button 
@@ -64,8 +64,8 @@
   @if (filteredNews().length === 0) {
     <div class="empty-state">
       <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
-      <h3 class="empty-title">{{ 'member.news.empty' | translate }}</h3>
-      <p class="empty-description">{{ 'member.news.emptyDescription' | translate }}</p>
+      <h3 class="empty-title">{{ 'user.news.empty' | translate }}</h3>
+      <p class="empty-description">{{ 'user.news.emptyDescription' | translate }}</p>
     </div>
   } @else {
     <div class="grid-auto-fill news-grid">

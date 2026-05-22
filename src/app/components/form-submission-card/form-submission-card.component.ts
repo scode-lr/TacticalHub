@@ -47,21 +47,21 @@ export class FormSubmissionCardComponent {
 
     return [
       {
-        labelKey: 'member.forms.submission.statusSubmitted',
+        labelKey: 'user.forms.submission.statusSubmitted',
         icon: 'checkmark-outline',
         completed: true,
         connectorCompleted: isUnderReview,
       },
       {
-        labelKey: 'member.forms.submission.statusUnderReview',
+        labelKey: 'user.forms.submission.statusUnderReview',
         icon: isFinal ? 'checkmark-outline' : 'time-outline',
         completed: isUnderReview,
         connectorCompleted: isFinal,
       },
       {
         labelKey: status === AppStatus.Rejected
-          ? 'member.forms.submission.statusRejected'
-          : 'member.forms.submission.statusApproved',
+          ? 'user.forms.submission.statusRejected'
+          : 'user.forms.submission.statusApproved',
         icon: status === AppStatus.Rejected ? 'close-outline' : 'checkmark-outline',
         completed: isFinal,
         isApproved: status === AppStatus.Approved,
@@ -83,10 +83,10 @@ export class FormSubmissionCardComponent {
   readonly statusLabelKey = computed(() => {
     const status = this.submission().status as AppStatus;
     switch (status) {
-      case AppStatus.Approved: return 'member.forms.submission.statusApproved';
-      case AppStatus.Rejected: return 'member.forms.submission.statusRejected';
-      case AppStatus.Pending: return 'member.forms.submission.statusUnderReview';
-      default: return 'member.forms.submission.statusSubmitted';
+      case AppStatus.Approved: return 'user.forms.submission.statusApproved';
+      case AppStatus.Rejected: return 'user.forms.submission.statusRejected';
+      case AppStatus.Pending: return 'user.forms.submission.statusUnderReview';
+      default: return 'user.forms.submission.statusSubmitted';
     }
   });
 

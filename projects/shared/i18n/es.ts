@@ -551,7 +551,7 @@ export const sharedTranslations = {
     reviewComment: 'Comentario',
     reviewCommentPlaceholder: 'Añade un comentario (opcional)'
   },
-  member: {
+  user: {
     title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',
     menu: {
@@ -721,7 +721,7 @@ export const sharedTranslations = {
     }
   },
   roles: {
-    member: 'Miembro',
+    member: 'Usuario',
     admin: 'Administrador',
     coach: 'Entrenador',
     guest: 'Invitado'

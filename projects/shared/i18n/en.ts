@@ -554,7 +554,7 @@ export const sharedTranslations = {
     reviewComment: 'Comment',
     reviewCommentPlaceholder: 'Add a comment (optional)'
   },
-  member: {
+  user: {
     title: 'Viewer portal',
     subtitle: 'Access club information and services',
     menu: {
@@ -783,7 +783,7 @@ export const sharedTranslations = {
     }
   },
   roles: {
-    member: 'Member',
+    member: 'User',
     admin: 'Admin',
     coach: 'Coach',
     guest: 'Guest'

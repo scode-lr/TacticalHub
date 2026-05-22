@@ -1,6 +1,6 @@
 <div class="page-container">
   <div class="section-header">
-    <h1 class="section-title">{{ 'member.menu.forms' | translate }}</h1>
+    <h1 class="section-title">{{ 'user.menu.forms' | translate }}</h1>
   </div>
 
   @if (loading()) {
@@ -24,8 +24,8 @@
       <div class="empty-icon-wrap">
         <ion-icon name="document-text-outline"></ion-icon>
       </div>
-      <h3 class="empty-title">{{ 'member.action.noForms' | translate }}</h3>
-      <p class="empty-description">{{ 'member.action.noFormsDescription' | translate }}</p>
+      <h3 class="empty-title">{{ 'user.action.noForms' | translate }}</h3>
+      <p class="empty-description">{{ 'user.action.noFormsDescription' | translate }}</p>
     </div>
   } @else {
     <p-dataview [value]="forms()" styleClass="forms-dataview">

@@ -1,29 +1,29 @@
 <div class="page-container">
   <div class="section-header">
-    <h1 class="section-title">{{ 'member.proposals.title' | translate }}</h1>
+    <h1 class="section-title">{{ 'user.proposals.title' | translate }}</h1>
   </div>
 
   <form [formGroup]="proposalForm" (ngSubmit)="onSubmit()" class="proposal-form">
     
     <div class="form-field">
-      <label class="field-label">{{ 'member.proposals.form.title' | translate }}</label>
+      <label class="field-label">{{ 'user.proposals.form.title' | translate }}</label>
       <ion-input 
         formControlName="title"
-        [placeholder]="'member.proposals.form.titlePlaceholder' | translate">
+        [placeholder]="'user.proposals.form.titlePlaceholder' | translate">
       </ion-input>
     </div>
 
     <div class="form-field">
-      <label class="field-label">{{ 'member.proposals.form.body' | translate }}</label>
+      <label class="field-label">{{ 'user.proposals.form.body' | translate }}</label>
       <ion-textarea 
         formControlName="content" 
         [rows]="6"
-        [placeholder]="'member.proposals.form.bodyPlaceholder' | translate">
+        [placeholder]="'user.proposals.form.bodyPlaceholder' | translate">
       </ion-textarea>
     </div>
 
     <div class="form-field">
-      <label class="field-label">{{ 'member.proposals.form.attachment' | translate }}</label>
+      <label class="field-label">{{ 'user.proposals.form.attachment' | translate }}</label>
       <div class="file-upload" (click)="fileInput.click()">
         <input #fileInput type="file" (change)="onFileSelected($event)" hidden>
         
@@ -31,10 +31,10 @@
           <ion-icon name="cloud-upload-outline"></ion-icon>
           @if (selectedFileName()) {
             <span class="file-name">{{ selectedFileName() }}</span>
-            <span class="file-hint">{{ 'member.proposals.form.changeFile' | translate }}</span>
+            <span class="file-hint">{{ 'user.proposals.form.changeFile' | translate }}</span>
           } @else {
-            <span class="upload-label">{{ 'member.proposals.form.uploadText' | translate }}</span>
-            <span class="file-hint">{{ 'member.proposals.form.uploadSubtext' | translate }}</span>
+            <span class="upload-label">{{ 'user.proposals.form.uploadText' | translate }}</span>
+            <span class="file-hint">{{ 'user.proposals.form.uploadSubtext' | translate }}</span>
           }
         </div>
       </div>
@@ -47,9 +47,9 @@
         [disabled]="!canSubmit() || isSubmitting()">
         @if (isSubmitting()) {
           <ion-spinner name="dots"></ion-spinner>
-          {{ 'member.proposals.form.submitting' | translate }}
+          {{ 'user.proposals.form.submitting' | translate }}
         } @else {
-          {{ 'member.proposals.form.submit' | translate }}
+          {{ 'user.proposals.form.submit' | translate }}
         }
       </button>
     </div>

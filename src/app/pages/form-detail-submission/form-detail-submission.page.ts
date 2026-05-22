@@ -152,8 +152,8 @@ export class FormDetailSubmissionPage implements OnInit {
       }
 
       const successKey = this.isEditing()
-        ? 'member.action.form.success.resubmitMessage'
-        : 'member.action.form.success.submitMessage';
+        ? 'user.action.form.success.resubmitMessage'
+        : 'user.action.form.success.submitMessage';
       const toast = await this.toastController.create({
         message: this.translationService.instant(successKey),
         duration: 3000,
@@ -165,7 +165,7 @@ export class FormDetailSubmissionPage implements OnInit {
       this.goToFormDetail();
     } catch {
       const toast = await this.toastController.create({
-        message: this.translationService.instant('member.action.form.errors.submitError'),
+        message: this.translationService.instant('user.action.form.errors.submitError'),
         duration: 3000,
         position: 'top',
         color: 'danger',
