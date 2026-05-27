@@ -81,6 +81,10 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../settings-club/settings-information/settings-information.page').then(m => m.SettingsInformationPage)
       },
       {
+        path: 'settings-club/sponsors',
+        loadComponent: () => import('../settings-club/settings-sponsors/settings-sponsors.page').then(m => m.SettingsSponsorsPage)
+      },
+      {
         path: 'settings-forms',
         loadComponent: () => import('../settings-forms/settings-forms.page').then(m => m.SettingsFormsPage)
       },

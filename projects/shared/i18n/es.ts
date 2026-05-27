@@ -298,6 +298,49 @@ export const sharedTranslations = {
       forms: {
         title: 'Configuración de Formularios',
         description: 'Crear y gestionar formularios del club'
+      },
+      sponsors: {
+        title: 'Patrocinadores',
+        description: 'Gestionar logos y niveles de patrocinadores',
+        empty: 'Sin patrocinadores',
+        emptyDescription: 'Añade patrocinadores para mostrarlos a los miembros del club.',
+        add: 'Añadir patrocinador',
+        edit: 'Editar patrocinador',
+        newSponsor: 'Nuevo patrocinador',
+        created: 'Patrocinador creado correctamente',
+        updated: 'Patrocinador actualizado correctamente',
+        deleted: 'Patrocinador eliminado',
+        tier: {
+          gold: 'Oro',
+          silver: 'Plata',
+          bronze: 'Bronce'
+        },
+        form: {
+          name: 'Nombre',
+          namePlaceholder: 'Nombre del patrocinador',
+          tier: 'Nivel',
+          selectImage: 'Seleccionar imagen',
+          replaceImage: 'Reemplazar imagen',
+          imageHint: 'PNG, JPEG, WebP o SVG',
+          title: 'Título',
+          titlePlaceholder: 'Título opcional',
+          description: 'Descripción',
+          descriptionPlaceholder: 'Descripción opcional',
+          links: 'Enlaces',
+          addLink: 'Añadir enlace',
+          selectPlatform: 'Seleccionar plataforma',
+          urlPlaceholder: 'https://...'
+        },
+        error: {
+          load: 'No se pudieron cargar los patrocinadores.',
+          create: 'No se pudo crear el patrocinador.',
+          update: 'No se pudo actualizar el patrocinador.',
+          delete: 'No se pudo eliminar el patrocinador.',
+          reorder: 'No se pudo reordenar los patrocinadores.',
+          imageSize: 'La imagen debe ser menor de 2 MB.',
+          imageType: 'Formato inválido. Usa PNG, JPEG, WebP o SVG.',
+          imageRequired: 'Selecciona una imagen.'
+        }
       }
     },
     parameters: {

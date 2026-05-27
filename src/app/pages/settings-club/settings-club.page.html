@@ -21,5 +21,14 @@
       </div>
       <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
     </div>
+
+    <div class="settings-card" [routerLink]="getSettingsSponsorsUrl()">
+      <ion-icon name="wallet-outline" class="card-icon"></ion-icon>
+      <div class="card-text">
+        <h2 class="card-title">{{ 'admin.settings.sponsors.title' | translate }}</h2>
+        <p class="card-description">{{ 'admin.settings.sponsors.description' | translate }}</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
   </div>
 </div>

@@ -298,6 +298,49 @@ export const sharedTranslations = {
       forms: {
         title: 'Configuració de Formularis',
         description: 'Crear i gestionar formularis del club'
+      },
+      sponsors: {
+        title: 'Patrocinadors',
+        description: 'Gestionar logos i nivells de patrocinadors',
+        empty: 'Sense patrocinadors',
+        emptyDescription: 'Afegeix patrocinadors per mostrar-los als membres del club.',
+        add: 'Afegir patrocinador',
+        edit: 'Editar patrocinador',
+        newSponsor: 'Nou patrocinador',
+        created: 'Patrocinador creat correctament',
+        updated: 'Patrocinador actualitzat correctament',
+        deleted: 'Patrocinador eliminat',
+        tier: {
+          gold: 'Or',
+          silver: 'Plata',
+          bronze: 'Bronze'
+        },
+        form: {
+          name: 'Nom',
+          namePlaceholder: 'Nom del patrocinador',
+          tier: 'Nivell',
+          selectImage: 'Seleccionar imatge',
+          replaceImage: 'Reemplaçar imatge',
+          imageHint: 'PNG, JPEG, WebP o SVG',
+          title: 'Títol',
+          titlePlaceholder: 'Títol opcional',
+          description: 'Descripció',
+          descriptionPlaceholder: 'Descripció opcional',
+          links: 'Enllaços',
+          addLink: 'Afegir enllaç',
+          selectPlatform: 'Seleccionar plataforma',
+          urlPlaceholder: 'https://...'
+        },
+        error: {
+          load: 'No s\'han pogut carregar els patrocinadors.',
+          create: 'No s\'ha pogut crear el patrocinador.',
+          update: 'No s\'ha pogut actualitzar el patrocinador.',
+          delete: 'No s\'ha pogut eliminar el patrocinador.',
+          reorder: 'No s\'han pogut reordenar els patrocinadors.',
+          imageSize: 'La imatge ha de ser menor de 2 MB.',
+          imageType: 'Format invàlid. Utilitza PNG, JPEG, WebP o SVG.',
+          imageRequired: 'Selecciona una imatge.'
+        }
       }
     },
     parameters: {

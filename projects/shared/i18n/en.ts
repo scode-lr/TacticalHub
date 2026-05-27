@@ -300,6 +300,49 @@ export const sharedTranslations = {
       forms: {
         title: 'Form Settings',
         description: 'Create and manage club forms'
+      },
+      sponsors: {
+        title: 'Sponsors',
+        description: 'Manage sponsor logos and tiers',
+        empty: 'No sponsors yet',
+        emptyDescription: 'Add sponsors to display them to club members.',
+        add: 'Add Sponsor',
+        edit: 'Edit Sponsor',
+        newSponsor: 'New Sponsor',
+        created: 'Sponsor created successfully',
+        updated: 'Sponsor updated successfully',
+        deleted: 'Sponsor deleted',
+        tier: {
+          gold: 'Gold',
+          silver: 'Silver',
+          bronze: 'Bronze'
+        },
+        form: {
+          name: 'Name',
+          namePlaceholder: 'Sponsor name',
+          tier: 'Tier',
+          selectImage: 'Select image',
+          replaceImage: 'Replace image',
+          imageHint: 'PNG, JPEG, WebP or SVG',
+          title: 'Title',
+          titlePlaceholder: 'Optional display title',
+          description: 'Description',
+          descriptionPlaceholder: 'Optional description',
+          links: 'Links',
+          addLink: 'Add link',
+          selectPlatform: 'Select platform',
+          urlPlaceholder: 'https://...'
+        },
+        error: {
+          load: 'Could not load sponsors.',
+          create: 'Could not create sponsor.',
+          update: 'Could not update sponsor.',
+          delete: 'Could not delete sponsor.',
+          reorder: 'Could not reorder sponsors.',
+          imageSize: 'Image must be less than 2 MB.',
+          imageType: 'Invalid format. Use PNG, JPEG, WebP or SVG.',
+          imageRequired: 'Please select an image.'
+        }
       }
     },
     parameters: {
