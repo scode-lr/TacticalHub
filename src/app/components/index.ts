@@ -9,4 +9,5 @@ export { SectionFooterActionsComponent } from './section-footer-actions/section-
 export { FormPreviewContentComponent } from './form-preview-content/form-preview-content.component';
 export { FormSubmissionCardComponent } from './form-submission-card/form-submission-card.component';
 export { EmptyStateComponent } from './empty-state/empty-state.component';
+export { SponsorDetailComponent } from './sponsor-detail/sponsor-detail.component';
 export { SubmissionDetailViewComponent } from './submission-detail-view/submission-detail-view.component';

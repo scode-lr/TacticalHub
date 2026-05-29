@@ -1,0 +1,107 @@
+.modal-image-wrapper {
+  background: #f9fafb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  padding: 16px;
+}
+
+.modal-title-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary, #6b7280);
+  margin: 0 0 0.5rem 0;
+}
+
+.modal-description {
+  font-size: 0.9375rem;
+  color: var(--text-light, #9ca3af);
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.modal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.modal-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.9375rem;
+}
+
+.modal-info-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-light, #9ca3af);
+}
+
+.modal-info-value {
+  color: var(--text-secondary, #6b7280);
+}
+
+.modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  color: var(--ion-color-primary, #3880ff);
+  text-decoration: none;
+  padding: 6px 12px;
+  background: rgba(56, 128, 255, 0.08);
+  border-radius: 6px;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(56, 128, 255, 0.15);
+  }
+
+  ion-icon {
+    font-size: 14px;
+  }
+}
+
+:host.compact {
+  .modal-image-wrapper {
+    min-height: 100px;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-image {
+    max-height: 150px;
+    padding: 12px;
+  }
+
+  .modal-title-text {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .modal-description {
+    font-size: 0.8125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-link {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  .modal-info-text {
+    font-size: 0.8125rem;
+  }
+}

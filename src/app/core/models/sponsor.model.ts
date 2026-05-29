@@ -4,10 +4,23 @@ export enum SponsorTier {
   Gold = 2
 }
 
-export interface SponsorLink {
+export const SPONSOR_INFO_KEYS = [
+  { value: 'Website', label: 'admin.settings.sponsors.infoKeys.website' },
+  { value: 'Instagram', label: 'admin.settings.sponsors.infoKeys.instagram' },
+  { value: 'Twitter', label: 'admin.settings.sponsors.infoKeys.twitter' },
+  { value: 'Facebook', label: 'admin.settings.sponsors.infoKeys.facebook' },
+  { value: 'TikTok', label: 'admin.settings.sponsors.infoKeys.tiktok' },
+  { value: 'Youtube', label: 'admin.settings.sponsors.infoKeys.youtube' },
+  { value: 'Linkedin', label: 'admin.settings.sponsors.infoKeys.linkedin' },
+  { value: 'Twitch', label: 'admin.settings.sponsors.infoKeys.twitch' },
+  { value: 'Email', label: 'admin.settings.sponsors.infoKeys.email' },
+  { value: 'Mobile', label: 'admin.settings.sponsors.infoKeys.mobile' }
+];
+
+export interface AdditionalInfo {
   id?: number;
-  platform: string;
-  url: string;
+  key: string;
+  value: string;
 }
 
 export interface Sponsor {
@@ -17,7 +30,7 @@ export interface Sponsor {
   imageUrl: string;
   title: string | null;
   description: string | null;
-  links: SponsorLink[];
+  additionalInfo: AdditionalInfo[];
   tier: SponsorTier;
   sortOrder: number;
   createdAt: string;
@@ -30,7 +43,7 @@ export interface CreateSponsorRequest {
   tier: SponsorTier;
   title?: string;
   description?: string;
-  links?: SponsorLink[];
+  additionalInfo?: AdditionalInfo[];
 }
 
 export interface UpdateSponsorRequest {
@@ -39,9 +52,24 @@ export interface UpdateSponsorRequest {
   image?: File;
   title?: string;
   description?: string;
-  links?: SponsorLink[];
+  additionalInfo?: AdditionalInfo[];
 }
 
 export interface ReorderSponsorsRequest {
   ids: number[];
+}
+
+export interface UploadImageResponse {
+  url: string;
+}
+
+export interface DeleteImagesRequest {
+  urls: string[];
+}
+
+export interface BatchSponsorRequest {
+  additions: Sponsor[];
+  updates: Sponsor[];
+  deletions: number[];
+  orphanedImageUrls: string[];
 }

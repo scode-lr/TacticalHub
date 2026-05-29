@@ -302,6 +302,11 @@ export const sharedTranslations = {
       sponsors: {
         title: 'Patrocinadors',
         description: 'Gestionar logos i nivells de patrocinadors',
+        preview: 'Vista prèvia',
+        previewNotice: 'Així és com els patrocinadors apareixeran al club.',
+        previewEmpty: 'No hi ha patrocinadors per mostrar',
+        saved: 'Patrocinadors guardats correctament',
+        canceled: 'Canvis descartats',
         empty: 'Sense patrocinadors',
         emptyDescription: 'Afegeix patrocinadors per mostrar-los als membres del club.',
         add: 'Afegir patrocinador',
@@ -326,10 +331,22 @@ export const sharedTranslations = {
           titlePlaceholder: 'Títol opcional',
           description: 'Descripció',
           descriptionPlaceholder: 'Descripció opcional',
-          links: 'Enllaços',
-          addLink: 'Afegir enllaç',
-          selectPlatform: 'Seleccionar plataforma',
-          urlPlaceholder: 'https://...'
+          additionalInfo: 'Informació addicional',
+          addInfo: 'Afegir info',
+          selectKey: 'Seleccionar clau',
+          valuePlaceholder: 'Valor o URL'
+        },
+        infoKeys: {
+          website: 'Lloc web',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Correu',
+          mobile: 'Mòbil'
         },
         error: {
           load: 'No s\'han pogut carregar els patrocinadors.',
@@ -339,7 +356,9 @@ export const sharedTranslations = {
           reorder: 'No s\'han pogut reordenar els patrocinadors.',
           imageSize: 'La imatge ha de ser menor de 2 MB.',
           imageType: 'Format invàlid. Utilitza PNG, JPEG, WebP o SVG.',
-          imageRequired: 'Selecciona una imatge.'
+          imageRequired: 'Selecciona una imatge.',
+          imageUpload: 'No s\'ha pogut pujar la imatge. Torna-ho a intentar.',
+          saveAll: 'No s\'han pogut guardar els patrocinadors. Torna-ho a intentar.'
         }
       }
     },
@@ -605,8 +624,7 @@ export const sharedTranslations = {
       information: 'Informació',
       proposals: 'Propostes i queixes',
       matches: 'Partits',
-      partners: 'Socis',
-      forms: 'Formularis',
+      partners: 'Col·laboradors',      forms: 'Formularis',
       more: 'Més'
     },
     description: {
@@ -617,7 +635,7 @@ export const sharedTranslations = {
       information: 'Informació i recursos del club',
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
-      partners: 'Els nostres socis i patrocinadors del club',
+      partners: 'Els nostres col·laboradors i patrocinadors del club',
       forms: 'Omple els formularis del club'
     },
     home: {
@@ -800,8 +818,8 @@ export const sharedTranslations = {
       noRelatedMatches: 'No hi ha partits relacionats'
     },
     partners: {
-      empty: 'No hi ha socis llistats',
-      emptyDescription: 'Els nostres socis i patrocinadors del club es llistaran aquí.'
+      empty: 'No hi ha col·laboradors llistats',
+      emptyDescription: 'Els nostres col·laboradors i patrocinadors del club es llistaran aquí.'
     }
   },
   guest: {
@@ -812,7 +830,7 @@ export const sharedTranslations = {
       news: 'Notícies',
       information: 'Informació',
       matches: 'Partits',
-      partners: 'Socis'
+      partners: 'Col·laboradors'
     },
     description: {
       home: 'Benvingut al portal públic del club',

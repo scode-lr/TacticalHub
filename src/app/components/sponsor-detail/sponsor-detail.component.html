@@ -1,0 +1,35 @@
+@if (sponsor(); as sponsor) {
+  <div class="modal-image-wrapper">
+    @if (sponsor.imageUrl) {
+      <img [src]="sponsor.imageUrl" [alt]="sponsor.name" class="modal-image" />
+    }
+  </div>
+
+  @if (sponsor.title) {
+    <p class="modal-title-text">{{ sponsor.title }}</p>
+  }
+  @if (sponsor.description) {
+    <p class="modal-description">{{ sponsor.description }}</p>
+  }
+  @if (sponsor.additionalInfo && sponsor.additionalInfo.length > 0) {
+    <div class="modal-links">
+      @for (info of sponsor.additionalInfo; track info.key) {
+        @if (isInfoLink(info.key)) {
+          <a
+            class="modal-link"
+            [href]="info.value"
+            target="_blank"
+            rel="noopener noreferrer">
+            <ion-icon name="link-outline"></ion-icon>
+            <span>{{ infoKeyLabel(info.key) | translate }}</span>
+          </a>
+        } @else {
+          <span class="modal-info-text">
+            <span class="modal-info-label">{{ infoKeyLabel(info.key) | translate }}</span>
+            <span class="modal-info-value">{{ info.value }}</span>
+          </span>
+        }
+      }
+    </div>
+  }
+}

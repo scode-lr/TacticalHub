@@ -302,6 +302,11 @@ export const sharedTranslations = {
       sponsors: {
         title: 'Patrocinadores',
         description: 'Gestionar logos y niveles de patrocinadores',
+        preview: 'Vista previa',
+        previewNotice: 'Así es como los patrocinadores aparecerán en el club.',
+        previewEmpty: 'No hay patrocinadores para mostrar',
+        saved: 'Patrocinadores guardados correctamente',
+        canceled: 'Cambios descartados',
         empty: 'Sin patrocinadores',
         emptyDescription: 'Añade patrocinadores para mostrarlos a los miembros del club.',
         add: 'Añadir patrocinador',
@@ -326,10 +331,22 @@ export const sharedTranslations = {
           titlePlaceholder: 'Título opcional',
           description: 'Descripción',
           descriptionPlaceholder: 'Descripción opcional',
-          links: 'Enlaces',
-          addLink: 'Añadir enlace',
-          selectPlatform: 'Seleccionar plataforma',
-          urlPlaceholder: 'https://...'
+          additionalInfo: 'Información adicional',
+          addInfo: 'Añadir info',
+          selectKey: 'Seleccionar clave',
+          valuePlaceholder: 'Valor o URL'
+        },
+        infoKeys: {
+          website: 'Sitio web',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Correo',
+          mobile: 'Móvil'
         },
         error: {
           load: 'No se pudieron cargar los patrocinadores.',
@@ -339,7 +356,9 @@ export const sharedTranslations = {
           reorder: 'No se pudo reordenar los patrocinadores.',
           imageSize: 'La imagen debe ser menor de 2 MB.',
           imageType: 'Formato inválido. Usa PNG, JPEG, WebP o SVG.',
-          imageRequired: 'Selecciona una imagen.'
+          imageRequired: 'Selecciona una imagen.',
+          imageUpload: 'No se pudo subir la imagen. Inténtalo de nuevo.',
+          saveAll: 'No se pudieron guardar los patrocinadores. Inténtalo de nuevo.'
         }
       }
     },
@@ -605,7 +624,7 @@ export const sharedTranslations = {
       information: 'Información',
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
-      partners: 'Socios',
+      partners: 'Colaboradores',
       forms: 'Formularios',
       more: 'Más'
     },
@@ -617,7 +636,7 @@ export const sharedTranslations = {
       information: 'Información y recursos del club',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
-      partners: 'Nuestros socios y patrocinadores del club',
+      partners: 'Nuestros colaboradores y patrocinadores del club',
       forms: 'Rellena los formularios del club'
     },
     home: {
@@ -741,8 +760,8 @@ export const sharedTranslations = {
       noRelatedMatches: 'No hay partidos relacionados'
     },
     partners: {
-      empty: 'No hay socios listados',
-      emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
+      empty: 'No hay colaboradores listados',
+      emptyDescription: 'Nuestros colaboradores y patrocinadores del club se listarán aquí.'
     }
   },
   guest: {
@@ -753,14 +772,14 @@ export const sharedTranslations = {
       news: 'Noticias',
       information: 'Información',
       matches: 'Partidos',
-      partners: 'Socios'
+      partners: 'Colaboradores'
     },
     description: {
       home: 'Bienvenido al portal público del club',
       news: 'Últimas noticias y anuncios',
       information: 'Información del club',
       matches: 'Ver próximos partidos',
-      partners: 'Socios y patrocinadores del club'
+      partners: 'Colaboradores y patrocinadores del club'
     }
   },
   roles: {

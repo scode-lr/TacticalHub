@@ -1,204 +1,115 @@
 <div class="page-container">
-  <!-- Header -->
-  <div class="page-header">
-    <button class="back-button" (click)="goBack()">
-      <ion-icon name="arrow-back-outline"></ion-icon>
-    </button>
-    <h1 class="page-title">{{ 'admin.settings.sponsors.title' | translate }}</h1>
-    <button class="add-button" (click)="startAdding()" [disabled]="isSaving() || isAdding()">
-      <ion-icon name="add-outline"></ion-icon>
-      <span>{{ 'admin.settings.sponsors.add' | translate }}</span>
-    </button>
+  <!-- Section Header -->
+  <div class="section-header">
+    <div class="header-content">
+      <div class="section-header-with-back-button">
+        <app-back-button />
+        <h1 class="section-title">{{ 'admin.settings.sponsors.title' | translate }}</h1>
+      </div>
+      <p class="section-subtitle">{{ 'admin.settings.sponsors.description' | translate }}</p>
+    </div>
+    @if (!loading() && sponsors().length > 0) {
+      <button class="btn-add" (click)="startAdding()" [disabled]="isSaving() || isAdding()">
+        <ion-icon name="add-outline"></ion-icon>
+        <span>{{ 'admin.settings.sponsors.add' | translate }}</span>
+      </button>
+    }
   </div>
-
-  <p class="page-description">{{ 'admin.settings.sponsors.description' | translate }}</p>
 
   <!-- Loading -->
   @if (loading()) {
-    <div class="loading-container"><ion-spinner name="dots"></ion-spinner></div>
+    <div class="skeleton-list">
+      @for (i of [1, 2, 3]; track i) {
+        <div class="skeleton-item">
+          <div class="skeleton-reorder">
+            <div class="skeleton-btn"></div>
+            <div class="skeleton-btn"></div>
+          </div>
+          <div class="skeleton-thumb"></div>
+          <div class="skeleton-text">
+            <div class="skeleton-line skeleton-name"></div>
+            <div class="skeleton-line skeleton-tier"></div>
+          </div>
+          <div class="skeleton-actions">
+            <div class="skeleton-btn"></div>
+          </div>
+        </div>
+      }
+    </div>
   }
 
   <!-- Add Form -->
   @if (isAdding()) {
-    <div class="sponsor-card add-card">
-      <div class="card-header">
-        <h3>{{ 'admin.settings.sponsors.newSponsor' | translate }}</h3>
-        <button class="icon-button cancel" (click)="cancelAdding()"><ion-icon name="close-outline"></ion-icon></button>
-      </div>
-      <div class="card-body">
-        <div class="form-row">
-          <div class="image-upload-area">
-            @if (addFormImagePreview()) {
-              <img [src]="addFormImagePreview()" class="image-preview" alt="Preview" />
-            } @else {
-              <div class="image-placeholder">
-                <ion-icon name="image-outline"></ion-icon>
-                <span>{{ 'admin.settings.sponsors.form.imageHint' | translate }}</span>
-              </div>
-            }
-            <label class="file-input-label">
-              <ion-icon name="cloud-upload-outline"></ion-icon>
-              {{ 'admin.settings.sponsors.form.selectImage' | translate }}
-              <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" (change)="onAddImageSelected($event)" hidden />
-            </label>
-            @if (addForm.controls['image'].touched && !hasAddImage) {
-              <span class="field-error">{{ 'sponsors.error.imageRequired' | translate }}</span>
-            }
-          </div>
-
-          <div class="form-fields">
-            <div class="field-group">
-              <label>{{ 'admin.settings.sponsors.form.name' | translate }}</label>
-              <input type="text" [formControl]="addName" [placeholder]="'admin.settings.sponsors.form.namePlaceholder' | translate" />
-              @if (addName.touched && addName.invalid) { <span class="field-error">{{ 'validation.required' | translate }}</span> }
-            </div>
-            <div class="field-group">
-              <label>{{ 'admin.settings.sponsors.form.tier' | translate }}</label>
-              <select [formControl]="addTier">
-                @for (opt of tierOptions; track opt.value) { <option [ngValue]="opt.value">{{ opt.label | translate }}</option> }
-              </select>
-            </div>
-            <div class="field-group">
-              <label>{{ 'admin.settings.sponsors.form.title' | translate }}</label>
-              <input type="text" [formControl]="addTitle" [placeholder]="'admin.settings.sponsors.form.titlePlaceholder' | translate" />
-            </div>
-            <div class="field-group">
-              <label>{{ 'admin.settings.sponsors.form.description' | translate }}</label>
-              <textarea [formControl]="addDescription" rows="2" [placeholder]="'admin.settings.sponsors.form.descriptionPlaceholder' | translate"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Links -->
-        <div class="links-section">
-          <div class="links-header">
-            <label>{{ 'admin.settings.sponsors.form.links' | translate }}</label>
-            <button type="button" class="btn-link-add" (click)="addLink(addForm)" [disabled]="addLinks.length >= 10">
-              <ion-icon name="add-outline"></ion-icon> {{ 'admin.settings.sponsors.form.addLink' | translate }}
-            </button>
-          </div>
-          @for (link of addLinks.controls; track $index; let i = $index) {
-            <div class="link-row" [formGroup]="getLinkGroup(link)">
-              <select formControlName="platform" class="link-platform">
-                <option value="">{{ 'admin.settings.sponsors.form.selectPlatform' | translate }}</option>
-                @for (p of socialPlatforms; track p) { <option [value]="p">{{ p }}</option> }
-              </select>
-              <input type="url" formControlName="url" [placeholder]="'admin.settings.sponsors.form.urlPlaceholder' | translate" class="link-url" />
-              <button type="button" class="icon-button small delete" (click)="removeLink(addForm, i)"><ion-icon name="trash-outline"></ion-icon></button>
-            </div>
-          }
-        </div>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-cancel" (click)="cancelAdding()">{{ 'common.cancel' | translate }}</button>
-        <button class="btn btn-primary" (click)="saveNewSponsor()" [disabled]="isSaving()">
-          @if (isSaving()) { <ion-spinner name="lines-small"></ion-spinner> } {{ 'common.save' | translate }}
-        </button>
-      </div>
-    </div>
+    <app-sponsor-card
+      [addMode]="true"
+      [isSaving]="isSaving()"
+      (directSave)="onAddSave($event)"
+      (directCancel)="cancelAdding()" />
   }
 
   <!-- Empty State -->
   @if (!loading() && sponsors().length === 0 && !isAdding()) {
     <div class="empty-state">
-      <ion-icon name="wallet-outline"></ion-icon>
+      <ion-icon class="wallet-icon" name="wallet-outline"></ion-icon>
       <h3>{{ 'admin.settings.sponsors.empty' | translate }}</h3>
       <p>{{ 'admin.settings.sponsors.emptyDescription' | translate }}</p>
-      <button class="btn btn-primary empty-action" (click)="startAdding()">
+      <button class="btn-primary empty-action" (click)="startAdding()">
         <ion-icon name="add-outline"></ion-icon> {{ 'admin.settings.sponsors.add' | translate }}
       </button>
     </div>
   }
 
   <!-- Sponsor Cards -->
+   <!-- TODO: EXPORT TO A COMPONENT -->
   @for (sponsor of sponsors(); track sponsor.id; let i = $index) {
-    <div class="sponsor-card" [class.expanded]="expandedIndex() === i">
-      @if (expandedIndex() !== i) {
-        <div class="card-row" (click)="toggleExpand(i)">
-          <div class="reorder-buttons">
-            <button class="icon-button small" (click)="moveUp(i); $event.stopPropagation()" [disabled]="i === 0"><ion-icon name="chevron-up-outline"></ion-icon></button>
-            <button class="icon-button small" (click)="moveDown(i); $event.stopPropagation()" [disabled]="i === sponsors().length - 1"><ion-icon name="chevron-down-outline"></ion-icon></button>
-          </div>
-          <div class="sponsor-thumbnail"><img [src]="sponsor.imageUrl" [alt]="sponsor.name" /></div>
-          <div class="sponsor-info">
-            <span class="sponsor-name">{{ sponsor.name }}</span>
-            <span class="tier-badge" [class.gold]="sponsor.tier === 2" [class.silver]="sponsor.tier === 1" [class.bronze]="sponsor.tier === 0">
-              <ion-icon [name]="tierIcon(sponsor.tier)"></ion-icon> {{ tierLabel(sponsor.tier) | translate }}
-            </span>
-          </div>
-          <button class="icon-button delete" (click)="deleteSponsor(i); $event.stopPropagation()" [disabled]="isSaving()"><ion-icon name="trash-outline"></ion-icon></button>
-        </div>
-      }
-
-      @if (expandedIndex() === i) {
-        <div class="card-header">
-          <h3>{{ 'admin.settings.sponsors.edit' | translate }}</h3>
-          <button class="icon-button cancel" (click)="toggleExpand(i)"><ion-icon name="close-outline"></ion-icon></button>
-        </div>
-        <div class="card-body">
-          <div class="form-row">
-            <div class="image-upload-area">
-              @if (editFormImagePreview()) {
-                <img [src]="editFormImagePreview()" class="image-preview" alt="Preview" />
-              } @else {
-                <div class="image-placeholder"><ion-icon name="image-outline"></ion-icon><span>{{ 'admin.settings.sponsors.form.imageHint' | translate }}</span></div>
-              }
-              <label class="file-input-label">
-                <ion-icon name="cloud-upload-outline"></ion-icon> {{ 'admin.settings.sponsors.form.replaceImage' | translate }}
-                <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" (change)="onEditImageSelected($event)" hidden />
-              </label>
-            </div>
-
-            <div class="form-fields">
-              <div class="field-group">
-                <label>{{ 'admin.settings.sponsors.form.name' | translate }}</label>
-                <input type="text" [formControl]="editName" [placeholder]="'admin.settings.sponsors.form.namePlaceholder' | translate" />
-                @if (editName.touched && editName.invalid) { <span class="field-error">{{ 'validation.required' | translate }}</span> }
-              </div>
-              <div class="field-group">
-                <label>{{ 'admin.settings.sponsors.form.tier' | translate }}</label>
-                <select [formControl]="editTier">
-                  @for (opt of tierOptions; track opt.value) { <option [ngValue]="opt.value">{{ opt.label | translate }}</option> }
-                </select>
-              </div>
-              <div class="field-group">
-                <label>{{ 'admin.settings.sponsors.form.title' | translate }}</label>
-                <input type="text" [formControl]="editTitle" [placeholder]="'admin.settings.sponsors.form.titlePlaceholder' | translate" />
-              </div>
-              <div class="field-group">
-                <label>{{ 'admin.settings.sponsors.form.description' | translate }}</label>
-                <textarea [formControl]="editDescription" rows="2" [placeholder]="'admin.settings.sponsors.form.descriptionPlaceholder' | translate"></textarea>
-              </div>
-            </div>
-          </div>
-
-          <!-- Edit Links -->
-          <div class="links-section">
-            <div class="links-header">
-              <label>{{ 'admin.settings.sponsors.form.links' | translate }}</label>
-              <button type="button" class="btn-link-add" (click)="addLink(editForm)" [disabled]="editLinks.length >= 10">
-                <ion-icon name="add-outline"></ion-icon> {{ 'admin.settings.sponsors.form.addLink' | translate }}
-              </button>
-            </div>
-            @for (link of editLinks.controls; track $index; let i = $index) {
-            <div class="link-row" [formGroup]="getLinkGroup(link)">
-                <select formControlName="platform" class="link-platform">
-                  <option value="">{{ 'admin.settings.sponsors.form.selectPlatform' | translate }}</option>
-                  @for (p of socialPlatforms; track p) { <option [value]="p">{{ p }}</option> }
-                </select>
-                <input type="url" formControlName="url" [placeholder]="'admin.settings.sponsors.form.urlPlaceholder' | translate" class="link-url" />
-                <button type="button" class="icon-button small delete" (click)="removeLink(editForm, i)"><ion-icon name="trash-outline"></ion-icon></button>
-              </div>
-            }
-          </div>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-cancel" (click)="toggleExpand(i)">{{ 'common.cancel' | translate }}</button>
-          <button class="btn btn-primary" (click)="saveEdit()" [disabled]="isSaving()">
-            @if (isSaving()) { <ion-spinner name="lines-small"></ion-spinner> } {{ 'common.save' | translate }}
-          </button>
-        </div>
-      }
-    </div>
+    <app-sponsor-card
+      [sponsor]="sponsor"
+      [index]="i"
+      [expanded]="expandedIndex() === i"
+      [isFirst]="i === 0"
+      [isLast]="i === sponsors().length - 1"
+      [isSaving]="isSaving()"
+      (expand)="toggleExpand($event)"
+      (moveUp)="moveUp($event)"
+      (moveDown)="moveDown($event)"
+      (delete)="deleteSponsor($event)"
+      (save)="onEditSave($event.index, $event.event)"
+      (cancel)="toggleExpand($event)" />
   }
 </div>
+
+<app-section-footer-actions
+  [canCancel]="canCancel()"
+  [canPreview]="sponsors().length > 0"
+  [canSave]="canSave()"
+  [previewLabel]="'admin.settings.sponsors.preview'"
+  (cancelAction)="cancelAll()"
+  (previewAction)="togglePreview()"
+  (saveAction)="saveAll()" />
+
+<!-- Toast -->
+<ion-toast
+  [isOpen]="showToast()"
+  [message]="toastMessage()"
+  [color]="toastColor()"
+  duration="3000"
+  position="top"
+  (didDismiss)="onToastDismiss()">
+</ion-toast>
+
+<!-- Sponsors Preview Modal -->
+<app-preview-modal
+  [isOpen]="previewOpen()"
+  [title]="'admin.settings.sponsors.preview'"
+  [notice]="'admin.settings.sponsors.previewNotice'"
+  [emptyMessage]="'admin.settings.sponsors.previewEmpty'"
+  [isEmpty]="previewSponsors().length === 0"
+  (didDismiss)="previewOpen.set(false)">
+  <div class="sponsors-preview-list">
+    @for (sponsor of previewSponsors(); track sponsor.id) {
+      <div class="preview-sponsor-card">
+        <app-sponsor-detail [sponsor]="sponsor" [compact]="true" />
+      </div>
+    }
+  </div>
+</app-preview-modal>

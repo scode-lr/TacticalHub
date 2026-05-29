@@ -41,10 +41,7 @@ export class MemberPage implements OnInit {
       { id: 'forms', label: 'user.menu.forms', icon: 'document-text-outline', route: 'forms' },
       // { id: 'matches', label: 'user.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'user.menu.information', icon: 'information-circle-outline', route: 'information' },
-      // { id: 'proposals', label: 'user.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      // { id: 'partners', label: 'user.menu.partners', icon: 'people-outline', route: 'partners' },
-      // { id: 'proposals', label: 'user.menu.proposals', icon: 'chatbubble-ellipses-outline', route: 'proposals' },
-      // { id: 'partners', label: 'user.menu.partners', icon: 'people-outline', route: 'partners' }
+      { id: 'partners', label: 'user.menu.partners', icon: 'people-outline', route: 'partners' },
     ]
   };
   

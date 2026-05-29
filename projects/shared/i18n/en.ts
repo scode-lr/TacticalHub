@@ -304,6 +304,11 @@ export const sharedTranslations = {
       sponsors: {
         title: 'Sponsors',
         description: 'Manage sponsor logos and tiers',
+        preview: 'Preview',
+        previewNotice: 'This is how sponsors will appear in the club.',
+        previewEmpty: 'No sponsors to preview',
+        saved: 'Sponsors saved successfully',
+        canceled: 'Changes discarded',
         empty: 'No sponsors yet',
         emptyDescription: 'Add sponsors to display them to club members.',
         add: 'Add Sponsor',
@@ -328,10 +333,22 @@ export const sharedTranslations = {
           titlePlaceholder: 'Optional display title',
           description: 'Description',
           descriptionPlaceholder: 'Optional description',
-          links: 'Links',
-          addLink: 'Add link',
-          selectPlatform: 'Select platform',
-          urlPlaceholder: 'https://...'
+          additionalInfo: 'Additional Info',
+          addInfo: 'Add info',
+          selectKey: 'Select key',
+          valuePlaceholder: 'Value or URL'
+        },
+        infoKeys: {
+          website: 'Website',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Email',
+          mobile: 'Mobile'
         },
         error: {
           load: 'Could not load sponsors.',
@@ -341,7 +358,9 @@ export const sharedTranslations = {
           reorder: 'Could not reorder sponsors.',
           imageSize: 'Image must be less than 2 MB.',
           imageType: 'Invalid format. Use PNG, JPEG, WebP or SVG.',
-          imageRequired: 'Please select an image.'
+          imageRequired: 'Please select an image.',
+          imageUpload: 'Could not upload image. Please try again.',
+          saveAll: 'Could not save sponsors. Please try again.'
         }
       }
     },
@@ -608,7 +627,7 @@ export const sharedTranslations = {
       information: 'Information',
       proposals: 'Proposals & complaints',
       matches: 'Matches',
-      partners: 'Partners',
+      partners: 'Collaborators',
       forms: 'Forms',
       more: 'More'
     },
@@ -620,7 +639,7 @@ export const sharedTranslations = {
       information: 'Club information and resources',
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
-      partners: 'Our club partners and sponsors',
+      partners: 'Our club collaborators and sponsors',
       forms: 'Fill in and submit club forms'
     },
     home: {
@@ -803,8 +822,8 @@ export const sharedTranslations = {
       noRelatedMatches: 'No related matches'
     },
     partners: {
-      empty: 'No partners listed',
-      emptyDescription: 'Our club partners and sponsors will be listed here.'
+      empty: 'No collaborators listed',
+      emptyDescription: 'Our club collaborators and sponsors will be listed here.'
     }
   },
   guest: {
@@ -815,14 +834,14 @@ export const sharedTranslations = {
       news: 'News',
       information: 'Information',
       matches: 'Matches',
-      partners: 'Partners'
+      partners: 'Collaborators'
     },
     description: {
       home: 'Welcome to the public club portal',
       news: 'Latest news and announcements',
       information: 'Club information',
       matches: 'View upcoming matches',
-      partners: 'Club partners and sponsors'
+      partners: 'Club collaborators and sponsors'
     }
   },
   roles: {
