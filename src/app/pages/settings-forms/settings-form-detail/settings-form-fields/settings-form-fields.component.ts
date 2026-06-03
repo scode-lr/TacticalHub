@@ -8,13 +8,17 @@ import { addIcons } from 'ionicons';
 import { addOutline, closeOutline, trashOutline, chevronUpOutline, chevronDownOutline } from 'ionicons/icons';
 import { IonIcon } from '@ionic/angular/standalone';
 import { Subject, takeUntil } from 'rxjs';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
+import { SelectModule } from 'primeng/select';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-settings-form-fields',
   templateUrl: './settings-form-fields.component.html',
   styleUrls: ['./settings-form-fields.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, TranslatePipe, IonIcon]
+  imports: [ReactiveFormsModule, TranslatePipe, IonIcon, InputTextModule, TextareaModule, SelectModule, ToggleSwitchModule]
 })
 export class SettingsFormFieldsComponent {
   readonly fields = input.required<FormArray>();

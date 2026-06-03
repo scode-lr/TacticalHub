@@ -39,7 +39,7 @@
 
   .sponsors-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 16px;
     animation: fadeIn 0.3s ease backwards;
 
@@ -65,7 +65,7 @@
     }
 
     &.tier-gold {
-      grid-column: 1 / -1;
+      grid-column: span 6;
 
       .sponsor-image-container {
         height: 280px;
@@ -77,12 +77,16 @@
     }
 
     &.tier-silver {
+      grid-column: span 3;
+
       .sponsor-image-container {
         height: 200px;
       }
     }
 
     &.tier-bronze {
+      grid-column: span 2;
+
       .sponsor-image-container {
         height: 140px;
       }
