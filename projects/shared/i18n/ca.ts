@@ -300,7 +300,7 @@ export const sharedTranslations = {
         description: 'Crear i gestionar formularis del club'
       },
       sponsors: {
-        title: 'Patrocinadors',
+        title: 'Patrocinadors i col·laboradors',
         description: 'Gestionar logos i nivells de patrocinadors',
         preview: 'Vista prèvia',
         previewNotice: 'Així és com els patrocinadors apareixeran al club.',
@@ -316,9 +316,8 @@ export const sharedTranslations = {
         updated: 'Patrocinador actualitzat correctament',
         deleted: 'Patrocinador eliminat',
         tier: {
-          gold: 'Or',
-          silver: 'Plata',
-          bronze: 'Bronze'
+          sponsor: 'Patrocinadors',
+          collaborator: 'Col·laboradors'
         },
         form: {
           name: 'Nom',
@@ -624,7 +623,8 @@ export const sharedTranslations = {
       information: 'Informació',
       proposals: 'Propostes i queixes',
       matches: 'Partits',
-      partners: 'Col·laboradors',      forms: 'Formularis',
+      sponsors: 'Patrocinadors i col·laboradors',
+      forms: 'Formularis',
       more: 'Més'
     },
     description: {
@@ -635,7 +635,7 @@ export const sharedTranslations = {
       information: 'Informació i recursos del club',
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
-      partners: 'Els nostres col·laboradors i patrocinadors del club',
+      sponsors: 'Els nostres col·laboradors i patrocinadors del club',
       forms: 'Omple els formularis del club'
     },
     home: {
@@ -817,7 +817,9 @@ export const sharedTranslations = {
       upcomingMatches: 'Pròxims Partits',
       noRelatedMatches: 'No hi ha partits relacionats'
     },
-    partners: {
+    sponsors: {
+      title: 'Patrocinadors i col·laboradors',
+      subtitle: 'Els qui fan possible el club',
       empty: 'No hi ha col·laboradors llistats',
       emptyDescription: 'Els nostres col·laboradors i patrocinadors del club es llistaran aquí.'
     }
@@ -830,14 +832,14 @@ export const sharedTranslations = {
       news: 'Notícies',
       information: 'Informació',
       matches: 'Partits',
-      partners: 'Col·laboradors'
+      sponsors: 'Patrocinadors i col·laboradors'
     },
     description: {
       home: 'Benvingut al portal públic del club',
       news: 'Últimes notícies i anuncis',
       information: 'Informació del club',
       matches: 'Veure pròxims partits',
-      partners: 'Socis i patrocinadors del club'
+      sponsors: 'Socis i patrocinadors del club'
     }
   },
   roles: {

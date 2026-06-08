@@ -38,7 +38,7 @@ export class GuestPage implements OnInit {
       { id: 'news', label: 'guest.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'matches', label: 'guest.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'guest.menu.information', icon: 'information-circle-outline', route: 'information' },
-      { id: 'partners', label: 'guest.menu.partners', icon: 'people-outline', route: 'partners' }
+      { id: 'sponsors', label: 'guest.menu.sponsors', icon: 'people-outline', route: 'sponsors' }
     ]
   };
   

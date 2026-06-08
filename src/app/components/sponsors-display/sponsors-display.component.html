@@ -1,0 +1,39 @@
+@for (section of tierSections(); track section.tier) {
+  <h2 class="tier-title">{{ tierLabel(section.tier) | translate }}</h2>
+  <div class="sponsors-grid" [ngClass]="tierClass(section.tier)">
+    @for (sponsor of section.items; track sponsor.id) {
+      <div class="sponsor-card" (click)="openSponsor(sponsor)">
+        <div class="sponsor-image-container">
+          <img
+            [src]="sponsor.imageUrl || 'assets/image-non-available.svg'"
+            [alt]="sponsor.name"
+            class="sponsor-image"
+            appDefaultImage />
+        </div>
+        <div class="sponsor-card-footer">
+          <span class="sponsor-name">{{ sponsor.name }}</span>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+<!-- Sponsor Detail Modal -->
+<ion-modal
+  [isOpen]="!!selectedSponsor()"
+  (didDismiss)="closeSponsor()"
+  class="sponsor-detail-modal">
+  <ng-template>
+    @if (selectedSponsor(); as sponsor) {
+      <div class="modal-container">
+        <button class="modal-close" (click)="closeSponsor()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+
+        <div class="modal-content">
+          <app-sponsor-detail [sponsor]="sponsor" />
+        </div>
+      </div>
+    }
+  </ng-template>
+</ion-modal>

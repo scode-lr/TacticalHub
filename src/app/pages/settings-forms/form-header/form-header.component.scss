@@ -27,13 +27,6 @@
   }
 }
 
-// Left accent bar
-.status-bar {
-  width: 4px;
-  flex-shrink: 0;
-  background: var(--ion-color-primary, #3880ff);
-}
-
 .card-body {
   flex: 1;
   min-width: 0;

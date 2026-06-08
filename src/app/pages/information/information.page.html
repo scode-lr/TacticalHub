@@ -1,16 +1,22 @@
 <div class="page-container member-information-page">
-  <div class="information-header">
-    <h1 class="page-title">{{ 'user.information.title' | translate }}</h1>
-    <p class="page-description">{{ 'user.information.description' | translate }}</p>
+  <div class="section-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'user.information.title' | translate }}</h1>
+      <p class="section-subtitle">
+        {{ 'user.information.description' | translate }}
+      </p>
+    </div>
   </div>
 
   @if (isEmpty()) {
-    <div class="empty-state">
-      <ion-icon name="information-circle-outline" class="empty-icon"></ion-icon>
-      <h3 class="empty-title">{{ 'user.information.empty' | translate }}</h3>
-      <p class="empty-description">{{ 'user.information.emptyDescription' | translate }}</p>
-    </div>
+  <div class="empty-state">
+    <ion-icon name="information-circle-outline" class="empty-icon"></ion-icon>
+    <h3 class="empty-title">{{ 'user.information.empty' | translate }}</h3>
+    <p class="empty-description">
+      {{ 'user.information.emptyDescription' | translate }}
+    </p>
+  </div>
   } @else {
-    <app-section-display [sections]="displaySections()" />
+  <app-section-display [sections]="displaySections()" />
   }
 </div>

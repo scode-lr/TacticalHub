@@ -61,8 +61,8 @@ export const memberRoutes: Routes = [
         loadComponent: () => import('../teams/teams.page').then(m => m.TeamsPage)
       },
       {
-        path: 'partners',
-        loadComponent: () => import('../partners/partners.page').then(m => m.PartnersPage)
+        path: 'sponsors',
+        loadComponent: () => import('../sponsors/sponsors.page').then(m => m.SponsorsPage)
       }
     ]
   }

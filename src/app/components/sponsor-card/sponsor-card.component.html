@@ -21,18 +21,13 @@
         </button>
       </div>
       <div class="sponsor-thumbnail">
-        <img [src]="sponsor()!.imageUrl" [alt]="sponsor()!.name" />
+        <img
+          [src]="sponsor()!.imageUrl || 'assets/image-non-available.svg'"
+          [alt]="sponsor()!.name"
+          appDefaultImage />
       </div>
       <div class="sponsor-info">
         <span class="sponsor-name">{{ sponsor()!.name }}</span>
-        <span
-          class="tier-badge"
-          [class.gold]="sponsor()!.tier === 2"
-          [class.silver]="sponsor()!.tier === 1"
-          [class.bronze]="sponsor()!.tier === 0">
-          <ion-icon [name]="tierIcon(sponsor()!.tier)"></ion-icon>
-          {{ tierLabel(sponsor()!.tier) | translate }}
-        </span>
       </div>
       <button
         class="icon-button delete"

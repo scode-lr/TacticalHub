@@ -41,7 +41,7 @@ export class MemberPage implements OnInit {
       { id: 'forms', label: 'user.menu.forms', icon: 'document-text-outline', route: 'forms' },
       // { id: 'matches', label: 'user.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'user.menu.information', icon: 'information-circle-outline', route: 'information' },
-      { id: 'partners', label: 'user.menu.partners', icon: 'people-outline', route: 'partners' },
+      { id: 'sponsors', label: 'user.menu.sponsors', icon: 'people-outline', route: 'sponsors' },
     ]
   };
   

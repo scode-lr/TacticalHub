@@ -66,9 +66,8 @@ export class SponsorFormComponent implements OnInit {
   readonly imageError = signal<string | null>(null);
 
   readonly tierOptions: TierOption[] = [
-    { value: SponsorTier.Gold, label: 'admin.settings.sponsors.tier.gold' },
-    { value: SponsorTier.Silver, label: 'admin.settings.sponsors.tier.silver' },
-    { value: SponsorTier.Bronze, label: 'admin.settings.sponsors.tier.bronze' }
+    { value: SponsorTier.Sponsor, label: 'admin.settings.sponsors.tier.sponsor' },
+    { value: SponsorTier.Collaborator, label: 'admin.settings.sponsors.tier.collaborator' }
   ];
 
   readonly infoKeys = SPONSOR_INFO_KEYS;
@@ -105,7 +104,7 @@ export class SponsorFormComponent implements OnInit {
       controls[field.key] = new FormControl(value, validators);
     }
 
-    controls['tier'] = new FormControl(s?.tier ?? SponsorTier.Bronze, [Validators.required]);
+    controls['tier'] = new FormControl(s?.tier ?? SponsorTier.Collaborator, [Validators.required]);
     controls['additionalInfo'] = this.fb.array(
       (s?.additionalInfo || []).map(l =>
         this.fb.group({ key: [l.key, Validators.required], value: [l.value, Validators.required] })

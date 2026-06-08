@@ -1,7 +1,6 @@
 export enum SponsorTier {
-  Bronze = 0,
-  Silver = 1,
-  Gold = 2
+  Collaborator = 0,
+  Sponsor = 1
 }
 
 export const SPONSOR_INFO_KEYS = [

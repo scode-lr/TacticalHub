@@ -11,8 +11,8 @@ import { PreviewModalComponent } from '@components/modals/preview-modal/preview-
 import { SectionFooterActionsComponent } from '@components/section-footer-actions/section-footer-actions.component';
 import { SponsorFormSaveEvent } from '@components/sponsor-form/sponsor-form.component';
 import { SponsorCardComponent } from '@components/sponsor-card/sponsor-card.component';
-import { SponsorDetailComponent } from '@components/sponsor-detail/sponsor-detail.component';
-import { Sponsor } from '@core/models/sponsor.model';
+import { SponsorsDisplayComponent } from '@components/sponsors-display/sponsors-display.component';
+import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
 import { addIcons } from 'ionicons';
 import { addOutline, walletOutline, arrowBackOutline, saveOutline } from 'ionicons/icons';
 import { ClubService } from '@services/club.service';
@@ -22,7 +22,7 @@ import { ClubService } from '@services/club.service';
   templateUrl: './settings-sponsors.page.html',
   styleUrls: ['./settings-sponsors.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonSpinner, IonToast, TranslatePipe, BackButtonComponent, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorDetailComponent]
+  imports: [CommonModule, IonIcon, IonSpinner, IonToast, TranslatePipe, BackButtonComponent, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent]
 })
 export class SettingsSponsorsPage implements OnInit {
   private readonly sponsorService = inject(SponsorService);
@@ -42,10 +42,17 @@ export class SettingsSponsorsPage implements OnInit {
   readonly toastMessage = this.toastService.toastMessage;
   readonly toastColor = this.toastService.toastColor;
 
+  private readonly TIER_ORDER = [SponsorTier.Sponsor, SponsorTier.Collaborator];
+  private readonly TIER_LABEL_KEYS: Record<SponsorTier, string> = {
+    [SponsorTier.Sponsor]: 'admin.settings.sponsors.tier.sponsor',
+    [SponsorTier.Collaborator]: 'admin.settings.sponsors.tier.collaborator',
+  };
+
   private tempIdCounter = -1;
   private pendingAdditions = new Map<number, SponsorFormSaveEvent>();
   private pendingUpdates = new Map<number, SponsorFormSaveEvent>();
   private pendingDeletions = new Set<number>();
+  private pendingReorder = new Set<number>();
   private orphanedImageUrls = new Set<string>();
   private pendingVersion = signal(0);
 
@@ -59,7 +66,29 @@ export class SettingsSponsorsPage implements OnInit {
     return !this.isSaving() &&
       (this.pendingAdditions.size > 0 ||
        this.pendingUpdates.size > 0 ||
-       this.pendingDeletions.size > 0);
+       this.pendingDeletions.size > 0 ||
+       this.pendingReorder.size > 0);
+  });
+
+  readonly groupedSponsors = computed(() => {
+    const list = this.sponsors();
+    return this.TIER_ORDER
+      .map(tier => {
+        const items = list
+          .map((sponsor, index) => ({ sponsor, index }))
+          .filter(entry => entry.sponsor.tier === tier);
+        return {
+          tier,
+          labelKey: this.TIER_LABEL_KEYS[tier],
+          items: items.map((entry, i) => ({
+            sponsor: entry.sponsor,
+            index: entry.index,
+            isFirstInTier: i === 0,
+            isLastInTier: i === items.length - 1,
+          })),
+        };
+      })
+      .filter(group => group.items.length > 0);
   });
 
   readonly previewSponsors = computed(() => {
@@ -82,7 +111,7 @@ export class SettingsSponsorsPage implements OnInit {
     try {
       this.loading.set(true);
       const data = await this.sponsorService.getByClubId(this.clubId);
-      this.sponsors.set(data);
+      this.sponsors.set(this.sortByTier(data));
     } catch {
       this.showToastMessage('sponsors.error.load', 'danger');
     } finally {
@@ -110,8 +139,17 @@ export class SettingsSponsorsPage implements OnInit {
   private buildSponsorForBatch(sponsor: Sponsor): Sponsor {
     return {
       ...sponsor,
-      sortOrder: this.sponsors().findIndex(s => s.id === sponsor.id),
+      sortOrder: this.sponsors()
+        .filter(s => s.tier === sponsor.tier)
+        .findIndex(s => s.id === sponsor.id),
     };
+  }
+
+  /** Orders the list by tier (Sponsor → Collaborator), preserving the relative order within each tier. */
+  private sortByTier(list: Sponsor[]): Sponsor[] {
+    return [...list].sort(
+      (a, b) => this.TIER_ORDER.indexOf(a.tier) - this.TIER_ORDER.indexOf(b.tier)
+    );
   }
 
   // ---- Add sponsor ----
@@ -134,7 +172,7 @@ export class SettingsSponsorsPage implements OnInit {
     }
 
     const draft = this.createDraftSponsor(tempId, event.data, imageUrl);
-    this.sponsors.update(list => [...list, draft]);
+    this.sponsors.update(list => this.sortByTier([...list, draft]));
     this.cancelAdding();
 
     if (event.imageFile) {
@@ -196,7 +234,11 @@ export class SettingsSponsorsPage implements OnInit {
       updatedAt: new Date().toISOString(),
     };
 
-    this.sponsors.update(list => { const copy = [...list]; copy[index] = updated; return copy; });
+    this.sponsors.update(list => {
+      const copy = [...list];
+      copy[index] = updated;
+      return this.sortByTier(copy);
+    });
 
     if (sponsor.id < 0) {
       this.pendingAdditions.set(sponsor.id, event);
@@ -223,6 +265,7 @@ export class SettingsSponsorsPage implements OnInit {
       }
     } else {
       this.pendingUpdates.delete(sponsor.id);
+      this.pendingReorder.delete(sponsor.id);
       this.pendingDeletions.add(sponsor.id);
     }
 
@@ -247,8 +290,18 @@ export class SettingsSponsorsPage implements OnInit {
 
   private swapLocal(fromIndex: number, toIndex: number): void {
     const list = [...this.sponsors()];
-    [list[fromIndex], list[toIndex]] = [list[toIndex], list[fromIndex]];
+    const from = list[fromIndex];
+    const to = list[toIndex];
+    // Keep reordering confined to a single tier group.
+    if (from.tier !== to.tier) return;
+
+    [list[fromIndex], list[toIndex]] = [to, from];
     this.sponsors.set(list);
+
+    // Mark existing sponsors so their new sortOrder is persisted on save.
+    if (from.id >= 0) this.pendingReorder.add(from.id);
+    if (to.id >= 0) this.pendingReorder.add(to.id);
+    this.markPendingChanged();
   }
 
   // ---- Preview ----
@@ -265,6 +318,7 @@ export class SettingsSponsorsPage implements OnInit {
     this.pendingAdditions.clear();
     this.pendingUpdates.clear();
     this.pendingDeletions.clear();
+    this.pendingReorder.clear();
     this.markPendingChanged();
     this.deleteOrphanedImages();
     this.loadSponsors();
@@ -283,7 +337,8 @@ export class SettingsSponsorsPage implements OnInit {
         if (draft) additions.push(this.buildSponsorForBatch(draft));
       }
 
-      for (const [id] of this.pendingUpdates) {
+      const updateIds = new Set<number>([...this.pendingUpdates.keys(), ...this.pendingReorder]);
+      for (const id of updateIds) {
         const sponsor = list.find(s => s.id === id);
         if (sponsor) updates.push(this.buildSponsorForBatch(sponsor));
       }
@@ -298,6 +353,7 @@ export class SettingsSponsorsPage implements OnInit {
       this.pendingAdditions.clear();
       this.pendingUpdates.clear();
       this.pendingDeletions.clear();
+      this.pendingReorder.clear();
       this.orphanedImageUrls.clear();
       this.markPendingChanged();
 
