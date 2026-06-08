@@ -6,7 +6,6 @@ import { TranslationService } from '@core/services/i18n/translation.service';
 import { SponsorService } from '@core/services/sponsor.service';
 import { NavigationService } from '@services/navigation.service';
 import { ToastService } from '@services/toast.service';
-import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { PreviewModalComponent } from '@components/modals/preview-modal/preview-modal.component';
 import { SectionFooterActionsComponent } from '@components/section-footer-actions/section-footer-actions.component';
 import { SponsorFormSaveEvent } from '@components/sponsor-form/sponsor-form.component';
@@ -22,7 +21,7 @@ import { ClubService } from '@services/club.service';
   templateUrl: './settings-sponsors.page.html',
   styleUrls: ['./settings-sponsors.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonSpinner, IonToast, TranslatePipe, BackButtonComponent, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent]
+  imports: [CommonModule, IonIcon, IonSpinner, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent]
 })
 export class SettingsSponsorsPage implements OnInit {
   private readonly sponsorService = inject(SponsorService);
@@ -54,6 +53,7 @@ export class SettingsSponsorsPage implements OnInit {
   private pendingDeletions = new Set<number>();
   private pendingReorder = new Set<number>();
   private orphanedImageUrls = new Set<string>();
+  private newlyUploadedUrls = new Set<string>();
   private pendingVersion = signal(0);
 
   private markPendingChanged(): void {
@@ -113,7 +113,7 @@ export class SettingsSponsorsPage implements OnInit {
       const data = await this.sponsorService.getByClubId(this.clubId);
       this.sponsors.set(this.sortByTier(data));
     } catch {
-      this.showToastMessage('sponsors.error.load', 'danger');
+      this.showToastMessage('admin.settings.sponsors.error.load', 'danger');
     } finally {
       this.loading.set(false);
     }
@@ -180,11 +180,16 @@ export class SettingsSponsorsPage implements OnInit {
         const result = await this.sponsorService.uploadImage(this.clubId, event.imageFile);
         imageUrl = result.url;
         URL.revokeObjectURL(draft.imageUrl);
+        this.newlyUploadedUrls.add(result.url);
         this.sponsors.update(list =>
           list.map(s => s.id === tempId ? { ...s, imageUrl: result.url } : s)
         );
       } catch {
-        this.showToastMessage('sponsors.error.imageUpload', 'danger');
+        URL.revokeObjectURL(draft.imageUrl);
+        this.sponsors.update(list =>
+          list.map(s => s.id === tempId ? { ...s, imageUrl: '' } : s)
+        );
+        this.showToastMessage('admin.settings.sponsors.error.imageUpload', 'danger');
       }
     }
 
@@ -218,8 +223,10 @@ export class SettingsSponsorsPage implements OnInit {
       try {
         const result = await this.sponsorService.uploadImage(this.clubId, event.imageFile);
         imageUrl = result.url;
+        this.newlyUploadedUrls.add(result.url);
       } catch {
-        this.showToastMessage('sponsors.error.imageUpload', 'danger');
+        this.orphanedImageUrls.delete(event.data.existingImageUrl ?? '');
+        this.showToastMessage('admin.settings.sponsors.error.imageUpload', 'danger');
       }
     }
 
@@ -315,12 +322,14 @@ export class SettingsSponsorsPage implements OnInit {
   cancelAll(): void {
     this.expandedIndex.set(null);
     this.isAdding.set(false);
+    this.deleteNewlyUploadedImages();
     this.pendingAdditions.clear();
     this.pendingUpdates.clear();
     this.pendingDeletions.clear();
     this.pendingReorder.clear();
+    this.orphanedImageUrls.clear();
+    this.newlyUploadedUrls.clear();
     this.markPendingChanged();
-    this.deleteOrphanedImages();
     this.loadSponsors();
   }
 
@@ -355,6 +364,7 @@ export class SettingsSponsorsPage implements OnInit {
       this.pendingDeletions.clear();
       this.pendingReorder.clear();
       this.orphanedImageUrls.clear();
+      this.newlyUploadedUrls.clear();
       this.markPendingChanged();
 
       await this.loadSponsors();
@@ -375,6 +385,13 @@ export class SettingsSponsorsPage implements OnInit {
       try { await this.sponsorService.deleteImages(this.clubId, urls); } catch { }
     }
     this.orphanedImageUrls.clear();
+  }
+
+  private async deleteNewlyUploadedImages(): Promise<void> {
+    const urls = [...this.newlyUploadedUrls].filter(Boolean);
+    if (urls.length > 0) {
+      try { await this.sponsorService.deleteImages(this.clubId, urls); } catch { }
+    }
   }
 
   goBack(): void { this.navigationService.goBack(); }

@@ -333,6 +333,7 @@ export class SettingsInformationPage implements OnInit {
       // Reload to sync with server state
       await this.loadSections();
       this.expandedIndex.set(null);
+      this.navigationService.goBack();
     } catch {
       this.toastService.show(
         this.translationService.instant('admin.settings.information.saveError'),
@@ -340,8 +341,6 @@ export class SettingsInformationPage implements OnInit {
       );
     } finally {
       this.isSaving.set(false);
-      this.navigationService.goBack();
-
     }
   }
 
