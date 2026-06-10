@@ -38,6 +38,7 @@
         <span class="file-input-label">
           <ion-icon name="cloud-upload-outline"></ion-icon>
           {{ 'admin.settings.sponsors.form.selectImage' | translate }}
+          @if (!sponsor()) { <span class="required-mark">*</span> }
         </span>
         @if (imageError()) {
           <span class="field-error">{{ 'admin.settings.sponsors.error.' + imageError() | translate }}</span>

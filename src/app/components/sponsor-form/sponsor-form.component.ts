@@ -217,6 +217,11 @@ export class SponsorFormComponent implements OnInit {
       return;
     }
 
+    if (!this.sponsor() && !this.selectedImage) {
+      this.showFieldError('imageRequired');
+      return;
+    }
+
     const additionalInfoValue = (this.additionalInfo.value as AdditionalInfo[])
       .filter((i: AdditionalInfo) => i.key && i.value);
 

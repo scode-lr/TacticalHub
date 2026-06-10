@@ -15,18 +15,12 @@ export class BackButtonComponent {
   private readonly navigationService = inject(NavigationService);
 
   readonly route = input<string | null>(null);
-  readonly confirmBeforeBack = input(false);
-  readonly beforeBack = output<void>();
 
   constructor() {
     addIcons({ arrowBackOutline });
   }
 
   goBack(): void {
-    if (this.confirmBeforeBack()) {
-      this.beforeBack.emit();
-      return;
-    }
     const route = this.route();
     if (route) {
       this.navigationService.navigateTo([route]);

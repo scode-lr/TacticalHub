@@ -293,10 +293,6 @@ export class SettingsSponsorsPage implements OnInit {
       this.pendingDeletions.add(sponsor.id);
     }
 
-    if (sponsor.imageUrl.startsWith('blob:')) {
-      URL.revokeObjectURL(sponsor.imageUrl);
-    }
-
     this.markPendingChanged();
 
     if (this.expandedIndex() === index) this.expandedIndex.set(null);
