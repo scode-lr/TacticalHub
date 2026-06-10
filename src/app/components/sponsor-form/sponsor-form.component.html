@@ -102,8 +102,8 @@
             }
           </select>
           <input type="text" formControlName="value" maxlength="500" [placeholder]="'admin.settings.sponsors.form.valuePlaceholder' | translate" class="info-value" />
-          @if (info.get('value')?.touched && info.get('value')?.errors?.['maxlength']) {
-            <span class="field-error">{{ maxLengthError }}</span>
+          @if (info.get('value')?.touched && info.get('value')?.invalid) {
+            <span class="field-error">{{ info.get('value')?.errors?.['maxlength'] ? maxLengthError : ('validation.required' | translate) }}</span>
           }
           <button type="button" class="icon-button small delete" (click)="removeInfo(i)">
             <ion-icon name="trash-outline"></ion-icon>
