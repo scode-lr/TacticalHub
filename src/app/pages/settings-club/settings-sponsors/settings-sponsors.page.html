@@ -55,18 +55,16 @@
     (directCancel)="cancelAdding()"
   />
   }
-
   <!-- Empty State -->
-  @if (!loading() && sponsors().length === 0 && !isAdding()) {
-  <div class="empty-state">
-    <ion-icon class="wallet-icon" name="wallet-outline"></ion-icon>
-    <h3>{{ 'admin.settings.sponsors.empty' | translate }}</h3>
-    <p>{{ 'admin.settings.sponsors.emptyDescription' | translate }}</p>
-    <button class="btn-primary empty-action" (click)="startAdding()">
-      <ion-icon name="add-outline"></ion-icon> {{ 'admin.settings.sponsors.add'
-      | translate }}
-    </button>
-  </div>
+  @if (groupedSponsors() === null || groupedSponsors().length === 0 && !isAdding()) {
+  <app-empty-state
+    icon="wallet-outline"
+    [titleKey]="'admin.settings.sponsors.empty'"
+    [messageKey]="'admin.settings.sponsors.emptyDescription'"
+    [actionLabelKey]="'admin.settings.sponsors.add'"
+    actionIcon="add-outline"
+    (actionClick)="startAdding()"
+  />
   }
 
   <!-- Sponsor Cards (grouped by tier) -->

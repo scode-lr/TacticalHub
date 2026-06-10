@@ -365,6 +365,8 @@ export const sharedTranslations = {
           imageType: 'Invalid format. Use PNG, JPEG, WebP or SVG.',
           imageRequired: 'Please select an image.',
           imageUpload: 'Could not upload image. Please try again.',
+          imageUploadFailed: 'Image upload failed. Sponsor removed. Please try adding again.',
+          imageUploadFailedKept: 'Image upload failed. Previous image kept.',
           saveAll: 'Could not save sponsors. Please try again.'
         }
       }

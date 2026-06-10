@@ -19,6 +19,10 @@ export interface ApiRequestOptions {
    * Used by auth flows that need to distinguish 401/403 from transient errors.
    */
   skipErrorHandler?: boolean;
+  /** When true, skips Content-Type: application/json header (use for FormData). */
+  isFormData?: boolean;
+  /** Request body for methods that don't normally accept one (e.g. DELETE). */
+  body?: any;
 }
 
 export interface ApiResponse<T = any> {
@@ -44,10 +48,13 @@ export class ApiService {
 
   private buildHeaders(options?: ApiRequestOptions): HttpHeaders {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
       'ngrok-skip-browser-warning': 'true'
     });
+
+    if (!options?.isFormData) {
+      headers = headers.set('Content-Type', 'application/json');
+    }
 
     if (options?.headers) {
       const customHeaders = options.headers instanceof HttpHeaders 
@@ -160,6 +167,7 @@ export class ApiService {
     return this.applyTail(this.http.delete<T>(url, {
       headers,
       params: options?.params,
+      body: options?.body,
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
     }), options);

@@ -363,6 +363,8 @@ export const sharedTranslations = {
           imageType: 'Format invàlid. Utilitza PNG, JPEG, WebP o SVG.',
           imageRequired: 'Selecciona una imatge.',
           imageUpload: 'No s\'ha pogut pujar la imatge. Torna-ho a intentar.',
+          imageUploadFailed: 'Error al pujar la imatge. Patrocinador eliminat. Torna a intentar afegir-lo.',
+          imageUploadFailedKept: 'Error al pujar la imatge. S\'ha conservat la imatge anterior.',
           saveAll: 'No s\'han pogut guardar els patrocinadors. Torna-ho a intentar.'
         }
       }

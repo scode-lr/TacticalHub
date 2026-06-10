@@ -363,6 +363,8 @@ export const sharedTranslations = {
           imageType: 'Formato inválido. Usa PNG, JPEG, WebP o SVG.',
           imageRequired: 'Selecciona una imagen.',
           imageUpload: 'No se pudo subir la imagen. Inténtalo de nuevo.',
+          imageUploadFailed: 'Fallo al subir la imagen. Patrocinador eliminado. Intenta añadirlo de nuevo.',
+          imageUploadFailedKept: 'Fallo al subir la imagen. Se ha conservado la imagen anterior.',
           saveAll: 'No se pudieron guardar los patrocinadores. Inténtalo de nuevo.'
         }
       }

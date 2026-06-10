@@ -20,12 +20,14 @@
         } @else if (imagePreview()) {
           <div class="image-preview-wrapper">
             <img [src]="imagePreview()" class="image-preview" alt="Preview" />
+            @if (selectedImage) {
             <button
               type="button"
               class="image-clear-btn"
               (click)="clearImage(); $event.stopPropagation()">
               <ion-icon name="close-outline"></ion-icon>
             </button>
+            }
           </div>
         } @else {
           <div class="image-placeholder">
@@ -61,6 +63,7 @@
               <textarea
                 [formControl]="getFieldControl(field.key)"
                 rows="2"
+                [attr.maxlength]="field.maxLength ?? null"
                 [placeholder]="(field.placeholder || '') | translate"></textarea>
             } @else if (field.type === 'select' && field.options) {
               <select [formControl]="getFieldControl(field.key)" class="field-select">
@@ -72,10 +75,11 @@
               <input
                 [type]="field.type"
                 [formControl]="getFieldControl(field.key)"
+                [attr.maxlength]="field.maxLength ?? null"
                 [placeholder]="(field.placeholder || '') | translate" />
             }
             @if (getFieldControl(field.key).touched && getFieldControl(field.key).invalid) {
-              <span class="field-error">{{ 'validation.required' | translate }}</span>
+              <span class="field-error">{{ getFieldControl(field.key).errors?.['maxlength'] ? fieldMaxLengthErrors[field.key] : ('validation.required' | translate) }}</span>
             }
           </div>
         }
@@ -96,7 +100,10 @@
               <option [value]="p.value">{{ p.label | translate }}</option>
             }
           </select>
-          <input type="text" formControlName="value" [placeholder]="'admin.settings.sponsors.form.valuePlaceholder' | translate" class="info-value" />
+          <input type="text" formControlName="value" maxlength="500" [placeholder]="'admin.settings.sponsors.form.valuePlaceholder' | translate" class="info-value" />
+          @if (info.get('value')?.touched && info.get('value')?.errors?.['maxlength']) {
+            <span class="field-error">{{ maxLengthError }}</span>
+          }
           <button type="button" class="icon-button small delete" (click)="removeInfo(i)">
             <ion-icon name="trash-outline"></ion-icon>
           </button>

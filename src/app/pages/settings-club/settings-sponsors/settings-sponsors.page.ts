@@ -12,6 +12,7 @@ import { SectionFooterActionsComponent } from '@components/section-footer-action
 import { SponsorFormSaveEvent } from '@components/sponsor-form/sponsor-form.component';
 import { SponsorCardComponent } from '@components/sponsor-card/sponsor-card.component';
 import { SponsorsDisplayComponent } from '@components/sponsors-display/sponsors-display.component';
+import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
 import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
 import { addIcons } from 'ionicons';
 import { addOutline, walletOutline, arrowBackOutline, saveOutline } from 'ionicons/icons';
@@ -24,7 +25,7 @@ import { BackButtonComponent } from '@components/back-button/back-button.compone
   templateUrl: './settings-sponsors.page.html',
   styleUrls: ['./settings-sponsors.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent, BackButtonComponent]
+  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent, BackButtonComponent, EmptyStateComponent]
 })
 export class SettingsSponsorsPage implements OnInit {
   private readonly sponsorService = inject(SponsorService);
@@ -92,16 +93,16 @@ export class SettingsSponsorsPage implements OnInit {
         const items = list
           .map((sponsor, index) => ({ sponsor, index }))
           .filter(entry => entry.sponsor.tier === tier);
-        return {
-          tier,
+      return {
+        tier,
           labelKey: this.TIER_LABEL_KEYS[tier],
-          items: items.map((entry, i) => ({
-            sponsor: entry.sponsor,
-            index: entry.index,
-            isFirstInTier: i === 0,
-            isLastInTier: i === items.length - 1,
-          })),
-        };
+        items: items.map((entry, i) => ({
+          sponsor: entry.sponsor,
+          index: entry.index,
+          isFirstInTier: i === 0,
+          isLastInTier: i === items.length - 1,
+        })),
+      };
       })
       .filter(group => group.items.length > 0);
   });
@@ -199,17 +200,17 @@ export class SettingsSponsorsPage implements OnInit {
         this.sponsors.update(list =>
           list.map(s => s.id === tempId ? { ...s, imageUrl: result.url } : s)
         );
+        this.pendingAdditions.set(tempId, event);
+        this.markPendingChanged();
       } catch {
         URL.revokeObjectURL(draft.imageUrl);
-        this.sponsors.update(list =>
-          list.map(s => s.id === tempId ? { ...s, imageUrl: '' } : s)
-        );
-        this.showToastMessage('admin.settings.sponsors.error.imageUpload', 'danger');
+        this.sponsors.update(list => list.filter(s => s.id !== tempId));
+        this.showToastMessage('admin.settings.sponsors.error.imageUploadFailed', 'danger');
       }
+    } else {
+      this.pendingAdditions.set(tempId, event);
+      this.markPendingChanged();
     }
-
-    this.pendingAdditions.set(tempId, event);
-    this.markPendingChanged();
   }
 
   // ---- Edit sponsor ----
@@ -241,7 +242,8 @@ export class SettingsSponsorsPage implements OnInit {
         this.newlyUploadedUrls.add(result.url);
       } catch {
         this.orphanedImageUrls.delete(event.data.existingImageUrl ?? '');
-        this.showToastMessage('admin.settings.sponsors.error.imageUpload', 'danger');
+        this.showToastMessage('admin.settings.sponsors.error.imageUploadFailedKept', 'danger');
+        return;
       }
     }
 
@@ -367,7 +369,7 @@ export class SettingsSponsorsPage implements OnInit {
         if (sponsor) updates.push(this.buildSponsorForBatch(sponsor));
       }
 
-      await this.sponsorService.batch(this.clubId, {
+      const updatedList = await this.sponsorService.batch(this.clubId, {
         additions,
         updates,
         deletions: [...this.pendingDeletions],
@@ -382,11 +384,12 @@ export class SettingsSponsorsPage implements OnInit {
       this.newlyUploadedUrls.clear();
       this.markPendingChanged();
 
-      await this.loadSponsors();
+      this.sponsors.set(this.sortByTier(updatedList));
       this.toastService.show(this.translationService.instant('admin.settings.sponsors.saved'), 'success');
       this.navigationService.goBack();
-    } catch {
-      this.toastService.show(this.translationService.instant('admin.settings.sponsors.error.saveAll'), 'danger');
+    } catch (err: any) {
+      const message = err?.error?.message || this.translationService.instant('admin.settings.sponsors.error.saveAll');
+      this.toastService.show(message, 'danger');
     } finally {
       this.isSaving.set(false);
     }
@@ -422,11 +425,10 @@ export class SettingsSponsorsPage implements OnInit {
   }
 
   confirmLeave(): Observable<boolean> {
-    console.log('Confirming leave with pending changes:', this.hasChanges());
     if (!this.hasChanges()) return of(true);
-    return from(this.confirmService.request().then(confirmed => {
+    return from(this.confirmService.request().then(async confirmed => {
       if (confirmed) {
-        this.deleteNewlyUploadedImages();
+        try { await this.deleteNewlyUploadedImages(); } catch { }
       }
       return confirmed;
     }));

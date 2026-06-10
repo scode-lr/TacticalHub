@@ -26,4 +26,11 @@
     color: var(--ion-color-medium);
     opacity: 0.8;
   }
+
+  .empty-state-action {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
 }
