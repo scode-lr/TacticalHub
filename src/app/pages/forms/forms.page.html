@@ -4,38 +4,40 @@
   </div>
 
   @if (loading()) {
-    <div class="forms-grid">
-      <div class="skeleton-card">
-        <div class="skeleton-card-header">
-          <div class="skeleton-line skeleton-title"></div>
-          <div class="skeleton-line skeleton-subtitle"></div>
-        </div>
-        <div class="skeleton-card-body">
-          <div class="skeleton-line"></div>
-          <div class="skeleton-line skeleton-line--short"></div>
-        </div>
-        <div class="skeleton-card-footer">
-          <div class="skeleton-line skeleton-badge"></div>
-        </div>
+  <div class="forms-grid">
+    <div class="skeleton-card">
+      <div class="skeleton-card-header">
+        <div class="skeleton-line skeleton-title"></div>
+        <div class="skeleton-line skeleton-subtitle"></div>
+      </div>
+      <div class="skeleton-card-body">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line skeleton-line--short"></div>
+      </div>
+      <div class="skeleton-card-footer">
+        <div class="skeleton-line skeleton-badge"></div>
       </div>
     </div>
+  </div>
   } @else if (forms().length === 0) {
-    <div class="empty-state">
-      <div class="empty-icon-wrap">
-        <ion-icon name="document-text-outline"></ion-icon>
-      </div>
-      <h3 class="empty-title">{{ 'user.action.noForms' | translate }}</h3>
-      <p class="empty-description">{{ 'user.action.noFormsDescription' | translate }}</p>
+  <div class="empty-state">
+    <div class="empty-icon-wrap">
+      <ion-icon name="document-text-outline"></ion-icon>
     </div>
+    <h3 class="empty-title">{{ 'user.action.noForms' | translate }}</h3>
+    <p class="empty-description">
+      {{ 'user.action.noFormsDescription' | translate }}
+    </p>
+  </div>
   } @else {
-    <p-dataview [value]="forms()" styleClass="forms-dataview">
-      <ng-template #list let-items>
-        <div class="forms-grid">
-          @for (item of items; track item.id) {
-            <app-form-header [form]="item" [editable]="false" />
-          }
-        </div>
-      </ng-template>
-    </p-dataview>
+  <p-dataview [value]="forms()" class="forms-dataview">
+    <ng-template #list let-items>
+      <div class="forms-grid">
+        @for (item of items; track item.id) {
+        <app-form-header [form]="item" [editable]="false" />
+        }
+      </div>
+    </ng-template>
+  </p-dataview>
   }
 </div>

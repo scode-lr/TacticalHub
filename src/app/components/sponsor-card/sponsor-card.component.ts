@@ -1,18 +1,18 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
-import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { SponsorFormComponent, SponsorFormSaveEvent } from '@components/sponsor-form/sponsor-form.component';
-import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
+import { Sponsor } from '@core/models/sponsor.model';
+import { DefaultImageDirective } from '@core/directives';
 import { addIcons } from 'ionicons';
-import { chevronUpOutline, chevronDownOutline, trashOutline, starOutline, ribbonOutline, medalOutline } from 'ionicons/icons';
+import { chevronUpOutline, chevronDownOutline, trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-sponsor-card',
   templateUrl: './sponsor-card.component.html',
   styleUrls: ['./sponsor-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, SponsorFormComponent]
+  imports: [CommonModule, IonIcon, SponsorFormComponent, DefaultImageDirective]
 })
 export class SponsorCardComponent {
   readonly sponsor = input<Sponsor | null>(null);
@@ -33,25 +33,7 @@ export class SponsorCardComponent {
   readonly directCancel = output<void>();
 
   constructor() {
-    addIcons({ chevronUpOutline, chevronDownOutline, trashOutline, starOutline, ribbonOutline, medalOutline });
-  }
-
-  tierIcon(tier: SponsorTier): string {
-    switch (tier) {
-      case SponsorTier.Gold: return 'star-outline';
-      case SponsorTier.Silver: return 'ribbon-outline';
-      case SponsorTier.Bronze: return 'medal-outline';
-      default: return 'medal-outline';
-    }
-  }
-
-  tierLabel(tier: SponsorTier): string {
-    switch (tier) {
-      case SponsorTier.Gold: return 'admin.settings.sponsors.tier.gold';
-      case SponsorTier.Silver: return 'admin.settings.sponsors.tier.silver';
-      case SponsorTier.Bronze: return 'admin.settings.sponsors.tier.bronze';
-      default: return 'admin.settings.sponsors.tier.bronze';
-    }
+    addIcons({ chevronUpOutline, chevronDownOutline, trashOutline });
   }
 
   onExpand(): void { this.expand.emit(this.index()); }

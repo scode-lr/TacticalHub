@@ -203,6 +203,19 @@
     font-weight: 500;
     color: var(--ion-color-medium);
   }
+
+  // Neutral styling so the button doesn't rely on the app accent color
+  // (which gave a low-contrast grey button with a yellow label).
+  .btn-add-field {
+    border: 1px solid var(--ion-color-light-shade, #e0e0e0);
+    color: var(--ion-color-dark, #1f2937);
+    background: var(--ion-card-background, #fff);
+
+    &:hover {
+      background: var(--ion-color-light, #f4f5f8);
+      border-color: var(--ion-color-medium, #92949c);
+    }
+  }
 }
 
 .info-row {
@@ -236,6 +249,13 @@
     &:focus { outline: none; border-color: var(--ion-color-primary); }
   }
 }
+.delete {
+  font-size: 20px;
+  color: var(--ion-color-danger);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
 
 .card-header {
   display: flex;
@@ -247,7 +267,7 @@
     color: var(--ion-color-medium);
     background: transparent;
     border: none;
-    font-size: 14px;
+    font-size: 20px;
     cursor: pointer;
 
   }

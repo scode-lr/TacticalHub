@@ -97,6 +97,12 @@ export const sharedTranslations = {
     emptyState: {
       title: 'Nada por aquí todavía',
       message: 'No hay notificaciones que mostrar.'
+    },
+    confirmAlert: {
+      title: 'Cambios sin guardar',
+      message: 'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?',
+      confirm: 'Salir',
+      cancel: 'Quedarse',
     }
   },
   fieldLabels: {
@@ -300,7 +306,7 @@ export const sharedTranslations = {
         description: 'Crear y gestionar formularios del club'
       },
       sponsors: {
-        title: 'Patrocinadores',
+        title: 'Patrocinadores y colaboradores',
         description: 'Gestionar logos y niveles de patrocinadores',
         preview: 'Vista previa',
         previewNotice: 'Así es como los patrocinadores aparecerán en el club.',
@@ -316,9 +322,8 @@ export const sharedTranslations = {
         updated: 'Patrocinador actualizado correctamente',
         deleted: 'Patrocinador eliminado',
         tier: {
-          gold: 'Oro',
-          silver: 'Plata',
-          bronze: 'Bronce'
+          sponsor: 'Patrocinadores',
+          collaborator: 'Colaboradores'
         },
         form: {
           name: 'Nombre',
@@ -358,6 +363,8 @@ export const sharedTranslations = {
           imageType: 'Formato inválido. Usa PNG, JPEG, WebP o SVG.',
           imageRequired: 'Selecciona una imagen.',
           imageUpload: 'No se pudo subir la imagen. Inténtalo de nuevo.',
+          imageUploadFailed: 'Fallo al subir la imagen. Patrocinador eliminado. Intenta añadirlo de nuevo.',
+          imageUploadFailedKept: 'Fallo al subir la imagen. Se ha conservado la imagen anterior.',
           saveAll: 'No se pudieron guardar los patrocinadores. Inténtalo de nuevo.'
         }
       }
@@ -624,7 +631,7 @@ export const sharedTranslations = {
       information: 'Información',
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
-      partners: 'Colaboradores',
+      sponsors: 'Patrocinadores y colaboradores',
       forms: 'Formularios',
       more: 'Más'
     },
@@ -636,7 +643,7 @@ export const sharedTranslations = {
       information: 'Información y recursos del club',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
-      partners: 'Nuestros colaboradores y patrocinadores del club',
+      sponsors: 'Nuestros colaboradores y patrocinadores del club',
       forms: 'Rellena los formularios del club'
     },
     home: {
@@ -759,7 +766,9 @@ export const sharedTranslations = {
       upcomingMatches: 'Próximos Partidos',
       noRelatedMatches: 'No hay partidos relacionados'
     },
-    partners: {
+    sponsors: {
+      title: 'Patrocinadores y colaboradores',
+      subtitle: 'Los que hacen posible el club',
       empty: 'No hay colaboradores listados',
       emptyDescription: 'Nuestros colaboradores y patrocinadores del club se listarán aquí.'
     }
@@ -772,14 +781,14 @@ export const sharedTranslations = {
       news: 'Noticias',
       information: 'Información',
       matches: 'Partidos',
-      partners: 'Colaboradores'
+      sponsors: 'Patrocinadores y colaboradores'
     },
     description: {
       home: 'Bienvenido al portal público del club',
       news: 'Últimas noticias y anuncios',
       information: 'Información del club',
       matches: 'Ver próximos partidos',
-      partners: 'Colaboradores y patrocinadores del club'
+      sponsors: 'Colaboradores y patrocinadores del club'
     }
   },
   roles: {

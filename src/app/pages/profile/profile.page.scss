@@ -14,22 +14,6 @@
   }
 }
 
-.section-header {
-  margin-bottom: 2rem;
-
-  .section-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--text-primary, #111827);
-    line-height: 1.2;
-    margin: 0;
-
-    @media (max-width: 768px) {
-      font-size: 1.5rem;
-    }
-  }
-}
-
 .content-section {
   background: var(--background-primary, #ffffff);
   border: 1px solid var(--border-light, #e5e7eb);

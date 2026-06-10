@@ -82,44 +82,17 @@
   animation: shimmer 1.5s infinite;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 48px 16px;
+// ---- Tier group header ----
+
+.tier-group-header {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--ion-color-medium);
 
-  .wallet-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
-    opacity: 0.5;
+  &:first-of-type {
+    margin-top: 0.5rem;
   }
-
-  h3 {
-    margin: 0 0 4px;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--ion-color-dark);
-  }
-
-  p {
-    margin: 0;
-    font-size: 14px;
-  }
-}
-
-// ---- Sponsors Preview Modal ----
-
-.sponsors-preview-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.5rem 0;
-}
-
-.preview-sponsor-card {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--background-secondary, #f8f9fa);
-  border-radius: 12px;
-  border: 1px solid var(--border-light, #e5e7eb);
 }

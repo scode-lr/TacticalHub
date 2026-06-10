@@ -82,7 +82,8 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'settings-club/sponsors',
-        loadComponent: () => import('../settings-club/settings-sponsors/settings-sponsors.page').then(m => m.SettingsSponsorsPage)
+        loadComponent: () => import('../settings-club/settings-sponsors/settings-sponsors.page').then(m => m.SettingsSponsorsPage),
+        canDeactivate: [(comp: any) => comp.confirmLeave()]
       },
       {
         path: 'settings-forms',

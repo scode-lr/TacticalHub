@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
+import { TranslationService } from '@core/services/i18n/translation.service';
 import { Sponsor, SponsorTier, AdditionalInfo, SPONSOR_INFO_KEYS } from '@core/models/sponsor.model';
 import { addIcons } from 'ionicons';
 import { imageOutline, cloudUploadOutline, closeOutline, addOutline, trashOutline } from 'ionicons/icons';
@@ -54,6 +55,7 @@ const DEFAULT_FIELDS: FormFieldConfig[] = [
 })
 export class SponsorFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
+  private readonly translationService = inject(TranslationService);
 
   readonly sponsor = input<Sponsor | null>(null);
   readonly isSaving = input<boolean>(false);
@@ -66,12 +68,14 @@ export class SponsorFormComponent implements OnInit {
   readonly imageError = signal<string | null>(null);
 
   readonly tierOptions: TierOption[] = [
-    { value: SponsorTier.Gold, label: 'admin.settings.sponsors.tier.gold' },
-    { value: SponsorTier.Silver, label: 'admin.settings.sponsors.tier.silver' },
-    { value: SponsorTier.Bronze, label: 'admin.settings.sponsors.tier.bronze' }
+    { value: SponsorTier.Sponsor, label: 'admin.settings.sponsors.tier.sponsor' },
+    { value: SponsorTier.Collaborator, label: 'admin.settings.sponsors.tier.collaborator' }
   ];
 
   readonly infoKeys = SPONSOR_INFO_KEYS;
+
+  maxLengthError = '';
+  fieldMaxLengthErrors: Record<string, string> = {};
 
   form!: FormGroup;
   selectedImage: File | null = null;
@@ -105,10 +109,10 @@ export class SponsorFormComponent implements OnInit {
       controls[field.key] = new FormControl(value, validators);
     }
 
-    controls['tier'] = new FormControl(s?.tier ?? SponsorTier.Bronze, [Validators.required]);
+    controls['tier'] = new FormControl(s?.tier ?? SponsorTier.Collaborator, [Validators.required]);
     controls['additionalInfo'] = this.fb.array(
       (s?.additionalInfo || []).map(l =>
-        this.fb.group({ key: [l.key, Validators.required], value: [l.value, Validators.required] })
+        this.fb.group({ key: [l.key, Validators.required], value: [l.value, [Validators.required, Validators.maxLength(500)]] })
       )
     );
 
@@ -116,6 +120,14 @@ export class SponsorFormComponent implements OnInit {
 
     if (s?.imageUrl) {
       this.imagePreview.set(s.imageUrl);
+    }
+
+    this.maxLengthError = this.translationService.instant('validation.maxLength', { max: 500 });
+
+    for (const field of this.fields()) {
+      if (field.maxLength) {
+        this.fieldMaxLengthErrors[field.key] = this.translationService.instant('validation.maxLength', { max: field.maxLength });
+      }
     }
   }
 
@@ -136,8 +148,8 @@ export class SponsorFormComponent implements OnInit {
   addInfo(): void {
     if (this.additionalInfo.length >= 10) return;
     this.additionalInfo.push(this.fb.group({
-      key: ['', [Validators.required]],
-      value: ['', [Validators.required]]
+      key: [SPONSOR_INFO_KEYS[0].value, [Validators.required]],
+      value: ['', [Validators.required, Validators.maxLength(500)]]
     }));
   }
 
@@ -202,6 +214,11 @@ export class SponsorFormComponent implements OnInit {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+
+    if (!this.sponsor() && !this.selectedImage) {
+      this.showFieldError('imageRequired');
       return;
     }
 

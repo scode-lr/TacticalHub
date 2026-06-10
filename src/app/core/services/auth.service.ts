@@ -1,4 +1,5 @@
 import { Injectable, signal, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, firstValueFrom, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { User } from '../models';
@@ -61,13 +62,19 @@ export class AuthService {
           if (token) {
             return true;
           }
-          // Refresh cookie is gone / expired — clear the stale cache.
+          // Server responded OK but without a token — treat as no session.
           this.cleanSesion();
           return false;
         }),
-        catchError(() => {
-          this.cleanSesion();
-          this.navigationService.navigateTo(['auth/signin']);
+        catchError((error: unknown) => {
+          // Only a real auth error (401/403) means the refresh cookie is gone:
+          // clear the stale cache and send the user to sign-in. A transient
+          // error (timeout, 5xx, status 0) must NOT destroy the cached session
+          // — leave it so a later reload can restore it when the network is back.
+          if (this.isAuthError(error)) {
+            this.cleanSesion();
+            this.navigationService.navigateTo(['auth/signin']);
+          }
           return of(false);
         })
       )
@@ -80,13 +87,19 @@ export class AuthService {
    * Exchanges the HttpOnly refresh-token cookie for a new short-lived access
    * token.  Uses `skipAuth: true` and `withCredentials: true` directly so
    * this call bypasses the auth interceptor (avoiding circular 401 loops).
-   * Returns the new access token string, or null on failure.
+   *
+   * Returns the new access token, or null only when the server responds
+   * successfully but without a token. HTTP errors are NOT swallowed — they
+   * propagate so callers can distinguish a real 401/403 (refresh cookie
+   * gone → must log out) from a transient error (timeout, 5xx, status 0 →
+   * keep the session). `skipErrorHandler` keeps the original
+   * HttpErrorResponse intact (status preserved, no toast).
    */
   refreshAccessToken(): Observable<string | null> {
     return this.apiService.post<AuthResponse>(
       '/auth/refresh',
       {},
-      { skipAuth: true, withCredentials: true }
+      { skipAuth: true, withCredentials: true, skipErrorHandler: true }
     ).pipe(
       map(response => {
         if (response.success && response.data?.token) {
@@ -98,8 +111,7 @@ export class AuthService {
           return response.data.token;
         }
         return null;
-      }),
-      catchError(() => of(null))
+      })
     );
   }
 
@@ -324,6 +336,28 @@ export class AuthService {
       this._isLoading.set(false);
       return { success: false, message: error.message ?? this.translationService.instant('messages.invalidResetLink') };
     }
+  }
+
+  /**
+   * True if the error is a real authentication failure (401/403), meaning the
+   * refresh-token cookie is gone/invalid and the session cannot be recovered.
+   * Any other error (timeout, status 0, 5xx, etc.) is transient and must NOT
+   * trigger a logout.
+   */
+  isAuthError(error: unknown): boolean {
+    return error instanceof HttpErrorResponse &&
+      (error.status === 401 || error.status === 403);
+  }
+
+  /**
+   * Forces a client-side logout WITHOUT calling the backend `/auth/logout`.
+   * Used when the refresh cookie is already invalid (a real 401/403), so there
+   * is nothing to revoke server-side. Crucially, this avoids destroying a
+   * possibly-valid refresh cookie on transient errors. Navigates to sign-in.
+   */
+  clearSessionLocally(): void {
+    this.cleanSesion();
+    this.navigationService.navigateTo(['auth/signin']);
   }
 
   /** Clears all client-side auth state.  The access token is memory-only so

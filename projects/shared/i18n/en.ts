@@ -97,6 +97,12 @@ export const sharedTranslations = {
     emptyState: {
       title: 'Nothing here yet',
       message: 'There are no notifications to show.'
+    },
+    confirmAlert: {
+      title: 'Unsaved changes',
+      message: 'You have unsaved changes. Are you sure you want to leave?',
+      confirm: 'Leave',
+      cancel: 'Stay',
     }
   },
   fieldLabels: {
@@ -302,7 +308,7 @@ export const sharedTranslations = {
         description: 'Create and manage club forms'
       },
       sponsors: {
-        title: 'Sponsors',
+        title: 'Sponsors & Collaborators',
         description: 'Manage sponsor logos and tiers',
         preview: 'Preview',
         previewNotice: 'This is how sponsors will appear in the club.',
@@ -318,9 +324,8 @@ export const sharedTranslations = {
         updated: 'Sponsor updated successfully',
         deleted: 'Sponsor deleted',
         tier: {
-          gold: 'Gold',
-          silver: 'Silver',
-          bronze: 'Bronze'
+          sponsor: 'Sponsors',
+          collaborator: 'Collaborators'
         },
         form: {
           name: 'Name',
@@ -360,6 +365,8 @@ export const sharedTranslations = {
           imageType: 'Invalid format. Use PNG, JPEG, WebP or SVG.',
           imageRequired: 'Please select an image.',
           imageUpload: 'Could not upload image. Please try again.',
+          imageUploadFailed: 'Image upload failed. Sponsor removed. Please try adding again.',
+          imageUploadFailedKept: 'Image upload failed. Previous image kept.',
           saveAll: 'Could not save sponsors. Please try again.'
         }
       }
@@ -627,7 +634,7 @@ export const sharedTranslations = {
       information: 'Information',
       proposals: 'Proposals & complaints',
       matches: 'Matches',
-      partners: 'Collaborators',
+      sponsors: 'Sponsors & Collaborators',
       forms: 'Forms',
       more: 'More'
     },
@@ -639,7 +646,7 @@ export const sharedTranslations = {
       information: 'Club information and resources',
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
-      partners: 'Our club collaborators and sponsors',
+      sponsors: 'Our club collaborators and sponsors',
       forms: 'Fill in and submit club forms'
     },
     home: {
@@ -821,7 +828,9 @@ export const sharedTranslations = {
       upcomingMatches: 'Upcoming Matches',
       noRelatedMatches: 'No related matches'
     },
-    partners: {
+    sponsors: {
+      title: 'Sponsors & Collaborators',
+      subtitle: 'The clubs that make it all possible',
       empty: 'No collaborators listed',
       emptyDescription: 'Our club collaborators and sponsors will be listed here.'
     }
@@ -834,14 +843,14 @@ export const sharedTranslations = {
       news: 'News',
       information: 'Information',
       matches: 'Matches',
-      partners: 'Collaborators'
+      sponsors: 'Sponsors & Collaborators'
     },
     description: {
       home: 'Welcome to the public club portal',
       news: 'Latest news and announcements',
       information: 'Club information',
       matches: 'View upcoming matches',
-      partners: 'Club collaborators and sponsors'
+      sponsors: 'Club collaborators and sponsors'
     }
   },
   roles: {

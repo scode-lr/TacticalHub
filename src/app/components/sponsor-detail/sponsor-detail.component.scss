@@ -1,65 +1,59 @@
-.modal-image-wrapper {
-  background: #f9fafb;
+// Mobile (default): stacked — image, name/title/contact, description.
+.sponsor-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sd-image {
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 160px;
-  margin-bottom: 1rem;
   overflow: hidden;
 }
 
-.modal-image {
+.sd-image-el {
   width: 100%;
   max-height: 250px;
   object-fit: contain;
-  padding: 16px;
 }
 
-.modal-title-text {
-  font-size: 1rem;
+.sd-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sd-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  line-height: 1.2;
+}
+
+.sd-subtitle {
+  margin: 0;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--text-secondary, #6b7280);
-  margin: 0 0 0.5rem 0;
 }
 
-.modal-description {
-  font-size: 0.9375rem;
-  color: var(--text-light, #9ca3af);
-  line-height: 1.6;
-  margin: 0 0 1rem 0;
-}
-
-.modal-links {
+.sd-links {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
 }
 
-.modal-info-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 0.9375rem;
-}
-
-.modal-info-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--text-light, #9ca3af);
-}
-
-.modal-info-value {
-  color: var(--text-secondary, #6b7280);
-}
-
-.modal-link {
+.sd-link {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-size: 0.8125rem;
-  color: var(--ion-color-primary, #3880ff);
+  color: var(--ion-color-primary-contrast);
   text-decoration: none;
   padding: 6px 12px;
   background: rgba(56, 128, 255, 0.08);
@@ -71,37 +65,56 @@
   }
 
   ion-icon {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
-:host.compact {
-  .modal-image-wrapper {
-    min-height: 100px;
-    margin-bottom: 0.5rem;
+.sd-description {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+// Desktop: image top-left, name/title/contact on the right, description full-width below.
+@media (min-width: 768px) {
+  .sponsor-detail {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-areas:
+      "image content"
+      "image links"
+      "desc  desc";
+    gap: 1rem 1.5rem;
+    align-content: start;
+    align-items: start;
   }
 
-  .modal-image {
-    max-height: 150px;
-    padding: 12px;
+  .sd-image {
+    grid-area: image;
+    align-self: start;
+    min-height: 200px;
   }
 
-  .modal-title-text {
-    font-size: 0.875rem;
-    margin-bottom: 0.25rem;
+  .sd-image-el {
+    max-height: 220px;
   }
 
-  .modal-description {
-    font-size: 0.8125rem;
-    margin-bottom: 0.5rem;
+  .sd-content {
+    grid-area: content;
   }
 
-  .modal-link {
-    font-size: 0.75rem;
-    padding: 4px 8px;
+  .sd-name {
+    font-size: 1.5rem;
   }
 
-  .modal-info-text {
-    font-size: 0.8125rem;
+  .sd-links {
+    grid-area: links;
+    align-self: start;
+  }
+
+  .sd-description {
+    grid-area: desc;
   }
 }

@@ -1,15 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiService } from './api.service';
 import { Sponsor, AdditionalInfo, CreateSponsorRequest, UpdateSponsorRequest, ReorderSponsorsRequest, UploadImageResponse, DeleteImagesRequest, BatchSponsorRequest } from '@core/models/sponsor.model';
-import { environment } from '@environment';
 
 @Injectable({ providedIn: 'root' })
 export class SponsorService {
   private readonly apiService = inject(ApiService);
-  private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
 
   async getByClubId(clubId: number): Promise<Sponsor[]> {
     return await firstValueFrom(
@@ -21,7 +17,7 @@ export class SponsorService {
   async create(clubId: number, request: CreateSponsorRequest): Promise<Sponsor> {
     const formData = this.buildFormData(request);
     return await firstValueFrom(
-      this.http.post<Sponsor>(`${this.baseUrl}/clubs/${clubId}/sponsors`, formData)
+      this.apiService.post<Sponsor>(`clubs/${clubId}/sponsors`, formData, { isFormData: true })
         .pipe(map(data => this.normalizeSponsor(data as any)))
     );
   }
@@ -29,7 +25,7 @@ export class SponsorService {
   async update(clubId: number, id: number, request: UpdateSponsorRequest): Promise<Sponsor> {
     const formData = this.buildFormData(request);
     return await firstValueFrom(
-      this.http.put<Sponsor>(`${this.baseUrl}/clubs/${clubId}/sponsors/${id}`, formData)
+      this.apiService.put<Sponsor>(`clubs/${clubId}/sponsors/${id}`, formData, { isFormData: true })
         .pipe(map(data => this.normalizeSponsor(data as any)))
     );
   }
@@ -50,7 +46,7 @@ export class SponsorService {
     const formData = new FormData();
     formData.append('Image', file);
     return await firstValueFrom(
-      this.http.post<UploadImageResponse>(`${this.baseUrl}/clubs/${clubId}/sponsors/images`, formData)
+      this.apiService.post<UploadImageResponse>(`clubs/${clubId}/sponsors/images`, formData, { isFormData: true })
         .pipe(map(data => data as UploadImageResponse))
     );
   }
@@ -58,15 +54,13 @@ export class SponsorService {
   async deleteImages(clubId: number, urls: string[]): Promise<void> {
     if (!urls.length) return;
     await firstValueFrom(
-      this.http.delete(`${this.baseUrl}/clubs/${clubId}/sponsors/images`, {
-        body: { urls } as DeleteImagesRequest
-      })
+      this.apiService.delete(`clubs/${clubId}/sponsors/images`, { body: { urls } as DeleteImagesRequest })
     );
   }
 
   async batch(clubId: number, request: BatchSponsorRequest): Promise<Sponsor[]> {
     return await firstValueFrom(
-      this.http.put<Sponsor[]>(`${this.baseUrl}/clubs/${clubId}/sponsors/batch`, request)
+      this.apiService.put<Sponsor[]>(`clubs/${clubId}/sponsors/batch`, request)
         .pipe(map(data => ((data as any[]) ?? []).map(s => this.normalizeSponsor(s))))
     );
   }

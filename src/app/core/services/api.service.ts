@@ -13,6 +13,16 @@ export interface ApiRequestOptions {
   withCredentials?: boolean;
   timeout?: number;
   skipAuth?: boolean;
+  /**
+   * When true, skips the default error handler (no toast, no error rewriting),
+   * so the original HttpErrorResponse propagates with its status intact.
+   * Used by auth flows that need to distinguish 401/403 from transient errors.
+   */
+  skipErrorHandler?: boolean;
+  /** When true, skips Content-Type: application/json header (use for FormData). */
+  isFormData?: boolean;
+  /** Request body for methods that don't normally accept one (e.g. DELETE). */
+  body?: any;
 }
 
 export interface ApiResponse<T = any> {
@@ -38,10 +48,13 @@ export class ApiService {
 
   private buildHeaders(options?: ApiRequestOptions): HttpHeaders {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
       'ngrok-skip-browser-warning': 'true'
     });
+
+    if (!options?.isFormData) {
+      headers = headers.set('Content-Type', 'application/json');
+    }
 
     if (options?.headers) {
       const customHeaders = options.headers instanceof HttpHeaders 
@@ -55,6 +68,16 @@ export class ApiService {
     }
 
     return headers;
+  }
+
+  /**
+   * Applies the shared tail operators (timeout + error handling) to a request.
+   * When `skipErrorHandler` is set the original HttpErrorResponse is preserved
+   * (no toast, no rewrite) so callers can inspect the status.
+   */
+  private applyTail<T>(obs$: Observable<T>, options?: ApiRequestOptions): Observable<T> {
+    const piped$ = obs$.pipe(timeout(options?.timeout || this.defaultTimeout));
+    return options?.skipErrorHandler ? piped$ : piped$.pipe(catchError(this.handleError));
   }
 
   private handleError = (error: HttpErrorResponse): Observable<never> => {
@@ -93,90 +116,73 @@ export class ApiService {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
     
-    return this.http.get<T>(url, {
+    return this.applyTail(this.http.get<T>(url, {
       headers,
       params: options?.params,
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
-    }).pipe(
-      timeout(options?.timeout || this.defaultTimeout),
-      catchError(this.handleError)
-    );
+    }), options);
   }
 
   post<T = any>(endpoint: string, body: any, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
-    
-    return this.http.post<T>(url, body, {
+
+    return this.applyTail(this.http.post<T>(url, body, {
       headers,
       params: options?.params,
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
-    }).pipe(
-      timeout(options?.timeout || this.defaultTimeout),
-      catchError(this.handleError)
-    );
+    }), options);
   }
 
   put<T = any>(endpoint: string, body: any, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
-    
-    return this.http.put<T>(url, body, {
+
+    return this.applyTail(this.http.put<T>(url, body, {
       headers,
       params: options?.params,
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
-    }).pipe(
-      timeout(options?.timeout || this.defaultTimeout),
-      catchError(this.handleError)
-    );
+    }), options);
   }
 
   patch<T = any>(endpoint: string, body: any, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
-    
-    return this.http.patch<T>(url, body, {
+
+    return this.applyTail(this.http.patch<T>(url, body, {
       headers,
       params: options?.params,
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
-    }).pipe(
-      timeout(options?.timeout || this.defaultTimeout),
-      catchError(this.handleError)
-    );
+    }), options);
   }
 
   delete<T = any>(endpoint: string, options?: ApiRequestOptions): Observable<T> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
 
-    return this.http.delete<T>(url, {
+    return this.applyTail(this.http.delete<T>(url, {
       headers,
       params: options?.params,
+      body: options?.body,
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
-    }).pipe(
-      timeout(options?.timeout || this.defaultTimeout),
-      catchError(this.handleError)
-    );
+    }), options);
   }
 
   getBlob(endpoint: string, options?: ApiRequestOptions): Observable<Blob> {
     const url = this.buildUrl(endpoint);
     const headers = this.buildHeaders(options);
 
-    return this.http.get(url, {
+    return this.applyTail(this.http.get(url, {
       headers,
       params: options?.params,
       responseType: 'blob',
       withCredentials: options?.withCredentials,
       context: options?.skipAuth ? skipAuthContext() : undefined
-    }).pipe(
-      timeout(options?.timeout || this.defaultTimeout),
-      catchError(this.handleError)
-    );
+    }), options);
   }
 }

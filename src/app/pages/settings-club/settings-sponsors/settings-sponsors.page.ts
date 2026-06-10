@@ -1,28 +1,31 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable, of, from } from 'rxjs';
 import { IonIcon, IonSpinner, IonToast } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { SponsorService } from '@core/services/sponsor.service';
 import { NavigationService } from '@services/navigation.service';
 import { ToastService } from '@services/toast.service';
-import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { PreviewModalComponent } from '@components/modals/preview-modal/preview-modal.component';
 import { SectionFooterActionsComponent } from '@components/section-footer-actions/section-footer-actions.component';
 import { SponsorFormSaveEvent } from '@components/sponsor-form/sponsor-form.component';
 import { SponsorCardComponent } from '@components/sponsor-card/sponsor-card.component';
-import { SponsorDetailComponent } from '@components/sponsor-detail/sponsor-detail.component';
-import { Sponsor } from '@core/models/sponsor.model';
+import { SponsorsDisplayComponent } from '@components/sponsors-display/sponsors-display.component';
+import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
+import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
 import { addIcons } from 'ionicons';
 import { addOutline, walletOutline, arrowBackOutline, saveOutline } from 'ionicons/icons';
 import { ClubService } from '@services/club.service';
+import { ConfirmService } from '@services/confirm.service';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 
 @Component({
   selector: 'app-settings-sponsors',
   templateUrl: './settings-sponsors.page.html',
   styleUrls: ['./settings-sponsors.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonSpinner, IonToast, TranslatePipe, BackButtonComponent, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorDetailComponent]
+  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent, BackButtonComponent, EmptyStateComponent]
 })
 export class SettingsSponsorsPage implements OnInit {
   private readonly sponsorService = inject(SponsorService);
@@ -30,6 +33,7 @@ export class SettingsSponsorsPage implements OnInit {
   private readonly translationService = inject(TranslationService);
   private readonly toastService = inject(ToastService);
   private readonly clubService = inject(ClubService);
+  private readonly confirmService = inject(ConfirmService);
 
   readonly sponsors = signal<Sponsor[]>([]);
   readonly loading = signal(true);
@@ -42,11 +46,19 @@ export class SettingsSponsorsPage implements OnInit {
   readonly toastMessage = this.toastService.toastMessage;
   readonly toastColor = this.toastService.toastColor;
 
+  private readonly TIER_ORDER = [SponsorTier.Sponsor, SponsorTier.Collaborator];
+  private readonly TIER_LABEL_KEYS: Record<SponsorTier, string> = {
+    [SponsorTier.Sponsor]: 'admin.settings.sponsors.tier.sponsor',
+    [SponsorTier.Collaborator]: 'admin.settings.sponsors.tier.collaborator',
+  };
+
   private tempIdCounter = -1;
   private pendingAdditions = new Map<number, SponsorFormSaveEvent>();
   private pendingUpdates = new Map<number, SponsorFormSaveEvent>();
   private pendingDeletions = new Set<number>();
+  private pendingReorder = new Set<number>();
   private orphanedImageUrls = new Set<string>();
+  private newlyUploadedUrls = new Set<string>();
   private pendingVersion = signal(0);
 
   private markPendingChanged(): void {
@@ -59,7 +71,40 @@ export class SettingsSponsorsPage implements OnInit {
     return !this.isSaving() &&
       (this.pendingAdditions.size > 0 ||
        this.pendingUpdates.size > 0 ||
-       this.pendingDeletions.size > 0);
+       this.pendingDeletions.size > 0 ||
+       this.pendingReorder.size > 0);
+  });
+
+  readonly hasChanges = computed(() => {
+    console.log('Checking for changes:',this.isAdding() || this.expandedIndex() !== null || this.pendingAdditions.size > 0 || this.pendingUpdates.size > 0 || this.pendingDeletions.size > 0 || this.pendingReorder.size > 0);
+    this.pendingVersion();
+    return this.isAdding() ||
+           this.expandedIndex() !== null ||
+           this.pendingAdditions.size > 0 ||
+           this.pendingUpdates.size > 0 ||
+           this.pendingDeletions.size > 0 ||
+           this.pendingReorder.size > 0;
+  });
+
+  readonly groupedSponsors = computed(() => {
+    const list = this.sponsors();
+    return this.TIER_ORDER
+      .map(tier => {
+        const items = list
+          .map((sponsor, index) => ({ sponsor, index }))
+          .filter(entry => entry.sponsor.tier === tier);
+      return {
+        tier,
+          labelKey: this.TIER_LABEL_KEYS[tier],
+        items: items.map((entry, i) => ({
+          sponsor: entry.sponsor,
+          index: entry.index,
+          isFirstInTier: i === 0,
+          isLastInTier: i === items.length - 1,
+        })),
+      };
+      })
+      .filter(group => group.items.length > 0);
   });
 
   readonly previewSponsors = computed(() => {
@@ -82,9 +127,9 @@ export class SettingsSponsorsPage implements OnInit {
     try {
       this.loading.set(true);
       const data = await this.sponsorService.getByClubId(this.clubId);
-      this.sponsors.set(data);
+      this.sponsors.set(this.sortByTier(data));
     } catch {
-      this.showToastMessage('sponsors.error.load', 'danger');
+      this.showToastMessage('admin.settings.sponsors.error.load', 'danger');
     } finally {
       this.loading.set(false);
     }
@@ -110,8 +155,17 @@ export class SettingsSponsorsPage implements OnInit {
   private buildSponsorForBatch(sponsor: Sponsor): Sponsor {
     return {
       ...sponsor,
-      sortOrder: this.sponsors().findIndex(s => s.id === sponsor.id),
+      sortOrder: this.sponsors()
+        .filter(s => s.tier === sponsor.tier)
+        .findIndex(s => s.id === sponsor.id),
     };
+  }
+
+  /** Orders the list by tier (Sponsor → Collaborator), preserving the relative order within each tier. */
+  private sortByTier(list: Sponsor[]): Sponsor[] {
+    return [...list].sort(
+      (a, b) => this.TIER_ORDER.indexOf(a.tier) - this.TIER_ORDER.indexOf(b.tier)
+    );
   }
 
   // ---- Add sponsor ----
@@ -134,7 +188,7 @@ export class SettingsSponsorsPage implements OnInit {
     }
 
     const draft = this.createDraftSponsor(tempId, event.data, imageUrl);
-    this.sponsors.update(list => [...list, draft]);
+    this.sponsors.update(list => this.sortByTier([...list, draft]));
     this.cancelAdding();
 
     if (event.imageFile) {
@@ -142,16 +196,21 @@ export class SettingsSponsorsPage implements OnInit {
         const result = await this.sponsorService.uploadImage(this.clubId, event.imageFile);
         imageUrl = result.url;
         URL.revokeObjectURL(draft.imageUrl);
+        this.newlyUploadedUrls.add(result.url);
         this.sponsors.update(list =>
           list.map(s => s.id === tempId ? { ...s, imageUrl: result.url } : s)
         );
+        this.pendingAdditions.set(tempId, event);
+        this.markPendingChanged();
       } catch {
-        this.showToastMessage('sponsors.error.imageUpload', 'danger');
+        URL.revokeObjectURL(draft.imageUrl);
+        this.sponsors.update(list => list.filter(s => s.id !== tempId));
+        this.showToastMessage('admin.settings.sponsors.error.imageUploadFailed', 'danger');
       }
+    } else {
+      this.pendingAdditions.set(tempId, event);
+      this.markPendingChanged();
     }
-
-    this.pendingAdditions.set(tempId, event);
-    this.markPendingChanged();
   }
 
   // ---- Edit sponsor ----
@@ -180,8 +239,11 @@ export class SettingsSponsorsPage implements OnInit {
       try {
         const result = await this.sponsorService.uploadImage(this.clubId, event.imageFile);
         imageUrl = result.url;
+        this.newlyUploadedUrls.add(result.url);
       } catch {
-        this.showToastMessage('sponsors.error.imageUpload', 'danger');
+        this.orphanedImageUrls.delete(event.data.existingImageUrl ?? '');
+        this.showToastMessage('admin.settings.sponsors.error.imageUploadFailedKept', 'danger');
+        return;
       }
     }
 
@@ -196,7 +258,11 @@ export class SettingsSponsorsPage implements OnInit {
       updatedAt: new Date().toISOString(),
     };
 
-    this.sponsors.update(list => { const copy = [...list]; copy[index] = updated; return copy; });
+    this.sponsors.update(list => {
+      const copy = [...list];
+      copy[index] = updated;
+      return this.sortByTier(copy);
+    });
 
     if (sponsor.id < 0) {
       this.pendingAdditions.set(sponsor.id, event);
@@ -223,11 +289,8 @@ export class SettingsSponsorsPage implements OnInit {
       }
     } else {
       this.pendingUpdates.delete(sponsor.id);
+      this.pendingReorder.delete(sponsor.id);
       this.pendingDeletions.add(sponsor.id);
-    }
-
-    if (sponsor.imageUrl.startsWith('blob:')) {
-      URL.revokeObjectURL(sponsor.imageUrl);
     }
 
     this.markPendingChanged();
@@ -247,8 +310,18 @@ export class SettingsSponsorsPage implements OnInit {
 
   private swapLocal(fromIndex: number, toIndex: number): void {
     const list = [...this.sponsors()];
-    [list[fromIndex], list[toIndex]] = [list[toIndex], list[fromIndex]];
+    const from = list[fromIndex];
+    const to = list[toIndex];
+    // Keep reordering confined to a single tier group.
+    if (from.tier !== to.tier) return;
+
+    [list[fromIndex], list[toIndex]] = [to, from];
     this.sponsors.set(list);
+
+    // Mark existing sponsors so their new sortOrder is persisted on save.
+    if (from.id >= 0) this.pendingReorder.add(from.id);
+    if (to.id >= 0) this.pendingReorder.add(to.id);
+    this.markPendingChanged();
   }
 
   // ---- Preview ----
@@ -262,11 +335,14 @@ export class SettingsSponsorsPage implements OnInit {
   cancelAll(): void {
     this.expandedIndex.set(null);
     this.isAdding.set(false);
+    this.deleteNewlyUploadedImages();
     this.pendingAdditions.clear();
     this.pendingUpdates.clear();
     this.pendingDeletions.clear();
+    this.pendingReorder.clear();
+    this.orphanedImageUrls.clear();
+    this.newlyUploadedUrls.clear();
     this.markPendingChanged();
-    this.deleteOrphanedImages();
     this.loadSponsors();
   }
 
@@ -283,12 +359,13 @@ export class SettingsSponsorsPage implements OnInit {
         if (draft) additions.push(this.buildSponsorForBatch(draft));
       }
 
-      for (const [id] of this.pendingUpdates) {
+      const updateIds = new Set<number>([...this.pendingUpdates.keys(), ...this.pendingReorder]);
+      for (const id of updateIds) {
         const sponsor = list.find(s => s.id === id);
         if (sponsor) updates.push(this.buildSponsorForBatch(sponsor));
       }
 
-      await this.sponsorService.batch(this.clubId, {
+      const updatedList = await this.sponsorService.batch(this.clubId, {
         additions,
         updates,
         deletions: [...this.pendingDeletions],
@@ -298,14 +375,17 @@ export class SettingsSponsorsPage implements OnInit {
       this.pendingAdditions.clear();
       this.pendingUpdates.clear();
       this.pendingDeletions.clear();
+      this.pendingReorder.clear();
       this.orphanedImageUrls.clear();
+      this.newlyUploadedUrls.clear();
       this.markPendingChanged();
 
-      await this.loadSponsors();
+      this.sponsors.set(this.sortByTier(updatedList));
       this.toastService.show(this.translationService.instant('admin.settings.sponsors.saved'), 'success');
       this.navigationService.goBack();
-    } catch {
-      this.toastService.show(this.translationService.instant('admin.settings.sponsors.error.saveAll'), 'danger');
+    } catch (err: any) {
+      const message = err?.error?.message || this.translationService.instant('admin.settings.sponsors.error.saveAll');
+      this.toastService.show(message, 'danger');
     } finally {
       this.isSaving.set(false);
     }
@@ -321,7 +401,34 @@ export class SettingsSponsorsPage implements OnInit {
     this.orphanedImageUrls.clear();
   }
 
+  private async deleteNewlyUploadedImages(): Promise<void> {
+    const urls = [...this.newlyUploadedUrls].filter(Boolean);
+    if (urls.length > 0) {
+      try { await this.sponsorService.deleteImages(this.clubId, urls); } catch { }
+    }
+  }
+
   goBack(): void { this.navigationService.goBack(); }
+
+  onBackRequested(): void {
+    if (this.hasChanges()) {
+      this.confirmService.request().then(confirmed => {
+        if (confirmed) this.navigationService.goBack();
+      });
+    } else {
+      this.navigationService.goBack();
+    }
+  }
+
+  confirmLeave(): Observable<boolean> {
+    if (!this.hasChanges()) return of(true);
+    return from(this.confirmService.request().then(async confirmed => {
+      if (confirmed) {
+        try { await this.deleteNewlyUploadedImages(); } catch { }
+      }
+      return confirmed;
+    }));
+  }
 
   onToastDismiss(): void {
     this.toastService.hide();

@@ -2,6 +2,10 @@ import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 
+/** Sentinel meaning "a refresh is in flight; no result yet". Kept distinct
+ *  from null (which means "refresh failed") so waiters resolve in both cases. */
+const PENDING = Symbol('refresh-pending');
+
 /**
  * TokenService
  *
@@ -44,17 +48,23 @@ export class TokenService {
   // ─── Concurrent refresh coordination ─────────────────────────────────────
 
   private _isRefreshing = false;
-  private readonly _refreshSubject = new BehaviorSubject<string | null>(null);
+  // The subject distinguishes three states: PENDING (refresh in flight),
+  // a token string (success) and null (failure). Using a dedicated PENDING
+  // sentinel — rather than reusing null for "in flight" — guarantees that
+  // waiting requests are notified on FAILURE too (null), instead of hanging
+  // forever waiting for a value that never comes.
+  private readonly _refreshSubject =
+    new BehaviorSubject<string | null | typeof PENDING>(PENDING);
 
   get isRefreshing(): boolean {
     return this._isRefreshing;
   }
 
-  /** Mark that a refresh call has started; resets the subject to null to
-   *  make subsequent callers wait properly. */
+  /** Mark that a refresh call has started; resets the subject to PENDING so
+   *  subsequent callers wait until it resolves. */
   startRefresh(): void {
     this._isRefreshing = true;
-    this._refreshSubject.next(null);
+    this._refreshSubject.next(PENDING);
   }
 
   /** Notify all waiting requests that refresh has completed.
@@ -64,10 +74,11 @@ export class TokenService {
     this._refreshSubject.next(newToken);
   }
 
-  /** Observable that emits once when a pending refresh resolves. */
+  /** Observable that emits once when a pending refresh resolves — the new
+   *  token on success, or null on failure. Never emits the PENDING sentinel. */
   waitForRefresh$(): Observable<string | null> {
     return this._refreshSubject.pipe(
-      filter(token => token !== null),
+      filter((value): value is string | null => value !== PENDING),
       take(1)
     );
   }
