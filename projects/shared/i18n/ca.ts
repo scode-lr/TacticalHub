@@ -97,6 +97,12 @@ export const sharedTranslations = {
     emptyState: {
       title: 'Res per aquí encara',
       message: 'No hi ha notificacions per mostrar.'
+    },
+    confirmAlert: {
+      title: 'Canvis sense desar',
+      message: 'Tens canvis sense desar. Estàs segur que vols sortir?',
+      confirm: 'Sortir',
+      cancel: 'Quedar-se',
     }
   },
   fieldLabels: {

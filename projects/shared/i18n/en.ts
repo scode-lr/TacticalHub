@@ -97,6 +97,12 @@ export const sharedTranslations = {
     emptyState: {
       title: 'Nothing here yet',
       message: 'There are no notifications to show.'
+    },
+    confirmAlert: {
+      title: 'Unsaved changes',
+      message: 'You have unsaved changes. Are you sure you want to leave?',
+      confirm: 'Leave',
+      cancel: 'Stay',
     }
   },
   fieldLabels: {

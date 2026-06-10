@@ -1,5 +1,6 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable, of, from } from 'rxjs';
 import { IonIcon, IonSpinner, IonToast } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@core/services/i18n/translation.service';
@@ -15,6 +16,7 @@ import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
 import { addIcons } from 'ionicons';
 import { addOutline, walletOutline, arrowBackOutline, saveOutline } from 'ionicons/icons';
 import { ClubService } from '@services/club.service';
+import { ConfirmService } from '@services/confirm.service';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
 
 @Component({
@@ -30,6 +32,7 @@ export class SettingsSponsorsPage implements OnInit {
   private readonly translationService = inject(TranslationService);
   private readonly toastService = inject(ToastService);
   private readonly clubService = inject(ClubService);
+  private readonly confirmService = inject(ConfirmService);
 
   readonly sponsors = signal<Sponsor[]>([]);
   readonly loading = signal(true);
@@ -69,6 +72,17 @@ export class SettingsSponsorsPage implements OnInit {
        this.pendingUpdates.size > 0 ||
        this.pendingDeletions.size > 0 ||
        this.pendingReorder.size > 0);
+  });
+
+  readonly hasChanges = computed(() => {
+    console.log('Checking for changes:',this.isAdding() || this.expandedIndex() !== null || this.pendingAdditions.size > 0 || this.pendingUpdates.size > 0 || this.pendingDeletions.size > 0 || this.pendingReorder.size > 0);
+    this.pendingVersion();
+    return this.isAdding() ||
+           this.expandedIndex() !== null ||
+           this.pendingAdditions.size > 0 ||
+           this.pendingUpdates.size > 0 ||
+           this.pendingDeletions.size > 0 ||
+           this.pendingReorder.size > 0;
   });
 
   readonly groupedSponsors = computed(() => {
@@ -396,6 +410,27 @@ export class SettingsSponsorsPage implements OnInit {
   }
 
   goBack(): void { this.navigationService.goBack(); }
+
+  onBackRequested(): void {
+    if (this.hasChanges()) {
+      this.confirmService.request().then(confirmed => {
+        if (confirmed) this.navigationService.goBack();
+      });
+    } else {
+      this.navigationService.goBack();
+    }
+  }
+
+  confirmLeave(): Observable<boolean> {
+    console.log('Confirming leave with pending changes:', this.hasChanges());
+    if (!this.hasChanges()) return of(true);
+    return from(this.confirmService.request().then(confirmed => {
+      if (confirmed) {
+        this.deleteNewlyUploadedImages();
+      }
+      return confirmed;
+    }));
+  }
 
   onToastDismiss(): void {
     this.toastService.hide();
