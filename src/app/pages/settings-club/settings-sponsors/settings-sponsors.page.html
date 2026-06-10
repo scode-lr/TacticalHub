@@ -72,22 +72,23 @@
   <!-- Sponsor Cards (grouped by tier) -->
   @for (group of groupedSponsors(); track group.tier) {
   <h2 class="tier-group-header">{{ group.labelKey | translate }}</h2>
-  @for (item of group.items; track item.sponsor.id) {
-  <app-sponsor-card
-    [sponsor]="item.sponsor"
-    [index]="item.index"
-    [expanded]="expandedIndex() === item.index"
-    [isFirst]="item.isFirstInTier"
-    [isLast]="item.isLastInTier"
-    [isSaving]="isSaving()"
-    (expand)="toggleExpand($event)"
-    (moveUp)="moveUp($event)"
-    (moveDown)="moveDown($event)"
-    (delete)="deleteSponsor($event)"
-    (save)="onEditSave($event.index, $event.event)"
-    (cancel)="toggleExpand($event)"
-  />
-  } }
+    @for (item of group.items; track item.sponsor.id) {
+      <app-sponsor-card
+        [sponsor]="item.sponsor"
+        [index]="item.index"
+        [expanded]="expandedIndex() === item.index"
+        [isFirst]="item.isFirstInTier"
+        [isLast]="item.isLastInTier"
+        [isSaving]="isSaving()"
+        (expand)="toggleExpand($event)"
+        (moveUp)="moveUp($event)"
+        (moveDown)="moveDown($event)"
+        (delete)="deleteSponsor($event)"
+        (save)="onEditSave($event.index, $event.event)"
+        (cancel)="toggleExpand($event)"
+      />
+    } 
+  }
 
   <app-section-footer-actions
     [canCancel]="canCancel()"

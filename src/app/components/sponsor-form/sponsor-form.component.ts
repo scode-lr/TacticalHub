@@ -135,7 +135,7 @@ export class SponsorFormComponent implements OnInit {
   addInfo(): void {
     if (this.additionalInfo.length >= 10) return;
     this.additionalInfo.push(this.fb.group({
-      key: ['', [Validators.required]],
+      key: [SPONSOR_INFO_KEYS[0].value, [Validators.required]],
       value: ['', [Validators.required]]
     }));
   }

@@ -15,13 +15,14 @@ import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
 import { addIcons } from 'ionicons';
 import { addOutline, walletOutline, arrowBackOutline, saveOutline } from 'ionicons/icons';
 import { ClubService } from '@services/club.service';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 
 @Component({
   selector: 'app-settings-sponsors',
   templateUrl: './settings-sponsors.page.html',
   styleUrls: ['./settings-sponsors.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonSpinner, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent]
+  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent, BackButtonComponent]
 })
 export class SettingsSponsorsPage implements OnInit {
   private readonly sponsorService = inject(SponsorService);
