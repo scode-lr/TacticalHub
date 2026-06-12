@@ -155,7 +155,12 @@ export class LoadingService {
   }
 
   private redirectToSignIn(): void {
-    this.authService.signOut();
+    // Clear local state and go to sign-in WITHOUT calling the backend
+    // /auth/logout. A failure to load the profile here may be transient
+    // (network blip, 5xx); calling signOut() would expire the refresh-token
+    // cookie server-side and turn a recoverable error into a permanent logout.
+    // Real auth failures (401/403) are already handled by the auth interceptor.
+    this.authService.clearSessionLocally();
   }
 
   private isPrivateApp(): boolean {

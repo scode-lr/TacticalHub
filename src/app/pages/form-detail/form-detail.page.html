@@ -3,7 +3,7 @@
     <app-back-button [route]="backRoute()" />
     <h1 class="section-title">{{ pageTitle() | translate }}</h1>
   </div>
-
+  
   @if (loading()) {
     <div class="form-skeleton">
       <div class="skeleton-title"></div>
@@ -12,27 +12,27 @@
       <div class="skeleton-field"></div>
     </div>
   }
-
+  
   @if (!loading()) {
     @if (formDetail(); as detail) {
       @if (detail.description) {
         <p class="form-description">{{ detail.description }}</p>
       }
     }
-
+    
     <div class="submissions-section">
       <div class="submissions-header">
-        <h2 class="submissions-title">{{ 'member.forms.submission.title' | translate }}</h2>
+        <h2 class="submissions-title">{{ 'user.forms.submission.title' | translate }}</h2>
         <button type="button" class="btn-primary" (click)="onFillAgain()">
-          {{ 'member.forms.submission.fillAgain' | translate }}
+          {{ 'user.forms.submission.fillAgain' | translate }}
         </button>
       </div>
-
-      <div class="submissions-list">
-        @for (submission of mySubmissions(); track submission.id) {
-          <app-form-submission-card [submission]="submission" [formFields]="formFields()" (editRequested)="onEditRejected(submission)" />
-        }
-      </div>
+      
+        <div class="submissions-list">
+          @for (submission of mySubmissions(); track submission.id) {
+            <app-form-submission-card [submission]="submission" [formFields]="formFields()" (editRequested)="onEditRejected(submission)" />
+          }
+        </div>
     </div>
-  }
+    }
 </div>

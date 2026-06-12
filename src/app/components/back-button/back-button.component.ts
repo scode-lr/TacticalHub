@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { NavigationService } from '@services/navigation.service';
 import { addIcons } from 'ionicons';

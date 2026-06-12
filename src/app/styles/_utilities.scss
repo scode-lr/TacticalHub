@@ -158,6 +158,16 @@
   border-top-color: var(--ion-color-primary, #3880ff);
 }
 
+.content-max-width {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.content-narrow {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 .shadow-sm {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }

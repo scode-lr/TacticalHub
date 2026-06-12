@@ -1,120 +1,115 @@
-<div class="settings-header">
-  <app-user-header [showBackButton]="true" (backClick)="goBack()"></app-user-header>
-</div>
+<div class="page-container settings-page">
+  <div class="section-header-with-back-button">
+    <app-back-button />
+    <h1 class="section-title">{{ 'settings.title' | translate }}</h1>
+  </div>
 
-<ion-content>
-  <div class="page-container">
-    <div class="section-header">
-      <h1 class="section-title">{{ 'settings.title' | translate }}</h1>
-    </div>
+  <!-- Language -->
+  <div class="content-section">
+    <div class="section-content">
+      <div class="setting-group">
+        <label class="setting-label">{{ 'settings.language' | translate }}</label>
 
-    <!-- Language -->
-    <div class="content-section">
-      <div class="section-content">
-        <div class="setting-group">
-          <label class="setting-label">{{ 'settings.language' | translate }}</label>
-
-          <ion-select
-            class="language-select"
-            [value]="currentLanguage()"
-            (ionChange)="onLanguageChange($event)"
-            [placeholder]="'settings.selectLanguage' | translate">
-            @for (lang of supportedLanguages(); track lang.code) {
-              <ion-select-option [value]="lang.code">
-                {{ lang.name | translate }}
-              </ion-select-option>
-            }
-          </ion-select>
-        </div>
-      </div>
-    </div>
-
-    <!-- Security -->
-    <div class="content-section security-section">
-      <div class="section-content">
-        <h2 class="subsection-title">{{ 'settings.security' | translate }}</h2>
-        <p class="subsection-description">{{ 'settings.changePasswordDescription' | translate }}</p>
-
-        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
-          <!-- Current Password -->
-          <div class="setting-group">
-            <label class="setting-label">{{ 'settings.currentPassword' | translate }}</label>
-            <div class="password-input-wrapper">
-              <ion-input
-                [type]="showCurrentPassword() ? 'text' : 'password'"
-                formControlName="currentPassword"
-                [placeholder]="'settings.currentPasswordPlaceholder' | translate"
-                fill="outline"
-                class="settings-input"
-                [class.ion-invalid]="passwordForm.get('currentPassword')?.invalid && passwordFormSubmitted()">
-              </ion-input>
-              <button type="button" class="show-hide-btn" (click)="toggleCurrentPassword()">
-                <ion-icon [name]="showCurrentPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-              </button>
-            </div>
-            @if (currentPasswordError(); as error) {
-              <div class="field-error">
-                <ion-icon name="alert-circle"></ion-icon>
-                <span>{{ error }}</span>
-              </div>
-            }
-          </div>
-
-          <!-- New Password -->
-          <div class="setting-group">
-            <label class="setting-label">{{ 'settings.newPassword' | translate }}</label>
-            <div class="password-input-wrapper">
-              <ion-input
-                [type]="showNewPassword() ? 'text' : 'password'"
-                formControlName="newPassword"
-                [placeholder]="'settings.newPasswordPlaceholder' | translate"
-                fill="outline"
-                class="settings-input"
-                [class.ion-invalid]="passwordForm.get('newPassword')?.invalid && passwordFormSubmitted()">
-              </ion-input>
-              <button type="button" class="show-hide-btn" (click)="toggleNewPassword()">
-                <ion-icon [name]="showNewPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-              </button>
-            </div>
-
-            @if (passwordForm.get('newPassword')?.value) {
-              <div class="strength-bar" [attr.data-strength]="strengthLevel()">
-                @for (i of [1, 2, 3, 4]; track i) {
-                  <div class="strength-segment" [class.active]="strengthLevel() >= i"></div>
-                }
-              </div>
-              @if (strengthLabel()) {
-                <span class="strength-label" [attr.data-strength]="strengthLevel()">{{ strengthLabel() }}</span>
-              }
-            }
-
-            @if (newPasswordError(); as error) {
-              <div class="field-error">
-                <ion-icon name="alert-circle"></ion-icon>
-                <span>{{ error }}</span>
-              </div>
-            }
-          </div>
-
-          <!-- Feedback -->
-          @if (passwordFeedback(); as fb) {
-            <div class="feedback-line" [class.success]="fb.success" [class.danger]="!fb.success">
-              <ion-icon [name]="fb.success ? 'checkmark-circle' : 'alert-circle'"></ion-icon>
-              <span>{{ fb.message }}</span>
-            </div>
+        <ion-select
+          class="language-select"
+          [value]="currentLanguage()"
+          (ionChange)="onLanguageChange($event)"
+          [placeholder]="'settings.selectLanguage' | translate">
+          @for (lang of supportedLanguages(); track lang.code) {
+            <ion-select-option [value]="lang.code">
+              {{ lang.name | translate }}
+            </ion-select-option>
           }
-
-          <div class="form-actions">
-            <button type="submit" class="btn-primary" [disabled]="isLoading()">
-              @if (isLoading()) {
-                <ion-spinner name="dots"></ion-spinner>
-              } @else {
-                {{ 'settings.updatePassword' | translate }}
-              }
-            </button>
-          </div>
-        </form>
+        </ion-select>
       </div>
     </div>
   </div>
-</ion-content>
+
+  <!-- Security -->
+  <div class="content-section security-section">
+    <div class="section-content">
+      <h2 class="subsection-title">{{ 'settings.security' | translate }}</h2>
+      <p class="subsection-description">{{ 'settings.changePasswordDescription' | translate }}</p>
+
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
+        <!-- Current Password -->
+        <div class="setting-group">
+          <label class="setting-label">{{ 'settings.currentPassword' | translate }}</label>
+          <div class="password-input-wrapper">
+            <ion-input
+              [type]="showCurrentPassword() ? 'text' : 'password'"
+              formControlName="currentPassword"
+              [placeholder]="'settings.currentPasswordPlaceholder' | translate"
+              fill="outline"
+              class="settings-input"
+              [class.ion-invalid]="passwordForm.get('currentPassword')?.invalid && passwordFormSubmitted()">
+            </ion-input>
+            <button type="button" class="show-hide-btn" (click)="toggleCurrentPassword()">
+              <ion-icon [name]="showCurrentPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </button>
+          </div>
+          @if (currentPasswordError(); as error) {
+            <div class="field-error">
+              <ion-icon name="alert-circle"></ion-icon>
+              <span>{{ error }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- New Password -->
+        <div class="setting-group">
+          <label class="setting-label">{{ 'settings.newPassword' | translate }}</label>
+          <div class="password-input-wrapper">
+            <ion-input
+              [type]="showNewPassword() ? 'text' : 'password'"
+              formControlName="newPassword"
+              [placeholder]="'settings.newPasswordPlaceholder' | translate"
+              fill="outline"
+              class="settings-input"
+              [class.ion-invalid]="passwordForm.get('newPassword')?.invalid && passwordFormSubmitted()">
+            </ion-input>
+            <button type="button" class="show-hide-btn" (click)="toggleNewPassword()">
+              <ion-icon [name]="showNewPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </button>
+          </div>
+
+          @if (passwordForm.get('newPassword')?.value) {
+            <div class="strength-bar" [attr.data-strength]="strengthLevel()">
+              @for (i of [1, 2, 3, 4]; track i) {
+                <div class="strength-segment" [class.active]="strengthLevel() >= i"></div>
+              }
+            </div>
+            @if (strengthLabel()) {
+              <span class="strength-label" [attr.data-strength]="strengthLevel()">{{ strengthLabel() }}</span>
+            }
+          }
+
+          @if (newPasswordError(); as error) {
+            <div class="field-error">
+              <ion-icon name="alert-circle"></ion-icon>
+              <span>{{ error }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Feedback -->
+        @if (passwordFeedback(); as fb) {
+          <div class="feedback-line" [class.success]="fb.success" [class.danger]="!fb.success">
+            <ion-icon [name]="fb.success ? 'checkmark-circle' : 'alert-circle'"></ion-icon>
+            <span>{{ fb.message }}</span>
+          </div>
+        }
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="isLoading()">
+            @if (isLoading()) {
+              <ion-spinner name="dots"></ion-spinner>
+            } @else {
+              {{ 'settings.updatePassword' | translate }}
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

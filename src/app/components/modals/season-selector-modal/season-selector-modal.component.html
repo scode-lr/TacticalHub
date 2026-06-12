@@ -4,22 +4,40 @@
   [breakpoints]="isMobile() ? [0, 1] : undefined"
   [initialBreakpoint]="isMobile() ? 1 : undefined"
   [cssClass]="isMobile() ? 'season-modal-mobile' : 'season-modal-web'"
-  class="season-selector-modal">
+  class="season-selector-modal"
+>
   <ng-template>
     <div class="modal-container">
       <div class="modal-header">
         <div class="header-content">
           <div class="header-icon-wrap">
-            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M2 8h16" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M6 2v3M14 2v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="7" cy="12" r="1" fill="currentColor"/>
-              <circle cx="10" cy="12" r="1" fill="currentColor"/>
-              <circle cx="13" cy="12" r="1" fill="currentColor"/>
+            <svg
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="2"
+                y="4"
+                width="16"
+                height="14"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path d="M2 8h16" stroke="currentColor" stroke-width="1.5" />
+              <path
+                d="M6 2v3M14 2v3"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <circle cx="7" cy="12" r="1" fill="currentColor" />
+              <circle cx="10" cy="12" r="1" fill="currentColor" />
+              <circle cx="13" cy="12" r="1" fill="currentColor" />
             </svg>
           </div>
-          <h2 class="modal-title">{{ 'common.selectSeason' | translate }}</h2>
+          <h2 class="modal-title">{{ "common.selectSeason" | translate }}</h2>
         </div>
         <button class="close-button" (click)="closeModal()">
           <ion-icon name="close-outline"></ion-icon>
@@ -31,7 +49,8 @@
           [(ngModel)]="currentValue"
           [checkmark]="true"
           [highlightOnSelect]="true"
-          styleClass="season-listbox" />
+          class="season-listbox"
+        />
       </div>
     </div>
   </ng-template>

@@ -152,8 +152,8 @@ export class FormDetailSubmissionPage implements OnInit {
       }
 
       const successKey = this.isEditing()
-        ? 'member.action.form.success.resubmitMessage'
-        : 'member.action.form.success.submitMessage';
+        ? 'user.action.form.success.resubmitMessage'
+        : 'user.action.form.success.submitMessage';
       const toast = await this.toastController.create({
         message: this.translationService.instant(successKey),
         duration: 3000,
@@ -165,7 +165,7 @@ export class FormDetailSubmissionPage implements OnInit {
       this.goToFormDetail();
     } catch {
       const toast = await this.toastController.create({
-        message: this.translationService.instant('member.action.form.errors.submitError'),
+        message: this.translationService.instant('user.action.form.errors.submitError'),
         duration: 3000,
         position: 'top',
         color: 'danger',
@@ -177,17 +177,20 @@ export class FormDetailSubmissionPage implements OnInit {
     }
   }
 
-  onFormCancel(): void {
-    this.goToFormDetail();
-  }
-
   pageTitle(): string {
     return this.formDetail()?.name ?? '';
   }
 
   backRoute(): string {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/forms/${this.formId}`;
+    if((this.formDetail()?.submissionsCount ?? 0) > 0){
+      return `/app/${roleType}/${roleId}/forms/${this.formId}`;
+    }
+    return `/app/${roleType}/${roleId}/forms`;
+  }
+
+  cancelSubmission(): void {
+    this.navigationService.navigateTo([this.backRoute()]);
   }
 
   private goToFormDetail(): void {

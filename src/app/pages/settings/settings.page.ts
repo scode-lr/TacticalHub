@@ -1,14 +1,14 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonSelect, IonSelectOption, IonContent, IonIcon, IonInput, IonSpinner } from '@ionic/angular/standalone';
+import { IonSelect, IonSelectOption, IonIcon, IonInput, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOutline, eyeOffOutline, alertCircle, checkmarkCircle } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { AuthService } from '@services/auth.service';
-import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 
 @Component({
   selector: 'app-settings',
@@ -18,14 +18,13 @@ import { UserHeaderComponent } from '@components/user-header/user-header.compone
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonContent,
     IonSelect,
     IonSelectOption,
     IonIcon,
     IonInput,
     IonSpinner,
     TranslatePipe,
-    UserHeaderComponent,
+    BackButtonComponent,
   ]
 })
 export class SettingsPage implements OnInit {

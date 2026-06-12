@@ -1,10 +1,10 @@
 <div class="comments-section">
   <h2 class="comments-title">
-    {{ 'member.news.comments' | translate }} ({{ commentCount() }})
+    {{ 'user.news.comments' | translate }} ({{ commentCount() }})
   </h2>
   
   @if (comments().length === 0) {
-    <p class="no-comments">{{ 'member.news.noComments' | translate }}</p>
+    <p class="no-comments">{{ 'user.news.noComments' | translate }}</p>
   } @else {
     <div class="comments-list">
       @for (comment of comments(); track comment.id) {

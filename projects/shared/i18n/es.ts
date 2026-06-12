@@ -97,6 +97,12 @@ export const sharedTranslations = {
     emptyState: {
       title: 'Nada por aquí todavía',
       message: 'No hay notificaciones que mostrar.'
+    },
+    confirmAlert: {
+      title: 'Cambios sin guardar',
+      message: 'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?',
+      confirm: 'Salir',
+      cancel: 'Quedarse',
     }
   },
   fieldLabels: {
@@ -247,6 +253,7 @@ export const sharedTranslations = {
       matches: 'Partidos',
       users: 'Usuarios',
       forms: 'Formularios',
+      settings: 'Ajustes',
       settingsForms: 'Configuración de formularios'
     },
     description: {
@@ -261,7 +268,106 @@ export const sharedTranslations = {
       matches: 'Gestionar calendarios de partidos',
       users: 'Gestión de usuarios y permisos',
       forms: 'Gestionar formularios',
+      settings: 'Gestionar ajustes del club',
       settingsForms: 'Configurar ajustes de formularios'
+    },
+    settings: {
+      title: 'Ajustes del Club',
+      information: {
+        title: 'Información del Club',
+        description: 'Gestiona las secciones de información visibles para los miembros',
+        empty: 'Sin secciones de información',
+        emptyDescription: 'Añade secciones para mostrar información del club a los miembros.',
+        add: 'Añadir Sección',
+        edit: 'Editar Sección',
+        untitled: 'Sección sin título',
+        moveUp: 'Mover sección arriba',
+        moveDown: 'Mover sección abajo',
+        preview: 'Vista previa',
+        previewNotice: 'Esta es una vista previa de cómo verán las secciones los miembros del club.',
+        previewEmpty: 'Nada que previsualizar',
+        previewEmptyDescription: 'Añade secciones primero para ver la vista previa.',
+        saveSuccess: 'Secciones guardadas correctamente',
+        saveError: 'No se pudieron guardar las secciones. Inténtalo de nuevo.',
+        formInvalid: 'Corrige los errores en las secciones antes de guardar.',
+        form: {
+          title: 'Título',
+          content: 'Contenido',
+          icon: 'Icono',
+          titlePlaceholder: 'Título de la sección',
+          contentPlaceholder: 'Contenido de la sección...',
+          iconPlaceholder: 'Elegir un icono...',
+          titleRequired: 'El título es obligatorio.',
+          contentRequired: 'El contenido es obligatorio.'
+        }
+      },
+      forms: {
+        title: 'Configuración de Formularios',
+        description: 'Crear y gestionar formularios del club'
+      },
+      sponsors: {
+        title: 'Patrocinadores y colaboradores',
+        description: 'Gestionar logos y niveles de patrocinadores',
+        preview: 'Vista previa',
+        previewNotice: 'Así es como los patrocinadores aparecerán en el club.',
+        previewEmpty: 'No hay patrocinadores para mostrar',
+        saved: 'Patrocinadores guardados correctamente',
+        canceled: 'Cambios descartados',
+        empty: 'Sin patrocinadores',
+        emptyDescription: 'Añade patrocinadores para mostrarlos a los miembros del club.',
+        add: 'Añadir patrocinador',
+        edit: 'Editar patrocinador',
+        newSponsor: 'Nuevo patrocinador',
+        created: 'Patrocinador creado correctamente',
+        updated: 'Patrocinador actualizado correctamente',
+        deleted: 'Patrocinador eliminado',
+        tier: {
+          sponsor: 'Patrocinadores',
+          collaborator: 'Colaboradores'
+        },
+        form: {
+          name: 'Nombre',
+          namePlaceholder: 'Nombre del patrocinador',
+          tier: 'Nivel',
+          selectImage: 'Seleccionar imagen',
+          replaceImage: 'Reemplazar imagen',
+          imageHint: 'PNG, JPEG, WebP o SVG',
+          title: 'Título',
+          titlePlaceholder: 'Título opcional',
+          description: 'Descripción',
+          descriptionPlaceholder: 'Descripción opcional',
+          additionalInfo: 'Información adicional',
+          addInfo: 'Añadir info',
+          selectKey: 'Seleccionar clave',
+          valuePlaceholder: 'Valor o URL'
+        },
+        infoKeys: {
+          website: 'Sitio web',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Correo',
+          mobile: 'Móvil'
+        },
+        error: {
+          load: 'No se pudieron cargar los patrocinadores.',
+          create: 'No se pudo crear el patrocinador.',
+          update: 'No se pudo actualizar el patrocinador.',
+          delete: 'No se pudo eliminar el patrocinador.',
+          reorder: 'No se pudo reordenar los patrocinadores.',
+          imageSize: 'La imagen debe ser menor de 2 MB.',
+          imageType: 'Formato inválido. Usa PNG, JPEG, WebP o SVG.',
+          imageRequired: 'Selecciona una imagen.',
+          imageUpload: 'No se pudo subir la imagen. Inténtalo de nuevo.',
+          imageUploadFailed: 'Fallo al subir la imagen. Patrocinador eliminado. Intenta añadirlo de nuevo.',
+          imageUploadFailedKept: 'Fallo al subir la imagen. Se ha conservado la imagen anterior.',
+          saveAll: 'No se pudieron guardar los patrocinadores. Inténtalo de nuevo.'
+        }
+      }
     },
     parameters: {
       title: 'Parámetros',
@@ -514,7 +620,7 @@ export const sharedTranslations = {
     reviewComment: 'Comentario',
     reviewCommentPlaceholder: 'Añade un comentario (opcional)'
   },
-  member: {
+  user: {
     title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',
     menu: {
@@ -525,7 +631,7 @@ export const sharedTranslations = {
       information: 'Información',
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
-      partners: 'Socios',
+      sponsors: 'Patrocinadores y colaboradores',
       forms: 'Formularios',
       more: 'Más'
     },
@@ -537,7 +643,7 @@ export const sharedTranslations = {
       information: 'Información y recursos del club',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
-      partners: 'Nuestros socios y patrocinadores del club',
+      sponsors: 'Nuestros colaboradores y patrocinadores del club',
       forms: 'Rellena los formularios del club'
     },
     home: {
@@ -660,9 +766,11 @@ export const sharedTranslations = {
       upcomingMatches: 'Próximos Partidos',
       noRelatedMatches: 'No hay partidos relacionados'
     },
-    partners: {
-      empty: 'No hay socios listados',
-      emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
+    sponsors: {
+      title: 'Patrocinadores y colaboradores',
+      subtitle: 'Los que hacen posible el club',
+      empty: 'No hay colaboradores listados',
+      emptyDescription: 'Nuestros colaboradores y patrocinadores del club se listarán aquí.'
     }
   },
   guest: {
@@ -673,18 +781,18 @@ export const sharedTranslations = {
       news: 'Noticias',
       information: 'Información',
       matches: 'Partidos',
-      partners: 'Socios'
+      sponsors: 'Patrocinadores y colaboradores'
     },
     description: {
       home: 'Bienvenido al portal público del club',
       news: 'Últimas noticias y anuncios',
       information: 'Información del club',
       matches: 'Ver próximos partidos',
-      partners: 'Socios y patrocinadores del club'
+      sponsors: 'Colaboradores y patrocinadores del club'
     }
   },
   roles: {
-    member: 'Miembro',
+    member: 'Usuario',
     admin: 'Administrador',
     coach: 'Entrenador',
     guest: 'Invitado'

@@ -5,8 +5,8 @@
 }
 
 .form-card {
-  background: var(--background-primary, #ffffff);
-  border: 1px solid var(--border-light, #e5e7eb);
+  background: var(--ion-background-color, #ffffff);
+  border: 1px solid var(--ion-color-light-shade, #e5e7eb);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -137,23 +137,6 @@
 .required-mark {
   color: var(--ion-color-danger, #eb445a);
   margin-left: 0.125rem;
-}
-
-.form-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.75rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column-reverse;
-
-    .btn-primary,
-    .btn-secondary {
-      width: 100%;
-      justify-content: center;
-    }
-  }
 }
 
 .btn-primary,

@@ -97,6 +97,12 @@ export const sharedTranslations = {
     emptyState: {
       title: 'Res per aquí encara',
       message: 'No hi ha notificacions per mostrar.'
+    },
+    confirmAlert: {
+      title: 'Canvis sense desar',
+      message: 'Tens canvis sense desar. Estàs segur que vols sortir?',
+      confirm: 'Sortir',
+      cancel: 'Quedar-se',
     }
   },
   fieldLabels: {
@@ -247,6 +253,7 @@ export const sharedTranslations = {
       matches: 'Partits',
       users: 'Usuaris',
       forms: 'Formularis',
+      settings: 'Configuració',
       settingsForms: 'Configuració de formularis'
     },
     description: {
@@ -261,7 +268,106 @@ export const sharedTranslations = {
       matches: 'Gestionar calendaris de partits',
       users: 'Gestió d\'usuaris i permisos',
       forms: 'Gestionar formularis',
+      settings: 'Gestionar configuració del club',
       settingsForms: 'Configurar ajustos de formularis'
+    },
+    settings: {
+      title: 'Configuració del Club',
+      information: {
+        title: 'Informació del Club',
+        description: 'Gestiona les seccions d\'informació visibles per als membres',
+        empty: 'Sense seccions d\'informació',
+        emptyDescription: 'Afegeix seccions per mostrar informació del club als membres.',
+        add: 'Afegir Secció',
+        edit: 'Editar Secció',
+        untitled: 'Secció sense títol',
+        moveUp: 'Moure secció amunt',
+        moveDown: 'Moure secció avall',
+        preview: 'Vista prèvia',
+        previewNotice: 'Aquesta és una vista prèvia de com veuran les seccions els membres del club.',
+        previewEmpty: 'Res per previsualitzar',
+        previewEmptyDescription: 'Afegeix seccions primer per veure la vista prèvia.',
+        saveSuccess: 'Seccions desades correctament',
+        saveError: 'No s\'han pogut desar les seccions. Torna-ho a intentar.',
+        formInvalid: 'Corregeix els errors de les seccions abans de desar.',
+        form: {
+          title: 'Títol',
+          content: 'Contingut',
+          icon: 'Icona',
+          titlePlaceholder: 'Títol de la secció',
+          contentPlaceholder: 'Contingut de la secció...',
+          iconPlaceholder: 'Tria un icona...',
+          titleRequired: 'El títol és obligatori.',
+          contentRequired: 'El contingut és obligatori.'
+        }
+      },
+      forms: {
+        title: 'Configuració de Formularis',
+        description: 'Crear i gestionar formularis del club'
+      },
+      sponsors: {
+        title: 'Patrocinadors i col·laboradors',
+        description: 'Gestionar logos i nivells de patrocinadors',
+        preview: 'Vista prèvia',
+        previewNotice: 'Així és com els patrocinadors apareixeran al club.',
+        previewEmpty: 'No hi ha patrocinadors per mostrar',
+        saved: 'Patrocinadors guardats correctament',
+        canceled: 'Canvis descartats',
+        empty: 'Sense patrocinadors',
+        emptyDescription: 'Afegeix patrocinadors per mostrar-los als membres del club.',
+        add: 'Afegir patrocinador',
+        edit: 'Editar patrocinador',
+        newSponsor: 'Nou patrocinador',
+        created: 'Patrocinador creat correctament',
+        updated: 'Patrocinador actualitzat correctament',
+        deleted: 'Patrocinador eliminat',
+        tier: {
+          sponsor: 'Patrocinadors',
+          collaborator: 'Col·laboradors'
+        },
+        form: {
+          name: 'Nom',
+          namePlaceholder: 'Nom del patrocinador',
+          tier: 'Nivell',
+          selectImage: 'Seleccionar imatge',
+          replaceImage: 'Reemplaçar imatge',
+          imageHint: 'PNG, JPEG, WebP o SVG',
+          title: 'Títol',
+          titlePlaceholder: 'Títol opcional',
+          description: 'Descripció',
+          descriptionPlaceholder: 'Descripció opcional',
+          additionalInfo: 'Informació addicional',
+          addInfo: 'Afegir info',
+          selectKey: 'Seleccionar clau',
+          valuePlaceholder: 'Valor o URL'
+        },
+        infoKeys: {
+          website: 'Lloc web',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Correu',
+          mobile: 'Mòbil'
+        },
+        error: {
+          load: 'No s\'han pogut carregar els patrocinadors.',
+          create: 'No s\'ha pogut crear el patrocinador.',
+          update: 'No s\'ha pogut actualitzar el patrocinador.',
+          delete: 'No s\'ha pogut eliminar el patrocinador.',
+          reorder: 'No s\'han pogut reordenar els patrocinadors.',
+          imageSize: 'La imatge ha de ser menor de 2 MB.',
+          imageType: 'Format invàlid. Utilitza PNG, JPEG, WebP o SVG.',
+          imageRequired: 'Selecciona una imatge.',
+          imageUpload: 'No s\'ha pogut pujar la imatge. Torna-ho a intentar.',
+          imageUploadFailed: 'Error al pujar la imatge. Patrocinador eliminat. Torna a intentar afegir-lo.',
+          imageUploadFailedKept: 'Error al pujar la imatge. S\'ha conservat la imatge anterior.',
+          saveAll: 'No s\'han pogut guardar els patrocinadors. Torna-ho a intentar.'
+        }
+      }
     },
     parameters: {
       title: 'Paràmetres',
@@ -514,7 +620,7 @@ export const sharedTranslations = {
     reviewComment: 'Comentari',
     reviewCommentPlaceholder: 'Afegeix un comentari (opcional)'
   },
-  member: {
+  user: {
     title: 'Portal de l\'observador',
     subtitle: 'Accedeix a informació i serveis del club',
     menu: {
@@ -525,7 +631,7 @@ export const sharedTranslations = {
       information: 'Informació',
       proposals: 'Propostes i queixes',
       matches: 'Partits',
-      partners: 'Socis',
+      sponsors: 'Patrocinadors i col·laboradors',
       forms: 'Formularis',
       more: 'Més'
     },
@@ -537,7 +643,7 @@ export const sharedTranslations = {
       information: 'Informació i recursos del club',
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
-      partners: 'Els nostres socis i patrocinadors del club',
+      sponsors: 'Els nostres col·laboradors i patrocinadors del club',
       forms: 'Omple els formularis del club'
     },
     home: {
@@ -719,9 +825,11 @@ export const sharedTranslations = {
       upcomingMatches: 'Pròxims Partits',
       noRelatedMatches: 'No hi ha partits relacionats'
     },
-    partners: {
-      empty: 'No hi ha socis llistats',
-      emptyDescription: 'Els nostres socis i patrocinadors del club es llistaran aquí.'
+    sponsors: {
+      title: 'Patrocinadors i col·laboradors',
+      subtitle: 'Els qui fan possible el club',
+      empty: 'No hi ha col·laboradors llistats',
+      emptyDescription: 'Els nostres col·laboradors i patrocinadors del club es llistaran aquí.'
     }
   },
   guest: {
@@ -732,18 +840,18 @@ export const sharedTranslations = {
       news: 'Notícies',
       information: 'Informació',
       matches: 'Partits',
-      partners: 'Socis'
+      sponsors: 'Patrocinadors i col·laboradors'
     },
     description: {
       home: 'Benvingut al portal públic del club',
       news: 'Últimes notícies i anuncis',
       information: 'Informació del club',
       matches: 'Veure pròxims partits',
-      partners: 'Socis i patrocinadors del club'
+      sponsors: 'Socis i patrocinadors del club'
     }
   },
   roles: {
-    member: 'Membre',
+    member: 'Usuari',
     admin: 'Administrador',
     coach: 'Entrenador',
     guest: 'Convidat'

@@ -41,6 +41,7 @@
                     <span class="required-mark">*</span>
                   </label>
                   <input
+                    pInputText
                     class="field-input"
                     [id]="'flabel-' + i"
                     type="text"
@@ -49,21 +50,23 @@
                     [class.ng-dirty]="fieldHasError(i, 'label')"
                     formControlName="label"
                     [placeholder]="'admin.settingsForms.formFields.label' | translate"
+                    pSize="small"
                   />
                 </div>
                 <div class="field-mini-group field-mini-group--narrow">
                   <label class="field-mini-label" [for]="'ftype-' + i">
                     {{ 'admin.settingsForms.formFields.type' | translate }}
                   </label>
-                  <select
-                    class="field-select"
-                    [id]="'ftype-' + i"
+                  <p-select
+                    [inputId]="'ftype-' + i"
                     formControlName="type"
-                  >
-                    @for (item of fieldTypeItems; track item.value) {
-                      <option [value]="item.value">{{ item.label }}</option>
-                    }
-                  </select>
+                    [options]="fieldTypeItems"
+                    optionLabel="label"
+                    optionValue="value"
+                    [fluid]="true"
+                    size="small"
+                    appendTo="body"
+                  />
                 </div>
               </div>
               <div class="field-row">
@@ -72,6 +75,7 @@
                     {{ 'admin.settingsForms.formFields.description' | translate }}
                   </label>
                   <textarea
+                    pInputTextarea
                     class="field-input field-textarea"
                     [id]="'fdesc-' + i"
                     rows="3"
@@ -87,10 +91,7 @@
                 </div>
                 <div class="field-mini-group field-mini-group--toggle">
                   <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
-                  <label class="toggle-switch">
-                    <input type="checkbox" formControlName="required" />
-                    <span class="toggle-slider"></span>
-                  </label>
+                  <p-toggleswitch formControlName="required" />
                 </div>
               </div>
             </div>
@@ -104,11 +105,13 @@
                 {{ 'admin.settingsForms.formFields.length' | translate }}
               </label>
               <input
+                pInputText
                 class="field-input field-input--narrow"
                 [id]="'flength-' + i"
                 type="number"
                 min="1"
                 formControlName="length"
+                pSize="small"
               />
             </div>
           }
@@ -128,11 +131,13 @@
                 <div class="option-row">
                   <span class="option-index">{{ j + 1 }}</span>
                   <input
+                    pInputText
                     class="field-input"
                     maxlength="100"
                     type="text"
                     [formControl]="$any(optCtrl)"
                     [placeholder]="'admin.settingsForms.formFields.optionPlaceholder' | translate"
+                    pSize="small"
                   />
                   <button type="button" class="btn-remove-option" (click)="removeOption(i, j)" [attr.aria-label]="'common.remove' | translate">
                     <ion-icon name="close-outline"></ion-icon>

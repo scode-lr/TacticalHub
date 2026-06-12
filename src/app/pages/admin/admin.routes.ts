@@ -65,20 +65,25 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
       },
       {
-        path: 'forms',
-        loadComponent: () => import('../forms/admin-forms-list/admin-forms-list.page').then(m => m.AdminFormsListPage)
-      },
-      {
-        path: 'forms/:formId',
-        loadComponent: () => import('../forms/admin-form-detail/admin-form-detail.page').then(m => m.AdminFormDetailPage)
-      },
-      {
         path: 'forms-submissions',
         loadComponent: () => import('../forms-submissions/forms-submissions.page').then(m => m.FormsSubmissionsPage)
       },
       {
         path: 'forms-submissions/:idSubmision',
         loadComponent: () => import('../forms-submissions/forms-submission-detail/forms-submission-detail.page').then(m => m.FormsSubmissionDetailPage)
+      },
+      {
+        path: 'settings-club',
+        loadComponent: () => import('../settings-club/settings-club.page').then(m => m.SettingsClubPage)
+      },
+      {
+        path: 'settings-club/information',
+        loadComponent: () => import('../settings-club/settings-information/settings-information.page').then(m => m.SettingsInformationPage)
+      },
+      {
+        path: 'settings-club/sponsors',
+        loadComponent: () => import('../settings-club/settings-sponsors/settings-sponsors.page').then(m => m.SettingsSponsorsPage),
+        canDeactivate: [(comp: any) => comp.confirmLeave()]
       },
       {
         path: 'settings-forms',

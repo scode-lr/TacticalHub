@@ -1,0 +1,123 @@
+<div class="page-container">
+  <!-- Section Header -->
+  <div class="section-header">
+    <div class="header-content">
+      <div class="section-header-with-back-button">
+        <app-back-button />
+        <h1 class="section-title">
+          {{ 'admin.settings.sponsors.title' | translate }}
+        </h1>
+      </div>
+      <p class="section-subtitle">
+        {{ 'admin.settings.sponsors.description' | translate }}
+      </p>
+    </div>
+    @if (!loading() && sponsors().length > 0) {
+    <button
+      class="btn-add"
+      (click)="startAdding()"
+      [disabled]="isSaving() || isAdding()"
+    >
+      <ion-icon name="add-outline"></ion-icon>
+      <span>{{ 'admin.settings.sponsors.add' | translate }}</span>
+    </button>
+    }
+  </div>
+
+  <!-- Loading -->
+  @if (loading()) {
+  <div class="skeleton-list">
+    @for (i of [1, 2, 3]; track i) {
+    <div class="skeleton-item">
+      <div class="skeleton-reorder">
+        <div class="skeleton-btn"></div>
+        <div class="skeleton-btn"></div>
+      </div>
+      <div class="skeleton-thumb"></div>
+      <div class="skeleton-text">
+        <div class="skeleton-line skeleton-name"></div>
+        <div class="skeleton-line skeleton-tier"></div>
+      </div>
+      <div class="skeleton-actions">
+        <div class="skeleton-btn"></div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Add Form -->
+  @if (isAdding()) {
+  <app-sponsor-card
+    [addMode]="true"
+    [isSaving]="isSaving()"
+    (directSave)="onAddSave($event)"
+    (directCancel)="cancelAdding()"
+  />
+  }
+  <!-- Empty State -->
+  @if (groupedSponsors() === null || groupedSponsors().length === 0 && !isAdding()) {
+  <app-empty-state
+    icon="wallet-outline"
+    [titleKey]="'admin.settings.sponsors.empty'"
+    [messageKey]="'admin.settings.sponsors.emptyDescription'"
+    [actionLabelKey]="'admin.settings.sponsors.add'"
+    actionIcon="add-outline"
+    (actionClick)="startAdding()"
+  />
+  }
+
+  <!-- Sponsor Cards (grouped by tier) -->
+  @for (group of groupedSponsors(); track group.tier) {
+  <h2 class="tier-group-header">{{ group.labelKey | translate }}</h2>
+    @for (item of group.items; track item.sponsor.id) {
+      <app-sponsor-card
+        [sponsor]="item.sponsor"
+        [index]="item.index"
+        [expanded]="expandedIndex() === item.index"
+        [isFirst]="item.isFirstInTier"
+        [isLast]="item.isLastInTier"
+        [isSaving]="isSaving()"
+        (expand)="toggleExpand($event)"
+        (moveUp)="moveUp($event)"
+        (moveDown)="moveDown($event)"
+        (delete)="deleteSponsor($event)"
+        (save)="onEditSave($event.index, $event.event)"
+        (cancel)="toggleExpand($event)"
+      />
+    } 
+  }
+
+  <app-section-footer-actions
+    [canCancel]="canCancel()"
+    [canPreview]="sponsors().length > 0"
+    [canSave]="canSave()"
+    [previewLabel]="'admin.settings.sponsors.preview'"
+    (cancelAction)="cancelAll()"
+    (previewAction)="togglePreview()"
+    (saveAction)="saveAll()"
+  />
+</div>
+
+<!-- Toast -->
+<ion-toast
+  [isOpen]="showToast()"
+  [message]="toastMessage()"
+  [color]="toastColor()"
+  duration="3000"
+  position="top"
+  (didDismiss)="onToastDismiss()"
+>
+</ion-toast>
+
+<!-- Sponsors Preview Modal -->
+<app-preview-modal
+  [isOpen]="previewOpen()"
+  [title]="'admin.settings.sponsors.preview'"
+  [notice]="'admin.settings.sponsors.previewNotice'"
+  [emptyMessage]="'admin.settings.sponsors.previewEmpty'"
+  [isEmpty]="previewSponsors().length === 0"
+  (didDismiss)="previewOpen.set(false)"
+>
+  <app-sponsors-display [sponsors]="previewSponsors()" />
+</app-preview-modal>

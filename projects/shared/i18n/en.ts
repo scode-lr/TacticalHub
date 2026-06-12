@@ -97,6 +97,12 @@ export const sharedTranslations = {
     emptyState: {
       title: 'Nothing here yet',
       message: 'There are no notifications to show.'
+    },
+    confirmAlert: {
+      title: 'Unsaved changes',
+      message: 'You have unsaved changes. Are you sure you want to leave?',
+      confirm: 'Leave',
+      cancel: 'Stay',
     }
   },
   fieldLabels: {
@@ -249,6 +255,7 @@ export const sharedTranslations = {
       matches: 'Matches',
       users: 'Users',
       forms: 'Forms',
+      settings: 'Settings',
       settingsForms: 'Form Settings'
     },
     description: {
@@ -263,7 +270,106 @@ export const sharedTranslations = {
       matches: 'Manage match schedules',
       users: 'User management and permissions',
       forms: 'Manage forms',
+      settings: 'Manage club settings',
       settingsForms: 'Configure form settings'
+    },
+    settings: {
+      title: 'Club Settings',
+      information: {
+        title: 'Club Information',
+        description: 'Manage information sections visible to club members',
+        empty: 'No information sections',
+        emptyDescription: 'Add sections to display club information to members.',
+        add: 'Add Section',
+        edit: 'Edit Section',
+        untitled: 'Untitled section',
+        moveUp: 'Move section up',
+        moveDown: 'Move section down',
+        preview: 'Preview',
+        previewNotice: 'This is a preview of how the sections will look to club members.',
+        previewEmpty: 'Nothing to preview',
+        previewEmptyDescription: 'Add sections first to see the preview.',
+        saveSuccess: 'Sections saved successfully',
+        saveError: 'Could not save sections. Please try again.',
+        formInvalid: 'Please fix the errors in the sections before saving.',
+        form: {
+          title: 'Title',
+          content: 'Content',
+          icon: 'Icon',
+          titlePlaceholder: 'Section title',
+          contentPlaceholder: 'Section content...',
+          iconPlaceholder: 'Choose an icon...',
+          titleRequired: 'Title is required.',
+          contentRequired: 'Content is required.'
+        }
+      },
+      forms: {
+        title: 'Form Settings',
+        description: 'Create and manage club forms'
+      },
+      sponsors: {
+        title: 'Sponsors & Collaborators',
+        description: 'Manage sponsor logos and tiers',
+        preview: 'Preview',
+        previewNotice: 'This is how sponsors will appear in the club.',
+        previewEmpty: 'No sponsors to preview',
+        saved: 'Sponsors saved successfully',
+        canceled: 'Changes discarded',
+        empty: 'No sponsors yet',
+        emptyDescription: 'Add sponsors to display them to club members.',
+        add: 'Add Sponsor',
+        edit: 'Edit Sponsor',
+        newSponsor: 'New Sponsor',
+        created: 'Sponsor created successfully',
+        updated: 'Sponsor updated successfully',
+        deleted: 'Sponsor deleted',
+        tier: {
+          sponsor: 'Sponsors',
+          collaborator: 'Collaborators'
+        },
+        form: {
+          name: 'Name',
+          namePlaceholder: 'Sponsor name',
+          tier: 'Tier',
+          selectImage: 'Select image',
+          replaceImage: 'Replace image',
+          imageHint: 'PNG, JPEG, WebP or SVG',
+          title: 'Title',
+          titlePlaceholder: 'Optional display title',
+          description: 'Description',
+          descriptionPlaceholder: 'Optional description',
+          additionalInfo: 'Additional Info',
+          addInfo: 'Add info',
+          selectKey: 'Select key',
+          valuePlaceholder: 'Value or URL'
+        },
+        infoKeys: {
+          website: 'Website',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Email',
+          mobile: 'Mobile'
+        },
+        error: {
+          load: 'Could not load sponsors.',
+          create: 'Could not create sponsor.',
+          update: 'Could not update sponsor.',
+          delete: 'Could not delete sponsor.',
+          reorder: 'Could not reorder sponsors.',
+          imageSize: 'Image must be less than 2 MB.',
+          imageType: 'Invalid format. Use PNG, JPEG, WebP or SVG.',
+          imageRequired: 'Please select an image.',
+          imageUpload: 'Could not upload image. Please try again.',
+          imageUploadFailed: 'Image upload failed. Sponsor removed. Please try adding again.',
+          imageUploadFailedKept: 'Image upload failed. Previous image kept.',
+          saveAll: 'Could not save sponsors. Please try again.'
+        }
+      }
     },
     parameters: {
       title: 'Parameters',
@@ -517,7 +623,7 @@ export const sharedTranslations = {
     reviewComment: 'Comment',
     reviewCommentPlaceholder: 'Add a comment (optional)'
   },
-  member: {
+  user: {
     title: 'Viewer portal',
     subtitle: 'Access club information and services',
     menu: {
@@ -528,7 +634,7 @@ export const sharedTranslations = {
       information: 'Information',
       proposals: 'Proposals & complaints',
       matches: 'Matches',
-      partners: 'Partners',
+      sponsors: 'Sponsors & Collaborators',
       forms: 'Forms',
       more: 'More'
     },
@@ -540,7 +646,7 @@ export const sharedTranslations = {
       information: 'Club information and resources',
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
-      partners: 'Our club partners and sponsors',
+      sponsors: 'Our club collaborators and sponsors',
       forms: 'Fill in and submit club forms'
     },
     home: {
@@ -722,9 +828,11 @@ export const sharedTranslations = {
       upcomingMatches: 'Upcoming Matches',
       noRelatedMatches: 'No related matches'
     },
-    partners: {
-      empty: 'No partners listed',
-      emptyDescription: 'Our club partners and sponsors will be listed here.'
+    sponsors: {
+      title: 'Sponsors & Collaborators',
+      subtitle: 'The clubs that make it all possible',
+      empty: 'No collaborators listed',
+      emptyDescription: 'Our club collaborators and sponsors will be listed here.'
     }
   },
   guest: {
@@ -735,18 +843,18 @@ export const sharedTranslations = {
       news: 'News',
       information: 'Information',
       matches: 'Matches',
-      partners: 'Partners'
+      sponsors: 'Sponsors & Collaborators'
     },
     description: {
       home: 'Welcome to the public club portal',
       news: 'Latest news and announcements',
       information: 'Club information',
       matches: 'View upcoming matches',
-      partners: 'Club partners and sponsors'
+      sponsors: 'Club collaborators and sponsors'
     }
   },
   roles: {
-    member: 'Member',
+    member: 'User',
     admin: 'Admin',
     coach: 'Coach',
     guest: 'Guest'

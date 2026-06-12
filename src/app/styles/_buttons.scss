@@ -31,6 +31,31 @@
   width: 100%;
 }
 
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: var(--button-primary-color, #3880ff);
+  color: var(--button-primary-contrast, #ffffff);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 1.125rem;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
 .btn-primary {
   @include btn-base;
   background: var(--button-primary-color, #3880ff);
@@ -110,6 +135,32 @@
     background: var(--background-secondary, #f8f9fa);
     color: var(--text-light, #adb5bd);
     opacity: 1;
+  }
+}
+
+
+.btn-add-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.875rem;
+  border: 1.5px dashed var(--button-primary-color, #3880ff);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--button-primary-color, #3880ff);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  justify-content: center;
+
+  i {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background: rgba(56, 128, 255, 0.06);
   }
 }
 

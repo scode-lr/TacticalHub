@@ -2,4 +2,12 @@
   <ion-icon [name]="icon()" class="empty-state-icon"></ion-icon>
   <h3 class="empty-state-title">{{ titleKey() | translate }}</h3>
   <p class="empty-state-message">{{ messageKey() | translate }}</p>
+  @if (actionLabelKey()) {
+    <button class="empty-state-action btn-primary" (click)="actionClick.emit()">
+      @if (actionIcon(); as actIcon) {
+        <ion-icon [name]="actIcon"></ion-icon>
+      }
+      {{ actionLabelKey()! | translate }}
+    </button>
+  }
 </div>

@@ -167,7 +167,7 @@ export const mockActionCards: ActionParameter[] = [
       label: 'Comentarios',
       type: 'textarea',
       required: false,
-      placeholder: 'member.action.form.commentsPlaceholder',
+      placeholder: 'user.action.form.commentsPlaceholder',
       maxLength: 500
     }
   ]

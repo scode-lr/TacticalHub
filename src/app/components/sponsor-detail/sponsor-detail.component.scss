@@ -1,0 +1,120 @@
+// Mobile (default): stacked — image, name/title/contact, description.
+.sponsor-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sd-image {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  overflow: hidden;
+}
+
+.sd-image-el {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+}
+
+.sd-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sd-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  line-height: 1.2;
+}
+
+.sd-subtitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary, #6b7280);
+}
+
+.sd-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.sd-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--ion-color-primary-contrast);
+  text-decoration: none;
+  padding: 6px 12px;
+  background: rgba(56, 128, 255, 0.08);
+  border-radius: 6px;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(56, 128, 255, 0.15);
+  }
+
+  ion-icon {
+    font-size: 16px;
+  }
+}
+
+.sd-description {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+// Desktop: image top-left, name/title/contact on the right, description full-width below.
+@media (min-width: 768px) {
+  .sponsor-detail {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-areas:
+      "image content"
+      "image links"
+      "desc  desc";
+    gap: 1rem 1.5rem;
+    align-content: start;
+    align-items: start;
+  }
+
+  .sd-image {
+    grid-area: image;
+    align-self: start;
+    min-height: 200px;
+  }
+
+  .sd-image-el {
+    max-height: 220px;
+  }
+
+  .sd-content {
+    grid-area: content;
+  }
+
+  .sd-name {
+    font-size: 1.5rem;
+  }
+
+  .sd-links {
+    grid-area: links;
+    align-self: start;
+  }
+
+  .sd-description {
+    grid-area: desc;
+  }
+}

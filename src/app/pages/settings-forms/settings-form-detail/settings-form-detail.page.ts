@@ -9,7 +9,9 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { AppStatus } from '@models/app-status.model';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
-import { FormPreviewModalComponent } from '@components/modals/form-preview-modal/form-preview-modal.component';
+import { SectionFooterActionsComponent } from '@components/section-footer-actions/section-footer-actions.component';
+import { PreviewModalComponent } from '@components/modals/preview-modal/preview-modal.component';
+import { FormPreviewContentComponent } from '@components/form-preview-content/form-preview-content.component';
 import { FormField } from '@core/models/form-field.model';
 import { FormAction } from '@core/models/form-action.enum';
 import { SettingsFormFieldsComponent } from './settings-form-fields/settings-form-fields.component';
@@ -40,8 +42,10 @@ interface HeaderFormControls {
     ReactiveFormsModule,
     TranslatePipe,
     BackButtonComponent,
+    SectionFooterActionsComponent,
+    PreviewModalComponent,
+    FormPreviewContentComponent,
     SettingsFormFieldsComponent,
-    FormPreviewModalComponent,
     IonToast,
   ]
 })
