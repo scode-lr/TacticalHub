@@ -165,7 +165,6 @@ export class SponsorFormComponent implements OnInit {
     const maxSize = 2 * 1024 * 1024;
     const allowedTypes = ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'];
 
-    console.log('Selected file:', file);
     if (file.size > maxSize) {
       this.showFieldError('imageSize');
       return;
@@ -189,9 +188,6 @@ export class SponsorFormComponent implements OnInit {
     reader.onabort = () => {
       console.warn('Image loading aborted');
       this.imageLoading.set(false);
-    }
-    reader.onloadstart = () => {
-      console.log('Image loading started');
     }
     reader.onerror = () => {
       console.error('Error reading image file');
