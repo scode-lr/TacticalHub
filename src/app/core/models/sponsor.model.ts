@@ -66,9 +66,20 @@ export interface DeleteImagesRequest {
   urls: string[];
 }
 
+export interface BatchSponsorItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  title: string | null;
+  description: string | null;
+  additionalInfo: AdditionalInfo[];
+  tier: SponsorTier;
+  sortOrder: number;
+}
+
 export interface BatchSponsorRequest {
-  additions: Sponsor[];
-  updates: Sponsor[];
+  additions: BatchSponsorItem[];
+  updates: BatchSponsorItem[];
   deletions: number[];
   orphanedImageUrls: string[];
 }

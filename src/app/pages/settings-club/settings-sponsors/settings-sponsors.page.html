@@ -56,7 +56,7 @@
   />
   }
   <!-- Empty State -->
-  @if (groupedSponsors() === null || groupedSponsors().length === 0 && !isAdding()) {
+  @if (!loading() && (groupedSponsors() === null || groupedSponsors().length === 0) && !isAdding()) {
   <app-empty-state
     icon="wallet-outline"
     [titleKey]="'admin.settings.sponsors.empty'"

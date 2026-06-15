@@ -46,7 +46,7 @@ export class SponsorService {
     const formData = new FormData();
     formData.append('Image', file);
     return await firstValueFrom(
-      this.apiService.post<UploadImageResponse>(`clubs/${clubId}/sponsors/images`, formData, { isFormData: true })
+      this.apiService.post<UploadImageResponse>(`clubs/${clubId}/sponsors/images`, formData, { isFormData: true, skipErrorHandler: true })
         .pipe(map(data => data as UploadImageResponse))
     );
   }
@@ -54,13 +54,13 @@ export class SponsorService {
   async deleteImages(clubId: number, urls: string[]): Promise<void> {
     if (!urls.length) return;
     await firstValueFrom(
-      this.apiService.delete(`clubs/${clubId}/sponsors/images`, { body: { urls } as DeleteImagesRequest })
+      this.apiService.delete(`clubs/${clubId}/sponsors/images`, { body: { urls } as DeleteImagesRequest, skipErrorHandler: true })
     );
   }
 
   async batch(clubId: number, request: BatchSponsorRequest): Promise<Sponsor[]> {
     return await firstValueFrom(
-      this.apiService.put<Sponsor[]>(`clubs/${clubId}/sponsors/batch`, request)
+      this.apiService.put<Sponsor[]>(`clubs/${clubId}/sponsors/batch`, request, { skipErrorHandler: true })
         .pipe(map(data => ((data as any[]) ?? []).map(s => this.normalizeSponsor(s))))
     );
   }

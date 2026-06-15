@@ -1,7 +1,7 @@
-import { Component, inject, signal, computed, OnInit, HostListener } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, of, from } from 'rxjs';
-import { IonIcon, IonSpinner, IonToast } from '@ionic/angular/standalone';
+import { IonIcon, IonToast } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { SponsorService } from '@core/services/sponsor.service';
@@ -13,7 +13,7 @@ import { SponsorFormSaveEvent } from '@components/sponsor-form/sponsor-form.comp
 import { SponsorCardComponent } from '@components/sponsor-card/sponsor-card.component';
 import { SponsorsDisplayComponent } from '@components/sponsors-display/sponsors-display.component';
 import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
-import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
+import { BatchSponsorItem, Sponsor, SponsorTier } from '@core/models/sponsor.model';
 import { addIcons } from 'ionicons';
 import { addOutline, walletOutline, arrowBackOutline, saveOutline } from 'ionicons/icons';
 import { ClubService } from '@services/club.service';
@@ -38,6 +38,7 @@ export class SettingsSponsorsPage implements OnInit {
   readonly sponsors = signal<Sponsor[]>([]);
   readonly loading = signal(true);
   readonly isSaving = signal(false);
+  readonly pendingImageUploads = signal(0);
   readonly expandedIndex = signal<number | null>(null);
   readonly isAdding = signal(false);
   readonly previewOpen = signal(false);
@@ -68,15 +69,17 @@ export class SettingsSponsorsPage implements OnInit {
   readonly canCancel = computed(() => !this.isSaving());
   readonly canSave = computed(() => {
     this.pendingVersion();
+    const hasPendingChanges = this.pendingAdditions.size > 0 ||
+      this.pendingUpdates.size > 0 ||
+      this.pendingDeletions.size > 0 ||
+      this.pendingReorder.size > 0;
+
     return !this.isSaving() &&
-      (this.pendingAdditions.size > 0 ||
-       this.pendingUpdates.size > 0 ||
-       this.pendingDeletions.size > 0 ||
-       this.pendingReorder.size > 0);
+      this.pendingImageUploads() === 0 &&
+      hasPendingChanges;
   });
 
   readonly hasChanges = computed(() => {
-    console.log('Checking for changes:',this.isAdding() || this.expandedIndex() !== null || this.pendingAdditions.size > 0 || this.pendingUpdates.size > 0 || this.pendingDeletions.size > 0 || this.pendingReorder.size > 0);
     this.pendingVersion();
     return this.isAdding() ||
            this.expandedIndex() !== null ||
@@ -152,9 +155,15 @@ export class SettingsSponsorsPage implements OnInit {
     };
   }
 
-  private buildSponsorForBatch(sponsor: Sponsor): Sponsor {
+  private buildSponsorForBatch(sponsor: Sponsor): BatchSponsorItem {
     return {
-      ...sponsor,
+      id: sponsor.id,
+      name: sponsor.name,
+      imageUrl: sponsor.imageUrl,
+      title: sponsor.title,
+      description: sponsor.description,
+      additionalInfo: sponsor.additionalInfo,
+      tier: sponsor.tier,
       sortOrder: this.sponsors()
         .filter(s => s.tier === sponsor.tier)
         .findIndex(s => s.id === sponsor.id),
@@ -193,6 +202,7 @@ export class SettingsSponsorsPage implements OnInit {
 
     if (event.imageFile) {
       try {
+        this.pendingImageUploads.update(count => count + 1);
         const result = await this.sponsorService.uploadImage(this.clubId, event.imageFile);
         imageUrl = result.url;
         URL.revokeObjectURL(draft.imageUrl);
@@ -206,6 +216,8 @@ export class SettingsSponsorsPage implements OnInit {
         URL.revokeObjectURL(draft.imageUrl);
         this.sponsors.update(list => list.filter(s => s.id !== tempId));
         this.showToastMessage('admin.settings.sponsors.error.imageUploadFailed', 'danger');
+      } finally {
+        this.pendingImageUploads.update(count => Math.max(0, count - 1));
       }
     } else {
       this.pendingAdditions.set(tempId, event);
@@ -237,6 +249,7 @@ export class SettingsSponsorsPage implements OnInit {
       }
 
       try {
+        this.pendingImageUploads.update(count => count + 1);
         const result = await this.sponsorService.uploadImage(this.clubId, event.imageFile);
         imageUrl = result.url;
         this.newlyUploadedUrls.add(result.url);
@@ -244,6 +257,8 @@ export class SettingsSponsorsPage implements OnInit {
         this.orphanedImageUrls.delete(event.data.existingImageUrl ?? '');
         this.showToastMessage('admin.settings.sponsors.error.imageUploadFailedKept', 'danger');
         return;
+      } finally {
+        this.pendingImageUploads.update(count => Math.max(0, count - 1));
       }
     }
 
@@ -348,11 +363,16 @@ export class SettingsSponsorsPage implements OnInit {
 
   async saveAll(): Promise<void> {
     if (this.isSaving()) return;
+    if (this.pendingImageUploads() > 0) {
+      this.showToastMessage('admin.settings.sponsors.error.imageUploadInProgress', 'warning');
+      return;
+    }
+
     this.isSaving.set(true);
     try {
       const list = this.sponsors();
-      const additions: Sponsor[] = [];
-      const updates: Sponsor[] = [];
+      const additions: BatchSponsorItem[] = [];
+      const updates: BatchSponsorItem[] = [];
 
       for (const [tempId] of this.pendingAdditions) {
         const draft = list.find(s => s.id === tempId);
@@ -384,7 +404,7 @@ export class SettingsSponsorsPage implements OnInit {
       this.toastService.show(this.translationService.instant('admin.settings.sponsors.saved'), 'success');
       this.navigationService.goBack();
     } catch (err: any) {
-      const message = err?.error?.message || this.translationService.instant('admin.settings.sponsors.error.saveAll');
+      const message = this.getErrorMessage(err, 'admin.settings.sponsors.error.saveAll');
       this.toastService.show(message, 'danger');
     } finally {
       this.isSaving.set(false);
@@ -436,5 +456,21 @@ export class SettingsSponsorsPage implements OnInit {
 
   private showToastMessage(messageKey: string, color: 'success' | 'danger' | 'warning'): void {
     this.toastService.show(this.translationService.instant(messageKey), color);
+  }
+
+  private getErrorMessage(err: any, fallbackKey: string): string {
+    const fallback = this.translationService.instant(fallbackKey);
+    const errorBody = err?.error;
+
+    if (typeof errorBody === 'string' && errorBody.trim()) return errorBody;
+
+    const message = errorBody?.message || errorBody?.error;
+    const details = errorBody?.details;
+
+    if (message && details) return `${message} ${details}`;
+    if (message) return message;
+    if (details) return details;
+
+    return fallback;
   }
 }
