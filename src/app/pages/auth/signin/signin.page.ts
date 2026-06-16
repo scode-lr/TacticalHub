@@ -100,7 +100,7 @@ export class SigninPage {
       const email = this.signinForm.value.email;
       const password = this.signinForm.value.password;
       
-      const response = await this.authService.signIn({ email, password });
+      const response = await this.authService.signIn({ email, password, rememberMe: true });
       
       if (response.success) {
         this.navigationService.navigateTo(['auth/loading']);

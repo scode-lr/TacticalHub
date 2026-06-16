@@ -19,6 +19,12 @@
       <div class="selection-bar">
         <span class="selection-count">{{ selectedForms.length }} {{ 'admin.forms.selected' | translate }}</span>
         <div class="selection-actions">
+          @if (selectedForms.length === 1) {
+            <button class="btn-action" (click)="openExportConfig(selectedForms[0])">
+              <ion-icon name="settings-outline"></ion-icon>
+              {{ 'admin.forms.exportConfig.configure' | translate }}
+            </button>
+          }
           <button class="btn-action" (click)="exportSubmissions()">
             <ion-icon name="download-outline"></ion-icon>
             {{ 'admin.forms.export' | translate }}
@@ -118,10 +124,7 @@
             <span>{{ form.name }}</span>
           </td>
           <td class="col-desktop no-padding-top-bottom">
-            <p-tag
-              [value]="'admin.settingsForms.actions.' + form.action | translate"
-              [severity]="getActionSeverity(form.action)"
-            />
+            <span>{{ 'admin.settingsForms.actions.' + form.action | translate }}</span>
           </td>
           <td class="no-padding-top-bottom">
             <p-tag
@@ -156,6 +159,21 @@
   }
 
   @if (viewState() === 'detail') {
+    <div class="detail-actions">
+      <button class="btn-action" (click)="openIntegrations()">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+        {{ 'admin.forms.integrations.title' | translate }}
+      </button>
+      <button class="btn-action" (click)="openExportConfig()">
+        <ion-icon name="settings-outline"></ion-icon>
+        {{ 'admin.forms.exportConfig.configure' | translate }}
+      </button>
+      <button class="btn-action" (click)="exportCurrentForm()">
+        <ion-icon name="download-outline"></ion-icon>
+        {{ 'admin.forms.export' | translate }}
+      </button>
+    </div>
+
     <p-table
       #dtSubmissions
       [value]="submissions()"
@@ -244,10 +262,46 @@
     </p-table>
   }
 
+  <app-forms-export-config-modal
+    [isOpen]="isExportConfigOpen()"
+    [loading]="exportConfigLoading()"
+    [saving]="exportConfigSaving()"
+    [exportProfile]="exportProfile()"
+    [editableColumns]="editableColumns()"
+    (didDismiss)="closeExportConfig()"
+    (toggleExportColumn)="toggleExportColumn($event.index, $event.isEnabled)"
+    (updateExportColumnHeader)="updateExportColumnHeader($event.index, $event.header)"
+    (moveExportColumn)="moveExportColumn($event.index, $event.direction)"
+    (save)="saveExportConfig()"
+  ></app-forms-export-config-modal>
+
+  <app-forms-integrations-modal
+    [isOpen]="isIntegrationsOpen()"
+    [loading]="integrationsLoading()"
+    [saving]="integrationsSaving()"
+    [creatingSheet]="integrationsCreatingSheet()"
+    [testingId]="integrationsTestingId()"
+    [syncingId]="integrationsSyncingId()"
+    [integrations]="integrations()"
+    [integrationForm]="integrationForm()"
+    [googleSheetsCreateForm]="googleSheetsCreateForm()"
+    (didDismiss)="closeIntegrations()"
+    (editIntegration)="editIntegration($event)"
+    (newIntegration)="newIntegration()"
+    (updateIntegrationForm)="updateIntegrationForm($event.key, $event.value)"
+    (updateGoogleSheetsCreateForm)="updateGoogleSheetsCreateForm($event.key, $event.value)"
+    (createGoogleSheetsIntegration)="createGoogleSheetsIntegration()"
+    (saveIntegration)="saveIntegration()"
+    (testIntegration)="testIntegration($event)"
+    (syncIntegration)="syncIntegration($event)"
+    (deleteIntegration)="deleteIntegration($event)"
+    (openIntegrationSpreadsheet)="openIntegrationSpreadsheet($event)"
+  ></app-forms-integrations-modal>
+
   <ion-toast
     [isOpen]="toastVisible()"
     [message]="toastMessage()"
-    color="danger"
+    [color]="toastColor()"
     duration="3000"
     position="top"
     (didDismiss)="onToastDismiss()">

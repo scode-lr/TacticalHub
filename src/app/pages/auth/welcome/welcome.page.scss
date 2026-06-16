@@ -24,12 +24,17 @@
   padding: 2rem 1.5rem 2.5rem;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   z-index: 2;
+  gap: 1.5rem;
   animation: slideUp 0.6s ease-out 0.6s both;
   
     ion-icon {
       font-size: 1.25rem;
     }
   }
+
+.action-section .btn-block + .btn-block {
+  margin-top: 0.5rem;
+}
   
   .terms-text {
     text-align: center;

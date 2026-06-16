@@ -1,0 +1,73 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="close()" class="app-modal app-modal--wide">
+  <ng-template>
+    <div class="app-modal-container export-config-modal">
+      <div class="app-modal-header">
+        <div class="app-modal-header-info">
+          <ion-icon name="settings-outline" class="app-modal-header-icon"></ion-icon>
+          <div class="app-modal-header-text">
+            <h2 class="app-modal-title">{{ 'admin.forms.exportConfig.title' | translate }}</h2>
+            <p class="app-modal-subtitle">{{ exportProfile()?.name || ('admin.forms.exportConfig.subtitle' | translate) }}</p>
+          </div>
+        </div>
+        <button class="app-modal-close" (click)="close()" [attr.aria-label]="'common.close' | translate">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="app-modal-content">
+        @if (loading()) {
+          <div class="config-loading">
+            {{ 'admin.forms.exportConfig.loading' | translate }}
+          </div>
+        } @else {
+          <p class="config-help">{{ 'admin.forms.exportConfig.help' | translate }}</p>
+
+          <div class="columns-list">
+            @for (column of editableColumns(); track column.sourceKey; let i = $index; let first = $first; let last = $last) {
+              <div class="column-row" [class.column-row--disabled]="!column.isEnabled">
+                <label class="column-toggle">
+                  <input
+                    type="checkbox"
+                    [checked]="column.isEnabled"
+                    (change)="onToggle(i, $any($event.target).checked)"
+                  />
+                </label>
+
+                <div class="column-main">
+                  <input
+                    class="column-header-input"
+                    type="text"
+                    name="columnHeader{{i}}"
+                    [ngModel]="column.header"
+                    (ngModelChange)="onUpdateHeader(i, $event)"
+                    [disabled]="!column.isEnabled"
+                    [placeholder]="'admin.forms.exportConfig.headerPlaceholder' | translate"
+                  />
+                </div>
+
+                <div class="column-order-actions">
+                  <button class="icon-action" [disabled]="first" (click)="onMove(i, -1)">
+                    <ion-icon name="chevron-up-outline"></ion-icon>
+                  </button>
+                  <button class="icon-action" [disabled]="last" (click)="onMove(i, 1)">
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="app-modal-footer">
+        <button type="button" class="btn-secondary" (click)="close()">
+          {{ 'common.cancel' | translate }}
+        </button>
+        <button type="button" class="btn-primary" (click)="onSave()" [disabled]="loading() || saving()">
+          <ion-icon name="save-outline"></ion-icon>
+          {{ (saving() ? 'admin.forms.exportConfig.saving' : 'admin.forms.exportConfig.save') | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

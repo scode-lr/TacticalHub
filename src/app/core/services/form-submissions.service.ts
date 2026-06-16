@@ -6,6 +6,8 @@ import { RolesService } from '@services/roles.service';
 import { FormSubmissionResult, SubmissionDetail, SubmissionPage } from '@core/responses/form.response';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
+import { ExportProfile, SaveExportProfileRequest } from '@core/models/export-profile.model';
+import { CreateGoogleSheetsIntegrationRequest, CreateGoogleSheetsIntegrationResponse, ExternalIntegration, ExternalIntegrationTestResult, ExternalSyncResult, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
 
 export interface FormsSubmissionsPageState {
   viewState: 'list' | 'detail';
@@ -92,5 +94,75 @@ export class FormSubmissionsService {
     anchor.download = `${formName}_submissions.csv`;
     anchor.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  async getExportProfile(formId: number): Promise<ExportProfile> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<ExportProfile>>(`/forms/${formId}/export-profile`).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async saveExportProfile(formId: number, request: SaveExportProfileRequest): Promise<ExportProfile> {
+    return await firstValueFrom(
+      this.apiService.put<ApiResponse<ExportProfile>>(`/forms/${formId}/export-profile`, request).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async getIntegrations(formId: number): Promise<ExternalIntegration[]> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<ExternalIntegration[]>>(`/forms/${formId}/integrations`).pipe(
+        map(response => response.data ?? [])
+      )
+    );
+  }
+
+  async createIntegration(formId: number, request: SaveExternalIntegrationRequest): Promise<ExternalIntegration> {
+    return await firstValueFrom(
+      this.apiService.post<ApiResponse<ExternalIntegration>>(`/forms/${formId}/integrations`, request).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async createGoogleSheetsIntegration(formId: number, request: CreateGoogleSheetsIntegrationRequest): Promise<CreateGoogleSheetsIntegrationResponse> {
+    return await firstValueFrom(
+      this.apiService.post<ApiResponse<CreateGoogleSheetsIntegrationResponse>>(`/forms/${formId}/integrations/google-sheets/create`, request).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async updateIntegration(formId: number, integrationId: number, request: SaveExternalIntegrationRequest): Promise<ExternalIntegration> {
+    return await firstValueFrom(
+      this.apiService.put<ApiResponse<ExternalIntegration>>(`/forms/${formId}/integrations/${integrationId}`, request).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async deleteIntegration(formId: number, integrationId: number): Promise<void> {
+    await firstValueFrom(
+      this.apiService.delete<ApiResponse<ExternalIntegration>>(`/forms/${formId}/integrations/${integrationId}`)
+    );
+  }
+
+  async testIntegration(formId: number, integrationId: number): Promise<ExternalIntegrationTestResult> {
+    return await firstValueFrom(
+      this.apiService.post<ApiResponse<ExternalIntegrationTestResult>>(`/forms/${formId}/integrations/${integrationId}/test`, {}).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  async syncPendingIntegration(formId: number, integrationId: number): Promise<ExternalSyncResult> {
+    return await firstValueFrom(
+      this.apiService.post<ApiResponse<ExternalSyncResult>>(`/forms/${formId}/integrations/${integrationId}/sync-pending`, {}).pipe(
+        map(response => response.data!)
+      )
+    );
   }
 }
