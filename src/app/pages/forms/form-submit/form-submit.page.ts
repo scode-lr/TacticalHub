@@ -1,7 +1,7 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonIcon, IonSpinner, IonInput, IonCheckbox } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
@@ -9,6 +9,7 @@ import { FormsService } from '@services/forms.service';
 import { SnackbarService } from '@services/snackbar.service';
 import { Form, FormField, FormFieldType } from '@core/models/form.model';
 import { SubmitFormRequest } from '@core/requests/form.request';
+import { isValidIban, normalizeIban } from '@core/utils/iban.util';
 
 @Component({
   selector: 'app-form-submit',
@@ -75,6 +76,10 @@ export class FormSubmitPage implements OnInit {
       const validators = [];
       if (field.isRequired) validators.push(Validators.required);
       if (field.maxLength) validators.push(Validators.maxLength(field.maxLength));
+      if (field.type === FormFieldType.Iban) validators.push((control: AbstractControl) => {
+        const value = control.value as string | null;
+        return !value || isValidIban(value) ? null : { iban: true };
+      });
       group[field.key] = [null, validators];
     });
     this.fieldForm.set(this.fb.group(group));
@@ -103,7 +108,15 @@ export class FormSubmitPage implements OnInit {
 
     this.isSubmitting.set(true);
     try {
-      const request: SubmitFormRequest = { values: fg.value };
+      const fieldsByKey = new Map((formData.fields ?? []).map(field => [field.key, field]));
+      const values = Object.entries(fg.value as Record<string, unknown>)
+        .reduce<Record<string, string | number | boolean | string[] | null>>((acc, [key, value]) => {
+        acc[key] = fieldsByKey.get(key)?.type === FormFieldType.Iban && typeof value === 'string'
+          ? normalizeIban(value)
+          : value as string | number | boolean | string[] | null;
+        return acc;
+      }, {});
+      const request: SubmitFormRequest = { values };
       await this.formsService.submitForm(formData.id, request);
       this.submitSuccess.set(true);
       this.snackbarService.show('forms.submit.success', 'success');

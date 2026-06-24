@@ -10,6 +10,8 @@ import { FormSubmissionsService } from '@services/form-submissions.service';
 import { FormField } from '@core/models/form-field.model';
 import { SubmissionDetail } from '@core/responses/form.response';
 import { SubmissionValue } from '@core/models/submission-value.model';
+import { maskIban } from '@core/utils/iban.util';
+import { FormFieldType } from '@core/models/form.model';
 
 @Component({
   selector: 'app-submission-detail-modal',
@@ -88,7 +90,7 @@ export class SubmissionDetailModalComponent {
       createdAt: new Date(),
       status: val.status ?? undefined,
       // For select/radio: provide stored value as the only option so p-select renders it
-      options: (val.fieldType === 'select' || (val.fieldType === 'boolean' && val.valueText !== null))
+      options: (val.fieldType === FormFieldType.Select || val.fieldType === FormFieldType.Checkbox)
         ? (val.valueText !== null ? [val.valueText] : [])
         : null,
     };
@@ -98,6 +100,7 @@ export class SubmissionDetailModalComponent {
     if (val.valueBoolean !== null) return val.valueBoolean;
     if (val.valueNumber !== null) return val.valueNumber;
     if (val.valueDate !== null) return new Date(val.valueDate);
+    if (val.fieldType === FormFieldType.Iban) return maskIban(val.valueText);
     if (val.valueText !== null) return val.valueText;
     return null;
   }

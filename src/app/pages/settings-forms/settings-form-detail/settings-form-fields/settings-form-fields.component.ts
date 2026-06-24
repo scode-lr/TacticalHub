@@ -3,7 +3,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
-import { FormFieldType } from '@models/form-field.model';
 import { addIcons } from 'ionicons';
 import { addOutline, closeOutline, trashOutline, chevronUpOutline, chevronDownOutline } from 'ionicons/icons';
 import { IonIcon } from '@ionic/angular/standalone';
@@ -12,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { FormFieldType } from '@core/models/form.model';
 
 @Component({
   selector: 'app-settings-form-fields',
@@ -30,7 +30,7 @@ export class SettingsFormFieldsComponent {
   private fieldNotifiers = new Map<number, Subject<void>>();
 
   readonly fieldTypeOptions: FormFieldType[] = [
-    'text', 'number', 'date', 'email', 'textarea', 'boolean', 'select'
+    FormFieldType.Text, FormFieldType.Number, FormFieldType.Date, FormFieldType.Iban, FormFieldType.Select, FormFieldType.Checkbox
   ];
 
   get fieldTypeItems() {
@@ -168,7 +168,7 @@ export class SettingsFormFieldsComponent {
 
   hasLength(fieldIndex: number): boolean {
     const type = this.asFormGroup(fieldIndex).get('type')?.value;
-    return ['text', 'number', 'email', 'textarea'].includes(type);
+    return [FormFieldType.Text, FormFieldType.Number, FormFieldType.Email, FormFieldType.Iban, FormFieldType.Textarea].includes(type);
   }
 
   getOptionsArray(fieldIndex: number): FormArray {

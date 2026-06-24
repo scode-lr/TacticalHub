@@ -5,7 +5,7 @@ export const environment = {
   appId: 'com.tactical.hub',
   private: false,
   version: '1.0.0',
-  apiUrl: 'https://api.tactical.hub',
+  apiUrl: 'https://api.tacticalhub.lol',
   translations: {
     en: { app: { name: 'Tactical Hub', tagline: 'Manage your football teams' } },
     es: { app: { name: 'Tactical Hub', tagline: 'Gestiona tus equipos' } },

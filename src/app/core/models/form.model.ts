@@ -11,8 +11,11 @@ export enum FormFieldType {
   Text = 'text',
   Number = 'number',
   Date = 'date',
+  Iban = 'iban',
   Select = 'select',
-  Checkbox = 'checkbox'
+  Checkbox = 'boolean',
+  Email = 'email',
+  Textarea = 'textarea'
 }
 
 

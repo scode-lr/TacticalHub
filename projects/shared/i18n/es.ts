@@ -546,6 +546,7 @@ export const sharedTranslations = {
           date: 'Fecha',
           datetime: 'Fecha y hora',
           email: 'Email',
+          iban: 'IBAN',
           phone: 'Teléfono',
           textarea: 'Área de texto',
           boolean: 'Checkbox',
