@@ -1,59 +1,75 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon, IonChip } from '@ionic/angular/standalone';
+import { formatDistanceToNow, Locale } from 'date-fns';
+import { enUS } from 'date-fns/locale/en-US';
+import { es } from 'date-fns/locale/es';
+import { ca } from 'date-fns/locale/ca';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { UpvotesComponent } from '../upvotes/upvotes.component';
-import { News, NewsCategory, VoteType } from '@models/news.model';
+import { TranslationService } from '@core/services/i18n/translation.service';
+import { NewsPost } from '@models/news.model';
+import { AppStatus } from '@models/app-status.model';
 
 @Component({
   selector: 'app-news-card',
   templateUrl: './news-card.component.html',
   styleUrls: ['./news-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonChip, TranslatePipe, UpvotesComponent]
+  imports: [CommonModule, TranslatePipe]
 })
 export class NewsCardComponent {
-  readonly news = input.required<News>();
+  private readonly translationService = inject(TranslationService);
+  readonly news = input.required<NewsPost>();
   readonly animationDelay = input<number>(0);
+  readonly isAdmin = input<boolean>(false);
   
   readonly cardClick = output<number>();
-  readonly voteChange = output<{ newsId: number; voteType: VoteType }>();
-  
-  getCategoryColor(category: NewsCategory): string {
-    const colors: Record<NewsCategory, string> = {
-      [NewsCategory.General]: 'medium',
-      [NewsCategory.Match]: 'primary',
-      [NewsCategory.Training]: 'success',
-      [NewsCategory.Event]: 'tertiary',
-      [NewsCategory.Announcement]: 'warning',
-      [NewsCategory.Achievement]: 'secondary'
-    };
-    return colors[category];
+  readonly editClick = output<NewsPost>();
+  readonly publishClick = output<NewsPost>();
+  readonly unpublishClick = output<NewsPost>();
+  readonly deleteClick = output<NewsPost>();
+
+  readonly AppStatus = AppStatus;
+
+  get primaryImageUrl(): string | null {
+    const images = this.news().images ?? [];
+    return images.find(image => image.isPrimary)?.imageUrl ?? images[0]?.imageUrl ?? null;
   }
   
-  getTimeAgo(date: Date): string {
-    const now = new Date();
-    const diffMs = now.getTime() - new Date(date).getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
-    
-    if (diffMins < 60) {
-      return diffMins <= 1 ? 'Just now' : `${diffMins} min ago`;
-    } else if (diffHours < 24) {
-      return `${diffHours}h ago`;
-    } else if (diffDays < 7) {
-      return `${diffDays}d ago`;
-    } else {
-      return new Date(date).toLocaleDateString();
+  getTimeAgo(date: string | null | undefined): string {
+    if (!date) return this.translationService.instant('user.news.statusDraft');
+    return formatDistanceToNow(new Date(date), { addSuffix: true, locale: this.getLocale() });
+  }
+
+  private getLocale(): Locale {
+    const lang = this.translationService.getCurrentLanguage();
+    switch (lang) {
+      case 'es': return es;
+      case 'ca': return ca;
+      default: return enUS;
     }
   }
   
   onCardClick(): void {
     this.cardClick.emit(this.news().id);
   }
-  
-  onVoteChange(voteType: 'up' | 'down'): void {
-    this.voteChange.emit({ newsId: this.news().id, voteType });
+
+  onEdit(event: Event): void {
+    event.stopPropagation();
+    this.editClick.emit(this.news());
+  }
+
+  onPublish(event: Event): void {
+    event.stopPropagation();
+    this.publishClick.emit(this.news());
+  }
+
+  onUnpublish(event: Event): void {
+    event.stopPropagation();
+    this.unpublishClick.emit(this.news());
+  }
+
+  onDelete(event: Event): void {
+    event.stopPropagation();
+    this.deleteClick.emit(this.news());
   }
 }

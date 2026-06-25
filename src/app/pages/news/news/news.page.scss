@@ -2,6 +2,7 @@
   .news-header {
     margin-bottom: 2rem;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
@@ -134,6 +135,22 @@
           }
         }
       }
+
+      .news-create-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        min-height: 40px;
+        white-space: nowrap;
+
+        @media (max-width: 480px) {
+          padding: 0.625rem 0.75rem;
+
+          span {
+            display: none;
+          }
+        }
+      }
     }
   }
 
@@ -141,6 +158,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 1.5rem;
+
+    @media (min-width: 769px) {
+      grid-template-columns: 1fr;
+    }
 
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
@@ -182,6 +203,83 @@
       max-width: 400px;
       margin: 0 auto;
     }
+  }
+}
+
+.news-editor-modal {
+  .news-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    span {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-primary, #111827);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border-light, #e5e7eb);
+      border-radius: 12px;
+      padding: 0.875rem 1rem;
+      font: inherit;
+      color: var(--text-primary, #111827);
+      background: var(--background-primary, #ffffff);
+      outline: none;
+
+      &:focus {
+        border-color: var(--ion-color-primary, #3880ff);
+        box-shadow: 0 0 0 3px rgba(56, 128, 255, 0.12);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 180px;
+    }
+
+    .field-hint {
+      color: var(--text-secondary, #6b7280);
+      font-size: 0.8125rem;
+      line-height: 1.35;
+    }
+  }
+
+  .image-preview {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--background-secondary, #f8f9fa);
+    border: 1px solid var(--border-light, #e5e7eb);
+  }
+
+  .uploading-row,
+  .checkbox-row,
+  .save-news-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .checkbox-row {
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+  }
+
+  .save-news-button {
+    justify-content: center;
+    min-height: 44px;
   }
 }
 
