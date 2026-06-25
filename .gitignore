@@ -37,6 +37,7 @@ yarn-error.log
 
 # IDEs and editors
 .idea/
+.codex/
 .project
 .classpath
 .c9/

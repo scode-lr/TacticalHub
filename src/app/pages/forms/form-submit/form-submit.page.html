@@ -56,6 +56,17 @@
                     fill="outline">
                   </ion-input>
                 }
+                @case ('iban') {
+                  <ion-input
+                    [formControlName]="field.key"
+                    type="text"
+                    fill="outline"
+                    autocapitalize="characters"
+                    autocomplete="off"
+                    [maxlength]="field.maxLength ?? 34"
+                    [placeholder]="field.label">
+                  </ion-input>
+                }
                 @case ('checkbox') {
                   <ion-checkbox [formControlName]="field.key" labelPlacement="end">
                   </ion-checkbox>

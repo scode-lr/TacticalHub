@@ -1,16 +1,4 @@
-import { AppStatus } from "./app-status.model";
-
-export type FormFieldType =
-  | 'text'
-  | 'number'
-  | 'date'
-  | 'datetime'
-  | 'email'
-  | 'phone'
-  | 'textarea'
-  | 'boolean'
-  | 'select'
-  | 'file';
+import { FormFieldType } from "./form.model";
 
 export interface FormField {
   id: number;

@@ -8,6 +8,8 @@ import { SubmissionDetail } from '@core/responses/form.response';
 import { SubmissionValue } from '@core/models/submission-value.model';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle, closeCircle, ellipsisHorizontalCircle } from 'ionicons/icons';
+import { maskIban } from '@core/utils/iban.util';
+import { FormFieldType } from '@core/models/form.model';
 
 export type FieldReviewState = 'ok' | 'nok' | null;
 
@@ -30,6 +32,7 @@ export class SubmissionDetailViewComponent {
   }
 
   getDisplayValue(value: SubmissionValue): string {
+    if (value.fieldType === FormFieldType.Iban) return maskIban(value.valueText);
     if (value.valueText !== null) return value.valueText;
     if (value.valueNumber !== null) return String(value.valueNumber);
     if (value.valueDate !== null) return value.valueDate;

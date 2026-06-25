@@ -59,6 +59,20 @@
       />
     }
 
+    @if (field.type === 'iban') {
+      <input
+        pInputText
+        [id]="field.key"
+        type="text"
+        inputmode="text"
+        autocomplete="off"
+        autocapitalize="characters"
+        [formControl]="$any(form().get(field.key))"
+        [invalid]="isFieldInvalid(field)"
+        [attr.maxlength]="field.maxLength ?? 34"
+      />
+    }
+
     @if (field.type === 'phone') {
       <input
         pInputText
