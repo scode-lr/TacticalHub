@@ -7,6 +7,7 @@ import { NewsPost } from '@models/news.model';
 import { NewsService } from '@services/news.service';
 import { ClubService } from '@services/club.service';
 import { RoleType } from '@models/role.model';
+import { TranslationService } from '@core/services/i18n/translation.service';
 
 @Component({
   selector: 'app-news-detail',
@@ -19,6 +20,7 @@ export class NewsDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly newsService = inject(NewsService);
   private readonly clubService = inject(ClubService);
+  private readonly translationService = inject(TranslationService);
   
   readonly news = signal<NewsPost | null>(null);
   readonly loading = signal(true);
@@ -51,7 +53,7 @@ export class NewsDetailPage implements OnInit {
   
   getFormattedDate(date: string | null | undefined): string {
     if (!date) return '';
-    return new Date(date).toLocaleDateString('en-US', {
+    return new Date(date).toLocaleDateString(this.translationService.getCurrentLanguage(), {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
