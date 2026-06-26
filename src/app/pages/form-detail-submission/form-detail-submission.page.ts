@@ -16,6 +16,8 @@ import { AppStatus } from '@core/models/app-status.model';
 import { parseSubmissionComment, SubmissionCommentEntry } from '@core/utils/submission-comment.util';
 import { FormDetail } from '@core/responses/form.response';
 import { BackButtonComponent, DynamicFormFieldsComponent } from '@components/index';
+import { isValidIban, normalizeIban } from '@core/utils/iban.util';
+import { FormFieldType } from '@core/models/form.model';
 
 @Component({
   selector: 'app-form-detail-submission',
@@ -119,8 +121,12 @@ export class FormDetailSubmissionPage implements OnInit {
       const validators = [];
       if (field.isRequired) validators.push(Validators.required);
       if (field.maxLength && field.maxLength > 0) validators.push(Validators.maxLength(field.maxLength));
-      if (field.type === 'email') validators.push(Validators.email);
-      const defaultValue = field.type === 'boolean' && !field.options?.length ? false : null;
+      if (field.type === FormFieldType.Email) validators.push(Validators.email);
+      if (field.type === FormFieldType.Iban) validators.push((control: AbstractControl) => {
+        const value = control.value as string | null;
+        return !value || isValidIban(value) ? null : { iban: true };
+      });
+      const defaultValue = !field.options?.length ? false : null;
       group[field.key] = this.fb.control(defaultValue, validators);
     }
     this.dynamicForm = this.fb.group(group);
@@ -135,10 +141,13 @@ export class FormDetailSubmissionPage implements OnInit {
     this.isSubmitting.set(true);
     try {
       const rawValues = this.dynamicForm.value as Record<string, unknown>;
+      const fieldsByKey = new Map(this.formFields().map(field => [field.key, field]));
       const values = Object.keys(rawValues).reduce<Record<string, string | number | boolean | string[]>>((acc, key) => {
         const v = rawValues[key];
         if (v instanceof Date) {
           acc[key] = v.toISOString();
+        } else if (fieldsByKey.get(key)?.type === FormFieldType.Iban && typeof v === 'string') {
+          acc[key] = normalizeIban(v);
         } else if (v !== null && v !== undefined) {
           acc[key] = v as string | number | boolean | string[];
         }

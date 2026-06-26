@@ -1,5 +1,5 @@
-import { FormFieldType } from './form-field.model';
 import { AppStatus } from './app-status.model';
+import { FormFieldType } from './form.model';
 
 export interface SubmissionValue {
   id: number;

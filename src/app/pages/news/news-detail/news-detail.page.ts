@@ -1,31 +1,42 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon, IonChip, IonImg } from '@ionic/angular/standalone';
+import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
-import { UpvotesComponent } from '@components/upvotes/upvotes.component';
-import { CommentsComponent } from '@components/comments/comments.component';
-import { News, NewsCategory, NewsComment } from '@models/news.model';
-import { mockNews } from '@mocks/news.mock';
-import { DefaultImageDirective } from "@core/directives";
+import { NewsPost } from '@models/news.model';
+import { NewsService } from '@services/news.service';
+import { ClubService } from '@services/club.service';
+import { RoleType } from '@models/role.model';
 
 @Component({
   selector: 'app-news-detail',
   templateUrl: './news-detail.page.html',
   styleUrls: ['./news-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonChip, TranslatePipe, UpvotesComponent, CommentsComponent, DefaultImageDirective, IonImg]
+  imports: [CommonModule, IonIcon, TranslatePipe]
 })
 export class NewsDetailPage implements OnInit {
-  private navigationService = inject(NavigationService);
+  private readonly navigationService = inject(NavigationService);
+  private readonly newsService = inject(NewsService);
+  private readonly clubService = inject(ClubService);
   
-  readonly news = signal<News | null>(null);
+  readonly news = signal<NewsPost | null>(null);
+  readonly loading = signal(true);
   
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const id = this.navigationService.findRouteParam('newsId');
-    if (id) {
-      const foundNews = mockNews.find(n => n.id === Number(id));
-      this.news.set(foundNews || null);
+    const clubId = this.clubService.getCurrentClubId() ?? 0;
+    if (!id || !clubId) {
+      this.loading.set(false);
+      return;
+    }
+
+    try {
+      this.news.set(await this.newsService.getById(clubId, Number(id)));
+    } catch {
+      this.news.set(null);
+    } finally {
+      this.loading.set(false);
     }
   }
   
@@ -33,19 +44,13 @@ export class NewsDetailPage implements OnInit {
     this.navigationService.goBack();
   }
   
-  getCategoryColor(category: NewsCategory): string {
-    const colors: Record<NewsCategory, string> = {
-      [NewsCategory.General]: 'medium',
-      [NewsCategory.Match]: 'primary',
-      [NewsCategory.Training]: 'success',
-      [NewsCategory.Event]: 'tertiary',
-      [NewsCategory.Announcement]: 'warning',
-      [NewsCategory.Achievement]: 'secondary'
-    };
-    return colors[category];
+  get primaryImageUrl(): string | null {
+    const images = this.news()?.images ?? [];
+    return images.find(image => image.isPrimary)?.imageUrl ?? images[0]?.imageUrl ?? null;
   }
   
-  getFormattedDate(date: Date): string {
+  getFormattedDate(date: string | null | undefined): string {
+    if (!date) return '';
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
@@ -54,81 +59,24 @@ export class NewsDetailPage implements OnInit {
       minute: '2-digit'
     });
   }
-  
-  vote(voteType: 'up' | 'down'): void {
-    const currentNews = this.news();
-    if (!currentNews) return;
-    
-    const currentVote = currentNews.userVote;
-    let newUpvotes = currentNews.upvotes;
-    let newDownvotes = currentNews.downvotes;
-    let newUserVote: 'up' | 'down' | null = voteType;
-    
-    if (currentVote === voteType) {
-      newUserVote = null;
-      if (voteType === 'up') {
-        newUpvotes--;
-      } else {
-        newDownvotes--;
-      }
-    } else if (currentVote) {
-      if (currentVote === 'up') {
-        newUpvotes--;
-        newDownvotes++;
-      } else {
-        newDownvotes--;
-        newUpvotes++;
-      }
-    } else {
-      if (voteType === 'up') {
-        newUpvotes++;
-      } else {
-        newDownvotes++;
-      }
+
+  openExternalLink(): void {
+    const url = this.news()?.externalLinkUrl;
+    if (url) window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  openLinkedForm(): void {
+    const formId = this.news()?.linkedFormId;
+    if (!formId) return;
+
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    if (roleType === RoleType.Admin) {
+      this.navigationService.navigateTo([`/app/${roleType}/${roleId}`, 'settings-forms', formId.toString()]);
+      return;
     }
-    
-    this.news.set({
-      ...currentNews,
-      upvotes: newUpvotes,
-      downvotes: newDownvotes,
-      userVote: newUserVote
-    });
-  }
-  
-  onVoteComment(event: { commentId: number; voteType: 'up' | 'down'; parentCommentId?: number }): void {
-    this.voteComment(event.commentId, event.voteType, event.parentCommentId);
-  }
-  
-  voteComment(commentId: number, voteType: 'up' | 'down', parentCommentId?: number): void {
-    const currentNews = this.news();
-    if (!currentNews) return;
-    
-    const updateCommentVotes = (comments: NewsComment[]): NewsComment[] => {
-      return comments.map(comment => {
-        if (comment.id === commentId) {
-          let newUpvotes = comment.upvotes;
-          let newDownvotes = comment.downvotes;
-          
-          if (voteType === 'up') {
-            newUpvotes++;
-          } else {
-            newDownvotes++;
-          }
-          
-          return { ...comment, upvotes: newUpvotes, downvotes: newDownvotes };
-        }
-        
-        if (comment.replies) {
-          return { ...comment, replies: updateCommentVotes(comment.replies) };
-        }
-        
-        return comment;
-      });
-    };
-    
-    this.news.set({
-      ...currentNews,
-      comments: updateCommentVotes(currentNews.comments)
-    });
+
+    if (roleType === RoleType.Member) {
+      this.navigationService.navigateTo([`/app/${roleType}/${roleId}`, 'forms', formId.toString()]);
+    }
   }
 }

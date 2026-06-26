@@ -1,36 +1,30 @@
 <article class="news-card" [style.animation-delay]="animationDelay() * 0.04 + 's'" (click)="onCardClick()">
   
-  @if (news().imageUrl) {
-    <div class="news-image" [style.background-image]="'url(' + news().imageUrl + ')'">
-    </div>
-  }
   <div class="news-content">
-    <div class="news-meta">
-      <ion-chip [color]="getCategoryColor(news().category)" class="category-chip">
-        {{ 'user.news.categories.' + news().category | translate }}
-      </ion-chip>
-      <span class="news-time">{{ getTimeAgo(news().publishedAt) }}</span>
-    </div>
-    
     <h2 class="news-title">{{ news().title }}</h2>
     <p class="news-body">{{ news().body }}</p>
     
-    <div class="news-footer">
+  @if (primaryImageUrl) {
+    <div class="news-image" [style.background-image]="'url(' + primaryImageUrl + ')'">
+    </div>
+  }
+    @if (isAdmin()) {
+      <div class="news-footer">
       <div class="footer-actions">
-        <div class="comment-count">
-          <ion-icon name="chatbubble-outline"></ion-icon>
-          <span>{{ news().commentCount }}</span>
-        </div>
-        
-        <div class="vote-section" (click)="$event.stopPropagation()">
-          <app-upvotes
-            [upvotes]="news().upvotes"
-            [downvotes]="news().downvotes"
-            [userVote]="news().userVote || null"
-            (voteChange)="onVoteChange($event)"
-          />
-        </div>
+          <div class="vote-section news-admin-actions">
+            <button class="btn-text" type="button" (click)="onEdit($event)">{{ 'common.edit' | translate }}</button>
+            @if (news().status !== AppStatus.Active) {
+              <button class="btn-text" type="button" (click)="onPublish($event)">{{ 'user.news.publish' | translate }}</button>
+            } @else {
+              <button class="btn-text" type="button" (click)="onUnpublish($event)">{{ 'user.news.unpublish' | translate }}</button>
+            }
+            <button class="btn-text danger" type="button" (click)="onDelete($event)">{{ 'common.delete' | translate }}</button>
+          </div>
       </div>
+      </div>
+    }
+    <div class="news-meta">
+      <span class="news-time">{{ getTimeAgo(news().publishedAt || news().createdAt) }}</span>
     </div>
   </div>
 </article>

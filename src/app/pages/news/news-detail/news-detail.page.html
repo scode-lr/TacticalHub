@@ -1,49 +1,47 @@
-@if (news()) {
+@if (loading()) {
   <div class="page-container-narrow news-detail-page">
-    <article class="card news-article">
-      @if (news()?.imageUrl) {
-        <div class="news-hero-image" [style.background-image]="'url(' + news()?.imageUrl + ')'"></div>
-      }
+    <div class="empty-state">
+      <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
+    </div>
+  </div>
+} @else if (news()) {
+  <div class="page-container-narrow news-detail-page">
+    <button class="detail-back" type="button" (click)="goBack()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <span>{{ 'common.back' | translate }}</span>
+    </button>
 
+    <article class="card news-article">
       <div class="card-body news-content">
-        <div class="news-meta">
-          <ion-chip [color]="getCategoryColor(news()!.category)" class="category-chip">
-            {{ 'user.news.categories.' + news()!.category | translate }}
-          </ion-chip>
-          <span class="news-date">{{ getFormattedDate(news()!.publishedAt) }}</span>
-        </div>
+        <span class="news-date">{{ getFormattedDate(news()!.publishedAt || news()!.createdAt) }}</span>
 
         <h1 class="heading-2 news-title">{{ news()?.title }}</h1>
-
-        <div class="author-section">
-          <div class="author-info">
-            <ion-img [src]="news()!.author.avatarUrl || 'assets/default-avatar.svg'" [alt]="news()!.author.name" class="author-avatar" appDefaultImage="assets/default-avatar.svg" />
-            <div class="author-details">
-              <span class="author-name">{{ news()!.author.name }}</span>
-              <span class="author-role">{{ 'user.news.author' | translate }}</span>
-            </div>
-          </div>
-        </div>
 
         <div class="body-large news-body">
           <p>{{ news()?.body }}</p>
         </div>
-        
-        <div class="article-footer">
-          <app-upvotes
-            [upvotes]="news()!.upvotes"
-            [downvotes]="news()!.downvotes"
-            [userVote]="news()!.userVote ?? null"
-            [size]="'large'"
-            (voteChange)="vote($event)"
-          />
-        </div>
-        
-        <app-comments
-          [comments]="news()!.comments"
-          [commentCount]="news()!.commentCount"
-          (voteComment)="onVoteComment($event)"
-        />
+
+        @if (primaryImageUrl) {
+          <div class="news-image-below">
+            <img [src]="primaryImageUrl" [alt]="news()!.title" />
+          </div>
+        }
+
+        @if (news()!.externalLinkUrl || news()!.linkedFormId) {
+          <div class="article-footer news-links">
+            @if (news()!.externalLinkUrl) {
+              <button class="btn-secondary" type="button" (click)="openExternalLink()">
+                {{ news()!.externalLinkLabel || ('user.news.openLink' | translate) }}
+              </button>
+            }
+
+            @if (news()!.linkedFormId) {
+              <button class="btn-primary" type="button" (click)="openLinkedForm()">
+                {{ 'user.news.openForm' | translate }}
+              </button>
+            }
+          </div>
+        }
       </div>
     </article>
   </div>

@@ -3,12 +3,13 @@
     <h1 class="section-title">{{ 'user.news.title' | translate }}</h1>
     
     <div class="filters-icons">
-      <div class="filter-wrapper">
-        <button class="filter-icon" [class.active]="selectedCategory() !== 'all'" (click)="showCategoryModal.set(true)">
-          <ion-icon name="pricetag-outline"></ion-icon>
+      @if (isAdmin()) {
+        <button class="btn-primary news-create-button" type="button" (click)="startCreate()">
+          <ion-icon name="add-outline"></ion-icon>
+          <span>{{ 'user.news.newPost' | translate }}</span>
         </button>
-      </div>
-      
+      }
+
       <div class="filter-wrapper">
         <button class="filter-icon" [class.active]="selectedTimeFilter() !== TimeFilter.All" (click)="showTimeModal.set(true)">
           <ion-icon name="time-outline"></ion-icon>
@@ -16,28 +17,6 @@
       </div>
     </div>
   </div>
-  
-  <!-- Category Filter Modal -->
-  <ion-modal [isOpen]="showCategoryModal()" (didDismiss)="showCategoryModal.set(false)" [breakpoints]="[0, 0.6, 0.9]" [initialBreakpoint]="0.6">
-    <ng-template>
-      <div class="filter-modal">
-        <h3 class="filter-modal-title">{{ 'user.news.category' | translate }}</h3>
-        <div class="filter-options">
-          @for (category of categories; track category.value) {
-            <button 
-              class="filter-option" 
-              [class.active]="selectedCategory() === category.value"
-              (click)="selectCategory(category.value)">
-              <span>{{ category.label | translate }}</span>
-              @if (selectedCategory() === category.value) {
-                <ion-icon name="checkmark"></ion-icon>
-              }
-            </button>
-          }
-        </div>
-      </div>
-    </ng-template>
-  </ion-modal>
   
   <!-- Time Filter Modal -->
   <ion-modal [isOpen]="showTimeModal()" (didDismiss)="showTimeModal.set(false)" [breakpoints]="[0, 0.5, 0.8]" [initialBreakpoint]="0.5">
@@ -60,8 +39,110 @@
       </div>
     </ng-template>
   </ion-modal>
+
+  <ion-modal class="app-modal app-modal--wide" [isOpen]="showEditorModal()" (didDismiss)="cancelEditor()">
+    <ng-template>
+      <div class="app-modal-container news-editor-modal">
+        <div class="app-modal-header">
+          <div class="app-modal-header-info">
+            <ion-icon name="newspaper-outline" class="app-modal-header-icon"></ion-icon>
+            <div class="app-modal-header-text">
+              <h2 class="app-modal-title">{{ editingNews() ? ('user.news.editTitle' | translate) : ('user.news.createTitle' | translate) }}</h2>
+              <p class="app-modal-subtitle">{{ 'user.news.editorSubtitle' | translate }}</p>
+            </div>
+          </div>
+
+          <button class="app-modal-close" type="button" (click)="showEditorModal.set(false)" [attr.aria-label]="'common.close' | translate">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <div class="app-modal-content news-form">
+          <label class="field-group">
+            <span>{{ 'user.news.fieldTitle' | translate }}</span>
+            <input
+              type="text"
+              [ngModel]="form().title"
+              (ngModelChange)="updateForm('title', $event)"
+              maxlength="200"
+              [placeholder]="'user.news.titlePlaceholder' | translate"
+            />
+          </label>
+
+          <label class="field-group">
+            <span>{{ 'user.news.fieldBody' | translate }}</span>
+            <textarea
+              rows="8"
+              [ngModel]="form().body"
+              (ngModelChange)="updateForm('body', $event)"
+              maxlength="10000"
+              [placeholder]="'user.news.bodyPlaceholder' | translate"
+            ></textarea>
+          </label>
+
+          <div class="field-group">
+            <span>{{ 'user.news.primaryImage' | translate }}</span>
+            @if (uploadedPrimaryImageUrl()) {
+              <div class="image-preview" [style.background-image]="'url(' + uploadedPrimaryImageUrl() + ')'"></div>
+              <button class="btn-text danger" type="button" (click)="removePrimaryImage()">{{ 'user.news.removeImage' | translate }}</button>
+            }
+            <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" (change)="onImageSelected($event)" [disabled]="imageUploading()" />
+            @if (imageUploading()) {
+              <div class="uploading-row"><ion-spinner name="crescent" /> {{ 'user.news.uploadingImage' | translate }}</div>
+            }
+          </div>
+
+          <label class="field-group">
+            <span>{{ 'user.news.externalLinkUrl' | translate }}</span>
+            <input type="url" [ngModel]="form().externalLinkUrl" (ngModelChange)="updateForm('externalLinkUrl', $event)" placeholder="https://..." />
+          </label>
+
+          <label class="field-group">
+            <span>{{ 'user.news.externalLinkLabel' | translate }}</span>
+            <input type="text" [ngModel]="form().externalLinkLabel" (ngModelChange)="updateForm('externalLinkLabel', $event)" [placeholder]="'user.news.openLink' | translate" />
+          </label>
+
+          <label class="field-group">
+            <span>{{ 'user.news.linkedForm' | translate }}</span>
+            <select [ngModel]="form().linkedFormId" (ngModelChange)="updateForm('linkedFormId', $event)">
+              <option [ngValue]="null">{{ 'user.news.noLinkedForm' | translate }}</option>
+              @for (activeForm of activeForms(); track activeForm.id) {
+                <option [ngValue]="activeForm.id">{{ activeForm.name }}</option>
+              }
+            </select>
+            @if (formsLoading()) {
+              <small class="field-hint">{{ 'user.news.loadingForms' | translate }}</small>
+            } @else if (activeForms().length === 0) {
+              <small class="field-hint">{{ 'user.news.noActiveForms' | translate }}</small>
+            }
+          </label>
+
+          <label class="checkbox-row">
+            <input type="checkbox" [ngModel]="form().publishNow" (ngModelChange)="updateForm('publishNow', $event)" />
+            <span>{{ 'user.news.publishNow' | translate }}</span>
+          </label>
+        </div>
+
+        <div class="app-modal-footer">
+          <button class="btn-secondary" type="button" (click)="cancelEditor()" [disabled]="isSaving()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button class="btn-primary save-news-button" type="button" (click)="saveNews()" [disabled]="isSaving() || imageUploading()">
+            @if (isSaving()) {
+              <ion-spinner name="crescent" />
+            }
+            <span>{{ isSaving() ? ('user.news.saving' | translate) : ('user.news.saveNews' | translate) }}</span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
   
-  @if (filteredNews().length === 0) {
+  @if (loading()) {
+    <div class="empty-state">
+      <ion-spinner name="crescent" />
+    </div>
+  } @else if (filteredNews().length === 0) {
     <div class="empty-state">
       <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
       <h3 class="empty-title">{{ 'user.news.empty' | translate }}</h3>
@@ -72,9 +153,13 @@
       @for (newsItem of filteredNews(); track newsItem.id; let i = $index) {
         <app-news-card
           [news]="newsItem"
+          [isAdmin]="isAdmin()"
           [animationDelay]="i"
           (cardClick)="openNews($event)"
-          (voteChange)="vote($event.newsId, $event.voteType)"
+          (editClick)="startEdit($event)"
+          (publishClick)="publish($event)"
+          (unpublishClick)="unpublish($event)"
+          (deleteClick)="deleteNews($event)"
         />
       }
     </div>
