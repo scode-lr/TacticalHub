@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
-import { ApiService } from './api.service';
+import { ApiResponse, ApiService } from './api.service';
 import { CreateNewsPostRequest, NewsPost, UpdateNewsPostRequest, UploadNewsImageResponse } from '@models/news.model';
 
 @Injectable({ providedIn: 'root' })
@@ -10,52 +10,52 @@ export class NewsService {
   async getByClubId(clubId: number, includeUnpublished = false): Promise<NewsPost[]> {
     const params = includeUnpublished ? { includeUnpublished: 'true' } : undefined;
     return await firstValueFrom(
-      this.apiService.get<NewsPost[]>(`clubs/${clubId}/news`, { params }).pipe(
-        map(data => (data as NewsPost[]) ?? [])
+      this.apiService.get<ApiResponse<NewsPost[]>>(`clubs/${clubId}/news`, { params }).pipe(
+        map(response => response.data ?? [])
       )
     );
   }
 
   async getById(clubId: number, id: number): Promise<NewsPost> {
     return await firstValueFrom(
-      this.apiService.get<NewsPost>(`clubs/${clubId}/news/${id}`).pipe(
-        map(data => data as NewsPost)
+      this.apiService.get<ApiResponse<NewsPost>>(`clubs/${clubId}/news/${id}`).pipe(
+        map(response => response.data!)
       )
     );
   }
 
   async create(clubId: number, request: CreateNewsPostRequest): Promise<NewsPost> {
     return await firstValueFrom(
-      this.apiService.post<NewsPost>(`clubs/${clubId}/news`, request).pipe(
-        map(data => data as NewsPost)
+      this.apiService.post<ApiResponse<NewsPost>>(`clubs/${clubId}/news`, request).pipe(
+        map(response => response.data!)
       )
     );
   }
 
   async update(clubId: number, id: number, request: UpdateNewsPostRequest): Promise<NewsPost> {
     return await firstValueFrom(
-      this.apiService.put<NewsPost>(`clubs/${clubId}/news/${id}`, request).pipe(
-        map(data => data as NewsPost)
+      this.apiService.put<ApiResponse<NewsPost>>(`clubs/${clubId}/news/${id}`, request).pipe(
+        map(response => response.data!)
       )
     );
   }
 
   async delete(clubId: number, id: number): Promise<void> {
-    await firstValueFrom(this.apiService.delete(`clubs/${clubId}/news/${id}`));
+    await firstValueFrom(this.apiService.delete<ApiResponse<NewsPost>>(`clubs/${clubId}/news/${id}`));
   }
 
   async publish(clubId: number, id: number): Promise<NewsPost> {
     return await firstValueFrom(
-      this.apiService.post<NewsPost>(`clubs/${clubId}/news/${id}/publish`, {}).pipe(
-        map(data => data as NewsPost)
+      this.apiService.post<ApiResponse<NewsPost>>(`clubs/${clubId}/news/${id}/publish`, {}).pipe(
+        map(response => response.data!)
       )
     );
   }
 
   async unpublish(clubId: number, id: number): Promise<NewsPost> {
     return await firstValueFrom(
-      this.apiService.post<NewsPost>(`clubs/${clubId}/news/${id}/unpublish`, {}).pipe(
-        map(data => data as NewsPost)
+      this.apiService.post<ApiResponse<NewsPost>>(`clubs/${clubId}/news/${id}/unpublish`, {}).pipe(
+        map(response => response.data!)
       )
     );
   }
@@ -64,8 +64,8 @@ export class NewsService {
     const formData = new FormData();
     formData.append('Image', file);
     return await firstValueFrom(
-      this.apiService.post<UploadNewsImageResponse>(`clubs/${clubId}/news/images`, formData, { isFormData: true, skipErrorHandler: true }).pipe(
-        map(data => data as UploadNewsImageResponse)
+      this.apiService.post<ApiResponse<UploadNewsImageResponse>>(`clubs/${clubId}/news/images`, formData, { isFormData: true, skipErrorHandler: true }).pipe(
+        map(response => response.data!)
       )
     );
   }

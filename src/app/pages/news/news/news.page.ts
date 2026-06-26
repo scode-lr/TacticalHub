@@ -11,6 +11,7 @@ import { ClubService } from '@services/club.service';
 import { FormService } from '@services/form.service';
 import { RoleType } from '@models/role.model';
 import { ToastService } from '@services/toast.service';
+import { ConfirmService } from '@services/confirm.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { AppStatus } from '@models/app-status.model';
 import { FormDetail } from '@core/responses/form.response';
@@ -37,6 +38,7 @@ export class NewsPage implements OnInit {
   private readonly clubService = inject(ClubService);
   private readonly formService = inject(FormService);
   private readonly toastService = inject(ToastService);
+  private readonly confirmService = inject(ConfirmService);
   private readonly translationService = inject(TranslationService);
   
   readonly news = signal<NewsPost[]>([]);
@@ -251,19 +253,38 @@ export class NewsPage implements OnInit {
   }
 
   async publish(newsPost: NewsPost): Promise<void> {
-    const updated = await this.newsService.publish(this.clubId, newsPost.id);
-    this.news.update(list => list.map(item => item.id === updated.id ? updated : item));
+    try {
+      const updated = await this.newsService.publish(this.clubId, newsPost.id);
+      this.news.update(list => list.map(item => item.id === updated.id ? updated : item));
+    } catch {
+      this.toastService.show(this.translationService.instant('user.news.publishFailed'), 'danger');
+    }
   }
 
   async unpublish(newsPost: NewsPost): Promise<void> {
-    const updated = await this.newsService.unpublish(this.clubId, newsPost.id);
-    this.news.update(list => list.map(item => item.id === updated.id ? updated : item));
+    try {
+      const updated = await this.newsService.unpublish(this.clubId, newsPost.id);
+      this.news.update(list => list.map(item => item.id === updated.id ? updated : item));
+    } catch {
+      this.toastService.show(this.translationService.instant('user.news.unpublishFailed'), 'danger');
+    }
   }
 
   async deleteNews(newsPost: NewsPost): Promise<void> {
-    if (!confirm(this.translationService.instant('user.news.deleteConfirm', { title: newsPost.title }))) return;
-    await this.newsService.delete(this.clubId, newsPost.id);
-    this.news.update(list => list.filter(item => item.id !== newsPost.id));
+    const confirmed = await this.confirmService.request({
+      header: this.translationService.instant('common.delete'),
+      message: this.translationService.instant('user.news.deleteConfirm', { title: newsPost.title }),
+      confirmText: this.translationService.instant('common.delete'),
+      cancelText: this.translationService.instant('common.cancel')
+    });
+    if (!confirmed) return;
+
+    try {
+      await this.newsService.delete(this.clubId, newsPost.id);
+      this.news.update(list => list.filter(item => item.id !== newsPost.id));
+    } catch {
+      this.toastService.show(this.translationService.instant('user.news.deleteFailed'), 'danger');
+    }
   }
 
   updateForm<K extends keyof NewsFormModel>(key: K, value: NewsFormModel[K]): void {
@@ -280,8 +301,12 @@ export class NewsPage implements OnInit {
   }
 
   private async cleanupOrphanedImages(): Promise<void> {
-    await this.newsService.deleteImages(this.clubId, [...this.orphanedImageUrls]);
-    this.orphanedImageUrls.clear();
+    try {
+      await this.newsService.deleteImages(this.clubId, [...this.orphanedImageUrls]);
+      this.orphanedImageUrls.clear();
+    } catch {
+      this.toastService.show(this.translationService.instant('user.news.imageCleanupFailed'), 'warning');
+    }
   }
 
   private async loadActiveForms(): Promise<void> {
