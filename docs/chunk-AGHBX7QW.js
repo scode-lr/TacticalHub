@@ -1,0 +1,1 @@
+var t=(function(e){return e.Text="text",e.Number="number",e.Date="date",e.Iban="iban",e.Select="select",e.Checkbox="boolean",e.Email="email",e.Phone="phone",e.Textarea="textarea",e})(t||{});export{t as a};
