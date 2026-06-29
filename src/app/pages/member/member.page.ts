@@ -37,7 +37,7 @@ export class MemberPage implements OnInit {
     items: [
       { id: 'home', label: 'user.menu.home', icon: 'home-outline', route: 'home' },
       { id: 'notifications', label: 'user.menu.notifications', icon: 'notifications-outline', route: 'notifications' },
-      // { id: 'news', label: 'user.menu.news', icon: 'newspaper-outline', route: 'news' },
+      { id: 'news', label: 'user.menu.news', icon: 'newspaper-outline', route: 'news' },
       { id: 'forms', label: 'user.menu.forms', icon: 'document-text-outline', route: 'forms' },
       // { id: 'matches', label: 'user.menu.matches', icon: 'football-outline', route: 'matches' },
       { id: 'information', label: 'user.menu.information', icon: 'information-circle-outline', route: 'information' },

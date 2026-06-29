@@ -15,6 +15,7 @@ export enum FormFieldType {
   Select = 'select',
   Checkbox = 'boolean',
   Email = 'email',
+  Phone = 'phone',
   Textarea = 'textarea'
 }
 
