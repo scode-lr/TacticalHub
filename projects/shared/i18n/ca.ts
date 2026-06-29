@@ -776,7 +776,8 @@ export const sharedTranslations = {
       deleteConfirm: 'Eliminar "{title}"?',
       statusDraft: 'Esborrany',
       openLink: 'Obrir enllaç',
-      openForm: 'Obrir formulari'
+      openForm: 'Obrir formulari',
+      loadMore: 'Carregar-ne més',
     },
     action: {
       registerPlayer: 'Registrar un jugador',

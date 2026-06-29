@@ -142,7 +142,7 @@
     <div class="empty-state">
       <ion-spinner name="crescent" />
     </div>
-  } @else if (filteredNews().length === 0) {
+  } @else if (filteredNews().length === 0 && !hasMore()) {
     <div class="empty-state">
       <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
       <h3 class="empty-title">{{ 'user.news.empty' | translate }}</h3>
@@ -163,5 +163,17 @@
         />
       }
     </div>
+
+    @if (hasMore() || isLoadingMore()) {
+      <div class="news-load-more">
+        @if (isLoadingMore()) {
+          <ion-spinner name="crescent" class="news-load-more__spinner" />
+        } @else {
+          <button class="btn-text btn-block news-load-more__button" type="button" (click)="loadMoreNews()">
+            {{ 'user.news.loadMore' | translate }}
+          </button>
+        }
+      </div>
+    }
   }
 </div>

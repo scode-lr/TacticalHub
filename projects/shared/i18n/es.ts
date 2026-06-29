@@ -776,7 +776,8 @@ export const sharedTranslations = {
       deleteConfirm: '¿Eliminar "{title}"?',
       statusDraft: 'Borrador',
       openLink: 'Abrir enlace',
-      openForm: 'Abrir formulario'
+      openForm: 'Abrir formulario',
+      loadMore: 'Cargar más',
     },
     action: {
       noForms: 'No hay formularios disponibles',

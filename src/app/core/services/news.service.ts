@@ -1,17 +1,22 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
-import { CreateNewsPostRequest, NewsPost, UpdateNewsPostRequest, UploadNewsImageResponse } from '@models/news.model';
+import { CreateNewsPostRequest, NewsPost, NewsPostsPage, UpdateNewsPostRequest, UploadNewsImageResponse } from '@models/news.model';
 
 @Injectable({ providedIn: 'root' })
 export class NewsService {
   private readonly apiService = inject(ApiService);
+  private readonly defaultLimit = 12;
 
-  async getByClubId(clubId: number, includeUnpublished = false): Promise<NewsPost[]> {
-    const params = includeUnpublished ? { includeUnpublished: 'true' } : undefined;
+  async getByClubId(clubId: number, includeUnpublished = false, limit = this.defaultLimit, offset = 0): Promise<NewsPostsPage> {
+    const params = {
+      includeUnpublished: includeUnpublished ? 'true' : 'false',
+      limit: limit.toString(),
+      offset: offset.toString()
+    };
     return await firstValueFrom(
-      this.apiService.get<ApiResponse<NewsPost[]>>(`clubs/${clubId}/news`, { params }).pipe(
-        map(response => response.data ?? [])
+      this.apiService.get<ApiResponse<NewsPostsPage>>(`clubs/${clubId}/news`, { params }).pipe(
+        map(response => response.data!)
       )
     );
   }

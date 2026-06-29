@@ -348,6 +348,25 @@
   }
 }
 
+.news-load-more {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+
+  .news-load-more__spinner {
+    width: 24px;
+    height: 24px;
+    color: var(--ion-color-primary, #3880ff);
+  }
+
+  .news-load-more__button {
+    min-height: 44px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

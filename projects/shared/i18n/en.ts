@@ -779,7 +779,8 @@ export const sharedTranslations = {
       deleteConfirm: 'Delete "{title}"?',
       statusDraft: 'Draft',
       openLink: 'Open link',
-      openForm: 'Open form'
+      openForm: 'Open form',
+      loadMore: 'Load more',
     },
     action: {
       registerPlayer: 'Register a player',
