@@ -106,6 +106,9 @@ export class AdminPage implements OnInit {
       if (url.includes('/forms')) {
         return `app/${roleType}/${roleId}/forms`;
       }
+      if (url.includes('/contact')) {
+        return `app/${roleType}/${roleId}/contacts`;
+      }
     }
     return `app/${roleType}/${roleId}/home`;
   });
@@ -140,7 +143,9 @@ export class AdminPage implements OnInit {
       url.includes('/settings-club/information') ||
       url.includes('/settings-forms') ||
       (url.includes('/forms-submissions/') && url.split('/').length > 5) ||
-      url.includes('/settings-club/sponsors');
+      url.includes('/settings-club/sponsors') ||
+      url.includes('/contact');
+    console.log('isDetail', isDetail, 'url', url);
     this.isDetailPage.set(isDetail);
   }
 

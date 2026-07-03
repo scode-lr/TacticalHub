@@ -40,7 +40,7 @@ export class SponsorsPage implements OnInit {
   contactSponsor(): void {
     this.router.navigate(['../contact'], {
       relativeTo: this.route,
-      queryParams: { type: 'sponsor' }
+      queryParams: { type: 'sponsors' }
     });
   }
 }

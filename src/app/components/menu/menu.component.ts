@@ -14,6 +14,7 @@ import {
   chatbubbleEllipsesOutline,
   footballOutline,
   peopleOutline,
+  mailOutline,
   ellipsisHorizontal,
   logOutOutline,
   settingsOutline,
@@ -108,6 +109,7 @@ export class MenuComponent implements OnInit {
       chatbubbleEllipsesOutline,
       footballOutline,
       peopleOutline,
+      mailOutline,
       ellipsisHorizontal,
       logOutOutline,
       settingsOutline,
@@ -132,7 +134,6 @@ export class MenuComponent implements OnInit {
   }
 
   private trackRouteChanges() {
-    const { roleId, roleType } = this.navigationService.extractRoleDetails();
     const menuId = this.navigationService.getMenuIdFromUrl();
     if (menuId) {
       const menuItem = this.config().items.find(item => item.route === menuId);
