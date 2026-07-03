@@ -79,7 +79,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
 
     ion-icon {
       font-size: 1.25rem;
@@ -106,7 +105,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
     flex-shrink: 0;
 
     ion-icon {
@@ -132,24 +130,6 @@
   overflow-x: hidden;
   min-height: 0;
   max-height: 100%;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--background-secondary, #f8f9fa);
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--border-medium, #ced4da);
-    border-radius: 4px;
-    
-    &:hover {
-      background: var(--text-light, #9ca3af);
-    }
-  }
 }
 
 .textarea-container {
@@ -171,7 +151,6 @@
   background: var(--background-secondary, #f8f9fa);
   color: var(--text-primary, #111827);
   resize: none;
-  transition: all 0.2s ease;
 
   &:focus {
     outline: none;
@@ -197,7 +176,6 @@
   border-radius: 12px;
   background: transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
   font-size: 0.9375rem;
   font-weight: 600;
   color: var(--text-secondary, #6b7280);
@@ -213,39 +191,11 @@
   }
 }
 
-.add-field-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  border: 1px dashed var(--border-light, #e5e7eb);
-  border-radius: 8px;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-light, #9ca3af);
-  margin-top: 0.5rem;
-
-  ion-icon {
-    font-size: 1.25rem;
-  }
-
-  &:hover {
-    border-color: var(--ion-color-primary, #3880ff);
-    background: rgba(56, 128, 255, 0.05);
-    color: var(--ion-color-primary, #3880ff);
-  }
-}
-
 .array-item {
   background: var(--background-primary, #ffffff);
   border: 1px solid var(--border-light, #e5e7eb);
   border-radius: 12px;
   overflow: hidden;
-  transition: all 0.2s ease;
 
   &:hover {
     border-color: var(--border-medium, #ced4da);
@@ -258,7 +208,6 @@
   justify-content: space-between;
   padding: 1rem 1.25rem;
   background: var(--background-secondary, #f8f9fa);
-  transition: all 0.2s ease;
 
   .array-item-info {
     display: flex;
@@ -287,13 +236,11 @@
     font-size: 0.9375rem;
     font-weight: 600;
     color: var(--text-primary, #111827);
-    transition: color 0.2s ease;
   }
 
   ion-icon {
     font-size: 1.25rem;
     color: var(--text-secondary, #6b7280);
-    transition: transform 0.2s ease;
   }
 
   .delete-item-button {
@@ -306,7 +253,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
     flex-shrink: 0;
 
     ion-icon {
@@ -331,30 +277,11 @@
   flex-direction: column;
   gap: 1rem;
   border-top: 1px solid var(--border-light, #e5e7eb);
-  animation: slideDown 0.2s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-
-.field-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 0.5rem;
 }
 
@@ -365,34 +292,6 @@
   flex: 1;
 }
 
-.delete-field-button {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  border: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  opacity: 0.5;
-
-  ion-icon {
-    font-size: 1.125rem;
-    color: var(--text-secondary, #6b7280);
-  }
-
-  &:hover {
-    opacity: 1;
-    background: #fef2f2;
-
-    ion-icon {
-      color: var(--ion-color-danger, #eb445a);
-    }
-  }
-}
-
 .field-input {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -401,7 +300,6 @@
   background: var(--background-primary, #ffffff);
   color: var(--text-primary, #111827);
   font-size: 0.875rem;
-  transition: all 0.2s ease;
 
   &:focus {
     outline: none;
@@ -464,7 +362,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
     padding: 0;
 
     ion-icon {
@@ -504,7 +401,6 @@
   border-radius: 6px;
   background: transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-secondary, #6b7280);
@@ -526,7 +422,6 @@
   border-radius: 8px;
   padding: 1rem;
   margin: 0.5rem 0;
-  animation: fadeIn 0.2s ease;
 
   .form-grid-compact {
     display: grid;
@@ -574,7 +469,6 @@
     font-size: 0.8125rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
     border: none;
   }
 
@@ -595,17 +489,6 @@
     &:hover {
       background: #2e6fd9;
     }
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -646,7 +529,6 @@
   border-radius: 8px;
   background: var(--background-secondary, #f8f9fa);
   cursor: pointer;
-  transition: all 0.2s ease;
 
   .toggle-label {
     font-size: 0.875rem;
@@ -693,51 +575,6 @@
 
 .icon-select {
   flex: 1;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  padding-right: 2.5rem;
-}
-
-.type-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  padding-right: 2.5rem;
-}
-
-.object-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.value-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  .value-textarea {
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid var(--border-light, #e5e7eb);
-    border-radius: 10px;
-    background: var(--background-primary, #ffffff);
-    color: var(--text-primary, #111827);
-    font-size: 0.8125rem;
-    font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
-    line-height: 1.5;
-    resize: vertical;
-    transition: all 0.2s ease;
-
-    &:focus {
-      outline: none;
-      border-color: var(--ion-color-primary, #3880ff);
-      box-shadow: 0 0 0 3px rgba(56, 128, 255, 0.1);
-    }
-  }
 }
 
 .modal-footer {

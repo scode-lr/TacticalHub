@@ -43,6 +43,8 @@ export class NewsPage implements OnInit {
   
   readonly news = signal<NewsPost[]>([]);
   readonly loading = signal(true);
+  readonly isLoadingMore = signal(false);
+  readonly hasMore = signal(false);
   readonly selectedTimeFilter = signal<TimeFilter>(TimeFilter.All);
   readonly showTimeModal = signal<boolean>(false);
   readonly showEditorModal = signal(false);
@@ -59,13 +61,15 @@ export class NewsPage implements OnInit {
 
   readonly form = signal<NewsFormModel>(this.createEmptyForm());
 
+  private readonly limit = 12;
+  private offset = 0;
   private clubId = 0;
   private orphanedImageUrls = new Set<string>();
   private uploadedUnsavedImageUrls = new Set<string>();
 
   async ngOnInit(): Promise<void> {
     this.clubId = this.clubService.getCurrentClubId() ?? 0;
-    await this.loadNews();
+    await this.loadInitialNews();
   }
   
   readonly filteredNews = computed(() => {
@@ -96,7 +100,7 @@ export class NewsPage implements OnInit {
     
     return filtered;
   });
-  
+   
   readonly timeFilters = [
     { value: TimeFilter.All, label: 'user.news.time.all' },
     { value: TimeFilter.Today, label: 'user.news.time.today' },
@@ -105,15 +109,35 @@ export class NewsPage implements OnInit {
     { value: TimeFilter.Year, label: 'user.news.time.year' }
   ];
   
-  async loadNews(): Promise<void> {
+  async loadInitialNews(): Promise<void> {
     try {
       this.loading.set(true);
-      const posts = await this.newsService.getByClubId(this.clubId, this.isAdmin());
-      this.news.set(posts);
+      this.offset = 0;
+      const page = await this.newsService.getByClubId(this.clubId, this.isAdmin(), this.limit, this.offset);
+      this.news.set(page.items);
+      this.hasMore.set(page.hasMore);
+      this.offset += page.items.length;
     } catch {
       this.news.set([]);
     } finally {
       this.loading.set(false);
+    }
+  }
+
+  async loadMoreNews(): Promise<void> {
+    if (this.isLoadingMore() || !this.hasMore()) return;
+
+    try {
+      this.isLoadingMore.set(true);
+      const page = await this.newsService.getByClubId(this.clubId, this.isAdmin(), this.limit, this.offset);
+      this.news.update(existing => [...existing, ...page.items]);
+      this.hasMore.set(page.hasMore);
+      this.offset += page.items.length;
+    } catch {
+      this.offset = this.news().length;
+      this.hasMore.set(false);
+    } finally {
+      this.isLoadingMore.set(false);
     }
   }
   

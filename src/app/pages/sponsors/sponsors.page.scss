@@ -1,4 +1,22 @@
 .member-sponsors-page {
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+    }
+  }
+
+  .sponsor-contact-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+
   .loading-spinner {
     display: flex;
     justify-content: center;

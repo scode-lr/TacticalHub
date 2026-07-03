@@ -14,6 +14,7 @@ import {
   chatbubbleEllipsesOutline,
   footballOutline,
   peopleOutline,
+  mailOutline,
   ellipsisHorizontal,
   logOutOutline,
   settingsOutline,
@@ -71,8 +72,9 @@ export class MenuComponent implements OnInit {
   readonly user = signal<User | null>(null);
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
 
-  readonly visibleMenuItems = computed(() => this.config().items.slice(0, 4));
-  readonly hiddenMenuItems = computed(() => this.config().items.slice(4));
+  readonly mobileMenuItems = computed(() => this.config().items.filter(item => item.id !== 'notifications'));
+  readonly visibleMenuItems = computed(() => this.mobileMenuItems().slice(0, 4));
+  readonly hiddenMenuItems = computed(() => this.mobileMenuItems().slice(4));
 
   readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
   readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
@@ -86,8 +88,9 @@ export class MenuComponent implements OnInit {
     }));
   });
 
-  readonly visibleMenuItemsWithBadges = computed(() => this.menuItemsWithBadges().slice(0, 4));
-  readonly hiddenMenuItemsWithBadges = computed(() => this.menuItemsWithBadges().slice(4));
+  readonly mobileMenuItemsWithBadges = computed(() => this.menuItemsWithBadges().filter(item => item.id !== 'notifications'));
+  readonly visibleMenuItemsWithBadges = computed(() => this.mobileMenuItemsWithBadges().slice(0, 4));
+  readonly hiddenMenuItemsWithBadges = computed(() => this.mobileMenuItemsWithBadges().slice(4));
 
   constructor() {
     this.initializeIcons();
@@ -108,6 +111,7 @@ export class MenuComponent implements OnInit {
       chatbubbleEllipsesOutline,
       footballOutline,
       peopleOutline,
+      mailOutline,
       ellipsisHorizontal,
       logOutOutline,
       settingsOutline,
@@ -132,7 +136,6 @@ export class MenuComponent implements OnInit {
   }
 
   private trackRouteChanges() {
-    const { roleId, roleType } = this.navigationService.extractRoleDetails();
     const menuId = this.navigationService.getMenuIdFromUrl();
     if (menuId) {
       const menuItem = this.config().items.find(item => item.route === menuId);

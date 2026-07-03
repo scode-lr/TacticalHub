@@ -43,6 +43,14 @@ export interface UpdateNewsPostRequest {
   images: NewsPostImage[];
 }
 
+export interface NewsPostsPage {
+  items: NewsPost[];
+  totalCount: number;
+  limit: number;
+  offset: number;
+  hasMore: boolean;
+}
+
 export interface UploadNewsImageResponse {
   url: string;
 }

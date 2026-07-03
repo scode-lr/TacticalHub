@@ -126,7 +126,7 @@ export class FormDetailSubmissionPage implements OnInit {
         const value = control.value as string | null;
         return !value || isValidIban(value) ? null : { iban: true };
       });
-      const defaultValue = !field.options?.length ? false : null;
+      const defaultValue = field.type === FormFieldType.Checkbox && !field.options?.length ? false : null;
       group[field.key] = this.fb.control(defaultValue, validators);
     }
     this.dynamicForm = this.fb.group(group);
