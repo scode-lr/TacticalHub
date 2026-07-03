@@ -1,12 +1,21 @@
-import { Component, inject, signal, HostListener, input, output } from '@angular/core';
+import { Component, computed, inject, signal, HostListener, input, output } from '@angular/core';
 import { IonAvatar, IonIcon, IonImg } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
-import { Role } from '@core/models/role.model';
+import { Role, RoleType } from '@core/models/role.model';
 import { UserService } from '@core/services/user.service';
 import { NavigationService } from '@services/navigation.service';
+import { NotificationsService } from '@core/services/notifications.service';
 import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
+import { addIcons } from 'ionicons';
+import {
+  arrowBackOutline,
+  logOutOutline,
+  notificationsOutline,
+  personOutline,
+  settingsOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-user-header',
@@ -25,6 +34,7 @@ import { RoleSelectorComponent } from '@components/role-selector/role-selector.c
 export class UserHeaderComponent {
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
+  private readonly notificationsService = inject(NotificationsService);
   
   readonly showBackButton = input<boolean>(false);
   readonly showRoleSelector = input<boolean>(true);
@@ -35,6 +45,21 @@ export class UserHeaderComponent {
   user: User | null = null;
   readonly showUserMenu = signal<boolean>(false);
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
+  readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
+  readonly showNotificationsButton = computed(() => {
+    const role = this.currentRole() ?? this.userService.getCurrentRole();
+    return role?.roleId === RoleType.Admin || role?.roleId === RoleType.Member;
+  });
+
+  constructor() {
+    addIcons({
+      arrowBackOutline,
+      logOutOutline,
+      notificationsOutline,
+      personOutline,
+      settingsOutline
+    });
+  }
 
   ngOnInit() {
     this.loadUserData();
@@ -76,6 +101,13 @@ export class UserHeaderComponent {
     } else {
       this.backClick.emit();
     }
+  }
+
+  goToNotifications() {
+    const role = this.currentRole() ?? this.userService.getCurrentRole();
+    if (!role || role.roleId === RoleType.Guest) return;
+    this.showUserMenu.set(false);
+    this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/notifications`]);
   }
 
   goToProfile() {

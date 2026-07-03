@@ -67,7 +67,7 @@
                     [placeholder]="field.label">
                   </ion-input>
                 }
-                @case ('checkbox') {
+                @case (FormFieldType.Checkbox) {
                   <ion-checkbox [formControlName]="field.key" labelPlacement="end">
                   </ion-checkbox>
                 }

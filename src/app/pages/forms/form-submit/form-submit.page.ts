@@ -80,7 +80,8 @@ export class FormSubmitPage implements OnInit {
         const value = control.value as string | null;
         return !value || isValidIban(value) ? null : { iban: true };
       });
-      group[field.key] = [null, validators];
+      const defaultValue = field.type === FormFieldType.Checkbox ? false : null;
+      group[field.key] = [defaultValue, validators];
     });
     this.fieldForm.set(this.fb.group(group));
   }
