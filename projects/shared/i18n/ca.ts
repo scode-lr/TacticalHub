@@ -247,6 +247,7 @@ export const sharedTranslations = {
       notifications: 'Notificacions',
       membership: 'Socis',
       news: 'Notícies',
+      contactMessages: 'Safata de coordinació',
       params: 'Paràmetres',
       teams: 'Equips',
       club: 'Club',
@@ -262,6 +263,7 @@ export const sharedTranslations = {
       notifications: 'Configurar i enviar notificacions',
       membership: 'Gestionar socis i membres',
       news: 'Gestionar notícies i anuncis',
+      contactMessages: 'Missatges enviats a coordinació',
       params: 'Configurar paràmetres del sistema',
       teams: 'Gestionar equips i plantilles',
       club: 'Editar informació del club',
@@ -931,7 +933,49 @@ export const sharedTranslations = {
       title: 'Patrocinadors i col·laboradors',
       subtitle: 'Els qui fan possible el club',
       empty: 'No hi ha col·laboradors llistats',
-      emptyDescription: 'Els nostres col·laboradors i patrocinadors del club es llistaran aquí.'
+      emptyDescription: 'Els nostres col·laboradors i patrocinadors del club es llistaran aquí.',
+      contactButton: 'Ser patrocinador'
+    }
+  },
+  contact: {
+    title: 'Contacta amb el club',
+    subtitle: 'Envia un missatge a l\'equip de coordinació del club.',
+    sponsorTitle: 'Ser patrocinador',
+    sponsorSubtitle: 'Explica\'ns com t\'agradaria col·laborar amb el club.',
+    name: 'Nom',
+    email: 'Email',
+    phone: 'Telèfon',
+    subject: 'Assumpte',
+    message: 'Missatge',
+    send: 'Enviar missatge',
+    sent: 'Missatge enviat',
+    error: 'No s\'ha pogut enviar el missatge',
+    thanksTitle: 'Gràcies per contactar',
+    thanksDescription: 'L\'equip de coordinació ha rebut el teu missatge i el revisarà aviat.'
+  },
+  contactMessages: {
+    title: 'Safata de coordinació',
+    subtitle: 'Revisa els missatges que els usuaris envien a coordinació.',
+    empty: 'No hi ha missatges de contacte',
+    emptyDescription: 'Els nous missatges enviats a coordinació apareixeran aquí.',
+    loadMore: 'Carregar-ne més',
+    loadError: 'No s\'ha pogut carregar el missatge',
+    createdAt: 'Creat',
+    close: 'Tancar missatge',
+    types: {
+      general: 'General',
+      sponsor: 'Patrocinador'
+    },
+    status: {
+      AC: 'Oberta',
+      AR: 'Tancada',
+      P: 'Nova',
+      S: 'En progrés'
+    },
+    workflow: {
+      statusLabel: 'Estat',
+      openHint: 'Gestiona aquest missatge des de la safata de coordinació.',
+      closedHint: 'Aquest missatge ja està tancat per a tot l\'equip de coordinació.'
     }
   },
   guest: {

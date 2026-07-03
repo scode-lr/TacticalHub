@@ -45,7 +45,7 @@ export class AdminPage implements OnInit {
         icon: 'home-outline',
         route: 'home',
       },
-      // { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
+      { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
       {
         id: 'notifications',
         label: 'admin.menu.notifications',
@@ -65,7 +65,6 @@ export class AdminPage implements OnInit {
         icon: 'settings-outline',
         route: 'settings-club',
       },
-      // { id: 'params', label: 'admin.menu.params', icon: 'settings-outline', route: 'params' },
       // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
       // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
       // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
@@ -81,6 +80,9 @@ export class AdminPage implements OnInit {
     if (this.isDetailPage()) {
       if (url.includes('/news')) {
         return `app/${roleType}/${roleId}/news`;
+      }
+      if (url.includes('/inbox')) {
+        return `app/${roleType}/${roleId}/inbox`;
       }
       if (url.includes('/teams')) {
         return `app/${roleType}/${roleId}/teams`;

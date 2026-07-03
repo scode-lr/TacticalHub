@@ -247,6 +247,7 @@ export const sharedTranslations = {
       notifications: 'Notificaciones',
       membership: 'Socios',
       news: 'Noticias',
+      contactMessages: 'Bandeja de coordinación',
       params: 'Parámetros',
       teams: 'Equipos',
       club: 'Club',
@@ -262,6 +263,7 @@ export const sharedTranslations = {
       notifications: 'Configurar y enviar notificaciones',
       membership: 'Gestionar socios y membresías',
       news: 'Gestionar noticias y anuncios',
+      contactMessages: 'Mensajes enviados a coordinación',
       params: 'Configurar parámetros del sistema',
       teams: 'Gestionar equipos y plantillas',
       club: 'Editar información del club',
@@ -872,7 +874,49 @@ export const sharedTranslations = {
       title: 'Patrocinadores y colaboradores',
       subtitle: 'Los que hacen posible el club',
       empty: 'No hay colaboradores listados',
-      emptyDescription: 'Nuestros colaboradores y patrocinadores del club se listarán aquí.'
+      emptyDescription: 'Nuestros colaboradores y patrocinadores del club se listarán aquí.',
+      contactButton: 'Ser patrocinador'
+    }
+  },
+  contact: {
+    title: 'Contacta con el club',
+    subtitle: 'Envía un mensaje al equipo de coordinación del club.',
+    sponsorTitle: 'Ser patrocinador',
+    sponsorSubtitle: 'Cuéntanos cómo te gustaría colaborar con el club.',
+    name: 'Nombre',
+    email: 'Email',
+    phone: 'Teléfono',
+    subject: 'Asunto',
+    message: 'Mensaje',
+    send: 'Enviar mensaje',
+    sent: 'Mensaje enviado',
+    error: 'No se pudo enviar el mensaje',
+    thanksTitle: 'Gracias por contactar',
+    thanksDescription: 'El equipo de coordinación ha recibido tu mensaje y lo revisará pronto.'
+  },
+  contactMessages: {
+    title: 'Bandeja de coordinación',
+    subtitle: 'Revisa los mensajes enviados por usuarios a coordinación.',
+    empty: 'No hay mensajes de contacto',
+    emptyDescription: 'Los nuevos mensajes enviados a coordinación aparecerán aquí.',
+    loadMore: 'Cargar más',
+    loadError: 'No se pudo cargar el mensaje',
+    createdAt: 'Creado',
+    close: 'Cerrar mensaje',
+    types: {
+      general: 'General',
+      sponsor: 'Patrocinador'
+    },
+    status: {
+      AC: 'Abierta',
+      AR: 'Cerrada',
+      P: 'Nueva',
+      S: 'En progreso'
+    },
+    workflow: {
+      statusLabel: 'Estado',
+      openHint: 'Gestiona este mensaje desde tu bandeja de coordinación.',
+      closedHint: 'Este mensaje ya está cerrado para todo el equipo de coordinación.'
     }
   },
   guest: {

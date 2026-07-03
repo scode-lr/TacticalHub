@@ -1,0 +1,58 @@
+<div class="page-container contact-page">
+  <button class="detail-back" type="button" (click)="goBack()">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+    <span>{{ 'common.back' | translate }}</span>
+  </button>
+
+  <div class="contact-card">
+    <div class="contact-header">
+      <ion-icon name="mail-outline" class="contact-icon"></ion-icon>
+      <div>
+        <h1 class="section-title">{{ titleKey() | translate }}</h1>
+        <p class="section-description">{{ subtitleKey() | translate }}</p>
+      </div>
+    </div>
+
+    @if (submitted()) {
+      <div class="success-state">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <h2>{{ 'contact.thanksTitle' | translate }}</h2>
+        <p>{{ 'contact.thanksDescription' | translate }}</p>
+      </div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="submit()" class="contact-form">
+        <label class="field-group" [class.invalid]="isInvalid('contactName')">
+          <span>{{ 'contact.name' | translate }}</span>
+          <input type="text" formControlName="contactName" />
+        </label>
+
+        <label class="field-group" [class.invalid]="isInvalid('contactEmail')">
+          <span>{{ 'contact.email' | translate }}</span>
+          <input type="email" formControlName="contactEmail" />
+        </label>
+
+        <label class="field-group">
+          <span>{{ 'contact.phone' | translate }}</span>
+          <input type="tel" formControlName="contactPhone" />
+        </label>
+
+        <label class="field-group" [class.invalid]="isInvalid('subject')">
+          <span>{{ 'contact.subject' | translate }}</span>
+          <input type="text" formControlName="subject" />
+        </label>
+
+        <label class="field-group" [class.invalid]="isInvalid('message')">
+          <span>{{ 'contact.message' | translate }}</span>
+          <textarea rows="6" formControlName="message"></textarea>
+        </label>
+
+        <button class="btn-primary btn-block submit-button" type="submit" [disabled]="submitting()">
+          @if (submitting()) {
+            <ion-spinner name="crescent" />
+          }
+          <span>{{ 'contact.send' | translate }}</span>
+        </button>
+      </form>
+    }
+  </div>
+</div>

@@ -39,6 +39,10 @@ export const guestRoutes: Routes = [
       {
         path: 'sponsors',
         loadComponent: () => import('../sponsors/sponsors.page').then(m => m.SponsorsPage)
+      },
+      {
+        path: 'contact',
+        loadComponent: () => import('../contact/contact.page').then(m => m.ContactPage)
       }
     ]
   }
