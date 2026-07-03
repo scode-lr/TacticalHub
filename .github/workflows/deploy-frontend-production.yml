@@ -1,14 +1,14 @@
 name: Deploy Voltrega Frontend to GitHub Pages
 
-on:
-  push:
-    branches: [deploy]
-  workflow_dispatch:
-    inputs:
-      publish_branch:
-        description: 'Target branch for GitHub Pages'
-        required: true
-        default: 'gh-pages'
+# on:
+#   push:
+#     branches: [deploy]
+#   workflow_dispatch:
+#     inputs:
+#       publish_branch:
+#         description: 'Target branch for GitHub Pages'
+#         required: true
+#         default: 'gh-pages'
 
 jobs:
   deploy:
