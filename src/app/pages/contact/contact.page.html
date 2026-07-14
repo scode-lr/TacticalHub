@@ -1,0 +1,104 @@
+<div class="page-container">
+  @if (showSponsorBackButton()) {
+    <div class="section-header-with-back-button">
+      <app-back-button />
+      <h1 class="section-title">{{ titleKey() | translate }}</h1>
+    </div>
+  } @else {
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">{{ titleKey() | translate }}</h1>
+        <p class="section-description">{{ subtitleKey() | translate }}</p>
+      </div>
+    </div>
+  }
+
+  <div class="contact-layout">
+    <aside class="contact-aside">
+      <div class="aside-card">
+        <h2>{{ 'contact.asideTitle' | translate }}</h2>
+        <p>{{ 'contact.asideDescription' | translate }}</p>
+
+        <div class="aside-note">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <span>{{ 'contact.privacyNote' | translate }}</span>
+        </div>
+      </div>
+    </aside>
+
+    @if (submitted()) {
+      <div class="contact-card success-state">
+        <div class="success-icon">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <h2>{{ 'contact.thanksTitle' | translate }}</h2>
+          <p>{{ 'contact.thanksDescription' | translate }}</p>
+        </div>
+      </div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="submit()" class="contact-card contact-form">
+        <div class="form-section">
+          <h2>{{ 'contact.yourDetails' | translate }}</h2>
+          <div class="form-grid">
+            <label class="field-group" [class.invalid]="isInvalid('contactName')">
+              <span class="field-label">
+                <span>{{ 'contact.name' | translate }}</span>
+                <span class="field-required">*</span>
+              </span>
+              <input type="text" formControlName="contactName" [placeholder]="'contact.namePlaceholder' | translate" />
+              <span class="field-meta">{{ valueLength('contactName') }}/{{ maxLengths.contactName }}</span>
+            </label>
+
+            <label class="field-group" [class.invalid]="isInvalid('contactEmail')">
+              <span class="field-label">
+                <span>{{ 'contact.email' | translate }}</span>
+              </span>
+              <input type="email" formControlName="contactEmail" [placeholder]="'contact.emailPlaceholder' | translate" />
+              <span class="field-meta">{{ valueLength('contactEmail') }}/{{ maxLengths.contactEmail }}</span>
+            </label>
+
+            <label class="field-group">
+              <span class="field-label">
+                <span>{{ 'contact.phone' | translate }}</span>
+              </span>
+              <input type="tel" formControlName="contactPhone" [placeholder]="'contact.phonePlaceholder' | translate" />
+              <span class="field-meta">{{ valueLength('contactPhone') }}/{{ maxLengths.contactPhone }}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>{{ 'contact.messageDetails' | translate }}</h2>
+          <label class="field-group" [class.invalid]="isInvalid('subject')">
+            <span class="field-label">
+              <span>{{ 'contact.subject' | translate }}</span>
+              <span class="field-required">*</span>
+            </span>
+            <input type="text" formControlName="subject" [placeholder]="'contact.subjectPlaceholder' | translate" />
+            <span class="field-meta">{{ valueLength('subject') }}/{{ maxLengths.subject }}</span>
+          </label>
+
+          <label class="field-group" [class.invalid]="isInvalid('message')">
+            <span class="field-label">
+              <span>{{ 'contact.message' | translate }}</span>
+              <span class="field-required">*</span>
+            </span>
+            <textarea rows="7" formControlName="message" [placeholder]="'contact.messagePlaceholder' | translate"></textarea>
+            <span class="field-meta">{{ valueLength('message') }}/{{ maxLengths.message }}</span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <p>{{ 'contact.responseHint' | translate }}</p>
+          <button class="btn-primary submit-button" type="submit" [disabled]="submitting()">
+            @if (submitting()) {
+              <ion-spinner name="crescent" />
+            }
+            <span>{{ 'contact.send' | translate }}</span>
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

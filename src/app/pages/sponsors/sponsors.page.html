@@ -4,6 +4,10 @@
       <h1 class="section-title">{{ 'user.sponsors.title' | translate }}</h1>
       <p class="section-subtitle">{{ 'user.sponsors.subtitle' | translate }}</p>
     </div>
+    <button class="btn-primary sponsor-contact-button" type="button" (click)="contactSponsor()">
+      <ion-icon name="mail-outline"></ion-icon>
+      <span>{{ 'user.sponsors.contactButton' | translate }}</span>
+    </button>
   </div>
 
   <!-- Loading -->

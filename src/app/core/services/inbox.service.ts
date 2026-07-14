@@ -1,60 +1,74 @@
-import { Injectable, signal } from '@angular/core';
-import { Message, MessageStatus } from '@models/message.model';
-import { mockMessages } from '@mocks/message.mock';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { AppStatus } from '@core/models/app-status.model';
+import { ContactMessageDetail, ContactMessageSummary } from '@core/models/contact-message.model';
+import { ClubService } from './club.service';
+import { ContactMessageService } from './contact-message.service';
+import { NavigationService } from './navigation.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class InboxService {
-  private messages = signal<Message[]>(mockMessages);
+  private readonly clubService = inject(ClubService);
+  private readonly contactMessageService = inject(ContactMessageService);
+  private readonly navigationService = inject(NavigationService);
 
-  getMessages(): Message[] {
+  private readonly messages = signal<ContactMessageSummary[]>([]);
+  readonly loading = signal(false);
+  readonly unreadCount = computed(() => this.messages().filter(message => message.recipientStatus === AppStatus.Pending).length);
+
+  private readonly limit = 50;
+
+  getMessages(): ContactMessageSummary[] {
     return this.messages();
   }
 
-  getMessageById(id: number): Message | undefined {
-    return this.messages().find(message => message.id === id);
-  }
-
-  getUnreadMessages(): Message[] {
-    return this.messages().filter(message => message.status === MessageStatus.Unread);
-  }
-
   getUnreadCount(): number {
-    return this.getUnreadMessages().length;
+    return this.unreadCount();
   }
 
-  markAsRead(id: number): void {
-    const messages = this.messages();
-    const message = messages.find(m => m.id === id);
-    if (message && message.status === MessageStatus.Unread) {
-      message.status = MessageStatus.Read;
-      message.readAt = new Date();
-      this.messages.set([...messages]);
+  async loadMessages(): Promise<void> {
+    const clubId = this.clubService.getCurrentClubId() ?? 0;
+    const userClubRoleId = this.navigationService.extractRoleDetails().roleId;
+    if (!clubId || !userClubRoleId || this.loading()) return;
+
+    this.loading.set(true);
+    try {
+      const page = await this.contactMessageService.getForCoordinator(clubId, userClubRoleId, this.limit, 0);
+      this.messages.set(page.items);
+    } finally {
+      this.loading.set(false);
     }
   }
 
-  markAsUnread(id: number): void {
-    const messages = this.messages();
-    const message = messages.find(m => m.id === id);
-    if (message) {
-      message.status = MessageStatus.Unread;
-      message.readAt = undefined;
-      this.messages.set([...messages]);
+  async openMessage(message: ContactMessageSummary): Promise<ContactMessageDetail> {
+    const clubId = this.clubService.getCurrentClubId() ?? 0;
+    const userClubRoleId = this.navigationService.extractRoleDetails().roleId;
+    let detail = await this.contactMessageService.getById(clubId, message.id, userClubRoleId);
+
+    if (detail.recipientStatus === AppStatus.Pending && detail.globalStatus !== AppStatus.Archived) {
+      detail = await this.contactMessageService.markAsRead(clubId, message.id, userClubRoleId);
+      this.patchMessage(detail);
     }
+
+    return detail;
   }
 
-  archiveMessage(id: number): void {
-    const messages = this.messages();
-    const message = messages.find(m => m.id === id);
-    if (message) {
-      message.status = MessageStatus.Archived;
-      this.messages.set([...messages]);
-    }
+  async markInProgress(messageId: number): Promise<ContactMessageDetail> {
+    const clubId = this.clubService.getCurrentClubId() ?? 0;
+    const userClubRoleId = this.navigationService.extractRoleDetails().roleId;
+    const updated = await this.contactMessageService.updateRecipientStatus(clubId, messageId, userClubRoleId, AppStatus.Submitted);
+    this.patchMessage(updated);
+    return updated;
   }
 
-  deleteMessage(id: number): void {
-    const messages = this.messages().filter(m => m.id !== id);
-    this.messages.set(messages);
+  async closeMessage(messageId: number): Promise<ContactMessageDetail> {
+    const clubId = this.clubService.getCurrentClubId() ?? 0;
+    const userClubRoleId = this.navigationService.extractRoleDetails().roleId;
+    const updated = await this.contactMessageService.close(clubId, messageId, userClubRoleId);
+    this.patchMessage(updated);
+    return updated;
+  }
+
+  private patchMessage(updated: ContactMessageDetail): void {
+    this.messages.update(messages => messages.map(message => message.id === updated.id ? { ...message, ...updated } : message));
   }
 }

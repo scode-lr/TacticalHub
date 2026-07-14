@@ -6,6 +6,7 @@ import { SponsorService } from '@core/services/sponsor.service';
 import { ClubService } from '@services/club.service';
 import { Sponsor } from '@core/models/sponsor.model';
 import { SponsorsDisplayComponent } from '@components/sponsors-display/sponsors-display.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sponsors',
@@ -17,6 +18,8 @@ import { SponsorsDisplayComponent } from '@components/sponsors-display/sponsors-
 export class SponsorsPage implements OnInit {
   private readonly sponsorService = inject(SponsorService);
   private readonly clubService = inject(ClubService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   readonly loading = signal(true);
   readonly sponsors = signal<Sponsor[]>([]);
@@ -32,5 +35,12 @@ export class SponsorsPage implements OnInit {
     } finally {
       this.loading.set(false);
     }
+  }
+
+  contactSponsor(): void {
+    this.router.navigate(['../contact'], {
+      relativeTo: this.route,
+      queryParams: { type: 'sponsors' }
+    });
   }
 }

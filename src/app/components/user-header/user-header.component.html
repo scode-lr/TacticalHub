@@ -11,10 +11,21 @@
       </div>
     }
     
-    <div class="user-menu" (click)="onUserClick($event)" [class.menu-open]="showUserMenu()">
-      <ion-avatar class="user-avatar">
-        <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>
-      </ion-avatar>
+    <div class="header-actions">
+      @if (showNotificationsButton()) {
+        <button class="notifications-button" type="button" (click)="goToNotifications()">
+          <ion-icon name="notifications-outline"></ion-icon>
+          @if (notificationsBadge() > 0) {
+            <span class="notifications-badge"></span>
+          }
+        </button>
+      }
+
+      <div class="user-menu" (click)="onUserClick($event)" [class.menu-open]="showUserMenu()">
+        <ion-avatar class="user-avatar">
+          <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>
+        </ion-avatar>
+      </div>
     </div>
     
     @if (showUserMenu()) {

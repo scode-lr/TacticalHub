@@ -249,6 +249,7 @@ export const sharedTranslations = {
       notifications: 'Notifications',
       membership: 'Membership',
       news: 'News',
+      contactMessages: 'Coordination inbox',
       params: 'Parameters',
       teams: 'Teams',
       club: 'Club',
@@ -264,6 +265,7 @@ export const sharedTranslations = {
       notifications: 'Configure and send notifications',
       membership: 'Manage members and memberships',
       news: 'Manage news and announcements',
+      contactMessages: 'Messages sent to coordination',
       params: 'Configure system parameters',
       teams: 'Manage teams and rosters',
       club: 'Edit club information',
@@ -701,6 +703,7 @@ export const sharedTranslations = {
       proposals: 'Proposals & complaints',
       matches: 'Matches',
       sponsors: 'Sponsors & Collaborators',
+      contact: 'Contact',
       forms: 'Forms',
       more: 'More'
     },
@@ -713,6 +716,7 @@ export const sharedTranslations = {
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
       sponsors: 'Our club collaborators and sponsors',
+      contact: 'Contact club coordination',
       forms: 'Fill in and submit club forms'
     },
     home: {
@@ -934,7 +938,62 @@ export const sharedTranslations = {
       title: 'Sponsors & Collaborators',
       subtitle: 'The clubs that make it all possible',
       empty: 'No collaborators listed',
-      emptyDescription: 'Our club collaborators and sponsors will be listed here.'
+      emptyDescription: 'Our club collaborators and sponsors will be listed here.',
+      contactButton: 'Become a sponsor'
+    }
+  },
+  contact: {
+    title: 'Contact the club',
+    subtitle: 'Send a message to the club coordination team.',
+    sponsorTitle: 'Become a sponsor',
+    sponsorSubtitle: 'Tell us how you would like to collaborate with the club.',
+    generalType: 'Contact',
+    sponsorType: 'Sponsorship',
+    asideTitle: 'Your message goes straight to coordination',
+    asideDescription: 'Share as much context as possible so the club can review it and respond quickly.',
+    privacyNote: 'Your details will only be used to respond to this message within the club.',
+    yourDetails: 'Your details',
+    messageDetails: 'Message',
+    responseHint: 'Coordination will review your message as soon as possible.',
+    name: 'Name',
+    namePlaceholder: 'Your full name',
+    email: 'Email',
+    emailPlaceholder: 'name@email.com',
+    phone: 'Phone',
+    phonePlaceholder: '+1 555 000 000',
+    subject: 'Subject',
+    subjectPlaceholder: 'Brief summary of your message',
+    message: 'Message',
+    messagePlaceholder: 'Explain what you need help with...',
+    send: 'Send message',
+    sent: 'Message sent',
+    error: 'Could not send the message',
+    thanksTitle: 'Thanks for contacting us',
+    thanksDescription: 'The coordination team has received your message and will review it soon.'
+  },
+  contactMessages: {
+    title: 'Coordination inbox',
+    subtitle: 'Review messages users send to coordination.',
+    empty: 'No contact messages',
+    emptyDescription: 'New messages sent to coordination will appear here.',
+    loadMore: 'Load more',
+    loadError: 'Could not load contact message',
+    createdAt: 'Created',
+    close: 'Close message',
+    types: {
+      general: 'General',
+      sponsor: 'Sponsor'
+    },
+    status: {
+      AC: 'Open',
+      AR: 'Closed',
+      P: 'New',
+      S: 'In progress'
+    },
+    workflow: {
+      statusLabel: 'Status',
+      openHint: 'Manage this message from your coordination inbox.',
+      closedHint: 'This message is already closed for the whole coordination team.'
     }
   },
   guest: {
