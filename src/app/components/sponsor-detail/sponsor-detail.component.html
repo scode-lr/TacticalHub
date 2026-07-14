@@ -1,0 +1,39 @@
+@if (sponsor(); as s) {
+<div class="sponsor-detail">
+  <div class="sd-image">
+    <img
+      [src]="s.imageUrl || 'assets/image-non-available.svg'"
+      [alt]="s.name"
+      class="sd-image-el"
+      appDefaultImage
+    />
+  </div>
+
+  <div class="sd-content">
+    <h2 class="sd-name">{{ s.name }}</h2>
+    @if (s.title) {
+    <p class="sd-subtitle">{{ s.title }}</p>
+    } @if (s.description) {
+    <p class="sd-description">{{ s.description }}</p>
+    } @if (s.additionalInfo && s.additionalInfo.length > 0) {
+    <div class="sd-links">
+      @for (info of s.additionalInfo; track info.key) {
+      <a
+        class="sd-link"
+        [href]="infoHref(info)"
+        [target]="isExternal(info.key) ? '_blank' : null"
+        rel="noopener noreferrer"
+      >
+        <ion-icon [name]="infoIcon(info.key)"></ion-icon>
+        <span>{{
+          isExternal(info.key)
+            ? (infoKeyLabel(info.key) | translate)
+            : info.value
+        }}</span>
+      </a>
+      }
+    </div>
+    }
+  </div>
+</div>
+}

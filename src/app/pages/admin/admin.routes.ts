@@ -73,6 +73,19 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../forms-submissions/forms-submission-detail/forms-submission-detail.page').then(m => m.FormsSubmissionDetailPage)
       },
       {
+        path: 'settings-club',
+        loadComponent: () => import('../settings-club/settings-club.page').then(m => m.SettingsClubPage)
+      },
+      {
+        path: 'settings-club/information',
+        loadComponent: () => import('../settings-club/settings-information/settings-information.page').then(m => m.SettingsInformationPage)
+      },
+      {
+        path: 'settings-club/sponsors',
+        loadComponent: () => import('../settings-club/settings-sponsors/settings-sponsors.page').then(m => m.SettingsSponsorsPage),
+        canDeactivate: [(comp: any) => comp.confirmLeave()]
+      },
+      {
         path: 'settings-forms',
         loadComponent: () => import('../settings-forms/settings-forms.page').then(m => m.SettingsFormsPage)
       },

@@ -1,0 +1,122 @@
+<div class="sponsor-card add-card">
+  <div class="card-header">
+    <button class="icon-button cancel" (click)="onCancel()">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+  </div>
+
+  <div class="card-body">
+    <div class="form-row">
+      <div class="image-upload-area">
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/svg+xml"
+          (change)="onImageSelected($event)"
+          class="file-input-overlay" />
+        @if (imageLoading()) {
+          <div class="image-placeholder image-loading">
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+        } @else if (imagePreview()) {
+          <div class="image-preview-wrapper">
+            <img [src]="imagePreview()" class="image-preview" alt="Preview" />
+            @if (selectedImage) {
+            <button
+              type="button"
+              class="image-clear-btn"
+              (click)="clearImage(); $event.stopPropagation()">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+            }
+          </div>
+        } @else {
+          <div class="image-placeholder">
+            <ion-icon name="image-outline"></ion-icon>
+            <span>{{ 'admin.settings.sponsors.form.selectImage' | translate }}</span>
+          </div>
+        }
+        <span class="file-input-label">
+          <ion-icon name="cloud-upload-outline"></ion-icon>
+          {{ 'admin.settings.sponsors.form.selectImage' | translate }}
+          @if (!sponsor()) { <span class="required-mark">*</span> }
+        </span>
+        @if (imageError()) {
+          <span class="field-error">{{ 'admin.settings.sponsors.error.' + imageError() | translate }}</span>
+        }
+      </div>
+
+      <div class="form-fields">
+        <div class="field-group">
+          <label>{{ 'admin.settings.sponsors.form.tier' | translate }}</label>
+          <select [formControl]="tier" class="field-select">
+            @for (opt of tierOptions; track opt.value) {
+              <option [ngValue]="opt.value">{{ opt.label | translate }}</option>
+            }
+          </select>
+        </div>
+        @for (field of fields(); track field.key) {
+          <div class="field-group">
+            <label>
+              {{ field.label | translate }}
+              @if (field.required) { <span class="required-mark">*</span> }
+            </label>
+            @if (field.type === 'textarea') {
+              <textarea
+                [formControl]="getFieldControl(field.key)"
+                rows="2"
+                [attr.maxlength]="field.maxLength ?? null"
+                [placeholder]="(field.placeholder || '') | translate"></textarea>
+            } @else if (field.type === 'select' && field.options) {
+              <select [formControl]="getFieldControl(field.key)" class="field-select">
+                @for (opt of field.options; track opt.value) {
+                  <option [ngValue]="opt.value">{{ opt.label | translate }}</option>
+                }
+              </select>
+            } @else {
+              <input
+                [type]="field.type"
+                [formControl]="getFieldControl(field.key)"
+                [attr.maxlength]="field.maxLength ?? null"
+                [placeholder]="(field.placeholder || '') | translate" />
+            }
+            @if (getFieldControl(field.key).touched && getFieldControl(field.key).invalid) {
+              <span class="field-error">{{ getFieldControl(field.key).errors?.['maxlength'] ? fieldMaxLengthErrors[field.key] : ('validation.required' | translate) }}</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="additional-info-section">
+      <div class="additional-info-header">
+        <label>{{ 'admin.settings.sponsors.form.additionalInfo' | translate }}</label>
+        <button type="button" class="btn-add-field" (click)="addInfo()" [disabled]="additionalInfo.length >= 10">
+          <ion-icon name="add-outline"></ion-icon> {{ 'admin.settings.sponsors.form.addInfo' | translate }}
+        </button>
+      </div>
+      @for (info of additionalInfo.controls; track $index; let i = $index) {
+        <div class="info-row" [formGroup]="getInfoGroup(info)">
+          <select formControlName="key" class="info-key">
+            @for (p of infoKeys; track p.value) {
+              <option [value]="p.value">{{ p.label | translate }}</option>
+            }
+          </select>
+          <input type="text" formControlName="value" maxlength="500" [placeholder]="'admin.settings.sponsors.form.valuePlaceholder' | translate" class="info-value" />
+          @if (info.get('value')?.touched && info.get('value')?.invalid) {
+            <span class="field-error">{{ info.get('value')?.errors?.['maxlength'] ? maxLengthError : ('validation.required' | translate) }}</span>
+          }
+          <button type="button" class="icon-button small delete" (click)="removeInfo(i)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-secondary" (click)="onCancel()">{{ 'common.cancel' | translate }}</button>
+    <button class="btn-primary" (click)="submit()" [disabled]="isSaving()">
+      @if (isSaving()) { <ion-spinner name="lines-small"></ion-spinner> } {{ 'common.save' | translate }}
+    </button>
+  </div>
+</div>

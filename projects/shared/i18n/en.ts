@@ -43,7 +43,29 @@ export const sharedTranslations = {
     continueWithApple: 'Continue with Apple',
     alreadyHaveAccount: 'Already have an account?',
     dontHaveAccount: "Don't have an account?",
-    continueAsGuest: 'Continue as guest'
+    continueAsGuest: 'Continue as guest',
+    forgotPasswordTitle: 'Forgot password?',
+    forgotPasswordSubtitle: "Enter your email and we'll send you a reset link.",
+    sendResetLink: 'Send reset link',
+    sending: 'Sending…',
+    rememberIt: 'Remember it?',
+    checkYourEmail: 'Check your email',
+    checkEmailMessage: 'If {email} is registered, a reset link has been sent. Check your inbox and follow the instructions.',
+    backToSignIn: 'Back to sign in',
+    checkSpam: "Don't see it? Check your spam folder.",
+    setNewPassword: 'Set new password',
+    setNewPasswordSubtitle: 'Choose a strong password for your account.',
+    newPasswordPlaceholder: 'New password',
+    resetPasswordButton: 'Reset password',
+    resetting: 'Resetting…',
+    passwordResetTitle: 'Password reset!',
+    passwordResetRedirecting: 'Redirecting you to sign in…',
+    signInNow: 'Sign in now',
+    invalidResetLinkMessage: 'This reset link is invalid or has expired. Please request a new one.',
+    strengthWeak: 'Weak',
+    strengthFair: 'Fair',
+    strengthGood: 'Good',
+    strengthStrong: 'Strong'
   },
   common: {
     loading: 'Loading...',
@@ -69,7 +91,19 @@ export const sharedTranslations = {
     addItem: 'Add item',
     addNewItem: 'Add new item',
     selectSeason: 'Select Season',
-    selectOption: 'Select an option'
+    selectOption: 'Select an option',
+    approve: 'Approve',
+    reject: 'Reject',
+    emptyState: {
+      title: 'Nothing here yet',
+      message: 'There are no notifications to show.'
+    },
+    confirmAlert: {
+      title: 'Unsaved changes',
+      message: 'You have unsaved changes. Are you sure you want to leave?',
+      confirm: 'Leave',
+      cancel: 'Stay',
+    }
   },
   fieldLabels: {
     type: 'Type',
@@ -101,7 +135,14 @@ export const sharedTranslations = {
     english: 'English',
     spanish: 'Spanish',
     catalan: 'Catalan',
-    languageChanged: 'Language changed successfully'
+    languageChanged: 'Language changed successfully',
+    security: 'Security',
+    changePasswordDescription: 'Change your account password.',
+    currentPassword: 'Current password',
+    currentPasswordPlaceholder: 'Enter current password',
+    newPassword: 'New password',
+    newPasswordPlaceholder: 'Enter new password',
+    updatePassword: 'Update password'
   },
   profile: {
     title: 'My profile',
@@ -139,6 +180,11 @@ export const sharedTranslations = {
     accountCreatedSuccess: 'Account created successfully!',
     signUpError: 'An error occurred during sign up.',
     signInError: 'An error occurred',
+    passwordUpdated: 'Password updated successfully.',
+    passwordUpdateError: 'Could not update password.',
+    forgotPasswordSent: 'If that email is registered, a reset link has been sent.',
+    passwordResetSuccess: 'Password reset successfully.',
+    invalidResetLink: 'Invalid or expired link.',
     googleSignUpSuccess: 'Google sign-up successful!',
     appleSignUpSuccess: 'Apple sign-up successful!',
     googleSignUpFailed: 'Google sign-up failed',
@@ -183,7 +229,7 @@ export const sharedTranslations = {
     selectRole: 'Select your role',
     roleDescription: 'Choose how you want to participate in this team',
     coachDescription: 'Create and manage team activities, training sessions, and matches',
-    viewerDescription: 'View team information, schedules, and match results',
+    memberDescription: 'View team information, schedules, and match results',
     submitRequest: 'Submit join request',
     joinInstant: 'Join team instantly',
     joiningInstant: 'Joining...',
@@ -203,12 +249,14 @@ export const sharedTranslations = {
       notifications: 'Notifications',
       membership: 'Membership',
       news: 'News',
+      contactMessages: 'Coordination inbox',
       params: 'Parameters',
       teams: 'Teams',
       club: 'Club',
       matches: 'Matches',
       users: 'Users',
       forms: 'Forms',
+      settings: 'Settings',
       settingsForms: 'Form Settings'
     },
     description: {
@@ -217,13 +265,114 @@ export const sharedTranslations = {
       notifications: 'Configure and send notifications',
       membership: 'Manage members and memberships',
       news: 'Manage news and announcements',
+      contactMessages: 'Messages sent to coordination',
       params: 'Configure system parameters',
       teams: 'Manage teams and rosters',
       club: 'Edit club information',
       matches: 'Manage match schedules',
       users: 'User management and permissions',
       forms: 'Manage forms',
+      settings: 'Manage club settings',
       settingsForms: 'Configure form settings'
+    },
+    settings: {
+      title: 'Club Settings',
+      information: {
+        title: 'Club Information',
+        description: 'Manage information sections visible to club members',
+        empty: 'No information sections',
+        emptyDescription: 'Add sections to display club information to members.',
+        add: 'Add Section',
+        edit: 'Edit Section',
+        untitled: 'Untitled section',
+        moveUp: 'Move section up',
+        moveDown: 'Move section down',
+        preview: 'Preview',
+        previewNotice: 'This is a preview of how the sections will look to club members.',
+        previewEmpty: 'Nothing to preview',
+        previewEmptyDescription: 'Add sections first to see the preview.',
+        saveSuccess: 'Sections saved successfully',
+        saveError: 'Could not save sections. Please try again.',
+        formInvalid: 'Please fix the errors in the sections before saving.',
+        form: {
+          title: 'Title',
+          content: 'Content',
+          icon: 'Icon',
+          titlePlaceholder: 'Section title',
+          contentPlaceholder: 'Section content...',
+          iconPlaceholder: 'Choose an icon...',
+          titleRequired: 'Title is required.',
+          contentRequired: 'Content is required.'
+        }
+      },
+      forms: {
+        title: 'Form Settings',
+        description: 'Create and manage club forms'
+      },
+      sponsors: {
+        title: 'Sponsors & Collaborators',
+        description: 'Manage sponsor logos and tiers',
+        preview: 'Preview',
+        previewNotice: 'This is how sponsors will appear in the club.',
+        previewEmpty: 'No sponsors to preview',
+        saved: 'Sponsors saved successfully',
+        canceled: 'Changes discarded',
+        empty: 'No sponsors yet',
+        emptyDescription: 'Add sponsors to display them to club members.',
+        add: 'Add Sponsor',
+        edit: 'Edit Sponsor',
+        newSponsor: 'New Sponsor',
+        created: 'Sponsor created successfully',
+        updated: 'Sponsor updated successfully',
+        deleted: 'Sponsor deleted',
+        tier: {
+          sponsor: 'Sponsors',
+          collaborator: 'Collaborators'
+        },
+        form: {
+          name: 'Name',
+          namePlaceholder: 'Sponsor name',
+          tier: 'Tier',
+          selectImage: 'Select image',
+          replaceImage: 'Replace image',
+          imageHint: 'PNG, JPEG, WebP or SVG',
+          title: 'Title',
+          titlePlaceholder: 'Optional display title',
+          description: 'Description',
+          descriptionPlaceholder: 'Optional description',
+          additionalInfo: 'Additional Info',
+          addInfo: 'Add info',
+          selectKey: 'Select key',
+          valuePlaceholder: 'Value or URL'
+        },
+        infoKeys: {
+          website: 'Website',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Email',
+          mobile: 'Mobile'
+        },
+        error: {
+          load: 'Could not load sponsors.',
+          create: 'Could not create sponsor.',
+          update: 'Could not update sponsor.',
+          delete: 'Could not delete sponsor.',
+          reorder: 'Could not reorder sponsors.',
+          imageSize: 'Image must be less than 2 MB.',
+          imageType: 'Invalid format. Use PNG, JPEG, WebP or SVG.',
+          imageRequired: 'Please select an image.',
+          imageUpload: 'Could not upload image. Please try again.',
+          imageUploadFailed: 'Image upload failed. Sponsor removed. Please try adding again.',
+          imageUploadFailedKept: 'Image upload failed. Previous image kept.',
+          imageUploadInProgress: 'Please wait until all sponsor images finish uploading.',
+          saveAll: 'Could not save sponsors. Please try again.'
+        }
+      }
     },
     parameters: {
       title: 'Parameters',
@@ -241,6 +390,71 @@ export const sharedTranslations = {
       paginatorReport: 'Showing {first} to {last} of {totalRecords} entries',
       submissions: 'Submissions',
       allForms: 'All forms',
+      exportError: 'Could not export submissions. Please try again.',
+      exportConfig: {
+        configure: 'Configure export',
+        title: 'Export columns',
+        subtitle: 'Choose the fields to include in the CSV.',
+        help: 'Select the form fields to export, rename the column headers and order them as they should appear in the document.',
+        include: 'Include',
+        selectAll: 'Select all',
+        unselectAll: 'Unselect all',
+        headerPlaceholder: 'Column name',
+        loading: 'Loading export configuration...',
+        save: 'Save configuration',
+        saving: 'Saving...',
+        saveSuccess: 'Export configuration saved.',
+        saveError: 'Could not save export configuration. Please try again.',
+        loadError: 'Could not load export configuration. Please try again.',
+        selectOne: 'Select one form to configure its export.',
+        atLeastOne: 'Enable at least one column.',
+        headerRequired: 'Enabled columns need a column name.'
+      },
+      integrations: {
+        title: 'Integrations',
+        subtitle: 'Send form submissions to external tools.',
+        loading: 'Loading integrations...',
+        createTitle: 'Create Google Sheet automatically',
+        createHelp: 'TacticalHub will create the spreadsheet, share it with this email and connect the form to it.',
+        create: 'Create Google Sheet',
+        creating: 'Creating...',
+        shareWithEmail: 'Share with email',
+        shareWithEmailPlaceholder: 'coordinator@club.com',
+        newTitle: 'New Google Sheets integration',
+        editTitle: 'Edit Google Sheets integration',
+        googleSheetsOnly: 'Initial version supports Google Sheets only.',
+        newButton: 'New integration',
+        name: 'Name',
+        spreadsheet: 'Spreadsheet URL or ID',
+        spreadsheetPlaceholder: 'https://docs.google.com/spreadsheets/d/...',
+        sheetName: 'Sheet name',
+        enabled: 'Enabled',
+        save: 'Save integration',
+        saving: 'Saving...',
+        configured: 'Configured integrations',
+        empty: 'No integrations configured yet.',
+        pending: 'pending',
+        enabledStatus: 'Enabled',
+        disabledStatus: 'Disabled',
+        open: 'Open',
+        edit: 'Edit',
+        test: 'Test',
+        sync: 'Sync pending',
+        delete: 'Delete',
+        required: 'Name, spreadsheet and sheet name are required.',
+        createRequired: 'Name, sheet name and share email are required.',
+        loadError: 'Could not load integrations. Please try again.',
+        createSuccess: 'Google Sheet created and integration connected.',
+        createError: 'Could not create the Google Sheet. Check Google Cloud setup and try again.',
+        saveSuccess: 'Integration saved.',
+        saveError: 'Could not save integration. Please try again.',
+        testSuccess: 'Integration test successful.',
+        testError: 'Integration test failed. Check spreadsheet access.',
+        syncSuccess: 'Synced {synced} items. Failed: {failed}.',
+        syncError: 'Could not sync pending items. Please try again.',
+        deleteSuccess: 'Integration deleted.',
+        deleteError: 'Could not delete integration. Please try again.'
+      },
       columns: {
         id: 'ID',
         name: 'Name',
@@ -285,6 +499,7 @@ export const sharedTranslations = {
       status: {
         AC: 'Active',
         I: 'Inactive',
+        E: 'Expired',
         P: 'Pending',
         D: 'Draft',
         AR: 'Archived'
@@ -303,7 +518,11 @@ export const sharedTranslations = {
         fromDate: 'Start Date',
         toDate: 'End Date',
         status: 'Status',
-        action: 'Action'
+        action: 'Action',
+        email: 'Email',
+        emailPlaceholder: 'Enter an email to send the submissions',
+        emailInvalid: 'Please enter a valid email address',
+        actionRequired: 'Action is required'
       },
       section: {
         general: 'General',
@@ -319,23 +538,123 @@ export const sharedTranslations = {
         description: 'Description',
         descriptionPlaceholder: 'Optional description',
         length: 'Max length',
+        descriptionMaxLength: 'Description must be 2000 characters or less',
         options: 'Options',
         addOption: 'Add option',
         optionsEmpty: 'No options yet. Add at least one.',
         optionPlaceholder: 'Option value',
+        moveUp: 'Move up',
+        moveDown: 'Move down',
         types: {
           text: 'Text',
           number: 'Number',
           date: 'Date',
           datetime: 'Date & Time',
           email: 'Email',
+          iban: 'IBAN',
           phone: 'Phone',
           textarea: 'Textarea',
-          boolean: 'Boolean',
-          select: 'Dropdown',
+          boolean: 'Checkbox',
+          select: 'Selection',
           file: 'File'
         }
+      },
+      preview: {
+        button: 'Preview',
+        title: 'Form Preview',
+        notice: 'This is a preview. Submitting is disabled.',
+        noFields: 'No fields added yet.'
+      },
+       formInvalid: 'Please fix the validation errors before saving',
+    }
+  },
+  forms: {
+    list: {
+      title: 'Forms',
+      description: 'Fill in the available forms for your club',
+      empty: 'No forms available',
+      emptyDescription: 'There are no active forms at this time. Check back later.'
+    },
+    submit: {
+      success: 'Form submitted successfully!'
+    },
+    status: {
+      draft: 'Draft',
+      active: 'Active',
+      closed: 'Closed'
+    },
+    actions: {
+      none: 'None',
+      register_user: 'Register user',
+      create_payment: 'Create payment',
+      trigger_workflow: 'Trigger workflow'
+    },
+    fieldTypes: {
+      text: 'Text',
+      number: 'Number',
+      date: 'Date',
+      select: 'Select',
+      checkbox: 'Checkbox'
+    },
+    submissionStatus: {
+      draft: 'Draft',
+      submitted: 'Submitted'
+    },
+    fields: {
+      name: 'Name',
+      namePlaceholder: 'Enter form name',
+      description: 'Description',
+      descriptionPlaceholder: 'Enter description (optional)',
+      fromDate: 'From date',
+      toDate: 'To date',
+      action: 'Action',
+      actionPlaceholder: 'Select action',
+      key: 'Field key',
+      keyPlaceholder: 'e.g. first_name',
+      label: 'Label',
+      labelPlaceholder: 'Enter field label',
+      type: 'Type',
+      order: 'Order',
+      maxLength: 'Max length',
+      isRequired: 'Required field'
+    },
+    admin: {
+      title: 'Form management',
+      createForm: 'Create form',
+      createFormTitle: 'Create new form',
+      createSuccess: 'Form created successfully!',
+      updateSuccess: 'Form updated successfully!',
+      updateError: 'Could not update form. Please try again.',
+      createError: 'Could not create form. Please try again.',
+      addFieldSuccess: 'Field added successfully!',
+      empty: 'No forms yet',
+      emptyDescription: 'Create your first form to start collecting data.',
+      tabs: {
+        fields: 'Fields',
+        submissions: 'Submissions'
+      },
+      fields: {
+        title: 'Form fields',
+        add: 'Add field',
+        addTitle: 'Add new field',
+        empty: 'No fields yet',
+        emptyDescription: 'Add fields to define what data to collect.',
+        required: 'Required'
+      },
+      submissions: {
+        title: 'Submissions',
+        empty: 'No submissions yet',
+        emptyDescription: 'Submissions will appear here once users fill in the form.',
+        userId: 'User',
+        total: 'Total'
       }
+    },
+    errors: {
+      loadError: 'Could not load forms. Please try again.',
+      submitError: 'Could not submit form. Please try again.',
+      createError: 'Could not create form. Please try again.',
+      updateError: 'Could not update form. Please try again.',
+      addFieldError: 'Could not add field. Please try again.'
     }
   },
   modals: {
@@ -368,30 +687,36 @@ export const sharedTranslations = {
     teamJoinRequests: 'Team join requests',
     actionRequests: 'Action requests',
     pendingRequest: 'pending request',
-    pendingRequests: 'pending requests'
+    pendingRequests: 'pending requests',
+    reviewComment: 'Comment',
+    reviewCommentPlaceholder: 'Add a comment (optional)'
   },
-  viewer: {
+  user: {
     title: 'Viewer portal',
     subtitle: 'Access club information and services',
     menu: {
       home: 'Home',
+      notifications: 'Notifications',
       news: 'News',
       action: 'Actions',
       information: 'Information',
       proposals: 'Proposals & complaints',
       matches: 'Matches',
-      partners: 'Partners',
+      sponsors: 'Sponsors & Collaborators',
+      contact: 'Contact',
       forms: 'Forms',
       more: 'More'
     },
     description: {
       home: 'Welcome to your club portal',
+      notifications: 'Your notifications and alerts',
       news: 'Latest updates and announcements',
       action: 'Register players or become a member',
       information: 'Club information and resources',
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
-      partners: 'Our club partners and sponsors',
+      sponsors: 'Our club collaborators and sponsors',
+      contact: 'Contact club coordination',
       forms: 'Fill in and submit club forms'
     },
     home: {
@@ -423,7 +748,43 @@ export const sharedTranslations = {
         event: 'Event',
         announcement: 'Announcement',
         achievement: 'Achievement'
-      }
+      },
+      newPost: 'New post',
+      createTitle: 'Create news',
+      editTitle: 'Edit news',
+      editorSubtitle: 'Publish an official update for this club.',
+      fieldTitle: 'Title',
+      titlePlaceholder: 'Important update',
+      fieldBody: 'Body',
+      bodyPlaceholder: 'Write the announcement...',
+      primaryImage: 'Primary image',
+      removeImage: 'Remove image',
+      uploadingImage: 'Uploading image...',
+      externalLinkUrl: 'External link URL',
+      externalLinkLabel: 'External link label',
+      linkedForm: 'Linked form',
+      noLinkedForm: 'No linked form',
+      loadingForms: 'Loading active forms...',
+      noActiveForms: 'No active forms available.',
+      publishNow: 'Publish now',
+      publish: 'Publish',
+      unpublish: 'Unpublish',
+      saveNews: 'Save news',
+      saving: 'Saving...',
+      imageUploadFailed: 'Image upload failed',
+      titleBodyRequired: 'Title and body are required',
+      saved: 'News saved',
+      saveFailed: 'Could not save news',
+      publishFailed: 'Could not publish news',
+      unpublishFailed: 'Could not unpublish news',
+      deleteFailed: 'Could not delete news',
+      imageCleanupFailed: 'News saved, but some unused images could not be cleaned up',
+      loadFormsFailed: 'Could not load active forms',
+      deleteConfirm: 'Delete "{title}"?',
+      statusDraft: 'Draft',
+      openLink: 'Open link',
+      openForm: 'Open form',
+      loadMore: 'Load more',
     },
     action: {
       registerPlayer: 'Register a player',
@@ -478,6 +839,10 @@ export const sharedTranslations = {
         commentsPlaceholder: 'Add any comments (optional)',
         registerPlayerSuccess: 'Player registration submitted successfully!',
         becomeMemberSuccess: 'Membership application submitted successfully!',
+        success: {
+          submitMessage: 'The form has been submitted successfully',
+          resubmitMessage: 'Your form has been resubmitted successfully'
+        },
         errors: {
           required: 'This field is required',
           email: 'Please enter a valid email address',
@@ -489,6 +854,23 @@ export const sharedTranslations = {
       },
       noForms: 'No forms available',
       noFormsDescription: 'There are no active forms at this time. Check back later.'
+    },
+    forms: {
+      submission: {
+        title: 'My submissions',
+        statusSubmitted: 'Submitted',
+        statusUnderReview: 'Under Review',
+        statusApproved: 'Approved',
+        statusRejected: 'Rejected',
+        fillAgain: 'Fill again',
+        detailTitle: 'My submission',
+        rejectionComment: 'Coordinator\'s comment',
+        editAndResend: 'Edit and resend',
+        resend: 'Resend',
+        rejectionFeedback: 'Coordinator\'s feedback',
+        viewHistory: 'View history',
+        commentHistory: 'Comment history'
+      }
     },
     information: {
       title: 'Information',
@@ -552,9 +934,66 @@ export const sharedTranslations = {
       upcomingMatches: 'Upcoming Matches',
       noRelatedMatches: 'No related matches'
     },
-    partners: {
-      empty: 'No partners listed',
-      emptyDescription: 'Our club partners and sponsors will be listed here.'
+    sponsors: {
+      title: 'Sponsors & Collaborators',
+      subtitle: 'The clubs that make it all possible',
+      empty: 'No collaborators listed',
+      emptyDescription: 'Our club collaborators and sponsors will be listed here.',
+      contactButton: 'Become a sponsor'
+    }
+  },
+  contact: {
+    title: 'Contact the club',
+    subtitle: 'Send a message to the club coordination team.',
+    sponsorTitle: 'Become a sponsor',
+    sponsorSubtitle: 'Tell us how you would like to collaborate with the club.',
+    generalType: 'Contact',
+    sponsorType: 'Sponsorship',
+    asideTitle: 'Your message goes straight to coordination',
+    asideDescription: 'Share as much context as possible so the club can review it and respond quickly.',
+    privacyNote: 'Your details will only be used to respond to this message within the club.',
+    yourDetails: 'Your details',
+    messageDetails: 'Message',
+    responseHint: 'Coordination will review your message as soon as possible.',
+    name: 'Name',
+    namePlaceholder: 'Your full name',
+    email: 'Email',
+    emailPlaceholder: 'name@email.com',
+    phone: 'Phone',
+    phonePlaceholder: '+1 555 000 000',
+    subject: 'Subject',
+    subjectPlaceholder: 'Brief summary of your message',
+    message: 'Message',
+    messagePlaceholder: 'Explain what you need help with...',
+    send: 'Send message',
+    sent: 'Message sent',
+    error: 'Could not send the message',
+    thanksTitle: 'Thanks for contacting us',
+    thanksDescription: 'The coordination team has received your message and will review it soon.'
+  },
+  contactMessages: {
+    title: 'Coordination inbox',
+    subtitle: 'Review messages users send to coordination.',
+    empty: 'No contact messages',
+    emptyDescription: 'New messages sent to coordination will appear here.',
+    loadMore: 'Load more',
+    loadError: 'Could not load contact message',
+    createdAt: 'Created',
+    close: 'Close message',
+    types: {
+      general: 'General',
+      sponsor: 'Sponsor'
+    },
+    status: {
+      AC: 'Open',
+      AR: 'Closed',
+      P: 'New',
+      S: 'In progress'
+    },
+    workflow: {
+      statusLabel: 'Status',
+      openHint: 'Manage this message from your coordination inbox.',
+      closedHint: 'This message is already closed for the whole coordination team.'
     }
   },
   guest: {
@@ -565,18 +1004,18 @@ export const sharedTranslations = {
       news: 'News',
       information: 'Information',
       matches: 'Matches',
-      partners: 'Partners'
+      sponsors: 'Sponsors & Collaborators'
     },
     description: {
       home: 'Welcome to the public club portal',
       news: 'Latest news and announcements',
       information: 'Club information',
       matches: 'View upcoming matches',
-      partners: 'Club partners and sponsors'
+      sponsors: 'Club collaborators and sponsors'
     }
   },
   roles: {
-    viewer: 'Viewer',
+    member: 'User',
     admin: 'Admin',
     coach: 'Coach',
     guest: 'Guest'

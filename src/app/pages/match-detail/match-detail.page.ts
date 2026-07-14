@@ -1,6 +1,6 @@
 import { Component, inject, signal, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon, IonButton, IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
+import { IonIcon, IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { MatchService } from '@services/match.service';
@@ -20,7 +20,6 @@ export type TabType = 'lineup' | 'goals' | 'standings' | 'matches';
   imports: [
     CommonModule,
     IonIcon,
-    IonButton,
     IonSegment,
     IonSegmentButton,
     TranslatePipe,

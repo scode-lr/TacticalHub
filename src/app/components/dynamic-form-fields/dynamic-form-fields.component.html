@@ -1,0 +1,138 @@
+@for (field of fields(); track field.id) {
+  <div class="field-group"
+       [class.field-group--boolean]="field.type === 'boolean' && !field.options?.length"
+       [class.field-group--approved]="field.status === AppStatus.Approved"
+       [class.field-group--rejected]="field.status === AppStatus.Rejected">
+    @if (field.type !== 'boolean' || field.options?.length) {
+      <label class="field-label" [for]="field.key">
+        {{ field.label }}
+        @if (field.isRequired) {
+          <span class="required-mark">*</span>
+        }
+      </label>
+    }
+
+    @if (field.description) {
+      <p class="field-hint">{{ field.description }}</p>
+    }
+
+    @if (field.type === 'text') {
+      <input
+        pInputText
+        [id]="field.key"
+        type="text"
+        [formControl]="$any(form().get(field.key))"
+        [invalid]="isFieldInvalid(field)"
+        [attr.maxlength]="field.maxLength"
+      />
+    }
+
+    @if (field.type === 'number') {
+      <input
+        pInputText
+        [id]="field.key"
+        type="number"
+        [formControl]="$any(form().get(field.key))"
+        [invalid]="isFieldInvalid(field)"
+      />
+    }
+
+    @if (field.type === 'date') {
+      <p-datepicker
+        [inputId]="field.key"
+        [formControl]="$any(form().get(field.key))"
+        dateFormat="dd/mm/yy"
+        [fluid]="true"
+        [showIcon]="true"
+        [invalid]="isFieldInvalid(field)"
+        appendTo="body"
+      />
+    }
+
+    @if (field.type === 'email') {
+      <input
+        pInputText
+        [id]="field.key"
+        type="email"
+        [formControl]="$any(form().get(field.key))"
+        [invalid]="isFieldInvalid(field)"
+      />
+    }
+
+    @if (field.type === 'iban') {
+      <input
+        pInputText
+        [id]="field.key"
+        type="text"
+        inputmode="text"
+        autocomplete="off"
+        autocapitalize="characters"
+        [formControl]="$any(form().get(field.key))"
+        [invalid]="isFieldInvalid(field)"
+        [attr.maxlength]="field.maxLength ?? 34"
+      />
+    }
+
+    @if (field.type === 'phone') {
+      <input
+        pInputText
+        [id]="field.key"
+        type="tel"
+        [formControl]="$any(form().get(field.key))"
+        [invalid]="isFieldInvalid(field)"
+      />
+    }
+
+    @if (field.type === 'textarea') {
+      <textarea
+        pTextarea
+        [id]="field.key"
+        [formControl]="$any(form().get(field.key))"
+        [invalid]="isFieldInvalid(field)"
+        rows="4"
+        [attr.maxlength]="field.maxLength"
+      ></textarea>
+    }
+
+    @if (field.type === 'boolean') {
+      @if (field.options?.length) {
+        <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field)">
+          @for (option of field.options; track option) {
+            <div class="radio-option">
+              <p-radiobutton
+                [inputId]="field.key + '_' + option"
+                [formControl]="$any(form().get(field.key))"
+                [name]="field.key"
+                [value]="option"
+              />
+              <label [for]="field.key + '_' + option" class="radio-text">{{ option }}</label>
+            </div>
+          }
+        </div>
+      } @else {
+        <label class="boolean-label">
+          <p-toggleswitch [formControl]="$any(form().get(field.key))" />
+          <span class="boolean-text">
+            {{ field.label }}
+            @if (field.isRequired) {
+              <span class="required-mark">*</span>
+            }
+          </span>
+        </label>
+      }
+    }
+
+    @if (field.type === 'select') {
+      <p-select
+        [inputId]="field.key"
+        [formControl]="$any(form().get(field.key))"
+        [options]="field.options ?? []"
+        [fluid]="true"
+        [invalid]="isFieldInvalid(field)"
+        [placeholder]="'common.selectOption' | translate"
+        appendTo="body"
+      />
+    }
+
+  </div>
+}

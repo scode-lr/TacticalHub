@@ -1,0 +1,33 @@
+<div class="page-container member-sponsors-page">
+  <div class="section-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'user.sponsors.title' | translate }}</h1>
+      <p class="section-subtitle">{{ 'user.sponsors.subtitle' | translate }}</p>
+    </div>
+    <button class="btn-primary sponsor-contact-button" type="button" (click)="contactSponsor()">
+      <ion-icon name="mail-outline"></ion-icon>
+      <span>{{ 'user.sponsors.contactButton' | translate }}</span>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="loading-spinner">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!loading() && sponsors().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="people-outline" class="empty-icon"></ion-icon>
+      <h3 class="empty-title">{{ 'user.sponsors.empty' | translate }}</h3>
+      <p class="empty-description">{{ 'user.sponsors.emptyDescription' | translate }}</p>
+    </div>
+  }
+
+  <!-- Sponsors Grid (grouped by tier) + detail modal -->
+  @if (!loading() && sponsors().length > 0) {
+    <app-sponsors-display [sponsors]="sponsors()" />
+  }
+</div>

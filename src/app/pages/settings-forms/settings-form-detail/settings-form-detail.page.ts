@@ -1,14 +1,18 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, AbstractControl, Validators } from '@angular/forms';
-import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { IonToast } from '@ionic/angular/standalone';
+import { saveOutline, syncOutline } from 'ionicons/icons';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
+import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
-import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
-import { addIcons } from 'ionicons';
-import { saveOutline } from 'ionicons/icons';
+import { SectionFooterActionsComponent } from '@components/section-footer-actions/section-footer-actions.component';
+import { PreviewModalComponent } from '@components/modals/preview-modal/preview-modal.component';
+import { FormPreviewContentComponent } from '@components/form-preview-content/form-preview-content.component';
+import { FormField } from '@core/models/form-field.model';
 import { FormAction } from '@core/models/form-action.enum';
 import { SettingsFormFieldsComponent } from './settings-form-fields/settings-form-fields.component';
 import { FormService } from '@core/services/form.service';
@@ -20,10 +24,11 @@ import { FormDetail } from '@core/responses/form.response';
 interface HeaderFormControls {
   name: FormControl<string>;
   description: FormControl<string>;
-  fromDate: FormControl<string>;
-  toDate: FormControl<string>;
+  fromDate: FormControl<string | null>;
+  toDate: FormControl<string | null>;
   status: FormControl<AppStatus>;
   action: FormControl<string>;
+  email: FormControl<string>;
   fields: FormArray;
 }
 
@@ -32,7 +37,17 @@ interface HeaderFormControls {
   templateUrl: './settings-form-detail.page.html',
   styleUrls: ['./settings-form-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IonIcon, TranslatePipe, BackButtonComponent, SettingsFormFieldsComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslatePipe,
+    BackButtonComponent,
+    SectionFooterActionsComponent,
+    PreviewModalComponent,
+    FormPreviewContentComponent,
+    SettingsFormFieldsComponent,
+    IonToast,
+  ]
 })
 export class SettingsFormDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
@@ -40,25 +55,42 @@ export class SettingsFormDetailPage implements OnInit {
   private readonly formService = inject(FormService);
   private readonly roleService = inject(RolesService);
   private readonly toastService = inject(ToastService);
+  private readonly translationService = inject(TranslationService);
 
   readonly isEditMode = signal<boolean>(false);
   readonly formId = signal<string | null>(null);
   readonly isSaving = signal<boolean>(false);
   readonly isLoading = signal<boolean>(false);
+  readonly previewOpen = signal<boolean>(false);
+
+  readonly showToast = this.toastService.showToast;
+  readonly toastMessage = this.toastService.toastMessage;
+  readonly toastColor = this.toastService.toastColor;
+
+  onToastDismiss(): void {
+    this.toastService.hide();
+  }
 
   readonly pageTitle = computed(() =>
     this.isEditMode() ? 'admin.settingsForms.editForm' : 'admin.settingsForms.newForm'
   );
 
-  readonly statusOptions = [
-    AppStatus.Active,
-    AppStatus.Inactive,
-    AppStatus.Pending,
-    AppStatus.Draft,
-    AppStatus.Archived
-  ];
+  get statusItems() {
+    return [
+      { label: this.translationService.instant('admin.settingsForms.status.AC'), value: AppStatus.Active },
+      { label: this.translationService.instant('admin.settingsForms.status.I'), value: AppStatus.Inactive },
+      { label: this.translationService.instant('admin.settingsForms.status.E'), value: AppStatus.Expired },
+      { label: this.translationService.instant('admin.settingsForms.status.D'), value: AppStatus.Draft },
+    ];
+  }
 
-  readonly actionOptions = Object.values(FormAction);
+  get actionItems() {
+    return [
+      { label: this.translationService.instant('admin.settingsForms.actions.simple'), value: FormAction.Simple },
+      { label: this.translationService.instant('admin.settingsForms.actions.register-player'), value: FormAction.RegisterPlayer },
+      { label: this.translationService.instant('admin.settingsForms.actions.become-member'), value: FormAction.BecomeMember },
+    ];
+  }
 
   form!: FormGroup;
 
@@ -67,7 +99,7 @@ export class SettingsFormDetailPage implements OnInit {
   }
 
   constructor() {
-    addIcons({ saveOutline });
+    addIcons({ saveOutline, syncOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -83,6 +115,34 @@ export class SettingsFormDetailPage implements OnInit {
     return this.form.get('fields') as FormArray;
   }
 
+  get previewFields(): FormField[] {
+    return this.fieldsArray.controls.map((ctrl, index) => {
+      const v = ctrl.value as {
+        key: string; label: string; description: string;
+        type: FormField['type']; length: number | null;
+        required: boolean; order: number; options: string[];
+      };
+      return {
+        id: index,
+        formId: 0,
+        key: v.key || `field_${index}`,
+        label: v.label || '',
+        description: v.description || null,
+        type: v.type || 'text',
+        maxLength: v.length ?? null,
+        isRequired: v.required ?? false,
+        order: v.order ?? index + 1,
+        options: v.options?.length ? v.options : null,
+        validationJson: null,
+        createdAt: new Date(),
+      };
+    });
+  }
+
+  openPreview(): void {
+    this.previewOpen.set(true);
+  }
+
   goBack(): void {
     this.navigationService.goBack();
   }
@@ -90,6 +150,7 @@ export class SettingsFormDetailPage implements OnInit {
   async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.toastService.show(this.translationService.instant('admin.settingsForms.formInvalid'), 'danger');
       return;
     }
 
@@ -98,20 +159,22 @@ export class SettingsFormDetailPage implements OnInit {
     if (!clubId) return;
 
     const value = this.form.getRawValue();
+    console.log('Form Value', value);
     const request: CreateFormRequest = {
       clubId,
       name: value.name,
       description: value.description || null,
-      fromDate: value.fromDate ? new Date(value.fromDate).toISOString() : null,
-      toDate: value.toDate ? new Date(value.toDate).toISOString() : null,
+      fromDate: value.fromDate ? `${value.fromDate}T00:00:00Z` : null,
+      toDate: value.toDate ? `${value.toDate}T00:00:00Z` : null,
       status: value.status,
       action: value.action,
+      email: value.email || null,
       fields: (value.fields as any[]).map((f, index) => ({
         key: f.key,
         label: f.label,
         description: f.description || null,
         type: f.type,
-        isRequired: f.isRequired ?? false,
+        isRequired: f.required ?? false,
         maxLength: f.maxLength ?? null,
         order: index + 1,
         options: f.options?.length ? f.options : null,
@@ -129,18 +192,19 @@ export class SettingsFormDetailPage implements OnInit {
           toDate: request.toDate,
           status: request.status,
           action: request.action,
+          email: request.email,
           fields: request.fields
         };
         await this.formService.updateForm(Number(this.formId()), updateRequest);
-        this.toastService.show('admin.settingsForms.updateSuccess');
+        this.toastService.show(this.translationService.instant('forms.admin.updateSuccess'));
       } else {
         await this.formService.createForm(request);
-        this.toastService.show('admin.settingsForms.createSuccess');
+        this.toastService.show(this.translationService.instant('forms.admin.createSuccess'));
       }
       this.navigationService.goBack();
     } catch {
-      const errorKey = this.isEditMode() ? 'admin.settingsForms.updateError' : 'admin.settingsForms.createError';
-      this.toastService.show(errorKey, 'danger');
+      const errorKey = this.isEditMode() ? 'forms.admin.updateError' : 'forms.admin.createError';
+      this.toastService.show(this.translationService.instant(errorKey), 'danger');
     } finally {
       this.isSaving.set(false);
     }
@@ -150,9 +214,10 @@ export class SettingsFormDetailPage implements OnInit {
     const fieldsArray = this.fb.array(
       (existing?.fields ?? []).map(f =>
         this.fb.group({
-          key: [f.key, [Validators.required, Validators.pattern(/^[a-z][a-z0-9_]*$/)]],
+          id: [f.id],
+          key: [f.key],
           label: [f.label, Validators.required],
-          description: [f.description ?? ''],
+          description: [f.description ?? '', Validators.maxLength(2000)],
           type: [f.type, Validators.required],
           length: [f.maxLength ?? null],
           required: [f.isRequired ?? false],
@@ -164,20 +229,18 @@ export class SettingsFormDetailPage implements OnInit {
 
     this.form = this.fb.group({
       name: [existing?.name ?? '', [Validators.required, Validators.maxLength(100)]],
-      description: [existing?.description ?? '', Validators.maxLength(500)],
-      fromDate: [existing ? this.toInputDate(existing.fromDate) : ''],
-      toDate: [existing ? this.toInputDate(existing.toDate) : ''],
+      description: [existing?.description ?? '', Validators.maxLength(2000)],
+      fromDate: [existing?.fromDate ? String(existing.fromDate).substring(0, 10) : null],
+      toDate: [existing?.toDate ? String(existing.toDate).substring(0, 10) : null],
       status: [existing?.status ?? AppStatus.Draft, Validators.required],
       action: [existing?.action ?? '', Validators.required],
+      email: [existing?.email ?? '', Validators.email],
       fields: fieldsArray
     });
-  }
-
-  private toInputDate(date: Date | null): string {
-    return date ? new Date(date).toISOString().split('T')[0] : '';
   }
 
   private async fetchFormById(id: string): Promise<FormDetail | null> {
     return await this.formService.getFormById(Number(id));
   }
+
 }

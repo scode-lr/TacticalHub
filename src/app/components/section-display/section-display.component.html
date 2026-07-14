@@ -1,0 +1,24 @@
+<div class="sections-container">
+  @for (section of sections(); track $index; let i = $index) {
+    <div class="section-card" [class.expanded]="isExpanded(i)">
+      <button class="section-header margin-bottom-0" (click)="toggle(i)" type="button">
+        <div class="header-content">
+          <ion-icon [name]="section.icon || 'information-circle-outline'" class="section-icon"></ion-icon>
+          <h2 class="section-title">{{ section.title }}</h2>
+        </div>
+        <div class="drop-down-icon">
+          <ion-icon
+          [name]="isExpanded(i) ? 'chevron-up-outline' : 'chevron-down-outline'"
+          class="toggle-icon">
+        </ion-icon>
+      </div>
+      </button>
+
+      @if (isExpanded(i)) {
+        <div class="section-content">
+          <p>{{ section.content }}</p>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -4,22 +4,20 @@
   </div>
 
   <div class="social-buttons">
-    <ion-button 
-      fill="clear" 
-      class="btn-secondary"
+    <button
+      class="btn-secondary btn-icon"
       (click)="onGoogleClick()"
       [disabled]="isLoading">
       <ion-spinner name="dots" *ngIf="isProviderLoading('google')"></ion-spinner>
-      <ion-icon name="logo-google" slot="icon-only" *ngIf="!isProviderLoading('google')"></ion-icon>
-    </ion-button>
+      <ion-icon name="logo-google" *ngIf="!isProviderLoading('google')"></ion-icon>
+    </button>
 
-    <ion-button 
-      fill="clear" 
-      class="btn-secondary"
+    <button
+      class="btn-secondary btn-icon"
       (click)="onAppleClick()"
       [disabled]="isLoading">
       <ion-spinner name="dots" *ngIf="isProviderLoading('apple')"></ion-spinner>
-      <ion-icon name="logo-apple" slot="icon-only" *ngIf="!isProviderLoading('apple')"></ion-icon>
-    </ion-button>
+      <ion-icon name="logo-apple" *ngIf="!isProviderLoading('apple')"></ion-icon>
+    </button>
   </div>
 </div>

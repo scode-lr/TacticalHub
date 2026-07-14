@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonButton, IonIcon, IonSpinner } from '@ionic/angular/standalone';
+import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { logoGoogle, logoApple } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -20,7 +20,6 @@ export interface SocialLoginResult {
   standalone: true,
   imports: [
     CommonModule,
-    IonButton,
     IonIcon,
     IonSpinner,
     TranslatePipe

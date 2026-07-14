@@ -40,17 +40,17 @@ export class RoleCardComponent {
     const nameMap: { [key: number]: string } = {
       [RoleType.Admin]: 'admin',
       [RoleType.Coach]: 'coach',
-      [RoleType.Viewer]: 'viewer',
+      [RoleType.Member]: 'member',
       [RoleType.Guest]: 'guest'
     };
-    return nameMap[roleId as number] ?? 'viewer';
+    return nameMap[roleId as number] ?? 'member';
   }
 
   getRoleIcon(roleId: RoleType | undefined): string {
     const iconMap: { [key: number]: string } = {
       [RoleType.Admin]: 'shield-checkmark-outline',
       [RoleType.Coach]: 'clipboard-outline',
-      [RoleType.Viewer]: 'person-outline',
+      [RoleType.Member]: 'person-outline',
       [RoleType.Guest]: 'eye-outline'
     };
     return iconMap[roleId as number] ?? 'person-outline';

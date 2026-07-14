@@ -1,0 +1,113 @@
+<div class="page-container form-submit-page">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  } @else if (error()) {
+    <div class="empty-state">
+      <ion-icon name="alert-circle-outline" class="empty-icon"></ion-icon>
+      <p class="empty-description">{{ error()! | translate }}</p>
+    </div>
+  } @else if (form(); as formData) {
+    <div class="section-header">
+      <h1 class="section-title">{{ formData.name }}</h1>
+      @if (formData.description) {
+        <p class="section-description">{{ formData.description }}</p>
+      }
+    </div>
+
+    @if (fieldForm(); as fg) {
+      <form [formGroup]="fg" (ngSubmit)="onSubmit()" class="form-content">
+        <div class="fields-list">
+          @for (field of getSortedFields(); track field.id) {
+            <div class="field-group" [class.invalid]="isFieldInvalid(field.key)">
+              <label class="field-label">
+                {{ field.label }}
+                @if (field.isRequired) {
+                  <span class="required-mark">*</span>
+                }
+              </label>
+              @if (field.description) {
+                <p class="field-description">{{ field.description }}</p>
+              }
+
+              @switch (field.type) {
+                @case ('text') {
+                  <ion-input
+                    [formControlName]="field.key"
+                    type="text"
+                    fill="outline"
+                    [placeholder]="field.label">
+                  </ion-input>
+                }
+                @case ('number') {
+                  <ion-input
+                    [formControlName]="field.key"
+                    type="number"
+                    fill="outline"
+                    [placeholder]="field.label">
+                  </ion-input>
+                }
+                @case ('date') {
+                  <ion-input
+                    [formControlName]="field.key"
+                    type="date"
+                    fill="outline">
+                  </ion-input>
+                }
+                @case ('iban') {
+                  <ion-input
+                    [formControlName]="field.key"
+                    type="text"
+                    fill="outline"
+                    autocapitalize="characters"
+                    autocomplete="off"
+                    [maxlength]="field.maxLength ?? 34"
+                    [placeholder]="field.label">
+                  </ion-input>
+                }
+                @case (FormFieldType.Checkbox) {
+                  <ion-checkbox [formControlName]="field.key" labelPlacement="end">
+                  </ion-checkbox>
+                }
+                @default {
+                  <ion-input
+                    [formControlName]="field.key"
+                    type="text"
+                    fill="outline"
+                    [placeholder]="field.label">
+                  </ion-input>
+                }
+              }
+
+              @if (isFieldInvalid(field.key)) {
+                <p class="field-error">{{ 'validation.required' | translate }}</p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button
+            class="btn-outline btn-block"
+            (click)="onCancel()"
+            [disabled]="isSubmitting()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button
+            type="submit"
+            class="btn-primary btn-block"
+            [disabled]="isSubmitting()">
+            @if (isSubmitting()) {
+              <ion-spinner name="crescent"></ion-spinner>
+              {{ 'common.submitting' | translate }}
+            } @else {
+              {{ 'common.submit' | translate }}
+            }
+          </button>
+        </div>
+      </form>
+    }
+  }
+</div>

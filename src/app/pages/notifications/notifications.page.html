@@ -1,4 +1,4 @@
-<div class="page-container viewer-action-page">
+<div class="page-container member-action-page">
   <div class="section-header">
     <h1 class="section-title">{{ 'admin.menu.notifications' | translate }}</h1>
   </div>
@@ -6,6 +6,25 @@
   <app-team-join-requests></app-team-join-requests>
 
   <app-action-requests></app-action-requests>
+
+  <!-- Loading state (initial load) -->
+  @if (isLoading() && notifications().length === 0) {
+    <div class="loading-state">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (hasError()) {
+    <div class="error-state">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>Could not load notifications. Pull down to retry.</p>
+    </div>
+  }
+
+  @if (!isLoading() && !hasError() && notifications().length === 0) {
+    <app-empty-state />
+  }
 
   <div class="notifications-list">
     @for (notification of notifications(); track notification.id) {
@@ -23,7 +42,10 @@
 
         @if (notification.user) {
           <ion-avatar class="notification-avatar">
-            <ion-img [src]="notification.user.avatarUrl || 'assets/default-avatar.png'" [alt]="notification.id" />
+            <ion-img
+              [src]="notification.user.avatarUrl || defaultAvatar"
+              [alt]="notification.user.username"
+              (ionError)="onAvatarError($event)" />
           </ion-avatar>
         } @else {
           <div class="notification-icon-wrapper">
@@ -33,6 +55,9 @@
 
         <div class="notification-content">
           <h3 class="notification-title">{{ notification.title }}</h3>
+          @if (notification.user?.username) {
+            <span class="notification-creator">{{ notification.user!.username }}</span>
+          }
           <p class="notification-message">{{ notification.message }}</p>
         </div>
 
@@ -41,36 +66,42 @@
 
           @if (notification.type === NotificationType.Action && notification.action && notification.status === 'unread') {
             <div class="notification-actions">
-              <ion-button 
-                size="small" 
-                fill="outline" 
-                color="primary"
+              <button
+                class="btn-outline btn-small"
                 (click)="handleAction(notification); $event.stopPropagation()">
                 {{ notification.action.label }}
-              </ion-button>
+              </button>
             </div>
           }
 
           @if (notification.type === NotificationType.Approval && notification.status === 'unread') {
             <div class="notification-approval-actions">
-              <ion-button 
-                size="small" 
-                fill="clear" 
-                color="success"
+              <button
+                class="btn-icon btn-icon--success btn-small"
                 (click)="handleApprove(notification); $event.stopPropagation()">
-                <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
-              </ion-button>
-              <ion-button 
-                size="small" 
-                fill="clear" 
-                color="danger"
+                <ion-icon name="checkmark-outline"></ion-icon>
+              </button>
+              <button
+                class="btn-icon btn-icon--danger btn-small"
                 (click)="handleReject(notification); $event.stopPropagation()">
-                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-              </ion-button>
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
             </div>
           }
         </div>
       </div>
     }
   </div>
+
+  <!-- Load more -->
+  @if (hasMore() && !isLoading()) {
+    <button class="btn-text btn-block" (click)="loadMore()">
+      Load more
+    </button>
+  }
+  @if (isLoading() && notifications().length > 0) {
+    <div class="loading-more">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  }
 </div>

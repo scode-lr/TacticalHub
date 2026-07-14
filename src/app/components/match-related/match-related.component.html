@@ -2,7 +2,7 @@
   <div class="related-matches-container">
     @if (previousMatches.length > 0) {
       <div class="matches-section">
-        <h3 class="section-title">{{ 'viewer.match.previousMatches' | translate }}</h3>
+        <h3 class="section-title">{{ 'user.match.previousMatches' | translate }}</h3>
         <div class="matches-list">
           @for (match of previousMatches; track match.id) {
             <div class="match-card" (click)="goToMatch(match.id)">
@@ -35,7 +35,7 @@
 
     @if (upcomingMatches.length > 0) {
       <div class="matches-section">
-        <h3 class="section-title">{{ 'viewer.match.upcomingMatches' | translate }}</h3>
+        <h3 class="section-title">{{ 'user.match.upcomingMatches' | translate }}</h3>
         <div class="matches-list">
           @for (match of upcomingMatches; track match.id) {
             <div class="match-card upcoming" (click)="goToMatch(match.id)">
@@ -65,6 +65,6 @@
 } @else {
   <div class="empty-message">
     <ion-icon name="calendar-outline"></ion-icon>
-    <p>{{ 'viewer.match.noRelatedMatches' | translate }}</p>
+    <p>{{ 'user.match.noRelatedMatches' | translate }}</p>
   </div>
 }

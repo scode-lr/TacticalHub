@@ -1,0 +1,191 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="close()" class="app-modal app-modal--large">
+  <ng-template>
+    <div class="app-modal-container integrations-modal">
+      <div class="app-modal-header">
+        <div class="app-modal-header-info">
+          <ion-icon name="cloud-upload-outline" class="app-modal-header-icon"></ion-icon>
+          <div class="app-modal-header-text">
+            <h2 class="app-modal-title">{{ 'admin.forms.integrations.title' | translate }}</h2>
+            <p class="app-modal-subtitle">{{ 'admin.forms.integrations.subtitle' | translate }}</p>
+          </div>
+        </div>
+        <button class="app-modal-close" (click)="close()" [attr.aria-label]="'common.close' | translate">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="app-modal-content">
+        @if (loading()) {
+          <div class="config-loading">
+            {{ 'admin.forms.integrations.loading' | translate }}
+          </div>
+        } @else {
+          <section class="integrations-list-section">
+            <h3>{{ 'admin.forms.integrations.configured' | translate }}</h3>
+
+            @if (integrations().length === 0) {
+              <div class="integration-empty">
+                <ion-icon name="cloud-upload-outline"></ion-icon>
+                <p>{{ 'admin.forms.integrations.empty' | translate }}</p>
+              </div>
+            } @else {
+              <div class="integrations-list">
+                @for (integration of integrations(); track integration.id) {
+                  <article class="integration-card">
+                    <div class="integration-card-main">
+                      <div>
+                        <h4>{{ integration.name }}</h4>
+                        <p>{{ getGoogleSheetsConfig(integration).sheetName }} - {{ integration.pendingSyncItems }} {{ 'admin.forms.integrations.pending' | translate }}</p>
+                      </div>
+                      <p-tag
+                        [value]="(integration.isEnabled ? 'admin.forms.integrations.enabledStatus' : 'admin.forms.integrations.disabledStatus') | translate"
+                        [severity]="integration.isEnabled ? 'success' : 'secondary'"
+                      />
+                    </div>
+
+                    @if (integration.lastError) {
+                      <p class="integration-error">{{ integration.lastError }}</p>
+                    }
+
+                    <div class="integration-actions">
+                      <button type="button" class="btn-secondary btn-small" (click)="onOpenIntegrationSpreadsheet(integration)">
+                        <ion-icon name="open-outline"></ion-icon>
+                        {{ 'admin.forms.integrations.open' | translate }}
+                      </button>
+                      <button type="button" class="btn-secondary btn-small" (click)="onEditIntegration(integration)">
+                        <ion-icon name="settings-outline"></ion-icon>
+                        {{ 'admin.forms.integrations.edit' | translate }}
+                      </button>
+                      <!-- <button type="button" class="btn-text btn-small" (click)="onTestIntegration(integration)" [disabled]="testingId() === integration.id">
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        {{ 'admin.forms.integrations.test' | translate }}
+                      </button> -->
+                      <button class="btn-primary btn-small" (click)="onSyncIntegration(integration)" [disabled]="syncingId() === integration.id">
+                        <ion-icon name="refresh-outline"></ion-icon>
+                        {{ 'admin.forms.integrations.sync' | translate }}
+                      </button>
+                      <button class="btn-danger btn-small" (click)="onDeleteIntegration(integration)">
+                        <ion-icon name="trash-outline"></ion-icon>
+                        {{ 'admin.forms.integrations.delete' | translate }}
+                      </button>
+                    </div>
+                  </article>
+                }
+              </div>
+            }
+          </section>
+
+          <!-- <section class="integration-form-card integration-create-card">
+            <div class="integration-form-header">
+              <div>
+                <h3>{{ 'admin.forms.integrations.createTitle' | translate }}</h3>
+                <p>{{ 'admin.forms.integrations.createHelp' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="integration-form-grid">
+              <label class="form-control">
+                <span>{{ 'admin.forms.integrations.name' | translate }}</span>
+                <input
+                  type="text"
+                  name="googleSheetsName"
+                  [ngModel]="googleSheetsCreateForm().name"
+                  (ngModelChange)="onUpdateGoogleSheetsCreateForm('name', $event)"
+                />
+              </label>
+
+              <label class="form-control">
+                <span>{{ 'admin.forms.integrations.sheetName' | translate }}</span>
+                <input
+                  type="text"
+                  name="googleSheetsSheetName"
+                  [ngModel]="googleSheetsCreateForm().sheetName"
+                  (ngModelChange)="onUpdateGoogleSheetsCreateForm('sheetName', $event)"
+                />
+              </label>
+
+              <label class="form-control">
+                <span>{{ 'admin.forms.integrations.shareWithEmail' | translate }}</span>
+                <input
+                  type="email"
+                  name="googleSheetsShareWithEmail"
+                  [ngModel]="googleSheetsCreateForm().shareWithEmail"
+                  (ngModelChange)="onUpdateGoogleSheetsCreateForm('shareWithEmail', $event)"
+                  [placeholder]="'admin.forms.integrations.shareWithEmailPlaceholder' | translate"
+                />
+              </label>
+            </div>
+
+            <button class="btn-primary" (click)="onCreateGoogleSheetsIntegration()" [disabled]="creatingSheet()">
+              <ion-icon name="add-outline"></ion-icon>
+              {{ (creatingSheet() ? 'admin.forms.integrations.creating' : 'admin.forms.integrations.create') | translate }}
+            </button>
+          </section> -->
+
+          <section class="integration-form-card">
+            <div class="integration-form-header">
+              <div>
+                <h3>{{ (integrationForm().id ? 'admin.forms.integrations.editTitle' : 'admin.forms.integrations.newTitle') | translate }}</h3>
+                <p>{{ 'admin.forms.integrations.googleSheetsOnly' | translate }}</p>
+              </div>
+              @if (integrationForm().id) {
+                <button class="btn-secondary" (click)="onNewIntegration()">
+                  <ion-icon name="add-outline"></ion-icon>
+                  {{ 'admin.forms.integrations.newButton' | translate }}
+                </button>
+              }
+            </div>
+
+            <div class="integration-form-grid">
+              <label class="form-control">
+                <span>{{ 'admin.forms.integrations.name' | translate }}</span>
+                <input
+                  type="text"
+                  name="integrationName"
+                  [ngModel]="integrationForm().name"
+                  (ngModelChange)="onUpdateIntegrationForm('name', $event)"
+                />
+              </label>
+
+              <label class="form-control">
+                <span>{{ 'admin.forms.integrations.spreadsheet' | translate }}</span>
+                <input
+                  type="text"
+                  name="integrationSpreadsheet"
+                  [ngModel]="integrationForm().spreadsheetId"
+                  (ngModelChange)="onUpdateIntegrationForm('spreadsheetId', $event)"
+                  [placeholder]="'admin.forms.integrations.spreadsheetPlaceholder' | translate"
+                />
+              </label>
+
+              <label class="form-control">
+                <span>{{ 'admin.forms.integrations.sheetName' | translate }}</span>
+                <input
+                  type="text"
+                  name="integrationSheetName"
+                  [ngModel]="integrationForm().sheetName"
+                  (ngModelChange)="onUpdateIntegrationForm('sheetName', $event)"
+                />
+              </label>
+
+              <label class="integration-enabled-toggle">
+                <input
+                  type="checkbox"
+                  [checked]="integrationForm().isEnabled"
+                  (change)="onUpdateIntegrationForm('isEnabled', $any($event.target).checked)"
+                />
+                <span>{{ 'admin.forms.integrations.enabled' | translate }}</span>
+              </label>
+            </div>
+
+            <button class="btn-primary" (click)="onSaveIntegration()" [disabled]="saving()">
+              <ion-icon name="save-outline"></ion-icon>
+              {{ (saving() ? 'admin.forms.integrations.saving' : 'admin.forms.integrations.save') | translate }}
+            </button>
+          </section>
+
+        }
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

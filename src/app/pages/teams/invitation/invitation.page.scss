@@ -56,9 +56,9 @@
     line-height: 1.6;
   }
 
-  ion-button {
+  button {
     margin-top: 10px;
-    --border-radius: 12px;
+    border-radius: 12px;
     height: 48px;
     font-weight: 600;
   }
@@ -266,7 +266,7 @@
       font-size: 14px;
     }
 
-    ion-button {
+    button {
       height: 46px;
     }
   }
@@ -366,9 +366,9 @@
       margin-bottom: 24px;
     }
 
-    ion-button {
+    button {
       height: 44px;
-      --border-radius: 10px;
+      border-radius: 10px;
     }
   }
 }
@@ -444,7 +444,7 @@
       font-size: 12px;
     }
 
-    ion-button {
+    button {
       height: 42px;
     }
   }

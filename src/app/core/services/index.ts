@@ -12,4 +12,7 @@ export * from './loading.service';
 export * from './toast.service';
 export * from './snackbar.service';
 export * from './token.service';
+export * from './forms.service';
 export * from './form-submissions.service';
+export * from './sponsor.service';
+export * from './confirm.service';

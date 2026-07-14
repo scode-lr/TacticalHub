@@ -43,7 +43,29 @@ export const sharedTranslations = {
     continueWithApple: 'Continuar amb Apple',
     alreadyHaveAccount: 'Ja tens un compte?',
     dontHaveAccount: 'No tens un compte?',
-    continueAsGuest: 'Continuar com a convidat'
+    continueAsGuest: 'Continuar com a convidat',
+    forgotPasswordTitle: 'Has oblidat la contrasenya?',
+    forgotPasswordSubtitle: "Introdueix el teu correu i t'enviarem un enllaç de restabliment.",
+    sendResetLink: 'Enviar enllaç',
+    sending: 'Enviant…',
+    rememberIt: 'La recordes?',
+    checkYourEmail: 'Revisa el teu correu',
+    checkEmailMessage: "Si {email} està registrat, s'ha enviat un enllaç de restabliment. Revisa la teva safata d'entrada i segueix les instruccions.",
+    backToSignIn: 'Tornar a iniciar sessió',
+    checkSpam: 'No el veus? Revisa la teva carpeta de correu brossa.',
+    setNewPassword: 'Establir nova contrasenya',
+    setNewPasswordSubtitle: 'Tria una contrasenya segura per al teu compte.',
+    newPasswordPlaceholder: 'Nova contrasenya',
+    resetPasswordButton: 'Restablir contrasenya',
+    resetting: 'Restablint…',
+    passwordResetTitle: 'Contrasenya restablerta!',
+    passwordResetRedirecting: "Redirigint a l'inici de sessió…",
+    signInNow: 'Iniciar sessió ara',
+    invalidResetLinkMessage: "Aquest enllaç de restabliment és invàlid o ha caducat. Si us plau, sol·licita'n un de nou.",
+    strengthWeak: 'Feble',
+    strengthFair: 'Regular',
+    strengthGood: 'Bona',
+    strengthStrong: 'Forta'
   },
   common: {
     loading: 'Carregant...',
@@ -69,7 +91,19 @@ export const sharedTranslations = {
     addItem: 'Afegir element',
     addNewItem: 'Afegir nou element',
     selectSeason: 'Seleccionar Temporada',
-    selectOption: 'Seleccionar una opció'
+    selectOption: 'Seleccionar una opció',
+    approve: 'Aprovar',
+    reject: 'Rebutjar',
+    emptyState: {
+      title: 'Res per aquí encara',
+      message: 'No hi ha notificacions per mostrar.'
+    },
+    confirmAlert: {
+      title: 'Canvis sense desar',
+      message: 'Tens canvis sense desar. Estàs segur que vols sortir?',
+      confirm: 'Sortir',
+      cancel: 'Quedar-se',
+    }
   },
   fieldLabels: {
     type: 'Tipus',
@@ -101,7 +135,14 @@ export const sharedTranslations = {
     english: 'Anglès',
     spanish: 'Espanyol',
     catalan: 'Català',
-    languageChanged: 'Idioma canviat correctament'
+    languageChanged: 'Idioma canviat correctament',
+    security: 'Seguretat',
+    changePasswordDescription: 'Canvia la contrasenya del teu compte.',
+    currentPassword: 'Contrasenya actual',
+    currentPasswordPlaceholder: 'Introdueix la teva contrasenya actual',
+    newPassword: 'Nova contrasenya',
+    newPasswordPlaceholder: 'Introdueix la nova contrasenya',
+    updatePassword: 'Actualitzar contrasenya'
   },  profile: {
     title: 'El meu perfil',
     editProfile: 'Editar perfil',
@@ -137,6 +178,11 @@ export const sharedTranslations = {
     accountCreatedSuccess: 'Compte creat amb èxit!',
     signUpError: 'Ha ocorregut un error durant el registre.',
     signInError: 'Ha ocorregut un error',
+    passwordUpdated: 'Contrasenya actualitzada correctament.',
+    passwordUpdateError: 'No s\'ha pogut actualitzar la contrasenya.',
+    forgotPasswordSent: "Si aquest correu està registrat, s'ha enviat un enllaç de restabliment.",
+    passwordResetSuccess: 'Contrasenya restablerta correctament.',
+    invalidResetLink: 'Enllaç invàlid o caducat.',
     googleSignUpSuccess: 'Registre amb Google amb èxit!',
     appleSignUpSuccess: 'Registre amb Apple amb èxit!',
     googleSignUpFailed: 'Registre amb Google ha fallat',
@@ -181,7 +227,7 @@ export const sharedTranslations = {
     selectRole: 'Selecciona el teu rol',
     roleDescription: 'Tria com vols participar en aquest equip',
     coachDescription: 'Crear i gestionar activitats de l\'equip, sessions d\'entrenament i partits',
-    viewerDescription: 'Veure informació de l\'equip, horaris i resultats de partits',
+    memberDescription: 'Veure informació de l\'equip, horaris i resultats de partits',
     submitRequest: 'Enviar sol·licitud',
     joinInstant: 'Unir-se instantàniament',
     joiningInstant: 'Unint-se...',
@@ -201,12 +247,14 @@ export const sharedTranslations = {
       notifications: 'Notificacions',
       membership: 'Socis',
       news: 'Notícies',
+      contactMessages: 'Safata de coordinació',
       params: 'Paràmetres',
       teams: 'Equips',
       club: 'Club',
       matches: 'Partits',
       users: 'Usuaris',
       forms: 'Formularis',
+      settings: 'Configuració',
       settingsForms: 'Configuració de formularis'
     },
     description: {
@@ -215,13 +263,114 @@ export const sharedTranslations = {
       notifications: 'Configurar i enviar notificacions',
       membership: 'Gestionar socis i membres',
       news: 'Gestionar notícies i anuncis',
+      contactMessages: 'Missatges enviats a coordinació',
       params: 'Configurar paràmetres del sistema',
       teams: 'Gestionar equips i plantilles',
       club: 'Editar informació del club',
       matches: 'Gestionar calendaris de partits',
       users: 'Gestió d\'usuaris i permisos',
       forms: 'Gestionar formularis',
+      settings: 'Gestionar configuració del club',
       settingsForms: 'Configurar ajustos de formularis'
+    },
+    settings: {
+      title: 'Configuració del Club',
+      information: {
+        title: 'Informació del Club',
+        description: 'Gestiona les seccions d\'informació visibles per als membres',
+        empty: 'Sense seccions d\'informació',
+        emptyDescription: 'Afegeix seccions per mostrar informació del club als membres.',
+        add: 'Afegir Secció',
+        edit: 'Editar Secció',
+        untitled: 'Secció sense títol',
+        moveUp: 'Moure secció amunt',
+        moveDown: 'Moure secció avall',
+        preview: 'Vista prèvia',
+        previewNotice: 'Aquesta és una vista prèvia de com veuran les seccions els membres del club.',
+        previewEmpty: 'Res per previsualitzar',
+        previewEmptyDescription: 'Afegeix seccions primer per veure la vista prèvia.',
+        saveSuccess: 'Seccions desades correctament',
+        saveError: 'No s\'han pogut desar les seccions. Torna-ho a intentar.',
+        formInvalid: 'Corregeix els errors de les seccions abans de desar.',
+        form: {
+          title: 'Títol',
+          content: 'Contingut',
+          icon: 'Icona',
+          titlePlaceholder: 'Títol de la secció',
+          contentPlaceholder: 'Contingut de la secció...',
+          iconPlaceholder: 'Tria un icona...',
+          titleRequired: 'El títol és obligatori.',
+          contentRequired: 'El contingut és obligatori.'
+        }
+      },
+      forms: {
+        title: 'Configuració de Formularis',
+        description: 'Crear i gestionar formularis del club'
+      },
+      sponsors: {
+        title: 'Patrocinadors i col·laboradors',
+        description: 'Gestionar logos i nivells de patrocinadors',
+        preview: 'Vista prèvia',
+        previewNotice: 'Així és com els patrocinadors apareixeran al club.',
+        previewEmpty: 'No hi ha patrocinadors per mostrar',
+        saved: 'Patrocinadors guardats correctament',
+        canceled: 'Canvis descartats',
+        empty: 'Sense patrocinadors',
+        emptyDescription: 'Afegeix patrocinadors per mostrar-los als membres del club.',
+        add: 'Afegir patrocinador',
+        edit: 'Editar patrocinador',
+        newSponsor: 'Nou patrocinador',
+        created: 'Patrocinador creat correctament',
+        updated: 'Patrocinador actualitzat correctament',
+        deleted: 'Patrocinador eliminat',
+        tier: {
+          sponsor: 'Patrocinadors',
+          collaborator: 'Col·laboradors'
+        },
+        form: {
+          name: 'Nom',
+          namePlaceholder: 'Nom del patrocinador',
+          tier: 'Nivell',
+          selectImage: 'Seleccionar imatge',
+          replaceImage: 'Reemplaçar imatge',
+          imageHint: 'PNG, JPEG, WebP o SVG',
+          title: 'Títol',
+          titlePlaceholder: 'Títol opcional',
+          description: 'Descripció',
+          descriptionPlaceholder: 'Descripció opcional',
+          additionalInfo: 'Informació addicional',
+          addInfo: 'Afegir info',
+          selectKey: 'Seleccionar clau',
+          valuePlaceholder: 'Valor o URL'
+        },
+        infoKeys: {
+          website: 'Lloc web',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Correu',
+          mobile: 'Mòbil'
+        },
+        error: {
+          load: 'No s\'han pogut carregar els patrocinadors.',
+          create: 'No s\'ha pogut crear el patrocinador.',
+          update: 'No s\'ha pogut actualitzar el patrocinador.',
+          delete: 'No s\'ha pogut eliminar el patrocinador.',
+          reorder: 'No s\'han pogut reordenar els patrocinadors.',
+          imageSize: 'La imatge ha de ser menor de 2 MB.',
+          imageType: 'Format invàlid. Utilitza PNG, JPEG, WebP o SVG.',
+          imageRequired: 'Selecciona una imatge.',
+          imageUpload: 'No s\'ha pogut pujar la imatge. Torna-ho a intentar.',
+          imageUploadFailed: 'Error al pujar la imatge. Patrocinador eliminat. Torna a intentar afegir-lo.',
+          imageUploadFailedKept: 'Error al pujar la imatge. S\'ha conservat la imatge anterior.',
+          imageUploadInProgress: 'Espera que s\'acabin de pujar totes les imatges dels patrocinadors.',
+          saveAll: 'No s\'han pogut guardar els patrocinadors. Torna-ho a intentar.'
+        }
+      }
     },
     parameters: {
       title: 'Paràmetres',
@@ -239,6 +388,71 @@ export const sharedTranslations = {
       paginatorReport: 'Mostrant {first} a {last} de {totalRecords} entrades',
       submissions: 'Enviaments',
       allForms: 'Tots els formularis',
+      exportError: 'No s\'ha pogut exportar les respostes. Si us plau, torna-ho a intentar.',
+      exportConfig: {
+        configure: 'Configurar exportació',
+        title: 'Columnes d\'exportació',
+        subtitle: 'Tria els camps que s\'inclouran al CSV.',
+        help: 'Selecciona els camps del formulari, reanomena les columnes i ordena-les com han d\'aparèixer al document.',
+        include: 'Incloure',
+        selectAll: 'Seleccionar-ho tot',
+        unselectAll: 'Deseleccionar-ho tot',
+        headerPlaceholder: 'Nom de columna',
+        loading: 'Carregant configuració d\'exportació...',
+        save: 'Guardar configuració',
+        saving: 'Guardant...',
+        saveSuccess: 'Configuració d\'exportació guardada.',
+        saveError: 'No s\'ha pogut guardar la configuració d\'exportació. Torna-ho a intentar.',
+        loadError: 'No s\'ha pogut carregar la configuració d\'exportació. Torna-ho a intentar.',
+        selectOne: 'Selecciona un formulari per configurar-ne l\'exportació.',
+        atLeastOne: 'Activa almenys una columna.',
+        headerRequired: 'Les columnes actives necessiten un nom.'
+      },
+      integrations: {
+        title: 'Integracions',
+        subtitle: 'Envia les respostes del formulari a eines externes.',
+        loading: 'Carregant integracions...',
+        createTitle: 'Crear Google Sheet automàticament',
+        createHelp: 'TacticalHub crearà el full, el compartirà amb aquest email i connectarà el formulari.',
+        create: 'Crear Google Sheet',
+        creating: 'Creant...',
+        shareWithEmail: 'Compartir amb email',
+        shareWithEmailPlaceholder: 'coordinacio@club.com',
+        newTitle: 'Nova integració amb Google Sheets',
+        editTitle: 'Editar integració amb Google Sheets',
+        googleSheetsOnly: 'La versió inicial només suporta Google Sheets.',
+        newButton: 'Nova integració',
+        name: 'Nom',
+        spreadsheet: 'URL o ID del full',
+        spreadsheetPlaceholder: 'https://docs.google.com/spreadsheets/d/...',
+        sheetName: 'Nom de pestanya',
+        enabled: 'Activa',
+        save: 'Guardar integració',
+        saving: 'Guardant...',
+        configured: 'Integracions configurades',
+        empty: 'Encara no hi ha integracions configurades.',
+        pending: 'pendents',
+        enabledStatus: 'Activa',
+        disabledStatus: 'Desactivada',
+        open: 'Obrir',
+        edit: 'Editar',
+        test: 'Provar',
+        sync: 'Sincronitzar pendents',
+        delete: 'Eliminar',
+        required: 'Nom, full i pestanya són obligatoris.',
+        createRequired: 'Nom, pestanya i email per compartir són obligatoris.',
+        loadError: 'No s\'han pogut carregar les integracions. Torna-ho a intentar.',
+        createSuccess: 'Google Sheet creada i integració connectada.',
+        createError: 'No s\'ha pogut crear la Google Sheet. Revisa la configuració de Google Cloud i torna-ho a intentar.',
+        saveSuccess: 'Integració guardada.',
+        saveError: 'No s\'ha pogut guardar la integració. Torna-ho a intentar.',
+        testSuccess: 'Prova d\'integració correcta.',
+        testError: 'La prova d\'integració ha fallat. Revisa l\'accés al full.',
+        syncSuccess: 'Sincronitzats: {synced}. Fallits: {failed}.',
+        syncError: 'No s\'han pogut sincronitzar els pendents. Torna-ho a intentar.',
+        deleteSuccess: 'Integració eliminada.',
+        deleteError: 'No s\'ha pogut eliminar la integració. Torna-ho a intentar.'
+      },
       columns: {
         id: 'ID',
         name: 'Nom',
@@ -283,6 +497,7 @@ export const sharedTranslations = {
       status: {
         AC: 'Actiu',
         I: 'Inactiu',
+        E: 'Caducat',
         P: 'Pendent',
         D: 'Esborrany',
         AR: 'Arxivat'
@@ -301,7 +516,10 @@ export const sharedTranslations = {
         fromDate: 'Data d\'inici',
         toDate: 'Data de fi',
         status: 'Estat',
-        action: 'Acció'
+        action: 'Acció',
+        email: 'Email',
+        emailPlaceholder: 'Introdueix un email per enviar les respostes',
+        emailInvalid: 'Si us plau, introdueix un email vàlid'
       },
       section: {
         general: 'General',
@@ -317,23 +535,123 @@ export const sharedTranslations = {
         description: 'Descripció',
         descriptionPlaceholder: 'Descripció opcional',
         length: 'Long. màx.',
+        descriptionMaxLength: 'La descripció ha de tenir 2000 caràcters o menys',
         options: 'Opcions',
         addOption: 'Afegir opció',
         optionsEmpty: 'Sense opcions. Afegeix-ne almenys una.',
         optionPlaceholder: 'Valor de l\'opció',
+        moveUp: 'Moure amunt',
+        moveDown: 'Moure avall',
         types: {
           text: 'Text',
-          number: 'Nombre',
+          number: 'Numero',
           date: 'Data',
           datetime: 'Data i hora',
           email: 'Email',
+          iban: 'IBAN',
           phone: 'Telèfon',
           textarea: 'Àrea de text',
-          boolean: 'Boolean',
-          select: 'Desplegable',
+          boolean: 'Checkbox',
+          select: 'Selecció',
           file: 'Arxiu'
         }
+      },
+      preview: {
+        button: 'Previsualitza',
+        title: 'Previsualització del formulari',
+        notice: 'Això és una previsualització. L\'enviament està desactivat.',
+        noFields: 'Encara no s\'han afegit camps.'
+      },
+       formInvalid: 'Corregeix els errors de validació abans de desar',
+    }
+  },
+  forms: {
+    list: {
+      title: 'Formularis',
+      description: 'Omple els formularis disponibles del teu club',
+      empty: 'No hi ha formularis disponibles',
+      emptyDescription: 'No hi ha formularis actius en aquest moment. Torna més tard.'
+    },
+    submit: {
+      success: 'Formulari enviat correctament!'
+    },
+    status: {
+      draft: 'Esborrany',
+      active: 'Actiu',
+      closed: 'Tancat'
+    },
+    actions: {
+      none: 'Cap',
+      register_user: 'Registrar usuari',
+      create_payment: 'Crear pagament',
+      trigger_workflow: 'Activar flux de treball'
+    },
+    fieldTypes: {
+      text: 'Text',
+      number: 'Número',
+      date: 'Data',
+      select: 'Selecció',
+      checkbox: 'Casella'
+    },
+    submissionStatus: {
+      draft: 'Esborrany',
+      submitted: 'Enviat'
+    },
+    fields: {
+      name: 'Nom',
+      namePlaceholder: 'Introdueix el nom del formulari',
+      description: 'Descripció',
+      descriptionPlaceholder: 'Introdueix una descripció (opcional)',
+      fromDate: 'Data d\'inici',
+      toDate: 'Data de fi',
+      action: 'Acció',
+      actionPlaceholder: 'Seleccionar acció',
+      key: 'Clau del camp',
+      keyPlaceholder: 'p.ex. nom',
+      label: 'Etiqueta',
+      labelPlaceholder: 'Introdueix l\'etiqueta del camp',
+      type: 'Tipus',
+      order: 'Ordre',
+      maxLength: 'Longitud màxima',
+      isRequired: 'Camp obligatori'
+    },
+    admin: {
+      title: 'Gestió de formularis',
+      createForm: 'Crear formulari',
+      createFormTitle: 'Crear nou formulari',
+      createSuccess: 'Formulari creat correctament!',
+      updateSuccess: 'Formulari actualitzat correctament!',
+      updateError: 'No s\'ha pogut actualitzar el formulari. Torna-ho a intentar.',
+      createError: 'No s\'ha pogut crear el formulari. Torna-ho a intentar.',
+      addFieldSuccess: 'Camp afegit correctament!',
+      empty: 'No hi ha formularis encara',
+      emptyDescription: 'Crea el teu primer formulari per començar a recollir dades.',
+      tabs: {
+        fields: 'Camps',
+        submissions: 'Enviaments'
+      },
+      fields: {
+        title: 'Camps del formulari',
+        add: 'Afegir camp',
+        addTitle: 'Afegir nou camp',
+        empty: 'No hi ha camps encara',
+        emptyDescription: 'Afegeix camps per definir quines dades recollir.',
+        required: 'Obligatori'
+      },
+      submissions: {
+        title: 'Enviaments',
+        empty: 'No hi ha enviaments encara',
+        emptyDescription: 'Els enviaments apareixeran aquí quan els usuaris omplin el formulari.',
+        userId: 'Usuari',
+        total: 'Total'
       }
+    },
+    errors: {
+      loadError: 'No s\'han pogut carregar els formularis. Torna-ho a intentar.',
+      submitError: 'No s\'ha pogut enviar el formulari. Torna-ho a intentar.',
+      createError: 'No s\'ha pogut crear el formulari. Torna-ho a intentar.',
+      updateError: 'No s\'ha pogut actualitzar el formulari. Torna-ho a intentar.',
+      addFieldError: 'No s\'ha pogut afegir el camp. Torna-ho a intentar.'
     }
   },
   modals: {
@@ -366,31 +684,37 @@ export const sharedTranslations = {
     teamJoinRequests: 'Sol·licituds d\'unió a l\'equip',
     actionRequests: 'Sol·licituds d\'acció',
     pendingRequest: 'sol·licitud pendent',
-    pendingRequests: 'sol·licituds pendents'
+    pendingRequests: 'sol·licituds pendents',
+    reviewComment: 'Comentari',
+    reviewCommentPlaceholder: 'Afegeix un comentari (opcional)'
   },
-  viewer: {
+  user: {
     title: 'Portal de l\'observador',
     subtitle: 'Accedeix a informació i serveis del club',
     menu: {
       home: 'Inici',
+      notifications: 'Notificacions',
       news: 'Notícies',
       action: 'Accions',
       information: 'Informació',
       proposals: 'Propostes i queixes',
       matches: 'Partits',
-      partners: 'Socis',
+      sponsors: 'Patrocinadors i col·laboradors',
+      contact: 'Contactar',
       forms: 'Formularis',
       more: 'Més'
     },
     description: {
       home: 'Benvingut al teu portal del club',
+      notifications: 'Les teves notificacions i alertes',
       news: 'Últimes actualitzacions i anuncis',
       action: 'Registra jugadors o fes-te soci',
       information: 'Informació i recursos del club',
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
-      partners: 'Els nostres socis i patrocinadors del club',
-      forms: 'Omple i envia formularis del club'
+      sponsors: 'Els nostres col·laboradors i patrocinadors del club',
+      contact: 'Contacta amb coordinació del club',
+      forms: 'Omple els formularis del club'
     },
     home: {
       welcome: 'Benvingut al club!',
@@ -421,7 +745,43 @@ export const sharedTranslations = {
         event: 'Esdeveniment',
         announcement: 'Anunci',
         achievement: 'Assoliment'
-      }
+      },
+      newPost: 'Nova notícia',
+      createTitle: 'Crear notícia',
+      editTitle: 'Editar notícia',
+      editorSubtitle: 'Publicar una actualització oficial per a aquest club.',
+      fieldTitle: 'Títol',
+      titlePlaceholder: 'Actualització important',
+      fieldBody: 'Contingut',
+      bodyPlaceholder: 'Escriu l\'anunci...',
+      primaryImage: 'Imatge principal',
+      removeImage: 'Treure imatge',
+      uploadingImage: 'Pujant imatge...',
+      externalLinkUrl: 'URL de l\'enllaç extern',
+      externalLinkLabel: 'Etiqueta de l\'enllaç extern',
+      linkedForm: 'Formulari vinculat',
+      noLinkedForm: 'Sense formulari',
+      loadingForms: 'Carregant formularis actius...',
+      noActiveForms: 'No hi ha formularis actius disponibles.',
+      publishNow: 'Publicar ara',
+      publish: 'Publicar',
+      unpublish: 'Despublicar',
+      saveNews: 'Desar notícia',
+      saving: 'Desant...',
+      imageUploadFailed: 'Error en pujar la imatge',
+      titleBodyRequired: 'El títol i el contingut són obligatoris',
+      saved: 'Notícia desada',
+      saveFailed: 'No s\'ha pogut desar la notícia',
+      publishFailed: 'No s\'ha pogut publicar la notícia',
+      unpublishFailed: 'No s\'ha pogut despublicar la notícia',
+      deleteFailed: 'No s\'ha pogut eliminar la notícia',
+      imageCleanupFailed: 'Notícia desada, però no s\'han pogut netejar algunes imatges no utilitzades',
+      loadFormsFailed: 'No s\'han pogut carregar els formularis actius',
+      deleteConfirm: 'Eliminar "{title}"?',
+      statusDraft: 'Esborrany',
+      openLink: 'Obrir enllaç',
+      openForm: 'Obrir formulari',
+      loadMore: 'Carregar-ne més',
     },
     action: {
       registerPlayer: 'Registrar un jugador',
@@ -476,6 +836,10 @@ export const sharedTranslations = {
         commentsPlaceholder: 'Afegeix comentaris (opcional)',
         registerPlayerSuccess: 'Registre de jugador enviat amb èxit!',
         becomeMemberSuccess: 'Sol·licitud de membresía enviada amb èxit!',
+        success: {
+          submitMessage: 'El formulari s\'ha enviat correctament',
+          resubmitMessage: 'El teu formulari s\'ha reenviat correctament'
+        },
         errors: {
           required: 'Aquest camp és obligatori',
           email: 'Si us plau introdueix un correu electrònic vàlid',
@@ -487,6 +851,23 @@ export const sharedTranslations = {
       },
       noForms: 'No hi ha formularis disponibles',
       noFormsDescription: 'No hi ha formularis actius en aquest moment. Torna a comprovar-ho més tard.'
+    },
+    forms: {
+      submission: {
+        title: 'Els meus enviaments',
+        statusSubmitted: 'Enviat',
+        statusUnderReview: 'En revisió',
+        statusApproved: 'Aprovat',
+        statusRejected: 'Rebutjat',
+        fillAgain: 'Tornar a omplir',
+        detailTitle: 'El meu enviament',
+        rejectionComment: 'Comentari del coordinador',
+        editAndResend: 'Editar i reenviar',
+        resend: 'Reenviar',
+        rejectionFeedback: 'Comentari del coordinador',
+        viewHistory: 'Veure historial',
+        commentHistory: 'Historial de comentaris'
+      }
     },
     information: {
       title: 'Informació',
@@ -550,9 +931,66 @@ export const sharedTranslations = {
       upcomingMatches: 'Pròxims Partits',
       noRelatedMatches: 'No hi ha partits relacionats'
     },
-    partners: {
-      empty: 'No hi ha socis llistats',
-      emptyDescription: 'Els nostres socis i patrocinadors del club es llistaran aquí.'
+    sponsors: {
+      title: 'Patrocinadors i col·laboradors',
+      subtitle: 'Els qui fan possible el club',
+      empty: 'No hi ha col·laboradors llistats',
+      emptyDescription: 'Els nostres col·laboradors i patrocinadors del club es llistaran aquí.',
+      contactButton: 'Ser patrocinador'
+    }
+  },
+  contact: {
+    title: 'Contacta amb el club',
+    subtitle: 'Envia un missatge a l\'equip de coordinació del club.',
+    sponsorTitle: 'Ser patrocinador',
+    sponsorSubtitle: 'Explica\'ns com t\'agradaria col·laborar amb el club.',
+    generalType: 'Contacte',
+    sponsorType: 'Patrocini',
+    asideTitle: 'El teu missatge arriba directament a coordinació',
+    asideDescription: 'Descriu la consulta amb el màxim context possible perquè el club pugui revisar-la i respondre amb agilitat.',
+    privacyNote: 'Les teves dades s\'utilitzaran només per respondre aquest missatge dins del club.',
+    yourDetails: 'Les teves dades',
+    messageDetails: 'Missatge',
+    responseHint: 'Coordinació revisarà el teu missatge tan aviat com sigui possible.',
+    name: 'Nom',
+    namePlaceholder: 'El teu nom i cognoms',
+    email: 'Email',
+    emailPlaceholder: 'nom@email.com',
+    phone: 'Telèfon',
+    phonePlaceholder: '+34 600 000 000',
+    subject: 'Assumpte',
+    subjectPlaceholder: 'Resum breu del missatge',
+    message: 'Missatge',
+    messagePlaceholder: 'Explica el motiu de la consulta...',
+    send: 'Enviar missatge',
+    sent: 'Missatge enviat',
+    error: 'No s\'ha pogut enviar el missatge',
+    thanksTitle: 'Gràcies per contactar',
+    thanksDescription: 'L\'equip de coordinació ha rebut el teu missatge i el revisarà aviat.'
+  },
+  contactMessages: {
+    title: 'Safata de coordinació',
+    subtitle: 'Revisa els missatges que els usuaris envien a coordinació.',
+    empty: 'No hi ha missatges de contacte',
+    emptyDescription: 'Els nous missatges enviats a coordinació apareixeran aquí.',
+    loadMore: 'Carregar-ne més',
+    loadError: 'No s\'ha pogut carregar el missatge',
+    createdAt: 'Creat',
+    close: 'Tancar missatge',
+    types: {
+      general: 'General',
+      sponsor: 'Patrocinador'
+    },
+    status: {
+      AC: 'Oberta',
+      AR: 'Tancada',
+      P: 'Nova',
+      S: 'En progrés'
+    },
+    workflow: {
+      statusLabel: 'Estat',
+      openHint: 'Gestiona aquest missatge des de la safata de coordinació.',
+      closedHint: 'Aquest missatge ja està tancat per a tot l\'equip de coordinació.'
     }
   },
   guest: {
@@ -563,18 +1001,18 @@ export const sharedTranslations = {
       news: 'Notícies',
       information: 'Informació',
       matches: 'Partits',
-      partners: 'Socis'
+      sponsors: 'Patrocinadors i col·laboradors'
     },
     description: {
       home: 'Benvingut al portal públic del club',
       news: 'Últimes notícies i anuncis',
       information: 'Informació del club',
       matches: 'Veure pròxims partits',
-      partners: 'Socis i patrocinadors del club'
+      sponsors: 'Socis i patrocinadors del club'
     }
   },
   roles: {
-    viewer: 'Visualitzador',
+    member: 'Usuari',
     admin: 'Administrador',
     coach: 'Entrenador',
     guest: 'Convidat'

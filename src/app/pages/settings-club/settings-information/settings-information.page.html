@@ -1,0 +1,235 @@
+<div class="page-container">
+  <!-- Section Header -->
+  <div class="section-header">
+    <div class="header-content">
+      <div class="section-header-with-back-button">
+        <app-back-button />
+        <h1 class="section-title">{{ 'admin.settings.information.title' | translate }}</h1>
+      </div>
+      <p class="section-subtitle">{{ 'admin.settings.information.description' | translate }}</p>
+    </div>
+  </div>
+
+  <!-- Loading Skeleton -->
+  @if (loading()) {
+    <div class="content-section">
+      <div class="skeleton-list">
+        @for (i of [1, 2, 3]; track i) {
+          <div class="skeleton-item">
+            <div class="skeleton-icon"></div>
+            <div class="skeleton-text">
+              <div class="skeleton-line skeleton-title"></div>
+              <div class="skeleton-line skeleton-subtitle"></div>
+            </div>
+            <div class="skeleton-actions">
+              <div class="skeleton-btn"></div>
+              <div class="skeleton-btn"></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Edit Mode -->
+  @if (!loading()) {
+  <form [formGroup]="form" class="detail-form">
+    @if (sectionsFormArray.length === 0) {
+      <div class="content-section empty-state">
+        <div class="empty-content">
+          <div class="empty-icon-wrapper">
+            <ion-icon name="information-circle-outline" class="empty-icon"></ion-icon>
+          </div>
+          <h3>{{ 'admin.settings.information.empty' | translate }}</h3>
+          <p>{{ 'admin.settings.information.emptyDescription' | translate }}</p>
+          <button class="btn-primary" (click)="addSection()">
+            <ion-icon name="add-outline"></ion-icon>
+            {{ 'admin.settings.information.add' | translate }}
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="sections-list">
+        @for (group of sectionsFormArray.controls; track $index; let i = $index) {
+          <div
+            class="section-card"
+            [class.section-card--expanded]="expandedIndex() === i"
+            [formGroup]="asFormGroup(i)"
+          >
+            <!-- Collapsed Header -->
+            <div class="section-card-header" (click)="toggleExpand(i)">
+              <div class="section-order-controls">
+                <span class="section-order-badge">{{ i + 1 }}</span>
+                <div class="section-move-buttons">
+                  <button
+                    type="button"
+                    class="btn-move"
+                    (click)="moveSectionUp(i); $event.stopPropagation()"
+                    [disabled]="i === 0"
+                    [attr.aria-label]="'admin.settings.information.moveUp' | translate"
+                  >
+                    <ion-icon name="chevron-up-outline"></ion-icon>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-move"
+                    (click)="moveSectionDown(i); $event.stopPropagation()"
+                    [disabled]="i === sectionsFormArray.length - 1"
+                    [attr.aria-label]="'admin.settings.information.moveDown' | translate"
+                  >
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="section-card-summary">
+                <div class="section-icon-wrapper">
+                  @if (asFormGroup(i).get('icon')?.value) {
+                    <ion-icon [name]="asFormGroup(i).get('icon')?.value" class="section-icon"></ion-icon>
+                  } @else {
+                    <ion-icon name="information-circle-outline" class="section-icon section-icon--empty"></ion-icon>
+                  }
+                </div>
+                <div class="section-title-line">
+                  <span class="section-title-text">
+                    {{ asFormGroup(i).get('title')?.value || ('admin.settings.information.untitled' | translate) }}
+                  </span>
+                  @if (sectionHasError(i, 'title') || sectionHasError(i, 'content')) {
+                    <span class="section-error-badge">!</span>
+                  }
+                </div>
+              </div>
+
+              <div class="section-card-actions">
+                <button
+                  type="button"
+                  class="btn-remove"
+                  (click)="removeSection(i); $event.stopPropagation()"
+                  [attr.aria-label]="'common.remove' | translate"
+                >
+                  <ion-icon name="trash-outline"></ion-icon>
+                </button>
+                <ion-icon
+                  name="chevron-down"
+                  class="expand-icon"
+                  [class.expand-icon--rotated]="expandedIndex() === i"
+                ></ion-icon>
+              </div>
+            </div>
+
+            <!-- Expanded Body -->
+            @if (expandedIndex() === i) {
+              <div class="section-card-body">
+                <div class="form-field">
+                  <label [for]="'title-' + i">
+                    {{ 'admin.settings.information.form.title' | translate }}
+                    <span class="required-mark">*</span>
+                  </label>
+                  <input
+                    class="form-input"
+                    [id]="'title-' + i"
+                    type="text"
+                    formControlName="title"
+                    maxlength="200"
+                    [placeholder]="'admin.settings.information.form.titlePlaceholder' | translate"
+                  />
+                  @if (sectionHasError(i, 'title')) {
+                    <small class="field-error">{{ 'admin.settings.information.form.titleRequired' | translate }}</small>
+                  }
+                </div>
+
+                <div class="form-field">
+                  <label [for]="'content-' + i">
+                    {{ 'admin.settings.information.form.content' | translate }}
+                    <span class="required-mark">*</span>
+                  </label>
+                  <textarea
+                    class="form-textarea"
+                    [id]="'content-' + i"
+                    formControlName="content"
+                    rows="5"
+                    maxlength="2000"
+                    [placeholder]="'admin.settings.information.form.contentPlaceholder' | translate"
+                  ></textarea>
+                  @if (sectionHasError(i, 'content')) {
+                    <small class="field-error">{{ 'admin.settings.information.form.contentRequired' | translate }}</small>
+                  }
+                </div>
+
+                <div class="form-field">
+                  <label>{{ 'admin.settings.information.form.icon' | translate }}</label>
+                  <div class="icon-field-wrapper">
+                    <div class="icon-preview-wrapper" (click)="openIconPicker(i)">
+                      @if (asFormGroup(i).get('icon')?.value) {
+                        <ion-icon [name]="asFormGroup(i).get('icon')?.value" class="selected-icon-preview"></ion-icon>
+                      } @else {
+                        <ion-icon name="apps-outline" class="selected-icon-preview placeholder"></ion-icon>
+                      }
+                    </div>
+                    <input
+                      class="form-input icon-name-input"
+                      type="text"
+                      formControlName="icon"
+                      [readonly]="true"
+                      [placeholder]="'admin.settings.information.form.iconPlaceholder' | translate"
+                      (click)="openIconPicker(i)"
+                    />
+                    @if (asFormGroup(i).get('icon')?.value) {
+                      <button type="button" class="icon-clear-btn visible" (click)="clearIcon(i)">
+                        <ion-icon name="close-outline"></ion-icon>
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <button class="btn-add-field" (click)="addSection()">
+        <ion-icon name="add-outline"></ion-icon>
+        {{ 'admin.settings.information.add' | translate }}
+      </button>
+    }
+
+    <app-section-footer-actions
+      [canCancel]="canCancel()"
+      [canPreview]="sectionsFormArray.length > 0"
+      [canSave]="canSave()"
+      [previewLabel]="'admin.settings.information.preview'"
+      (cancelAction)="cancel()"
+      (previewAction)="togglePreview()"
+      (saveAction)="saveAll()" />
+  </form>
+  }
+</div>
+
+<!-- Toast -->
+<ion-toast
+  [isOpen]="showToast()"
+  [message]="toastMessage()"
+  [color]="toastColor()"
+  duration="3000"
+  position="top"
+  (didDismiss)="onToastDismiss()">
+</ion-toast>
+
+<!-- Icon Picker Modal -->
+<app-icon-picker-modal
+  [isOpen]="isIconPickerOpen()"
+  [selectedIcon]="getSelectedIcon()"
+  (iconSelected)="onIconSelected($event)"
+  (didDismiss)="closeIconPicker()">
+</app-icon-picker-modal>
+
+<!-- Information Preview Modal -->
+<app-preview-modal
+  [isOpen]="previewOpen()"
+  [title]="'admin.settings.information.preview'"
+  [notice]="'admin.settings.information.previewNotice'"
+  [emptyMessage]="'admin.settings.information.previewEmpty'"
+  [isEmpty]="previewSections().length === 0"
+  (didDismiss)="previewOpen.set(false)">
+  <app-section-display [sections]="previewSections()" />
+</app-preview-modal>

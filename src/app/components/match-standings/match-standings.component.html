@@ -2,14 +2,14 @@
   <div class="standings-container">
     <div class="standings-table">
       <div class="table-header">
-        <div class="col-pos">{{ 'viewer.match.position' | translate }}</div>
-        <div class="col-team">{{ 'viewer.match.team' | translate }}</div>
-        <div class="col-stat">{{ 'viewer.match.played' | translate }}</div>
-        <div class="col-stat">{{ 'viewer.match.won' | translate }}</div>
-        <div class="col-stat">{{ 'viewer.match.drawn' | translate }}</div>
-        <div class="col-stat">{{ 'viewer.match.lost' | translate }}</div>
-        <div class="col-stat">{{ 'viewer.match.gd' | translate }}</div>
-        <div class="col-points">{{ 'viewer.match.points' | translate }}</div>
+        <div class="col-pos">{{ 'user.match.position' | translate }}</div>
+        <div class="col-team">{{ 'user.match.team' | translate }}</div>
+        <div class="col-stat">{{ 'user.match.played' | translate }}</div>
+        <div class="col-stat">{{ 'user.match.won' | translate }}</div>
+        <div class="col-stat">{{ 'user.match.drawn' | translate }}</div>
+        <div class="col-stat">{{ 'user.match.lost' | translate }}</div>
+        <div class="col-stat">{{ 'user.match.gd' | translate }}</div>
+        <div class="col-points">{{ 'user.match.points' | translate }}</div>
       </div>
       <div class="table-body">
         @for (standing of standings(); track standing.position) {
@@ -38,6 +38,6 @@
 } @else {
   <div class="empty-message">
     <ion-icon name="trophy-outline"></ion-icon>
-    <p>{{ 'viewer.match.noStandings' | translate }}</p>
+    <p>{{ 'user.match.noStandings' | translate }}</p>
   </div>
 }

@@ -1,0 +1,98 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--ion-card-background, #fff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 12px;
+}
+
+.skeleton-reorder {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.skeleton-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, var(--background-tertiary, #e9ecef) 25%, var(--background-secondary, #f8f9fa) 50%, var(--background-tertiary, #e9ecef) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-line {
+  height: 0.75rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--background-tertiary, #e9ecef) 25%, var(--background-secondary, #f8f9fa) 50%, var(--background-tertiary, #e9ecef) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+
+  &.skeleton-name {
+    width: 60%;
+    height: 0.9375rem;
+  }
+
+  &.skeleton-tier {
+    width: 30%;
+    height: 0.75rem;
+  }
+}
+
+.skeleton-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.skeleton-btn {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--background-tertiary, #e9ecef) 25%, var(--background-secondary, #f8f9fa) 50%, var(--background-tertiary, #e9ecef) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+// ---- Tier group header ----
+
+.tier-group-header {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ion-color-medium);
+
+  &:first-of-type {
+    margin-top: 0.5rem;
+  }
+}

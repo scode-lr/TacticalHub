@@ -1,14 +1,4 @@
-export type FormFieldType =
-  | 'text'
-  | 'number'
-  | 'date'
-  | 'datetime'
-  | 'email'
-  | 'phone'
-  | 'textarea'
-  | 'boolean'
-  | 'select'
-  | 'file';
+import { FormFieldType } from "./form.model";
 
 export interface FormField {
   id: number;
@@ -22,5 +12,6 @@ export interface FormField {
   order: number;
   validationJson: unknown | null;
   createdAt: Date;
+  status?: string;
   options: string[] | null;
 }

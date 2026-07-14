@@ -1,3 +1,6 @@
 @use '../../auth-shared.scss';
 
 // Component-specific overrides can be added here if needed
+.form-footer {
+  padding: 1rem;
+}

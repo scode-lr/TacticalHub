@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@services/navigation.service';
 import { ViewWillEnter } from '@ionic/angular';
-import { 
-  IonButton,
+import {
   IonIcon,
   IonSpinner,
   IonText,
@@ -35,7 +34,6 @@ interface ClubInvitation {
   standalone: true,
   imports: [
     CommonModule,
-    IonButton,
     IonIcon,
     IonSpinner,
     IonText,

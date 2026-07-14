@@ -43,7 +43,29 @@ export const sharedTranslations = {
     continueWithApple: 'Continuar con Apple',
     alreadyHaveAccount: '¿Ya tienes una cuenta?',
     dontHaveAccount: '¿No tienes una cuenta?',
-    continueAsGuest: 'Continuar como invitado'
+    continueAsGuest: 'Continuar como invitado',
+    forgotPasswordTitle: '¿Olvidaste tu contraseña?',
+    forgotPasswordSubtitle: 'Introduce tu correo y te enviaremos un enlace de restablecimiento.',
+    sendResetLink: 'Enviar enlace',
+    sending: 'Enviando…',
+    rememberIt: '¿La recuerdas?',
+    checkYourEmail: 'Revisa tu correo',
+    checkEmailMessage: 'Si {email} está registrado, se ha enviado un enlace de restablecimiento. Revisa tu bandeja de entrada y sigue las instrucciones.',
+    backToSignIn: 'Volver a iniciar sesión',
+    checkSpam: '¿No lo ves? Revisa tu carpeta de spam.',
+    setNewPassword: 'Establecer nueva contraseña',
+    setNewPasswordSubtitle: 'Elige una contraseña segura para tu cuenta.',
+    newPasswordPlaceholder: 'Nueva contraseña',
+    resetPasswordButton: 'Restablecer contraseña',
+    resetting: 'Restableciendo…',
+    passwordResetTitle: '¡Contraseña restablecida!',
+    passwordResetRedirecting: 'Redirigiendo a inicio de sesión…',
+    signInNow: 'Iniciar sesión ahora',
+    invalidResetLinkMessage: 'Este enlace de restablecimiento es inválido o ha caducado. Por favor, solicita uno nuevo.',
+    strengthWeak: 'Débil',
+    strengthFair: 'Regular',
+    strengthGood: 'Buena',
+    strengthStrong: 'Fuerte'
   },
   common: {
     loading: 'Cargando...',
@@ -69,7 +91,19 @@ export const sharedTranslations = {
     addItem: 'Agregar elemento',
     addNewItem: 'Agregar nuevo elemento',
     selectSeason: 'Seleccionar Temporada',
-    selectOption: 'Seleccionar una opción'
+    selectOption: 'Seleccionar una opción',
+    approve: 'Aprobar',
+    reject: 'Rechazar',
+    emptyState: {
+      title: 'Nada por aquí todavía',
+      message: 'No hay notificaciones que mostrar.'
+    },
+    confirmAlert: {
+      title: 'Cambios sin guardar',
+      message: 'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?',
+      confirm: 'Salir',
+      cancel: 'Quedarse',
+    }
   },
   fieldLabels: {
     type: 'Tipo',
@@ -101,7 +135,14 @@ export const sharedTranslations = {
     english: 'Inglés',
     spanish: 'Español',
     catalan: 'Catalán',
-    languageChanged: 'Idioma cambiado correctamente'
+    languageChanged: 'Idioma cambiado correctamente',
+    security: 'Seguridad',
+    changePasswordDescription: 'Cambia la contraseña de tu cuenta.',
+    currentPassword: 'Contraseña actual',
+    currentPasswordPlaceholder: 'Introduce tu contraseña actual',
+    newPassword: 'Nueva contraseña',
+    newPasswordPlaceholder: 'Introduce la nueva contraseña',
+    updatePassword: 'Actualizar contraseña'
   },  profile: {
     title: 'Mi perfil',
     editProfile: 'Editar perfil',
@@ -137,6 +178,11 @@ export const sharedTranslations = {
     accountCreatedSuccess: '¡Cuenta creada exitosamente!',
     signUpError: 'Ocurrió un error durante el registro.',
     signInError: 'Ocurrió un error',
+    passwordUpdated: 'Contraseña actualizada correctamente.',
+    passwordUpdateError: 'No se pudo actualizar la contraseña.',
+    forgotPasswordSent: 'Si ese correo está registrado, se ha enviado un enlace de restablecimiento.',
+    passwordResetSuccess: 'Contraseña restablecida correctamente.',
+    invalidResetLink: 'Enlace inválido o caducado.',
     googleSignUpSuccess: '¡Registro con Google exitoso!',
     appleSignUpSuccess: '¡Registro con Apple exitoso!',
     googleSignUpFailed: 'Registro con Google falló',
@@ -181,7 +227,7 @@ export const sharedTranslations = {
     selectRole: 'Selecciona tu rol',
     roleDescription: 'Elige cómo quieres participar en este equipo',
     coachDescription: 'Crear y gestionar actividades del equipo, sesiones de entrenamiento y partidos',
-    viewerDescription: 'Ver información del equipo, horarios y resultados de partidos',
+    memberDescription: 'Ver información del equipo, horarios y resultados de partidos',
     submitRequest: 'Enviar solicitud',
     joinInstant: 'Unirse instantáneamente',
     joiningInstant: 'Uniéndose...',
@@ -201,12 +247,14 @@ export const sharedTranslations = {
       notifications: 'Notificaciones',
       membership: 'Socios',
       news: 'Noticias',
+      contactMessages: 'Bandeja de coordinación',
       params: 'Parámetros',
       teams: 'Equipos',
       club: 'Club',
       matches: 'Partidos',
       users: 'Usuarios',
       forms: 'Formularios',
+      settings: 'Ajustes',
       settingsForms: 'Configuración de formularios'
     },
     description: {
@@ -215,13 +263,114 @@ export const sharedTranslations = {
       notifications: 'Configurar y enviar notificaciones',
       membership: 'Gestionar socios y membresías',
       news: 'Gestionar noticias y anuncios',
+      contactMessages: 'Mensajes enviados a coordinación',
       params: 'Configurar parámetros del sistema',
       teams: 'Gestionar equipos y plantillas',
       club: 'Editar información del club',
       matches: 'Gestionar calendarios de partidos',
       users: 'Gestión de usuarios y permisos',
       forms: 'Gestionar formularios',
+      settings: 'Gestionar ajustes del club',
       settingsForms: 'Configurar ajustes de formularios'
+    },
+    settings: {
+      title: 'Ajustes del Club',
+      information: {
+        title: 'Información del Club',
+        description: 'Gestiona las secciones de información visibles para los miembros',
+        empty: 'Sin secciones de información',
+        emptyDescription: 'Añade secciones para mostrar información del club a los miembros.',
+        add: 'Añadir Sección',
+        edit: 'Editar Sección',
+        untitled: 'Sección sin título',
+        moveUp: 'Mover sección arriba',
+        moveDown: 'Mover sección abajo',
+        preview: 'Vista previa',
+        previewNotice: 'Esta es una vista previa de cómo verán las secciones los miembros del club.',
+        previewEmpty: 'Nada que previsualizar',
+        previewEmptyDescription: 'Añade secciones primero para ver la vista previa.',
+        saveSuccess: 'Secciones guardadas correctamente',
+        saveError: 'No se pudieron guardar las secciones. Inténtalo de nuevo.',
+        formInvalid: 'Corrige los errores en las secciones antes de guardar.',
+        form: {
+          title: 'Título',
+          content: 'Contenido',
+          icon: 'Icono',
+          titlePlaceholder: 'Título de la sección',
+          contentPlaceholder: 'Contenido de la sección...',
+          iconPlaceholder: 'Elegir un icono...',
+          titleRequired: 'El título es obligatorio.',
+          contentRequired: 'El contenido es obligatorio.'
+        }
+      },
+      forms: {
+        title: 'Configuración de Formularios',
+        description: 'Crear y gestionar formularios del club'
+      },
+      sponsors: {
+        title: 'Patrocinadores y colaboradores',
+        description: 'Gestionar logos y niveles de patrocinadores',
+        preview: 'Vista previa',
+        previewNotice: 'Así es como los patrocinadores aparecerán en el club.',
+        previewEmpty: 'No hay patrocinadores para mostrar',
+        saved: 'Patrocinadores guardados correctamente',
+        canceled: 'Cambios descartados',
+        empty: 'Sin patrocinadores',
+        emptyDescription: 'Añade patrocinadores para mostrarlos a los miembros del club.',
+        add: 'Añadir patrocinador',
+        edit: 'Editar patrocinador',
+        newSponsor: 'Nuevo patrocinador',
+        created: 'Patrocinador creado correctamente',
+        updated: 'Patrocinador actualizado correctamente',
+        deleted: 'Patrocinador eliminado',
+        tier: {
+          sponsor: 'Patrocinadores',
+          collaborator: 'Colaboradores'
+        },
+        form: {
+          name: 'Nombre',
+          namePlaceholder: 'Nombre del patrocinador',
+          tier: 'Nivel',
+          selectImage: 'Seleccionar imagen',
+          replaceImage: 'Reemplazar imagen',
+          imageHint: 'PNG, JPEG, WebP o SVG',
+          title: 'Título',
+          titlePlaceholder: 'Título opcional',
+          description: 'Descripción',
+          descriptionPlaceholder: 'Descripción opcional',
+          additionalInfo: 'Información adicional',
+          addInfo: 'Añadir info',
+          selectKey: 'Seleccionar clave',
+          valuePlaceholder: 'Valor o URL'
+        },
+        infoKeys: {
+          website: 'Sitio web',
+          instagram: 'Instagram',
+          twitter: 'Twitter',
+          facebook: 'Facebook',
+          tiktok: 'TikTok',
+          youtube: 'Youtube',
+          linkedin: 'Linkedin',
+          twitch: 'Twitch',
+          email: 'Correo',
+          mobile: 'Móvil'
+        },
+        error: {
+          load: 'No se pudieron cargar los patrocinadores.',
+          create: 'No se pudo crear el patrocinador.',
+          update: 'No se pudo actualizar el patrocinador.',
+          delete: 'No se pudo eliminar el patrocinador.',
+          reorder: 'No se pudo reordenar los patrocinadores.',
+          imageSize: 'La imagen debe ser menor de 2 MB.',
+          imageType: 'Formato inválido. Usa PNG, JPEG, WebP o SVG.',
+          imageRequired: 'Selecciona una imagen.',
+          imageUpload: 'No se pudo subir la imagen. Inténtalo de nuevo.',
+          imageUploadFailed: 'Fallo al subir la imagen. Patrocinador eliminado. Intenta añadirlo de nuevo.',
+          imageUploadFailedKept: 'Fallo al subir la imagen. Se ha conservado la imagen anterior.',
+          imageUploadInProgress: 'Espera a que terminen de subirse todas las imágenes de los patrocinadores.',
+          saveAll: 'No se pudieron guardar los patrocinadores. Inténtalo de nuevo.'
+        }
+      }
     },
     parameters: {
       title: 'Parámetros',
@@ -239,6 +388,71 @@ export const sharedTranslations = {
       paginatorReport: 'Mostrando {first} a {last} de {totalRecords} entradas',
       submissions: 'Envíos',
       allForms: 'Todos los formularios',
+      exportError: 'No se pudo exportar las respuestas. Por favor, inténtalo de nuevo.',
+      exportConfig: {
+        configure: 'Configurar exportación',
+        title: 'Columnas de exportación',
+        subtitle: 'Elige los campos que se incluirán en el CSV.',
+        help: 'Selecciona los campos del formulario, renombra las columnas y ordénalas como deben aparecer en el documento.',
+        include: 'Incluir',
+        selectAll: 'Seleccionar todo',
+        unselectAll: 'Deseleccionar todo',
+        headerPlaceholder: 'Nombre de columna',
+        loading: 'Cargando configuración de exportación...',
+        save: 'Guardar configuración',
+        saving: 'Guardando...',
+        saveSuccess: 'Configuración de exportación guardada.',
+        saveError: 'No se pudo guardar la configuración de exportación. Inténtalo de nuevo.',
+        loadError: 'No se pudo cargar la configuración de exportación. Inténtalo de nuevo.',
+        selectOne: 'Selecciona un formulario para configurar su exportación.',
+        atLeastOne: 'Activa al menos una columna.',
+        headerRequired: 'Las columnas activas necesitan un nombre.'
+      },
+      integrations: {
+        title: 'Integraciones',
+        subtitle: 'Envía las respuestas del formulario a herramientas externas.',
+        loading: 'Cargando integraciones...',
+        createTitle: 'Crear Google Sheet automáticamente',
+        createHelp: 'TacticalHub creará la hoja, la compartirá con este email y conectará el formulario.',
+        create: 'Crear Google Sheet',
+        creating: 'Creando...',
+        shareWithEmail: 'Compartir con email',
+        shareWithEmailPlaceholder: 'coordinacion@club.com',
+        newTitle: 'Nueva integración con Google Sheets',
+        editTitle: 'Editar integración con Google Sheets',
+        googleSheetsOnly: 'La versión inicial solo soporta Google Sheets.',
+        newButton: 'Nueva integración',
+        name: 'Nombre',
+        spreadsheet: 'URL o ID de la hoja',
+        spreadsheetPlaceholder: 'https://docs.google.com/spreadsheets/d/...',
+        sheetName: 'Nombre de pestaña',
+        enabled: 'Activa',
+        save: 'Guardar integración',
+        saving: 'Guardando...',
+        configured: 'Integraciones configuradas',
+        empty: 'Aún no hay integraciones configuradas.',
+        pending: 'pendientes',
+        enabledStatus: 'Activa',
+        disabledStatus: 'Desactivada',
+        open: 'Abrir',
+        edit: 'Editar',
+        test: 'Probar',
+        sync: 'Sincronizar pendientes',
+        delete: 'Eliminar',
+        required: 'Nombre, hoja y pestaña son obligatorios.',
+        createRequired: 'Nombre, pestaña y email para compartir son obligatorios.',
+        loadError: 'No se pudieron cargar las integraciones. Inténtalo de nuevo.',
+        createSuccess: 'Google Sheet creada e integración conectada.',
+        createError: 'No se pudo crear la Google Sheet. Revisa la configuración de Google Cloud e inténtalo de nuevo.',
+        saveSuccess: 'Integración guardada.',
+        saveError: 'No se pudo guardar la integración. Inténtalo de nuevo.',
+        testSuccess: 'Prueba de integración correcta.',
+        testError: 'La prueba de integración ha fallado. Revisa el acceso a la hoja.',
+        syncSuccess: 'Sincronizados: {synced}. Fallidos: {failed}.',
+        syncError: 'No se pudieron sincronizar los pendientes. Inténtalo de nuevo.',
+        deleteSuccess: 'Integración eliminada.',
+        deleteError: 'No se pudo eliminar la integración. Inténtalo de nuevo.'
+      },
       columns: {
         id: 'ID',
         name: 'Nombre',
@@ -283,6 +497,7 @@ export const sharedTranslations = {
       status: {
         AC: 'Activo',
         I: 'Inactivo',
+        E: 'Caducado',
         P: 'Pendiente',
         D: 'Borrador',
         AR: 'Archivado'
@@ -301,7 +516,10 @@ export const sharedTranslations = {
         fromDate: 'Fecha de inicio',
         toDate: 'Fecha de fin',
         status: 'Estado',
-        action: 'Acción'
+        action: 'Acción',
+        email: 'Email',
+        emailPlaceholder: 'Introduce un email para enviar las respuestas',
+        emailInvalid: 'Por favor, introduce un email válido'
       },
       section: {
         general: 'General',
@@ -317,23 +535,123 @@ export const sharedTranslations = {
         description: 'Descripción',
         descriptionPlaceholder: 'Descripción opcional',
         length: 'Long. máx.',
+        descriptionMaxLength: 'La descripción debe tener 2000 caracteres o menos',
         options: 'Opciones',
         addOption: 'Añadir opción',
         optionsEmpty: 'Sin opciones. Añade al menos una.',
         optionPlaceholder: 'Valor de opción',
+        moveUp: 'Mover arriba',
+        moveDown: 'Mover abajo',
         types: {
           text: 'Texto',
           number: 'Número',
           date: 'Fecha',
           datetime: 'Fecha y hora',
           email: 'Email',
+          iban: 'IBAN',
           phone: 'Teléfono',
           textarea: 'Área de texto',
-          boolean: 'Boolean',
-          select: 'Desplegable',
+          boolean: 'Checkbox',
+          select: 'Selección',
           file: 'Archivo'
         }
+      },
+      preview: {
+        button: 'Vista previa',
+        title: 'Vista previa del formulario',
+        notice: 'Esto es una vista previa. El envío está desactivado.',
+        noFields: 'Aún no se han añadido campos.'
+      },
+       formInvalid: 'Corrige los errores de validación antes de guardar',
+    }
+  },
+  forms: {
+    list: {
+      title: 'Formularios',
+      description: 'Rellena los formularios disponibles de tu club',
+      empty: 'No hay formularios disponibles',
+      emptyDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
+    },
+    submit: {
+      success: '¡Formulario enviado correctamente!'
+    },
+    status: {
+      draft: 'Borrador',
+      active: 'Activo',
+      closed: 'Cerrado'
+    },
+    actions: {
+      none: 'Ninguna',
+      register_user: 'Registrar usuario',
+      create_payment: 'Crear pago',
+      trigger_workflow: 'Activar flujo de trabajo'
+    },
+    fieldTypes: {
+      text: 'Texto',
+      number: 'Número',
+      date: 'Fecha',
+      select: 'Selección',
+      checkbox: 'Casilla'
+    },
+    submissionStatus: {
+      draft: 'Borrador',
+      submitted: 'Enviado'
+    },
+    fields: {
+      name: 'Nombre',
+      namePlaceholder: 'Introduce el nombre del formulario',
+      description: 'Descripción',
+      descriptionPlaceholder: 'Introduce una descripción (opcional)',
+      fromDate: 'Fecha de inicio',
+      toDate: 'Fecha de fin',
+      action: 'Acción',
+      actionPlaceholder: 'Seleccionar acción',
+      key: 'Clave del campo',
+      keyPlaceholder: 'p.ej. nombre',
+      label: 'Etiqueta',
+      labelPlaceholder: 'Introduce la etiqueta del campo',
+      type: 'Tipo',
+      order: 'Orden',
+      maxLength: 'Longitud máxima',
+      isRequired: 'Campo obligatorio'
+    },
+    admin: {
+      title: 'Gestión de formularios',
+      createForm: 'Crear formulario',
+      createFormTitle: 'Crear nuevo formulario',
+      createSuccess: '¡Formulario creado correctamente!',
+      updateSuccess: '¡Formulario actualizado correctamente!',
+      updateError: 'No se pudo actualizar el formulario. Inténtalo de nuevo.',
+      createError: 'No se pudo crear el formulario. Inténtalo de nuevo.',
+      addFieldSuccess: '¡Campo añadido correctamente!',
+      empty: 'No hay formularios aún',
+      emptyDescription: 'Crea tu primer formulario para empezar a recopilar datos.',
+      tabs: {
+        fields: 'Campos',
+        submissions: 'Envíos'
+      },
+      fields: {
+        title: 'Campos del formulario',
+        add: 'Añadir campo',
+        addTitle: 'Añadir nuevo campo',
+        empty: 'No hay campos aún',
+        emptyDescription: 'Añade campos para definir qué datos recopilar.',
+        required: 'Obligatorio'
+      },
+      submissions: {
+        title: 'Envíos',
+        empty: 'No hay envíos aún',
+        emptyDescription: 'Los envíos aparecerán aquí cuando los usuarios rellenen el formulario.',
+        userId: 'Usuario',
+        total: 'Total'
       }
+    },
+    errors: {
+      loadError: 'No se pudieron cargar los formularios. Inténtalo de nuevo.',
+      submitError: 'No se pudo enviar el formulario. Inténtalo de nuevo.',
+      createError: 'No se pudo crear el formulario. Inténtalo de nuevo.',
+      updateError: 'No se pudo actualizar el formulario. Inténtalo de nuevo.',
+      addFieldError: 'No se pudo añadir el campo. Inténtalo de nuevo.'
     }
   },
   modals: {
@@ -366,31 +684,37 @@ export const sharedTranslations = {
     teamJoinRequests: 'Solicitudes de unión al equipo',
     actionRequests: 'Solicitudes de acción',
     pendingRequest: 'solicitud pendiente',
-    pendingRequests: 'solicitudes pendientes'
+    pendingRequests: 'solicitudes pendientes',
+    reviewComment: 'Comentario',
+    reviewCommentPlaceholder: 'Añade un comentario (opcional)'
   },
-  viewer: {
+  user: {
     title: 'Portal del observador',
     subtitle: 'Accede a información y servicios del club',
     menu: {
       home: 'Inicio',
+      notifications: 'Notificaciones',
       news: 'Noticias',
       action: 'Acciones',
       information: 'Información',
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
-      partners: 'Socios',
+      sponsors: 'Patrocinadores y colaboradores',
+      contact: 'Contactar',
       forms: 'Formularios',
       more: 'Más'
     },
     description: {
       home: 'Bienvenido a tu portal del club',
+      notifications: 'Tus notificaciones y alertas',
       news: 'Últimas actualizaciones y anuncios',
       action: 'Registra jugadores o hazte socio',
       information: 'Información y recursos del club',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
-      partners: 'Nuestros socios y patrocinadores del club',
-      forms: 'Rellena y envía formularios del club'
+      sponsors: 'Nuestros colaboradores y patrocinadores del club',
+      contact: 'Contacta con coordinación del club',
+      forms: 'Rellena los formularios del club'
     },
     home: {
       welcome: '¡Bienvenido al club!',
@@ -421,11 +745,70 @@ export const sharedTranslations = {
         event: 'Evento',
         announcement: 'Anuncio',
         achievement: 'Logro'
-      }
+      },
+      newPost: 'Nueva noticia',
+      createTitle: 'Crear noticia',
+      editTitle: 'Editar noticia',
+      editorSubtitle: 'Publicar una actualización oficial para este club.',
+      fieldTitle: 'Título',
+      titlePlaceholder: 'Actualización importante',
+      fieldBody: 'Contenido',
+      bodyPlaceholder: 'Escribe el anuncio...',
+      primaryImage: 'Imagen principal',
+      removeImage: 'Quitar imagen',
+      uploadingImage: 'Subiendo imagen...',
+      externalLinkUrl: 'URL del enlace externo',
+      externalLinkLabel: 'Etiqueta del enlace externo',
+      linkedForm: 'Formulario vinculado',
+      noLinkedForm: 'Sin formulario',
+      loadingForms: 'Cargando formularios activos...',
+      noActiveForms: 'No hay formularios activos disponibles.',
+      publishNow: 'Publicar ahora',
+      publish: 'Publicar',
+      unpublish: 'Despublicar',
+      saveNews: 'Guardar noticia',
+      saving: 'Guardando...',
+      imageUploadFailed: 'Error al subir la imagen',
+      titleBodyRequired: 'El título y el contenido son obligatorios',
+      saved: 'Noticia guardada',
+      saveFailed: 'No se pudo guardar la noticia',
+      publishFailed: 'No se pudo publicar la noticia',
+      unpublishFailed: 'No se pudo despublicar la noticia',
+      deleteFailed: 'No se pudo eliminar la noticia',
+      imageCleanupFailed: 'Noticia guardada, pero no se pudieron limpiar algunas imágenes no utilizadas',
+      loadFormsFailed: 'No se pudieron cargar los formularios activos',
+      deleteConfirm: '¿Eliminar "{title}"?',
+      statusDraft: 'Borrador',
+      openLink: 'Abrir enlace',
+      openForm: 'Abrir formulario',
+      loadMore: 'Cargar más',
     },
     action: {
       noForms: 'No hay formularios disponibles',
-      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
+      noFormsDescription: 'No hay formularios activos en este momento. Vuelve más tarde.',
+      form: {
+        success: {
+          submitMessage: 'El formulario se ha enviado correctamente',
+          resubmitMessage: 'Tu formulario ha sido reenviado correctamente'
+        }
+      }
+    },
+    forms: {
+      submission: {
+        title: 'Mis envíos',
+        statusSubmitted: 'Enviado',
+        statusUnderReview: 'En revisión',
+        statusApproved: 'Aprobado',
+        statusRejected: 'Rechazado',
+        fillAgain: 'Volver a rellenar',
+        detailTitle: 'Mi envío',
+        rejectionComment: 'Comentario del coordinador',
+        editAndResend: 'Editar y reenviar',
+        resend: 'Reenviar',
+        rejectionFeedback: 'Comentario del coordinador',
+        viewHistory: 'Ver historial',
+        commentHistory: 'Historial de comentarios'
+      }
     },
     information: {
       title: 'Información',
@@ -489,9 +872,66 @@ export const sharedTranslations = {
       upcomingMatches: 'Próximos Partidos',
       noRelatedMatches: 'No hay partidos relacionados'
     },
-    partners: {
-      empty: 'No hay socios listados',
-      emptyDescription: 'Nuestros socios y patrocinadores del club se listarán aquí.'
+    sponsors: {
+      title: 'Patrocinadores y colaboradores',
+      subtitle: 'Los que hacen posible el club',
+      empty: 'No hay colaboradores listados',
+      emptyDescription: 'Nuestros colaboradores y patrocinadores del club se listarán aquí.',
+      contactButton: 'Ser patrocinador'
+    }
+  },
+  contact: {
+    title: 'Contacta con el club',
+    subtitle: 'Envía un mensaje al equipo de coordinación del club.',
+    sponsorTitle: 'Ser patrocinador',
+    sponsorSubtitle: 'Cuéntanos cómo te gustaría colaborar con el club.',
+    generalType: 'Contacto',
+    sponsorType: 'Patrocinio',
+    asideTitle: 'Tu mensaje llega directamente a coordinación',
+    asideDescription: 'Describe la consulta con el máximo contexto posible para que el club pueda revisarla y responder con agilidad.',
+    privacyNote: 'Tus datos se usarán únicamente para responder a este mensaje dentro del club.',
+    yourDetails: 'Tus datos',
+    messageDetails: 'Mensaje',
+    responseHint: 'Coordinación revisará tu mensaje lo antes posible.',
+    name: 'Nombre',
+    namePlaceholder: 'Tu nombre y apellidos',
+    email: 'Email',
+    emailPlaceholder: 'nombre@email.com',
+    phone: 'Teléfono',
+    phonePlaceholder: '+34 600 000 000',
+    subject: 'Asunto',
+    subjectPlaceholder: 'Resumen breve del mensaje',
+    message: 'Mensaje',
+    messagePlaceholder: 'Explica el motivo de tu consulta...',
+    send: 'Enviar mensaje',
+    sent: 'Mensaje enviado',
+    error: 'No se pudo enviar el mensaje',
+    thanksTitle: 'Gracias por contactar',
+    thanksDescription: 'El equipo de coordinación ha recibido tu mensaje y lo revisará pronto.'
+  },
+  contactMessages: {
+    title: 'Bandeja de coordinación',
+    subtitle: 'Revisa los mensajes enviados por usuarios a coordinación.',
+    empty: 'No hay mensajes de contacto',
+    emptyDescription: 'Los nuevos mensajes enviados a coordinación aparecerán aquí.',
+    loadMore: 'Cargar más',
+    loadError: 'No se pudo cargar el mensaje',
+    createdAt: 'Creado',
+    close: 'Cerrar mensaje',
+    types: {
+      general: 'General',
+      sponsor: 'Patrocinador'
+    },
+    status: {
+      AC: 'Abierta',
+      AR: 'Cerrada',
+      P: 'Nueva',
+      S: 'En progreso'
+    },
+    workflow: {
+      statusLabel: 'Estado',
+      openHint: 'Gestiona este mensaje desde tu bandeja de coordinación.',
+      closedHint: 'Este mensaje ya está cerrado para todo el equipo de coordinación.'
     }
   },
   guest: {
@@ -502,18 +942,18 @@ export const sharedTranslations = {
       news: 'Noticias',
       information: 'Información',
       matches: 'Partidos',
-      partners: 'Socios'
+      sponsors: 'Patrocinadores y colaboradores'
     },
     description: {
       home: 'Bienvenido al portal público del club',
       news: 'Últimas noticias y anuncios',
       information: 'Información del club',
       matches: 'Ver próximos partidos',
-      partners: 'Socios y patrocinadores del club'
+      sponsors: 'Colaboradores y patrocinadores del club'
     }
   },
   roles: {
-    viewer: 'Visualizador',
+    member: 'Usuario',
     admin: 'Administrador',
     coach: 'Entrenador',
     guest: 'Invitado'

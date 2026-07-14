@@ -1,4 +1,23 @@
 .page-container {
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .empty-state {
+    background: var(--background-primary, #ffffff);
+    border: 1px solid var(--border-light, #e5e7eb);
+    border-radius: 12px;
+    padding: 3rem 1.5rem;
+    text-align: center;
+
+    .empty-icon {
+      font-size: 3rem;
+      color: var(--text-light, #9ca3af);
+    }
+  }
+
   .messages-list {
     display: flex;
     flex-direction: column;
@@ -7,6 +26,7 @@
 
   .message-item {
     display: flex;
+    align-items: center;
     gap: 1rem;
     padding: 1.5rem;
     background: var(--background-primary, #ffffff);
@@ -29,19 +49,35 @@
     }
 
     &.read {
-      background: rgba(56, 128, 255, 0.02);
-      border-color: rgba(56, 128, 255, 0.2);
+      background: var(--background-primary, #ffffff);
+      border-color: var(--border-light, #e5e7eb);
 
       .message-title {
-        opacity: 0.7;
+        opacity: 0.9;
       }
 
       .user-name {
-        opacity: 0.7;
+        opacity: 0.9;
       }
 
       .message-text {
-        opacity: 0.7;
+        opacity: 0.9;
+      }
+    }
+
+    &.closed {
+      border-color: rgba(17, 24, 39, 0.06);
+      background: rgba(17, 24, 39, 0.035);
+
+      .message-title,
+      .user-name,
+      .message-text {
+        opacity: 0.62;
+      }
+
+      &:hover {
+        border-color: rgba(17, 24, 39, 0.12);
+        box-shadow: 0 4px 16px rgba(17, 24, 39, 0.08);
       }
     }
 
@@ -60,9 +96,35 @@
     width: 48px;
     height: 48px;
     flex-shrink: 0;
+    position: relative;
+    overflow: visible;
 
     img {
       object-fit: cover;
+    }
+  }
+
+  .avatar-status {
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--background-primary, #ffffff);
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(17, 24, 39, 0.18);
+  }
+
+  .avatar-status--closed {
+    background: var(--ion-color-success, #2dd36f);
+    color: #ffffff;
+
+    ion-icon {
+      font-size: 0.8rem;
     }
   }
 
@@ -123,6 +185,15 @@
   }
 }
 
+.message-context {
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -134,128 +205,172 @@
   }
 }
 
-// Message Modal Styling
-.message-modal {
-  --width: 600px;
-  --height: auto;
-  --border-radius: 16px;
-  --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+.message-detail-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 10px;
+  color: var(--ion-color-primary, #3880ff);
 
-  @media (min-width: 769px) {
-    --max-height: 80vh;
-    
-    &::part(content) {
-      margin: auto;
-    }
-  }
-
-  @media (max-width: 768px) {
-    --width: 100%;
-    --height: 100%;
-    --border-radius: 0;
+  ion-icon {
+    font-size: 1.35rem;
   }
 }
 
-.modal-container {
+.message-subject {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.3;
+}
+
+.message-context--detail {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.message-full-content {
+  p {
+    font-size: 0.9375rem;
+    color: var(--text-primary, #111827);
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+    white-space: pre-wrap;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.contact-lines {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: var(--background-primary, #ffffff);
-  overflow: hidden;
-}
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  color: var(--text-secondary, #6b7280);
 
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--border-light, #e5e7eb);
-  background: var(--background-secondary, #f8f9fa);
-  flex-shrink: 0;
-
-  .header-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-    min-width: 0;
+  strong {
+    margin-right: 0.35rem;
   }
 
-  .sender-avatar {
-    width: 48px;
-    height: 48px;
-    flex-shrink: 0;
-  }
-
-  .sender-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .sender-name {
-    font-size: 1rem;
+  a {
+    color: var(--button-primary-color, #3880ff);
     font-weight: 600;
-    color: var(--text-primary, #111827);
-    margin: 0 0 0.25rem 0;
-    line-height: 1.2;
-  }
-
-  .message-timestamp {
-    font-size: 0.8125rem;
-    color: var(--text-secondary, #6b7280);
-    margin: 0;
-    line-height: 1.2;
-  }
-
-  .close-button {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-
-    ion-icon {
-      font-size: 1.5rem;
-      color: var(--text-secondary, #6b7280);
-    }
+    text-decoration: none;
 
     &:hover {
-      background: var(--background-primary, #ffffff);
+      text-decoration: underline;
     }
   }
 }
 
-.modal-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 2rem 1.5rem;
+.message-workflow-footer {
+  align-items: stretch;
+  justify-content: stretch;
+}
 
-  .message-subject {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary, #111827);
-    margin: 0 0 1.5rem 0;
-    line-height: 1.3;
+.message-workflow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.workflow-summary {
+  min-width: 0;
+
+  .workflow-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--text-secondary, #6b7280);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
-  .message-full-content {
-    p {
-      font-size: 0.9375rem;
-      color: var(--text-primary, #111827);
-      line-height: 1.6;
-      margin: 0 0 1rem 0;
-      white-space: pre-wrap;
+  strong {
+    display: block;
+    color: var(--text-primary, #111827);
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
 
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
+  p {
+    margin: 0.25rem 0 0;
+    color: var(--text-secondary, #6b7280);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+}
+
+.workflow-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.workflow-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 42px;
+  padding: 0 0.875rem;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 10px;
+  background: var(--background-primary, #ffffff);
+  color: var(--text-primary, #111827);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  ion-icon {
+    color: var(--ion-color-primary, #3880ff);
+    font-size: 1.1rem;
+  }
+
+  &:hover {
+    border-color: rgba(56, 128, 255, 0.35);
+    background: rgba(56, 128, 255, 0.06);
+  }
+}
+
+.workflow-action--primary {
+  border-color: rgba(34, 197, 94, 0.24);
+  background: rgba(34, 197, 94, 0.08);
+  color: var(--ion-color-success-shade, #28ba62);
+
+  ion-icon {
+    color: var(--ion-color-success, #2dd36f);
+  }
+
+  &:hover {
+    border-color: rgba(34, 197, 94, 0.36);
+    background: rgba(34, 197, 94, 0.12);
+  }
+}
+
+.workflow-complete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.08);
+  color: var(--ion-color-success, #2dd36f);
+
+  ion-icon {
+    font-size: 1.25rem;
   }
 }
 
@@ -274,6 +389,15 @@
     .user-avatar {
       width: 40px;
       height: 40px;
+    }
+
+    .avatar-status {
+      width: 18px;
+      height: 18px;
+
+      ion-icon {
+        font-size: 0.72rem;
+      }
     }
 
     .message-header {
@@ -297,38 +421,24 @@
     }
   }
 
-  .modal-header {
-    padding: 1rem;
-
-    .sender-avatar {
-      width: 40px;
-      height: 40px;
-    }
-
-    .sender-name {
-      font-size: 0.9375rem;
-    }
-
-    .close-button {
-      width: 36px;
-      height: 36px;
-
-      ion-icon {
-        font-size: 1.25rem;
-      }
-    }
+  .message-subject {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
   }
 
-  .modal-content {
-    padding: 1.5rem 1rem;
+  .message-full-content p {
+    font-size: 0.875rem;
+  }
 
-    .message-subject {
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-    }
+  .message-workflow {
+    grid-template-columns: 1fr;
+  }
 
-    .message-full-content p {
-      font-size: 0.875rem;
-    }
+  .workflow-actions {
+    flex-direction: column;
+  }
+
+  .workflow-action {
+    width: 100%;
   }
 }

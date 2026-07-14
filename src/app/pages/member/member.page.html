@@ -1,0 +1,22 @@
+<ion-content [scrollY]="false">
+  <div class="member-page">
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <app-user-header 
+        [showBackButton]="isDetailPage()" 
+        [showRoleSelector]="!isDetailPage()"
+        [currentRole]="currentRole()"
+        [backUrl]="backUrl()"
+        (backClick)="goBack()">
+      </app-user-header>
+    </div>
+
+    <div class="layout-container">
+      <app-menu [config]="memberMenuConfig" [currentRole]="currentRole()" [class.hidden-on-detail]="isDetailPage()"></app-menu>
+      
+      <div class="content-container" [class.full-width]="isDetailPage()">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</ion-content>

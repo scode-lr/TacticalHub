@@ -73,15 +73,15 @@
 
               <div 
                 class="role-card" 
-                [class.selected]="selectedRole() === roleType.Viewer"
-                (click)="selectRole(roleType.Viewer)"
-                [class.disabled]="hasViewerRole()"
+                [class.selected]="selectedRole() === roleType.Member"
+                (click)="selectRole(roleType.Member)"
+                [class.disabled]="hasMemberRole()"
               >
                 <div class="role-icon">
                   <ion-icon name="eye-outline"></ion-icon>
                 </div>
-                <h3>{{ 'roles.viewer' | translate }}</h3>
-                <p>{{ 'joinTeam.viewerDescription' | translate }}</p>
+                <h3>{{ 'roles.member' | translate }}</h3>
+                <p>{{ 'joinTeam.memberDescription' | translate }}</p>
               </div>
             </div>
           </div>
@@ -108,27 +108,24 @@
         }
 
         <!-- Submit Button -->
-        @if (selectedRole() && (selectedRole() === roleType.Viewer || (selectedRole() === roleType.Coach && selectedTeam()))) {
-          <ion-button
-            expand="block"
-            class="btn-primary submit-button"
+        @if (selectedRole() && (selectedRole() === roleType.Member || (selectedRole() === roleType.Coach && selectedTeam()))) {
+          <button
+            class="btn-primary btn-block submit-button"
             [disabled]="!isFormValid() || isSubmitting()"
             (click)="submitBind()"
           >
             <span>{{ buttonText() | translate }}</span>
-          </ion-button>
+          </button>
         }
 
         <!-- Skip Button (only for new users without roles and not private app) -->
         @if (!showBackButton() && !selectedRole() && !isPrivateApp) {
-          <ion-button
-            expand="block"
-            fill="clear"
-            class="skip-button"
+          <button
+            class="btn-text btn-block skip-button"
             (click)="skipForNow()"
           >
             <span>{{ 'roleSelection.skipForNow' | translate }}</span>
-          </ion-button>
+          </button>
         }
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { IonContent, IonButton } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -20,7 +20,6 @@ import { RolesService } from '@services/roles.service';
   imports: [
     CommonModule,
     IonContent,
-    IonButton,
     TranslatePipe,
     UserHeaderComponent,
     RoleCardComponent

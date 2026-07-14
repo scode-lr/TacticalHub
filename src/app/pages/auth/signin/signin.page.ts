@@ -1,8 +1,7 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { 
-  IonButton,
+import {
   IonIcon,
   IonInput,
   IonSpinner,
@@ -26,7 +25,6 @@ import { AuthService } from '@services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonButton,
     IonIcon,
     IonInput,
     IonSpinner,
@@ -86,6 +84,10 @@ export class SigninPage {
     this.navigationService.navigateTo(['welcome']);
   }
 
+  goToForgotPassword(): void {
+    this.navigationService.navigateTo(['auth/forgot-password']);
+  }
+
   async onSignIn(): Promise<void> {
     this.formSubmitted.set(true);
     
@@ -98,7 +100,7 @@ export class SigninPage {
       const email = this.signinForm.value.email;
       const password = this.signinForm.value.password;
       
-      const response = await this.authService.signIn({ email, password });
+      const response = await this.authService.signIn({ email, password, rememberMe: true });
       
       if (response.success) {
         this.navigationService.navigateTo(['auth/loading']);

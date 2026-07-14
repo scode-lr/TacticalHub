@@ -25,8 +25,13 @@ export interface RefreshTokenRequest {
   refreshToken: string;
 }
 
-export interface ResetPasswordRequest {
+export interface ForgotPasswordRequest {
   email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  newPassword: string;
 }
 
 export interface ChangePasswordRequest {

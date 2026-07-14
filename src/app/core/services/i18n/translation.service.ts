@@ -123,7 +123,6 @@ export class TranslationService {
   instant(key: string, params?: Record<string, any>): string {
     const keys = key.split('.');
     let value = this.translations;
-
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k];

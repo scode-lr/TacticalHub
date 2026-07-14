@@ -9,38 +9,32 @@
   }
 
   @if (!isLoading()) {
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="detail-form">
+  <form [formGroup]="form" class="detail-form">
 
     <div class="form-card">
       <div class="form-card-header">
         <h2 class="card-section-title">{{ 'admin.settingsForms.section.general' | translate }}</h2>
       </div>
       <div class="form-card-body">
-        <div class="field-group">
-          <label class="field-label" for="name">
-            {{ 'admin.settingsForms.fields.name' | translate }}
-            <span class="required-mark">*</span>
-          </label>
+
+        <div class="form-field">
+          <label for="name">{{ 'admin.settingsForms.fields.name' | translate }} <span class="required-mark">*</span></label>
           <input
             id="name"
-            type="text"
-            class="field-input"
-            [class.field-input--error]="ctrl.name.invalid && ctrl.name.touched"
+            class="form-input"
             formControlName="name"
             [placeholder]="'admin.settingsForms.fields.namePlaceholder' | translate"
           />
           @if (ctrl.name.invalid && ctrl.name.touched) {
-            <span class="field-error">{{ 'admin.settingsForms.fields.nameRequired' | translate }}</span>
+            <small class="field-error">{{ 'admin.settingsForms.fields.nameRequired' | translate }}</small>
           }
         </div>
 
-        <div class="field-group">
-          <label class="field-label" for="description">
-            {{ 'admin.settingsForms.fields.description' | translate }}
-          </label>
+        <div class="form-field">
+          <label for="description">{{ 'admin.settingsForms.fields.description' | translate }}</label>
           <textarea
             id="description"
-            class="field-textarea"
+            class="form-textarea"
             formControlName="description"
             rows="3"
             [placeholder]="'admin.settingsForms.fields.descriptionPlaceholder' | translate"
@@ -48,81 +42,104 @@
         </div>
 
         <div class="field-row">
-          <div class="field-group">
-            <label class="field-label" for="fromDate">
-              {{ 'admin.settingsForms.fields.fromDate' | translate }}
-            </label>
+          <div class="form-field">
+            <label for="fromDate">{{ 'admin.settingsForms.fields.fromDate' | translate }}</label>
             <input
               id="fromDate"
+              class="form-input form-date"
               type="date"
-              class="field-input"
-              [class.field-input--error]="ctrl.fromDate.invalid && ctrl.fromDate.touched"
               formControlName="fromDate"
             />
           </div>
-          <div class="field-group">
-            <label class="field-label" for="toDate">
-              {{ 'admin.settingsForms.fields.toDate' | translate }}
-            </label>
+          <div class="form-field">
+            <label for="toDate">{{ 'admin.settingsForms.fields.toDate' | translate }}</label>
             <input
               id="toDate"
+              class="form-input form-date"
               type="date"
-              class="field-input"
-              [class.field-input--error]="ctrl.toDate.invalid && ctrl.toDate.touched"
               formControlName="toDate"
             />
           </div>
         </div>
 
         <div class="field-row">
-          <div class="field-group">
-            <label class="field-label" for="status">
-              {{ 'admin.settingsForms.fields.status' | translate }}
-              <span class="required-mark">*</span>
-            </label>
-            <select id="status" class="field-select" formControlName="status">
-              @for (option of statusOptions; track option) {
-                <option [value]="option">
-                  {{ 'admin.settingsForms.status.' + option | translate }}
-                </option>
+          <div class="form-field">
+            <label for="status">{{ 'admin.settingsForms.fields.status' | translate }} <span class="required-mark">*</span></label>
+            <select
+              id="status"
+              class="form-select"
+              formControlName="status"
+            >
+              @for (item of statusItems; track item.value) {
+                <option [value]="item.value">{{ item.label }}</option>
               }
             </select>
           </div>
-          <div class="field-group">
-            <label class="field-label" for="action">
-              {{ 'admin.settingsForms.fields.action' | translate }}
-              <span class="required-mark">*</span>
-            </label>
+          <div class="form-field">
+            <label for="action">{{ 'admin.settingsForms.fields.action' | translate }} <span class="required-mark">*</span></label>
             <select
               id="action"
-              class="field-select"
-              [class.field-input--error]="ctrl.action.invalid && ctrl.action.touched"
+              class="form-select"
               formControlName="action"
             >
-              @for (option of actionOptions; track option) {
-                <option [value]="option">
-                  {{ 'admin.settingsForms.actions.' + option | translate }}
-                </option>
+              @for (item of actionItems; track item.value) {
+                <option [value]="item.value">{{ item.label }}</option>
               }
             </select>
+            @if (ctrl.action.invalid && ctrl.action.touched) {
+              <small class="field-error">{{ 'admin.settingsForms.fields.actionRequired' | translate }}</small>
+            }
           </div>
         </div>
+
+        <div class="form-field">
+          <label for="email">{{ 'admin.settingsForms.fields.email' | translate }}</label>
+          <input
+            id="email"
+            class="form-input"
+            type="email"
+            formControlName="email"
+            [placeholder]="'admin.settingsForms.fields.emailPlaceholder' | translate"
+          />
+          @if (ctrl.email.invalid && ctrl.email.touched) {
+            <small class="field-error">{{ 'admin.settingsForms.fields.emailInvalid' | translate }}</small>
+          }
+        </div>
+
       </div>
     </div>
 
     <app-settings-form-fields [fields]="fieldsArray" />
 
-    <div class="form-actions">
-      <button type="button" class="btn-cancel" (click)="goBack()">
-        {{ 'common.cancel' | translate }}
-      </button>
-      <button type="submit" class="btn-save">
-        <ion-icon name="save-outline"></ion-icon>
-        {{ 'common.save' | translate }}
-      </button>
-    </div>
+    <app-section-footer-actions
+      [canCancel]="true"
+      [canPreview]="true"
+      [canSave]="!isSaving()"
+      [previewLabel]="'admin.settingsForms.preview.button'"
+      (cancelAction)="goBack()"
+      (previewAction)="openPreview()"
+      (saveAction)="onSubmit()" />
 
   </form>
+
+  <app-preview-modal
+    [isOpen]="previewOpen()"
+    [title]="'admin.settingsForms.preview.title'"
+    [subtitle]="form.get('name')?.value ?? ''"
+    [notice]="'admin.settingsForms.preview.notice'"
+    [emptyMessage]="'admin.settingsForms.preview.noFields'"
+    [isEmpty]="previewFields.length === 0"
+    (didDismiss)="previewOpen.set(false)">
+    <app-form-preview-content [fields]="previewFields" />
+  </app-preview-modal>
   }
 </div>
 
+<ion-toast
+  [isOpen]="showToast()"
+  [message]="toastMessage()"
+  [color]="toastColor()"
+  duration="3000"
+  position="top"
+  (didDismiss)="onToastDismiss()">
+</ion-toast>

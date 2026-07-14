@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { NavigationService } from '@services/navigation.service';
 import { addIcons } from 'ionicons';
@@ -14,11 +14,18 @@ import { arrowBackOutline } from 'ionicons/icons';
 export class BackButtonComponent {
   private readonly navigationService = inject(NavigationService);
 
+  readonly route = input<string | null>(null);
+
   constructor() {
     addIcons({ arrowBackOutline });
   }
 
   goBack(): void {
-    this.navigationService.goBack();
+    const route = this.route();
+    if (route) {
+      this.navigationService.navigateTo([route]);
+    } else {
+      this.navigationService.goBack();
+    }
   }
 }

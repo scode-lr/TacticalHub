@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed, ElementRef, ViewChildren, QueryList, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@services/navigation.service';
@@ -24,7 +24,6 @@ import { TeamsService } from '@services/teams.service';
   imports: [
     CommonModule,
     IonContent,
-    IonButton,
     IonIcon,
     TranslatePipe,
     UserHeaderComponent
@@ -61,11 +60,11 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   readonly buttonText = computed(() => {
     const roleId = this.selectedRole();
     if (this.isSubmitting()) {
-      return roleId !== null && RoleUtils.isViewer(roleId) ? 'joinTeam.joiningInstant' : 'common.submitting';
+      return roleId !== null && RoleUtils.isMember(roleId) ? 'joinTeam.joiningInstant' : 'common.submitting';
     }
-    return roleId !== null && RoleUtils.isViewer(roleId) ? 'joinTeam.joinInstant' : 'joinTeam.submitRequest';
+    return roleId !== null && RoleUtils.isMember(roleId) ? 'joinTeam.joinInstant' : 'joinTeam.submitRequest';
   });
-  readonly hasViewerRole = signal<boolean>(false);
+  readonly hasMemberRole = signal<boolean>(false);
 
   constructor() {
     addIcons({ arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeOutline });
@@ -81,7 +80,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     } else {
       const user = this.userService.getStoredUser();
       const hasRoles = (user?.roles?.length ?? 0) > 0;
-      this.hasViewerRole.set(user?.roles?.some(r => RoleUtils.isViewer(r.roleId) && r.clubId === this.clubId()) ?? false);
+      this.hasMemberRole.set(user?.roles?.some(r => RoleUtils.isMember(r.roleId) && r.clubId === this.clubId()) ?? false);
       this.showBackButton.set(hasRoles);
     }
   }
@@ -286,8 +285,8 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
         }
 
         await this.userService.fetchUserProfile();
-        console.log('User profile updated with new role. Navigating to appropriate page...',RoleUtils.isViewer(boundRole.roleId));
-        if(RoleUtils.isViewer(boundRole.roleId)) {
+        console.log('User profile updated with new role. Navigating to appropriate page...',RoleUtils.isMember(boundRole.roleId));
+        if(RoleUtils.isMember(boundRole.roleId)) {
           this.navigationService.navigateTo([`app/3/${boundRole.roleId}`]);
           return;
         }

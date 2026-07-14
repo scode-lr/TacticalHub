@@ -9,13 +9,14 @@ import { FormHeaderComponent } from '../settings-forms/form-header/form-header.c
 import { addIcons } from 'ionicons';
 import { documentTextOutline } from 'ionicons/icons';
 import { AppStatus } from '@core/models';
+import { DataView } from 'primeng/dataview';
 
 @Component({
-  selector: 'app-viewer-forms',
+  selector: 'app-member-forms',
   templateUrl: './forms.page.html',
   styleUrls: ['./forms.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent]
+  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent, DataView]
 })
 export class FormsPage implements OnInit {
   private readonly formService = inject(FormService);

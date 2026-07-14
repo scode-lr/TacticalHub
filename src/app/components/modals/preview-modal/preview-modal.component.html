@@ -1,0 +1,36 @@
+<ion-modal
+  [isOpen]="isOpen()"
+  (didDismiss)="close()"
+  class="app-modal preview-modal">
+  <ng-template>
+    <div class="app-modal-container">
+
+      <div class="app-modal-header">
+        <div class="app-modal-header-info">
+          <ion-icon name="eye-outline" class="app-modal-header-icon"></ion-icon>
+          <div class="app-modal-header-text">
+            <h2 class="app-modal-title">{{ title() | translate }}</h2>
+            @if (subtitle()) {
+              <span class="app-modal-subtitle">{{ subtitle() }}</span>
+            }
+          </div>
+        </div>
+        <button class="app-modal-close" (click)="close()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="app-modal-content">
+        @if (isEmpty()) {
+          <p class="app-modal-empty">{{ emptyMessage() | translate }}</p>
+        } @else {
+          @if (notice()) {
+            <div class="app-modal-notice">{{ notice() | translate }}</div>
+          }
+          <ng-content />
+        }
+      </div>
+
+    </div>
+  </ng-template>
+</ion-modal>

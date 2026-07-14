@@ -1,0 +1,99 @@
+// Mobile: full screen
+.submission-detail-modal {
+  --height: 100%;
+  --width: 100%;
+  --border-radius: 0;
+}
+
+// Desktop: centered card
+@media (min-width: 768px) {
+  .submission-detail-modal {
+    --height: 80vh;
+    --width: 560px;
+    --border-radius: 16px;
+  }
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--background-primary, #ffffff);
+  height: 100%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-light, #e5e7eb);
+  flex-shrink: 0;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header-icon {
+  font-size: 1.375rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  margin: 0;
+}
+
+.close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--background-secondary, #f3f4f6);
+  color: var(--text-secondary, #6b7280);
+  cursor: pointer;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 1.125rem;
+  }
+}
+
+.modal-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Skeleton
+.modal-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.skeleton-field {
+  height: 3.5rem;
+  border-radius: 10px;
+  background: var(--background-tertiary, #e9ecef);
+  animation: shimmer 1.5s infinite;
+
+  &:nth-child(2) { animation-delay: 0.1s; }
+  &:nth-child(3) { animation-delay: 0.2s; }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

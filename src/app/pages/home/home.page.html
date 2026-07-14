@@ -1,9 +1,15 @@
-<div class="page-container viewer-home-page">
-  <div class="welcome-section">
-    <div class="empty-state welcome-card">
-      <ion-icon name="home-outline" class="empty-icon"></ion-icon>
-      <h2 class="empty-title">{{ 'viewer.home.welcome' | translate }}</h2>
-      <p class="empty-description">{{ 'viewer.home.description' | translate }}</p>
-    </div>
-  </div>
+<div class="page-container home-page">
+  <section class="home-modules" aria-label="Modules">
+    @for (shortcut of shortcuts(); track shortcut.id) {
+      <button class="module-card" type="button" (click)="openShortcut(shortcut)">
+        <span class="module-icon">
+          <ion-icon [name]="shortcut.icon"></ion-icon>
+        </span>
+        <span class="module-content">
+          <span class="module-title">{{ shortcut.labelKey | translate }}</span>
+          <span class="module-description">{{ shortcut.descriptionKey | translate }}</span>
+        </span>
+      </button>
+    }
+  </section>
 </div>

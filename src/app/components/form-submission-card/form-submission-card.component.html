@@ -1,0 +1,65 @@
+<div class="submission-card">
+  <div class="submission-card__header">
+    <div class="submission-meta">
+      <span class="submission-date">
+        {{ submission().submittedAt ?? submission().createdAt | date:'mediumDate' }}
+      </span>
+      <div class="submission-meta__right">
+        <span class="submission-badge" [class]="statusBadgeClass()">
+          {{ statusLabelKey() | translate }}
+        </span>
+        <button class="view-button" (click)="openDetail()">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    @for (step of timelineSteps(); track step.labelKey; let last = $last) {
+      <div class="timeline-step">
+        <div class="timeline-marker"
+             [class.timeline-marker--completed]="step.completed && !step.isApproved && !step.isRejected"
+             [class.timeline-marker--approved]="step.isApproved"
+             [class.timeline-marker--rejected]="step.isRejected">
+          <ion-icon [name]="step.icon"></ion-icon>
+        </div>
+        <span class="timeline-label"
+              [class.timeline-label--completed]="step.completed && !step.isApproved && !step.isRejected"
+              [class.timeline-label--approved]="step.isApproved"
+              [class.timeline-label--rejected]="step.isRejected">
+          {{ step.labelKey | translate }}
+        </span>
+      </div>
+      @if (!last) {
+        <div class="timeline-connector"
+             [class.timeline-connector--completed]="step.connectorCompleted"></div>
+      }
+    }
+  </div>
+
+  @if (isRejected()) {
+    <div class="rejection-footer">
+      @if (rejectionComment()) {
+        <div class="rejection-comment">
+          <ion-icon name="chatbubble-outline" class="rejection-comment__icon"></ion-icon>
+          <div class="rejection-comment__body">
+            <span class="rejection-comment__label">{{ 'user.forms.submission.rejectionComment' | translate }}</span>
+            <p class="rejection-comment__text">{{ rejectionComment() }}</p>
+          </div>
+        </div>
+      }
+      <button class="btn-primary btn-block" (click)="editRequested.emit()">
+        <ion-icon name="create-outline"></ion-icon>
+        {{ 'user.forms.submission.editAndResend' | translate }}
+      </button>
+    </div>
+  }
+</div>
+
+<app-submission-detail-modal
+  [isOpen]="isModalOpen()"
+  [submissionId]="submission().id"
+  [formFields]="formFields()"
+  (didDismiss)="closeDetail()"
+/>

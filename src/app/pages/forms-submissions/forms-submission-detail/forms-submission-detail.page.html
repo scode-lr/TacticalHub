@@ -1,6 +1,6 @@
 <div class="page-container">
   <div class="section-header-with-back-button">
-    <app-back-button />
+    <app-back-button [route]="backRoute()" />
     <h1 class="section-title">{{ 'admin.forms.submissionDetail.title' | translate }}</h1>
   </div>
 
@@ -9,56 +9,6 @@
   }
 
   @if (!loading() && submission()) {
-    <div class="detail-form">
-
-      <div class="form-card">
-        <div class="form-card-header">
-          <h2 class="card-section-title">{{ 'admin.forms.submissionDetail.sectionInfo' | translate }}</h2>
-        </div>
-        <div class="form-card-body">
-          <div class="field-row">
-            <p-iftalabel>
-              <input pInputText id="formName" disabled [value]="submission()!.formName" />
-              <label for="formName">{{ 'admin.forms.submissionDetail.formName' | translate }}</label>
-            </p-iftalabel>
-            <p-iftalabel>
-              <input pInputText id="userName" disabled [value]="submission()!.userName" />
-              <label for="userName">{{ 'admin.forms.submissionDetail.userName' | translate }}</label>
-            </p-iftalabel>
-            <p-iftalabel>
-              <input pInputText id="submittedAt" disabled [value]="submission()!.submittedAt | date: 'dd/MM/yyyy HH:mm'" />
-              <label for="submittedAt">{{ 'admin.forms.submissionDetail.submittedAt' | translate }}</label>
-            </p-iftalabel>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-card">
-        <div class="form-card-header">
-          <h2 class="card-section-title">{{ 'admin.forms.submissionDetail.sectionValues' | translate }}</h2>
-        </div>
-        <div class="form-card-body">
-          @for (value of submission()!.values; track value.fieldId) {
-            @if (value.fieldType === 'textarea') {
-              <p-iftalabel class="full-width">
-                <textarea pTextarea [id]="'field-' + value.fieldId" disabled rows="3">{{ getDisplayValue(value) }}</textarea>
-                <label [for]="'field-' + value.fieldId">{{ value.fieldLabel }}</label>
-              </p-iftalabel>
-            } @else if (value.fieldType === 'boolean') {
-              <div class="checkbox-field">
-                <p-checkbox [ngModel]="value.valueBoolean" [binary]="true" [disabled]="true" [inputId]="'field-' + value.fieldId" />
-                <label [for]="'field-' + value.fieldId" class="checkbox-label">{{ value.fieldLabel }}</label>
-              </div>
-            } @else {
-              <p-iftalabel class="full-width">
-                <input pInputText [id]="'field-' + value.fieldId" disabled [value]="getDisplayValue(value)" />
-                <label [for]="'field-' + value.fieldId">{{ value.fieldLabel }}</label>
-              </p-iftalabel>
-            }
-          }
-        </div>
-      </div>
-
-    </div>
+    <app-submission-detail-view [submission]="submission()!" />
   }
 </div>

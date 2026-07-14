@@ -1,11 +1,16 @@
 <!-- Social Login Section -->
-<app-social-login
+@if(false){
+
+  <app-social-login
   [mode]="mode()"
   (loginComplete)="onSocialLoginComplete($event)">
-</app-social-login>
+    </app-social-login>
+}
 
 <div class="form-footer">
-  <app-auth-guest></app-auth-guest>
+  @if(false){
+    <app-auth-guest></app-auth-guest>
+  }
   
   @if (mode() === 'signin') {
     <ion-text class="footer-text">
