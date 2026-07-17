@@ -12,6 +12,28 @@
   .signup-btn {
     @extend .auth-btn;
   }
+
+  .terms-text {
+    margin: 1rem 0 1.25rem;
+    text-align: center;
+
+    ion-text {
+      color: var(--text-secondary, #6b7280);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+
+      .link {
+        color: var(--text-primary, #3880ff);
+        cursor: pointer;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
   
   // Name row layout (specific to signup)
   .name-row {

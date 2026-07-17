@@ -1,8 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  IonIcon,
-  IonText
+  IonIcon
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -23,7 +22,6 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   imports: [
     CommonModule,
     IonIcon,
-    IonText,
     AuthBrandingComponent,
     TranslatePipe
   ]

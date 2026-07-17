@@ -5,6 +5,7 @@ import {
   IonIcon,
   IonInput,
   IonSpinner,
+  IonText,
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -28,6 +29,7 @@ import { AuthService } from '@services/auth.service';
     IonIcon,
     IonInput,
     IonSpinner,
+    IonText,
     IonToast,
     AuthBrandingComponent,
     AuthFooterComponent,

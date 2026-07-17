@@ -30,32 +30,24 @@
     ion-icon {
       font-size: 1.25rem;
     }
-  }
+}
 
 .action-section .btn-block + .btn-block {
   margin-top: 0.5rem;
 }
-  
-  .terms-text {
-    text-align: center;
-    
-    ion-text {
-      font-size: 0.8125rem;
-      color: var(--text-secondary, #6b7280);
-      line-height: 1.5;
-      
-      .link {
-        color: var(--text-primary, #3880ff);
-        font-weight: 600;
-        cursor: pointer;
-        text-decoration: none;
-        
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
+
+.powered-by {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+
+  strong {
+    color: var(--text-primary, #111827);
+    font-weight: 700;
   }
+}
 
 // Animations
 @keyframes float {
@@ -138,7 +130,7 @@
       margin-bottom: 1.25rem;
     }
     
-    .terms-text {
+    .powered-by {
       margin-top: 1rem;
     }
   }
