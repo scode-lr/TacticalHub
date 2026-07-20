@@ -221,7 +221,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "projects/voltregacf.hub/environments/environment.ts"
+                  "with": "projects/voltregacf.hub/environments/environment.dev.ts"
                 }
               ]
             },

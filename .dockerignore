@@ -1,0 +1,13 @@
+.git
+.github
+.angular
+.codex
+.claude
+.opencode
+.vscode
+node_modules
+coverage
+docs
+projects/*/www
+*.log
+*.tmp
