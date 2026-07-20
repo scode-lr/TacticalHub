@@ -2,7 +2,7 @@ import { PROJECT_CONFIG } from '../config';
 
 export const environment = {
   production: true,
-  apiUrl: 'https://api.tacticalhub.lol',
+  apiUrl: 'https://api-voltrega.tacticalhub.es',
   version: '1.0.0',
   ...PROJECT_CONFIG
 };
