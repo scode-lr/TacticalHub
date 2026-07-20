@@ -9,7 +9,13 @@ COPY package.json package-lock.json ./
 RUN npm ci --include=dev --no-audit
 
 COPY . ./
-RUN npm run build:voltregacf:dev
+
+ARG VOLTREGA_ENV=production
+RUN case "$VOLTREGA_ENV" in \
+      dev|development) npm run build:voltregacf:dev ;; \
+      prod|production) npm run build:voltregacf:prod ;; \
+      *) echo "Invalid VOLTREGA_ENV='$VOLTREGA_ENV'. Use dev, development, prod, or production." >&2; exit 1 ;; \
+    esac
 
 FROM caddy:2-alpine
 
