@@ -4,12 +4,14 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { IonIcon, IonInput, IonSpinner } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { arrowBack, alertCircle, eyeOutline, eyeOffOutline, checkmarkCircleOutline, lockClosedOutline } from 'ionicons/icons';
+import { alertCircle, eyeOutline, eyeOffOutline, checkmarkCircleOutline, lockClosedOutline } from 'ionicons/icons';
 import { AuthService } from '@services/auth.service';
 import { NavigationService } from '@services/navigation.service';
 import { TranslationService } from '@services/i18n/translation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { AuthBrandingComponent } from '../components';
+import { PasswordStrengthComponent } from '@components/password-strength/password-strength.component';
+import { ToastService } from '@services/toast.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -24,6 +26,7 @@ import { AuthBrandingComponent } from '../components';
     IonSpinner,
     TranslatePipe,
     AuthBrandingComponent,
+    PasswordStrengthComponent,
   ]
 })
 export class ResetPasswordPage implements OnInit {
@@ -32,6 +35,7 @@ export class ResetPasswordPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
   private readonly route = inject(ActivatedRoute);
+  private readonly toastService = inject(ToastService);
 
   readonly isLoading = this.authService.isLoading;
   readonly formSubmitted = signal(false);
@@ -40,6 +44,10 @@ export class ResetPasswordPage implements OnInit {
   readonly resetForm: FormGroup;
   token = '';
   successMessage = '';
+
+  // Live value for the password-strength meter — presentation only, the
+  // reactive form validators below remain the source of truth.
+  readonly passwordValue = signal<string>('');
 
   readonly passwordError = computed(() => {
     const control = this.resetForm.get('newPassword');
@@ -50,25 +58,8 @@ export class ResetPasswordPage implements OnInit {
     return null;
   });
 
-  readonly strengthLevel = computed(() => {
-    const val: string = this.resetForm.get('newPassword')?.value ?? '';
-    if (!val) return 0;
-    let score = 0;
-    if (val.length >= 8) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
-    return score;
-  });
-
-  readonly strengthLabel = computed(() => {
-    const keys = ['', 'auth.strengthWeak', 'auth.strengthFair', 'auth.strengthGood', 'auth.strengthStrong'];
-    const key = keys[this.strengthLevel()];
-    return key ? this.translationService.instant(key) : '';
-  });
-
   constructor() {
-    addIcons({ arrowBack, alertCircle, eyeOutline, eyeOffOutline, checkmarkCircleOutline, lockClosedOutline });
+    addIcons({ alertCircle, eyeOutline, eyeOffOutline, checkmarkCircleOutline, lockClosedOutline });
     this.resetForm = this.formBuilder.group({
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -80,6 +71,10 @@ export class ResetPasswordPage implements OnInit {
 
   togglePassword(): void {
     this.showPassword.update(v => !v);
+  }
+
+  onPasswordInput(event: any): void {
+    this.passwordValue.set(event.target.value ?? '');
   }
 
   async onSubmit(): Promise<void> {
@@ -96,6 +91,8 @@ export class ResetPasswordPage implements OnInit {
     this.done.set(result.success);
     if (result.success) {
       setTimeout(() => this.navigationService.navigateTo(['auth/signin']), 2500);
+    } else {
+      this.toastService.show(result.message, 'danger');
     }
   }
 

@@ -34,13 +34,13 @@
         <div class="form-group">
           <label class="form-label">{{ 'modals.team.category' | translate }}</label>
           <ion-select
-            [value]="teamCategory()"
+            [value]="teamCategoryId()"
             (ionChange)="onCategoryChange($event)"
             interface="popover"
             [placeholder]="'modals.team.categoryPlaceholder' | translate"
             class="form-select">
-            @for (category of categories; track category) {
-              <ion-select-option [value]="category">{{ category }}</ion-select-option>
+            @for (category of categories(); track category.id) {
+              <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
             }
           </ion-select>
         </div>

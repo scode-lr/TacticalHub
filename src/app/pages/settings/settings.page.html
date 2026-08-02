@@ -1,14 +1,20 @@
-<div class="page-container settings-page">
-  <div class="section-header-with-back-button">
-    <app-back-button />
-    <h1 class="section-title">{{ 'settings.title' | translate }}</h1>
-  </div>
+<div class="settings-header">
+  <app-user-header [showBackButton]="true" (backClick)="goBack()"></app-user-header>
+</div>
 
-  <!-- Language -->
-  <div class="content-section">
-    <div class="section-content">
-      <div class="setting-group">
-        <label class="setting-label">{{ 'settings.language' | translate }}</label>
+<ion-content>
+  <div class="page-container settings-page">
+    <div class="section-header">
+      <h1 class="section-title">{{ 'settings.title' | translate }}</h1>
+    </div>
+
+    <!-- Language -->
+    <div class="setting-card">
+      <div class="setting-card-row">
+        <div class="setting-card-text">
+          <span class="setting-card-title">{{ 'settings.language' | translate }}</span>
+          <span class="setting-card-desc">{{ 'settings.languageDescription' | translate }}</span>
+        </div>
 
         <ion-select
           class="language-select"
@@ -23,13 +29,13 @@
         </ion-select>
       </div>
     </div>
-  </div>
 
-  <!-- Security -->
-  <div class="content-section security-section">
-    <div class="section-content">
-      <h2 class="subsection-title">{{ 'settings.security' | translate }}</h2>
-      <p class="subsection-description">{{ 'settings.changePasswordDescription' | translate }}</p>
+    <!-- Security -->
+    <div class="setting-card security-card">
+      <div class="setting-card-text">
+        <span class="setting-card-title">{{ 'settings.security' | translate }}</span>
+        <span class="setting-card-desc">{{ 'settings.changePasswordDescription' | translate }}</span>
+      </div>
 
       <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
         <!-- Current Password -->
@@ -66,6 +72,7 @@
               [placeholder]="'settings.newPasswordPlaceholder' | translate"
               fill="outline"
               class="settings-input"
+              (ionInput)="onPasswordInput($event)"
               [class.ion-invalid]="passwordForm.get('newPassword')?.invalid && passwordFormSubmitted()">
             </ion-input>
             <button type="button" class="show-hide-btn" (click)="toggleNewPassword()">
@@ -73,15 +80,8 @@
             </button>
           </div>
 
-          @if (passwordForm.get('newPassword')?.value) {
-            <div class="strength-bar" [attr.data-strength]="strengthLevel()">
-              @for (i of [1, 2, 3, 4]; track i) {
-                <div class="strength-segment" [class.active]="strengthLevel() >= i"></div>
-              }
-            </div>
-            @if (strengthLabel()) {
-              <span class="strength-label" [attr.data-strength]="strengthLevel()">{{ strengthLabel() }}</span>
-            }
+          @if (passwordValue()) {
+            <app-password-strength [password]="passwordValue()"></app-password-strength>
           }
 
           @if (newPasswordError(); as error) {
@@ -111,5 +111,18 @@
         </div>
       </form>
     </div>
+
+    <div class="setting-card legal-card">
+      <div class="setting-card-text">
+        <span class="setting-card-title">{{ 'settings.legal' | translate }}</span>
+        <span class="setting-card-desc">{{ 'settings.legalDescription' | translate }}</span>
+      </div>
+      <nav class="legal-links" [attr.aria-label]="'settings.legal' | translate">
+        <a href="privacy-policy.html" target="_blank" rel="noopener">{{ 'welcome.privacyPolicy' | translate }}</a>
+        <!-- <a href="terms-of-service.html" target="_blank" rel="noopener">{{ 'welcome.termsOfService' | translate }}</a>
+        <a href="legal-notice.html" target="_blank" rel="noopener">{{ 'welcome.legalNotice' | translate }}</a>
+        <a href="account-deletion.html" target="_blank" rel="noopener">{{ 'welcome.accountDeletion' | translate }}</a> -->
+      </nav>
+    </div>
   </div>
-</div>
+</ion-content>

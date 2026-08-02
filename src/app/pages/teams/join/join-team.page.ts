@@ -15,6 +15,8 @@ import { arrowBackOutline, clipboardOutline, eyeOutline, checkmarkCircle, closeO
 import { environment } from '@environment';
 import { ClubService } from '@services/club.service';
 import { TeamsService } from '@services/teams.service';
+import { Club } from '@core/models/club.model';
+import { Role } from '@core/models/role.model';
 
 @Component({
   selector: 'app-join-team',
@@ -55,6 +57,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
   readonly isGuestMode = signal<boolean>(false);
   readonly availableTeams = signal<Team[]>([]);
   readonly selectedClubId = signal<number>(0);
+  readonly matchedClub = signal<Club | null>(null);
   readonly clubId = computed(() => this.isPrivateApp ? this.clubService.getInternalClubId() ?? 0 : 0);
 
   readonly buttonText = computed(() => {
@@ -116,32 +119,36 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     }, 100);
   }
 
-  // Todo: Replace with real API call
   async checkClubCode() {
     if (this.code().length !== 5) {
       this.matchedTeam.set(null);
       this.showConfirmation.set(false);
       this.selectedClubId.set(0);
+      this.matchedClub.set(null);
       return;
     }
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
-      if (this.code() === '12345') {
+      const club = await this.clubService.fetchClubByCode(this.code());
+
+      if (club) {
+        this.matchedClub.set(club);
         this.matchedTeam.set({
-          name: 'U-19 Team',
-          clubName: 'FC Barcelona'
+          name: club.name,
+          clubName: club.name
         });
         this.showConfirmation.set(true);
-        this.selectedClubId.set(1);
+        this.selectedClubId.set(club.id);
+        this.clubService.saveClubInfo(club);
         this.scrollToRoles();
       } else {
+        this.matchedClub.set(null);
         this.matchedTeam.set(null);
         this.showConfirmation.set(false);
         this.selectedClubId.set(0);
       }
     } catch (error) {
+      this.matchedClub.set(null);
       this.matchedTeam.set(null);
       this.showConfirmation.set(false);
       this.selectedClubId.set(0);
@@ -185,6 +192,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
       this.showConfirmation.set(false);
       this.matchedTeam.set(null);
       this.selectedClubId.set(0);
+      this.matchedClub.set(null);
     } else if (event.key === 'ArrowLeft' && index > 0) {
       const inputs = this.codeInputs.toArray();
       inputs[index - 1]?.nativeElement.focus();
@@ -255,6 +263,7 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
     this.showConfirmation.set(false);
     this.matchedTeam.set(null);
     this.selectedClubId.set(0);
+    this.matchedClub.set(null);
     this.availableTeams.set([]);
     this.codeDigits.set(['', '', '', '', '']);
     const inputs = this.codeInputs.toArray();
@@ -271,6 +280,27 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
 
     try {
         if (role === null) {
+          return;
+        }
+
+        if (this.isGuestMode()) {
+          const club = this.matchedClub() ?? await this.clubService.fetchClubById(this.selectedClubId());
+          const user = this.userService.getCurrentUser();
+          if (!club || !user) return;
+
+          const guestRole: Role = {
+            id: club.id,
+            clubId: club.id,
+            clubName: club.name,
+            clubLogo: club.logo,
+            roleId: RoleType.Guest,
+            createdAt: new Date()
+          };
+
+          this.userService.setUser({ ...user, roles: [guestRole] });
+          this.rolesService.setSelectedRole(guestRole);
+          this.clubService.saveClubInfo(club);
+          this.navigationService.navigateTo([`app/${RoleType.Guest}/${club.id}/home`]);
           return;
         }
 

@@ -174,6 +174,21 @@
       </button>
     </div>
 
+    <div class="status-tabs">
+      <button type="button" class="status-tab" [class.active]="submissionsStatusFilter() === undefined" (click)="setStatusFilter(undefined, dtSubmissions)">
+        {{ 'admin.forms.submissionTable.statusTabs.all' | translate }}
+      </button>
+      <button type="button" class="status-tab" [class.active]="submissionsStatusFilter() === PendingStatus" (click)="setStatusFilter(PendingStatus, dtSubmissions)">
+        {{ 'admin.forms.submissionTable.statusTabs.pending' | translate }}
+      </button>
+      <button type="button" class="status-tab" [class.active]="submissionsStatusFilter() === ApprovedStatus" (click)="setStatusFilter(ApprovedStatus, dtSubmissions)">
+        {{ 'admin.forms.submissionTable.statusTabs.approved' | translate }}
+      </button>
+      <button type="button" class="status-tab" [class.active]="submissionsStatusFilter() === RejectedStatus" (click)="setStatusFilter(RejectedStatus, dtSubmissions)">
+        {{ 'admin.forms.submissionTable.statusTabs.rejected' | translate }}
+      </button>
+    </div>
+
     <p-table
       #dtSubmissions
       [value]="submissions()"

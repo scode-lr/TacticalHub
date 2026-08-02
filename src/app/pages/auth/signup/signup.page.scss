@@ -96,17 +96,35 @@
   }
 }
 
-// Mobile specific for name row
-@media (max-width: 968px) {
-  .signup-form {
-    .name-row {
-      flex-direction: column;
-      gap: 0;
-      
-      .input-group.half-width {
-        width: 100%;
-        margin-bottom: 1.25rem;
-      }
+.legal-text {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+  text-align: center;
+  color: color-mix(in srgb, var(--text-primary, #111827) 60%, transparent);
+
+  .link {
+    color: var(--color-accent, #3880ff);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-accent-hover, #1f5fd1);
+      text-decoration: underline;
     }
+  }
+}
+
+.confirm-hint {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 5px;
+
+  &.match {
+    color: #3a6b28;
+  }
+
+  &.mismatch {
+    color: #c0392b;
   }
 }

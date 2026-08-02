@@ -1,5 +1,8 @@
 {
   "name": "voltrega-hub",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@capacitor/push-notifications": "^7.0.7"
+  }
 }

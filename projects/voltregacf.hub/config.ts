@@ -5,6 +5,7 @@ export const PROJECT_CONFIG = {
   taglineKey: 'app.tagline',
   appId: 'com.voltregacf.hub',
   clubId: 1,
+  logoUrl: 'assets/icon.png',
   private: true, 
   translations: {
     en: translationsEn,

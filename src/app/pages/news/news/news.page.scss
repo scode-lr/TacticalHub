@@ -12,14 +12,15 @@
       margin-bottom: 1.5rem;
     }
 
-    .page-title {
+    .section-title {
       margin: 0;
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 700;
+      letter-spacing: -0.01em;
       color: var(--text-primary, #111827);
 
       @media (max-width: 768px) {
-        font-size: 1.5rem;
+        font-size: 1.625rem;
       }
     }
 
@@ -38,41 +39,27 @@
         justify-content: center;
         width: 40px;
         height: 40px;
-        background: var(--background-primary, #ffffff);
-        border: 1px solid var(--border-light, #e5e7eb);
-        border-radius: 10px;
+        background: var(--color-surface, var(--background-secondary, #f8f9fa));
+        border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+        border-radius: 999px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: background 0.15s ease;
 
         ion-icon {
-          font-size: 1.25rem;
-          color: var(--text-secondary, #6b7280);
+          font-size: 1.1875rem;
+          color: var(--text-primary, #212529);
         }
 
         &:hover {
-          border-color: var(--ion-color-primary, #3880ff);
-          background: var(--background-secondary, #f8f9fa);
-
-          ion-icon {
-            color: var(--ion-color-primary, #3880ff);
-          }
+          background: color-mix(in srgb, var(--text-primary, #212529) 7%, var(--color-surface, transparent));
         }
 
         &.active {
-          border-color: var(--ion-color-primary, #3880ff);
-          background: var(--ion-color-primary, #3880ff);
+          background: var(--color-accent, var(--ion-color-primary, #3880ff));
+          border-color: var(--color-accent, var(--ion-color-primary, #3880ff));
 
           ion-icon {
-            color: white;
-          }
-        }
-
-        @media (max-width: 768px) {
-          width: 36px;
-          height: 36px;
-
-          ion-icon {
-            font-size: 1.125rem;
+            color: var(--color-primary-contrast, #ffffff);
           }
         }
       }
@@ -156,16 +143,12 @@
 
   .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 10px;
 
     @media (min-width: 769px) {
-      grid-template-columns: 1fr;
-    }
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-      gap: 1rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
     }
   }
 

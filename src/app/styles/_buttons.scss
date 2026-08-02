@@ -7,7 +7,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.625rem 1.25rem;
-  border-radius: 8px;
+  border-radius: var(--btn-radius, 8px);
   border: none;
   font-size: 0.9375rem;
   font-weight: normal;
@@ -58,15 +58,15 @@
 }
 .btn-primary {
   @include btn-base;
-  background: var(--button-primary-color, #3880ff);
-  color: var(--button-primary-contrast, #ffffff);
+  background: var(--color-primary, #3880ff);
+  color: var(--color-primary-contrast, #ffffff);
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
+    background: var(--color-primary-hover, #3171e0);
   }
 
   &:active:not(:disabled) {
-    opacity: 0.85;
+    background: var(--color-primary-active, #2b64c7);
   }
 
   &:disabled {
@@ -78,15 +78,16 @@
 
 .btn-secondary {
   @include btn-base;
-  background: var(--background-secondary, #f3f4f6);
-  color: var(--text-primary, #111827);
+  background: var(--btn-secondary-bg, var(--background-secondary, #f3f4f6));
+  color: var(--btn-secondary-color, var(--text-primary, #111827));
+  border: var(--btn-secondary-border, none);
 
   &:hover:not(:disabled) {
-    background: var(--background-tertiary, #e9ecef);
+    background: var(--btn-secondary-bg-hover, var(--background-tertiary, #e9ecef));
   }
 
   &:active:not(:disabled) {
-    background: var(--border-light, #e5e7eb);
+    background: var(--btn-secondary-bg-active, var(--border-light, #e5e7eb));
   }
 
   &:disabled {

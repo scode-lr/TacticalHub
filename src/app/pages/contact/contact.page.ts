@@ -7,6 +7,7 @@ import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { ClubService } from '@services/club.service';
 import { ContactMessageService } from '@services/contact-message.service';
+import { NavigationService } from '@services/navigation.service';
 import { ToastService } from '@services/toast.service';
 import { ContactMessageType } from '@core/models/contact-message.model';
 import { TranslationService } from '@core/services/i18n/translation.service';
@@ -27,6 +28,7 @@ export class ContactPage implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly clubService = inject(ClubService);
   private readonly contactMessageService = inject(ContactMessageService);
+  private readonly navigationService = inject(NavigationService);
   private readonly toastService = inject(ToastService);
   private readonly translationService = inject(TranslationService);
 
@@ -104,5 +106,9 @@ export class ContactPage implements OnInit {
 
   valueLength(controlName: keyof typeof this.maxLengths): number {
     return this.form.controls[controlName].value.length;
+  }
+
+  goBack(): void {
+    this.navigationService.goBack();
   }
 }

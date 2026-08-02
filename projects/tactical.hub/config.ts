@@ -1,9 +1,10 @@
 import { translationsEn, translationsEs, translationsCa } from './i18n';
 
 export const PROJECT_CONFIG = {
-  name: 'Tactical Hub',
+  name: 'Tactical',
   taglineKey: 'app.tagline',
   appId: 'com.tactical.hub',
+  logoUrl: 'assets/icon/logo.svg',
   private: false,
   translations: {
     en: translationsEn,

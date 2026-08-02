@@ -1,0 +1,24 @@
+<div class="page-container more-page">
+  <div class="section-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'user.menu.more' | translate }}</h1>
+    </div>
+  </div>
+
+  <div class="more-list">
+    @for (item of items; track item.id) {
+      <button type="button" class="more-row" (click)="goTo(item)">
+        <span class="more-row-icon">
+          <ion-icon [name]="item.icon"></ion-icon>
+        </span>
+        <span class="more-row-body">
+          <span class="more-row-title">{{ item.label | translate }}</span>
+          @if (item.description) {
+            <span class="more-row-description">{{ item.description | translate }}</span>
+          }
+        </span>
+        <ion-icon name="chevron-forward-outline" class="more-row-chevron"></ion-icon>
+      </button>
+    }
+  </div>
+</div>

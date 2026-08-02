@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonIcon, IonInput, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, alertCircle, mailOutline, lockClosedOutline } from 'ionicons/icons';
+import { alertCircle, mailOutline, lockClosedOutline } from 'ionicons/icons';
 import { AuthService } from '@services/auth.service';
 import { NavigationService } from '@services/navigation.service';
 import { TranslationService } from '@services/i18n/translation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { AuthBrandingComponent } from '../components';
+import { ToastService } from '@services/toast.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -30,6 +31,7 @@ export class ForgotPasswordPage {
   private readonly authService = inject(AuthService);
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
+  private readonly toastService = inject(ToastService);
 
   readonly isLoading = this.authService.isLoading;
   readonly formSubmitted = signal(false);
@@ -47,7 +49,7 @@ export class ForgotPasswordPage {
   });
 
   constructor() {
-    addIcons({ arrowBack, alertCircle, mailOutline, lockClosedOutline });
+    addIcons({ alertCircle, mailOutline, lockClosedOutline });
     this.forgotForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
@@ -57,8 +59,12 @@ export class ForgotPasswordPage {
     this.formSubmitted.set(true);
     if (!this.forgotForm.valid) return;
     this.sentEmail = this.forgotForm.value.email;
-    await this.authService.forgotPassword({ email: this.sentEmail });
-    this.sent.set(true);
+    const result = await this.authService.forgotPassword({ email: this.sentEmail });
+    if (result.success) {
+      this.sent.set(true);
+    } else {
+      this.toastService.show(result.message, 'danger');
+    }
   }
 
   goToSignIn(): void {

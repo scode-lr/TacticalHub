@@ -1,18 +1,18 @@
 .form-card {
   display: flex;
   align-items: stretch;
-  background: var(--background-primary, #ffffff);
-  border: 1px solid var(--border-light, #e5e7eb);
-  border-radius: 14px;
+  background: white;
+  border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+  border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
   animation: fadeIn 0.3s ease backwards;
   height: 100%;
 
   &:hover {
-    border-color: var(--ion-color-primary, #3880ff);
-    box-shadow: 0 6px 20px rgba(56, 128, 255, 0.1);
+    border-color: var(--color-accent, var(--ion-color-primary, #3880ff));
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--color-accent, #3880ff) 16%, transparent);
     transform: translateY(-2px);
 
     .card-chevron {
@@ -24,6 +24,23 @@
   &:active {
     transform: translateY(0);
     box-shadow: none;
+  }
+}
+
+.form-icon-chip {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: 1.125rem 0 1.125rem 1.25rem;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-secondary, #f3f4f6);
+  color: var(--text-secondary, #6b7280);
+
+  ion-icon {
+    font-size: 1.25rem;
   }
 }
 
@@ -45,8 +62,9 @@
 
 .form-name {
   margin: 0;
+  font-family: var(--font-heading, inherit);
   font-size: 1.0625rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary, #111827);
   line-height: 1.4;
   flex: 1;
@@ -80,11 +98,11 @@
 }
 
 :host ::ng-deep .meta-chip {
-  background: var(--background-secondary, #f3f4f6);
+  background: color-mix(in srgb, var(--color-divider, var(--background-secondary, #f3f4f6)) 55%, transparent);
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--text-secondary, #6b7280);
   font-weight: 500;
   gap: 0.375rem;
@@ -104,7 +122,7 @@
 }
 
 :host ::ng-deep .cog-btn {
-  background: var(--button-primary-color, #3880ff) !important;
+  background: var(--color-accent, var(--button-primary-color, #3880ff)) !important;
   color: var(--button-primary-contrast, #ffffff) !important;
   border: none !important;
 

@@ -413,6 +413,60 @@
     line-height: 1.5;
   }
 
+  .content-editor {
+    width: 100%;
+
+    &.ng-invalid.ng-touched {
+      ::ng-deep .p-editor-toolbar,
+      ::ng-deep .p-editor-content {
+        border-color: var(--ion-color-danger, #eb445a);
+      }
+    }
+
+    // Quill 2 always renders lists as <ol data-list="bullet|ordered"> while
+    // editing (real <ul>/<ol> only appear in the exported HTML). PrimeNG's
+    // bundled editor CSS predates that and numbers every item regardless of
+    // type, so bullet lists show "1, 2, 3…" while typing. Override with the
+    // real data-list-based marker so the edit view matches the saved output.
+    ::ng-deep .ql-editor {
+      counter-reset: list-0;
+
+      p {
+        counter-reset: list-0;
+      }
+
+      li:before {
+        content: none;
+      }
+
+      li[data-list] {
+        position: relative;
+        padding-left: 1.5em;
+      }
+
+      li[data-list] > .ql-ui {
+        position: absolute;
+        display: inline-block;
+        width: 1.2em;
+        margin-left: -1.5em;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      li[data-list='bullet'] > .ql-ui:before {
+        content: '\2022';
+      }
+
+      li[data-list='ordered'] {
+        counter-increment: list-0;
+      }
+
+      li[data-list='ordered'] > .ql-ui:before {
+        content: counter(list-0, decimal) '. ';
+      }
+    }
+  }
+
   .field-error {
     font-size: 0.75rem;
     color: var(--ion-color-danger, #eb445a);

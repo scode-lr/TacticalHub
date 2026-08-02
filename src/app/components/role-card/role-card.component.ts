@@ -1,10 +1,11 @@
-import { Component, input, output, signal, computed, inject } from '@angular/core';
-import { IonIcon, IonAvatar, IonImg } from '@ionic/angular/standalone';
+import { Component, input, output, computed, inject } from '@angular/core';
+import { IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { Role, RoleType } from '@core/models/role.model';
 import { TranslationService } from '@services/i18n/translation.service';
 import { AppStatus } from '@core/models/app-status.model';
+import { ListCardComponent } from '@components/list-card/list-card.component';
 
 @Component({
   selector: 'app-role-card',
@@ -14,17 +15,17 @@ import { AppStatus } from '@core/models/app-status.model';
   imports: [
     CommonModule,
     IonIcon,
-    IonAvatar,
-    IonImg,
-    TranslatePipe
+    TranslatePipe,
+    ListCardComponent
   ]
 })
 export class RoleCardComponent {
   private readonly translationService = inject(TranslationService);
   readonly role = input<Role | null>(null);
   readonly isAddCard = input<boolean>(false);
+  readonly listMode = input<boolean>(false);
+  readonly selected = input<boolean>(false);
   readonly cardClicked = output<Role | null>();
-  readonly showDefaultIcon = signal<boolean>(false);
   readonly isPending = computed(() => {
     const roleStatus = this.role()?.status;
     return roleStatus === AppStatus.Pending || roleStatus === AppStatus.Draft;
@@ -54,10 +55,6 @@ export class RoleCardComponent {
       [RoleType.Guest]: 'eye-outline'
     };
     return iconMap[roleId as number] ?? 'person-outline';
-  }
-
-  onLogoError() {
-    this.showDefaultIcon.set(true);
   }
 
   onCardClick() {

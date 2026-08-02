@@ -18,9 +18,15 @@ export const sharedTranslations = {
     cancel: 'Cancelar'
   },
   welcome: {
+    legalNotice: 'Aviso legal',
+    accountDeletion: 'Eliminación de cuenta',
     createAccount: 'Crear cuenta',
     signIn: 'Iniciar sesión',
     signUpTagline: 'Regístrate para comenzar a gestionar tus equipos',
+    kicker: 'Bienvenido',
+    getStarted: 'Empecemos',
+    subtitle: 'Crea tu cuenta o inicia sesión para continuar.',
+    poweredBy: 'Desarrollado por',
     terms: 'Al continuar, aceptas nuestros',
     termsOfService: 'Términos de servicio',
     and: 'y',
@@ -60,12 +66,60 @@ export const sharedTranslations = {
     resetting: 'Restableciendo…',
     passwordResetTitle: '¡Contraseña restablecida!',
     passwordResetRedirecting: 'Redirigiendo a inicio de sesión…',
+    verifyEmailTitle: 'Verifica tu correo',
+    verifyEmailSubtitle: 'Hemos enviado un código de 6 dígitos a {email}.',
+    verificationCodePlaceholder: 'Código de 6 dígitos',
+    verificationCodeValidation: 'Introduce los 6 dígitos del código.',
+    verifyEmailButton: 'Verificar cuenta',
+    resendVerificationCode: 'Volver a enviar el código',
+    verificationCodeResent: 'Te hemos enviado un nuevo código.',
+    verificationCodeResendError: 'No se ha podido enviar un nuevo código.',
+    invalidVerificationCode: 'El código no es válido o ha caducado.',
+    emailNotVerified: 'Debes verificar tu correo antes de iniciar sesión.',
+    emailVerified: 'Correo verificado correctamente.',
+    emailVerifiedTitle: 'Cuenta verificada',
+    emailVerifiedSubtitle: 'Ya puedes iniciar sesión con tu correo y contraseña.',
     signInNow: 'Iniciar sesión ahora',
     invalidResetLinkMessage: 'Este enlace de restablecimiento es inválido o ha caducado. Por favor, solicita uno nuevo.',
+    strengthTooShort: 'Muy corta',
     strengthWeak: 'Débil',
     strengthFair: 'Regular',
     strengthGood: 'Buena',
-    strengthStrong: 'Fuerte'
+    strengthStrong: 'Fuerte',
+    signInSubtitle: 'Bienvenido de nuevo al club.',
+    signUpSubtitle: 'Únete al club y empieza a gestionar tus equipos.',
+    passwordHint6Chars: '6+ caracteres',
+    passwordHintUppercase: '1 letra mayúscula',
+    passwordHintNumber: '1 número',
+    passwordsMatch: 'Las contraseñas coinciden',
+    passwordsDontMatch: 'Las contraseñas no coinciden'
+  },
+  clubMembers: {
+    title: 'Usuarios del club',
+    subtitle: 'Usuarios activos vinculados a este club.',
+    search: 'Buscar por nombre o correo...',
+    empty: 'No hay usuarios para mostrar.',
+    role: 'Rol',
+    team: 'Equipo',
+    selectTeam: 'Seleccionar equipo',
+    status: 'Estado',
+    active: 'Activo',
+    pending: 'Pendiente',
+    actions: 'Acciones del usuario',
+    assignRole: 'Asignar un nuevo rol',
+    assignAdmin: 'Asignar como administrador',
+    assignCoach: 'Asignar como entrenador',
+    deactivateUser: 'Dar de baja del club',
+    deactivateConfirm: '¿Dar de baja a {name}? Perderá todos sus roles en este club.',
+    deactivateSuccess: 'El usuario se ha dado de baja del club.',
+    deactivateError: 'No se ha podido dar de baja al usuario.',
+    currentRoles: 'Roles actuales',
+    pagination: 'Paginación de usuarios',
+    previousPage: 'Anterior',
+    nextPage: 'Siguiente',
+    pageStatus: 'Página {current} de {total}',
+    roleAssigned: 'El nuevo rol se ha asignado correctamente.',
+    roleAssignError: 'No se ha podido asignar el nuevo rol.'
   },
   common: {
     loading: 'Cargando...',
@@ -78,6 +132,7 @@ export const sharedTranslations = {
     delete: 'Eliminar',
     edit: 'Editar',
     back: 'Volver',
+    menu: 'Menú',
     next: 'Siguiente',
     submit: 'Enviar',
     close: 'Cerrar',
@@ -129,8 +184,11 @@ export const sharedTranslations = {
     becomeMember: 'Hacerse socio'
   },
   settings: {
+    legal: 'Información legal',
+    legalDescription: 'Consulta las condiciones, la privacidad y cómo ejercer tus derechos.',
     title: 'Ajustes',
     language: 'Idioma',
+    languageDescription: 'Idioma de la aplicación',
     selectLanguage: 'Seleccionar idioma',
     english: 'Inglés',
     spanish: 'Español',
@@ -153,7 +211,15 @@ export const sharedTranslations = {
     lastName: 'Apellido',
     saveChanges: 'Guardar cambios',
     saving: 'Guardando...',
-    profileUpdated: 'Perfil actualizado correctamente'
+    profileUpdated: 'Perfil actualizado correctamente',
+    deleteAccount: 'Eliminar cuenta',
+    deleteAccountDescription: 'Desactiva tu acceso, elimina tus sesiones y anonimiza tus datos personales. Esta acción no se puede deshacer.',
+    deleteAccountWarning: 'Se cerrará tu sesión y se desactivarán todas tus relaciones con los clubes.',
+    confirmWithPassword: 'Confirma con tu contraseña actual',
+    confirmDeleteAccount: 'Eliminar definitivamente',
+    deletingAccount: 'Eliminando cuenta…',
+    accountDeleted: 'Tu cuenta se ha eliminado correctamente.',
+    deleteAccountError: 'No se ha podido eliminar la cuenta.'
   },  validation: {
     required: 'Este campo es obligatorio',
     invalidEmail: 'Dirección de correo inválida',
@@ -166,6 +232,7 @@ export const sharedTranslations = {
     birthDateRequired: 'La fecha de nacimiento es obligatoria',
     birthDateInvalid: 'Formato de fecha inválido. Usa DD/MM/AAAA',
     birthDateFuture: 'La fecha de nacimiento no puede ser futura',
+    minimumRegistrationAge: 'Debes tener al menos 14 años para crear una cuenta',
     confirmPasswordRequired: 'Por favor confirma tu contraseña',
     emailRequired: 'El correo electrónico es obligatorio',
     emailInvalid: 'Por favor ingresa un correo válido',
@@ -300,7 +367,14 @@ export const sharedTranslations = {
           contentPlaceholder: 'Contenido de la sección...',
           iconPlaceholder: 'Elegir un icono...',
           titleRequired: 'El título es obligatorio.',
-          contentRequired: 'El contenido es obligatorio.'
+          contentRequired: 'El contenido es obligatorio.',
+          editor: {
+            bold: 'Negrita',
+            italic: 'Cursiva',
+            orderedList: 'Lista numerada',
+            bulletList: 'Lista con viñetas',
+            link: 'Insertar enlace'
+          }
         }
       },
       forms: {
@@ -473,7 +547,13 @@ export const sharedTranslations = {
         },
         noSubmissions: 'Sin envíos aún',
         noSubmissionsDescription: 'Aún no se han recibido envíos para este formulario.',
-        searchPlaceholder: 'Buscar por usuario...'
+        searchPlaceholder: 'Buscar por usuario...',
+        statusTabs: {
+          all: 'Todos',
+          pending: 'Pendientes',
+          approved: 'Completados',
+          rejected: 'Rechazados'
+        }
       },
       submissionDetail: {
         title: 'Detalle del envío',
@@ -566,55 +646,6 @@ export const sharedTranslations = {
     }
   },
   forms: {
-    list: {
-      title: 'Formularios',
-      description: 'Rellena los formularios disponibles de tu club',
-      empty: 'No hay formularios disponibles',
-      emptyDescription: 'No hay formularios activos en este momento. Vuelve más tarde.'
-    },
-    submit: {
-      success: '¡Formulario enviado correctamente!'
-    },
-    status: {
-      draft: 'Borrador',
-      active: 'Activo',
-      closed: 'Cerrado'
-    },
-    actions: {
-      none: 'Ninguna',
-      register_user: 'Registrar usuario',
-      create_payment: 'Crear pago',
-      trigger_workflow: 'Activar flujo de trabajo'
-    },
-    fieldTypes: {
-      text: 'Texto',
-      number: 'Número',
-      date: 'Fecha',
-      select: 'Selección',
-      checkbox: 'Casilla'
-    },
-    submissionStatus: {
-      draft: 'Borrador',
-      submitted: 'Enviado'
-    },
-    fields: {
-      name: 'Nombre',
-      namePlaceholder: 'Introduce el nombre del formulario',
-      description: 'Descripción',
-      descriptionPlaceholder: 'Introduce una descripción (opcional)',
-      fromDate: 'Fecha de inicio',
-      toDate: 'Fecha de fin',
-      action: 'Acción',
-      actionPlaceholder: 'Seleccionar acción',
-      key: 'Clave del campo',
-      keyPlaceholder: 'p.ej. nombre',
-      label: 'Etiqueta',
-      labelPlaceholder: 'Introduce la etiqueta del campo',
-      type: 'Tipo',
-      order: 'Orden',
-      maxLength: 'Longitud máxima',
-      isRequired: 'Campo obligatorio'
-    },
     admin: {
       title: 'Gestión de formularios',
       createForm: 'Crear formulario',
@@ -646,13 +677,6 @@ export const sharedTranslations = {
         total: 'Total'
       }
     },
-    errors: {
-      loadError: 'No se pudieron cargar los formularios. Inténtalo de nuevo.',
-      submitError: 'No se pudo enviar el formulario. Inténtalo de nuevo.',
-      createError: 'No se pudo crear el formulario. Inténtalo de nuevo.',
-      updateError: 'No se pudo actualizar el formulario. Inténtalo de nuevo.',
-      addFieldError: 'No se pudo añadir el campo. Inténtalo de nuevo.'
-    }
   },
   modals: {
     player: {
@@ -686,7 +710,15 @@ export const sharedTranslations = {
     pendingRequest: 'solicitud pendiente',
     pendingRequests: 'solicitudes pendientes',
     reviewComment: 'Comentario',
-    reviewCommentPlaceholder: 'Añade un comentario (opcional)'
+    reviewCommentPlaceholder: 'Añade un comentario (opcional)',
+    markAllAsRead: 'Marcar todas como leídas',
+    today: 'Hoy',
+    yesterday: 'Ayer',
+    thisWeek: 'Esta semana',
+    older: 'Anteriores',
+    empty: 'Aún no tienes notificaciones',
+    emptyDescription: 'Estás al día. Las nuevas notificaciones aparecerán aquí.',
+    loadError: 'No se han podido cargar las notificaciones. Desliza hacia abajo para reintentar.'
   },
   user: {
     title: 'Portal del observador',
@@ -718,7 +750,22 @@ export const sharedTranslations = {
     },
     home: {
       welcome: '¡Bienvenido al club!',
-      description: 'Aquí puedes acceder a todos los servicios del club y mantenerte actualizado con las últimas noticias y eventos.'
+      description: 'Aquí puedes acceder a todos los servicios del club y mantenerte actualizado con las últimas noticias y eventos.',
+      greetingMorning: '¡Buenos días, {name}! 👋',
+      greetingAfternoon: '¡Buenas tardes, {name}! 👋',
+      greetingEvening: '¡Buenas noches, {name}! 👋',
+      greetingSubtitle: 'Todo lo que pasa en el club, en un solo lugar.',
+      latestForm: 'Último formulario',
+      seeAllForms: 'Ver todos',
+      vs: 'vs',
+      featuredNews: 'Noticias destacadas',
+      seeAllNews: 'Ver todas',
+      upcomingMatches: 'Próximos partidos',
+      seeAllMatches: 'Ver todos',
+      noLatestForm: 'No hay formularios disponibles',
+      noNews: 'Todavía no hay noticias',
+      noUpcomingMatches: 'No hay más partidos programados',
+      clubBadge: 'CLUB'
     },
     news: {
       title: 'Noticias',
@@ -887,11 +934,7 @@ export const sharedTranslations = {
     sponsorSubtitle: 'Cuéntanos cómo te gustaría colaborar con el club.',
     generalType: 'Contacto',
     sponsorType: 'Patrocinio',
-    asideTitle: 'Tu mensaje llega directamente a coordinación',
-    asideDescription: 'Describe la consulta con el máximo contexto posible para que el club pueda revisarla y responder con agilidad.',
     privacyNote: 'Tus datos se usarán únicamente para responder a este mensaje dentro del club.',
-    yourDetails: 'Tus datos',
-    messageDetails: 'Mensaje',
     responseHint: 'Coordinación revisará tu mensaje lo antes posible.',
     name: 'Nombre',
     namePlaceholder: 'Tu nombre y apellidos',
@@ -907,7 +950,8 @@ export const sharedTranslations = {
     sent: 'Mensaje enviado',
     error: 'No se pudo enviar el mensaje',
     thanksTitle: 'Gracias por contactar',
-    thanksDescription: 'El equipo de coordinación ha recibido tu mensaje y lo revisará pronto.'
+    thanksDescription: 'El equipo de coordinación ha recibido tu mensaje y lo revisará pronto.',
+    backToHome: 'Volver al inicio'
   },
   contactMessages: {
     title: 'Bandeja de coordinación',

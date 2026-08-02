@@ -9,15 +9,15 @@
     </div>
 
     <div class="content-section">
-      <div class="profile-avatar-section">
-        <ion-avatar class="profile-avatar">
-          <ion-img [src]="avatarUrl()" [alt]="user()?.username" (ionError)="onAvatarError()"></ion-img>
-        </ion-avatar>
-      </div>
-
       <div class="section-content">
+        <div class="profile-avatar-row">
+          <ion-avatar class="profile-avatar">
+            <ion-img [src]="avatarUrl()" [alt]="user()?.username" (ionError)="onAvatarError()"></ion-img>
+          </ion-avatar>
+        </div>
+
         <h2 class="subsection-title">{{ 'profile.personalInfo' | translate }}</h2>
-        
+
         <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
           <div class="form-group">
             <label class="form-label">{{ 'profile.email' | translate }}</label>
@@ -75,5 +75,51 @@
         </form>
       </div>
     </div>
+
+    <section class="danger-zone" aria-labelledby="delete-account-title">
+      <div class="danger-zone-copy">
+        <h2 id="delete-account-title">{{ 'profile.deleteAccount' | translate }}</h2>
+        <p>{{ 'profile.deleteAccountDescription' | translate }}</p>
+      </div>
+
+      @if (!showDeleteConfirmation()) {
+        <button type="button" class="btn-danger" (click)="openDeleteConfirmation()">
+          <ion-icon name="trash-outline"></ion-icon>
+          {{ 'profile.deleteAccount' | translate }}
+        </button>
+      } @else {
+        <form [formGroup]="deleteAccountForm" (ngSubmit)="deleteAccount()" class="delete-confirmation">
+          <div class="delete-warning" role="alert">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <span>{{ 'profile.deleteAccountWarning' | translate }}</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="delete-account-password">
+              {{ 'profile.confirmWithPassword' | translate }}
+            </label>
+            <ion-input
+              id="delete-account-password"
+              class="form-input"
+              formControlName="currentPassword"
+              type="password"
+              autocomplete="current-password"
+              [placeholder]="'settings.currentPasswordPlaceholder' | translate">
+            </ion-input>
+          </div>
+
+          <div class="delete-actions">
+            <button type="button" class="btn-secondary" [disabled]="isDeleting()" (click)="cancelDeleteAccount()">
+              <ion-icon name="close-outline"></ion-icon>
+              {{ 'common.cancel' | translate }}
+            </button>
+            <button type="submit" class="btn-danger" [disabled]="deleteAccountForm.invalid || isDeleting()">
+              <ion-icon name="trash-outline"></ion-icon>
+              {{ (isDeleting() ? 'profile.deletingAccount' : 'profile.confirmDeleteAccount') | translate }}
+            </button>
+          </div>
+        </form>
+      }
+    </section>
   </div>
 </ion-content>

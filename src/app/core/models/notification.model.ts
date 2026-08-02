@@ -1,4 +1,10 @@
-import { User } from './user.model';
+export interface NotificationUser {
+  id: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
+}
 
 export enum NotificationType {
   Info = 'info',
@@ -27,7 +33,7 @@ export interface Notification {
   createdAt: Date;
   readAt?: Date;
   userId?: number;
-  user?: User;
+  user?: NotificationUser;
   action?: NotificationAction;
   metadata?: any;
 }
@@ -37,6 +43,7 @@ export interface Notification {
 export interface ApiNotificationSummary {
   id: number;
   title: string;
+  message: string;
   type: string;          // 'submission_pending' | 'publication_request' | ...
   priority: string;      // 'H' | 'M' | 'L'
   status: string;        // 'P' | 'A' | 'R' | 'RS'

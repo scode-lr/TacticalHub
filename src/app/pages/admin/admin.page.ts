@@ -15,6 +15,46 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 
+export const ADMIN_MENU_CONFIG: MenuConfig = {
+  role: RoleType.Admin,
+  items: [
+    {
+      id: 'home',
+      label: 'admin.menu.home',
+      icon: 'home-outline',
+      route: 'home',
+    },
+    { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
+    {
+      id: 'notifications',
+      label: 'admin.menu.notifications',
+      icon: 'notifications-outline',
+      route: 'notifications',
+    },
+    {
+      id: 'forms-submissions',
+      label: 'admin.menu.forms',
+      icon: 'document-text-outline',
+      route: 'forms-submissions',
+    },
+    { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
+    // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
+    { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
+    // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
+    // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
+    // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
+  ],
+  moreItems: [
+    {
+      id: 'settings-club',
+      label: 'admin.menu.settings',
+      icon: 'settings-outline',
+      route: 'settings-club',
+      description: 'admin.description.settings',
+    },
+  ],
+};
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.page.html',
@@ -36,42 +76,7 @@ export class AdminPage implements OnInit {
   readonly memberId = signal<string>('');
   readonly currentRole = signal<Role | null>(null);
 
-  readonly adminMenuConfig: MenuConfig = {
-    role: RoleType.Admin,
-    items: [
-      {
-        id: 'home',
-        label: 'admin.menu.home',
-        icon: 'home-outline',
-        route: 'home',
-      },
-      { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
-      {
-        id: 'notifications',
-        label: 'admin.menu.notifications',
-        icon: 'notifications-outline',
-        route: 'notifications',
-      },
-      {
-        id: 'forms-submissions',
-        label: 'admin.menu.forms',
-        icon: 'document-text-outline',
-        route: 'forms-submissions',
-      },
-      { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
-      {
-        id: 'settings-club',
-        label: 'admin.menu.settings',
-        icon: 'settings-outline',
-        route: 'settings-club',
-      },
-      // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
-      // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
-      // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
-      // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
-      // { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
-    ],
-  };
+  readonly adminMenuConfig = ADMIN_MENU_CONFIG;
 
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {

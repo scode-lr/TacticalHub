@@ -8,7 +8,7 @@ import { TeamJoinRequestsComponent } from '@components/team-join-requests/team-j
 import { ActionRequestsComponent } from '@components/action-requests/action-requests.component';
 import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
 import { addIcons } from 'ionicons';
-import { checkmarkOutline, closeOutline } from 'ionicons/icons';
+import { checkmarkOutline, closeOutline, checkmarkDoneOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-notifications',
@@ -38,8 +38,36 @@ export class NotificationsPage implements OnInit, OnDestroy {
   readonly NotificationType = NotificationType;
   readonly defaultAvatar = 'assets/default-avatar.svg';
 
+  readonly notificationGroups = computed<{ labelKey: string; items: Notification[] }[]>(() => {
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    const startOfYesterday = new Date(startOfToday);
+    startOfYesterday.setDate(startOfYesterday.getDate() - 1);
+    const startOfWeek = new Date(startOfToday);
+    startOfWeek.setDate(startOfWeek.getDate() - 7);
+
+    const today: Notification[] = [];
+    const yesterday: Notification[] = [];
+    const thisWeek: Notification[] = [];
+    const older: Notification[] = [];
+
+    for (const notification of this.notifications()) {
+      if (notification.createdAt >= startOfToday) today.push(notification);
+      else if (notification.createdAt >= startOfYesterday) yesterday.push(notification);
+      else if (notification.createdAt >= startOfWeek) thisWeek.push(notification);
+      else older.push(notification);
+    }
+
+    return [
+      { labelKey: 'notifications.today', items: today },
+      { labelKey: 'notifications.yesterday', items: yesterday },
+      { labelKey: 'notifications.thisWeek', items: thisWeek },
+      { labelKey: 'notifications.older', items: older }
+    ].filter(group => group.items.length > 0);
+  });
+
   constructor() {
-    addIcons({ checkmarkOutline, closeOutline });
+    addIcons({ checkmarkOutline, closeOutline, checkmarkDoneOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -53,6 +81,10 @@ export class NotificationsPage implements OnInit, OnDestroy {
 
   async loadMore(): Promise<void> {
     await this.notificationsService.loadMore();
+  }
+
+  markAllRead(): void {
+    this.notificationsService.markAllAsRead();
   }
 
 

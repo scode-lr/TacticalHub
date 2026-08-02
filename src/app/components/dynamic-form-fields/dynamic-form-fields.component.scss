@@ -31,13 +31,13 @@
     gap: 0;
     padding: 0.875rem 1rem;
     border: 1px solid var(--border-light, #e5e7eb);
-    border-radius: 10px;
+    border-radius: 12px;
     background: var(--background-primary, #ffffff);
     cursor: pointer;
     transition: border-color 0.2s ease;
 
     &:hover {
-      border-color: var(--ion-color-primary, #3880ff);
+      border-color: var(--color-accent, var(--ion-color-primary, #3880ff));
     }
   }
 }
@@ -63,6 +63,11 @@
 input[pInputText],
 textarea[pTextarea] {
   width: 100%;
+
+  &:focus {
+    border-color: var(--color-accent, var(--ion-color-primary, #3880ff)) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent, var(--ion-color-primary, #3880ff)) 22%, transparent) !important;
+  }
 }
 
 p-select,

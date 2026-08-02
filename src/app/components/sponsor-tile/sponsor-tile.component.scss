@@ -1,0 +1,50 @@
+.sponsor-card {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.sponsor-image-container {
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 120px;
+
+  .tier-sponsor & {
+    height: 280px;
+
+    @media (max-width: 600px) {
+      height: 200px;
+    }
+  }
+}
+
+.sponsor-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+}
+
+.sponsor-card-footer {
+  padding: 12px;
+}
+
+.sponsor-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary, #111827);
+}

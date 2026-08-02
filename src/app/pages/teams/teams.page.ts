@@ -1,12 +1,14 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
-import { Team } from '@core/models/team.model';
+import { Team, TeamCategory } from '@core/models/team.model';
 import { NavigationService } from '@core/services/navigation.service';
-import { TeamFormModalComponent, NewTeamData, SeasonSelectorModalComponent } from '@components/modals';
+import { TeamFormModalComponent, NewTeamData } from '@components/modals';
 import { addIcons } from 'ionicons';
 import { addOutline, chevronDownOutline } from 'ionicons/icons';
+import { TeamsService } from '@services/teams.service';
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-teams',
@@ -18,22 +20,25 @@ import { addOutline, chevronDownOutline } from 'ionicons/icons';
     IonIcon,
     TranslatePipe,
     TeamFormModalComponent,
-    SeasonSelectorModalComponent
   ]
 })
-export class TeamsPage {
+export class TeamsPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
+  private readonly teamsService = inject(TeamsService);
+  private readonly userService = inject(UserService);
 
   readonly teams = signal<Team[]>([]);
   readonly selectedSeason = signal<string>('2025-2026');
+  readonly selectedSeasonId = signal<number>(0);
+  readonly clubId = signal<number>(0);
+  readonly categories = signal<TeamCategory[]>([]);
+  readonly isLoading = signal<boolean>(true);
   
-  readonly seasons = ['2025-2026', '2024-2025', '2023-2024', '2022-2023'];
   readonly isModalOpen = signal<boolean>(false);
-  readonly isSeasonModalOpen = signal<boolean>(false);
 
   readonly groupedTeams = computed(() => {
     const teams = this.teams();
-    const grouped = new Map<string, Team[]>();
+    const grouped = new Map<number, Team[]>();
     
     teams.forEach(team => {
       const category = team.categoryId;
@@ -44,7 +49,7 @@ export class TeamsPage {
     });
     
     return Array.from(grouped.entries()).map(([category, teams]) => ({
-      category,
+      category: this.categories().find(item => item.id === category)?.name ?? String(category),
       teams
     }));
   });
@@ -53,16 +58,33 @@ export class TeamsPage {
     addIcons({ addOutline, chevronDownOutline });
   }
 
-  openSeasonSelector(): void {
-    this.isSeasonModalOpen.set(true);
+  async ngOnInit(): Promise<void> {
+    const role = this.userService.getCurrentRole();
+    if (!role) {
+      this.isLoading.set(false);
+      return;
+    }
+
+    this.clubId.set(role.clubId);
+    await this.loadData();
   }
 
-  closeSeasonModal(): void {
-    this.isSeasonModalOpen.set(false);
-  }
-
-  selectSeason(season: string): void {
-    this.selectedSeason.set(season);
+  private async loadData(): Promise<void> {
+    this.isLoading.set(true);
+    try {
+      const [teamSeasons, categories] = await Promise.all([
+        this.teamsService.fetchTeamsByClubId(this.clubId()),
+        this.teamsService.fetchCategories()
+      ]);
+      this.categories.set(categories);
+      if (teamSeasons) {
+        this.teams.set(teamSeasons.teams);
+        this.selectedSeason.set(teamSeasons.seasonName);
+        this.selectedSeasonId.set(teamSeasons.seasonId);
+      }
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 
   createNewTeam(): void {
@@ -73,22 +95,17 @@ export class TeamsPage {
     this.isModalOpen.set(false);
   }
 
-  onTeamAdded(teamData: NewTeamData): void {
-    const currentTeams = this.teams();
-    const maxId = currentTeams.reduce((max, t) => Math.max(max, t.id), 0);
-    
-    const newTeam: Team = {
-      id: maxId + 1,
-      name: teamData.name,
-      categoryId: teamData.category,
-      clubId: teamData.clubId
-    };
-
-    this.teams.update(teams => [...teams, newTeam]);
+  async onTeamAdded(teamData: NewTeamData): Promise<void> {
+    const team = await this.teamsService.createTeam(teamData);
+    await this.teamsService.createTeamSeason(team.id, {
+      seasonId: this.selectedSeasonId(),
+      status: 'AC'
+    });
+    await this.loadData();
   }
 
   openTeam(team: Team): void {
     const {roleType, roleId} = this.navigationService.extractRoleDetails();
-    this.navigationService.navigateTo([`app/${roleType}/${roleId}/teams/${team.id}`]);
+    this.navigationService.navigateTo([`app/${roleType}/${roleId}/teams/${team.teamSeasonId ?? team.id}`]);
   }
 }

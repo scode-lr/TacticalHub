@@ -1,0 +1,81 @@
+<section class="users-page">
+  <header class="page-header">
+    <div>
+      <h1>{{ 'clubMembers.title' | translate }}</h1>
+      <p>{{ 'clubMembers.subtitle' | translate }}</p>
+    </div>
+    <span class="count"><ion-icon name="people-outline"></ion-icon>{{ totalCount() }}</span>
+  </header>
+
+  <label class="search">
+    <ion-icon name="search-outline"></ion-icon>
+    <input type="search" [value]="query()" (input)="search($any($event.target).value)"
+      [placeholder]="'clubMembers.search' | translate" />
+  </label>
+
+  @if (isLoading()) {
+    <div class="state">{{ 'common.loading' | translate }}</div>
+  } @else if (!visibleUsers().length) {
+    <div class="state">{{ 'clubMembers.empty' | translate }}</div>
+  } @else {
+    <div class="member-list">
+      @for (user of visibleUsers(); track user.userId) {
+        <article class="member-card">
+          <div class="identity">
+            <div class="avatar">{{ displayName(user).charAt(0).toUpperCase() }}</div>
+            <div class="identity-copy">
+              <h2>{{ displayName(user) }}</h2>
+              <p>{{ user.email }}</p>
+            </div>
+            <div class="actions">
+              <button class="actions-toggle" type="button" (click)="toggleMenu(user.userId)"
+                [attr.aria-label]="'clubMembers.actions' | translate"
+                [attr.aria-expanded]="openMenuUserId() === user.userId">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+              </button>
+              @if (openMenuUserId() === user.userId) {
+                <div class="actions-menu">
+                  <strong>{{ 'clubMembers.assignRole' | translate }}</strong>
+                  <button type="button" (click)="assignAdmin(user)"
+                    [disabled]="hasRole(user, roleType.Admin) || savingUserId() === user.userId">
+                    {{ 'clubMembers.assignAdmin' | translate }}
+                  </button>
+                  <button class="danger-action" type="button" (click)="deactivateUser(user)"
+                    [disabled]="savingUserId() === user.userId">
+                    {{ 'clubMembers.deactivateUser' | translate }}
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="role-section">
+            <span class="section-label">{{ 'clubMembers.currentRoles' | translate }}</span>
+            <div class="role-list">
+              @for (relation of user.relations; track relation.id) {
+                <span class="role-chip">
+                  {{ roleLabelKey(relation.roleId) | translate }}
+                  @if (relation.teamName) { · {{ relation.teamName }} }
+                </span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <nav class="pagination" [attr.aria-label]="'clubMembers.pagination' | translate">
+        <button type="button" class="secondary" (click)="previousPage()"
+          [disabled]="!canGoBack() || isLoading()">
+          {{ 'clubMembers.previousPage' | translate }}
+        </button>
+        <span>{{ 'clubMembers.pageStatus' | translate: { current: currentPage(), total: totalPages() } }}</span>
+        <button type="button" class="secondary" (click)="nextPage()"
+          [disabled]="!canGoForward() || isLoading()">
+          {{ 'clubMembers.nextPage' | translate }}
+        </button>
+      </nav>
+    }
+  }
+</section>

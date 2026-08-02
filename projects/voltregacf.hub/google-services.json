@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1097796817474",
+    "project_id": "voltregacfhub",
+    "storage_bucket": "voltregacfhub.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097796817474:android:af414d7cec3641241453db",
+        "android_client_info": {
+          "package_name": "com.voltregacf.hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU871ajsZQ7L6UxJlVbxe6tEs9uUqI9tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

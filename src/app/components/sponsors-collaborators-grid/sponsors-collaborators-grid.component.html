@@ -1,0 +1,12 @@
+@if (loading()) {
+  <div class="loading-spinner">
+    <ion-spinner name="dots" />
+  </div>
+} @else if (collaborators().length > 0) {
+  <h2 class="tier-title">{{ 'admin.settings.sponsors.tier.collaborator' | translate }}</h2>
+  <div class="sponsors-grid tier-collaborator">
+    @for (sponsor of collaborators(); track sponsor.id) {
+      <app-sponsor-tile [sponsor]="sponsor" [showName]="false" (sponsorSelected)="onSelect($event)" />
+    }
+  </div>
+}

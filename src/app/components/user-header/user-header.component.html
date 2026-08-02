@@ -1,48 +1,75 @@
 <div class="page-header">
   <div class="header-content">
-    @if (showBackButton()) {
-      <button class="back-button" (click)="onBackClick()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-        <span>{{ 'common.back' | translate }}</span>
-      </button>
-    } @else if (showRoleSelector()) {
-      <div class="role-selector-wrapper">
-        <app-role-selector [currentRole]="currentRole()"></app-role-selector>
-      </div>
-    }
-    
+    <div class="header-leading">
+      @if (showBackButton()) {
+        <button class="back-button" (click)="onBackClick()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          <span>{{ 'common.back' | translate }}</span>
+        </button>
+      } @else if (showRoleSelector()) {
+        <button
+          type="button"
+          class="hamburger-button"
+          (click)="toggleAccountDrawer($event)"
+          [attr.aria-label]="'common.menu' | translate">
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+      }
+    </div>
+
+    <div class="header-center">
+      @if (showRoleSelector() && !showBackButton()) {
+        <img
+          class="header-club-logo"
+          [src]="defaultClubLogo()"
+          [alt]="currentRole()?.clubName || 'Club'"
+          appDefaultImage="assets/image-non-available.svg">
+      }
+    </div>
+
     <div class="header-actions">
       @if (showNotificationsButton()) {
         <button class="notifications-button" type="button" (click)="goToNotifications()">
           <ion-icon name="notifications-outline"></ion-icon>
           @if (notificationsBadge() > 0) {
-            <span class="notifications-badge"></span>
+            <span class="notifications-badge">{{ notificationsBadge() }}</span>
           }
         </button>
       }
-
-      <div class="user-menu" (click)="onUserClick($event)" [class.menu-open]="showUserMenu()">
-        <ion-avatar class="user-avatar">
-          <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>
-        </ion-avatar>
-      </div>
     </div>
-    
-    @if (showUserMenu()) {
-      <div class="user-dropdown">
-        <button class="dropdown-item" (click)="goToProfile()">
-          <ion-icon name="person-outline"></ion-icon>
-          <span>{{ 'common.profile' | translate }}</span>
-        </button>
-        <button class="dropdown-item" (click)="goToSettings()">
-          <ion-icon name="settings-outline"></ion-icon>
-          <span>{{ 'common.settings' | translate }}</span>
-        </button>
-        <button class="dropdown-item logout-item" (click)="logout()">
-          <ion-icon name="log-out-outline"></ion-icon>
-          <span>{{ 'auth.signOut' | translate }}</span>
-        </button>
-      </div>
-    }
   </div>
 </div>
+
+@if (showAccountDrawer()) {
+  <div class="drawer-backdrop" (click)="closeAccountDrawer()"></div>
+  <div class="account-drawer">
+    <div class="drawer-identity">
+      <ion-avatar class="drawer-avatar">
+        <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>
+      </ion-avatar>
+      <div class="drawer-identity-text">
+        <div class="drawer-name">{{ displayName() }}</div>
+        <div class="drawer-subtitle">{{ currentRole()?.clubName }} · {{ currentRoleName() }}</div>
+      </div>
+    </div>
+
+    <nav class="drawer-nav">
+      <button class="drawer-item" type="button" (click)="goToProfile()">
+        <ion-icon name="person-outline"></ion-icon>
+        <span>{{ 'common.profile' | translate }}</span>
+      </button>
+      <button class="drawer-item" type="button" (click)="goToSettings()">
+        <ion-icon name="settings-outline"></ion-icon>
+        <span>{{ 'common.settings' | translate }}</span>
+      </button>
+      <app-role-selector [currentRole]="currentRole()" [asMenuItem]="true"></app-role-selector>
+    </nav>
+
+    <div class="drawer-spacer"></div>
+
+    <button class="drawer-item drawer-item--danger" type="button" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>{{ 'auth.signOut' | translate }}</span>
+    </button>
+  </div>
+}

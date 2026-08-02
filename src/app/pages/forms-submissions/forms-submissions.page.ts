@@ -73,6 +73,11 @@ export class FormsSubmissionsPage {
   readonly currentPage = signal<number>(1);
   readonly totalSubmissions = signal<number>(0);
   readonly currentSort = signal<string | undefined>(undefined);
+  readonly submissionsStatusFilter = signal<AppStatus | undefined>(undefined);
+
+  readonly PendingStatus = AppStatus.Pending;
+  readonly ApprovedStatus = AppStatus.Approved;
+  readonly RejectedStatus = AppStatus.Rejected;
 
   readonly toastVisible = signal<boolean>(false);
   readonly toastMessage = signal<string>('');
@@ -144,6 +149,7 @@ export class FormsSubmissionsPage {
       this.loading.set(false);
       this.submissionsLoading.set(false);
       this.submissionsSearchValue = saved.submissionsSearchValue;
+      this.submissionsStatusFilter.set(saved.submissionsStatusFilter as AppStatus | undefined);
     } else {
       await this.loadForms();
     }
@@ -178,10 +184,17 @@ export class FormsSubmissionsPage {
     this.currentPage.set(1);
     this.currentSort.set(undefined);
     this.submissionsSearchValue = '';
+    this.submissionsStatusFilter.set(undefined);
     this.viewState.set('detail');
     const form = this.forms().find(f => f.id === formId);
     if (!form) return;
     this.totalSubmissions.set(form.submissionsCount ?? 0);
+  }
+
+  setStatusFilter(status: AppStatus | undefined, dt: Table): void {
+    if (this.submissionsStatusFilter() === status) return;
+    this.submissionsStatusFilter.set(status);
+    dt.reset();
   }
 
   async onLazyLoad(event: TableLazyLoadEvent): Promise<void> {
@@ -218,7 +231,7 @@ export class FormsSubmissionsPage {
   private async loadSubmissions(formId: number): Promise<void> {
     this.submissionsLoading.set(true);
     try {
-      const submissionsPage = await this.formSubmissionsService.getSubmissions(formId, this.pageSize(), (this.currentPage() - 1) * this.pageSize(), this.submissionsSearchValue || undefined, this.currentSort());
+      const submissionsPage = await this.formSubmissionsService.getSubmissions(formId, this.pageSize(), (this.currentPage() - 1) * this.pageSize(), this.submissionsSearchValue || undefined, this.currentSort(), this.submissionsStatusFilter());
       this.submissions.set(submissionsPage.submissions);
       this.totalSubmissions.set(submissionsPage.totalCount ?? this.totalSubmissions());
     } catch (error) {
@@ -244,6 +257,7 @@ export class FormsSubmissionsPage {
       currentPage: this.currentPage(),
       currentSort: this.currentSort(),
       submissionsSearchValue: this.submissionsSearchValue,
+      submissionsStatusFilter: this.submissionsStatusFilter(),
     };
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms-submissions/${submissionId}`]);

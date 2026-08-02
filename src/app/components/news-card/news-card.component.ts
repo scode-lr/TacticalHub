@@ -1,5 +1,6 @@
 import { Component, input, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonIcon } from '@ionic/angular/standalone';
 import { formatDistanceToNow, Locale } from 'date-fns';
 import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
@@ -14,7 +15,7 @@ import { AppStatus } from '@models/app-status.model';
   templateUrl: './news-card.component.html',
   styleUrls: ['./news-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, TranslatePipe]
+  imports: [CommonModule, IonIcon, TranslatePipe]
 })
 export class NewsCardComponent {
   private readonly translationService = inject(TranslationService);

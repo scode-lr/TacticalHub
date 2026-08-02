@@ -30,6 +30,11 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               {
+                "glob": "*.html",
+                "input": "projects/tactical.hub",
+                "output": "/"
+              },
+              {
                 "glob": "**/*",
                 "input": "projects/tactical.hub/assets",
                 "output": "assets"
@@ -177,6 +182,11 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               {
+                "glob": "*.html",
+                "input": "projects/voltregacf.hub",
+                "output": "/"
+              },
+              {
                 "glob": "**/*",
                 "input": "projects/voltregacf.hub/assets",
                 "output": "assets"
@@ -272,6 +282,11 @@
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
+              {
+                "glob": "*.html",
+                "input": "projects/voltregacf.hub",
+                "output": "/"
+              },
               {
                 "glob": "**/*",
                 "input": "projects/voltregacf.hub/assets",

@@ -1,7 +1,7 @@
-<div class="signup-page auth-background">
+<div class="signup-page auth-page">
   <!-- Back Button (Mobile Only) -->
   <button class="btn-icon back-btn" (click)="goBack()">
-    <ion-icon name="arrow-back"></ion-icon>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
   </button>
 
   <div class="branding-section">
@@ -14,13 +14,14 @@
       <!-- Header -->
       <div class="form-header">
         <h1>{{ 'welcome.createAccount' | translate }}</h1>
+        <p>{{ 'auth.signUpSubtitle' | translate }}</p>
       </div>
       <form [formGroup]="signupForm" (ngSubmit)="onSignUp()" class="signup-form">
         <!-- Name Inputs Row -->
         <div class="name-row">
           <div class="input-group half-width">
-            <ion-input 
-              type="text" 
+            <ion-input
+              type="text"
               formControlName="firstName"
               [placeholder]="'auth.firstName' | translate"
               fill="outline"
@@ -33,10 +34,10 @@
               </div>
             }
           </div>
-          
+
           <div class="input-group half-width">
-            <ion-input 
-              type="text" 
+            <ion-input
+              type="text"
               formControlName="lastName"
               [placeholder]="'auth.lastName' | translate"
               fill="outline"
@@ -50,11 +51,11 @@
             }
           </div>
         </div>
-        
+
         <!-- Email Input -->
         <div class="input-group">
-          <ion-input 
-            type="email" 
+          <ion-input
+            type="email"
             formControlName="email"
             [placeholder]="'auth.email' | translate"
             fill="outline"
@@ -72,10 +73,10 @@
             </div>
           }
         </div>
-        
+
         <!-- Birth Date Input -->
         <div class="input-group">
-          <ion-input 
+          <ion-input
             type="text"
             formControlName="birthDate"
             [placeholder]="'auth.birthDatePlaceholder' | translate"
@@ -83,9 +84,9 @@
             class="modern-input"
             maxlength="10"
             (ionInput)="onDateInput($event)"
-            [class.ion-invalid]="signupForm.get('birthDate')?.invalid && formSubmitted()">
+            [class.ion-invalid]="signupForm.get('birthDate')?.invalid && (formSubmitted() || signupForm.get('birthDate')?.dirty)">
           </ion-input>
-          @if (signupForm.get('birthDate')?.invalid && formSubmitted()) {
+          @if (signupForm.get('birthDate')?.invalid && (formSubmitted() || signupForm.get('birthDate')?.dirty)) {
             <div class="error-message">
               <ion-icon name="alert-circle" class="error-icon"></ion-icon>
               @if (signupForm.get('birthDate')?.hasError('required')) {
@@ -94,20 +95,24 @@
                 <span>{{ 'validation.birthDateInvalid' | translate }}</span>
               } @else if (signupForm.get('birthDate')?.hasError('futureDate')) {
                 <span>{{ 'validation.birthDateFuture' | translate }}</span>
+              } @else if (signupForm.get('birthDate')?.hasError('minimumAge')) {
+                <span>{{ 'validation.minimumRegistrationAge' | translate }}</span>
               }
             </div>
           }
         </div>
-        
+
         <!-- Password Input -->
         <div class="input-group">
-          <ion-input 
-            type="password" 
+          <ion-input
+            type="password"
             formControlName="password"
             [placeholder]="'auth.password' | translate"
             fill="outline"
+            (ionInput)="onPasswordInput($event)"
             [class.ion-invalid]="signupForm.get('password')?.invalid && formSubmitted()">
           </ion-input>
+          <app-password-strength [password]="passwordValue()"></app-password-strength>
           @if (signupForm.get('password')?.invalid && formSubmitted()) {
             <div class="error-message">
               <ion-icon name="alert-circle" class="error-icon"></ion-icon>
@@ -120,16 +125,22 @@
             </div>
           }
         </div>
-        
+
         <!-- Confirm Password Input -->
         <div class="input-group">
-          <ion-input 
-            type="password" 
+          <ion-input
+            type="password"
             formControlName="confirmPassword"
             [placeholder]="'auth.confirmPassword' | translate"
             fill="outline"
+            (ionInput)="onConfirmInput($event)"
             [class.ion-invalid]="((signupForm.get('confirmPassword')?.invalid && formSubmitted()) || (signupForm.errors?.['passwordMismatch'] && formSubmitted()))">
           </ion-input>
+          @if (confirmValue().length > 0) {
+            <span class="confirm-hint" [class.match]="passwordsMatch()" [class.mismatch]="!passwordsMatch()">
+              {{ (passwordsMatch() ? 'auth.passwordsMatch' : 'auth.passwordsDontMatch') | translate }}
+            </span>
+          }
           @if (signupForm.get('confirmPassword')?.invalid && formSubmitted()) {
             <div class="error-message">
               <ion-icon name="alert-circle" class="error-icon"></ion-icon>
@@ -156,6 +167,13 @@
             <span>{{ 'welcome.createAccount' | translate }}</span>
           }
         </button>
+
+        <!-- Legal microcopy -->
+        <p class="legal-text">
+          {{ 'welcome.terms' | translate }}
+          <a class="link" href="terms-of-service.html" target="_blank" rel="noopener">{{ 'welcome.termsOfService' | translate }}</a> {{ 'welcome.and' | translate }}
+          <a class="link" href="privacy-policy.html" target="_blank" rel="noopener">{{ 'welcome.privacyPolicy' | translate }}</a>
+        </p>
       </form>
 
       <app-auth-footer mode="signup"></app-auth-footer>

@@ -2,10 +2,11 @@ import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { calendarOutline, chevronForwardOutline, flashOutline, settingsOutline } from 'ionicons/icons';
+import { bodyOutline, calendarOutline, chevronForwardOutline, documentTextOutline, flashOutline, peopleOutline, settingsOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
+import { FormAction } from '@models/form-action.enum';
 import { NavigationService } from '@core/index';
 import { Tag } from 'primeng/tag';
 import { Chip } from 'primeng/chip';
@@ -34,8 +35,17 @@ export class FormHeaderComponent {
     }
   });
 
+  readonly formIcon = computed((): string => {
+    switch (this.form().action) {
+      case FormAction.RegisterPlayer: return 'body-outline';
+      case FormAction.BecomeMember:   return 'people-outline';
+      case FormAction.Simple:
+      default:                        return 'document-text-outline';
+    }
+  });
+
   constructor() {
-    addIcons({ flashOutline, calendarOutline, settingsOutline, chevronForwardOutline });
+    addIcons({ flashOutline, calendarOutline, settingsOutline, chevronForwardOutline, documentTextOutline, bodyOutline, peopleOutline });
   }
 
   redirect(): void {

@@ -226,14 +226,13 @@ export class NotificationsService {
     return {
       id: item.id,
       title: item.title,
-      message: '',           // not present in summary — populated in detail view
+      message: item.message,
       type: item.type as NotificationType,
       status: item.isRead ? NotificationStatus.Read : NotificationStatus.Unread,
       createdAt: new Date(item.createdAt),
       readAt: item.readAt ? new Date(item.readAt) : undefined,
       user: item.createdByUserName ? {
         id: 0,
-        email: '',
         username: item.createdByUserName,
         avatarUrl: item.createdByAvatar
       } : undefined,

@@ -1,16 +1,16 @@
 import { Component, inject, signal, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 
+import {
   IonModal,
   IonIcon,
-  IonAvatar,
-  IonBadge
+  IonAvatar
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { 
+import {
   chevronDownOutline,
   closeOutline,
-  briefcaseOutline
+  briefcaseOutline,
+  swapHorizontalOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserService } from '@core/services/user.service';
@@ -21,6 +21,8 @@ import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role, RoleType } from '@core/models/role.model';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
 import { RolesService } from '@services/roles.service';
+import { RoleCardComponent } from '@components/role-card/role-card.component';
+import { environment } from '@environment';
 
 
 @Component({
@@ -33,9 +35,9 @@ import { RolesService } from '@services/roles.service';
     IonModal,
     IonIcon,
     IonAvatar,
-    IonBadge,
     TranslatePipe,
-    DefaultImageDirective
+    DefaultImageDirective,
+    RoleCardComponent
   ]
 })
 export class RoleSelectorComponent {
@@ -46,7 +48,9 @@ export class RoleSelectorComponent {
   private readonly roleService = inject(RolesService);
 
   readonly isModalOpen = signal<boolean>(false);
+  readonly isPrivateApp = environment.private;
   readonly currentRole = input<Role | null>();
+  readonly asMenuItem = input<boolean>(false);
   readonly isRoleSelectorDisabled = computed(() => this.currentRole()?.roleId === RoleType.Guest);
   readonly availableRoles = computed(() => {
     const user = this.userService.getStoredUser();
@@ -64,7 +68,8 @@ export class RoleSelectorComponent {
     addIcons({
       chevronDownOutline,
       closeOutline,
-      briefcaseOutline
+      briefcaseOutline,
+      swapHorizontalOutline
     });
   }
 

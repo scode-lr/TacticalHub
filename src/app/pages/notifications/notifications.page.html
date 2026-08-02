@@ -1,6 +1,13 @@
 <div class="page-container member-action-page">
-  <div class="section-header">
-    <h1 class="section-title">{{ 'admin.menu.notifications' | translate }}</h1>
+  <div class="section-header notifications-header">
+    <h1 class="section-title">{{ 'user.menu.notifications' | translate }}</h1>
+
+    @if (notifications().length > 0) {
+      <button type="button" class="btn-icon mark-all-read-button" (click)="markAllRead()">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+        <span>{{ 'notifications.markAllAsRead' | translate }}</span>
+      </button>
+    }
   </div>
 
   <app-team-join-requests></app-team-join-requests>
@@ -18,74 +25,82 @@
   @if (hasError()) {
     <div class="error-state">
       <ion-icon name="alert-circle-outline"></ion-icon>
-      <p>Could not load notifications. Pull down to retry.</p>
+      <p>{{ 'notifications.loadError' | translate }}</p>
     </div>
   }
 
   @if (!isLoading() && !hasError() && notifications().length === 0) {
-    <app-empty-state />
+    <app-empty-state
+      icon="notifications-outline"
+      titleKey="notifications.empty"
+      messageKey="notifications.emptyDescription" />
   }
 
   <div class="notifications-list">
-    @for (notification of notifications(); track notification.id) {
-      <div 
-        class="notification-item" 
-        [class.read]="notification.status === 'read' || notification.status === 'completed'"
-        [class.notification-info]="notification.type === NotificationType.Info"
-        [class.notification-action]="notification.type === NotificationType.Action"
-        [class.notification-approval]="notification.type === NotificationType.Approval"
-        (click)="markAsRead(notification)">
-        
-        @if (notification.status === 'unread') {
-          <span class="new-badge"></span>
-        }
+    @for (group of notificationGroups(); track group.labelKey) {
+      <div class="notification-group">
+        <span class="group-label">{{ group.labelKey | translate }}</span>
 
-        @if (notification.user) {
-          <ion-avatar class="notification-avatar">
-            <ion-img
-              [src]="notification.user.avatarUrl || defaultAvatar"
-              [alt]="notification.user.username"
-              (ionError)="onAvatarError($event)" />
-          </ion-avatar>
-        } @else {
-          <div class="notification-icon-wrapper">
-            <ion-icon name="notifications-outline" class="notification-icon"></ion-icon>
-          </div>
-        }
+        <div class="notification-grid">
+          @for (notification of group.items; track notification.id) {
+            <div
+              class="notification-item"
+              [class.read]="notification.status === 'read' || notification.status === 'completed'"
+              [class.notification-info]="notification.type === NotificationType.Info"
+              [class.notification-action]="notification.type === NotificationType.Action"
+              [class.notification-approval]="notification.type === NotificationType.Approval"
+              (click)="markAsRead(notification)">
 
-        <div class="notification-content">
-          <h3 class="notification-title">{{ notification.title }}</h3>
-          @if (notification.user?.username) {
-            <span class="notification-creator">{{ notification.user!.username }}</span>
-          }
-          <p class="notification-message">{{ notification.message }}</p>
-        </div>
+              @if (notification.user) {
+                <ion-avatar class="notification-avatar">
+                  <ion-img
+                    [src]="notification.user.avatarUrl || defaultAvatar"
+                    [alt]="notification.user.username"
+                    (ionError)="onAvatarError($event)" />
+                </ion-avatar>
+              } @else {
+                <div class="notification-icon-wrapper">
+                  <ion-icon name="notifications-outline" class="notification-icon"></ion-icon>
+                </div>
+              }
 
-        <div class="notification-right-column">
-          <span class="notification-date">{{ formatDate(notification.createdAt) }}</span>
+              <div class="notification-content">
+                <h3 class="notification-title">{{ notification.title }}</h3>
+                @if (notification.user?.username) {
+                  <span class="notification-creator">{{ notification.user!.username }}</span>
+                }
+                <p class="notification-message">{{ notification.message }}</p>
+                <span class="notification-date">{{ formatDate(notification.createdAt) }}</span>
 
-          @if (notification.type === NotificationType.Action && notification.action && notification.status === 'unread') {
-            <div class="notification-actions">
-              <button
-                class="btn-outline btn-small"
-                (click)="handleAction(notification); $event.stopPropagation()">
-                {{ notification.action.label }}
-              </button>
-            </div>
-          }
+                @if (notification.type === NotificationType.Action && notification.action && notification.status === 'unread') {
+                  <div class="notification-actions">
+                    <button
+                      class="btn-outline btn-small"
+                      (click)="handleAction(notification); $event.stopPropagation()">
+                      {{ notification.action.label }}
+                    </button>
+                  </div>
+                }
 
-          @if (notification.type === NotificationType.Approval && notification.status === 'unread') {
-            <div class="notification-approval-actions">
-              <button
-                class="btn-icon btn-icon--success btn-small"
-                (click)="handleApprove(notification); $event.stopPropagation()">
-                <ion-icon name="checkmark-outline"></ion-icon>
-              </button>
-              <button
-                class="btn-icon btn-icon--danger btn-small"
-                (click)="handleReject(notification); $event.stopPropagation()">
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
+                @if (notification.type === NotificationType.Approval && notification.status === 'unread') {
+                  <div class="notification-approval-actions">
+                    <button
+                      class="btn-icon btn-icon--success btn-small"
+                      (click)="handleApprove(notification); $event.stopPropagation()">
+                      <ion-icon name="checkmark-outline"></ion-icon>
+                    </button>
+                    <button
+                      class="btn-icon btn-icon--danger btn-small"
+                      (click)="handleReject(notification); $event.stopPropagation()">
+                      <ion-icon name="close-outline"></ion-icon>
+                    </button>
+                  </div>
+                }
+              </div>
+
+              @if (notification.status === 'unread') {
+                <span class="new-dot"></span>
+              }
             </div>
           }
         </div>

@@ -22,6 +22,7 @@ export interface FormsSubmissionsPageState {
   currentPage: number;
   currentSort: string | undefined;
   submissionsSearchValue: string;
+  submissionsStatusFilter: string | undefined;
 }
 
 @Injectable({
@@ -42,10 +43,11 @@ export class FormSubmissionsService {
     );
   }
 
-  async getSubmissions(formId: number, limit = 12, offset = 0, username?: string, sort?: string): Promise<SubmissionPage> {
+  async getSubmissions(formId: number, limit = 12, offset = 0, username?: string, sort?: string, status?: string): Promise<SubmissionPage> {
     const params: Record<string, string> = { limit: String(limit), offset: String(offset) };
     if (username) params['username'] = username;
     if (sort) params['sort'] = sort;
+    if (status) params['status'] = status;
     return await firstValueFrom(
       this.apiService.get<ApiResponse<SubmissionPage>>(`/forms/${formId}/submissions`, { params }).pipe(
         map(response => response.data!)

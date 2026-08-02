@@ -62,7 +62,7 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'users',
-        loadComponent: () => import('../placeholder/placeholder.page').then(m => m.PlaceholderPage)
+        loadComponent: () => import('../users/users.page').then(m => m.UsersPage)
       },
       {
         path: 'forms-submissions',
@@ -92,6 +92,10 @@ export const adminRoutes: Routes = [
       {
         path: 'settings-forms/:formId',
         loadComponent: () => import('../settings-forms/settings-form-detail/settings-form-detail.page').then(m => m.SettingsFormDetailPage)
+      },
+      {
+        path: 'more',
+        loadComponent: () => import('../more/more.page').then(m => m.MorePage)
       }
     ]
   }

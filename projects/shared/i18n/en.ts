@@ -18,9 +18,15 @@ export const sharedTranslations = {
     cancel: 'Cancel'
   },
   welcome: {
+    legalNotice: 'Legal notice',
+    accountDeletion: 'Account deletion',
     createAccount: 'Create account',
     signIn: 'Sign in',
     signUpTagline: 'Sign up to start managing your teams',
+    kicker: 'Welcome',
+    getStarted: 'Get started',
+    subtitle: 'Create your account or sign in to continue.',
+    poweredBy: 'Powered by',
     terms: 'By continuing, you agree to our',
     termsOfService: 'Terms of service',
     and: 'and',
@@ -60,12 +66,60 @@ export const sharedTranslations = {
     resetting: 'Resetting…',
     passwordResetTitle: 'Password reset!',
     passwordResetRedirecting: 'Redirecting you to sign in…',
+    verifyEmailTitle: 'Verify your email',
+    verifyEmailSubtitle: 'We sent a 6-digit code to {email}.',
+    verificationCodePlaceholder: '6-digit code',
+    verificationCodeValidation: 'Enter all 6 digits of the code.',
+    verifyEmailButton: 'Verify account',
+    resendVerificationCode: 'Send the code again',
+    verificationCodeResent: 'We sent you a new code.',
+    verificationCodeResendError: 'We could not send a new code.',
+    invalidVerificationCode: 'The code is invalid or has expired.',
+    emailNotVerified: 'You must verify your email before signing in.',
+    emailVerified: 'Email verified successfully.',
+    emailVerifiedTitle: 'Account verified',
+    emailVerifiedSubtitle: 'You can now sign in with your email and password.',
     signInNow: 'Sign in now',
     invalidResetLinkMessage: 'This reset link is invalid or has expired. Please request a new one.',
+    strengthTooShort: 'Too short',
     strengthWeak: 'Weak',
     strengthFair: 'Fair',
     strengthGood: 'Good',
-    strengthStrong: 'Strong'
+    strengthStrong: 'Strong',
+    signInSubtitle: 'Welcome back to the club.',
+    signUpSubtitle: 'Join the club and start managing your teams.',
+    passwordHint6Chars: '6+ characters',
+    passwordHintUppercase: '1 uppercase letter',
+    passwordHintNumber: '1 number',
+    passwordsMatch: 'Passwords match',
+    passwordsDontMatch: "Passwords don't match"
+  },
+  clubMembers: {
+    title: 'Club users',
+    subtitle: 'Active users linked to this club.',
+    search: 'Search by name or email...',
+    empty: 'There are no users to display.',
+    role: 'Role',
+    team: 'Team',
+    selectTeam: 'Select team',
+    status: 'Status',
+    active: 'Active',
+    pending: 'Pending',
+    actions: 'User actions',
+    assignRole: 'Assign a new role',
+    assignAdmin: 'Assign as administrator',
+    assignCoach: 'Assign as coach',
+    deactivateUser: 'Deactivate from club',
+    deactivateConfirm: 'Deactivate {name}? They will lose every role in this club.',
+    deactivateSuccess: 'The user has been deactivated from the club.',
+    deactivateError: 'The user could not be deactivated.',
+    currentRoles: 'Current roles',
+    pagination: 'User pagination',
+    previousPage: 'Previous',
+    nextPage: 'Next',
+    pageStatus: 'Page {current} of {total}',
+    roleAssigned: 'The new role was assigned successfully.',
+    roleAssignError: 'The new role could not be assigned.'
   },
   common: {
     loading: 'Loading...',
@@ -78,6 +132,7 @@ export const sharedTranslations = {
     delete: 'Delete',
     edit: 'Edit',
     back: 'Back',
+    menu: 'Menu',
     next: 'Next',
     submit: 'Submit',
     close: 'Close',
@@ -129,8 +184,11 @@ export const sharedTranslations = {
     becomeMember: 'Become Member'
   },
   settings: {
+    legal: 'Legal information',
+    legalDescription: 'Review the terms, privacy information, and how to exercise your rights.',
     title: 'Settings',
     language: 'Language',
+    languageDescription: 'App language',
     selectLanguage: 'Select language',
     english: 'English',
     spanish: 'Spanish',
@@ -154,7 +212,15 @@ export const sharedTranslations = {
     lastName: 'Last name',
     saveChanges: 'Save changes',
     saving: 'Saving...',
-    profileUpdated: 'Profile updated successfully'
+    profileUpdated: 'Profile updated successfully',
+    deleteAccount: 'Delete account',
+    deleteAccountDescription: 'Disables your access, removes your sessions, and anonymizes your personal details. This cannot be undone.',
+    deleteAccountWarning: 'You will be signed out and all your club relationships will be disabled.',
+    confirmWithPassword: 'Confirm with your current password',
+    confirmDeleteAccount: 'Delete permanently',
+    deletingAccount: 'Deleting account…',
+    accountDeleted: 'Your account has been deleted.',
+    deleteAccountError: 'The account could not be deleted.'
   },
   validation: {
     required: 'This field is required',
@@ -168,6 +234,7 @@ export const sharedTranslations = {
     birthDateRequired: 'Date of birth is required',
     birthDateInvalid: 'Invalid date format. Use DD/MM/YYYY',
     birthDateFuture: 'Date of birth cannot be in the future',
+    minimumRegistrationAge: 'You must be at least 14 years old to create an account',
     confirmPasswordRequired: 'Please confirm your password',
     emailRequired: 'Email is required',
     emailInvalid: 'Please enter a valid email',
@@ -302,7 +369,14 @@ export const sharedTranslations = {
           contentPlaceholder: 'Section content...',
           iconPlaceholder: 'Choose an icon...',
           titleRequired: 'Title is required.',
-          contentRequired: 'Content is required.'
+          contentRequired: 'Content is required.',
+          editor: {
+            bold: 'Bold',
+            italic: 'Italic',
+            orderedList: 'Numbered list',
+            bulletList: 'Bulleted list',
+            link: 'Insert link'
+          }
         }
       },
       forms: {
@@ -475,7 +549,13 @@ export const sharedTranslations = {
         },
         noSubmissions: 'No submissions yet',
         noSubmissionsDescription: 'No submissions have been received for this form yet.',
-        searchPlaceholder: 'Search by user...'
+        searchPlaceholder: 'Search by user...',
+        statusTabs: {
+          all: 'All',
+          pending: 'Pending',
+          approved: 'Completed',
+          rejected: 'Rejected'
+        }
       },
       submissionDetail: {
         title: 'Submission Detail',
@@ -569,55 +649,6 @@ export const sharedTranslations = {
     }
   },
   forms: {
-    list: {
-      title: 'Forms',
-      description: 'Fill in the available forms for your club',
-      empty: 'No forms available',
-      emptyDescription: 'There are no active forms at this time. Check back later.'
-    },
-    submit: {
-      success: 'Form submitted successfully!'
-    },
-    status: {
-      draft: 'Draft',
-      active: 'Active',
-      closed: 'Closed'
-    },
-    actions: {
-      none: 'None',
-      register_user: 'Register user',
-      create_payment: 'Create payment',
-      trigger_workflow: 'Trigger workflow'
-    },
-    fieldTypes: {
-      text: 'Text',
-      number: 'Number',
-      date: 'Date',
-      select: 'Select',
-      checkbox: 'Checkbox'
-    },
-    submissionStatus: {
-      draft: 'Draft',
-      submitted: 'Submitted'
-    },
-    fields: {
-      name: 'Name',
-      namePlaceholder: 'Enter form name',
-      description: 'Description',
-      descriptionPlaceholder: 'Enter description (optional)',
-      fromDate: 'From date',
-      toDate: 'To date',
-      action: 'Action',
-      actionPlaceholder: 'Select action',
-      key: 'Field key',
-      keyPlaceholder: 'e.g. first_name',
-      label: 'Label',
-      labelPlaceholder: 'Enter field label',
-      type: 'Type',
-      order: 'Order',
-      maxLength: 'Max length',
-      isRequired: 'Required field'
-    },
     admin: {
       title: 'Form management',
       createForm: 'Create form',
@@ -649,13 +680,6 @@ export const sharedTranslations = {
         total: 'Total'
       }
     },
-    errors: {
-      loadError: 'Could not load forms. Please try again.',
-      submitError: 'Could not submit form. Please try again.',
-      createError: 'Could not create form. Please try again.',
-      updateError: 'Could not update form. Please try again.',
-      addFieldError: 'Could not add field. Please try again.'
-    }
   },
   modals: {
     player: {
@@ -689,7 +713,15 @@ export const sharedTranslations = {
     pendingRequest: 'pending request',
     pendingRequests: 'pending requests',
     reviewComment: 'Comment',
-    reviewCommentPlaceholder: 'Add a comment (optional)'
+    reviewCommentPlaceholder: 'Add a comment (optional)',
+    markAllAsRead: 'Mark all as read',
+    today: 'Today',
+    yesterday: 'Yesterday',
+    thisWeek: 'This week',
+    older: 'Older',
+    empty: 'No notifications yet',
+    emptyDescription: 'You\'re all caught up. New notifications will show up here.',
+    loadError: 'Could not load notifications. Pull down to retry.'
   },
   user: {
     title: 'Viewer portal',
@@ -721,7 +753,22 @@ export const sharedTranslations = {
     },
     home: {
       welcome: 'Welcome to the club!',
-      description: 'Here you can access all club services and stay updated with the latest news and events.'
+      description: 'Here you can access all club services and stay updated with the latest news and events.',
+      greetingMorning: 'Good morning, {name}! 👋',
+      greetingAfternoon: 'Good afternoon, {name}! 👋',
+      greetingEvening: 'Good evening, {name}! 👋',
+      greetingSubtitle: 'Everything happening at the club, in one place.',
+      latestForm: 'Latest form',
+      seeAllForms: 'See all',
+      vs: 'vs',
+      featuredNews: 'Featured news',
+      seeAllNews: 'See all',
+      upcomingMatches: 'Upcoming matches',
+      seeAllMatches: 'See all',
+      noLatestForm: 'No forms available',
+      noNews: 'No news yet',
+      noUpcomingMatches: 'No more matches scheduled',
+      clubBadge: 'CLUB'
     },
     news: {
       title: 'News',
@@ -949,11 +996,7 @@ export const sharedTranslations = {
     sponsorSubtitle: 'Tell us how you would like to collaborate with the club.',
     generalType: 'Contact',
     sponsorType: 'Sponsorship',
-    asideTitle: 'Your message goes straight to coordination',
-    asideDescription: 'Share as much context as possible so the club can review it and respond quickly.',
     privacyNote: 'Your details will only be used to respond to this message within the club.',
-    yourDetails: 'Your details',
-    messageDetails: 'Message',
     responseHint: 'Coordination will review your message as soon as possible.',
     name: 'Name',
     namePlaceholder: 'Your full name',
@@ -969,7 +1012,8 @@ export const sharedTranslations = {
     sent: 'Message sent',
     error: 'Could not send the message',
     thanksTitle: 'Thanks for contacting us',
-    thanksDescription: 'The coordination team has received your message and will review it soon.'
+    thanksDescription: 'The coordination team has received your message and will review it soon.',
+    backToHome: 'Back to home'
   },
   contactMessages: {
     title: 'Coordination inbox',
