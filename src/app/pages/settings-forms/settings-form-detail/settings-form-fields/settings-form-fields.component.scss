@@ -76,7 +76,7 @@
   }
 
   &:hover {
-    background: color-mix(in srgb, var(--color-accent, #3880ff) 8%, transparent);
+    background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
   }
 }
 
@@ -197,7 +197,7 @@
 
   &:hover:not(:disabled) {
     border-color: var(--color-accent, var(--ion-color-primary, #3880ff));
-    background: color-mix(in srgb, var(--color-accent, #3880ff) 8%, transparent);
+    background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
 
     ion-icon {
       color: var(--color-accent, var(--ion-color-primary, #3880ff));

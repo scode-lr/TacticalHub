@@ -7,24 +7,24 @@
   </div>
 }
 
-@if (collaborators(); as preSuppliedCollaborators) {
-  @if (preSuppliedCollaborators.length > 0) {
-    <h2 class="tier-title">{{ 'admin.settings.sponsors.tier.collaborator' | translate }}</h2>
-    <div class="sponsors-grid tier-collaborator">
-      @for (sponsor of preSuppliedCollaborators; track sponsor.id) {
-        <app-sponsor-tile [sponsor]="sponsor" [showName]="false" (sponsorSelected)="openSponsor($event)" />
-      }
-    </div>
-  }
-} @else if (clubId(); as id) {
-  @defer (on idle) {
+@defer (on viewport) {
+  @if (collaborators(); as preSuppliedCollaborators) {
+    @if (preSuppliedCollaborators.length > 0) {
+      <h2 class="tier-title">{{ 'admin.settings.sponsors.tier.collaborator' | translate }}</h2>
+      <div class="sponsors-grid tier-collaborator">
+        @for (sponsor of preSuppliedCollaborators; track sponsor.id) {
+          <app-sponsor-tile [sponsor]="sponsor" [showName]="false" (sponsorSelected)="openSponsor($event)" />
+        }
+      </div>
+    }
+  } @else if (clubId(); as id) {
     <app-sponsors-collaborators-grid
       [clubId]="id"
       (sponsorSelected)="openSponsor($event)"
       (loaded)="onCollaboratorsLoaded($event)" />
-  } @placeholder {
-    <div class="collaborators-placeholder"></div>
   }
+} @placeholder {
+  <div class="collaborators-placeholder"></div>
 }
 
 <!-- Sponsor Detail Modal -->

@@ -5,7 +5,7 @@
 }
 
 .section-card {
-  background: var(--color-surface, var(--background-primary, #ffffff));
+  background: white;
   border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
   border-radius: 18px;
   overflow: hidden;
@@ -87,7 +87,7 @@
   width: 46px;
   height: 46px;
   border-radius: 15px;
-  background: color-mix(in srgb, var(--color-accent, var(--ion-color-primary, #3880ff)) 16%, transparent);
+  background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
 
   @media (max-width: 768px) {
     width: 40px;
@@ -136,7 +136,10 @@
 }
 
 .section-content {
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-top: 0rem;
   animation: slideDown 0.2s ease;
   font-size: 0.9375rem;
   color: var(--text-secondary, #6b7280);
