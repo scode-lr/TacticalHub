@@ -92,7 +92,12 @@ export const sharedTranslations = {
     passwordHintUppercase: '1 letra mayúscula',
     passwordHintNumber: '1 número',
     passwordsMatch: 'Las contraseñas coinciden',
-    passwordsDontMatch: 'Las contraseñas no coinciden'
+    passwordsDontMatch: 'Las contraseñas no coinciden',
+    dataProcessingConsent: 'Acepto que se traten mis datos para atender la solicitud de registro.',
+    acceptLegalPrefix: 'Acepto las',
+    termsOfUse: 'Condiciones de Uso',
+    legalAnd: 'y la',
+    privacyPolicy: 'Política de Privacidad'
   },
   clubMembers: {
     title: 'Usuarios del club',
@@ -134,6 +139,8 @@ export const sharedTranslations = {
     back: 'Volver',
     menu: 'Menú',
     next: 'Siguiente',
+    previous: 'Anterior',
+    page: 'Página',
     submit: 'Enviar',
     close: 'Cerrar',
     submitting: 'Enviando...',
@@ -450,8 +457,8 @@ export const sharedTranslations = {
       title: 'Parámetros',
     },
     forms: {
-      selected: 'seleccionados',
       export: 'Exportar',
+      responses: 'respuestas',
       assign: 'Asignar',
       clearFilters: 'Limpiar',
       searchPlaceholder: 'Buscar formularios...',
@@ -480,7 +487,20 @@ export const sharedTranslations = {
         loadError: 'No se pudo cargar la configuración de exportación. Inténtalo de nuevo.',
         selectOne: 'Selecciona un formulario para configurar su exportación.',
         atLeastOne: 'Activa al menos una columna.',
-        headerRequired: 'Las columnas activas necesitan un nombre.'
+        headerRequired: 'Las columnas activas necesitan un nombre.',
+        preview: 'Previsualización del CSV',
+        searchColumn: 'Busca una columna...',
+        noColumnsFound: 'Ninguna columna coincide con la búsqueda.'
+      },
+      exportWizard: {
+        next: 'Siguiente',
+        editColumns: 'Editar columnas',
+        destinationTitle: '¿Dónde quieres enviarlo?',
+        destinationHelp: 'Se ha guardado la configuración de columnas. Elige dónde deben ir las respuestas.',
+        destinationSheets: 'Google Sheets',
+        destinationSheetsDescription: 'Mantén una hoja de cálculo sincronizada con las nuevas respuestas.',
+        destinationCsv: 'Descargar CSV',
+        destinationCsvDescription: 'Obtén un fichero con las respuestas recibidas hasta ahora.'
       },
       integrations: {
         title: 'Integraciones',
@@ -528,14 +548,12 @@ export const sharedTranslations = {
         deleteError: 'No se pudo eliminar la integración. Inténtalo de nuevo.'
       },
       columns: {
-        id: 'ID',
         name: 'Nombre',
         action: 'Acción',
         status: 'Estado',
         submissions: 'Envíos',
         createdAt: 'Creado',
-        fromDate: 'Desde',
-        toDate: 'Hasta'
+        period: 'Periodo'
       },
       submissionTable: {
         columns: {
@@ -547,13 +565,7 @@ export const sharedTranslations = {
         },
         noSubmissions: 'Sin envíos aún',
         noSubmissionsDescription: 'Aún no se han recibido envíos para este formulario.',
-        searchPlaceholder: 'Buscar por usuario...',
-        statusTabs: {
-          all: 'Todos',
-          pending: 'Pendientes',
-          approved: 'Completados',
-          rejected: 'Rechazados'
-        }
+        searchPlaceholder: 'Buscar por usuario...'
       },
       submissionDetail: {
         title: 'Detalle del envío',
@@ -731,7 +743,7 @@ export const sharedTranslations = {
       information: 'Información',
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
-      sponsors: 'Patrocinadores y colaboradores',
+      sponsors: 'Patrocinadores',
       contact: 'Contactar',
       forms: 'Formularios',
       more: 'Más'
@@ -751,9 +763,9 @@ export const sharedTranslations = {
     home: {
       welcome: '¡Bienvenido al club!',
       description: 'Aquí puedes acceder a todos los servicios del club y mantenerte actualizado con las últimas noticias y eventos.',
-      greetingMorning: '¡Buenos días, {name}! 👋',
-      greetingAfternoon: '¡Buenas tardes, {name}! 👋',
-      greetingEvening: '¡Buenas noches, {name}! 👋',
+      greetingMorning: '¡Buenos días, {name}! ',
+      greetingAfternoon: '¡Buenas tardes, {name}! ',
+      greetingEvening: '¡Buenas noches, {name}! ',
       greetingSubtitle: 'Todo lo que pasa en el club, en un solo lugar.',
       latestForm: 'Último formulario',
       seeAllForms: 'Ver todos',

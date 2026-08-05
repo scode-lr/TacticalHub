@@ -72,7 +72,9 @@ export class MenuComponent implements OnInit {
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
 
   readonly moreItems = computed(() => this.config().moreItems ?? []);
-  readonly mobileMenuItems = computed(() => this.config().items.filter(item => item.id !== 'notifications'));
+  readonly mobileMenuItems = computed(() =>
+    this.config().items.filter(item => item.id !== 'home' && item.id !== 'notifications')
+  );
 
   readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
   readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
@@ -142,9 +144,7 @@ export class MenuComponent implements OnInit {
     if (menuId) {
       this.currentMenuId.set(menuId);
       const menuItem = [...this.config().items, ...this.moreItems()].find(item => item.route === menuId);
-      if (menuItem) {
-        this.selectedMenuItem.set(menuItem.id);
-      }
+      this.selectedMenuItem.set(menuItem?.id ?? menuId);
     }
   }
 
@@ -163,6 +163,7 @@ export class MenuComponent implements OnInit {
   goToMore() {
     const role = this.currentRole();
     if (role) {
+      this.selectedMenuItem.set('more');
       this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/more`]);
     }
   }

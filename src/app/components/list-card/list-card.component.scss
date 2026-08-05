@@ -68,8 +68,22 @@
   }
 
   &.selected {
+    background: var(--background-primary, #ffffff);
     border-color: var(--ion-color-primary, #3880ff);
-    background: rgba(56, 128, 255, 0.06);
+    box-shadow: 0 2px 12px rgba(56, 128, 255, 0.12);
+  }
+
+  &.unselected {
+    background: var(--background-secondary, #f8f9fa);
+    border-color: transparent;
+
+    .card-logo {
+      background: var(--background-primary, #ffffff);
+    }
+
+    &:hover {
+      background: var(--background-primary, #ffffff);
+    }
   }
 
   .pending-badge {

@@ -3,9 +3,9 @@ import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { ExternalIntegration, GoogleSheetsConfiguration } from '@core/models/external-integration.model';
-import { IonIcon, IonModal } from '@ionic/angular/standalone';
+import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { addOutline, checkmarkCircleOutline, closeOutline, cloudUploadOutline, openOutline, refreshOutline, saveOutline, settingsOutline, trashOutline } from 'ionicons/icons';
+import { addOutline, checkmarkCircleOutline, cloudUploadOutline, openOutline, refreshOutline, saveOutline, settingsOutline, trashOutline } from 'ionicons/icons';
 import { TagModule } from 'primeng/tag';
 
 export interface IntegrationFormState {
@@ -33,14 +33,13 @@ export interface GoogleSheetsCreateFormInputChange {
 }
 
 @Component({
-  selector: 'app-forms-integrations-modal',
-  templateUrl: './forms-integrations-modal.component.html',
-  styleUrls: ['./forms-integrations-modal.component.scss'],
+  selector: 'app-forms-integrations-step',
+  templateUrl: './forms-integrations-step.component.html',
+  styleUrls: ['./forms-integrations-step.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonIcon, IonModal, TagModule, TranslatePipe]
+  imports: [CommonModule, FormsModule, IonIcon, TagModule, TranslatePipe]
 })
-export class FormsIntegrationsModalComponent {
-  readonly isOpen = input.required<boolean>();
+export class FormsIntegrationsStepComponent {
   readonly loading = input<boolean>(false);
   readonly saving = input<boolean>(false);
   readonly creatingSheet = input<boolean>(false);
@@ -50,7 +49,6 @@ export class FormsIntegrationsModalComponent {
   readonly integrationForm = input<IntegrationFormState>({ id: null, name: '', spreadsheetId: '', sheetName: '', isEnabled: true });
   readonly googleSheetsCreateForm = input<GoogleSheetsCreateFormState>({ name: '', sheetName: '', shareWithEmail: '' });
 
-  readonly didDismiss = output<void>();
   readonly editIntegration = output<ExternalIntegration>();
   readonly newIntegration = output<void>();
   readonly updateIntegrationForm = output<IntegrationFormInputChange>();
@@ -63,11 +61,7 @@ export class FormsIntegrationsModalComponent {
   readonly openIntegrationSpreadsheet = output<ExternalIntegration>();
 
   constructor() {
-    addIcons({ addOutline, checkmarkCircleOutline, closeOutline, cloudUploadOutline, openOutline, refreshOutline, saveOutline, settingsOutline, trashOutline });
-  }
-
-  close(): void {
-    this.didDismiss.emit();
+    addIcons({ addOutline, checkmarkCircleOutline, cloudUploadOutline, openOutline, refreshOutline, saveOutline, settingsOutline, trashOutline });
   }
 
   onUpdateIntegrationForm(key: keyof IntegrationFormState, value: string | boolean): void {

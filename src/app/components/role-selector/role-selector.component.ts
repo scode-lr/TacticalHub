@@ -21,6 +21,8 @@ import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role, RoleType } from '@core/models/role.model';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
 import { RolesService } from '@services/roles.service';
+import { NotificationsService } from '@services/notifications.service';
+import { InboxService } from '@services/inbox.service';
 import { RoleCardComponent } from '@components/role-card/role-card.component';
 import { environment } from '@environment';
 
@@ -46,6 +48,8 @@ export class RoleSelectorComponent {
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
   private readonly roleService = inject(RolesService);
+  private readonly notificationsService = inject(NotificationsService);
+  private readonly inboxService = inject(InboxService);
 
   readonly isModalOpen = signal<boolean>(false);
   readonly isPrivateApp = environment.private;
@@ -106,7 +110,12 @@ export class RoleSelectorComponent {
   }
 
   selectRole(role: Role) {
+    const previousRoleId = this.roleService.getCurrentRole()?.id;
     this.roleService.setSelectedRole(role);
+    if (previousRoleId !== role.id) {
+      this.notificationsService.clearAllNotifications();
+      this.inboxService.clearMessages();
+    }
     this.closeRoleSelector();
     
     setTimeout(() => {

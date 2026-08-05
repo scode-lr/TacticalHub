@@ -1,14 +1,301 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Política de privacidad | Tactical Hub</title><link rel="stylesheet" href="assets/legal.css"></head><body>
-<header><div><h1>Política de privacidad</h1><p>Tactical Hub · Última actualización: 1 de agosto de 2026</p><nav><a href="terms-of-service.html">Términos</a><a href="legal-notice.html">Aviso legal</a><a href="account-deletion.html">Eliminar cuenta</a></nav></div></header>
-<main>
-<p class="warning"><strong>No publicar todavía:</strong> deben sustituirse los datos entre corchetes y validar el texto con asesoramiento jurídico.</p>
-<h2>1. Responsable y contexto multi-club</h2><p>Responsable de la plataforma: <strong>[NOMBRE O RAZÓN SOCIAL]</strong>, NIF/CIF <strong>[NIF/CIF]</strong>, domicilio <strong>[DOMICILIO]</strong>, contacto <a href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a>.</p><p>Cada club decide qué formularios, comunicaciones y procesos gestiona para sus miembros y puede actuar como responsable del tratamiento en ese contexto. Tactical Hub presta la tecnología y, cuando corresponda, actúa como encargado siguiendo las instrucciones del club.</p>
-<h2>2. Datos tratados</h2><ul><li>Cuenta y perfil: correo, nombre, apellidos, fecha de nacimiento y fotografía opcional.</li><li>Pertenencia a clubes, roles, equipos y datos deportivos o administrativos.</li><li>Respuestas a formularios, que pueden incluir DNI, IBAN, firmas o autorizaciones si el club los solicita.</li><li>Noticias, mensajes y notificaciones vinculadas al club.</li><li>Datos técnicos de seguridad, sesión y tokens de notificaciones push.</li></ul><p>No se recopila ubicación ni se utiliza la información para publicidad comportamental. No deben solicitarse categorías especiales de datos si no existe una necesidad y base jurídica adecuadas.</p>
-<h2>3. Finalidades y bases jurídicas</h2><p>Los datos se usan para crear y proteger la cuenta, prestar los servicios solicitados, gestionar relaciones con clubes, formularios, comunicaciones, soporte, seguridad y cumplimiento legal. Las bases pueden ser la ejecución de las condiciones de uso y de la relación con el club, medidas precontractuales, obligaciones legales, interés legítimo en seguridad y comunicación operativa, o consentimiento específico cuando sea necesario, por ejemplo para determinados usos de imágenes.</p>
-<h2>4. Destinatarios y proveedores</h2><p>El acceso está limitado por club y rol. Pueden intervenir proveedores de alojamiento, base de datos, correo, almacenamiento, Google Sheets cuando un administrador autoriza una exportación, y Apple Push Notification Service o Firebase Cloud Messaging para notificaciones. Deben formalizarse los contratos y garantías de transferencias internacionales aplicables.</p>
-<h2>5. Conservación y seguridad</h2><p>Los datos se conservan mientras la cuenta o relación con el club esté activa y durante los plazos necesarios para obligaciones o reclamaciones. Los plazos concretos de producción, logs y copias de seguridad deben documentarse antes de publicar esta política. Se aplican HTTPS, contraseñas con hash, control de acceso por club y rol, cifrado de IBAN y revocación de sesiones.</p>
-<h2>6. Exportaciones</h2><p>Los administradores autorizados pueden exportar respuestas a CSV o Google Sheets. Los datos sensibles deben seleccionarse expresamente. Desde la descarga o copia a una hoja del club, el club debe controlar el acceso, conservación y eliminación.</p>
-<h2>7. Derechos</h2><p>Puede solicitar acceso, rectificación, supresión, limitación, oposición, portabilidad o retirada del consentimiento escribiendo a <a href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a>. También puede reclamar ante la Agencia Española de Protección de Datos. La cuenta puede eliminarse desde el perfil o mediante la <a href="account-deletion.html">página pública de eliminación</a>.</p>
-<h2>8. Menores</h2><p>No se permite crear una cuenta a menores de 14 años. Los datos e imágenes de menores gestionados por sus representantes o clubes requieren las autorizaciones y salvaguardas correspondientes.</p>
-<h2>9. Cambios</h2><p>Los cambios materiales se comunicarán dentro de la aplicación o por un medio adecuado. La versión y fecha publicadas identificarán el texto aplicable.</p>
-</main><footer>© Tactical Hub · Documento pendiente de completar y revisar antes de producción.</footer></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17233c">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="Política de privacidad de Tactical Hub: datos tratados, finalidades, proveedores, conservación, seguridad y eliminación de cuenta.">
+  <title>Política de privacidad | Tactical Hub</title>
+  <link rel="stylesheet" href="assets/legal.css">
+  <style>
+    .policy-intro {
+      margin: 0 0 28px;
+      padding: 20px 22px;
+      border-left: 5px solid #2457a6;
+      border-radius: 0 14px 14px 0;
+      background: #eef4ff;
+      color: #17233c;
+      font-size: 1.08rem;
+    }
+    .policy-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .policy-meta span {
+      padding: 5px 10px;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 999px;
+      color: #edf3ff;
+      font-size: .82rem;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 24px 0 32px;
+    }
+    .summary-card, .identity-card, .note {
+      padding: 18px;
+      border: 1px solid #dce4ef;
+      border-radius: 14px;
+      background: #f8fafc;
+    }
+    .summary-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #17233c;
+    }
+    .summary-card p, .identity-card p, .note p { margin: 0; }
+    .contents {
+      margin: 28px 0 38px;
+      padding: 20px 24px;
+      border: 1px solid #e1e5eb;
+      border-radius: 14px;
+      background: #fff;
+    }
+    .contents h2 { margin: 0 0 12px; font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; }
+    .contents ol { columns: 2; margin: 0; }
+    .contents a { text-underline-offset: 3px; }
+    section { scroll-margin-top: 24px; padding-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: .94rem; }
+    th, td { padding: 12px 14px; border: 1px solid #dce4ef; text-align: left; vertical-align: top; }
+    th { color: #17233c; background: #eef4ff; }
+    .table-wrap { overflow-x: auto; margin: 18px 0; border-radius: 12px; }
+    .plain-language { color: #4b5563; font-size: .94rem; }
+    @media (max-width: 660px) {
+      .summary-grid { grid-template-columns: 1fr; }
+      .contents ol { columns: 1; }
+      th, td { padding: 10px; }
+    }
+    @media print {
+      .contents, nav { display: none; }
+      main { width: 100%; border: 0; padding: 0; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <p>Información legal y protección de datos</p>
+      <h1>Política de privacidad</h1>
+      <div class="policy-meta">
+        <span>Tactical Hub</span>
+        <span>Versión 2.0</span>
+        <span>Última actualización: 5 de agosto de 2026</span>
+      </div>
+      <nav aria-label="Documentos legales">
+        <a href="terms-of-service.html">Términos</a>
+        <a href="legal-notice.html">Aviso legal</a>
+        <a href="account-deletion.html">Eliminar cuenta</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <p class="policy-intro">Esta Política de privacidad explica de forma transparente cómo Tactical Hub accede, recoge, utiliza, conserva y comparte datos cuando una persona usa la aplicación móvil o web Tactical Hub (la «Aplicación»).</p>
+
+    <div class="summary-grid" aria-label="Resumen de privacidad">
+      <div class="summary-card"><strong>No vendemos datos personales</strong><p>Los datos no se utilizan para publicidad de terceros ni para crear perfiles publicitarios.</p></div>
+      <div class="summary-card"><strong>Sin ubicación ni acceso invasivo</strong><p>La Aplicación no solicita ubicación, cámara, micrófono, contactos, SMS ni registro de llamadas.</p></div>
+      <div class="summary-card"><strong>Acceso limitado por club y rol</strong><p>Cada persona sólo puede acceder a la información necesaria para sus funciones.</p></div>
+      <div class="summary-card"><strong>Eliminación disponible</strong><p>La cuenta puede eliminarse desde el perfil o mediante la página pública de eliminación.</p></div>
+    </div>
+
+    <nav class="contents" aria-label="Índice de la política">
+      <h2>Índice</h2>
+      <ol>
+        <li><a href="#responsable">Responsable y modelo multi-club</a></li>
+        <li><a href="#alcance">Personas a las que se aplica</a></li>
+        <li><a href="#datos">Datos tratados</a></li>
+        <li><a href="#origen">Origen de los datos</a></li>
+        <li><a href="#finalidades">Finalidades y bases jurídicas</a></li>
+        <li><a href="#acceso">Quién puede acceder</a></li>
+        <li><a href="#proveedores">Proveedores y destinatarios</a></li>
+        <li><a href="#transferencias">Transferencias internacionales</a></li>
+        <li><a href="#conservacion">Conservación</a></li>
+        <li><a href="#eliminacion">Eliminación de cuenta y datos</a></li>
+        <li><a href="#seguridad">Seguridad</a></li>
+        <li><a href="#permisos">Permisos y notificaciones</a></li>
+        <li><a href="#analitica">Analítica, publicidad y decisiones</a></li>
+        <li><a href="#menores">Menores</a></li>
+        <li><a href="#derechos">Derechos</a></li>
+        <li><a href="#cambios">Cambios y contacto</a></li>
+      </ol>
+    </nav>
+
+    <section id="responsable">
+      <h2>1. Responsable y modelo multi-club</h2>
+      <div class="identity-card">
+        <p><strong>Aplicación y desarrollador:</strong> Tactical Hub<br>
+        <strong>Identificador Android:</strong> com.tactical.hub<br>
+        <strong>Contacto de privacidad:</strong> <a href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a><br>
+        <strong>Información del titular:</strong> disponible en el <a href="legal-notice.html">aviso legal</a>.</p>
+      </div>
+      <p>Tactical Hub es una plataforma de gestión deportiva en la que pueden coexistir varios clubes. Tactical Hub es responsable de los tratamientos necesarios para crear la cuenta, proteger la plataforma, prestar soporte y mantener el servicio.</p>
+      <p>Cada club determina qué usuarios, equipos, formularios, contenidos y procesos administra. Respecto de esos tratamientos, el club correspondiente puede actuar como responsable y Tactical Hub como encargado, siguiendo sus instrucciones. La identidad y los datos de contacto del club se muestran en su espacio o pueden solicitarse a su administración.</p>
+    </section>
+
+    <section id="alcance">
+      <h2>2. Personas a las que se aplica esta política</h2>
+      <p>Esta política se aplica a administradores, coordinadores, entrenadores, jugadores, socios, familiares, tutores, aficionados, invitados y demás personas que creen una cuenta, contacten con un club o utilicen la Aplicación.</p>
+    </section>
+
+    <section id="datos">
+      <h2>3. Datos que tratamos</h2>
+      <h3>Cuenta y perfil</h3>
+      <ul>
+        <li>Nombre, apellidos, nombre de usuario y correo electrónico.</li>
+        <li>Fecha de nacimiento y, cuando se facilite, teléfono y fotografía de perfil.</li>
+        <li>Contraseña protegida mediante un resumen criptográfico no reversible; Tactical Hub no conserva la contraseña en texto legible.</li>
+        <li>Estado de la cuenta, fecha de alta, último acceso e idioma preferido.</li>
+      </ul>
+      <h3>Clubes, equipos y actividad deportiva</h3>
+      <ul>
+        <li>Pertenencia a clubes, roles, permisos, equipos y categorías.</li>
+        <li>Número de socio, dorsal, posición, relación con el club y otra información organizativa.</li>
+        <li>Noticias, avisos, comentarios y actividad relacionada con las funciones utilizadas.</li>
+      </ul>
+      <h3>Formularios y gestiones del club</h3>
+      <p>Los administradores pueden crear formularios configurables. Según el trámite, éstos pueden solicitar datos identificativos y de contacto, fechas, respuestas escritas, autorizaciones y, sólo cuando resulte necesario, DNI/NIE, IBAN o firma. Tactical Hub no procesa pagos con tarjeta dentro de la Aplicación.</p>
+      <h3>Comunicaciones y archivos</h3>
+      <p>Tratamos los mensajes enviados al canal de contacto y los archivos que una persona o un administrador decida adjuntar o publicar, como fotografías de perfil, imágenes de noticias, documentos, escudos y logotipos. La selección de archivos se inicia por la persona usuaria.</p>
+      <h3>Datos técnicos y del dispositivo</h3>
+      <ul>
+        <li>Fecha y hora de acceso, dirección IP, registros de seguridad y errores, e información técnica necesaria para operar el servicio.</li>
+        <li>Identificador de usuario, sesión y club necesarios para autenticar y aplicar permisos.</li>
+        <li>Token de notificaciones, plataforma y estado del dispositivo cuando se autorizan notificaciones push.</li>
+      </ul>
+      <p>No recogemos ubicación precisa o aproximada, contactos, calendario, SMS, registro de llamadas, audio ni inventario de aplicaciones instaladas. Tampoco utilizamos identificadores publicitarios para seguir a la persona entre aplicaciones.</p>
+    </section>
+
+    <section id="origen">
+      <h2>4. Origen de los datos</h2>
+      <p>Los datos proceden de la propia persona al registrarse, actualizar su perfil, completar un formulario, seleccionar un archivo o contactar; de administradores o entrenadores al asignar roles y equipos; del club cuando incorpora información necesaria para prestar sus servicios; y del dispositivo o la infraestructura cuando se inicia sesión, se autorizan notificaciones o se produce una incidencia técnica.</p>
+    </section>
+
+    <section id="finalidades">
+      <h2>5. Para qué usamos los datos y con qué base</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Finalidad</th><th>Base jurídica habitual</th></tr></thead>
+          <tbody>
+            <tr><td>Crear la cuenta, autenticar, gestionar el perfil y prestar las funciones solicitadas.</td><td>Ejecución de los términos del servicio y medidas solicitadas antes de contratar o adherirse.</td></tr>
+            <tr><td>Gestionar clubes, equipos, inscripciones, formularios, autorizaciones y comunicaciones operativas.</td><td>Ejecución de la relación con el club, interés legítimo en su organización y, cuando proceda, obligación legal.</td></tr>
+            <tr><td>Tratar DNI/NIE, IBAN, firma o documentación para un trámite concreto.</td><td>Gestión del trámite solicitado, relación con el club u obligación legal; se solicitará consentimiento cuando sea la base adecuada.</td></tr>
+            <tr><td>Publicar o utilizar fotografías identificables.</td><td>Consentimiento específico de la persona o de su representante cuando resulte necesario. Aceptar esta política no equivale a autorizar el uso de imágenes.</td></tr>
+            <tr><td>Enviar avisos y notificaciones sobre noticias, formularios y actividad del club.</td><td>Prestación del servicio, interés legítimo en comunicaciones operativas y permiso del dispositivo.</td></tr>
+            <tr><td>Dar soporte, prevenir abusos, registrar accesos y proteger cuentas e infraestructura.</td><td>Interés legítimo en la seguridad y cumplimiento de obligaciones legales.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="acceso">
+      <h2>6. Quién puede acceder a los datos</h2>
+      <p>El acceso se separa por club y por rol. Los administradores y coordinadores pueden consultar la información necesaria para gestionar su club. Los entrenadores acceden únicamente a los equipos y datos necesarios para su función. Los usuarios acceden a su cuenta y a los contenidos o formularios que les correspondan. Los invitados sólo ven contenidos públicos.</p>
+      <p>Los datos administrativos especialmente sensibles, como DNI/NIE o IBAN, deben quedar restringidos a personas autorizadas. El personal técnico de Tactical Hub sólo puede acceder a sistemas de producción cuando sea necesario para resolver una incidencia, atender una solicitud autorizada, mantener el servicio o protegerlo.</p>
+    </section>
+
+    <section id="proveedores">
+      <h2>7. Proveedores, destinatarios y exportaciones</h2>
+      <p>Para prestar el servicio pueden intervenir proveedores que tratan datos por cuenta de Tactical Hub o del club:</p>
+      <ul>
+        <li>Railway, para alojamiento de la Aplicación y de la API.</li>
+        <li>Neon, para alojamiento de bases de datos.</li>
+        <li>Cloudflare y Cloudflare R2, para DNS, seguridad, distribución y almacenamiento de archivos.</li>
+        <li>Firebase Cloud Messaging y Apple Push Notification Service, para entregar notificaciones.</li>
+        <li>Google Workspace y Google Sheets, únicamente cuando un administrador autorizado exporta formularios a una cuenta del club.</li>
+        <li>DonDominio u otros proveedores equivalentes, para dominio y correo electrónico.</li>
+      </ul>
+      <p>Los administradores también pueden exportar respuestas a CSV. Cuando el administrador descarga datos o los envía a una hoja del club, el club debe proteger esa copia, limitar el acceso y eliminarla cuando ya no resulte necesaria.</p>
+      <p>No vendemos ni alquilamos datos personales. Sólo los comunicaremos a proveedores para prestar el servicio, al club correspondiente, por solicitud iniciada por un usuario o cuando exista una obligación legal válida.</p>
+    </section>
+
+    <section id="transferencias">
+      <h2>8. Transferencias internacionales</h2>
+      <p>Algunos proveedores pueden prestar parte de sus servicios desde países situados fuera del Espacio Económico Europeo. Cuando exista una transferencia internacional, se aplicarán las garantías exigidas por la normativa, como una decisión de adecuación, cláusulas contractuales tipo u otro mecanismo válido.</p>
+    </section>
+
+    <section id="conservacion">
+      <h2>9. Cuánto tiempo conservamos los datos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Categoría</th><th>Plazo ordinario</th></tr></thead>
+          <tbody>
+            <tr><td>Cuenta activa y perfil</td><td>Mientras se utilice la Aplicación o exista relación con algún club.</td></tr>
+            <tr><td>Cuenta sin actividad y sin relación activa</td><td>Hasta 12 meses, salvo que antes se solicite la eliminación.</td></tr>
+            <tr><td>Fotografía de perfil</td><td>Hasta que se sustituya o elimine la cuenta.</td></tr>
+            <tr><td>Borradores de formularios</td><td>Hasta 30 días.</td></tr>
+            <tr><td>Formularios enviados</td><td>Mientras sean necesarios y, ordinariamente, hasta un año después de finalizar la relación, salvo otro plazo legal.</td></tr>
+            <tr><td>DNI/NIE</td><td>Sólo durante el tiempo necesario para el trámite y las obligaciones aplicables.</td></tr>
+            <tr><td>IBAN</td><td>Mientras exista la domiciliación o queden recibos, obligaciones o reclamaciones pendientes.</td></tr>
+            <tr><td>Mensajes de contacto</td><td>Hasta 12 meses desde su resolución.</td></tr>
+            <tr><td>Registros técnicos y de seguridad</td><td>Ordinariamente 30 días, ampliables si se investiga una incidencia.</td></tr>
+            <tr><td>Tokens de notificaciones</td><td>Hasta que dejan de ser válidos, se cierra sesión, se elimina la cuenta o transcurren 6 meses de inactividad.</td></tr>
+            <tr><td>Copias de seguridad tras una eliminación</td><td>Hasta 30 días.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Si existe una obligación legal, de seguridad o una reclamación, la información estrictamente necesaria podrá conservarse bloqueada durante el plazo aplicable y no se utilizará para la gestión ordinaria.</p>
+    </section>
+
+    <section id="eliminacion">
+      <h2>10. Eliminación de cuenta y datos</h2>
+      <p>Una persona puede solicitar la eliminación desde <strong>Perfil → Eliminar cuenta</strong> y confirmar con su contraseña. Si no puede iniciar sesión, puede utilizar la <a href="account-deletion.html">página pública de eliminación</a> o escribir desde el correo asociado a <a href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a>.</p>
+      <p>La eliminación no es una simple desactivación: se revocan sesiones y accesos, se eliminan el token de notificaciones, los datos identificativos, la fotografía de perfil y los datos asociados que ya no sean necesarios. Los registros históricos que deban mantenerse podrán anonimizarse y los datos sujetos a obligación de conservación quedarán bloqueados. Las copias residuales desaparecerán de las copias de seguridad en un máximo de 30 días.</p>
+    </section>
+
+    <section id="seguridad">
+      <h2>11. Cómo protegemos los datos</h2>
+      <ul>
+        <li>Comunicaciones cifradas mediante HTTPS.</li>
+        <li>Contraseñas protegidas con funciones de hash y credenciales de acceso limitadas.</li>
+        <li>Token de acceso mantenido en memoria y token de renovación gestionado mediante cookie HttpOnly.</li>
+        <li>Separación de datos por club y control de acceso basado en roles.</li>
+        <li>Restricción de exportaciones y enmascarado de IBAN en las vistas ordinarias.</li>
+        <li>Cifrado de datos financieros almacenados cuando corresponde.</li>
+        <li>Registros de seguridad, copias de respaldo y procedimientos de recuperación.</li>
+      </ul>
+      <p>Ningún sistema puede garantizar una seguridad absoluta. Aplicamos medidas razonables y revisables atendiendo a la naturaleza, alcance y riesgo del tratamiento.</p>
+    </section>
+
+    <section id="permisos">
+      <h2>12. Permisos del dispositivo y notificaciones</h2>
+      <p>La versión Android utiliza acceso a Internet para conectar con el servicio. En dispositivos compatibles solicita permiso para mostrar notificaciones; el permiso puede denegarse o retirarse desde los ajustes sin impedir el uso de las funciones principales.</p>
+      <p>Cuando se aceptan notificaciones, se registra un token técnico de Firebase asociado a la instalación y a la cuenta. Se utiliza únicamente para entregar avisos operativos de Tactical Hub o del club, no para publicidad, y no se incluye en exportaciones.</p>
+      <p>La Aplicación no solicita permisos de ubicación, cámara, micrófono, contactos, teléfono, SMS ni almacenamiento general. La elección de una imagen o documento se realiza mediante el selector de archivos del sistema y sólo se trata el archivo que la persona haya elegido.</p>
+    </section>
+
+    <section id="analitica">
+      <h2>13. Analítica, publicidad y decisiones automatizadas</h2>
+      <p>La Aplicación no integra actualmente publicidad, perfiles comerciales, Firebase Analytics, Firebase Authentication ni Crashlytics. Puede medir registros técnicos agregados imprescindibles para conocer la disponibilidad, capacidad y seguridad de la infraestructura.</p>
+      <p>No se toman decisiones que produzcan efectos jurídicos o afecten significativamente a una persona basándose únicamente en un tratamiento automatizado.</p>
+    </section>
+
+    <section id="menores">
+      <h2>14. Menores de edad e imágenes</h2>
+      <p>No se permite crear una cuenta a menores de 14 años. Las personas de 14 a 17 años pueden utilizar funciones básicas, pero los trámites que requieran capacidad adulta, domiciliación, documentación o autorizaciones deberán ser gestionados por su representante cuando corresponda.</p>
+      <p>El uso de fotografías identificables de menores requiere una autorización específica y separada de la aceptación de esta política. No autorizar imágenes no impide utilizar las demás funciones disponibles.</p>
+    </section>
+
+    <section id="derechos">
+      <h2>15. Derechos de las personas</h2>
+      <p>Se puede solicitar acceso, rectificación, supresión, limitación, oposición, portabilidad y retirada de un consentimiento escribiendo a <a href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a> o al contacto de privacidad del club correspondiente. Podremos pedir información adicional únicamente para verificar la identidad.</p>
+      <p>También se puede presentar una reclamación ante la <a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer">Agencia Española de Protección de Datos (AEPD)</a>. Retirar un consentimiento no afecta a la licitud del tratamiento realizado antes de retirarlo.</p>
+    </section>
+
+    <section id="cambios">
+      <h2>16. Cambios y contacto</h2>
+      <p>Actualizaremos esta política cuando cambien de forma relevante las funciones, proveedores o normas aplicables. Los cambios materiales se comunicarán dentro de la Aplicación o por otro medio adecuado. La fecha y versión de la cabecera identifican el texto vigente.</p>
+      <div class="note"><p><strong>Consultas de privacidad:</strong> <a href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a><br><strong>Eliminación de cuenta:</strong> <a href="account-deletion.html">solicitud web y pasos dentro de la Aplicación</a></p></div>
+      <p class="plain-language">Esta política se ha redactado para ser comprensible y para reflejar el funcionamiento actual de Tactical Hub. Si una función de un club requiere información adicional o consentimiento específico, se mostrará en el momento de recoger los datos.</p>
+    </section>
+  </main>
+
+  <footer>© 2026 Tactical Hub · Privacidad, transparencia y control de tus datos.</footer>
+</body>
+</html>

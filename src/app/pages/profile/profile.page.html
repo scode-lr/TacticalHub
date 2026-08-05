@@ -10,12 +10,6 @@
 
     <div class="content-section">
       <div class="section-content">
-        <div class="profile-avatar-row">
-          <ion-avatar class="profile-avatar">
-            <ion-img [src]="avatarUrl()" [alt]="user()?.username" (ionError)="onAvatarError()"></ion-img>
-          </ion-avatar>
-        </div>
-
         <h2 class="subsection-title">{{ 'profile.personalInfo' | translate }}</h2>
 
         <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
@@ -26,16 +20,6 @@
               formControlName="email"
               type="email"
               readonly>
-            </ion-input>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">{{ 'profile.username' | translate }}</label>
-            <ion-input
-              class="form-input"
-              formControlName="username"
-              type="text"
-              [placeholder]="'profile.username' | translate">
             </ion-input>
           </div>
 

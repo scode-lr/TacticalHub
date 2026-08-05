@@ -16,7 +16,7 @@ Apple permite de una a diez capturas por tamaño/localización. Preparar al meno
 
 ## Android / Google Play
 
-- [ ] Confirmar `com.tactical.hub` o `com.voltregacf.hub` antes de crear la ficha.
+- [ ] Confirmar `com.tactical.hub` o `es.tacticalhub.voltrega` antes de crear la ficha.
 - [ ] Crear un keystore de upload exclusivo, cifrado y con dos copias seguras.
 - [ ] No guardar keystore ni contraseñas en Git.
 - [ ] Activar Play App Signing y documentar propietario/recuperación.

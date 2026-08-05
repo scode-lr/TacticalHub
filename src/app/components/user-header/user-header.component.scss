@@ -42,6 +42,32 @@
     object-fit: contain;
   }
 
+  .header-home-button {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    padding: 4px;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--text-primary, #212529) 7%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent, var(--ion-color-primary, #4a90e2));
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: scale(0.94);
+    }
+  }
+
   .hamburger-button {
     display: flex;
     align-items: center;

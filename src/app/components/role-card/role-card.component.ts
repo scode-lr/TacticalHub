@@ -24,7 +24,7 @@ export class RoleCardComponent {
   readonly role = input<Role | null>(null);
   readonly isAddCard = input<boolean>(false);
   readonly listMode = input<boolean>(false);
-  readonly selected = input<boolean>(false);
+  readonly selected = input<boolean | null>(null);
   readonly cardClicked = output<Role | null>();
   readonly isPending = computed(() => {
     const roleStatus = this.role()?.status;

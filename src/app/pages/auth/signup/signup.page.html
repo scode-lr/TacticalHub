@@ -155,6 +155,23 @@
           }
         </div>
 
+        <div class="consent-group">
+          <label class="consent-option">
+            <input type="checkbox" formControlName="dataProcessingConsent" />
+            <span>{{ 'auth.dataProcessingConsent' | translate }}</span>
+          </label>
+
+          <label class="consent-option">
+            <input type="checkbox" formControlName="legalConsent" />
+            <span>
+              {{ 'auth.acceptLegalPrefix' | translate }}
+              <a class="link" href="terms-of-service.html" target="_blank" rel="noopener">{{ 'auth.termsOfUse' | translate }}</a>
+              {{ 'auth.legalAnd' | translate }}
+              <a class="link" href="privacy-policy.html" target="_blank" rel="noopener">{{ 'auth.privacyPolicy' | translate }}</a>
+            </span>
+          </label>
+        </div>
+
         <!-- Sign Up Button -->
         <button
           type="submit"
@@ -167,13 +184,6 @@
             <span>{{ 'welcome.createAccount' | translate }}</span>
           }
         </button>
-
-        <!-- Legal microcopy -->
-        <p class="legal-text">
-          {{ 'welcome.terms' | translate }}
-          <a class="link" href="terms-of-service.html" target="_blank" rel="noopener">{{ 'welcome.termsOfService' | translate }}</a> {{ 'welcome.and' | translate }}
-          <a class="link" href="privacy-policy.html" target="_blank" rel="noopener">{{ 'welcome.privacyPolicy' | translate }}</a>
-        </p>
       </form>
 
       <app-auth-footer mode="signup"></app-auth-footer>

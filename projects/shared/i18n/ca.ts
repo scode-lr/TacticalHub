@@ -92,7 +92,12 @@ export const sharedTranslations = {
     passwordHintUppercase: '1 lletra majúscula',
     passwordHintNumber: '1 número',
     passwordsMatch: 'Les contrasenyes coincideixen',
-    passwordsDontMatch: 'Les contrasenyes no coincideixen'
+    passwordsDontMatch: 'Les contrasenyes no coincideixen',
+    dataProcessingConsent: 'Accepto que es tractin les meves dades per atendre la sol·licitud de registre.',
+    acceptLegalPrefix: 'Accepto les',
+    termsOfUse: "Condicions d'Ús",
+    legalAnd: 'i la',
+    privacyPolicy: 'Política de Privacitat'
   },
   clubMembers: {
     title: 'Usuaris del club',
@@ -134,6 +139,8 @@ export const sharedTranslations = {
     back: 'Tornar',
     menu: 'Menú',
     next: 'Següent',
+    previous: 'Anterior',
+    page: 'Pàgina',
     submit: 'Enviar',
     close: 'Tancar',
     submitting: 'Enviant...',
@@ -450,8 +457,8 @@ export const sharedTranslations = {
       title: 'Paràmetres',
     },
     forms: {
-      selected: 'seleccionats',
       export: 'Exportar',
+      responses: 'respostes',
       assign: 'Assignar',
       clearFilters: 'Netejar',
       searchPlaceholder: 'Cercar formularis...',
@@ -480,7 +487,20 @@ export const sharedTranslations = {
         loadError: 'No s\'ha pogut carregar la configuració d\'exportació. Torna-ho a intentar.',
         selectOne: 'Selecciona un formulari per configurar-ne l\'exportació.',
         atLeastOne: 'Activa almenys una columna.',
-        headerRequired: 'Les columnes actives necessiten un nom.'
+        headerRequired: 'Les columnes actives necessiten un nom.',
+        preview: 'Previsualització del CSV',
+        searchColumn: 'Cerca una columna...',
+        noColumnsFound: 'Cap columna coincideix amb la cerca.'
+      },
+      exportWizard: {
+        next: 'Següent',
+        editColumns: 'Editar columnes',
+        destinationTitle: 'On ho vols enviar?',
+        destinationHelp: 'S\'ha guardat la configuració de columnes. Tria on han d\'anar les respostes.',
+        destinationSheets: 'Google Sheets',
+        destinationSheetsDescription: 'Mantén un full de càlcul sincronitzat amb les noves respostes.',
+        destinationCsv: 'Descarregar CSV',
+        destinationCsvDescription: 'Obtén un fitxer amb les respostes rebudes fins ara.'
       },
       integrations: {
         title: 'Integracions',
@@ -528,14 +548,12 @@ export const sharedTranslations = {
         deleteError: 'No s\'ha pogut eliminar la integració. Torna-ho a intentar.'
       },
       columns: {
-        id: 'ID',
         name: 'Nom',
         action: 'Acció',
         status: 'Estat',
         submissions: 'Enviaments',
         createdAt: 'Creat',
-        fromDate: 'Des de',
-        toDate: 'Fins a'
+        period: 'Període'
       },
       submissionTable: {
         columns: {
@@ -547,13 +565,7 @@ export const sharedTranslations = {
         },
         noSubmissions: 'Sense enviaments encara',
         noSubmissionsDescription: 'Encara no s\'han rebut enviaments per a aquest formulari.',
-        searchPlaceholder: 'Cerca per usuari...',
-        statusTabs: {
-          all: 'Tots',
-          pending: 'Pendents',
-          approved: 'Completats',
-          rejected: 'Rebutjats'
-        }
+        searchPlaceholder: 'Cerca per usuari...'
       },
       submissionDetail: {
         title: 'Detall de l\'enviament',
@@ -731,7 +743,7 @@ export const sharedTranslations = {
       information: 'Informació',
       proposals: 'Propostes i queixes',
       matches: 'Partits',
-      sponsors: 'Patrocinadors i col·laboradors',
+      sponsors: 'Patrocinadors',
       contact: 'Contactar',
       forms: 'Formularis',
       more: 'Més'
@@ -751,9 +763,9 @@ export const sharedTranslations = {
     home: {
       welcome: 'Benvingut al club!',
       description: 'Aquí pots accedir a tots els serveis del club i mantenir-te actualitzat amb les últimes notícies i esdeveniments.',
-      greetingMorning: 'Bon dia, {name}! 👋',
-      greetingAfternoon: 'Bona tarda, {name}! 👋',
-      greetingEvening: 'Bona nit, {name}! 👋',
+      greetingMorning: 'Bon dia, {name}! ',
+      greetingAfternoon: 'Bona tarda, {name}! ',
+      greetingEvening: 'Bona nit, {name}! ',
       greetingSubtitle: 'Tot el que passa al club, en un sol lloc.',
       latestForm: 'Últim formulari',
       seeAllForms: 'Veure tots',

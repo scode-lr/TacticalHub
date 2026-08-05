@@ -37,10 +37,6 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../news/news-detail/news-detail.page').then(m => m.NewsDetailPage)
       },
       {
-        path: 'params',
-        loadComponent: () => import('../parameters/parameters.page').then(m => m.ParametersPage)
-      },
-      {
         path: 'teams',
         loadComponent: () => import('../teams/teams.page').then(m => m.TeamsPage)
       },

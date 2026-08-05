@@ -1,12 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  RouterModule,
-  ActivatedRoute,
-  Router,
-  NavigationEnd,
-} from '@angular/router';
-import { IonContent } from '@ionic/angular/standalone';
+import { Router, NavigationEnd } from '@angular/router';
+import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
 import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleType, Role } from '@core/models/role.model';
@@ -38,13 +33,6 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
       route: 'forms-submissions',
     },
     { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
-    // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
-    { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
-    // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
-    // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
-    // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
-  ],
-  moreItems: [
     {
       id: 'settings-club',
       label: 'admin.menu.settings',
@@ -52,6 +40,19 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
       route: 'settings-club',
       description: 'admin.description.settings',
     },
+    // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
+    // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
+    // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
+    // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
+  ],
+  moreItems: [
+    {
+      id: 'users',
+      label: 'admin.menu.users',
+      icon: 'person-outline',
+      route: 'users',
+      description: 'admin.description.users',
+    }
   ],
 };
 
@@ -62,8 +63,8 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     IonContent,
+    IonRouterOutlet,
     MenuComponent,
     UserHeaderComponent,
   ],
@@ -79,10 +80,22 @@ export class AdminPage implements OnInit {
   readonly adminMenuConfig = ADMIN_MENU_CONFIG;
 
   readonly isDetailPage = signal<boolean>(false);
+  readonly isMoreSubpage = signal<boolean>(false);
+  readonly showBackButton = computed(() => this.isDetailPage() || this.isMoreSubpage());
   readonly backUrl = computed(() => {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     const url = this.router.url;
+
+    if (this.isMoreSubpage()) {
+      return `/app/${roleType}/${roleId}/more`;
+    }
+
     if (this.isDetailPage()) {
+      // Notifications are opened from the header/menu, so their back action
+      // must use browser history instead of navigating to the same route.
+      if (url.includes('/notifications')) {
+        return '';
+      }
       if (url.includes('/news')) {
         return `app/${roleType}/${roleId}/news`;
       }
@@ -140,6 +153,7 @@ export class AdminPage implements OnInit {
 
   private checkIfDetailPage(): void {
     const url = this.router.url;
+    const isMoreSubpage = url.includes('/users');
     const isDetail =
       (url.includes('/news/') && url.split('/').length > 5) ||
       (url.includes('/matches/') && url.split('/').length > 5) ||
@@ -149,8 +163,9 @@ export class AdminPage implements OnInit {
       url.includes('/settings-forms') ||
       (url.includes('/forms-submissions/') && url.split('/').length > 5) ||
       url.includes('/settings-club/sponsors') ||
-      url.includes('/contact');
-    console.log('isDetail', isDetail, 'url', url);
+      url.includes('/contact') ||
+      url.includes('/notifications');
+    this.isMoreSubpage.set(isMoreSubpage);
     this.isDetailPage.set(isDetail);
   }
 
@@ -159,7 +174,12 @@ export class AdminPage implements OnInit {
     this.currentRole.set(role);
   }
 
-  goBack() {
+  goBack(): void {
+    if (this.router.url.includes('/notifications')) {
+      this.navigationService.goBack();
+      return;
+    }
+
     this.navigationService.navigateTo([this.backUrl()]);
   }
 }

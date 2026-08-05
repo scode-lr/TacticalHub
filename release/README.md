@@ -32,7 +32,7 @@ La rama no debe marcarse como lista para producción hasta cerrar todos los elem
 | Aplicación | App name | Bundle/Application ID |
 |---|---|---|
 | Tactical Hub | `Tactical Hub` | `com.tactical.hub` |
-| Voltregà CF | `Voltregà CF` | `com.voltregacf.hub` |
+| Voltregà CF | `Voltregà CF` | `es.tacticalhub.voltrega` |
 
 Estos identificadores deben coincidir exactamente en Capacitor, Firebase, Apple Developer, App Store Connect, Google Play y en `PushNotifications:ApnsBundleId`. Un identificador publicado no se cambia posteriormente.
 

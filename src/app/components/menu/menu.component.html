@@ -55,7 +55,7 @@
     @for (item of mobileMenuItemsWithBadges(); track item.id) {
       <button
         class="menu-item"
-        [class.active]="isSelected(item.id)"
+        [class.active]="isSelected(item.id) && !isMoreActive()"
         (click)="selectMenuItem(item)">
         <div class="menu-icon-wrapper">
           <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>

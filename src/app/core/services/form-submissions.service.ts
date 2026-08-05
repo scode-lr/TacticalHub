@@ -22,7 +22,6 @@ export interface FormsSubmissionsPageState {
   currentPage: number;
   currentSort: string | undefined;
   submissionsSearchValue: string;
-  submissionsStatusFilter: string | undefined;
 }
 
 @Injectable({

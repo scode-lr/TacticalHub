@@ -19,6 +19,10 @@ export class NotificationsService {
   private readonly _notifications = signal<Notification[]>([]);
   readonly isLoading = signal<boolean>(false);
   readonly hasError = signal<boolean>(false);
+  private loadedRoleId: string | null = null;
+  private loadingRoleId: string | null = null;
+  private loadingPromise: Promise<void> | null = null;
+  private loadRequestId = 0;
 
   // Pagination state
   private _totalCount = 0;
@@ -51,13 +55,43 @@ export class NotificationsService {
   // ── API calls ────────────────────────────────────────────────────
 
   async loadNotifications(isRead?: boolean): Promise<void> {
+    const roleId = this.getUserClubRoleId();
+    if (!roleId) {
+      this.clearAllNotifications();
+      return;
+    }
+
+    if (isRead === undefined && this.loadedRoleId === roleId) {
+      return;
+    }
+
+    if (isRead === undefined && this.loadingRoleId === roleId && this.loadingPromise) {
+      await this.loadingPromise;
+      return;
+    }
+
+    const requestId = ++this.loadRequestId;
+    if (this.loadedRoleId !== roleId) {
+      this._notifications.set([]);
+      this._totalCount = 0;
+      this._offset = 0;
+    }
+
     this.isLoading.set(true);
     this.hasError.set(false);
     this._offset = 0;
+    this.loadingRoleId = roleId;
+
+    const loadPromise = this.fetchNotifications(roleId, requestId, isRead);
+    this.loadingPromise = loadPromise;
+    await loadPromise;
+  }
+
+  private async fetchNotifications(roleId: string, requestId: number, isRead?: boolean): Promise<void> {
 
     try {
       const params: Record<string, string> = {
-        userClubRoleId: this.getUserClubRoleId(),
+        userClubRoleId: roleId,
         limit: String(this._limit),
         offset: '0'
       };
@@ -67,14 +101,21 @@ export class NotificationsService {
         this.apiService.get<ApiResponse<ApiGetNotificationsResponse>>('/notifications', { params })
       );
 
-      if (response.success && response.data) {
+      if (requestId === this.loadRequestId && response.success && response.data) {
         this._totalCount = response.data.totalCount;
         this._notifications.set(response.data.items.map(this.mapToNotification));
+        this.loadedRoleId = isRead === undefined ? roleId : null;
       }
     } catch {
-      this.hasError.set(true);
+      if (requestId === this.loadRequestId) {
+        this.hasError.set(true);
+      }
     } finally {
-      this.isLoading.set(false);
+      if (requestId === this.loadRequestId) {
+        this.isLoading.set(false);
+        this.loadingRoleId = null;
+        this.loadingPromise = null;
+      }
     }
   }
 
@@ -141,6 +182,14 @@ export class NotificationsService {
   }
 
   clearAllNotifications(): void {
+    this.loadRequestId++;
+    this.loadedRoleId = null;
+    this.loadingRoleId = null;
+    this.loadingPromise = null;
+    this._totalCount = 0;
+    this._offset = 0;
+    this.isLoading.set(false);
+    this.hasError.set(false);
     this._notifications.set([]);
   }
 

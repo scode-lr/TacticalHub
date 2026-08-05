@@ -12,6 +12,8 @@ import { ClubService } from '@services/club.service';
 import { MatchService } from '@services/match.service';
 import { NewsService } from '@services/news.service';
 import { FormService } from '@services/form.service';
+import { NotificationsService } from '@services/notifications.service';
+import { InboxService } from '@services/inbox.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { RoleType } from '@core/models/role.model';
 import { AppStatus } from '@core/models';
@@ -54,6 +56,8 @@ export class HomePage implements OnInit {
   private readonly matchService = inject(MatchService);
   private readonly newsService = inject(NewsService);
   private readonly formService = inject(FormService);
+  private readonly notificationsService = inject(NotificationsService);
+  private readonly inboxService = inject(InboxService);
   private readonly translationService = inject(TranslationService);
 
   private readonly adminShortcuts: HomeShortcut[] = [
@@ -116,6 +120,16 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     if (this.isMember()) {
       this.loadFeed();
+    }
+  }
+
+  ionViewWillEnter(): void {
+    const roleType = this.roleType();
+    if (roleType === RoleType.Admin) {
+      void this.notificationsService.loadNotifications();
+      void this.inboxService.loadMessages();
+    } else if (roleType === RoleType.Member) {
+      void this.notificationsService.loadNotifications();
     }
   }
 

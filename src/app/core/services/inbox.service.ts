@@ -14,6 +14,10 @@ export class InboxService {
   private readonly messages = signal<ContactMessageSummary[]>([]);
   readonly loading = signal(false);
   readonly unreadCount = computed(() => this.messages().filter(message => message.recipientStatus === AppStatus.Pending).length);
+  private loadedContextKey: string | null = null;
+  private loadingContextKey: string | null = null;
+  private loadingPromise: Promise<void> | null = null;
+  private loadRequestId = 0;
 
   private readonly limit = 50;
 
@@ -28,14 +32,62 @@ export class InboxService {
   async loadMessages(): Promise<void> {
     const clubId = this.clubService.getCurrentClubId() ?? 0;
     const userClubRoleId = this.navigationService.extractRoleDetails().roleId;
-    if (!clubId || !userClubRoleId || this.loading()) return;
+    if (!clubId || !userClubRoleId) {
+      this.clearMessages();
+      return;
+    }
+
+    const contextKey = `${clubId}:${userClubRoleId}`;
+    if (this.loadedContextKey === contextKey) return;
+
+    if (this.loadingContextKey === contextKey && this.loadingPromise) {
+      await this.loadingPromise;
+      return;
+    }
+
+    const requestId = ++this.loadRequestId;
+    if (this.loadedContextKey !== contextKey) {
+      this.messages.set([]);
+    }
 
     this.loading.set(true);
+    this.loadingContextKey = contextKey;
+    const loadPromise = this.fetchMessages(clubId, userClubRoleId, contextKey, requestId);
+    this.loadingPromise = loadPromise;
+    await loadPromise;
+  }
+
+  clearMessages(): void {
+    this.loadRequestId++;
+    this.loadedContextKey = null;
+    this.loadingContextKey = null;
+    this.loadingPromise = null;
+    this.loading.set(false);
+    this.messages.set([]);
+  }
+
+  private async fetchMessages(
+    clubId: number,
+    userClubRoleId: number,
+    contextKey: string,
+    requestId: number
+  ): Promise<void> {
     try {
       const page = await this.contactMessageService.getForCoordinator(clubId, userClubRoleId, this.limit, 0);
-      this.messages.set(page.items);
+      if (requestId === this.loadRequestId) {
+        this.messages.set(page.items);
+        this.loadedContextKey = contextKey;
+      }
+    } catch {
+      if (requestId === this.loadRequestId) {
+        this.messages.set([]);
+      }
     } finally {
-      this.loading.set(false);
+      if (requestId === this.loadRequestId) {
+        this.loading.set(false);
+        this.loadingContextKey = null;
+        this.loadingPromise = null;
+      }
     }
   }
 

@@ -2,7 +2,8 @@
   class="list-card"
   [class.pending]="disabled()"
   [class.disabled]="disabled()"
-  [class.selected]="selected()"
+  [class.selected]="selected() === true"
+  [class.unselected]="selected() === false"
   [class.list-mode]="listMode()"
   (click)="onClick()"
 >

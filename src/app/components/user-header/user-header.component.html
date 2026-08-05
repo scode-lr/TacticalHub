@@ -19,24 +19,29 @@
 
     <div class="header-center">
       @if (showRoleSelector() && !showBackButton()) {
-        <img
-          class="header-club-logo"
-          [src]="defaultClubLogo()"
-          [alt]="currentRole()?.clubName || 'Club'"
-          appDefaultImage="assets/image-non-available.svg">
+        <button
+          type="button"
+          class="header-home-button"
+          (click)="goToHome()"
+          [attr.aria-label]="'user.menu.home' | translate">
+          <img
+            class="header-club-logo"
+            [src]="defaultClubLogo()"
+            [alt]="currentRole()?.clubName || 'Club'"
+            appDefaultImage="assets/image-non-available.svg">
+        </button>
       }
     </div>
-
-    <div class="header-actions">
-      @if (showNotificationsButton()) {
+    @if (!showBackButton() && showNotificationsButton()) {
+      <div class="header-actions">
         <button class="notifications-button" type="button" (click)="goToNotifications()">
           <ion-icon name="notifications-outline"></ion-icon>
           @if (notificationsBadge() > 0) {
             <span class="notifications-badge">{{ notificationsBadge() }}</span>
           }
         </button>
-      }
-    </div>
+      </div>
+    }
   </div>
 </div>
 

@@ -23,7 +23,7 @@ export class ListCardComponent {
   readonly subtitleIcon = input<string | null>(null);
   readonly subtitle = input<string | null>(null);
   readonly badgeText = input<string | null>(null);
-  readonly selected = input<boolean>(false);
+  readonly selected = input<boolean | null>(null);
   readonly disabled = input<boolean>(false);
   readonly showArrow = input<boolean>(true);
   readonly listMode = input<boolean>(false);

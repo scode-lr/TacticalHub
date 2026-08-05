@@ -92,7 +92,12 @@ export const sharedTranslations = {
     passwordHintUppercase: '1 uppercase letter',
     passwordHintNumber: '1 number',
     passwordsMatch: 'Passwords match',
-    passwordsDontMatch: "Passwords don't match"
+    passwordsDontMatch: "Passwords don't match",
+    dataProcessingConsent: 'I consent to the processing of my data to handle my registration request.',
+    acceptLegalPrefix: 'I accept the',
+    termsOfUse: 'Terms of Use',
+    legalAnd: 'and the',
+    privacyPolicy: 'Privacy Policy'
   },
   clubMembers: {
     title: 'Club users',
@@ -134,6 +139,8 @@ export const sharedTranslations = {
     back: 'Back',
     menu: 'Menu',
     next: 'Next',
+    previous: 'Previous',
+    page: 'Page',
     submit: 'Submit',
     close: 'Close',
     submitting: 'Submitting...',
@@ -452,8 +459,8 @@ export const sharedTranslations = {
       title: 'Parameters',
     },
     forms: {
-      selected: 'selected',
       export: 'Export',
+      responses: 'responses',
       assign: 'Assign',
       clearFilters: 'Clear',
       searchPlaceholder: 'Search forms...',
@@ -482,7 +489,20 @@ export const sharedTranslations = {
         loadError: 'Could not load export configuration. Please try again.',
         selectOne: 'Select one form to configure its export.',
         atLeastOne: 'Enable at least one column.',
-        headerRequired: 'Enabled columns need a column name.'
+        headerRequired: 'Enabled columns need a column name.',
+        preview: 'CSV preview',
+        searchColumn: 'Search a column...',
+        noColumnsFound: 'No columns match your search.'
+      },
+      exportWizard: {
+        next: 'Next',
+        editColumns: 'Edit columns',
+        destinationTitle: 'Where do you want to send it?',
+        destinationHelp: 'Your column setup has been saved. Choose where the submissions should go.',
+        destinationSheets: 'Google Sheets',
+        destinationSheetsDescription: 'Keep a spreadsheet in sync with new submissions.',
+        destinationCsv: 'Download CSV',
+        destinationCsvDescription: 'Get a file with the submissions received so far.'
       },
       integrations: {
         title: 'Integrations',
@@ -530,14 +550,12 @@ export const sharedTranslations = {
         deleteError: 'Could not delete integration. Please try again.'
       },
       columns: {
-        id: 'ID',
         name: 'Name',
         action: 'Action',
         status: 'Status',
         submissions: 'Submissions',
         createdAt: 'Created',
-        fromDate: 'From',
-        toDate: 'To'
+        period: 'Period'
       },
       submissionTable: {
         columns: {
@@ -549,13 +567,7 @@ export const sharedTranslations = {
         },
         noSubmissions: 'No submissions yet',
         noSubmissionsDescription: 'No submissions have been received for this form yet.',
-        searchPlaceholder: 'Search by user...',
-        statusTabs: {
-          all: 'All',
-          pending: 'Pending',
-          approved: 'Completed',
-          rejected: 'Rejected'
-        }
+        searchPlaceholder: 'Search by user...'
       },
       submissionDetail: {
         title: 'Submission Detail',
@@ -734,7 +746,7 @@ export const sharedTranslations = {
       information: 'Information',
       proposals: 'Proposals & complaints',
       matches: 'Matches',
-      sponsors: 'Sponsors & Collaborators',
+      sponsors: 'Sponsors',
       contact: 'Contact',
       forms: 'Forms',
       more: 'More'
@@ -754,9 +766,9 @@ export const sharedTranslations = {
     home: {
       welcome: 'Welcome to the club!',
       description: 'Here you can access all club services and stay updated with the latest news and events.',
-      greetingMorning: 'Good morning, {name}! 👋',
-      greetingAfternoon: 'Good afternoon, {name}! 👋',
-      greetingEvening: 'Good evening, {name}! 👋',
+      greetingMorning: 'Good morning, {name}! ',
+      greetingAfternoon: 'Good afternoon, {name}! ',
+      greetingEvening: 'Good evening, {name}! ',
       greetingSubtitle: 'Everything happening at the club, in one place.',
       latestForm: 'Latest form',
       seeAllForms: 'See all',
@@ -1067,4 +1079,3 @@ export const sharedTranslations = {
 } as const;
 
 export type SharedTranslationKeys = typeof sharedTranslations;
-

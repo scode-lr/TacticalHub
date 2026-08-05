@@ -126,6 +126,12 @@ export class UserHeaderComponent {
     this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/notifications`]);
   }
 
+  goToHome() {
+    const role = this.currentRole() ?? this.userService.getCurrentRole();
+    if (!role) return;
+    this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
+  }
+
   goToProfile() {
     this.showAccountDrawer.set(false);
     this.navigationService.navigateTo(['/profile']);

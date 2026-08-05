@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { IonContent } from '@ionic/angular/standalone';
+import { Router, NavigationEnd } from '@angular/router';
+import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
 import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleType, Role } from '@core/models/role.model';
@@ -18,10 +18,10 @@ export const MEMBER_MENU_CONFIG: MenuConfig = {
     { id: 'news', label: 'user.menu.news', icon: 'newspaper-outline', route: 'news' },
     { id: 'forms', label: 'user.menu.forms', icon: 'document-text-outline', route: 'forms' },
     // { id: 'matches', label: 'user.menu.matches', icon: 'football-outline', route: 'matches' },
+    { id: 'sponsors', label: 'user.menu.sponsors', icon: 'people-outline', route: 'sponsors', description: 'user.description.sponsors' },
   ],
   moreItems: [
     { id: 'information', label: 'user.menu.information', icon: 'information-circle-outline', route: 'information', description: 'user.description.information' },
-    { id: 'sponsors', label: 'user.menu.sponsors', icon: 'people-outline', route: 'sponsors', description: 'user.description.sponsors' },
     { id: 'contact', label: 'user.menu.contact', icon: 'mail-outline', route: 'contact', description: 'user.description.contact' },
   ]
 };
@@ -33,14 +33,13 @@ export const MEMBER_MENU_CONFIG: MenuConfig = {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     IonContent,
+    IonRouterOutlet,
     MenuComponent,
     UserHeaderComponent
   ],
 })
 export class MemberPage implements OnInit {
-  private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
@@ -51,11 +50,21 @@ export class MemberPage implements OnInit {
   readonly memberMenuConfig = MEMBER_MENU_CONFIG;
   
   readonly isDetailPage = signal<boolean>(false);
+  readonly isMoreSubpage = signal<boolean>(false);
+  readonly showBackButton = computed(() => this.isDetailPage() || this.isMoreSubpage());
   readonly backUrl = computed(() => {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    if (!this.isDetailPage()) return '';
+    if (!this.showBackButton()) return '';
 
     const url = this.router.url;
+
+    if (this.isMoreSubpage()) {
+      return `/app/${roleType}/${roleId}/more`;
+    }
+
+    if (url.includes('/notifications')) {
+      return '';
+    }
 
     const formSubmissionMatch = url.match(/\/forms\/(\d+)\/(-?\d+)/);
     if (formSubmissionMatch) {
@@ -95,11 +104,16 @@ export class MemberPage implements OnInit {
 
   private checkIfDetailPage(): void {
     const url = this.router.url;
+    const isSponsorContact = /[?&]type=sponsors?(?:&|$)/.test(url);
+    const isMoreSubpage = url.includes('/information') ||
+                          (url.includes('/contact') && !isSponsorContact);
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
                      url.includes('/action/') ||
                      url.includes('/forms/') && url.split('/').length > 5 ||
-                     url.includes('/teams/') && url.split('/').length > 5;
+                     url.includes('/teams/') && url.split('/').length > 5 ||
+                     url.includes('/notifications');
+    this.isMoreSubpage.set(isMoreSubpage);
     this.isDetailPage.set(isDetail);
   }
   
@@ -109,6 +123,6 @@ export class MemberPage implements OnInit {
   }
   
   goBack(): void {
-    this.router.navigate(['..'], { relativeTo: this.route });
+    this.navigationService.goBack();
   }
 }

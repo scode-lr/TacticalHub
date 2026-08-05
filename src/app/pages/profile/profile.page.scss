@@ -29,28 +29,6 @@
     }
   }
 
-  .profile-avatar-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.75rem;
-
-    .profile-avatar {
-      width: 96px;
-      height: 96px;
-      border: 3px solid var(--color-bg, var(--background-primary, #ffffff));
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    }
-
-    @media (max-width: 768px) {
-      margin-bottom: 1.5rem;
-
-      .profile-avatar {
-        width: 88px;
-        height: 88px;
-      }
-    }
-  }
-
   .subsection-title {
     font-family: var(--font-heading, inherit);
     font-size: 1.125rem;

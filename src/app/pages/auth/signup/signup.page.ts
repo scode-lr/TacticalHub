@@ -65,7 +65,9 @@ export class SignupPage {
       email: ['', [Validators.required, Validators.email]],
       birthDate: ['', [Validators.required, this.dateValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required]],
+      dataProcessingConsent: [false, [Validators.requiredTrue]],
+      legalConsent: [false, [Validators.requiredTrue]]
     }, {
       validators: this.passwordMatchValidator
     });

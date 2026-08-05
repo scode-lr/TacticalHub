@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/core';
 
 const config: CapacitorConfig = {
-  appId: 'com.voltregacf.hub',
+  appId: 'es.tacticalhub.voltrega',
   appName: 'Voltregà CF',
   webDir: 'www',
   server: {

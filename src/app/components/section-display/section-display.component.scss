@@ -139,14 +139,14 @@
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
-  padding-top: 0rem;
+  padding-top: 0rem !important;
   animation: slideDown 0.2s ease;
   font-size: 0.9375rem;
   color: var(--text-secondary, #6b7280);
   line-height: 1.6;
 
   p, ul, ol {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.75rem !important;
 
     &:last-child {
       margin-bottom: 0;
@@ -161,21 +161,18 @@
     margin-bottom: 0.25rem;
   }
 
-  a {
-    color: var(--color-accent, var(--ion-color-primary, #3880ff));
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
   strong, b {
     font-weight: 600;
     color: var(--text-primary, #111827);
   }
 
   @media (max-width: 768px) {
-    padding: 1.25rem;
     font-size: 0.875rem;
   }
+}
+
+:host ::ng-deep .section-content > p:first-child {
+  margin-top: 0 !important;
 }
 
 @keyframes fadeIn {

@@ -31,4 +31,4 @@ button:disabled { opacity:.55; cursor:wait; }
 .state { padding:3rem 1rem; text-align:center; color:var(--text-secondary,#667085); }
 .pagination { display:flex; align-items:center; justify-content:center; gap:.75rem; margin-top:1rem; }
 .pagination span { color:var(--text-secondary,#667085); font-size:.85rem; font-weight:700; }
-@media (max-width:680px) { .identity { align-items:flex-start; } .actions { margin-left:auto; } .actions-menu { width:min(240px,calc(100vw - 3rem)); } }
+@media (max-width:680px) { .actions { margin-left:auto; } .actions-menu { width:min(240px,calc(100vw - 3rem)); } }

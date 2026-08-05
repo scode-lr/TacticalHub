@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonInput, IonAvatar, IonImg, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@services/user.service';
@@ -22,8 +22,6 @@ import { alertCircleOutline, closeOutline, trashOutline } from 'ionicons/icons';
     ReactiveFormsModule,
     IonContent,
     IonInput,
-    IonAvatar,
-    IonImg,
     IonIcon,
     TranslatePipe,
     UserHeaderComponent
@@ -37,7 +35,6 @@ export class ProfilePage implements OnInit {
   private readonly toastService = inject(ToastService);
 
   readonly user = signal<User | null>(null);
-  readonly avatarUrl = signal<string>('assets/default-avatar.svg');
   readonly isSaving = signal<boolean>(false);
   readonly isDeleting = signal<boolean>(false);
   readonly showDeleteConfirmation = signal<boolean>(false);
@@ -49,7 +46,6 @@ export class ProfilePage implements OnInit {
     addIcons({ alertCircleOutline, closeOutline, trashOutline });
     this.profileForm = this.fb.group({
       email: [{ value: '', disabled: true }],
-      username: ['', [Validators.required]],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
     });
@@ -66,7 +62,6 @@ export class ProfilePage implements OnInit {
     const currentUser = this.userService.getCurrentUser();
     if (currentUser) {
       this.user.set(currentUser);
-      this.avatarUrl.set(currentUser.metadata?.avatar || 'assets/default-avatar.svg');
       this.patchFormValues(currentUser);
     }
   }
@@ -74,14 +69,9 @@ export class ProfilePage implements OnInit {
   patchFormValues(user: User) {
     this.profileForm.patchValue({
       email: user.email,
-      username: user.username,
       firstName: user.metadata?.firstName,
       lastName: user.metadata?.lastName
     });
-  }
-
-  onAvatarError() {
-    this.avatarUrl.set('assets/default-avatar.svg');
   }
 
   async saveProfile() {
@@ -99,7 +89,6 @@ export class ProfilePage implements OnInit {
 
     const updatedUser: User = {
       ...currentUser,
-      username: this.profileForm.value.username,
       metadata: {
         ...currentUser.metadata,
         firstName: this.profileForm.value.firstName,

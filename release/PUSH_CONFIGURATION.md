@@ -17,7 +17,7 @@ GOOGLE_SERVICE_ACCOUNT_JSON=<json-completo-en-una-linea>
 APNS_PRIVATE_KEY=<contenido-completo-del-fichero-p8>
 ```
 
-Para Voltregà, usar `AppName=Voltregà CF` y `PushNotifications__ApnsBundleId=com.voltregacf.hub`. No compartir accidentalmente un despliegue cuyo `AppName` corresponda a otra app: los tokens se aíslan por ese valor configurado en el servidor.
+Para Voltregà, usar `AppName=Voltregà CF` y `PushNotifications__ApnsBundleId=es.tacticalhub.voltrega`. No compartir accidentalmente un despliegue cuyo `AppName` corresponda a otra app: los tokens se aíslan por ese valor configurado en el servidor.
 
 ## Android
 
