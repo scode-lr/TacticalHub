@@ -289,6 +289,87 @@
       .identity-card, .note { box-shadow: none; }
       .page-footer { color: #000; background: #fff; border-top: 1px solid #000; }
     }
+
+    /* Plain legal-page layout aligned with the app. */
+    body {
+      background: #f7f5f1;
+      color: #201e1d;
+      line-height: 1.6;
+    }
+    .skip-link, .reading-progress, .toolbar, .eyebrow, .updated, .toc, .page-footer {
+      display: none !important;
+    }
+    .masthead {
+      overflow: visible;
+      background: transparent;
+      border: 0;
+    }
+    .hero, .layout {
+      display: block;
+      width: min(720px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+    .hero { padding: 1.5rem 0 0.5rem; }
+    .back-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #edeae3;
+      color: #201e1d;
+      cursor: pointer;
+      font: 600 1.35rem/1 system-ui, sans-serif;
+    }
+    .back-button:hover { background: #e2ded6; }
+    h1 {
+      margin: 1.5rem 0 0;
+      font-size: clamp(1.8rem, 6vw, 2.25rem);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .layout { padding: 0.75rem 0 3rem; }
+    .lead {
+      margin: 0 0 1rem;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: inherit;
+    }
+    section {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    h2 {
+      display: block;
+      margin: 2rem 0 0.5rem;
+      font-size: 1.15rem;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h2 .number { display: none; }
+    h3 { margin: 1.25rem 0 0.5rem; font-size: 1rem; }
+    p { margin: 0 0 1rem; }
+    .identity-card, .note {
+      margin: 0 0 1rem;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+    .table-wrap {
+      margin: 1rem 0;
+      overflow-x: auto;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+    th { background: #edeae3; color: #201e1d; }
+    .email, article a { color: #6f5700; overflow-wrap: anywhere; }
   </style>
 </head>
 <body>
@@ -311,6 +392,7 @@
       </div>
     </div>
     <div class="hero">
+      <button class="back-button" type="button" aria-label="Tornar enrere" onclick="if (history.length > 1) { history.back(); } else if (window.opener) { window.close(); } else { location.href='./'; }">←</button>
       <p class="eyebrow" data-ui="eyebrow">Informació legal</p>
       <h1 data-ui="title">Política de privacitat</h1>
       <p class="updated" data-ui="updated">Última actualització: 5 d’agost de 2026</p>

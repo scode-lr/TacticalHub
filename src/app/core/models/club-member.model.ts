@@ -5,6 +5,8 @@ export interface ClubMember {
   email: string;
   firstName: string;
   lastName: string;
+  avatarUrl?: string | null;
+  avatar?: string | null;
   roleId: number;
   teamId?: number;
   teamName?: string;

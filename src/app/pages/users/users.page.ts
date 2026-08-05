@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonIcon } from '@ionic/angular/standalone';
+import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { ClubMember } from '@core/models/club-member.model';
 import { RoleType } from '@core/models/role.model';
@@ -10,8 +10,16 @@ import { ConfirmService } from '@services/confirm.service';
 import { ToastService } from '@services/toast.service';
 import { UserService } from '@services/user.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
+import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
 import { addIcons } from 'ionicons';
-import { ellipsisVertical, peopleOutline, searchOutline } from 'ionicons/icons';
+import {
+  chevronBackOutline,
+  chevronForwardOutline,
+  closeCircleOutline,
+  ellipsisVertical,
+  peopleOutline,
+  searchOutline
+} from 'ionicons/icons';
 
 interface ClubUser {
   userId: number;
@@ -19,13 +27,14 @@ interface ClubUser {
   email: string;
   firstName: string;
   lastName: string;
+  avatarUrl: string;
   relations: ClubMember[];
 }
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, IonIcon, TranslatePipe],
+  imports: [CommonModule, FormsModule, IonIcon, IonSpinner, TranslatePipe, EmptyStateComponent],
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss']
 })
@@ -48,6 +57,7 @@ export class UsersPage implements OnInit, OnDestroy {
   readonly offset = signal(0);
   readonly pageSize = 20;
   readonly roleType = RoleType;
+  readonly defaultAvatar = 'assets/default-avatar.svg';
 
   readonly users = computed<ClubUser[]>(() => {
     const usersById = new Map<number, ClubUser>();
@@ -64,6 +74,7 @@ export class UsersPage implements OnInit, OnDestroy {
         email: relation.email,
         firstName: relation.firstName,
         lastName: relation.lastName,
+        avatarUrl: relation.avatarUrl || relation.avatar || this.defaultAvatar,
         relations: [relation]
       });
     }
@@ -77,7 +88,14 @@ export class UsersPage implements OnInit, OnDestroy {
   readonly canGoForward = computed(() => this.offset() + this.pageSize < this.totalCount());
 
   constructor() {
-    addIcons({ ellipsisVertical, peopleOutline, searchOutline });
+    addIcons({
+      chevronBackOutline,
+      chevronForwardOutline,
+      closeCircleOutline,
+      ellipsisVertical,
+      peopleOutline,
+      searchOutline
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -117,6 +135,11 @@ export class UsersPage implements OnInit, OnDestroy {
     this.offset.set(0);
     if (this.searchTimer) clearTimeout(this.searchTimer);
     this.searchTimer = setTimeout(() => void this.reload(), 300);
+  }
+
+  clearSearch(): void {
+    if (!this.query()) return;
+    this.search('');
   }
 
   previousPage(): void {
@@ -183,6 +206,13 @@ export class UsersPage implements OnInit, OnDestroy {
 
   displayName(user: ClubUser): string {
     return `${user.firstName} ${user.lastName}`.trim() || user.username || user.email;
+  }
+
+  onAvatarError(event: Event): void {
+    const image = event.target as HTMLImageElement;
+    if (!image.src.endsWith(this.defaultAvatar)) {
+      image.src = this.defaultAvatar;
+    }
   }
 
   private async assignRole(user: ClubUser, roleId: RoleType.Admin): Promise<void> {

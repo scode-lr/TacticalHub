@@ -1,7 +1,12 @@
 .profile-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 }
 
 .page-container {

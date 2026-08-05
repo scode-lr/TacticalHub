@@ -172,6 +172,10 @@ export class MenuComponent implements OnInit {
     this.navigationService.navigateTo(['/settings']);
   }
 
+  goToProfile() {
+    this.navigationService.navigateTo(['/profile']);
+  }
+
   logout() {
     this.userService.logout();
   }

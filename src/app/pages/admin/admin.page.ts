@@ -44,8 +44,6 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
     // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
     // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
     // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
-  ],
-  moreItems: [
     {
       id: 'users',
       label: 'admin.menu.users',
@@ -54,6 +52,8 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
       description: 'admin.description.users',
     }
   ],
+  // moreItems: [
+  // ],
 };
 
 @Component({
@@ -80,15 +80,9 @@ export class AdminPage implements OnInit {
   readonly adminMenuConfig = ADMIN_MENU_CONFIG;
 
   readonly isDetailPage = signal<boolean>(false);
-  readonly isMoreSubpage = signal<boolean>(false);
-  readonly showBackButton = computed(() => this.isDetailPage() || this.isMoreSubpage());
   readonly backUrl = computed(() => {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     const url = this.router.url;
-
-    if (this.isMoreSubpage()) {
-      return `/app/${roleType}/${roleId}/more`;
-    }
 
     if (this.isDetailPage()) {
       // Notifications are opened from the header/menu, so their back action
@@ -153,7 +147,6 @@ export class AdminPage implements OnInit {
 
   private checkIfDetailPage(): void {
     const url = this.router.url;
-    const isMoreSubpage = url.includes('/users');
     const isDetail =
       (url.includes('/news/') && url.split('/').length > 5) ||
       (url.includes('/matches/') && url.split('/').length > 5) ||
@@ -165,7 +158,6 @@ export class AdminPage implements OnInit {
       url.includes('/settings-club/sponsors') ||
       url.includes('/contact') ||
       url.includes('/notifications');
-    this.isMoreSubpage.set(isMoreSubpage);
     this.isDetailPage.set(isDetail);
   }
 

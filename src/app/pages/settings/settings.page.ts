@@ -9,6 +9,7 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { AuthService } from '@services/auth.service';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { PasswordStrengthComponent } from '@components/password-strength/password-strength.component';
 
 @Component({
@@ -27,6 +28,7 @@ import { PasswordStrengthComponent } from '@components/password-strength/passwor
     IonSpinner,
     TranslatePipe,
     UserHeaderComponent,
+    BackButtonComponent,
     PasswordStrengthComponent,
   ]
 })

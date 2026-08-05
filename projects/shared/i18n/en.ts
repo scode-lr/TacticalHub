@@ -104,6 +104,7 @@ export const sharedTranslations = {
     subtitle: 'Active users linked to this club.',
     search: 'Search by name or email...',
     empty: 'There are no users to display.',
+    emptyDescription: 'Club users will appear here.',
     role: 'Role',
     team: 'Team',
     selectTeam: 'Select team',

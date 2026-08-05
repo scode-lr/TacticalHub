@@ -110,11 +110,22 @@
     }
 
     .user-info {
-      flex: 1;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      min-width: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+
+      &:hover .user-avatar {
+        border-color: var(--color-accent, var(--ion-color-primary, #4a90e2));
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-accent, var(--ion-color-primary, #4a90e2));
+        outline-offset: 2px;
+      }
 
       .user-avatar {
         width: 36px;
@@ -123,12 +134,14 @@
         object-fit: cover;
         border: 2px solid var(--color-divider, var(--border-light, #e5e7eb));
         flex-shrink: 0;
+        transition: border-color 0.15s ease;
       }
     }
 
     .action-buttons {
       display: flex;
       gap: 0.5rem;
+      margin-left: auto;
       flex-shrink: 0;
     }
 

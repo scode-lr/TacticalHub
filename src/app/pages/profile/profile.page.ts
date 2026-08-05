@@ -6,6 +6,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@services/user.service';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { User } from '@core/models/user.model';
 import { AuthService } from '@services/auth.service';
 import { ToastService } from '@services/toast.service';
@@ -24,7 +25,8 @@ import { alertCircleOutline, closeOutline, trashOutline } from 'ionicons/icons';
     IonInput,
     IonIcon,
     TranslatePipe,
-    UserHeaderComponent
+    UserHeaderComponent,
+    BackButtonComponent
   ]
 })
 export class ProfilePage implements OnInit {

@@ -2,8 +2,8 @@
   <div class="admin-page">
     <div class="mobile-header">
       <app-user-header 
-        [showBackButton]="showBackButton()"
-        [showRoleSelector]="!showBackButton()"
+        [showBackButton]="isDetailPage()"
+        [showRoleSelector]="!isDetailPage()"
         [currentRole]="currentRole()"
         [backUrl]="backUrl()"
         (backClick)="goBack()">

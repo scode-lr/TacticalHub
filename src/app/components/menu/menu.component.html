@@ -37,9 +37,13 @@
 
   <!-- Desktop User Section -->
   <div class="user-section desktop-only">
-    <div class="user-info">
+    <button
+      type="button"
+      class="user-info"
+      (click)="goToProfile()"
+      [attr.aria-label]="'common.profile' | translate">
       <img [src]="avatarUrl()" [alt]="user()?.username" (error)="onAvatarError()" class="user-avatar">
-    </div>
+    </button>
     <div class="action-buttons">
       <button class="settings-button" (click)="goToSettings()">
         <ion-icon name="settings-outline"></ion-icon>

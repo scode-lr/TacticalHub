@@ -4,7 +4,8 @@
 
 <ion-content>
   <div class="page-container settings-page">
-    <div class="section-header">
+    <div class="section-header-with-back-button">
+      <app-back-button />
       <h1 class="section-title">{{ 'settings.title' | translate }}</h1>
     </div>
 
@@ -118,10 +119,9 @@
         <span class="setting-card-desc">{{ 'settings.legalDescription' | translate }}</span>
       </div>
       <nav class="legal-links" [attr.aria-label]="'settings.legal' | translate">
-        <a href="privacy-policy.html" target="_blank" rel="noopener">{{ 'welcome.privacyPolicy' | translate }}</a>
-        <!-- <a href="terms-of-service.html" target="_blank" rel="noopener">{{ 'welcome.termsOfService' | translate }}</a>
-        <a href="legal-notice.html" target="_blank" rel="noopener">{{ 'welcome.legalNotice' | translate }}</a>
-        <a href="account-deletion.html" target="_blank" rel="noopener">{{ 'welcome.accountDeletion' | translate }}</a> -->
+        <a href="terms-of-service.html">{{ 'welcome.termsOfService' | translate }}</a>
+        <a href="privacy-policy.html">{{ 'welcome.privacyPolicy' | translate }}</a>
+        <a href="account-deletion.html">{{ 'welcome.accountDeletion' | translate }}</a>
       </nav>
     </div>
   </div>
