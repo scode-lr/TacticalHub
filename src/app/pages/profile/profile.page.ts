@@ -11,7 +11,7 @@ import { User } from '@core/models/user.model';
 import { AuthService } from '@services/auth.service';
 import { ToastService } from '@services/toast.service';
 import { addIcons } from 'ionicons';
-import { alertCircleOutline, closeOutline, trashOutline } from 'ionicons/icons';
+import { alertCircleOutline, closeOutline, trashOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-profile',
@@ -40,12 +40,13 @@ export class ProfilePage implements OnInit {
   readonly isSaving = signal<boolean>(false);
   readonly isDeleting = signal<boolean>(false);
   readonly showDeleteConfirmation = signal<boolean>(false);
-  
+  readonly showDeletePassword = signal<boolean>(false);
+
   profileForm: FormGroup;
   deleteAccountForm: FormGroup;
 
   constructor() {
-    addIcons({ alertCircleOutline, closeOutline, trashOutline });
+    addIcons({ alertCircleOutline, closeOutline, trashOutline, eyeOutline, eyeOffOutline });
     this.profileForm = this.fb.group({
       email: [{ value: '', disabled: true }],
       firstName: ['', [Validators.required]],
@@ -117,7 +118,12 @@ export class ProfilePage implements OnInit {
   cancelDeleteAccount(): void {
     if (this.isDeleting()) return;
     this.showDeleteConfirmation.set(false);
+    this.showDeletePassword.set(false);
     this.deleteAccountForm.reset();
+  }
+
+  toggleDeletePassword(): void {
+    this.showDeletePassword.update(v => !v);
   }
 
   async deleteAccount(): Promise<void> {
