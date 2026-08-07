@@ -55,7 +55,9 @@
       "Bash(xargs -I{} echo {})",
       "Bash(tee /tmp/build-full.log)",
       "Bash(xargs -I{} sh -c 'echo ==={}===; head -20 \"{}\"')",
-      "Bash(powershell -NoProfile -Command \"Get-Process -Id 53900 -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path, StartTime\" 2>&1)"
+      "Bash(powershell -NoProfile -Command \"Get-Process -Id 53900 -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path, StartTime\" 2>&1)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill *)"
     ]
   },
   "enabledMcpjsonServers": [

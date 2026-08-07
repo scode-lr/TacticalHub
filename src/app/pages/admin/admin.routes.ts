@@ -30,7 +30,7 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'news',
-        loadComponent: () => import('../news/news/news.page').then(m => m.NewsPage)
+        loadComponent: () => import('../settings-news/settings-news.page').then(m => m.SettingsNewsPage)
       },
       {
         path: 'news/:newsId',

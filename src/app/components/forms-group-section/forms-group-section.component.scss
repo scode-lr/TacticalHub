@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+.forms-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.75rem;
+}
+
+.forms-group-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(56, 128, 255, 0.1);
+  color: var(--color-accent, var(--ion-color-primary, #3880ff));
+
+  ion-icon {
+    font-size: 0.875rem;
+  }
+}
+
+.forms-group-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-primary, #111827);
+  white-space: nowrap;
+}
+
+.forms-group-count {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+  white-space: nowrap;
+}
+
+.forms-group-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-light, #e5e7eb);
+}
+
+.forms-rowlist {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+// The rows themselves (<app-form-header>) are projected from the parent
+// page's template, so they carry the parent's style-encapsulation scope,
+// not this component's — ::ng-deep is required to reach them here.
+:host ::ng-deep .forms-rowlist app-form-header + app-form-header {
+  border-top: 1px solid var(--border-light, #e5e7eb);
+}

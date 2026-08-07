@@ -233,6 +233,7 @@ export const sharedTranslations = {
   validation: {
     required: 'This field is required',
     invalidEmail: 'Invalid email address',
+    invalidIban: 'Invalid IBAN',
     minLength: 'Minimum {min} characters required',
     maxLength: 'Maximum {max} characters allowed',
     passwordMismatch: 'Passwords do not match',
@@ -602,6 +603,24 @@ export const sharedTranslations = {
         'register-player': 'Register player',
         'become-member': 'Become member'
       },
+      groups: {
+        registerPlayer: 'Player registration',
+        becomeMember: 'Membership',
+        general: 'General forms',
+        count: '{count} forms',
+        countOne: '{count} form'
+      },
+      typePicker: {
+        title: 'New form',
+        subtitle: 'Choose the type. The type decides where the response goes and which fields come predefined.',
+        registerPlayerTitle: 'Register player',
+        registerPlayerDescription: "A new player's registration in the club. The response creates their profile in Members.",
+        becomeMemberTitle: 'Become member',
+        becomeMemberDescription: 'Application to become a club member. Linked to the membership fee.',
+        generalTitle: 'General form',
+        generalDescription: 'Waivers, one-off registrations, surveys… Fully custom fields.'
+      },
+      type: 'Type',
       fields: {
         name: 'Name',
         namePlaceholder: 'Enter form name',
@@ -659,6 +678,21 @@ export const sharedTranslations = {
         noFields: 'No fields added yet.'
       },
        formInvalid: 'Please fix the validation errors before saving',
+    },
+    settingsNews: {
+      addNews: 'New post',
+      filters: {
+        all: 'All',
+        published: 'Published',
+        draft: 'Drafts'
+      },
+      status: {
+        published: 'Published',
+        draft: 'Draft'
+      },
+      empty: 'No news yet',
+      emptyDescription: 'Create your first post to get started.',
+      actions: 'Actions'
     }
   },
   forms: {
@@ -845,6 +879,10 @@ export const sharedTranslations = {
       openLink: 'Open link',
       openForm: 'Open form',
       loadMore: 'Load more',
+      share: 'Share',
+      linkCopied: 'Link copied to clipboard',
+      shareFailed: 'Could not share this article',
+      relatedTitle: 'Next article',
     },
     action: {
       registerPlayer: 'Register a player',
@@ -930,7 +968,12 @@ export const sharedTranslations = {
         rejectionFeedback: 'Coordinator\'s feedback',
         viewHistory: 'View history',
         commentHistory: 'Comment history'
-      }
+      },
+      status: {
+        closed: 'Closed'
+      },
+      sentStatus: 'Submitted',
+      pendingLabel: 'Pending'
     },
     information: {
       title: 'Information',

@@ -4,7 +4,7 @@ $marker-size: 1.75rem;
   border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
   border-radius: 18px;
   padding: 1.25rem;
-  background: var(--color-surface, var(--background-primary, #ffffff));
+  background: white;
   animation: fadeIn 0.3s ease;
 
   &__header {

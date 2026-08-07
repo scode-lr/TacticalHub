@@ -231,6 +231,7 @@ export const sharedTranslations = {
   },  validation: {
     required: 'Este campo es obligatorio',
     invalidEmail: 'Dirección de correo inválida',
+    invalidIban: 'IBAN inválido',
     minLength: 'Se requieren mínimo {min} caracteres',
     maxLength: 'Máximo {max} caracteres permitidos',
     passwordMismatch: 'Las contraseñas no coinciden',
@@ -600,6 +601,24 @@ export const sharedTranslations = {
         'register-player': 'Registrar jugador',
         'become-member': 'Hacerse socio'
       },
+      groups: {
+        registerPlayer: 'Registro de jugadores',
+        becomeMember: 'Alta de socio',
+        general: 'Formularios generales',
+        count: '{count} formularios',
+        countOne: '{count} formulario'
+      },
+      typePicker: {
+        title: 'Nuevo formulario',
+        subtitle: 'Elige el tipo. El tipo determina a dónde va la respuesta y qué campos vienen predefinidos.',
+        registerPlayerTitle: 'Registrar jugador',
+        registerPlayerDescription: 'Alta de un jugador nuevo en el club. La respuesta crea su ficha en Miembros.',
+        becomeMemberTitle: 'Hacerse socio',
+        becomeMemberDescription: 'Solicitud para ser socio del club. Se vincula al pago de la cuota.',
+        generalTitle: 'Formulario general',
+        generalDescription: 'Autorizaciones, inscripciones puntuales, encuestas… Campos totalmente a medida.'
+      },
+      type: 'Tipo',
       fields: {
         name: 'Nombre',
         namePlaceholder: 'Introduce el nombre del formulario',
@@ -656,6 +675,21 @@ export const sharedTranslations = {
         noFields: 'Aún no se han añadido campos.'
       },
        formInvalid: 'Corrige los errores de validación antes de guardar',
+    },
+    settingsNews: {
+      addNews: 'Nueva noticia',
+      filters: {
+        all: 'Todas',
+        published: 'Publicadas',
+        draft: 'Borradores'
+      },
+      status: {
+        published: 'Publicada',
+        draft: 'Borrador'
+      },
+      empty: 'Todavía no hay noticias',
+      emptyDescription: 'Crea tu primera noticia para empezar.',
+      actions: 'Acciones'
     }
   },
   forms: {
@@ -842,6 +876,10 @@ export const sharedTranslations = {
       openLink: 'Abrir enlace',
       openForm: 'Abrir formulario',
       loadMore: 'Cargar más',
+      share: 'Compartir',
+      linkCopied: 'Enlace copiado al portapapeles',
+      shareFailed: 'No se pudo compartir esta noticia',
+      relatedTitle: 'Siguiente noticia',
     },
     action: {
       noForms: 'No hay formularios disponibles',
@@ -868,7 +906,12 @@ export const sharedTranslations = {
         rejectionFeedback: 'Comentario del coordinador',
         viewHistory: 'Ver historial',
         commentHistory: 'Historial de comentarios'
-      }
+      },
+      status: {
+        closed: 'Cerrado'
+      },
+      sentStatus: 'Enviado',
+      pendingLabel: 'Pendiente'
     },
     information: {
       title: 'Información',

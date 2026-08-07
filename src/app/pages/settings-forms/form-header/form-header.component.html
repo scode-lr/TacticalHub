@@ -1,50 +1,41 @@
-<div class="form-card" (click)="redirect()">
-  <span class="form-icon-chip">
+<div class="form-row" [class.form-row--dim]="isDim()" (click)="redirect()">
+  <span class="fr-icon">
     <ion-icon [name]="formIcon()"></ion-icon>
   </span>
-  <div class="card-body">
-    <div class="card-header">
-      <h3 class="form-name">{{ form().name }}</h3>
-      @if (editable()) {
-        <p-tag
-          [value]="'admin.settingsForms.status.' + form().status | translate"
-          [severity]="statusSeverity()"
-          class="status-tag"
-        />
+  <div class="fr-body">
+    <span class="fr-title">{{ form().name }}</span>
+    <span class="fr-meta">
+      <ion-icon name="calendar-outline"></ion-icon>
+      @if (form().fromDate || form().toDate) {
+        {{ form().fromDate | date:'dd/MM/yy' }} &rarr; {{ form().toDate | date:'dd/MM/yy' }}
+      } @else {
+        {{ 'admin.settingsForms.periodAlways' | translate }}
       }
-    </div>
-
-    @if (form().description) {
-      <p class="form-description">{{ form().description }}</p>
-    }
-
-    @if (editable()) {
-      <div class="card-chips">
-        <p-chip class="meta-chip">
-          <ion-icon name="flash-outline"></ion-icon>
-          <span>{{ 'admin.settingsForms.actions.' + form().action | translate }}</span>
-        </p-chip>
-        <p-chip class="meta-chip">
-          <ion-icon name="calendar-outline"></ion-icon>
-          <span>
-            @if (form().fromDate || form().toDate) {
-              {{ form().fromDate | date:'dd/MM/yy' }} &rarr; {{ form().toDate | date:'dd/MM/yy' }}
-            } @else {
-              {{ 'admin.settingsForms.periodAlways' | translate }}
-            }
-          </span>
-        </p-chip>
-      </div>
-    }
-
-    @if (editable()) {
-      <div class="card-footer">       
-          <ion-icon name="settings-outline"></ion-icon>
-      </div>
-    }
+      @if (isPending()) {
+        · {{ 'user.forms.pendingLabel' | translate }}
+      }
+    </span>
   </div>
 
-  <div class="card-chevron">
-    <ion-icon name="chevron-forward-outline"></ion-icon>
-  </div>
+  @if (editable()) {
+    <p-tag
+      [value]="'admin.settingsForms.status.' + form().status | translate"
+      [severity]="statusSeverity()"
+      class="fr-status"
+    />
+  } @else if (mySubmissionLoading()) {
+    <span class="fr-status-skeleton" aria-hidden="true"></span>
+  } @else if (hasSubmission()) {
+    <span class="fr-done" [class.fr-done--rejected]="isRejected()" [attr.aria-label]="(isRejected() ? 'user.forms.submission.statusRejected' : 'user.forms.sentStatus') | translate">
+      <ion-icon [name]="isRejected() ? 'close-outline' : 'checkmark-outline'"></ion-icon>
+    </span>
+  } @else if (!formOpen()) {
+    <p-tag
+      [value]="'user.forms.status.closed' | translate"
+      severity="secondary"
+      class="fr-status"
+    />
+  }
+
+  <ion-icon name="chevron-forward-outline" class="fr-chevron"></ion-icon>
 </div>

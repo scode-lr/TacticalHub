@@ -1,0 +1,185 @@
+<div class="page-container settings-news-page">
+  <div class="section-header">
+    <h1 class="section-title">{{ 'admin.menu.news' | translate }}</h1>
+
+    <button class="btn-add" type="button" (click)="startCreate()">
+      <ion-icon name="add-outline"></ion-icon>
+      {{ 'admin.settingsNews.addNews' | translate }}
+    </button>
+  </div>
+
+  <div class="filter-pills">
+    <button type="button" class="filterpill" [class.active]="statusFilter() === 'all'" (click)="statusFilter.set('all')">
+      {{ 'admin.settingsNews.filters.all' | translate }}
+    </button>
+    <button type="button" class="filterpill" [class.active]="statusFilter() === 'published'" (click)="statusFilter.set('published')">
+      {{ 'admin.settingsNews.filters.published' | translate }}
+    </button>
+    <button type="button" class="filterpill" [class.active]="statusFilter() === 'draft'" (click)="statusFilter.set('draft')">
+      {{ 'admin.settingsNews.filters.draft' | translate }}
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="news-table">
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
+    </div>
+  } @else if (filteredNews().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
+      <h3 class="empty-title">{{ 'admin.settingsNews.empty' | translate }}</h3>
+      <p class="empty-description">{{ 'admin.settingsNews.emptyDescription' | translate }}</p>
+      <button class="btn-primary" type="button" (click)="startCreate()">
+        <ion-icon name="add-outline"></ion-icon>
+        {{ 'admin.settingsNews.addNews' | translate }}
+      </button>
+    </div>
+  } @else {
+    <div class="news-table">
+      @for (item of filteredNews(); track item.id) {
+        <div class="news-row" (click)="startEdit(item)">
+          <div class="news-row-main">
+            <span class="news-row-title">{{ item.title }}</span>
+            <span class="news-row-meta">{{ statusLabel(item) }} · {{ getTimeAgo(item.publishedAt || item.createdAt) }}</span>
+          </div>
+
+          <div class="news-row-actions" (click)="$event.stopPropagation()">
+            <button
+              type="button"
+              class="actions-toggle"
+              (click)="toggleMenu(item.id)"
+              [attr.aria-label]="'admin.settingsNews.actions' | translate"
+              [attr.aria-expanded]="openMenuId() === item.id"
+              aria-haspopup="menu">
+              <ion-icon name="ellipsis-vertical"></ion-icon>
+            </button>
+            @if (openMenuId() === item.id) {
+              <div class="actions-menu" role="menu">
+                <button type="button" role="menuitem" (click)="startEdit(item)">{{ 'common.edit' | translate }}</button>
+                @if (item.status !== AppStatus.Active) {
+                  <button type="button" role="menuitem" (click)="publish(item)">{{ 'user.news.publish' | translate }}</button>
+                } @else {
+                  <button type="button" role="menuitem" (click)="unpublish(item)">{{ 'user.news.unpublish' | translate }}</button>
+                }
+                <button type="button" class="danger-action" role="menuitem" (click)="deleteNews(item)">{{ 'common.delete' | translate }}</button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (hasMore() || isLoadingMore()) {
+      <div class="news-load-more">
+        @if (isLoadingMore()) {
+          <ion-spinner name="crescent" class="news-load-more__spinner" />
+        } @else {
+          <button class="btn-text btn-block" type="button" (click)="loadMoreNews()">
+            {{ 'user.news.loadMore' | translate }}
+          </button>
+        }
+      </div>
+    }
+  }
+
+  <ion-modal class="app-modal app-modal--wide" [isOpen]="showEditorModal()" (didDismiss)="cancelEditor()">
+    <ng-template>
+      <div class="app-modal-container news-editor-modal">
+        <div class="app-modal-header">
+          <div class="app-modal-header-info">
+            <ion-icon name="newspaper-outline" class="app-modal-header-icon"></ion-icon>
+            <div class="app-modal-header-text">
+              <h2 class="app-modal-title">{{ editingNews() ? ('user.news.editTitle' | translate) : ('user.news.createTitle' | translate) }}</h2>
+              <p class="app-modal-subtitle">{{ 'user.news.editorSubtitle' | translate }}</p>
+            </div>
+          </div>
+
+          <button class="app-modal-close" type="button" (click)="showEditorModal.set(false)" [attr.aria-label]="'common.close' | translate">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <div class="app-modal-content news-form">
+          <label class="field-group">
+            <span>{{ 'user.news.fieldTitle' | translate }}</span>
+            <input
+              type="text"
+              [ngModel]="form().title"
+              (ngModelChange)="updateForm('title', $event)"
+              maxlength="200"
+              [placeholder]="'user.news.titlePlaceholder' | translate"
+            />
+          </label>
+
+          <label class="field-group">
+            <span>{{ 'user.news.fieldBody' | translate }}</span>
+            <textarea
+              rows="8"
+              [ngModel]="form().body"
+              (ngModelChange)="updateForm('body', $event)"
+              maxlength="10000"
+              [placeholder]="'user.news.bodyPlaceholder' | translate"
+            ></textarea>
+          </label>
+
+          <div class="field-group">
+            <span>{{ 'user.news.primaryImage' | translate }}</span>
+            @if (uploadedPrimaryImageUrl()) {
+              <div class="image-preview" [style.background-image]="'url(' + uploadedPrimaryImageUrl() + ')'"></div>
+              <button class="btn-text danger" type="button" (click)="removePrimaryImage()">{{ 'user.news.removeImage' | translate }}</button>
+            }
+            <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onImageSelected($event)" [disabled]="imageUploading()" />
+            @if (imageUploading()) {
+              <div class="uploading-row"><ion-spinner name="crescent" /> {{ 'user.news.uploadingImage' | translate }}</div>
+            }
+          </div>
+
+          <label class="field-group">
+            <span>{{ 'user.news.externalLinkUrl' | translate }}</span>
+            <input type="url" [ngModel]="form().externalLinkUrl" (ngModelChange)="updateForm('externalLinkUrl', $event)" placeholder="https://..." />
+          </label>
+
+          <label class="field-group">
+            <span>{{ 'user.news.externalLinkLabel' | translate }}</span>
+            <input type="text" [ngModel]="form().externalLinkLabel" (ngModelChange)="updateForm('externalLinkLabel', $event)" [placeholder]="'user.news.openLink' | translate" />
+          </label>
+
+          <label class="field-group">
+            <span>{{ 'user.news.linkedForm' | translate }}</span>
+            <select [ngModel]="form().linkedFormId" (ngModelChange)="updateForm('linkedFormId', $event)">
+              <option [ngValue]="null">{{ 'user.news.noLinkedForm' | translate }}</option>
+              @for (activeForm of activeForms(); track activeForm.id) {
+                <option [ngValue]="activeForm.id">{{ activeForm.name }}</option>
+              }
+            </select>
+            @if (formsLoading()) {
+              <small class="field-hint">{{ 'user.news.loadingForms' | translate }}</small>
+            } @else if (activeForms().length === 0) {
+              <small class="field-hint">{{ 'user.news.noActiveForms' | translate }}</small>
+            }
+          </label>
+
+          <label class="checkbox-row">
+            <input type="checkbox" [ngModel]="form().publishNow" (ngModelChange)="updateForm('publishNow', $event)" />
+            <span>{{ 'user.news.publishNow' | translate }}</span>
+          </label>
+        </div>
+
+        <div class="app-modal-footer">
+          <button class="btn-secondary" type="button" (click)="cancelEditor()" [disabled]="isSaving()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button class="btn-primary save-news-button" type="button" (click)="saveNews()" [disabled]="isSaving() || imageUploading()">
+            @if (isSaving()) {
+              <ion-spinner name="crescent" />
+            }
+            <span>{{ isSaving() ? ('user.news.saving' | translate) : ('user.news.saveNews' | translate) }}</span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</div>

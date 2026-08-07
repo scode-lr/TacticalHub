@@ -134,5 +134,9 @@
       />
     }
 
+    @if (fieldErrorMessage(field); as error) {
+      <span class="field-error">{{ error.key | translate: error.params }}</span>
+    }
+
   </div>
 }

@@ -13,9 +13,10 @@
   }
 }
 
-::ng-deep .p-dataview,
-::ng-deep .p-dataview-content {
-  background: transparent !important;
+.forms-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .skeleton-card {

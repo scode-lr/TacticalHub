@@ -1,4 +1,9 @@
-<article class="news-card" [style.animation-delay]="animationDelay() * 0.04 + 's'" (click)="onCardClick()">
+<article
+  class="news-card"
+  [class.news-card--featured]="variant() === 'featured'"
+  [class.news-card--row]="variant() === 'row'"
+  [style.animation-delay]="animationDelay() * 0.04 + 's'"
+  (click)="onCardClick()">
   <div class="news-thumb" [class.news-thumb--empty]="!primaryImageUrl" [style.background-image]="primaryImageUrl ? 'url(' + primaryImageUrl + ')' : null">
     @if (!primaryImageUrl) {
       <ion-icon name="newspaper-outline"></ion-icon>
@@ -7,18 +12,13 @@
 
   <div class="news-body">
     <span class="news-time">{{ getTimeAgo(news().publishedAt || news().createdAt) }}</span>
-    <h2 class="news-title">{{ news().title }}</h2>
 
-    @if (isAdmin()) {
-      <div class="news-admin-actions" (click)="$event.stopPropagation()">
-        <button class="btn-text" type="button" (click)="onEdit($event)">{{ 'common.edit' | translate }}</button>
-        @if (news().status !== AppStatus.Active) {
-          <button class="btn-text" type="button" (click)="onPublish($event)">{{ 'user.news.publish' | translate }}</button>
-        } @else {
-          <button class="btn-text" type="button" (click)="onUnpublish($event)">{{ 'user.news.unpublish' | translate }}</button>
-        }
-        <button class="btn-text danger" type="button" (click)="onDelete($event)">{{ 'common.delete' | translate }}</button>
-      </div>
+    @if (variant() === 'featured') {
+      <h2 class="news-title">{{ news().title }}</h2>
+    } @else {
+      <h3 class="news-title">{{ news().title }}</h3>
     }
+
+    <p class="news-excerpt">{{ news().body }}</p>
   </div>
 </article>

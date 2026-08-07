@@ -26,6 +26,7 @@ import { IonIcon, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, settingsOutline, saveOutline, chevronUpOutline, chevronDownOutline, chevronForwardOutline, chevronBackOutline, cloudUploadOutline, addOutline, refreshOutline, checkmarkCircleOutline, trashOutline, openOutline, bodyOutline, peopleOutline } from 'ionicons/icons';
 import { TeamJoinRequestsComponent } from '@components/team-join-requests/team-join-requests.component';
+import { ActionRequestsComponent } from '@components/action-requests/action-requests.component';
 import { ExportWizardStep, FormsExportWizardModalComponent } from './components/forms-export-wizard-modal/forms-export-wizard-modal.component';
 import { GoogleSheetsCreateFormState, IntegrationFormState } from './components/forms-integrations-step/forms-integrations-step.component';
 
@@ -34,7 +35,7 @@ import { GoogleSheetsCreateFormState, IntegrationFormState } from './components/
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, BreadcrumbModule, PaginatorModule, IonIcon, IonToast, TeamJoinRequestsComponent, FormsExportWizardModalComponent]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, BreadcrumbModule, PaginatorModule, IonIcon, IonToast, TeamJoinRequestsComponent, ActionRequestsComponent, FormsExportWizardModalComponent]
 })
 export class FormsSubmissionsPage {
   private readonly formService = inject(FormService);

@@ -231,6 +231,7 @@ export const sharedTranslations = {
   },  validation: {
     required: 'Aquest camp és obligatori',
     invalidEmail: 'Adreça de correu invàlida',
+    invalidIban: 'IBAN invàlid',
     minLength: 'Es requereixen mínim {min} caràcters',
     maxLength: 'Màxim {max} caràcters permesos',
     passwordMismatch: 'Les contrasenyes no coincideixen',
@@ -600,6 +601,24 @@ export const sharedTranslations = {
         'register-player': 'Registrar jugador',
         'become-member': 'Fer-se soci'
       },
+      groups: {
+        registerPlayer: 'Registre de jugadors',
+        becomeMember: 'Alta de soci',
+        general: 'Formularis generals',
+        count: '{count} formularis',
+        countOne: '{count} formulari'
+      },
+      typePicker: {
+        title: 'Nou formulari',
+        subtitle: 'Tria de quin tipus. El tipus determina a on va la resposta i els camps que venen predefinits.',
+        registerPlayerTitle: 'Registrar jugador',
+        registerPlayerDescription: "Alta d'un jugador nou al club. La resposta crea la fitxa a Membres.",
+        becomeMemberTitle: 'Fer-se soci',
+        becomeMemberDescription: 'Sol·licitud per ser soci del club. Es vincula al pagament de la quota.',
+        generalTitle: 'Formulari general',
+        generalDescription: 'Autoritzacions, inscripcions puntuals, enquestes… Camps a mida.'
+      },
+      type: 'Tipus',
       fields: {
         name: 'Nom',
         namePlaceholder: 'Introdueix el nom del formulari',
@@ -656,6 +675,21 @@ export const sharedTranslations = {
         noFields: 'Encara no s\'han afegit camps.'
       },
        formInvalid: 'Corregeix els errors de validació abans de desar',
+    },
+    settingsNews: {
+      addNews: 'Nova notícia',
+      filters: {
+        all: 'Totes',
+        published: 'Publicades',
+        draft: 'Esborranys'
+      },
+      status: {
+        published: 'Publicada',
+        draft: 'Esborrany'
+      },
+      empty: 'Encara no hi ha notícies',
+      emptyDescription: 'Crea la teva primera notícia per començar.',
+      actions: 'Accions'
     }
   },
   forms: {
@@ -842,6 +876,10 @@ export const sharedTranslations = {
       openLink: 'Obrir enllaç',
       openForm: 'Obrir formulari',
       loadMore: 'Carregar-ne més',
+      share: 'Compartir',
+      linkCopied: 'Enllaç copiat al porta-retalls',
+      shareFailed: 'No s\'ha pogut compartir aquesta notícia',
+      relatedTitle: 'Següent notícia',
     },
     action: {
       registerPlayer: 'Registrar un jugador',
@@ -927,7 +965,12 @@ export const sharedTranslations = {
         rejectionFeedback: 'Comentari del coordinador',
         viewHistory: 'Veure historial',
         commentHistory: 'Historial de comentaris'
-      }
+      },
+      status: {
+        closed: 'Tancat'
+      },
+      sentStatus: 'Enviat',
+      pendingLabel: 'Pendent'
     },
     information: {
       title: 'Informació',

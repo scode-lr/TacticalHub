@@ -60,6 +60,12 @@
   line-height: 1.4;
 }
 
+.field-error {
+  font-size: 0.75rem;
+  color: var(--ion-color-danger, #eb445a);
+  margin-top: 0.125rem;
+}
+
 input[pInputText],
 textarea[pTextarea] {
   width: 100%;
