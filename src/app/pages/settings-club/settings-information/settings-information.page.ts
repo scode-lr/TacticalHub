@@ -2,6 +2,7 @@ import { Component, signal, inject, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { IonIcon, IonToast } from '@ionic/angular/standalone';
+import { EditorModule } from 'primeng/editor';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -14,6 +15,7 @@ import { SectionDisplayComponent, SectionDisplayData } from '@components/section
 import { ClubInformationService } from '@services/club-information.service';
 import { ClubService } from '@services/club.service';
 import { ClubInformation, CreateClubInformationRequest, UpdateClubInformationRequest } from '@core/models/club-information.model';
+import { ensureRichTextHtml } from '@core/utils/rich-text.util';
 import { addIcons } from 'ionicons';
 import {
   addOutline, eyeOutline, closeOutline, createOutline, saveOutline,
@@ -39,6 +41,7 @@ interface SectionFormValue {
     ReactiveFormsModule,
     IonIcon,
     IonToast,
+    EditorModule,
     TranslatePipe,
     BackButtonComponent,
     IconPickerModalComponent,
@@ -131,7 +134,7 @@ export class SettingsInformationPage implements OnInit {
     return this.fb.group({
       id: [section.id],
       title: [section.title, [Validators.required, Validators.maxLength(200)]],
-      content: [section.content, [Validators.required, Validators.maxLength(2000)]],
+      content: [ensureRichTextHtml(section.content), [Validators.required, Validators.maxLength(8000)]],
       icon: [section.icon ?? ''],
       sortOrder: [section.sortOrder],
     });
@@ -141,7 +144,7 @@ export class SettingsInformationPage implements OnInit {
     return this.fb.group({
       id: [null],
       title: ['', [Validators.required, Validators.maxLength(200)]],
-      content: ['', [Validators.required, Validators.maxLength(2000)]],
+      content: ['', [Validators.required, Validators.maxLength(8000)]],
       icon: [''],
       sortOrder: [this.sectionsFormArray.length],
     });

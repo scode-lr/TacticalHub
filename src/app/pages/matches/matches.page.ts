@@ -1,10 +1,10 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { Match } from '@models/match.model';
-import { mockMatches } from '@mocks/match.mock';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { MatchCardComponent } from '@components/match-card/match-card.component';
+import { MatchService } from '@services/match.service';
 
 @Component({
   selector: 'app-matches',
@@ -14,8 +14,10 @@ import { MatchCardComponent } from '@components/match-card/match-card.component'
   imports: [CommonModule, IonIcon, TranslatePipe, MatchCardComponent]
 })
 export class MatchesPage {
+  private readonly matchService = inject(MatchService);
+
   readonly currentWeekStart = signal<Date>(this.getStartOfWeek(new Date()));
-  readonly matches = signal<Match[]>(mockMatches);
+  readonly matches = signal<Match[]>(this.matchService.getMatches());
 
   readonly currentWeekMatches = computed(() => {
     const start = this.currentWeekStart();

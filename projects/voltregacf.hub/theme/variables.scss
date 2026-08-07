@@ -190,6 +190,28 @@
   }
 }
 
+// Auth screens redesign (welcome / sign in / sign up) — design tokens
+// New names, don't touch --button-primary-color/--ion-color-* used elsewhere
+// in the app, so this only affects places that opt in to --color-*.
+:root {
+  --color-bg: #f7f5f1;
+  --color-surface: #edeae3;
+  --color-divider: #e5e1d7;
+  --color-panel-bg: linear-gradient(160deg, #faf6ec 0%, #f1e6c9 100%);
+  --color-welcome-bg: linear-gradient(180deg, #faf8f4 0%, #f4ecd2 62%, #efe2b6 100%);
+  --color-header-bg: #fdf7db;
+
+  --color-accent: #b8860b;
+  --color-accent-hover: #5f4a04;
+
+  --color-primary: #ffd700;
+  --color-primary-contrast: #1a1a1a;
+  --color-primary-hover: #f2ca00;
+  --color-primary-active: #dcb600;
+
+  --font-heading: "Figtree", system-ui, sans-serif;
+}
+
 // Header Styles
 .tactical-header {
   background: var(--gradient-secondary);

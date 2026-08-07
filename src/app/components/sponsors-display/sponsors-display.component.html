@@ -1,21 +1,30 @@
-@for (section of tierSections(); track section.tier) {
-  <h2 class="tier-title">{{ tierLabel(section.tier) | translate }}</h2>
-  <div class="sponsors-grid" [ngClass]="tierClass(section.tier)">
-    @for (sponsor of section.items; track sponsor.id) {
-      <div class="sponsor-card" (click)="openSponsor(sponsor)">
-        <div class="sponsor-image-container">
-          <img
-            [src]="sponsor.imageUrl || 'assets/image-non-available.svg'"
-            [alt]="sponsor.name"
-            class="sponsor-image"
-            appDefaultImage />
-        </div>
-        <div class="sponsor-card-footer">
-          <span class="sponsor-name">{{ sponsor.name }}</span>
-        </div>
-      </div>
+@if (sponsors().length > 0) {
+  <h2 class="tier-title">{{ 'admin.settings.sponsors.tier.sponsor' | translate }}</h2>
+  <div class="sponsors-grid tier-sponsor">
+    @for (sponsor of sponsors(); track sponsor.id) {
+      <app-sponsor-tile [sponsor]="sponsor" (sponsorSelected)="openSponsor($event)" />
     }
   </div>
+}
+
+@defer (on viewport) {
+  @if (collaborators(); as preSuppliedCollaborators) {
+    @if (preSuppliedCollaborators.length > 0) {
+      <h2 class="tier-title">{{ 'admin.settings.sponsors.tier.collaborator' | translate }}</h2>
+      <div class="sponsors-grid tier-collaborator">
+        @for (sponsor of preSuppliedCollaborators; track sponsor.id) {
+          <app-sponsor-tile [sponsor]="sponsor" [showName]="false" (sponsorSelected)="openSponsor($event)" />
+        }
+      </div>
+    }
+  } @else if (clubId(); as id) {
+    <app-sponsors-collaborators-grid
+      [clubId]="id"
+      (sponsorSelected)="openSponsor($event)"
+      (loaded)="onCollaboratorsLoaded($event)" />
+  }
+} @placeholder {
+  <div class="collaborators-placeholder"></div>
 }
 
 <!-- Sponsor Detail Modal -->

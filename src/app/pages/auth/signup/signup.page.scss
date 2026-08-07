@@ -96,17 +96,54 @@
   }
 }
 
-// Mobile specific for name row
-@media (max-width: 968px) {
-  .signup-form {
-    .name-row {
-      flex-direction: column;
-      gap: 0;
-      
-      .input-group.half-width {
-        width: 100%;
-        margin-bottom: 1.25rem;
-      }
+.consent-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.consent-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  color: color-mix(in srgb, var(--text-primary, #111827) 72%, transparent);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+
+  input[type='checkbox'] {
+    width: 1rem;
+    height: 1rem;
+    margin: 0.1rem 0 0;
+    flex: 0 0 auto;
+    accent-color: var(--color-primary, #3880ff);
+    cursor: pointer;
+  }
+
+  .link {
+    color: var(--color-accent, #3880ff);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-accent-hover, #1f5fd1);
+      text-decoration: underline;
     }
+  }
+}
+
+.confirm-hint {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 5px;
+
+  &.match {
+    color: #3a6b28;
+  }
+
+  &.mismatch {
+    color: #c0392b;
   }
 }

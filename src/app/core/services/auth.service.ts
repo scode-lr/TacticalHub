@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, firstValueFrom, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { User } from '../models';
-import { SignInRequest, SignUpRequest, ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest } from '../requests/auth.request';
+import { SignInRequest, SignUpRequest, ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest, VerifyEmailRequest } from '../requests/auth.request';
 import { AuthResponse } from '../responses/auth.response';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 import { TranslationService } from './i18n/translation.service';
@@ -11,6 +11,7 @@ import { StorageService } from './storage.service';
 import { ApiService } from './api.service';
 import { TokenService } from './token.service';
 import { NavigationService } from './navigation.service';
+import { PushNotificationsService } from './push-notifications.service';
 
 export interface IAuthState {
   isAuthenticated: boolean;
@@ -21,6 +22,8 @@ export interface IAuthState {
 export interface IAuthResponse {
   success: boolean;
   message: string;
+  requiresEmailVerification?: boolean;
+  email?: string;
 }
 
 @Injectable({
@@ -32,6 +35,7 @@ export class AuthService {
   private readonly navigationService = inject(NavigationService);
   private readonly apiService = inject(ApiService);
   private readonly tokenService = inject(TokenService);
+  private readonly pushNotificationsService = inject(PushNotificationsService);
   private readonly _isLoading = signal<boolean>(false);
   readonly isLoading = this._isLoading.asReadonly();
 
@@ -108,6 +112,7 @@ export class AuthService {
           if (response.data.user) {
             this._currentUser.set(response.data.user);
           }
+          void this.pushNotificationsService.register();
           return response.data.token;
         }
         return null;
@@ -132,7 +137,7 @@ export class AuthService {
           email: credentials.email,
           password: credentials.password,
           rememberMe: credentials.rememberMe
-        })
+        }, { skipErrorHandler: true })
       );
 
       if (response.success && response.data) {
@@ -143,6 +148,7 @@ export class AuthService {
         this.tokenService.setAccessToken(token);
 
         this._currentUser.set(user);
+        void this.pushNotificationsService.register();
         this._isLoading.set(false);
 
         return { 
@@ -156,11 +162,25 @@ export class AuthService {
           message: response.message || this.translationService.instant('messages.signInError')
         };
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       this._isLoading.set(false);
+
+      if (error instanceof HttpErrorResponse &&
+          error.status === 403 &&
+          error.error?.data?.code === 'EMAIL_NOT_VERIFIED') {
+        return {
+          success: false,
+          message: this.translationService.instant('auth.emailNotVerified'),
+          requiresEmailVerification: true,
+          email: credentials.email,
+        };
+      }
+
       return { 
         success: false, 
-        message: error.message || this.translationService.instant('messages.signInError')
+        message: error instanceof HttpErrorResponse
+          ? (error.error?.message || this.translationService.instant('messages.signInError'))
+          : this.translationService.instant('messages.signInError')
       };
     }
   }
@@ -178,7 +198,7 @@ export class AuthService {
       }
 
       const response = await firstValueFrom(
-        this.apiService.post<AuthResponse>('/auth/signup', {
+        this.apiService.post<{ success: boolean; message?: string; data?: { email: string; verificationRequired: boolean } }>('/auth/signup', {
           email: userData.email,
           password: userData.password,
           firstName: userData.firstName,
@@ -188,16 +208,13 @@ export class AuthService {
         })
       );
 
-      if (response.success && response.data) {
-        const { user, token } = response.data;
-        // Persist user profile so initializeAuth can restore the session on reload.
-        this.storageService.set<User>(STORAGE_KEYS.USER, user);
-        this.tokenService.setAccessToken(token);
-        this._currentUser.set(user);
+      if (response.success && response.data?.email) {
         this._isLoading.set(false);
         return {
           success: true,
-          message: response.message || this.translationService.instant('messages.signUpSuccess')
+          message: response.message || this.translationService.instant('messages.signUpSuccess'),
+          requiresEmailVerification: true,
+          email: response.data.email,
         };
       }
 
@@ -265,6 +282,12 @@ export class AuthService {
 
   async signOut(): Promise<void> {
     try {
+      await this.pushNotificationsService.unregister();
+    } catch {
+      // Push cleanup is best-effort and must not prevent server-side logout.
+    }
+
+    try {
       // Notify the backend so it can expire the HttpOnly refresh-token cookie.
       await firstValueFrom(
         this.apiService.post('/auth/logout', {}, { skipAuth: true, withCredentials: true })
@@ -303,7 +326,9 @@ export class AuthService {
     try {
       this._isLoading.set(true);
       const response = await firstValueFrom(
-        this.apiService.post<{ success: boolean; message?: string }>('/auth/forgot-password', { email: data.email })
+        this.apiService.post<{ success: boolean; message?: string }>('/auth/forgot-password', {
+          email: data.email,
+        })
       );
       this._isLoading.set(false);
       return {
@@ -335,6 +360,92 @@ export class AuthService {
     } catch (error: any) {
       this._isLoading.set(false);
       return { success: false, message: error.message ?? this.translationService.instant('messages.invalidResetLink') };
+    }
+  }
+
+  async verifyEmail(data: VerifyEmailRequest): Promise<IAuthResponse> {
+    try {
+      this._isLoading.set(true);
+      const response = await firstValueFrom(
+        this.apiService.post<AuthResponse>('/auth/verify-email', data, { skipAuth: true })
+      );
+
+      if (!response.success || !response.data) {
+        return {
+          success: false,
+          message: response.message ?? this.translationService.instant('auth.invalidVerificationCode'),
+        };
+      }
+
+      const { user, token } = response.data;
+      this.storageService.set<User>(STORAGE_KEYS.USER, user);
+      this.tokenService.setAccessToken(token);
+      this._currentUser.set(user);
+      void this.pushNotificationsService.register();
+
+      return {
+        success: true,
+        message: response.message ?? this.translationService.instant('auth.emailVerified'),
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message ?? this.translationService.instant('auth.invalidVerificationCode'),
+      };
+    } finally {
+      this._isLoading.set(false);
+    }
+  }
+
+  async resendEmailVerification(email: string): Promise<IAuthResponse> {
+    try {
+      this._isLoading.set(true);
+      const response = await firstValueFrom(
+        this.apiService.post<{ success: boolean; message?: string }>(
+          '/auth/resend-verification-code',
+          { email }
+        )
+      );
+      return {
+        success: response.success,
+        message: this.translationService.instant('auth.verificationCodeResent'),
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message ?? this.translationService.instant('auth.verificationCodeResendError'),
+      };
+    } finally {
+      this._isLoading.set(false);
+    }
+  }
+
+  async deleteAccount(currentPassword: string): Promise<IAuthResponse> {
+    try {
+      this._isLoading.set(true);
+      const response = await firstValueFrom(
+        this.apiService.delete<{ success: boolean; message?: string }>('/users/me', {
+          body: { currentPassword },
+          skipErrorHandler: true,
+        })
+      );
+
+      if (response.success) {
+        this.cleanSesion();
+        await this.navigationService.navigateTo(['auth/welcome']);
+      }
+
+      return {
+        success: response.success,
+        message: response.message ?? this.translationService.instant('profile.accountDeleted'),
+      };
+    } catch (error: unknown) {
+      const message = error instanceof HttpErrorResponse
+        ? (error.error?.message ?? this.translationService.instant('profile.deleteAccountError'))
+        : this.translationService.instant('profile.deleteAccountError');
+      return { success: false, message };
+    } finally {
+      this._isLoading.set(false);
     }
   }
 

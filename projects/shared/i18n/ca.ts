@@ -18,9 +18,15 @@ export const sharedTranslations = {
     cancel: 'Cancel·lar'
   },
   welcome: {
+    legalNotice: 'Avís legal',
+    accountDeletion: 'Eliminació del compte',
     createAccount: 'Crear compte',
     signIn: 'Iniciar sessió',
     signUpTagline: "Registra't per començar a gestionar els teus equips",
+    kicker: 'Benvingut',
+    getStarted: 'Comencem',
+    subtitle: 'Crea el teu compte o inicia sessió per continuar.',
+    poweredBy: 'Desenvolupat per',
     terms: 'En continuar, acceptes els nostres',
     termsOfService: 'Termes de servei',
     and: 'i',
@@ -60,12 +66,66 @@ export const sharedTranslations = {
     resetting: 'Restablint…',
     passwordResetTitle: 'Contrasenya restablerta!',
     passwordResetRedirecting: "Redirigint a l'inici de sessió…",
+    verifyEmailTitle: 'Verifica el teu correu',
+    verifyEmailSubtitle: 'Hem enviat un codi de 6 dígits a {email}.',
+    verificationCodePlaceholder: 'Codi de 6 dígits',
+    verificationCodeValidation: 'Introdueix els 6 dígits del codi.',
+    verifyEmailButton: 'Verificar el compte',
+    resendVerificationCode: 'Tornar a enviar el codi',
+    verificationCodeResent: "T'hem enviat un codi nou.",
+    verificationCodeResendError: "No s'ha pogut enviar un codi nou.",
+    invalidVerificationCode: 'El codi no és vàlid o ha caducat.',
+    emailNotVerified: "Has de verificar el correu abans d'iniciar sessió.",
+    emailVerified: 'Correu verificat correctament.',
+    emailVerifiedTitle: 'Compte verificat',
+    emailVerifiedSubtitle: 'Ja pots iniciar sessió amb el teu correu i contrasenya.',
     signInNow: 'Iniciar sessió ara',
     invalidResetLinkMessage: "Aquest enllaç de restabliment és invàlid o ha caducat. Si us plau, sol·licita'n un de nou.",
+    strengthTooShort: 'Massa curta',
     strengthWeak: 'Feble',
     strengthFair: 'Regular',
     strengthGood: 'Bona',
-    strengthStrong: 'Forta'
+    strengthStrong: 'Forta',
+    signInSubtitle: 'Benvingut de nou al club.',
+    signUpSubtitle: "Uneix-te al club i comença a gestionar els teus equips.",
+    passwordHint6Chars: '6+ caràcters',
+    passwordHintUppercase: '1 lletra majúscula',
+    passwordHintNumber: '1 número',
+    passwordsMatch: 'Les contrasenyes coincideixen',
+    passwordsDontMatch: 'Les contrasenyes no coincideixen',
+    dataProcessingConsent: 'Accepto que es tractin les meves dades per atendre la sol·licitud de registre.',
+    acceptLegalPrefix: 'Accepto les',
+    termsOfUse: "Condicions d'Ús",
+    legalAnd: 'i la',
+    privacyPolicy: 'Política de Privacitat'
+  },
+  clubMembers: {
+    title: 'Usuaris del club',
+    subtitle: 'Usuaris actius vinculats a aquest club.',
+    search: 'Cercar per nom o correu...',
+    empty: 'No hi ha usuaris per mostrar.',
+    emptyDescription: 'Els usuaris del club apareixeran aquí.',
+    role: 'Rol',
+    team: 'Equip',
+    selectTeam: 'Seleccionar equip',
+    status: 'Estat',
+    active: 'Actiu',
+    pending: 'Pendent',
+    actions: "Accions de l'usuari",
+    assignRole: 'Assignar un rol nou',
+    assignAdmin: 'Assignar com a administrador',
+    assignCoach: 'Assignar com a entrenador',
+    deactivateUser: 'Donar de baixa del club',
+    deactivateConfirm: 'Vols donar de baixa {name}? Perdrà tots els rols en aquest club.',
+    deactivateSuccess: "L'usuari s'ha donat de baixa del club.",
+    deactivateError: "No s'ha pogut donar de baixa l'usuari.",
+    currentRoles: 'Rols actuals',
+    pagination: 'Paginació d\'usuaris',
+    previousPage: 'Anterior',
+    nextPage: 'Següent',
+    pageStatus: 'Pàgina {current} de {total}',
+    roleAssigned: 'El rol nou s’ha assignat correctament.',
+    roleAssignError: 'No s’ha pogut assignar el rol nou.'
   },
   common: {
     loading: 'Carregant...',
@@ -78,7 +138,10 @@ export const sharedTranslations = {
     delete: 'Eliminar',
     edit: 'Editar',
     back: 'Tornar',
+    menu: 'Menú',
     next: 'Següent',
+    previous: 'Anterior',
+    page: 'Pàgina',
     submit: 'Enviar',
     close: 'Tancar',
     submitting: 'Enviant...',
@@ -129,8 +192,11 @@ export const sharedTranslations = {
     becomeMember: 'Fer-se soci'
   },
   settings: {
+    legal: 'Informació legal',
+    legalDescription: 'Consulta les condicions, la privacitat i com exercir els teus drets.',
     title: 'Configuració',
     language: 'Idioma',
+    languageDescription: 'Idioma de l\'aplicació',
     selectLanguage: 'Seleccionar idioma',
     english: 'Anglès',
     spanish: 'Espanyol',
@@ -153,10 +219,19 @@ export const sharedTranslations = {
     lastName: 'Cognom',
     saveChanges: 'Desar canvis',
     saving: 'Desant...',
-    profileUpdated: 'Perfil actualitzat correctament'
+    profileUpdated: 'Perfil actualitzat correctament',
+    deleteAccount: 'Eliminar el compte',
+    deleteAccountDescription: "Desactiva l'accés, elimina les sessions i anonimitza les dades personals. Aquesta acció no es pot desfer.",
+    deleteAccountWarning: 'Es tancarà la sessió i es desactivaran totes les relacions amb els clubs.',
+    confirmWithPassword: 'Confirma amb la contrasenya actual',
+    confirmDeleteAccount: 'Eliminar definitivament',
+    deletingAccount: 'Eliminant el compte…',
+    accountDeleted: "El teu compte s'ha eliminat correctament.",
+    deleteAccountError: "No s'ha pogut eliminar el compte."
   },  validation: {
     required: 'Aquest camp és obligatori',
     invalidEmail: 'Adreça de correu invàlida',
+    invalidIban: 'IBAN invàlid',
     minLength: 'Es requereixen mínim {min} caràcters',
     maxLength: 'Màxim {max} caràcters permesos',
     passwordMismatch: 'Les contrasenyes no coincideixen',
@@ -166,6 +241,7 @@ export const sharedTranslations = {
     birthDateRequired: 'La data de naixement és obligatòria',
     birthDateInvalid: 'Format de data invàlid. Utilitza DD/MM/AAAA',
     birthDateFuture: 'La data de naixement no pot ser futura',
+    minimumRegistrationAge: 'Has de tenir almenys 14 anys per crear un compte',
     confirmPasswordRequired: 'Si us plau confirma la teva contrasenya',
     emailRequired: 'El correu electrònic és obligatori',
     emailInvalid: 'Si us plau introdueix un correu vàlid',
@@ -300,7 +376,14 @@ export const sharedTranslations = {
           contentPlaceholder: 'Contingut de la secció...',
           iconPlaceholder: 'Tria un icona...',
           titleRequired: 'El títol és obligatori.',
-          contentRequired: 'El contingut és obligatori.'
+          contentRequired: 'El contingut és obligatori.',
+          editor: {
+            bold: 'Negreta',
+            italic: 'Cursiva',
+            orderedList: 'Llista numerada',
+            bulletList: 'Llista amb pics',
+            link: 'Inserir enllaç'
+          }
         }
       },
       forms: {
@@ -376,8 +459,8 @@ export const sharedTranslations = {
       title: 'Paràmetres',
     },
     forms: {
-      selected: 'seleccionats',
       export: 'Exportar',
+      responses: 'respostes',
       assign: 'Assignar',
       clearFilters: 'Netejar',
       searchPlaceholder: 'Cercar formularis...',
@@ -406,7 +489,20 @@ export const sharedTranslations = {
         loadError: 'No s\'ha pogut carregar la configuració d\'exportació. Torna-ho a intentar.',
         selectOne: 'Selecciona un formulari per configurar-ne l\'exportació.',
         atLeastOne: 'Activa almenys una columna.',
-        headerRequired: 'Les columnes actives necessiten un nom.'
+        headerRequired: 'Les columnes actives necessiten un nom.',
+        preview: 'Previsualització del CSV',
+        searchColumn: 'Cerca una columna...',
+        noColumnsFound: 'Cap columna coincideix amb la cerca.'
+      },
+      exportWizard: {
+        next: 'Següent',
+        editColumns: 'Editar columnes',
+        destinationTitle: 'On ho vols enviar?',
+        destinationHelp: 'S\'ha guardat la configuració de columnes. Tria on han d\'anar les respostes.',
+        destinationSheets: 'Google Sheets',
+        destinationSheetsDescription: 'Mantén un full de càlcul sincronitzat amb les noves respostes.',
+        destinationCsv: 'Descarregar CSV',
+        destinationCsvDescription: 'Obtén un fitxer amb les respostes rebudes fins ara.'
       },
       integrations: {
         title: 'Integracions',
@@ -454,14 +550,12 @@ export const sharedTranslations = {
         deleteError: 'No s\'ha pogut eliminar la integració. Torna-ho a intentar.'
       },
       columns: {
-        id: 'ID',
         name: 'Nom',
         action: 'Acció',
         status: 'Estat',
         submissions: 'Enviaments',
         createdAt: 'Creat',
-        fromDate: 'Des de',
-        toDate: 'Fins a'
+        period: 'Període'
       },
       submissionTable: {
         columns: {
@@ -507,6 +601,24 @@ export const sharedTranslations = {
         'register-player': 'Registrar jugador',
         'become-member': 'Fer-se soci'
       },
+      groups: {
+        registerPlayer: 'Registre de jugadors',
+        becomeMember: 'Alta de soci',
+        general: 'Formularis generals',
+        count: '{count} formularis',
+        countOne: '{count} formulari'
+      },
+      typePicker: {
+        title: 'Nou formulari',
+        subtitle: 'Tria de quin tipus. El tipus determina a on va la resposta i els camps que venen predefinits.',
+        registerPlayerTitle: 'Registrar jugador',
+        registerPlayerDescription: "Alta d'un jugador nou al club. La resposta crea la fitxa a Membres.",
+        becomeMemberTitle: 'Fer-se soci',
+        becomeMemberDescription: 'Sol·licitud per ser soci del club. Es vincula al pagament de la quota.',
+        generalTitle: 'Formulari general',
+        generalDescription: 'Autoritzacions, inscripcions puntuals, enquestes… Camps a mida.'
+      },
+      type: 'Tipus',
       fields: {
         name: 'Nom',
         namePlaceholder: 'Introdueix el nom del formulari',
@@ -563,58 +675,24 @@ export const sharedTranslations = {
         noFields: 'Encara no s\'han afegit camps.'
       },
        formInvalid: 'Corregeix els errors de validació abans de desar',
+    },
+    settingsNews: {
+      addNews: 'Nova notícia',
+      filters: {
+        all: 'Totes',
+        published: 'Publicades',
+        draft: 'Esborranys'
+      },
+      status: {
+        published: 'Publicada',
+        draft: 'Esborrany'
+      },
+      empty: 'Encara no hi ha notícies',
+      emptyDescription: 'Crea la teva primera notícia per començar.',
+      actions: 'Accions'
     }
   },
   forms: {
-    list: {
-      title: 'Formularis',
-      description: 'Omple els formularis disponibles del teu club',
-      empty: 'No hi ha formularis disponibles',
-      emptyDescription: 'No hi ha formularis actius en aquest moment. Torna més tard.'
-    },
-    submit: {
-      success: 'Formulari enviat correctament!'
-    },
-    status: {
-      draft: 'Esborrany',
-      active: 'Actiu',
-      closed: 'Tancat'
-    },
-    actions: {
-      none: 'Cap',
-      register_user: 'Registrar usuari',
-      create_payment: 'Crear pagament',
-      trigger_workflow: 'Activar flux de treball'
-    },
-    fieldTypes: {
-      text: 'Text',
-      number: 'Número',
-      date: 'Data',
-      select: 'Selecció',
-      checkbox: 'Casella'
-    },
-    submissionStatus: {
-      draft: 'Esborrany',
-      submitted: 'Enviat'
-    },
-    fields: {
-      name: 'Nom',
-      namePlaceholder: 'Introdueix el nom del formulari',
-      description: 'Descripció',
-      descriptionPlaceholder: 'Introdueix una descripció (opcional)',
-      fromDate: 'Data d\'inici',
-      toDate: 'Data de fi',
-      action: 'Acció',
-      actionPlaceholder: 'Seleccionar acció',
-      key: 'Clau del camp',
-      keyPlaceholder: 'p.ex. nom',
-      label: 'Etiqueta',
-      labelPlaceholder: 'Introdueix l\'etiqueta del camp',
-      type: 'Tipus',
-      order: 'Ordre',
-      maxLength: 'Longitud màxima',
-      isRequired: 'Camp obligatori'
-    },
     admin: {
       title: 'Gestió de formularis',
       createForm: 'Crear formulari',
@@ -646,13 +724,6 @@ export const sharedTranslations = {
         total: 'Total'
       }
     },
-    errors: {
-      loadError: 'No s\'han pogut carregar els formularis. Torna-ho a intentar.',
-      submitError: 'No s\'ha pogut enviar el formulari. Torna-ho a intentar.',
-      createError: 'No s\'ha pogut crear el formulari. Torna-ho a intentar.',
-      updateError: 'No s\'ha pogut actualitzar el formulari. Torna-ho a intentar.',
-      addFieldError: 'No s\'ha pogut afegir el camp. Torna-ho a intentar.'
-    }
   },
   modals: {
     player: {
@@ -686,7 +757,15 @@ export const sharedTranslations = {
     pendingRequest: 'sol·licitud pendent',
     pendingRequests: 'sol·licituds pendents',
     reviewComment: 'Comentari',
-    reviewCommentPlaceholder: 'Afegeix un comentari (opcional)'
+    reviewCommentPlaceholder: 'Afegeix un comentari (opcional)',
+    markAllAsRead: 'Marcar totes com a llegides',
+    today: 'Avui',
+    yesterday: 'Ahir',
+    thisWeek: 'Aquesta setmana',
+    older: 'Anteriors',
+    empty: 'Encara no tens notificacions',
+    emptyDescription: 'Estàs al dia. Les noves notificacions apareixeran aquí.',
+    loadError: 'No s\'han pogut carregar les notificacions. Estira cap avall per tornar-ho a provar.'
   },
   user: {
     title: 'Portal de l\'observador',
@@ -699,7 +778,7 @@ export const sharedTranslations = {
       information: 'Informació',
       proposals: 'Propostes i queixes',
       matches: 'Partits',
-      sponsors: 'Patrocinadors i col·laboradors',
+      sponsors: 'Patrocinadors',
       contact: 'Contactar',
       forms: 'Formularis',
       more: 'Més'
@@ -718,7 +797,22 @@ export const sharedTranslations = {
     },
     home: {
       welcome: 'Benvingut al club!',
-      description: 'Aquí pots accedir a tots els serveis del club i mantenir-te actualitzat amb les últimes notícies i esdeveniments.'
+      description: 'Aquí pots accedir a tots els serveis del club i mantenir-te actualitzat amb les últimes notícies i esdeveniments.',
+      greetingMorning: 'Bon dia, {name}! ',
+      greetingAfternoon: 'Bona tarda, {name}! ',
+      greetingEvening: 'Bona nit, {name}! ',
+      greetingSubtitle: 'Tot el que passa al club, en un sol lloc.',
+      latestForm: 'Últim formulari',
+      seeAllForms: 'Veure tots',
+      vs: 'vs',
+      featuredNews: 'Notícies destacades',
+      seeAllNews: 'Veure totes',
+      upcomingMatches: 'Pròxims partits',
+      seeAllMatches: 'Veure tots',
+      noLatestForm: 'No hi ha formularis disponibles',
+      noNews: 'Encara no hi ha notícies',
+      noUpcomingMatches: 'No hi ha més partits programats',
+      clubBadge: 'CLUB'
     },
     news: {
       title: 'Notícies',
@@ -782,6 +876,10 @@ export const sharedTranslations = {
       openLink: 'Obrir enllaç',
       openForm: 'Obrir formulari',
       loadMore: 'Carregar-ne més',
+      share: 'Compartir',
+      linkCopied: 'Enllaç copiat al porta-retalls',
+      shareFailed: 'No s\'ha pogut compartir aquesta notícia',
+      relatedTitle: 'Següent notícia',
     },
     action: {
       registerPlayer: 'Registrar un jugador',
@@ -867,7 +965,12 @@ export const sharedTranslations = {
         rejectionFeedback: 'Comentari del coordinador',
         viewHistory: 'Veure historial',
         commentHistory: 'Historial de comentaris'
-      }
+      },
+      status: {
+        closed: 'Tancat'
+      },
+      sentStatus: 'Enviat',
+      pendingLabel: 'Pendent'
     },
     information: {
       title: 'Informació',
@@ -946,11 +1049,7 @@ export const sharedTranslations = {
     sponsorSubtitle: 'Explica\'ns com t\'agradaria col·laborar amb el club.',
     generalType: 'Contacte',
     sponsorType: 'Patrocini',
-    asideTitle: 'El teu missatge arriba directament a coordinació',
-    asideDescription: 'Descriu la consulta amb el màxim context possible perquè el club pugui revisar-la i respondre amb agilitat.',
     privacyNote: 'Les teves dades s\'utilitzaran només per respondre aquest missatge dins del club.',
-    yourDetails: 'Les teves dades',
-    messageDetails: 'Missatge',
     responseHint: 'Coordinació revisarà el teu missatge tan aviat com sigui possible.',
     name: 'Nom',
     namePlaceholder: 'El teu nom i cognoms',
@@ -966,7 +1065,8 @@ export const sharedTranslations = {
     sent: 'Missatge enviat',
     error: 'No s\'ha pogut enviar el missatge',
     thanksTitle: 'Gràcies per contactar',
-    thanksDescription: 'L\'equip de coordinació ha rebut el teu missatge i el revisarà aviat.'
+    thanksDescription: 'L\'equip de coordinació ha rebut el teu missatge i el revisarà aviat.',
+    backToHome: 'Tornar a l\'inici'
   },
   contactMessages: {
     title: 'Safata de coordinació',

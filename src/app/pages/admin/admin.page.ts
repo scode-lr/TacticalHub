@@ -1,12 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  RouterModule,
-  ActivatedRoute,
-  Router,
-  NavigationEnd,
-} from '@angular/router';
-import { IonContent } from '@ionic/angular/standalone';
+import { Router, NavigationEnd } from '@angular/router';
+import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
 import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleType, Role } from '@core/models/role.model';
@@ -15,6 +10,52 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 
+export const ADMIN_MENU_CONFIG: MenuConfig = {
+  role: RoleType.Admin,
+  items: [
+    {
+      id: 'home',
+      label: 'admin.menu.home',
+      icon: 'home-outline',
+      route: 'home',
+    },
+    { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
+    {
+      id: 'notifications',
+      label: 'admin.menu.notifications',
+      icon: 'notifications-outline',
+      route: 'notifications',
+    },
+    {
+      id: 'forms-submissions',
+      label: 'admin.menu.forms',
+      icon: 'document-text-outline',
+      route: 'forms-submissions',
+    },
+    { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
+    {
+      id: 'settings-club',
+      label: 'admin.menu.settings',
+      icon: 'settings-outline',
+      route: 'settings-club',
+      description: 'admin.description.settings',
+    },
+    // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
+    // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
+    // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
+    // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
+    {
+      id: 'users',
+      label: 'admin.menu.users',
+      icon: 'person-outline',
+      route: 'users',
+      description: 'admin.description.users',
+    }
+  ],
+  // moreItems: [
+  // ],
+};
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.page.html',
@@ -22,8 +63,8 @@ import { UserService } from '@core/services/user.service';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     IonContent,
+    IonRouterOutlet,
     MenuComponent,
     UserHeaderComponent,
   ],
@@ -36,48 +77,19 @@ export class AdminPage implements OnInit {
   readonly memberId = signal<string>('');
   readonly currentRole = signal<Role | null>(null);
 
-  readonly adminMenuConfig: MenuConfig = {
-    role: RoleType.Admin,
-    items: [
-      {
-        id: 'home',
-        label: 'admin.menu.home',
-        icon: 'home-outline',
-        route: 'home',
-      },
-      { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
-      {
-        id: 'notifications',
-        label: 'admin.menu.notifications',
-        icon: 'notifications-outline',
-        route: 'notifications',
-      },
-      {
-        id: 'forms-submissions',
-        label: 'admin.menu.forms',
-        icon: 'document-text-outline',
-        route: 'forms-submissions',
-      },
-      { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
-      {
-        id: 'settings-club',
-        label: 'admin.menu.settings',
-        icon: 'settings-outline',
-        route: 'settings-club',
-      },
-      // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
-      // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
-      // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
-      // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
-      // { id: 'users', label: 'admin.menu.users', icon: 'person-outline', route: 'users' },
-    ],
-  };
+  readonly adminMenuConfig = ADMIN_MENU_CONFIG;
 
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     const url = this.router.url;
+
     if (this.isDetailPage()) {
+      // Notifications are opened from the header/menu, so their back action
+      // must use browser history instead of navigating to the same route.
+      if (url.includes('/notifications')) {
+        return '';
+      }
       if (url.includes('/news')) {
         return `app/${roleType}/${roleId}/news`;
       }
@@ -144,8 +156,8 @@ export class AdminPage implements OnInit {
       url.includes('/settings-forms') ||
       (url.includes('/forms-submissions/') && url.split('/').length > 5) ||
       url.includes('/settings-club/sponsors') ||
-      url.includes('/contact');
-    console.log('isDetail', isDetail, 'url', url);
+      url.includes('/contact') ||
+      url.includes('/notifications');
     this.isDetailPage.set(isDetail);
   }
 
@@ -154,7 +166,12 @@ export class AdminPage implements OnInit {
     this.currentRole.set(role);
   }
 
-  goBack() {
+  goBack(): void {
+    if (this.router.url.includes('/notifications')) {
+      this.navigationService.goBack();
+      return;
+    }
+
     this.navigationService.navigateTo([this.backUrl()]);
   }
 }

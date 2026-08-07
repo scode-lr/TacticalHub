@@ -94,11 +94,11 @@
             <p class="section-description">{{ 'joinTeam.teamDescription' | translate }}</p>
             
             <div class="team-cards">
-              @for (team of availableTeams(); track team.id) {
+              @for (team of availableTeams(); track team.teamSeasonId ?? team.id) {
                 <div 
                   class="team-card" 
-                  [class.selected]="selectedTeam() === team.id"
-                  (click)="selectTeam(team.id)"
+                  [class.selected]="selectedTeam() === (team.teamSeasonId ?? 0)"
+                  (click)="selectTeam(team.teamSeasonId ?? 0)"
                 >
                   <h3>{{ team.name }} {{ team.squadCode }}</h3>
                 </div>

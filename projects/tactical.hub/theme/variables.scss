@@ -142,3 +142,25 @@
   --border-radius: 12px;
   --box-shadow: 0 4px 12px rgba(50, 215, 75, 0.3);
 }
+
+// Auth screens redesign (welcome / sign in / sign up) — design tokens
+// Same names as projects/voltregacf.hub/theme/variables.scss, wired to this
+// club's existing colors so the new auth layout keeps TacticalHub's palette.
+:root {
+  --color-bg: var(--background-primary);
+  --color-surface: var(--background-secondary);
+  --color-divider: var(--border-light);
+  --color-panel-bg: linear-gradient(160deg, var(--background-secondary) 0%, var(--background-primary) 100%);
+  --color-welcome-bg: linear-gradient(180deg, var(--background-secondary) 0%, var(--background-primary) 100%);
+  --color-header-bg: color-mix(in srgb, var(--ion-color-primary-shade) 14%, var(--background-primary));
+
+  --color-accent: var(--ion-color-primary-shade);
+  --color-accent-hover: var(--ion-color-primary-shade);
+
+  --color-primary: var(--button-primary-color);
+  --color-primary-contrast: var(--ion-color-primary-contrast);
+  --color-primary-hover: var(--ion-color-primary-shade);
+  --color-primary-active: var(--ion-color-primary-shade);
+
+  --font-heading: inherit;
+}

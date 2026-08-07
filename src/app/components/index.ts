@@ -11,3 +11,4 @@ export { FormSubmissionCardComponent } from './form-submission-card/form-submiss
 export { EmptyStateComponent } from './empty-state/empty-state.component';
 export { SponsorDetailComponent } from './sponsor-detail/sponsor-detail.component';
 export { SubmissionDetailViewComponent } from './submission-detail-view/submission-detail-view.component';
+export { FormsGroupSectionComponent } from './forms-group-section/forms-group-section.component';

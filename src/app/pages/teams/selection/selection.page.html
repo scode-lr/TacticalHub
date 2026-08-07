@@ -1,6 +1,4 @@
 <div class="role-selection-page">
-  <app-user-header [showRoleSelector]="false"></app-user-header>
-
   <ion-content class="clubs-content">
     <div class="clubs-container">
       <div class="page-title">
@@ -16,8 +14,10 @@
         @for (role of pendingRoles(); track role.id) {
           <app-role-card [role]="role" (cardClicked)="selectRole(role)"></app-role-card>
         }
-        
-        <app-role-card [isAddCard]="true" (cardClicked)="addNewClub()"></app-role-card>
+
+        @if (!isPrivateApp) {
+          <app-role-card [isAddCard]="true" (cardClicked)="addNewClub()"></app-role-card>
+        }
       </div>
 
       @if (!hasActiveRoles() && !isPrivateApp && !hasPendingRoles()) {

@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5f1">
+  <meta name="robots" content="index, follow">
+  <title>Política de privacitat | Tactical Hub – Voltregà CF</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #201e1d;
+      --muted: #6d6862;
+      --paper: #f7f5f1;
+      --surface: #edeae3;
+      --surface-soft: #fcfbf8;
+      --line: #d8d3ca;
+      --gold: #ffd700;
+      --gold-hover: #f2ca00;
+      --gold-active: #dcb600;
+      --gold-deep: #8a6a06;
+      --focus: #7a5a06;
+      --font: "Figtree", "Avenir Next", Avenir, system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 8% 5%, rgba(255, 215, 0, .13), transparent 24rem),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.68;
+    }
+
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 20;
+      top: .75rem;
+      left: .75rem;
+      padding: .65rem 1rem;
+      background: var(--gold);
+      border: 2px solid var(--gold-deep);
+      border-radius: 999px;
+      font-weight: 700;
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .reading-progress {
+      position: fixed;
+      z-index: 15;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+      background: var(--gold);
+    }
+
+    .masthead {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #faf6ec, #f1e6c9);
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+    }
+    .masthead::after {
+      content: "";
+      position: absolute;
+      width: 30rem;
+      height: 30rem;
+      right: -11rem;
+      bottom: -20rem;
+      background: rgba(255, 215, 0, .18);
+      border-radius: 43% 57% 62% 38% / 45% 40% 60% 55%;
+      transform: rotate(-12deg);
+      pointer-events: none;
+    }
+    .toolbar, .hero, .layout, .page-footer__inner {
+      width: min(1180px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+    .toolbar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid rgba(32, 30, 29, .12);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      color: var(--ink);
+      font: 700 .88rem/1 var(--font);
+      letter-spacing: .035em;
+    }
+    .brand img { width: 52px; height: 52px; object-fit: contain; }
+    .controls { display: flex; align-items: center; gap: .65rem; }
+    .language-switcher {
+      display: flex;
+      gap: .25rem;
+      padding: .25rem;
+      background: rgba(255, 255, 255, .45);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+    }
+    .language-switcher button, .print-button {
+      border: 0;
+      cursor: pointer;
+      font: 700 .75rem/1 var(--font);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .language-switcher button {
+      min-width: 2.5rem;
+      padding: .58rem .7rem;
+      color: var(--muted);
+      background: transparent;
+      border-radius: 999px;
+    }
+    .language-switcher button:hover { color: var(--ink); }
+    .language-switcher button[aria-pressed="true"] { background: var(--gold); color: var(--ink); }
+    .print-button {
+      padding: .72rem 1rem;
+      color: var(--ink);
+      background: var(--gold);
+      border-radius: 999px;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .print-button:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .print-button:active { background: var(--gold-active); transform: translateY(0); }
+    .hero { position: relative; z-index: 1; padding: clamp(3rem, 7vw, 6rem) 0 clamp(3rem, 6vw, 5rem); }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin: 0 0 1rem;
+      color: var(--gold-deep);
+      font: 700 .78rem/1.2 var(--font);
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 2.5rem; height: 3px; background: var(--gold); }
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font: 700 clamp(2.6rem, 6vw, 5.25rem)/1 var(--font);
+      letter-spacing: -.04em;
+    }
+    .updated {
+      display: inline-block;
+      margin: 1.75rem 0 0;
+      padding: .55rem .85rem;
+      color: var(--muted);
+      background: rgba(237, 234, 227, .78);
+      border: 1px solid rgba(32, 30, 29, .08);
+      border-radius: 999px;
+      font: 600 .78rem/1.2 var(--font);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 780px);
+      justify-content: space-between;
+      gap: clamp(2rem, 6vw, 6rem);
+      padding-block: clamp(2.5rem, 6vw, 5rem);
+    }
+    .toc {
+      align-self: start;
+      position: sticky;
+      top: 1.5rem;
+      padding: 1.35rem;
+      background: var(--surface);
+      border: 1px solid rgba(32, 30, 29, .06);
+      border-radius: 22px;
+    }
+    .toc__title {
+      margin: 0 0 1rem;
+      color: var(--gold-deep);
+      font: 700 .75rem/1.2 var(--font);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .toc ol {
+      max-height: calc(100vh - 7rem);
+      overflow: auto;
+      margin: 0;
+      padding: 0 0 0 1.75rem;
+      border-left: 2px solid rgba(255, 215, 0, .7);
+      font: 600 .8rem/1.35 var(--font);
+    }
+    .toc li { padding: .34rem 0 .34rem .15rem; color: var(--muted); }
+    .toc a { text-decoration: none; }
+    .toc a:hover { color: var(--gold-deep); text-decoration: underline; text-underline-offset: .2em; }
+
+    article { min-width: 0; }
+    .lead {
+      margin: 0 0 3rem;
+      padding: 1.5rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--gold);
+      border-radius: 0 18px 18px 0;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      font-weight: 500;
+      line-height: 1.55;
+    }
+    section { scroll-margin-top: 2rem; padding: 0 0 3rem; margin: 0 0 3rem; border-bottom: 1px solid var(--line); }
+    section:last-child { border-bottom: 0; }
+    h2 {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: .75rem;
+      align-items: start;
+      margin: 0 0 1.5rem;
+      font: 700 clamp(1.55rem, 3vw, 2.15rem)/1.15 var(--font);
+      letter-spacing: -.025em;
+    }
+    h2 .number {
+      padding-top: .45rem;
+      color: var(--muted);
+      font: 700 .72rem/1 var(--font);
+      letter-spacing: .1em;
+    }
+    h3 { margin: 2rem 0 .55rem; font: 700 1.02rem/1.3 var(--font); }
+    p { margin: 0 0 1rem; }
+    ul { margin: .5rem 0 1.25rem; padding-left: 1.4rem; }
+    li { margin: .32rem 0; }
+    li::marker { color: var(--gold-deep); }
+    .identity-card, .note {
+      margin: 1.5rem 0;
+      padding: 1.35rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+    .identity-card p:last-child, .note p:last-child { margin-bottom: 0; }
+    .identity-card strong { font-family: var(--font); font-size: .88rem; }
+    .email {
+      color: var(--gold-deep);
+      text-decoration-color: var(--gold-deep);
+      text-decoration-thickness: 2px;
+      text-underline-offset: .2em;
+      overflow-wrap: anywhere;
+    }
+    .table-wrap { overflow-x: auto; margin: 1.5rem 0; border: 1px solid var(--line); border-radius: 18px; background: var(--surface-soft); }
+    table { width: 100%; border-collapse: collapse; font-size: .94rem; line-height: 1.45; }
+    th, td { padding: .8rem 1rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { background: var(--gold); color: var(--ink); font: 700 .77rem/1.2 var(--font); letter-spacing: .06em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    .page-footer { background: var(--surface); color: var(--muted); border-top: 1px solid var(--line); }
+    .page-footer__inner { display: flex; justify-content: space-between; gap: 1rem; padding-block: 2rem; font: 600 .8rem/1.5 var(--font); }
+    .page-footer p { margin: 0; }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 850px) {
+      body { font-size: 16px; }
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static; padding: 1.25rem; }
+      .toc ol { max-height: none; columns: 2; }
+    }
+    @media (max-width: 580px) {
+      .toolbar { align-items: flex-start; padding-block: .75rem; }
+      .brand span, .print-button { display: none; }
+      .hero { padding-top: 3rem; }
+      h2 { grid-template-columns: 2.35rem 1fr; }
+      .toc ol { max-height: 18rem; overflow-y: auto; columns: unset; padding-right: .5rem; }
+      .page-footer__inner { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      body { background: #fff; color: #000; font-size: 11pt; }
+      .reading-progress, .controls, .skip-link, .toc { display: none !important; }
+      .masthead { color: #000; background: #fff; border-bottom: 2px solid #000; }
+      .toolbar { border-bottom: 1px solid #aaa; }
+      .hero { padding: 2rem 0; }
+      h1 { font-size: 30pt; }
+      .updated { border: 1px solid #000; background: #fff; border-radius: 0; }
+      .layout { display: block; width: 100%; padding: 2rem 0; }
+      article { width: 100%; }
+      section { break-inside: avoid; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+      .identity-card, .note { box-shadow: none; }
+      .page-footer { color: #000; background: #fff; border-top: 1px solid #000; }
+    }
+
+    /* Plain legal-page layout aligned with the app. */
+    body {
+      background: #f7f5f1;
+      color: #201e1d;
+      line-height: 1.6;
+    }
+    .skip-link, .reading-progress, .toolbar, .eyebrow, .updated, .toc, .page-footer {
+      display: none !important;
+    }
+    .masthead {
+      overflow: visible;
+      background: transparent;
+      border: 0;
+    }
+    .hero, .layout {
+      display: block;
+      width: min(720px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+    .hero { padding: 1.5rem 0 0.5rem; }
+    .back-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #edeae3;
+      color: #201e1d;
+      cursor: pointer;
+      font: 600 1.35rem/1 system-ui, sans-serif;
+    }
+    .back-button:hover { background: #e2ded6; }
+    h1 {
+      margin: 1.5rem 0 0;
+      font-size: clamp(1.8rem, 6vw, 2.25rem);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .layout { padding: 0.75rem 0 3rem; }
+    .lead {
+      margin: 0 0 1rem;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: inherit;
+    }
+    section {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    h2 {
+      display: block;
+      margin: 2rem 0 0.5rem;
+      font-size: 1.15rem;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h2 .number { display: none; }
+    h3 { margin: 1.25rem 0 0.5rem; font-size: 1rem; }
+    p { margin: 0 0 1rem; }
+    .identity-card, .note {
+      margin: 0 0 1rem;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+    .table-wrap {
+      margin: 1rem 0;
+      overflow-x: auto;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+    th { background: #edeae3; color: #201e1d; }
+    .email, article a { color: #6f5700; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#policy-content" data-ui="skip">Ves al contingut</a>
+  <div class="reading-progress" aria-hidden="true"></div>
+
+  <header class="masthead">
+    <div class="toolbar">
+      <div class="brand">
+        <img src="assets/icon/logo.svg" alt="" width="42" height="42">
+        <span>Voltregà CF · Tactical Hub</span>
+      </div>
+      <div class="controls">
+        <div class="language-switcher" role="group" aria-label="Idioma" data-ui-label="language">
+          <button type="button" data-lang="ca" aria-pressed="true" lang="ca">CA</button>
+          <button type="button" data-lang="es" aria-pressed="false" lang="es">ES</button>
+          <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        </div>
+        <button class="print-button" type="button" data-ui="print">Imprimeix</button>
+      </div>
+    </div>
+    <div class="hero">
+      <button class="back-button" type="button" aria-label="Tornar enrere" onclick="if (history.length > 1) { history.back(); } else if (window.opener) { window.close(); } else { location.href='./'; }">←</button>
+      <p class="eyebrow" data-ui="eyebrow">Informació legal</p>
+      <h1 data-ui="title">Política de privacitat</h1>
+      <p class="updated" data-ui="updated">Última actualització: 5 d’agost de 2026</p>
+    </div>
+  </header>
+
+  <main class="layout" id="policy-content" tabindex="-1">
+    <nav class="toc" aria-label="Índex" data-toc></nav>
+
+    <article lang="ca" data-policy="ca">
+      <p class="lead">Aquesta Política de Privacitat explica com es tracten les dades personals de les persones que utilitzen l’aplicació Tactical Hub – Voltregà CF, d’ara endavant, l’«Aplicació».</p>
+
+      <section><h2><span class="number">01</span>Responsable del tractament</h2>
+        <p>El responsable del tractament de les dades és:</p>
+        <div class="identity-card"><p><strong>Entitat:</strong> Club Futbol Voltregà<br><strong>NIF:</strong> G-59860163<br><strong>Domicili:</strong> C/ de la Vinya, s/n · 08512 Sant Hipòlit de Voltregà<br><strong>Correu electrònic de privacitat:</strong> <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a></p></div>
+        <p>El responsable determina les finalitats per a les quals s’utilitzen les dades, els formularis disponibles, els permisos dels usuaris i els terminis de conservació aplicables.</p>
+        <p>L’Aplicació utilitza la plataforma tecnològica Tactical Hub, desenvolupada i gestionada per:</p>
+        <div class="identity-card"><p><strong>Plataforma i prestador tecnològic:</strong> Tactical Hub<br><strong>Contacte tècnic de privacitat:</strong> <a class="email" href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a></p></div>
+        <p>Tactical Hub actua com a proveïdor tecnològic i encarregat del tractament, processant les dades seguint les instruccions del club.</p>
+      </section>
+
+      <section><h2><span class="number">02</span>A qui s’aplica aquesta política</h2>
+        <p>Aquesta política s’aplica a administradors, coordinadors, entrenadors, jugadors, socis, pares, mares, tutors, aficionats i altres persones que creïn un compte o utilitzin l’Aplicació.</p>
+        <p>No està permès crear un compte a menors de 14 anys.</p>
+        <p>Els usuaris d’entre 14 i 17 anys poden utilitzar les funcionalitats bàsiques de l’Aplicació. Els formularis que incloguin domiciliacions, DNI, IBAN, inscripcions o autoritzacions que requereixin intervenció adulta hauran de ser emplenats per una persona major d’edat.</p>
+      </section>
+
+      <section><h2><span class="number">03</span>Dades que es poden tractar</h2>
+        <p>Depenent de les funcionalitats utilitzades, l’Aplicació pot tractar les categories de dades següents.</p>
+        <h3>Dades de compte i perfil</h3><ul><li>Nom i cognoms.</li><li>Adreça de correu electrònic.</li><li>Data de naixement.</li><li>Telèfon, quan es faciliti.</li><li>Fotografia de perfil, quan es faciliti.</li><li>Número de soci.</li><li>Equip o categoria.</li><li>Rol i permisos dins de l’Aplicació.</li><li>Contrasenya emmagatzemada de manera no reversible mitjançant BCrypt.</li></ul>
+        <h3>Dades esportives i organitzatives</h3><ul><li>Equip.</li><li>Categoria.</li><li>Dorsal.</li><li>Posició.</li><li>Relació amb el club.</li><li>Informació administrativa vinculada a jugadors o socis.</li></ul>
+        <p>No es tracten inicialment dades mèdiques, lesions, al·lèrgies ni valoracions esportives internes.</p>
+        <h3>Dades incloses en formularis</h3><p>Els formularis creats pel club poden sol·licitar:</p><ul><li>Dades identificatives.</li><li>Dades d’inscripció o afiliació.</li><li>Número de DNI.</li><li>IBAN per gestionar domiciliacions.</li><li>Signatura.</li><li>Autoritzacions.</li><li>Consentiment per a l’ús d’imatges.</li><li>Respostes escrites per l’usuari.</li></ul>
+        <p>El DNI i l’IBAN només s’hauran de sol·licitar en tràmits que realment els necessitin.</p><p>L’Aplicació no processa directament pagaments. Quan un formulari inclou un IBAN, aquest s’utilitza perquè l’administració del club gestioni posteriorment la domiciliació bancària.</p>
+        <h3>Comunicacions</h3><p>Es poden tractar els missatges enviats per l’usuari mitjançant el canal de contacte amb l’administració del club.</p><p>El canal de contacte permet introduir text, però no adjuntar arxius. Es recomana no incloure informació mèdica, bancària o especialment sensible llevat que sigui imprescindible per resoldre la consulta.</p>
+        <h3>Imatges i contingut</h3><p>Es poden tractar:</p><ul><li>Fotografies de perfil.</li><li>Imatges incloses en notícies.</li><li>Logotips i escuts.</li><li>Fotografies de persones o menors quan existeixi l’autorització corresponent.</li></ul>
+        <h3>Dades tècniques</h3><p>Per garantir el funcionament i la seguretat del servei es poden tractar:</p><ul><li>Data i hora d’accés.</li><li>Registres d’errors.</li><li>Informació tècnica sobre el funcionament del servei.</li><li>Volum d’ús de la infraestructura.</li><li>Tokens tècnics de Firebase necessaris per enviar notificacions.</li></ul>
+        <p>Actualment no s’utilitza Firebase Analytics, Firebase Authentication ni Crashlytics.</p><p>No es recull la ubicació del dispositiu ni s’utilitzen les dades amb finalitats de publicitat comportamental.</p>
+      </section>
+
+      <section><h2><span class="number">04</span>Finalitats i bases jurídiques</h2>
+        <h3>Creació i gestió del compte</h3><p>Les dades del compte s’utilitzen per:</p><ul><li>Registrar l’usuari.</li><li>Permetre l’accés a l’Aplicació.</li><li>Gestionar el seu perfil i permisos.</li><li>Facilitar els serveis digitals oferts pel club.</li></ul><p>La base jurídica és l’execució de les condicions d’ús acceptades per l’usuari i la prestació del servei sol·licitat.</p>
+        <h3>Gestió de jugadors, socis i membres</h3><p>Les dades es poden utilitzar per:</p><ul><li>Gestionar inscripcions.</li><li>Organitzar equips i categories.</li><li>Gestionar jugadors, socis i altres membres.</li><li>Tramitar formularis, autoritzacions i documentació.</li><li>Mantenir la relació administrativa amb el club.</li></ul><p>La base jurídica és l’aplicació de mesures sol·licitades per l’usuari abans d’incorporar-se al club i, quan escaigui, l’execució de la relació entre l’usuari i el club.</p>
+        <h3>DNI i IBAN</h3><p>El DNI se sol·licita únicament quan sigui necessari per a un tràmit concret.</p><p>L’IBAN es tracta per gestionar la domiciliació de quotes o mensualitats sol·licitada i autoritzada per l’usuari.</p><p>La base jurídica és la gestió del tràmit o inscripció sol·licitada i, quan correspongui, el compliment d’obligacions legals aplicables al club.</p>
+        <h3>Notícies i informació del club</h3><p>Les dades s’utilitzen per proporcionar notícies, avisos i informació relacionada amb l’activitat del club.</p><p>La base jurídica és la prestació del servei i l’interès legítim del club a comunicar-se amb els usuaris de l’Aplicació.</p>
+        <h3>Fotografies</h3><p>El tractament de fotografies identificables es basa en el consentiment específic de la persona afectada o, quan correspongui, del seu pare, mare o tutor.</p><p>L’autorització per utilitzar imatges serà independent de l’acceptació general d’aquesta política. Es podrà utilitzar l’Aplicació encara que no s’autoritzi l’ús d’imatges.</p><p>Inicialment, l’autorització cobrirà únicament l’ús intern de les imatges dins de Tactical Hub. No inclourà automàticament la publicació en pàgines web públiques, xarxes socials, publicitat o material imprès.</p>
+        <h3>Notificacions</h3><p>Les notificacions s’utilitzen exclusivament per a comunicacions informatives i operatives relacionades amb l’Aplicació o el club.</p><p>No s’utilitzen per enviar publicitat de tercers.</p><p>L’usuari pot gestionar o desactivar les notificacions des de la configuració del dispositiu.</p>
+        <h3>Canal de contacte</h3><p>Els missatges s’utilitzen per atendre consultes, dubtes, incidències o queixes dirigides a l’administració.</p><p>La base jurídica és la gestió de la sol·licitud realitzada per l’usuari i l’interès legítim del club a atendre i resoldre les comunicacions rebudes.</p>
+        <h3>Seguretat i funcionament</h3><p>Els registres tècnics s’utilitzen per:</p><ul><li>Detectar errors.</li><li>Resoldre incidències.</li><li>Protegir els comptes.</li><li>Prevenir usos indeguts.</li><li>Mantenir la disponibilitat i seguretat del servei.</li></ul><p>La base jurídica és l’interès legítim del club i del prestador tecnològic a protegir l’Aplicació, els seus usuaris i la seva infraestructura.</p>
+      </section>
+
+      <section><h2><span class="number">05</span>Procedència de les dades</h2><p>Les dades s’obtenen principalment:</p><ul><li>Directament de l’usuari en crear el compte.</li><li>Mitjançant els formularis emplenats a l’Aplicació.</li><li>De l’administració, coordinació o entrenadors, quan assignen rols, equips, dorsals o categories.</li><li>Del dispositiu, quan s’habiliten les notificacions.</li><li>Dels sistemes tècnics utilitzats per registrar errors i accessos.</li></ul></section>
+
+      <section><h2><span class="number">06</span>Qui pot accedir a les dades</h2><p>L’accés depèn del rol assignat.</p><h3>Administració i coordinació</h3><p>Poden accedir a les dades necessàries per gestionar usuaris, formularis, inscripcions, equips, documents i exportacions.</p><h3>Entrenadors</h3><p>Només poden accedir a la informació necessària per gestionar els equips o jugadors que tinguin assignats.</p><p>No han de poder visualitzar DNI, IBAN ni altra informació administrativa sensible.</p><h3>Usuari</h3><p>Pot accedir a les dades del seu compte i als formularis o informació que li corresponguin.</p><h3>Tactical Hub</h3><p>El prestador tecnològic pot accedir tècnicament als sistemes de producció únicament quan sigui necessari per resoldre una incidència, fer manteniment autoritzat, atendre una sol·licitud del club o garantir la seguretat del servei.</p><p>Aquests accessos queden restringits i registrats.</p></section>
+
+      <section><h2><span class="number">07</span>Proveïdors tecnològics</h2><p>Per prestar el servei s’utilitzen proveïdors tecnològics que poden tractar dades per compte del club:</p><ul><li>Railway, per a l’allotjament de l’Aplicació i l’API.</li><li>Neon, per a l’allotjament de la base de dades.</li><li>Cloudflare i Cloudflare R2, per a DNS, seguretat i emmagatzematge d’arxius.</li><li>Google Workspace i Google Sheets, quan el club exporta formularis.</li><li>Firebase Cloud Messaging, per a l’enviament de notificacions.</li><li>DonDominio, per a serveis de domini i correu electrònic.</li></ul><p>Aquests proveïdors només podran tractar les dades per prestar els serveis contractats i hauran d’aplicar mesures de protecció adequades.</p><p>El club o Tactical Hub podran substituir un proveïdor tecnològic quan sigui necessari, informant-ne quan el canvi afecti de manera rellevant el tractament de les dades.</p></section>
+
+      <section><h2><span class="number">08</span>Transferències internacionals</h2><p>Alguns proveïdors tecnològics poden prestar part dels seus serveis des de països situats fora de l’Espai Econòmic Europeu.</p><p>Quan existeixi una transferència internacional de dades, s’aplicaran les garanties previstes per la normativa de protecció de dades, com ara una decisió d’adequació, clàusules contractuals tipus o un altre mecanisme legal vàlid.</p></section>
+
+      <section><h2><span class="number">09</span>Exportacions a CSV i Google Sheets</h2><p>L’administració del club pot exportar les respostes dels formularis a arxius CSV o a fulls de càlcul pertanyents al club.</p><p>Les exportacions poden contenir DNI o IBAN únicament quan:</p><ul><li>El formulari sol·liciti aquestes dades.</li><li>Siguin necessàries per a la gestió administrativa.</li><li>La persona administradora seleccioni expressament aquestes columnes.</li></ul><p>Les exportacions estan restringides a usuaris autoritzats.</p><p>Un cop descarregades o enviades a un full de càlcul del club, el club és responsable de protegir aquestes còpies, evitar accessos no autoritzats i eliminar-les quan deixin de ser necessàries.</p><p>Les exportacions no s’han d’enviar a comptes personals, serveis de missatgeria o sistemes d’emmagatzematge no autoritzats.</p></section>
+
+      <section><h2><span class="number">10</span>Conservació de les dades</h2><p>Les dades es conservaran durant els períodes orientatius següents:</p><div class="table-wrap"><table><thead><tr><th>Categoria</th><th>Període</th></tr></thead><tbody><tr><td>Compte actiu</td><td>Mentre s’utilitzi l’Aplicació o existeixi relació amb el club</td></tr><tr><td>Compte sense activitat ni inscripció</td><td>12 mesos</td></tr><tr><td>Dades de perfil</td><td>Fins a la baixa definitiva</td></tr><tr><td>Fotografia de perfil</td><td>Fins que se substitueixi o s’elimini el compte</td></tr><tr><td>Esborranys de formularis</td><td>30 dies</td></tr><tr><td>Formularis enviats</td><td>Mentre siguin necessaris i, ordinàriament, fins a un any després d’acabar la relació</td></tr><tr><td>DNI</td><td>Mentre sigui necessari per al tràmit concret</td></tr><tr><td>IBAN</td><td>Mentre existeixi la domiciliació o hi hagi rebuts o reclamacions pendents</td></tr><tr><td>Missatges de contacte</td><td>12 mesos des de la seva resolució</td></tr><tr><td>Logs tècnics</td><td>30 dies</td></tr><tr><td>Tokens de notificacions invàlids</td><td>Eliminació quan se’n detecti la invalidesa</td></tr><tr><td>Tokens de dispositius inactius</td><td>Fins a 6 mesos d’inactivitat</td></tr><tr><td>Còpies de seguretat després d’una eliminació</td><td>Màxim 30 dies</td></tr><tr><td>Evidència de consentiment d’imatges</td><td>Mentre s’utilitzin les imatges i durant el termini necessari per acreditar-ne la gestió</td></tr></tbody></table></div><p>Quan existeixi una obligació legal o una reclamació pendent, determinades dades podran conservar-se bloquejades durant el termini aplicable. Mentre estiguin bloquejades no s’utilitzaran per a la gestió ordinària.</p></section>
+
+      <section><h2><span class="number">11</span>Fotografies i arxius</h2><p>Els logotips, escuts i recursos gràfics que no identifiquin persones es poden emmagatzemar públicament.</p><p>Les fotografies de perfil, imatges de notícies amb persones, imatges de menors, formularis i documents signats s’han de mantenir en emmagatzematge privat o amb accés restringit.</p><p>Quan una persona retiri el seu consentiment per a l’ús d’imatges, el club revisarà les publicacions afectades i retirarà les fotografies quan no existeixi una altra causa legítima per conservar-les.</p></section>
+
+      <section><h2><span class="number">12</span>Seguretat</h2><p>El club i Tactical Hub apliquen mesures tècniques i organitzatives destinades a protegir les dades davant de pèrdua, alteració, accés no autoritzat o divulgació.</p><p>Entre aquestes mesures es troben:</p><ul><li>Comunicacions xifrades mitjançant HTTPS.</li><li>Contrasenyes emmagatzemades mitjançant BCrypt.</li><li>Control d’accés basat en rols.</li><li>Restricció de les exportacions a administradors autoritzats.</li><li>Xifratge de l’IBAN emmagatzemat.</li><li>Registre d’accessos tècnics i exportacions sensibles.</li><li>Separació entre els entorns de desenvolupament i producció.</li><li>Còpies de seguretat i procediments de recuperació.</li><li>Accés tècnic limitat a la resolució d’incidències autoritzades.</li></ul><p>Cap sistema pot garantir una seguretat absoluta, però s’aplicaran mesures raonables tenint en compte la naturalesa i el risc de les dades tractades.</p></section>
+
+      <section><h2><span class="number">13</span>Notificacions de Firebase</h2><p>Per enviar notificacions s’emmagatzema un identificador tècnic associat a la instal·lació de l’Aplicació.</p><p>Aquest identificador:</p><ul><li>No s’utilitza per a publicitat.</li><li>No s’inclou en exportacions.</li><li>S’elimina quan deixa de ser vàlid.</li><li>Es desvincula quan es tanca la sessió.</li><li>S’elimina quan es dona de baixa el compte.</li><li>Es pot eliminar després d’un període prolongat d’inactivitat.</li></ul></section>
+
+      <section><h2><span class="number">14</span>Decisions automatitzades</h2><p>No es prenen decisions que produeixin efectes jurídics o afectin significativament l’usuari basant-se únicament en tractaments automatitzats.</p><p>No s’elaboren perfils comercials ni publicitaris.</p></section>
+
+      <section><h2><span class="number">15</span>Drets dels usuaris</h2><p>Les persones usuàries poden sol·licitar:</p><ul><li>Accés a les seves dades.</li><li>Rectificació d’informació incorrecta.</li><li>Supressió de les seves dades.</li><li>Limitació del tractament.</li><li>Oposició al tractament, quan correspongui.</li><li>Portabilitat de les dades, quan sigui aplicable.</li><li>Retirada d’un consentiment concedit prèviament.</li></ul><p>Les sol·licituds s’han d’adreçar a:</p><div class="note"><p><a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a></p></div><p>El club podrà sol·licitar informació addicional per comprovar la identitat de la persona sol·licitant.</p><p>Retirar un consentiment no afecta la validesa del tractament realitzat abans de retirar-lo.</p><p>La política de privacitat informa sobre el tractament, però no substitueix els consentiments específics que puguin ser necessaris per a finalitats com l’ús de fotografies. L’AEPD recomana separar clarament la informació general de privacitat dels consentiments concrets.</p></section>
+
+      <section><h2><span class="number">16</span>Eliminació del compte</h2><p>L’usuari pot sol·licitar l’eliminació del seu compte i de les dades associades:</p><ul><li>Mitjançant l’opció d’eliminació disponible dins de l’Aplicació.</li><li>Escrivint a <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a>.</li><li>Mitjançant la pàgina pública de sol·licitud d’eliminació habilitada per Tactical Hub.</li></ul><p>L’eliminació del compte no consisteix únicament a bloquejar l’accés.</p><p>Quan es confirmi la baixa definitiva:</p><ul><li>Es revocarà l’accés.</li><li>S’eliminaran els tokens de notificacions.</li><li>S’eliminaran les dades identificatives que ja no siguin necessàries.</li><li>S’eliminarà la fotografia de perfil.</li><li>S’eliminaran DNI i IBAN quan no existeixi un tràmit, rebut, obligació o reclamació pendent.</li><li>Els registres històrics necessaris es podran anonimitzar.</li><li>Les dades subjectes a una obligació de conservació quedaran bloquejades.</li><li>Les còpies residuals desapareixeran dels sistemes de suport en un màxim de 30 dies.</li></ul></section>
+
+      <section><h2><span class="number">17</span>Reclamacions</h2><p>Si una persona considera que les seves dades no s’han tractat correctament, pot adreçar-se primer al club mitjançant <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a>.</p><p>També pot presentar una reclamació davant de l’Agència Espanyola de Protecció de Dades.</p></section>
+
+      <section><h2><span class="number">18</span>Canvis en aquesta política</h2><p>Aquesta política es podrà actualitzar quan canviïn les funcionalitats de l’Aplicació, els proveïdors utilitzats o les normes aplicables.</p><p>Quan el canvi sigui rellevant, s’informarà els usuaris mitjançant l’Aplicació o per un altre mitjà adequat.</p></section>
+    </article>
+
+    <article lang="es" data-policy="es" hidden>
+      <p class="lead">La presente Política de Privacidad explica cómo se tratan los datos personales de las personas que utilizan la aplicación Tactical Hub – Voltregà CF, en adelante, la «Aplicación».</p>
+
+      <section><h2><span class="number">01</span>Responsable del tratamiento</h2><p>El responsable del tratamiento de los datos es:</p><div class="identity-card"><p><strong>Entidad:</strong> Club Futbol Voltregà<br><strong>NIF:</strong> G-59860163<br><strong>Domicilio:</strong> C/ de la Vinya, s/n · 08512 Sant Hipòlit de Voltregà<br><strong>Correo electrónico de privacidad:</strong> <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a></p></div><p>El responsable determina las finalidades para las que se utilizan los datos, los formularios disponibles, los permisos de los usuarios y los plazos de conservación aplicables.</p><p>La Aplicación utiliza la plataforma tecnológica Tactical Hub, desarrollada y gestionada por:</p><div class="identity-card"><p><strong>Plataforma y proveedor tecnológico:</strong> Tactical Hub<br><strong>Contacto técnico de privacidad:</strong> <a class="email" href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a></p></div><p>Tactical Hub actúa como proveedor tecnológico y encargado del tratamiento, procesando los datos siguiendo las instrucciones del club.</p></section>
+
+      <section><h2><span class="number">02</span>A quién se aplica esta política</h2><p>Esta política se aplica a administradores, coordinadores, entrenadores, jugadores, socios, padres, madres, tutores, aficionados y demás personas que creen una cuenta o utilicen la Aplicación.</p><p>No está permitido crear una cuenta a menores de 14 años.</p><p>Los usuarios de entre 14 y 17 años pueden utilizar las funcionalidades básicas de la Aplicación. Los formularios que incluyan domiciliaciones, DNI, IBAN, inscripciones o autorizaciones que requieran intervención adulta deberán ser cumplimentados por una persona mayor de edad.</p></section>
+
+      <section><h2><span class="number">03</span>Datos que se pueden tratar</h2><p>Dependiendo de las funcionalidades utilizadas, la Aplicación puede tratar las siguientes categorías de datos.</p><h3>Datos de cuenta y perfil</h3><ul><li>Nombre y apellidos.</li><li>Dirección de correo electrónico.</li><li>Fecha de nacimiento.</li><li>Teléfono, cuando se facilite.</li><li>Fotografía de perfil, cuando se facilite.</li><li>Número de socio.</li><li>Equipo o categoría.</li><li>Rol y permisos dentro de la Aplicación.</li><li>Contraseña almacenada de forma no reversible mediante BCrypt.</li></ul><h3>Datos deportivos y organizativos</h3><ul><li>Equipo.</li><li>Categoría.</li><li>Dorsal.</li><li>Posición.</li><li>Relación con el club.</li><li>Información administrativa vinculada a jugadores o socios.</li></ul><p>No se tratan inicialmente datos médicos, lesiones, alergias ni valoraciones deportivas internas.</p><h3>Datos incluidos en formularios</h3><p>Los formularios creados por el club pueden solicitar:</p><ul><li>Datos identificativos.</li><li>Datos de inscripción o membresía.</li><li>Número de DNI.</li><li>IBAN para gestionar domiciliaciones.</li><li>Firma.</li><li>Autorizaciones.</li><li>Consentimiento para el uso de imágenes.</li><li>Respuestas escritas por el usuario.</li></ul><p>El DNI y el IBAN solo deberán solicitarse en trámites que realmente los necesiten.</p><p>La Aplicación no procesa directamente pagos. Cuando un formulario incluye un IBAN, este se utiliza para que la administración del club gestione posteriormente la domiciliación bancaria.</p><h3>Comunicaciones</h3><p>Se pueden tratar los mensajes enviados por el usuario mediante el canal de contacto con la administración del club.</p><p>El canal de contacto permite introducir texto, pero no adjuntar archivos. Se recomienda no incluir información médica, bancaria o especialmente sensible salvo que sea imprescindible para resolver la consulta.</p><h3>Imágenes y contenido</h3><p>Se pueden tratar:</p><ul><li>Fotografías de perfil.</li><li>Imágenes incluidas en noticias.</li><li>Logos y escudos.</li><li>Fotografías de personas o menores cuando exista la autorización correspondiente.</li></ul><h3>Datos técnicos</h3><p>Para garantizar el funcionamiento y la seguridad del servicio se pueden tratar:</p><ul><li>Fecha y hora de acceso.</li><li>Registros de errores.</li><li>Información técnica sobre el funcionamiento del servicio.</li><li>Volumen de uso de la infraestructura.</li><li>Tokens técnicos de Firebase necesarios para enviar notificaciones.</li></ul><p>No se utiliza actualmente Firebase Analytics, Firebase Authentication ni Crashlytics.</p><p>No se recoge la ubicación del dispositivo ni se utilizan los datos con fines de publicidad comportamental.</p></section>
+
+      <section><h2><span class="number">04</span>Finalidades y bases jurídicas</h2><h3>Creación y gestión de la cuenta</h3><p>Los datos de cuenta se utilizan para:</p><ul><li>Registrar al usuario.</li><li>Permitir el acceso a la Aplicación.</li><li>Gestionar su perfil y permisos.</li><li>Facilitar los servicios digitales ofrecidos por el club.</li></ul><p>La base jurídica es la ejecución de las condiciones de uso aceptadas por el usuario y la prestación del servicio solicitado.</p><h3>Gestión de jugadores, socios y miembros</h3><p>Los datos pueden utilizarse para:</p><ul><li>Gestionar inscripciones.</li><li>Organizar equipos y categorías.</li><li>Gestionar jugadores, socios y otros miembros.</li><li>Tramitar formularios, autorizaciones y documentación.</li><li>Mantener la relación administrativa con el club.</li></ul><p>La base jurídica es la aplicación de medidas solicitadas por el usuario antes de incorporarse al club y, cuando proceda, la ejecución de la relación entre el usuario y el club.</p><h3>DNI e IBAN</h3><p>El DNI se solicita únicamente cuando resulte necesario para un trámite concreto.</p><p>El IBAN se trata para gestionar la domiciliación de cuotas o mensualidades solicitada y autorizada por el usuario.</p><p>La base jurídica es la gestión del trámite o inscripción solicitada y, cuando corresponda, el cumplimiento de obligaciones legales aplicables al club.</p><h3>Noticias e información del club</h3><p>Los datos se utilizan para proporcionar noticias, avisos e información relacionada con la actividad del club.</p><p>La base jurídica es la prestación del servicio y el interés legítimo del club en comunicarse con los usuarios de la Aplicación.</p><h3>Fotografías</h3><p>El tratamiento de fotografías identificables se basa en el consentimiento específico de la persona afectada o, cuando corresponda, de su padre, madre o tutor.</p><p>La autorización para utilizar imágenes será independiente de la aceptación general de esta política. Se podrá utilizar la Aplicación aunque no se autorice el uso de imágenes.</p><p>Inicialmente, la autorización cubrirá únicamente el uso interno de las imágenes dentro de Tactical Hub. No incluirá automáticamente su publicación en páginas web públicas, redes sociales, publicidad o material impreso.</p><h3>Notificaciones</h3><p>Las notificaciones se utilizan exclusivamente para comunicaciones informativas y operativas relacionadas con la Aplicación o el club.</p><p>No se utilizan para enviar publicidad de terceros.</p><p>El usuario puede gestionar o desactivar las notificaciones desde la configuración del dispositivo.</p><h3>Canal de contacto</h3><p>Los mensajes se utilizan para atender consultas, dudas, incidencias o quejas dirigidas a la administración.</p><p>La base jurídica es la gestión de la solicitud realizada por el usuario y el interés legítimo del club en atender y resolver las comunicaciones recibidas.</p><h3>Seguridad y funcionamiento</h3><p>Los registros técnicos se utilizan para:</p><ul><li>Detectar errores.</li><li>Resolver incidencias.</li><li>Proteger las cuentas.</li><li>Prevenir usos indebidos.</li><li>Mantener la disponibilidad y seguridad del servicio.</li></ul><p>La base jurídica es el interés legítimo del club y del prestador tecnológico en proteger la Aplicación, sus usuarios y su infraestructura.</p></section>
+
+      <section><h2><span class="number">05</span>Procedencia de los datos</h2><p>Los datos se obtienen principalmente:</p><ul><li>Directamente del usuario al crear la cuenta.</li><li>Mediante los formularios cumplimentados en la Aplicación.</li><li>De la administración, coordinación o entrenadores, cuando asignan roles, equipos, dorsales o categorías.</li><li>Del dispositivo, cuando se habilitan las notificaciones.</li><li>De los sistemas técnicos utilizados para registrar errores y accesos.</li></ul></section>
+
+      <section><h2><span class="number">06</span>Quién puede acceder a los datos</h2><p>El acceso depende del rol asignado.</p><h3>Administración y coordinación</h3><p>Pueden acceder a los datos necesarios para gestionar usuarios, formularios, inscripciones, equipos, documentos y exportaciones.</p><h3>Entrenadores</h3><p>Solo pueden acceder a la información necesaria para gestionar los equipos o jugadores que tengan asignados.</p><p>No deben poder visualizar DNI, IBAN ni otra información administrativa sensible.</p><h3>Usuario</h3><p>Puede acceder a los datos de su cuenta y a los formularios o información que le correspondan.</p><h3>Tactical Hub</h3><p>El prestador tecnológico puede acceder técnicamente a los sistemas de producción únicamente cuando sea necesario para resolver una incidencia, realizar mantenimiento autorizado, atender una solicitud del club o garantizar la seguridad del servicio.</p><p>Estos accesos quedan restringidos y registrados.</p></section>
+
+      <section><h2><span class="number">07</span>Proveedores tecnológicos</h2><p>Para prestar el servicio se utilizan proveedores tecnológicos que pueden tratar datos por cuenta del club:</p><ul><li>Railway, para el alojamiento de la Aplicación y la API.</li><li>Neon, para el alojamiento de la base de datos.</li><li>Cloudflare y Cloudflare R2, para DNS, seguridad y almacenamiento de archivos.</li><li>Google Workspace y Google Sheets, cuando el club exporta formularios.</li><li>Firebase Cloud Messaging, para el envío de notificaciones.</li><li>DonDominio, para servicios de dominio y correo electrónico.</li></ul><p>Estos proveedores solo podrán tratar los datos para prestar los servicios contratados y deberán aplicar medidas de protección adecuadas.</p><p>El club o Tactical Hub podrán sustituir un proveedor tecnológico cuando resulte necesario, informando de ello cuando el cambio afecte de forma relevante al tratamiento de los datos.</p></section>
+
+      <section><h2><span class="number">08</span>Transferencias internacionales</h2><p>Algunos proveedores tecnológicos pueden prestar parte de sus servicios desde países situados fuera del Espacio Económico Europeo.</p><p>Cuando exista una transferencia internacional de datos, se aplicarán las garantías previstas por la normativa de protección de datos, como una decisión de adecuación, cláusulas contractuales tipo u otro mecanismo legal válido.</p></section>
+
+      <section><h2><span class="number">09</span>Exportaciones a CSV y Google Sheets</h2><p>La administración del club puede exportar las respuestas de los formularios a archivos CSV o a hojas de cálculo pertenecientes al club.</p><p>Las exportaciones pueden contener DNI o IBAN únicamente cuando:</p><ul><li>El formulario solicite esos datos.</li><li>Sean necesarios para la gestión administrativa.</li><li>La persona administradora seleccione expresamente esas columnas.</li></ul><p>Las exportaciones están restringidas a usuarios autorizados.</p><p>Una vez descargadas o enviadas a una hoja de cálculo del club, el club es responsable de proteger esas copias, evitar accesos no autorizados y eliminarlas cuando dejen de ser necesarias.</p><p>Las exportaciones no deben enviarse a cuentas personales, servicios de mensajería o sistemas de almacenamiento no autorizados.</p></section>
+
+      <section><h2><span class="number">10</span>Conservación de los datos</h2><p>Los datos se conservarán durante los siguientes periodos orientativos:</p><div class="table-wrap"><table><thead><tr><th>Categoría</th><th>Periodo</th></tr></thead><tbody><tr><td>Cuenta activa</td><td>Mientras se utilice la Aplicación o exista relación con el club</td></tr><tr><td>Cuenta sin actividad ni inscripción</td><td>12 meses</td></tr><tr><td>Datos de perfil</td><td>Hasta la baja definitiva</td></tr><tr><td>Fotografía de perfil</td><td>Hasta que se sustituya o elimine la cuenta</td></tr><tr><td>Borradores de formularios</td><td>30 días</td></tr><tr><td>Formularios enviados</td><td>Mientras sean necesarios y, ordinariamente, hasta un año después de finalizar la relación</td></tr><tr><td>DNI</td><td>Mientras resulte necesario para el trámite concreto</td></tr><tr><td>IBAN</td><td>Mientras exista la domiciliación o haya recibos o reclamaciones pendientes</td></tr><tr><td>Mensajes de contacto</td><td>12 meses desde su resolución</td></tr><tr><td>Logs técnicos</td><td>30 días</td></tr><tr><td>Tokens de notificaciones inválidos</td><td>Eliminación cuando se detecte su invalidez</td></tr><tr><td>Tokens de dispositivos inactivos</td><td>Hasta 6 meses de inactividad</td></tr><tr><td>Copias de seguridad después de una eliminación</td><td>Máximo 30 días</td></tr><tr><td>Evidencia de consentimiento de imágenes</td><td>Mientras se utilicen las imágenes y durante el plazo necesario para acreditar su gestión</td></tr></tbody></table></div><p>Cuando exista una obligación legal o una reclamación pendiente, determinados datos podrán conservarse bloqueados durante el plazo aplicable. Mientras estén bloqueados no se utilizarán para la gestión ordinaria.</p></section>
+
+      <section><h2><span class="number">11</span>Fotografías y archivos</h2><p>Los logos, escudos y recursos gráficos que no identifiquen a personas pueden almacenarse públicamente.</p><p>Las fotografías de perfil, imágenes de noticias con personas, imágenes de menores, formularios y documentos firmados deben mantenerse en almacenamiento privado o con acceso restringido.</p><p>Cuando una persona retire su consentimiento para el uso de imágenes, el club revisará las publicaciones afectadas y retirará las fotografías cuando no exista otra causa legítima para conservarlas.</p></section>
+
+      <section><h2><span class="number">12</span>Seguridad</h2><p>El club y Tactical Hub aplican medidas técnicas y organizativas destinadas a proteger los datos frente a pérdida, alteración, acceso no autorizado o divulgación.</p><p>Entre estas medidas se encuentran:</p><ul><li>Comunicaciones cifradas mediante HTTPS.</li><li>Contraseñas almacenadas mediante BCrypt.</li><li>Control de acceso basado en roles.</li><li>Restricción de las exportaciones a administradores autorizados.</li><li>Cifrado del IBAN almacenado.</li><li>Registro de accesos técnicos y exportaciones sensibles.</li><li>Separación entre los entornos de desarrollo y producción.</li><li>Copias de seguridad y procedimientos de recuperación.</li><li>Acceso técnico limitado a la resolución de incidencias autorizadas.</li></ul><p>Ningún sistema puede garantizar una seguridad absoluta, pero se aplicarán medidas razonables teniendo en cuenta la naturaleza y el riesgo de los datos tratados.</p></section>
+
+      <section><h2><span class="number">13</span>Notificaciones de Firebase</h2><p>Para enviar notificaciones se almacena un identificador técnico asociado a la instalación de la Aplicación.</p><p>Este identificador:</p><ul><li>No se utiliza para publicidad.</li><li>No se incluye en exportaciones.</li><li>Se elimina cuando deja de ser válido.</li><li>Se desvincula cuando se cierra la sesión.</li><li>Se elimina cuando se da de baja la cuenta.</li><li>Puede eliminarse tras un periodo prolongado de inactividad.</li></ul></section>
+
+      <section><h2><span class="number">14</span>Decisiones automatizadas</h2><p>No se toman decisiones que produzcan efectos jurídicos o afecten significativamente al usuario basándose únicamente en tratamientos automatizados.</p><p>No se elaboran perfiles comerciales ni publicitarios.</p></section>
+
+      <section><h2><span class="number">15</span>Derechos de los usuarios</h2><p>Las personas usuarias pueden solicitar:</p><ul><li>Acceso a sus datos.</li><li>Rectificación de información incorrecta.</li><li>Supresión de sus datos.</li><li>Limitación del tratamiento.</li><li>Oposición al tratamiento, cuando corresponda.</li><li>Portabilidad de los datos, cuando resulte aplicable.</li><li>Retirada de un consentimiento previamente concedido.</li></ul><p>Las solicitudes deben dirigirse a:</p><div class="note"><p><a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a></p></div><p>El club podrá solicitar información adicional para comprobar la identidad de la persona solicitante.</p><p>Retirar un consentimiento no afecta a la validez del tratamiento realizado antes de su retirada.</p><p>La política de privacidad informa sobre el tratamiento, pero no sustituye los consentimientos específicos que puedan necesitarse para finalidades como el uso de fotografías. La AEPD recomienda separar claramente la información general de privacidad de los consentimientos concretos.</p></section>
+
+      <section><h2><span class="number">16</span>Eliminación de la cuenta</h2><p>El usuario puede solicitar la eliminación de su cuenta y los datos asociados:</p><ul><li>Mediante la opción de eliminación disponible dentro de la Aplicación.</li><li>Escribiendo a <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a>.</li><li>Mediante la página pública de solicitud de eliminación habilitada por Tactical Hub.</li></ul><p>La eliminación de la cuenta no consiste únicamente en bloquear el acceso.</p><p>Cuando se confirme la baja definitiva:</p><ul><li>Se revocará el acceso.</li><li>Se eliminarán los tokens de notificaciones.</li><li>Se eliminarán los datos identificativos que ya no sean necesarios.</li><li>Se eliminará la fotografía de perfil.</li><li>Se eliminarán DNI e IBAN cuando no exista un trámite, recibo, obligación o reclamación pendiente.</li><li>Los registros históricos necesarios podrán anonimizarse.</li><li>Los datos sujetos a una obligación de conservación quedarán bloqueados.</li><li>Las copias residuales desaparecerán de los sistemas de respaldo en un máximo de 30 días.</li></ul></section>
+
+      <section><h2><span class="number">17</span>Reclamaciones</h2><p>Si una persona considera que sus datos no se han tratado correctamente, puede dirigirse primero al club mediante <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a>.</p><p>También puede presentar una reclamación ante la Agencia Española de Protección de Datos.</p></section>
+
+      <section><h2><span class="number">18</span>Cambios en esta política</h2><p>Esta política podrá actualizarse cuando cambien las funcionalidades de la Aplicación, los proveedores utilizados o las normas aplicables.</p><p>Cuando el cambio sea relevante, se informará a los usuarios mediante la Aplicación o por otro medio adecuado.</p></section>
+    </article>
+
+    <article lang="en" data-policy="en" hidden>
+      <p class="lead">This Privacy Policy explains how the personal data of people who use the Tactical Hub – Voltregà CF application, hereinafter the “Application”, is processed.</p>
+
+      <section><h2><span class="number">01</span>Data controller</h2><p>The data controller is:</p><div class="identity-card"><p><strong>Entity:</strong> Club Futbol Voltregà<br><strong>Tax ID:</strong> G-59860163<br><strong>Registered address:</strong> C/ de la Vinya, s/n · 08512 Sant Hipòlit de Voltregà, Spain<br><strong>Privacy email:</strong> <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a></p></div><p>The controller determines the purposes for which data is used, the available forms, user permissions and the applicable retention periods.</p><p>The Application uses the Tactical Hub technology platform, developed and managed by:</p><div class="identity-card"><p><strong>Technology platform and provider:</strong> Tactical Hub<br><strong>Technical privacy contact:</strong> <a class="email" href="mailto:privacidad@tacticalhub.es">privacidad@tacticalhub.es</a></p></div><p>Tactical Hub acts as the technology provider and data processor, processing data in accordance with the club’s instructions.</p></section>
+
+      <section><h2><span class="number">02</span>Who this policy applies to</h2><p>This policy applies to administrators, coordinators, coaches, players, members, parents, guardians, supporters and any other people who create an account or use the Application.</p><p>Children under the age of 14 are not permitted to create an account.</p><p>Users aged 14 to 17 may use the Application’s basic features. Forms involving direct debits, national identity documents, IBANs, registrations or authorisations requiring adult involvement must be completed by an adult.</p></section>
+
+      <section><h2><span class="number">03</span>Data that may be processed</h2><p>Depending on the features used, the Application may process the following categories of data.</p><h3>Account and profile data</h3><ul><li>First name and surname.</li><li>Email address.</li><li>Date of birth.</li><li>Telephone number, when provided.</li><li>Profile photograph, when provided.</li><li>Membership number.</li><li>Team or category.</li><li>Role and permissions within the Application.</li><li>Password stored in a non-reversible form using BCrypt.</li></ul><h3>Sporting and organisational data</h3><ul><li>Team.</li><li>Category.</li><li>Shirt number.</li><li>Position.</li><li>Relationship with the club.</li><li>Administrative information relating to players or members.</li></ul><p>Medical data, injuries, allergies and internal sporting assessments are not initially processed.</p><h3>Data included in forms</h3><p>Forms created by the club may request:</p><ul><li>Identification data.</li><li>Registration or membership data.</li><li>National identity document number.</li><li>IBAN for managing direct debits.</li><li>Signature.</li><li>Authorisations.</li><li>Consent for the use of images.</li><li>Written responses provided by the user.</li></ul><p>Identity document numbers and IBANs should only be requested for procedures that genuinely require them.</p><p>The Application does not process payments directly. When a form includes an IBAN, it is used so the club’s administration can subsequently manage the bank direct debit.</p><h3>Communications</h3><p>Messages sent by the user through the contact channel with the club’s administration may be processed.</p><p>The contact channel allows text to be entered but does not allow files to be attached. Users are advised not to include medical, banking or particularly sensitive information unless it is essential to resolve the enquiry.</p><h3>Images and content</h3><p>The following may be processed:</p><ul><li>Profile photographs.</li><li>Images included in news items.</li><li>Logos and crests.</li><li>Photographs of people or minors where the corresponding authorisation exists.</li></ul><h3>Technical data</h3><p>To ensure the operation and security of the service, the following may be processed:</p><ul><li>Date and time of access.</li><li>Error logs.</li><li>Technical information about the operation of the service.</li><li>Infrastructure usage volume.</li><li>Firebase technical tokens required to send notifications.</li></ul><p>Firebase Analytics, Firebase Authentication and Crashlytics are not currently used.</p><p>The device’s location is not collected and data is not used for behavioural advertising.</p></section>
+
+      <section><h2><span class="number">04</span>Purposes and legal bases</h2><h3>Creating and managing the account</h3><p>Account data is used to:</p><ul><li>Register the user.</li><li>Provide access to the Application.</li><li>Manage the user’s profile and permissions.</li><li>Provide the digital services offered by the club.</li></ul><p>The legal basis is the performance of the terms of use accepted by the user and provision of the requested service.</p><h3>Managing players, members and other participants</h3><p>Data may be used to:</p><ul><li>Manage registrations.</li><li>Organise teams and categories.</li><li>Manage players, members and other participants.</li><li>Process forms, authorisations and documentation.</li><li>Maintain the administrative relationship with the club.</li></ul><p>The legal basis is taking steps requested by the user before joining the club and, where applicable, performance of the relationship between the user and the club.</p><h3>Identity documents and IBANs</h3><p>An identity document number is requested only when necessary for a specific procedure.</p><p>The IBAN is processed to manage the direct debit of fees or monthly payments requested and authorised by the user.</p><p>The legal basis is management of the requested procedure or registration and, where applicable, compliance with legal obligations applying to the club.</p><h3>Club news and information</h3><p>Data is used to provide news, notices and information relating to the club’s activities.</p><p>The legal basis is provision of the service and the club’s legitimate interest in communicating with Application users.</p><h3>Photographs</h3><p>The processing of identifiable photographs is based on the specific consent of the person concerned or, where applicable, their parent or guardian.</p><p>Authorisation to use images is separate from general acceptance of this policy. The Application may still be used if the use of images is not authorised.</p><p>Initially, the authorisation covers only internal use of images within Tactical Hub. It does not automatically include publication on public websites, social media, advertising or printed material.</p><h3>Notifications</h3><p>Notifications are used exclusively for informative and operational communications relating to the Application or the club.</p><p>They are not used to send third-party advertising.</p><p>Users can manage or disable notifications in their device settings.</p><h3>Contact channel</h3><p>Messages are used to answer enquiries, questions, incidents or complaints addressed to the administration.</p><p>The legal basis is management of the user’s request and the club’s legitimate interest in receiving and resolving communications.</p><h3>Security and operation</h3><p>Technical logs are used to:</p><ul><li>Detect errors.</li><li>Resolve incidents.</li><li>Protect accounts.</li><li>Prevent misuse.</li><li>Maintain the availability and security of the service.</li></ul><p>The legal basis is the legitimate interest of the club and technology provider in protecting the Application, its users and its infrastructure.</p></section>
+
+      <section><h2><span class="number">05</span>Source of the data</h2><p>Data is obtained mainly:</p><ul><li>Directly from the user when they create an account.</li><li>Through forms completed in the Application.</li><li>From administrators, coordinators or coaches when they assign roles, teams, shirt numbers or categories.</li><li>From the device when notifications are enabled.</li><li>From technical systems used to record errors and access.</li></ul></section>
+
+      <section><h2><span class="number">06</span>Who may access the data</h2><p>Access depends on the assigned role.</p><h3>Administration and coordination</h3><p>They may access the data required to manage users, forms, registrations, teams, documents and exports.</p><h3>Coaches</h3><p>They may access only the information needed to manage the teams or players assigned to them.</p><p>They must not be able to view identity document numbers, IBANs or other sensitive administrative information.</p><h3>User</h3><p>Users may access their account data and the forms or information relevant to them.</p><h3>Tactical Hub</h3><p>The technology provider may technically access production systems only when required to resolve an incident, perform authorised maintenance, respond to a club request or ensure service security.</p><p>Such access is restricted and logged.</p></section>
+
+      <section><h2><span class="number">07</span>Technology providers</h2><p>The following technology providers, which may process data on behalf of the club, are used to provide the service:</p><ul><li>Railway, for hosting the Application and API.</li><li>Neon, for database hosting.</li><li>Cloudflare and Cloudflare R2, for DNS, security and file storage.</li><li>Google Workspace and Google Sheets, when the club exports forms.</li><li>Firebase Cloud Messaging, for sending notifications.</li><li>DonDominio, for domain and email services.</li></ul><p>These providers may process data only to provide the contracted services and must apply appropriate protection measures.</p><p>The club or Tactical Hub may replace a technology provider where necessary and will provide notice when the change materially affects data processing.</p></section>
+
+      <section><h2><span class="number">08</span>International transfers</h2><p>Some technology providers may deliver part of their services from countries outside the European Economic Area.</p><p>Where an international data transfer takes place, the safeguards required by data protection law will be applied, such as an adequacy decision, standard contractual clauses or another valid legal mechanism.</p></section>
+
+      <section><h2><span class="number">09</span>Exports to CSV and Google Sheets</h2><p>The club’s administration may export form responses to CSV files or spreadsheets belonging to the club.</p><p>Exports may contain identity document numbers or IBANs only when:</p><ul><li>The form requests that data.</li><li>It is required for administrative management.</li><li>The administrator expressly selects those columns.</li></ul><p>Exports are restricted to authorised users.</p><p>Once downloaded or sent to a club spreadsheet, the club is responsible for protecting those copies, preventing unauthorised access and deleting them when no longer required.</p><p>Exports must not be sent to personal accounts, messaging services or unauthorised storage systems.</p></section>
+
+      <section><h2><span class="number">10</span>Data retention</h2><p>Data will be retained for the following indicative periods:</p><div class="table-wrap"><table><thead><tr><th>Category</th><th>Period</th></tr></thead><tbody><tr><td>Active account</td><td>While the Application is used or a relationship with the club exists</td></tr><tr><td>Account with no activity or registration</td><td>12 months</td></tr><tr><td>Profile data</td><td>Until final account closure</td></tr><tr><td>Profile photograph</td><td>Until it is replaced or the account is deleted</td></tr><tr><td>Draft forms</td><td>30 days</td></tr><tr><td>Submitted forms</td><td>While required and, ordinarily, until one year after the relationship ends</td></tr><tr><td>Identity document number</td><td>While required for the specific procedure</td></tr><tr><td>IBAN</td><td>While the direct debit exists or receipts or claims remain outstanding</td></tr><tr><td>Contact messages</td><td>12 months from resolution</td></tr><tr><td>Technical logs</td><td>30 days</td></tr><tr><td>Invalid notification tokens</td><td>Deleted when invalidity is detected</td></tr><tr><td>Tokens for inactive devices</td><td>Up to 6 months of inactivity</td></tr><tr><td>Backups after deletion</td><td>Maximum of 30 days</td></tr><tr><td>Evidence of consent for images</td><td>While the images are used and for the period required to demonstrate its management</td></tr></tbody></table></div><p>Where a legal obligation or pending claim exists, certain data may be retained in blocked form for the applicable period. Blocked data will not be used for ordinary management.</p></section>
+
+      <section><h2><span class="number">11</span>Photographs and files</h2><p>Logos, crests and graphic resources that do not identify people may be stored publicly.</p><p>Profile photographs, news images featuring people, images of minors, forms and signed documents must be kept in private storage or with restricted access.</p><p>When a person withdraws consent for the use of images, the club will review the affected publications and remove the photographs where there is no other legitimate reason to retain them.</p></section>
+
+      <section><h2><span class="number">12</span>Security</h2><p>The club and Tactical Hub apply technical and organisational measures designed to protect data against loss, alteration, unauthorised access or disclosure.</p><p>These measures include:</p><ul><li>Communications encrypted using HTTPS.</li><li>Passwords stored using BCrypt.</li><li>Role-based access control.</li><li>Exports restricted to authorised administrators.</li><li>Encryption of stored IBANs.</li><li>Logging of technical access and sensitive exports.</li><li>Separation of development and production environments.</li><li>Backups and recovery procedures.</li><li>Technical access limited to resolving authorised incidents.</li></ul><p>No system can guarantee absolute security, but reasonable measures will be applied taking into account the nature and risk of the data processed.</p></section>
+
+      <section><h2><span class="number">13</span>Firebase notifications</h2><p>To send notifications, a technical identifier associated with the Application installation is stored.</p><p>This identifier:</p><ul><li>Is not used for advertising.</li><li>Is not included in exports.</li><li>Is deleted when it is no longer valid.</li><li>Is unlinked when the user signs out.</li><li>Is deleted when the account is closed.</li><li>May be deleted after a prolonged period of inactivity.</li></ul></section>
+
+      <section><h2><span class="number">14</span>Automated decision-making</h2><p>No decisions producing legal effects or similarly significantly affecting users are made solely on the basis of automated processing.</p><p>No commercial or advertising profiles are created.</p></section>
+
+      <section><h2><span class="number">15</span>User rights</h2><p>Users may request:</p><ul><li>Access to their data.</li><li>Rectification of inaccurate information.</li><li>Erasure of their data.</li><li>Restriction of processing.</li><li>Objection to processing, where applicable.</li><li>Data portability, where applicable.</li><li>Withdrawal of previously given consent.</li></ul><p>Requests should be sent to:</p><div class="note"><p><a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a></p></div><p>The club may request additional information to verify the requester’s identity.</p><p>Withdrawal of consent does not affect the lawfulness of processing carried out before consent was withdrawn.</p><p>This privacy policy provides information about processing, but does not replace specific consent that may be required for purposes such as the use of photographs. The Spanish Data Protection Agency (AEPD) recommends clearly separating general privacy information from specific consent.</p></section>
+
+      <section><h2><span class="number">16</span>Account deletion</h2><p>Users may request deletion of their account and associated data:</p><ul><li>Using the deletion option available within the Application.</li><li>By emailing <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a>.</li><li>Through the public deletion request page provided by Tactical Hub.</li></ul><p>Account deletion does not merely mean blocking access.</p><p>When final closure is confirmed:</p><ul><li>Access will be revoked.</li><li>Notification tokens will be deleted.</li><li>Identification data that is no longer required will be deleted.</li><li>The profile photograph will be deleted.</li><li>Identity document numbers and IBANs will be deleted where there is no pending procedure, receipt, obligation or claim.</li><li>Required historical records may be anonymised.</li><li>Data subject to a retention obligation will be blocked.</li><li>Residual copies will disappear from backup systems within a maximum of 30 days.</li></ul></section>
+
+      <section><h2><span class="number">17</span>Complaints</h2><p>If a person believes that their data has not been processed correctly, they may first contact the club at <a class="email" href="mailto:voltregacf@gmail.com">voltregacf@gmail.com</a>.</p><p>They may also lodge a complaint with the Spanish Data Protection Agency.</p></section>
+
+      <section><h2><span class="number">18</span>Changes to this policy</h2><p>This policy may be updated when the Application’s features, the providers used or applicable rules change.</p><p>Where a change is material, users will be informed through the Application or by another appropriate means.</p></section>
+    </article>
+  </main>
+
+  <footer class="page-footer"><div class="page-footer__inner"><p>© Voltregà CF · Tactical Hub</p><p data-ui="footer">Privacitat, transparència i control de les teves dades.</p></div></footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const supported = ['ca', 'es', 'en'];
+      const ui = {
+        ca: { title: 'Política de privacitat', eyebrow: 'Informació legal', updated: 'Última actualització: 5 d’agost de 2026', print: 'Imprimeix', skip: 'Ves al contingut', language: 'Idioma', toc: 'Índex', footer: 'Privacitat, transparència i control de les teves dades.', documentTitle: 'Política de privacitat | Tactical Hub – Voltregà CF' },
+        es: { title: 'Política de privacidad', eyebrow: 'Información legal', updated: 'Última actualización: 5 de agosto de 2026', print: 'Imprimir', skip: 'Ir al contenido', language: 'Idioma', toc: 'Índice', footer: 'Privacidad, transparencia y control de tus datos.', documentTitle: 'Política de privacidad | Tactical Hub – Voltregà CF' },
+        en: { title: 'Privacy policy', eyebrow: 'Legal information', updated: 'Last updated: 5 August 2026', print: 'Print', skip: 'Skip to content', language: 'Language', toc: 'Contents', footer: 'Privacy, transparency and control over your data.', documentTitle: 'Privacy policy | Tactical Hub – Voltregà CF' }
+      };
+
+      const getSavedLanguage = () => {
+        try { return localStorage.getItem('forceLanguage') || localStorage.getItem('language'); }
+        catch (_) { return null; }
+      };
+
+      const normalizeLanguage = (value) => {
+        const language = String(value || '').toLowerCase().split('-')[0];
+        return supported.includes(language) ? language : 'ca';
+      };
+
+      const buildToc = (language) => {
+        const nav = document.querySelector('[data-toc]');
+        const article = document.querySelector('[data-policy="' + language + '"]');
+        const headings = Array.from(article.querySelectorAll('section > h2'));
+        const list = document.createElement('ol');
+        const title = document.createElement('p');
+        title.className = 'toc__title';
+        title.textContent = ui[language].toc;
+        headings.forEach((heading, index) => {
+          const section = heading.parentElement;
+          const id = language + '-section-' + (index + 1);
+          section.id = id;
+          const item = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = '#' + id;
+          link.textContent = heading.textContent.replace(/^\d+/, '').trim();
+          item.appendChild(link);
+          list.appendChild(item);
+        });
+        nav.replaceChildren(title, list);
+        nav.setAttribute('aria-label', ui[language].toc);
+      };
+
+      const setLanguage = (language, persist) => {
+        const selected = normalizeLanguage(language);
+        document.documentElement.lang = selected;
+        document.title = ui[selected].documentTitle;
+        document.querySelectorAll('[data-policy]').forEach((article) => { article.hidden = article.dataset.policy !== selected; });
+        document.querySelectorAll('[data-lang]').forEach((button) => { button.setAttribute('aria-pressed', String(button.dataset.lang === selected)); });
+        ['title', 'eyebrow', 'updated', 'print', 'skip', 'footer'].forEach((key) => { document.querySelector('[data-ui="' + key + '"]').textContent = ui[selected][key]; });
+        document.querySelector('[data-ui-label="language"]').setAttribute('aria-label', ui[selected].language);
+        buildToc(selected);
+        if (persist) {
+          try { localStorage.setItem('forceLanguage', selected); localStorage.setItem('language', selected); }
+          catch (_) { /* The page still works when storage is unavailable. */ }
+        }
+      };
+
+      document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang, true)));
+      document.querySelector('[data-ui="print"]').addEventListener('click', () => window.print());
+      window.addEventListener('scroll', () => {
+        const available = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = available > 0 ? Math.min(100, (window.scrollY / available) * 100) : 0;
+        document.querySelector('.reading-progress').style.width = progress + '%';
+      }, { passive: true });
+
+      const detected = getSavedLanguage() || (navigator.languages && navigator.languages[0]) || navigator.language || 'ca';
+      setLanguage(detected, false);
+    }());
+  </script>
+</body>
+</html>

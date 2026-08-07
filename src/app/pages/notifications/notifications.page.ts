@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { IonAvatar, IonImg, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NotificationsService } from '@core/services/notifications.service';
+import { FormSubmissionsService } from '@core/services/form-submissions.service';
+import { NavigationService } from '@core/services/navigation.service';
 import { Notification, NotificationType } from '@core/models';
+import { RoleType } from '@core/models/role.model';
 import { TeamJoinRequestsComponent } from '@components/team-join-requests/team-join-requests.component';
-import { ActionRequestsComponent } from '@components/action-requests/action-requests.component';
 import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
 import { addIcons } from 'ionicons';
-import { checkmarkOutline, closeOutline } from 'ionicons/icons';
+import { checkmarkOutline, closeOutline, checkmarkDoneOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-notifications',
@@ -20,12 +22,13 @@ import { checkmarkOutline, closeOutline } from 'ionicons/icons';
     IonAvatar, IonImg, IonIcon, IonSpinner,
     TranslatePipe,
     TeamJoinRequestsComponent,
-    ActionRequestsComponent,
     EmptyStateComponent
   ]
 })
 export class NotificationsPage implements OnInit, OnDestroy {
   private notificationsService = inject(NotificationsService);
+  private readonly formSubmissionsService = inject(FormSubmissionsService);
+  private readonly navigationService = inject(NavigationService);
 
   readonly isLoading = this.notificationsService.isLoading;
   readonly hasError = this.notificationsService.hasError;
@@ -38,8 +41,36 @@ export class NotificationsPage implements OnInit, OnDestroy {
   readonly NotificationType = NotificationType;
   readonly defaultAvatar = 'assets/default-avatar.svg';
 
+  readonly notificationGroups = computed<{ labelKey: string; items: Notification[] }[]>(() => {
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    const startOfYesterday = new Date(startOfToday);
+    startOfYesterday.setDate(startOfYesterday.getDate() - 1);
+    const startOfWeek = new Date(startOfToday);
+    startOfWeek.setDate(startOfWeek.getDate() - 7);
+
+    const today: Notification[] = [];
+    const yesterday: Notification[] = [];
+    const thisWeek: Notification[] = [];
+    const older: Notification[] = [];
+
+    for (const notification of this.notifications()) {
+      if (notification.createdAt >= startOfToday) today.push(notification);
+      else if (notification.createdAt >= startOfYesterday) yesterday.push(notification);
+      else if (notification.createdAt >= startOfWeek) thisWeek.push(notification);
+      else older.push(notification);
+    }
+
+    return [
+      { labelKey: 'notifications.today', items: today },
+      { labelKey: 'notifications.yesterday', items: yesterday },
+      { labelKey: 'notifications.thisWeek', items: thisWeek },
+      { labelKey: 'notifications.older', items: older }
+    ].filter(group => group.items.length > 0);
+  });
+
   constructor() {
-    addIcons({ checkmarkOutline, closeOutline });
+    addIcons({ checkmarkOutline, closeOutline, checkmarkDoneOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -53,6 +84,10 @@ export class NotificationsPage implements OnInit, OnDestroy {
 
   async loadMore(): Promise<void> {
     await this.notificationsService.loadMore();
+  }
+
+  markAllRead(): void {
+    this.notificationsService.markAllAsRead();
   }
 
 
@@ -93,9 +128,26 @@ export class NotificationsPage implements OnInit, OnDestroy {
     if (img) img.src = this.defaultAvatar;
   }
 
-  markAsRead(notification: Notification): void {
+  async markAsRead(notification: Notification): Promise<void> {
     if (notification.status === 'unread') {
       this.notificationsService.markAsRead(notification.id);
+    }
+    await this.openRelatedEntity(notification);
+  }
+
+  private async openRelatedEntity(notification: Notification): Promise<void> {
+    const relatedEntityType = notification.metadata?.relatedEntityType;
+    const relatedEntityId = notification.metadata?.relatedEntityId;
+    if (relatedEntityType !== 'FormSubmission' || !relatedEntityId) return;
+
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    if (roleType !== RoleType.Member) return;
+
+    try {
+      const submission = await this.formSubmissionsService.getSubmission(relatedEntityId);
+      this.navigationService.navigateTo([`/app/${roleType}/${roleId}`, 'forms', submission.formId.toString(), relatedEntityId.toString()]);
+    } catch {
+      // notification is already marked as read; ignore navigation failure
     }
   }
 }

@@ -8,7 +8,7 @@ import {
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionicons/icons';
+import { alertCircle } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -72,7 +72,7 @@ export class SigninPage {
   });
 
   constructor() {
-    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline });
+    addIcons({ alertCircle });
     
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -104,6 +104,10 @@ export class SigninPage {
       
       if (response.success) {
         this.navigationService.navigateTo(['auth/loading']);
+      } else if (response.requiresEmailVerification) {
+        this.navigationService.navigateTo(['auth/verify-email'], {
+          queryParams: { email: response.email ?? email }
+        });
       } else {
         this.toastService.show(response.message, 'danger');
       }

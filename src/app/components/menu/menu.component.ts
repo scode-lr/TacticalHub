@@ -1,12 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { 
-  IonIcon,
-  IonModal
+import {
+  IonIcon
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { 
+import {
   homeOutline,
   newspaperOutline,
   addCircleOutline,
@@ -17,8 +16,7 @@ import {
   mailOutline,
   ellipsisHorizontal,
   logOutOutline,
-  settingsOutline,
-  closeOutline
+  settingsOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
@@ -35,12 +33,14 @@ export interface MenuItem {
   label: string;
   icon: string;
   route: string;
+  description?: string;
   badge?: number;
 }
 
 export interface MenuConfig {
   role: RoleType;
   items: MenuItem[];
+  moreItems?: MenuItem[];
 }
 
 @Component({
@@ -51,7 +51,6 @@ export interface MenuConfig {
   imports: [
     CommonModule,
     IonIcon,
-    IonModal,
     TranslatePipe,
     RoleSelectorComponent
   ],
@@ -68,29 +67,35 @@ export class MenuComponent implements OnInit {
   readonly currentRole = input<Role | null>();
   
   readonly selectedMenuItem = signal<string>('home');
-  readonly isModalOpen = signal<boolean>(false);
+  readonly currentMenuId = signal<string>('home');
   readonly user = signal<User | null>(null);
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
 
-  readonly mobileMenuItems = computed(() => this.config().items.filter(item => item.id !== 'notifications'));
-  readonly visibleMenuItems = computed(() => this.mobileMenuItems().slice(0, 4));
-  readonly hiddenMenuItems = computed(() => this.mobileMenuItems().slice(4));
+  readonly moreItems = computed(() => this.config().moreItems ?? []);
+  readonly mobileMenuItems = computed(() =>
+    this.config().items.filter(item => item.id !== 'home' && item.id !== 'notifications')
+  );
 
   readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
   readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
 
-  readonly menuItemsWithBadges = computed(() => {
-    return this.config().items.map(item => ({
+  private withBadges(items: MenuItem[]) {
+    return items.map(item => ({
       ...item,
-      badge: item.id === 'inbox' ? this.inboxBadge() : 
-             item.id === 'notifications' ? this.notificationsBadge() : 
+      badge: item.id === 'inbox' ? this.inboxBadge() :
+             item.id === 'notifications' ? this.notificationsBadge() :
              undefined
     }));
-  });
+  }
 
-  readonly mobileMenuItemsWithBadges = computed(() => this.menuItemsWithBadges().filter(item => item.id !== 'notifications'));
-  readonly visibleMenuItemsWithBadges = computed(() => this.mobileMenuItemsWithBadges().slice(0, 4));
-  readonly hiddenMenuItemsWithBadges = computed(() => this.mobileMenuItemsWithBadges().slice(4));
+  readonly menuItemsWithBadges = computed(() => this.withBadges(this.config().items));
+  readonly moreItemsWithBadges = computed(() => this.withBadges(this.moreItems()));
+  readonly mobileMenuItemsWithBadges = computed(() => this.withBadges(this.mobileMenuItems()));
+
+  readonly isMoreActive = computed(() => {
+    const menuId = this.currentMenuId();
+    return menuId === 'more' || this.moreItems().some(item => item.route === menuId);
+  });
 
   constructor() {
     this.initializeIcons();
@@ -114,8 +119,7 @@ export class MenuComponent implements OnInit {
       mailOutline,
       ellipsisHorizontal,
       logOutOutline,
-      settingsOutline,
-      closeOutline
+      settingsOutline
     });
   }
 
@@ -123,7 +127,7 @@ export class MenuComponent implements OnInit {
     const storedUser = this.userService.getStoredUser();
     if (storedUser) {
       this.user.set(storedUser);
-      this.avatarUrl.set(storedUser.avatarUrl || 'assets/default-avatar.svg');
+      this.avatarUrl.set(storedUser.metadata?.avatar || 'assets/default-avatar.svg');
     }
   }
 
@@ -138,19 +142,16 @@ export class MenuComponent implements OnInit {
   private trackRouteChanges() {
     const menuId = this.navigationService.getMenuIdFromUrl();
     if (menuId) {
-      const menuItem = this.config().items.find(item => item.route === menuId);
-      if (menuItem) {
-        this.selectedMenuItem.set(menuItem.id);
-      }
+      this.currentMenuId.set(menuId);
+      const menuItem = [...this.config().items, ...this.moreItems()].find(item => item.route === menuId);
+      this.selectedMenuItem.set(menuItem?.id ?? menuId);
     }
   }
 
   selectMenuItem(item: MenuItem) {
     this.selectedMenuItem.set(item.id);
-    this.isModalOpen.set(false);
     const role = this.currentRole();
     if (role) {
-      console.log(`/app/${role.roleId}/${role.id}/${item.route}`);
       this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/${item.route}`]);
     }
   }
@@ -159,16 +160,20 @@ export class MenuComponent implements OnInit {
     return this.selectedMenuItem() === itemId;
   }
 
-  toggleModal() {
-    this.isModalOpen.set(!this.isModalOpen());
-  }
-
-  closeModal() {
-    this.isModalOpen.set(false);
+  goToMore() {
+    const role = this.currentRole();
+    if (role) {
+      this.selectedMenuItem.set('more');
+      this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/more`]);
+    }
   }
 
   goToSettings() {
     this.navigationService.navigateTo(['/settings']);
+  }
+
+  goToProfile() {
+    this.navigationService.navigateTo(['/profile']);
   }
 
   logout() {

@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  } @else if (forms().length === 0) {
+  } @else if (rows().length === 0) {
   <div class="empty-state">
     <div class="empty-icon-wrap">
       <ion-icon name="document-text-outline"></ion-icon>
@@ -30,14 +30,20 @@
     </p>
   </div>
   } @else {
-  <p-dataview [value]="forms()" class="forms-dataview">
-    <ng-template #list let-items>
-      <div class="forms-grid">
-        @for (item of items; track item.id) {
-        <app-form-header [form]="item" [editable]="false" />
+  <div class="forms-groups">
+    @for (group of formGroups(); track group.action) {
+      <app-forms-group-section [icon]="group.icon" [titleKey]="group.titleKey" [count]="group.rows.length">
+        @for (row of group.rows; track row.form.id) {
+        <app-form-header
+          [form]="row.form"
+          [editable]="false"
+          [formOpen]="row.isOpen"
+          [mySubmissionStatus]="row.mySubmissionStatus"
+          [mySubmissionLoading]="row.mySubmissionLoading"
+        />
         }
-      </div>
-    </ng-template>
-  </p-dataview>
+      </app-forms-group-section>
+    }
+  </div>
   }
 </div>

@@ -67,6 +67,10 @@ export const memberRoutes: Routes = [
       {
         path: 'contact',
         loadComponent: () => import('../contact/contact.page').then(m => m.ContactPage)
+      },
+      {
+        path: 'more',
+        loadComponent: () => import('../more/more.page').then(m => m.MorePage)
       }
     ]
   }

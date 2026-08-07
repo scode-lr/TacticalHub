@@ -1,15 +1,72 @@
 <div class="page-container home-page">
-  <section class="home-modules" aria-label="Modules">
-    @for (shortcut of shortcuts(); track shortcut.id) {
-      <button class="module-card" type="button" (click)="openShortcut(shortcut)">
-        <span class="module-icon">
-          <ion-icon [name]="shortcut.icon"></ion-icon>
-        </span>
-        <span class="module-content">
-          <span class="module-title">{{ shortcut.labelKey | translate }}</span>
-          <span class="module-description">{{ shortcut.descriptionKey | translate }}</span>
-        </span>
-      </button>
-    }
-  </section>
+  @if (isMember()) {
+    <section class="feed-header">
+      <h1 class="feed-greeting">{{ greetingKey() | translate: { name: firstName() } }}</h1>
+      <p class="feed-subtitle">{{ 'user.home.greetingSubtitle' | translate }}</p>
+    </section>
+
+    <div class="feed-grid">
+      <div class="feed-main">
+        <section class="feed-section" aria-label="Latest form">
+          <div class="section-heading">
+            <span class="section-label">{{ 'user.home.latestForm' | translate }}</span>
+            <button type="button" class="see-all-link" (click)="goToForms()">{{ 'user.home.seeAllForms' | translate }}</button>
+          </div>
+          @if (latestForm(); as form) {
+            <button type="button" class="form-highlight-card" (click)="goToForm(form.id)">
+              <span class="form-highlight-icon">
+                <ion-icon name="document-text-outline"></ion-icon>
+              </span>
+              <span class="form-highlight-body">
+                <span class="form-highlight-name">{{ form.name }}</span>
+                @if (form.description) {
+                  <span class="form-highlight-description">{{ form.description }}</span>
+                }
+              </span>
+            </button>
+          } @else if (!feedLoading()) {
+            <div class="feed-empty">{{ 'user.home.noLatestForm' | translate }}</div>
+          }
+        </section>
+
+        <section class="feed-section" aria-label="Featured news">
+          <div class="section-heading">
+            <span class="section-label">{{ 'user.home.featuredNews' | translate }}</span>
+            <button type="button" class="see-all-link" (click)="goToAllNews()">{{ 'user.home.seeAllNews' | translate }}</button>
+          </div>
+          @if (featuredNews(); as news) {
+            <button
+              type="button"
+              class="news-hero"
+              [class.news-hero--placeholder]="!primaryNewsImage(news)"
+              [style.background-image]="primaryNewsImage(news) ? 'url(' + primaryNewsImage(news) + ')' : null"
+              (click)="goToNews(news.id)">
+              <span class="news-hero-badge">{{ 'user.home.clubBadge' | translate }}</span>
+              <div class="news-hero-content">
+                <div class="news-hero-title">{{ news.title }}</div>
+                <div class="news-hero-time">{{ getTimeAgo(news.publishedAt || news.createdAt) }}</div>
+              </div>
+            </button>
+          } @else if (!feedLoading()) {
+            <div class="feed-empty">{{ 'user.home.noNews' | translate }}</div>
+          }
+        </section>
+      </div>
+
+    </div>
+  } @else {
+    <section class="home-modules" aria-label="Modules">
+      @for (shortcut of shortcuts(); track shortcut.id) {
+        <button class="module-card" type="button" (click)="openShortcut(shortcut)">
+          <span class="module-icon">
+            <ion-icon [name]="shortcut.icon"></ion-icon>
+          </span>
+          <span class="module-content">
+            <span class="module-title">{{ shortcut.labelKey | translate }}</span>
+            <span class="module-description">{{ shortcut.descriptionKey | translate }}</span>
+          </span>
+        </button>
+      }
+    </section>
+  }
 </div>

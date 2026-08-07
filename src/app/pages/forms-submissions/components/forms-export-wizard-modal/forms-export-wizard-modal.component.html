@@ -1,0 +1,107 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="close()" class="app-modal app-modal--large">
+  <ng-template>
+    <div class="app-modal-container export-wizard">
+      <div class="app-modal-header">
+        <div class="app-modal-header-info">
+          @if (step() === 'columns') {
+            <ion-icon [name]="headerIcon()" class="app-modal-header-icon"></ion-icon>
+          } @else {
+            <button class="app-modal-close wizard-back" (click)="back.emit()" [attr.aria-label]="'common.back' | translate">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </button>
+          }
+          <div class="app-modal-header-text">
+            <h2 class="app-modal-title">{{ headerTitleKey() | translate }}</h2>
+            <p class="app-modal-subtitle">{{ formName() }}</p>
+          </div>
+        </div>
+        <button class="app-modal-close" (click)="close()" [attr.aria-label]="'common.close' | translate">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="app-modal-content">
+        @switch (step()) {
+          @case ('columns') {
+            <app-forms-export-columns-step
+              [loading]="columnsLoading()"
+              [editableColumns]="editableColumns()"
+              (toggleExportColumn)="toggleExportColumn.emit($event)"
+              (updateExportColumnHeader)="updateExportColumnHeader.emit($event)"
+              (moveExportColumn)="moveExportColumn.emit($event)"
+              (toggleAllColumns)="toggleAllColumns.emit($event)"
+            />
+          }
+
+          @case ('destination') {
+            <p class="config-help">{{ 'admin.forms.exportWizard.destinationHelp' | translate }}</p>
+
+            <div class="destination-options">
+              <button type="button" class="destination-option" (click)="chooseSheets.emit()">
+                <span class="destination-icon">
+                  <ion-icon name="cloud-upload-outline"></ion-icon>
+                </span>
+                <span class="destination-text">
+                  <span class="destination-title">{{ 'admin.forms.exportWizard.destinationSheets' | translate }}</span>
+                  <span class="destination-description">{{ 'admin.forms.exportWizard.destinationSheetsDescription' | translate }}</span>
+                </span>
+                <ion-icon name="arrow-forward-outline" class="destination-arrow"></ion-icon>
+              </button>
+
+              <button type="button" class="destination-option" (click)="chooseCsv.emit()">
+                <span class="destination-icon">
+                  <ion-icon name="download-outline"></ion-icon>
+                </span>
+                <span class="destination-text">
+                  <span class="destination-title">{{ 'admin.forms.exportWizard.destinationCsv' | translate }}</span>
+                  <span class="destination-description">{{ 'admin.forms.exportWizard.destinationCsvDescription' | translate }}</span>
+                </span>
+                <ion-icon name="arrow-forward-outline" class="destination-arrow"></ion-icon>
+              </button>
+            </div>
+
+            <button type="button" class="btn-text edit-columns-link" (click)="back.emit()">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+              {{ 'admin.forms.exportWizard.editColumns' | translate }}
+            </button>
+          }
+
+          @case ('sheets') {
+            <app-forms-integrations-step
+              [loading]="integrationsLoading()"
+              [saving]="integrationsSaving()"
+              [creatingSheet]="creatingSheet()"
+              [testingId]="testingId()"
+              [syncingId]="syncingId()"
+              [integrations]="integrations()"
+              [integrationForm]="integrationForm()"
+              [googleSheetsCreateForm]="googleSheetsCreateForm()"
+              (editIntegration)="editIntegration.emit($event)"
+              (newIntegration)="newIntegration.emit()"
+              (updateIntegrationForm)="updateIntegrationForm.emit($event)"
+              (updateGoogleSheetsCreateForm)="updateGoogleSheetsCreateForm.emit($event)"
+              (createGoogleSheetsIntegration)="createGoogleSheetsIntegration.emit()"
+              (saveIntegration)="saveIntegration.emit()"
+              (testIntegration)="testIntegration.emit($event)"
+              (syncIntegration)="syncIntegration.emit($event)"
+              (deleteIntegration)="deleteIntegration.emit($event)"
+              (openIntegrationSpreadsheet)="openIntegrationSpreadsheet.emit($event)"
+            />
+          }
+        }
+      </div>
+
+      @if (step() === 'columns') {
+        <div class="app-modal-footer">
+          <button type="button" class="btn-secondary" (click)="close()">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button type="button" class="btn-primary" (click)="next.emit()" [disabled]="columnsLoading() || columnsSaving()">
+            {{ (columnsSaving() ? 'admin.forms.exportConfig.saving' : 'admin.forms.exportWizard.next') | translate }}
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </button>
+        </div>
+      }
+    </div>
+  </ng-template>
+</ion-modal>

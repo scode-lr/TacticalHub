@@ -1,45 +1,64 @@
 @if (loading()) {
   <div class="page-container-narrow news-detail-page">
-    <div class="empty-state">
-      <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
+    <div class="news-skeleton">
+      <div class="skeleton-hero"></div>
+      <div class="news-skeleton-content">
+        <div class="skeleton-line skeleton-title-lg"></div>
+        <div class="skeleton-line skeleton-title-sm"></div>
+        <div class="skeleton-line skeleton-byline"></div>
+        <div class="skeleton-line skeleton-body"></div>
+        <div class="skeleton-line skeleton-body"></div>
+        <div class="skeleton-line skeleton-body skeleton-body--short"></div>
+      </div>
     </div>
   </div>
-} @else if (news()) {
+} @else if (news(); as post) {
   <div class="page-container-narrow news-detail-page">
     <button class="detail-back" type="button" (click)="goBack()">
       <ion-icon name="arrow-back-outline"></ion-icon>
       <span>{{ 'common.back' | translate }}</span>
     </button>
 
-    <article class="card news-article">
-      <div class="card-body news-content">
-        <span class="news-date">{{ getFormattedDate(news()!.publishedAt || news()!.createdAt) }}</span>
+    <article class="news-article">
+      @if (primaryImageUrl) {
+        <div class="news-hero" [style.background-image]="'url(' + primaryImageUrl + ')'"></div>
+      }
 
-        <h1 class="heading-2 news-title">{{ news()?.title }}</h1>
+      <div class="news-content">
+        <h1 class="news-title">{{ post.title }}</h1>
 
-        <div class="body-large news-body">
-          <p>{{ news()?.body }}</p>
+        <div class="news-byline">
+          <span class="news-byline-author">{{ post.authorName }}</span>
+          <span aria-hidden="true">·</span>
+          <span>{{ getFormattedDate(post.publishedAt || post.createdAt) }}</span>
         </div>
 
-        @if (primaryImageUrl) {
-          <div class="news-image-below">
-            <img [src]="primaryImageUrl" [alt]="news()!.title" />
-          </div>
-        }
+        <div class="news-body">
+          @for (paragraph of bodyParagraphs; track $index; let first = $first) {
+            <p [class.news-lede]="first">{{ paragraph }}</p>
+          }
+        </div>
 
-        @if (news()!.externalLinkUrl || news()!.linkedFormId) {
+        @if (post.externalLinkUrl || post.linkedFormId) {
           <div class="article-footer news-links">
-            @if (news()!.externalLinkUrl) {
+            @if (post.externalLinkUrl) {
               <button class="btn-secondary" type="button" (click)="openExternalLink()">
-                {{ news()!.externalLinkLabel || ('user.news.openLink' | translate) }}
+                {{ post.externalLinkLabel || ('user.news.openLink' | translate) }}
               </button>
             }
 
-            @if (news()!.linkedFormId) {
+            @if (post.linkedFormId) {
               <button class="btn-primary" type="button" (click)="openLinkedForm()">
                 {{ 'user.news.openForm' | translate }}
               </button>
             }
+          </div>
+        }
+
+        @if (relatedNews(); as related) {
+          <div class="news-related">
+            <span class="news-related-label">{{ 'user.news.relatedTitle' | translate }}</span>
+            <app-news-card [news]="related" variant="row" (cardClick)="openRelated($event)" />
           </div>
         }
       </div>

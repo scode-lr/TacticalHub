@@ -13,12 +13,22 @@
 
     .content-container {
       flex: 1;
-      padding: 2rem;
-      overflow-y: auto;
+      min-width: 0;
+      position: relative;
+      padding: 0;
+      overflow: hidden;
       background: var(--background-secondary, #f8f9fa);
 
-      @media (max-width: 768px) {
-        padding: 1.5rem;
+      ion-router-outlet {
+        position: absolute;
+        inset: 0;
+      }
+
+      ::ng-deep ion-router-outlet > .ion-page {
+        padding: 2rem;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: var(--background-secondary, #f8f9fa);
       }
     }
   }
@@ -31,7 +41,6 @@
       align-items: center;
       height: 56px;
       min-height: 56px;
-      padding: 0.5rem 1rem;
       background: var(--background-primary, #ffffff);
       border-bottom: 1px solid var(--border-light, #e5e7eb);
       position: sticky;
@@ -66,10 +75,13 @@
 
       .content-container {
         order: 1;
-        padding: 1.5rem;
-        padding-bottom: 70px;
+        padding: 0;
 
         &.full-width {
+          padding: 0;
+        }
+
+        ::ng-deep ion-router-outlet > .ion-page {
           padding: 1.5rem;
           padding-bottom: 70px;
         }

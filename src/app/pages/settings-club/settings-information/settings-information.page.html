@@ -139,18 +139,31 @@
                 </div>
 
                 <div class="form-field">
-                  <label [for]="'content-' + i">
+                  <label>
                     {{ 'admin.settings.information.form.content' | translate }}
                     <span class="required-mark">*</span>
                   </label>
-                  <textarea
-                    class="form-textarea"
-                    [id]="'content-' + i"
+                  <p-editor
+                    class="content-editor"
                     formControlName="content"
-                    rows="5"
-                    maxlength="2000"
+                    [style]="{ height: '200px' }"
+                    [formats]="['bold', 'italic', 'list', 'link']"
                     [placeholder]="'admin.settings.information.form.contentPlaceholder' | translate"
-                  ></textarea>
+                  >
+                    <ng-template #header>
+                      <span class="ql-formats">
+                        <button type="button" class="ql-bold" [attr.aria-label]="'admin.settings.information.form.editor.bold' | translate"></button>
+                        <button type="button" class="ql-italic" [attr.aria-label]="'admin.settings.information.form.editor.italic' | translate"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button type="button" class="ql-list" value="ordered" [attr.aria-label]="'admin.settings.information.form.editor.orderedList' | translate"></button>
+                        <button type="button" class="ql-list" value="bullet" [attr.aria-label]="'admin.settings.information.form.editor.bulletList' | translate"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button type="button" class="ql-link" [attr.aria-label]="'admin.settings.information.form.editor.link' | translate"></button>
+                      </span>
+                    </ng-template>
+                  </p-editor>
                   @if (sectionHasError(i, 'content')) {
                     <small class="field-error">{{ 'admin.settings.information.form.contentRequired' | translate }}</small>
                   }

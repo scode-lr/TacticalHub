@@ -1,0 +1,15 @@
+<section class="forms-group">
+  <div class="forms-group-title">
+    <span class="forms-group-icon">
+      <ion-icon [name]="icon()"></ion-icon>
+    </span>
+    <span class="forms-group-name">{{ titleKey() | translate }}</span>
+    <span class="forms-group-count">
+      · {{ (count() === 1 ? 'admin.settingsForms.groups.countOne' : 'admin.settingsForms.groups.count') | translate: { count: count() } }}
+    </span>
+    <span class="forms-group-line"></span>
+  </div>
+  <div class="forms-rowlist">
+    <ng-content />
+  </div>
+</section>

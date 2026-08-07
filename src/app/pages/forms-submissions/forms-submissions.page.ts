@@ -6,6 +6,7 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { FormService } from '@core/services/form.service';
 import { ClubService } from '@core/services/club.service';
 import { FormSubmissionsService } from '@core/services/form-submissions.service';
+import { NotificationsService } from '@core/services/notifications.service';
 import { NavigationService } from '@services/navigation.service';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
@@ -18,53 +19,41 @@ import { TagModule } from 'primeng/tag';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { SelectModule } from 'primeng/select';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MenuItem } from 'primeng/api';
 import { IonIcon, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, settingsOutline, saveOutline, chevronUpOutline, chevronDownOutline, cloudUploadOutline, addOutline, refreshOutline, checkmarkCircleOutline, trashOutline, openOutline } from 'ionicons/icons';
-import { FormsExportConfigModalComponent } from './components/forms-export-config-modal/forms-export-config-modal.component';
-import { FormsIntegrationsModalComponent } from './components/forms-integrations-modal/forms-integrations-modal.component';
-
-interface IntegrationFormState {
-  id: number | null;
-  name: string;
-  spreadsheetId: string;
-  sheetName: string;
-  isEnabled: boolean;
-}
-
-interface GoogleSheetsCreateFormState {
-  name: string;
-  sheetName: string;
-  shareWithEmail: string;
-}
-
+import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, settingsOutline, saveOutline, chevronUpOutline, chevronDownOutline, chevronForwardOutline, chevronBackOutline, cloudUploadOutline, addOutline, refreshOutline, checkmarkCircleOutline, trashOutline, openOutline, bodyOutline, peopleOutline } from 'ionicons/icons';
+import { TeamJoinRequestsComponent } from '@components/team-join-requests/team-join-requests.component';
+import { ActionRequestsComponent } from '@components/action-requests/action-requests.component';
+import { ExportWizardStep, FormsExportWizardModalComponent } from './components/forms-export-wizard-modal/forms-export-wizard-modal.component';
+import { GoogleSheetsCreateFormState, IntegrationFormState } from './components/forms-integrations-step/forms-integrations-step.component';
 
 @Component({
   selector: 'app-forms-submissions',
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, BreadcrumbModule, IonIcon, IonToast, FormsExportConfigModalComponent, FormsIntegrationsModalComponent]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, BreadcrumbModule, PaginatorModule, IonIcon, IonToast, TeamJoinRequestsComponent, ActionRequestsComponent, FormsExportWizardModalComponent]
 })
 export class FormsSubmissionsPage {
   private readonly formService = inject(FormService);
   private readonly clubService = inject(ClubService);
   private readonly translationService = inject(TranslationService);
   private readonly formSubmissionsService = inject(FormSubmissionsService);
+  private readonly notificationsService = inject(NotificationsService);
   private readonly navigationService = inject(NavigationService);
 
   constructor() {
-    addIcons({ downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, settingsOutline, saveOutline, chevronUpOutline, chevronDownOutline, cloudUploadOutline, addOutline, refreshOutline, checkmarkCircleOutline, trashOutline, openOutline });
+    addIcons({ downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, settingsOutline, saveOutline, chevronUpOutline, chevronDownOutline, chevronForwardOutline, chevronBackOutline, cloudUploadOutline, addOutline, refreshOutline, checkmarkCircleOutline, trashOutline, openOutline, bodyOutline, peopleOutline });
   }
 
   readonly forms = signal<FormDetail[]>([]);
-  readonly totalForms = signal<number>(0);
   readonly loading = signal<boolean>(true);
   readonly formsLimit = signal<number>(10);
   readonly formsOffset = signal<number>(0);
+  readonly hasMoreForms = signal<boolean>(false);
   readonly viewState = signal<'list' | 'detail'>('list');
   readonly selectedFormId = signal<number | null>(null);
   readonly submissions = signal<FormSubmission[]>([]);
@@ -74,28 +63,28 @@ export class FormsSubmissionsPage {
   readonly totalSubmissions = signal<number>(0);
   readonly currentSort = signal<string | undefined>(undefined);
 
+  readonly ActiveStatus = AppStatus.Active;
+
   readonly toastVisible = signal<boolean>(false);
   readonly toastMessage = signal<string>('');
   readonly toastColor = signal<'success' | 'danger'>('danger');
 
-  readonly isExportConfigOpen = signal<boolean>(false);
+  readonly isExportOpen = signal<boolean>(false);
+  readonly exportStep = signal<ExportWizardStep>('columns');
   readonly exportConfigLoading = signal<boolean>(false);
   readonly exportConfigSaving = signal<boolean>(false);
   readonly exportProfile = signal<ExportProfile | null>(null);
   readonly editableColumns = signal<ExportColumn[]>([]);
 
-  readonly isIntegrationsOpen = signal<boolean>(false);
   readonly integrationsLoading = signal<boolean>(false);
   readonly integrationsSaving = signal<boolean>(false);
   readonly integrationsCreatingSheet = signal<boolean>(false);
   readonly integrationsTestingId = signal<number | null>(null);
   readonly integrationsSyncingId = signal<number | null>(null);
   readonly integrations = signal<ExternalIntegration[]>([]);
-  readonly integrationExportProfile = signal<ExportProfile | null>(null);
   readonly integrationForm = signal<IntegrationFormState>(this.createEmptyIntegrationForm());
   readonly googleSheetsCreateForm = signal<GoogleSheetsCreateFormState>(this.createEmptyGoogleSheetsCreateForm());
 
-  selectedForms: FormDetail[] = [];
   searchValue = '';
   submissionsSearchValue = '';
 
@@ -109,24 +98,13 @@ export class FormsSubmissionsPage {
     { label: this.selectedForm()?.name ?? '' }
   ]);
 
-  get statuses() {
-    return [
-      { label: this.translationService.instant('admin.settingsForms.status.AC'), value: AppStatus.Active },
-      { label: this.translationService.instant('admin.settingsForms.status.I'), value: AppStatus.Inactive },
-      { label: this.translationService.instant('admin.settingsForms.status.P'), value: AppStatus.Pending },
-      { label: this.translationService.instant('admin.settingsForms.status.D'), value: AppStatus.Draft },
-    ];
-  }
-
-  get actions() {
-    return [
-      { label: this.translationService.instant('admin.settingsForms.actions.simple'), value: FormAction.Simple },
-      { label: this.translationService.instant('admin.settingsForms.actions.register-player'), value: FormAction.RegisterPlayer },
-      { label: this.translationService.instant('admin.settingsForms.actions.become-member'), value: FormAction.BecomeMember },
-    ];
-  }
-
   async ngOnInit(): Promise<void> {
+    // The pending-approval block still reads from the notifications feed; the definitive
+    // data source (dedicated endpoint vs. /notifications) is still to be decided.
+    if (this.notificationsService.getNotifications().length === 0) {
+      void this.notificationsService.loadNotifications();
+    }
+
     const saved = this.formSubmissionsService.savedPageState;
     if (saved) {
       this.formSubmissionsService.savedPageState = null;
@@ -149,10 +127,27 @@ export class FormsSubmissionsPage {
     }
   }
 
-  async onFormsPage(event: { first: number; rows: number }): Promise<void> {
-    const rowsChanged = event.rows !== this.formsLimit();
-    this.formsLimit.set(event.rows);
-    this.formsOffset.set(rowsChanged ? 0 : event.first);
+  readonly formsPageNumber = computed(() => Math.floor(this.formsOffset() / this.formsLimit()) + 1);
+
+  visibleForms(): FormDetail[] {
+    const query = this.searchValue.trim().toLocaleLowerCase();
+    if (!query) return this.forms();
+
+    return this.forms().filter(form =>
+      [form.name, form.action, form.status]
+        .some(value => String(value ?? '').toLocaleLowerCase().includes(query))
+    );
+  }
+
+  async prevFormsPage(): Promise<void> {
+    if (this.formsOffset() === 0) return;
+    this.formsOffset.set(Math.max(0, this.formsOffset() - this.formsLimit()));
+    await this.loadForms();
+  }
+
+  async nextFormsPage(): Promise<void> {
+    if (!this.hasMoreForms()) return;
+    this.formsOffset.set(this.formsOffset() + this.formsLimit());
     await this.loadForms();
   }
 
@@ -161,12 +156,17 @@ export class FormsSubmissionsPage {
     try {
       const clubId = this.clubService.getCurrentClubId();
       if (clubId !== null) {
-        const result = await this.formService.getFormsByClubId(clubId, AppStatus.Active, true, this.formsLimit(), this.formsOffset());
-        this.forms.set(result);
+        const limit = this.formsLimit();
+        // GET /forms returns no total, so one extra row is requested just to
+        // find out whether there is a next page.
+        const result = await this.formService.getFormsByClubId(clubId, undefined, true, limit + 1, this.formsOffset());
+        this.hasMoreForms.set(result.length > limit);
+        this.forms.set(result.slice(0, limit));
       }
     } catch (error) {
       console.error(error);
-      this.submissions.set([]);
+      this.forms.set([]);
+      this.hasMoreForms.set(false);
     } finally {
       this.loading.set(false);
     }
@@ -206,9 +206,9 @@ export class FormsSubmissionsPage {
     await this.loadSubmissions(formId);
   }
 
-  async clearSubmissionsFilter(dt: Table): Promise<void> {
+  async clearSubmissionsFilter(dt?: Table): Promise<void> {
     this.submissionsSearchValue = '';
-    dt.reset();
+    dt?.reset();
     const formId = this.selectedFormId();
     if (formId === null) return;
     this.currentPage.set(1);
@@ -249,64 +249,100 @@ export class FormsSubmissionsPage {
     this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms-submissions/${submissionId}`]);
   }
 
-  async exportSubmissions(): Promise<void> {
-    for (const form of this.selectedForms) {
-      try {
-        await this.formSubmissionsService.exportSubmissions(form.id, form.name);
-      } catch {
-        this.showToast(this.translationService.instant('admin.forms.exportError'), 'danger');
-        return;
-      }
-    }
-  }
+  // ── Export wizard ────────────────────────────────────────────────
 
-  async exportCurrentForm(): Promise<void> {
+  async openExport(): Promise<void> {
     const form = this.selectedForm();
     if (!form) return;
 
-    try {
-      await this.formSubmissionsService.exportSubmissions(form.id, form.name);
-    } catch {
-      this.showToast(this.translationService.instant('admin.forms.exportError'), 'danger');
-    }
-  }
-
-  async openExportConfig(form?: FormDetail): Promise<void> {
-    const targetForm = form ?? (this.selectedForms.length === 1 ? this.selectedForms[0] : this.selectedForm());
-    if (!targetForm) {
-      this.showToast(this.translationService.instant('admin.forms.exportConfig.selectOne'), 'danger');
-      return;
-    }
-
-    this.isExportConfigOpen.set(true);
+    this.isExportOpen.set(true);
+    this.exportStep.set('columns');
     this.exportConfigLoading.set(true);
     this.exportProfile.set(null);
     this.editableColumns.set([]);
 
     try {
-      const profile = await this.formSubmissionsService.getExportProfile(targetForm.id);
+      const profile = await this.formSubmissionsService.getExportProfile(form.id);
       this.exportProfile.set(profile);
       this.editableColumns.set(profile.columns.map(column => ({ ...column })).sort((a, b) => a.order - b.order));
     } catch (error) {
       console.error('Error loading export profile:', error);
       this.showToast(this.translationService.instant('admin.forms.exportConfig.loadError'), 'danger');
-      this.closeExportConfig();
+      this.closeExport();
     } finally {
       this.exportConfigLoading.set(false);
     }
   }
 
-  closeExportConfig(): void {
-    this.isExportConfigOpen.set(false);
+  closeExport(): void {
+    this.isExportOpen.set(false);
+    this.exportStep.set('columns');
     this.exportProfile.set(null);
     this.editableColumns.set([]);
     this.exportConfigLoading.set(false);
     this.exportConfigSaving.set(false);
+    this.integrationsLoading.set(false);
+    this.integrationsSaving.set(false);
+    this.integrationsCreatingSheet.set(false);
+    this.integrationsTestingId.set(null);
+    this.integrationsSyncingId.set(null);
+    this.integrations.set([]);
+    this.integrationForm.set(this.createEmptyIntegrationForm());
+    this.googleSheetsCreateForm.set(this.createEmptyGoogleSheetsCreateForm());
+  }
+
+  /** Back arrow: from the destination step to the columns, from Sheets to the destination. */
+  onWizardBack(): void {
+    this.exportStep.set(this.exportStep() === 'sheets' ? 'destination' : 'columns');
+  }
+
+  /** Saves the export profile and, only if it succeeds, moves on to pick a destination. */
+  async goToDestination(): Promise<void> {
+    if (await this.saveExportConfig()) {
+      this.exportStep.set('destination');
+    }
+  }
+
+  async goToSheets(): Promise<void> {
+    const form = this.selectedForm();
+    if (!form) return;
+
+    this.exportStep.set('sheets');
+    this.integrationsLoading.set(true);
+    this.integrations.set([]);
+    this.integrationForm.set(this.createEmptyIntegrationForm());
+    this.googleSheetsCreateForm.set(this.createEmptyGoogleSheetsCreateForm(form.name));
+
+    try {
+      this.integrations.set(await this.formSubmissionsService.getIntegrations(form.id));
+    } catch (error) {
+      console.error('Error loading integrations:', error);
+      this.showToast(this.translationService.instant('admin.forms.integrations.loadError'), 'danger');
+      this.exportStep.set('destination');
+    } finally {
+      this.integrationsLoading.set(false);
+    }
+  }
+
+  async downloadCsv(): Promise<void> {
+    const form = this.selectedForm();
+    if (!form) return;
+
+    try {
+      await this.formSubmissionsService.exportSubmissions(form.id, form.name);
+      this.closeExport();
+    } catch {
+      this.showToast(this.translationService.instant('admin.forms.exportError'), 'danger');
+    }
   }
 
   toggleExportColumn(index: number, isEnabled: boolean): void {
     const columns = this.editableColumns().map((column, columnIndex) => columnIndex === index ? { ...column, isEnabled } : column);
     this.editableColumns.set(columns);
+  }
+
+  toggleAllExportColumns(isEnabled: boolean): void {
+    this.editableColumns.set(this.editableColumns().map(column => ({ ...column, isEnabled })));
   }
 
   updateExportColumnHeader(index: number, header: string): void {
@@ -323,19 +359,20 @@ export class FormsSubmissionsPage {
     this.editableColumns.set(columns.map((column, columnIndex) => ({ ...column, order: columnIndex })));
   }
 
-  async saveExportConfig(): Promise<void> {
+  /** Returns true when the profile was persisted, false when validation or the request failed. */
+  private async saveExportConfig(): Promise<boolean> {
     const profile = this.exportProfile();
-    if (!profile || this.exportConfigSaving()) return;
+    if (!profile || this.exportConfigSaving()) return false;
 
     const columns = this.editableColumns().map((column, index) => ({ ...column, order: index }));
     if (!columns.some(column => column.isEnabled)) {
       this.showToast(this.translationService.instant('admin.forms.exportConfig.atLeastOne'), 'danger');
-      return;
+      return false;
     }
 
     if (columns.some(column => column.isEnabled && !column.header.trim())) {
       this.showToast(this.translationService.instant('admin.forms.exportConfig.headerRequired'), 'danger');
-      return;
+      return false;
     }
 
     const request: SaveExportProfileRequest = {
@@ -355,56 +392,17 @@ export class FormsSubmissionsPage {
       const saved = await this.formSubmissionsService.saveExportProfile(profile.sourceId ?? profile.id!, request);
       this.exportProfile.set(saved);
       this.editableColumns.set(saved.columns.map(column => ({ ...column })).sort((a, b) => a.order - b.order));
-      this.showToast(this.translationService.instant('admin.forms.exportConfig.saveSuccess'), 'success');
-      this.closeExportConfig();
+      return true;
     } catch (error) {
       console.error('Error saving export profile:', error);
       this.showToast(this.translationService.instant('admin.forms.exportConfig.saveError'), 'danger');
+      return false;
     } finally {
       this.exportConfigSaving.set(false);
     }
   }
 
-  async openIntegrations(): Promise<void> {
-    const form = this.selectedForm();
-    if (!form) return;
-
-    this.isIntegrationsOpen.set(true);
-    this.integrationsLoading.set(true);
-    this.integrations.set([]);
-    this.integrationExportProfile.set(null);
-    this.integrationForm.set(this.createEmptyIntegrationForm());
-    this.googleSheetsCreateForm.set(this.createEmptyGoogleSheetsCreateForm(form.name));
-
-    try {
-      const [profile, integrations] = await Promise.all([
-        this.ensureSavedExportProfile(form),
-        this.formSubmissionsService.getIntegrations(form.id)
-      ]);
-
-      this.integrationExportProfile.set(profile);
-      this.integrations.set(integrations);
-    } catch (error) {
-      console.error('Error loading integrations:', error);
-      this.showToast(this.translationService.instant('admin.forms.integrations.loadError'), 'danger');
-      this.closeIntegrations();
-    } finally {
-      this.integrationsLoading.set(false);
-    }
-  }
-
-  closeIntegrations(): void {
-    this.isIntegrationsOpen.set(false);
-    this.integrationsLoading.set(false);
-    this.integrationsSaving.set(false);
-    this.integrationsCreatingSheet.set(false);
-    this.integrationsTestingId.set(null);
-    this.integrationsSyncingId.set(null);
-    this.integrations.set([]);
-    this.integrationExportProfile.set(null);
-    this.integrationForm.set(this.createEmptyIntegrationForm());
-    this.googleSheetsCreateForm.set(this.createEmptyGoogleSheetsCreateForm());
-  }
+  // ── Google Sheets integrations ───────────────────────────────────
 
   editIntegration(integration: ExternalIntegration): void {
     const config = this.parseGoogleSheetsConfig(integration.configurationJson);
@@ -461,7 +459,7 @@ export class FormsSubmissionsPage {
 
   async saveIntegration(): Promise<void> {
     const form = this.selectedForm();
-    const profile = this.integrationExportProfile();
+    const profile = this.exportProfile();
     const integrationForm = this.integrationForm();
     if (!form || !profile?.id || this.integrationsSaving()) return;
 
@@ -557,25 +555,6 @@ export class FormsSubmissionsPage {
     window.open(`https://docs.google.com/spreadsheets/d/${spreadsheetId}`, '_blank', 'noopener,noreferrer');
   }
 
-  private async ensureSavedExportProfile(form: FormDetail): Promise<ExportProfile> {
-    const profile = await this.formSubmissionsService.getExportProfile(form.id);
-    if (profile.id) return profile;
-
-    const request: SaveExportProfileRequest = {
-      name: profile.name,
-      columns: profile.columns.map((column, index) => ({
-        sourceKind: ExportColumnSourceKind.FormField,
-        sourceKey: column.sourceKey,
-        header: column.header,
-        order: index,
-        isEnabled: column.isEnabled,
-        format: column.format ?? null
-      }))
-    };
-
-    return await this.formSubmissionsService.saveExportProfile(form.id, request);
-  }
-
   private createEmptyIntegrationForm(): IntegrationFormState {
     return {
       id: null,
@@ -629,9 +608,29 @@ export class FormsSubmissionsPage {
     this.totalSubmissions.set(0);
   }
 
-  clear(dt: Table): void {
+  clear(): void {
     this.searchValue = '';
-    dt.reset();
+  }
+
+  /**
+   * Keep the mobile paginator on the same signal state as the desktop table.
+   */
+  async onMobilePage(event: PaginatorState): Promise<void> {
+    const formId = this.selectedFormId();
+    if (formId === null) return;
+
+    const rows = event.rows ?? this.pageSize();
+    this.pageSize.set(rows);
+    this.currentPage.set(Math.floor((event.first ?? 0) / rows) + 1);
+    await this.loadSubmissions(formId);
+  }
+
+  formIcon(form: FormDetail): string {
+    switch (form.action) {
+      case FormAction.RegisterPlayer: return 'body-outline';
+      case FormAction.BecomeMember:   return 'people-outline';
+      default:                        return 'document-text-outline';
+    }
   }
 
   getSeverity(status: string): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' | undefined {

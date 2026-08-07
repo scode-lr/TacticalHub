@@ -1,14 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonIcon,
-  IonText
-} from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { 
-  logInOutline,
-  personAddOutline
-} from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -22,8 +13,6 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   standalone: true,
   imports: [
     CommonModule,
-    IonIcon,
-    IonText,
     AuthBrandingComponent,
     TranslatePipe
   ]
@@ -31,16 +20,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 export class WelcomePage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
-  
+
   appName = environment.name;
   tagline = '';
-  
-  constructor() {
-    addIcons({
-      'log-in-outline': logInOutline,
-      'person-add-outline': personAddOutline
-    });
-  }
 
   ngOnInit() {
     this.tagline = this.translationService.instant(environment.taglineKey);

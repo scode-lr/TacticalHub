@@ -1,14 +1,16 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonSelect, IonSelectOption, IonIcon, IonInput, IonSpinner } from '@ionic/angular/standalone';
+import { IonContent, IonSelect, IonSelectOption, IonIcon, IonInput, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { eyeOutline, eyeOffOutline, alertCircle, checkmarkCircle } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { AuthService } from '@services/auth.service';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { PasswordStrengthComponent } from '@components/password-strength/password-strength.component';
 
 @Component({
   selector: 'app-settings',
@@ -18,13 +20,16 @@ import { BackButtonComponent } from '@components/back-button/back-button.compone
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    IonContent,
     IonSelect,
     IonSelectOption,
     IonIcon,
     IonInput,
     IonSpinner,
     TranslatePipe,
+    UserHeaderComponent,
     BackButtonComponent,
+    PasswordStrengthComponent,
   ]
 })
 export class SettingsPage implements OnInit {
@@ -43,6 +48,10 @@ export class SettingsPage implements OnInit {
   readonly showCurrentPassword = signal(false);
   readonly showNewPassword = signal(false);
 
+  // Live value for the password-strength meter — presentation only, the
+  // reactive form validators below remain the source of truth.
+  readonly passwordValue = signal<string>('');
+
   readonly currentPasswordError = computed(() => {
     const control = this.passwordForm.get('currentPassword');
     if (this.passwordFormSubmitted() && control?.errors) {
@@ -58,23 +67,6 @@ export class SettingsPage implements OnInit {
       if (control.errors['minlength']) return this.translationService.instant('validation.passwordMinLength');
     }
     return null;
-  });
-
-  readonly strengthLevel = computed(() => {
-    const val: string = this.passwordForm.get('newPassword')?.value ?? '';
-    if (!val) return 0;
-    let score = 0;
-    if (val.length >= 8) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
-    return score;
-  });
-
-  readonly strengthLabel = computed(() => {
-    const keys = ['', 'auth.strengthWeak', 'auth.strengthFair', 'auth.strengthGood', 'auth.strengthStrong'];
-    const key = keys[this.strengthLevel()];
-    return key ? this.translationService.instant(key) : '';
   });
 
   constructor() {
@@ -122,7 +114,12 @@ export class SettingsPage implements OnInit {
     if (result.success) {
       this.passwordForm.reset();
       this.passwordFormSubmitted.set(false);
+      this.passwordValue.set('');
     }
+  }
+
+  onPasswordInput(event: any): void {
+    this.passwordValue.set(event.target.value ?? '');
   }
 
   toggleCurrentPassword(): void { this.showCurrentPassword.update(v => !v); }
