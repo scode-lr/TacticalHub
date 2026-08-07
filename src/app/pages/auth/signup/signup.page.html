@@ -104,14 +104,19 @@
 
         <!-- Password Input -->
         <div class="input-group">
-          <ion-input
-            type="password"
-            formControlName="password"
-            [placeholder]="'auth.password' | translate"
-            fill="outline"
-            (ionInput)="onPasswordInput($event)"
-            [class.ion-invalid]="signupForm.get('password')?.invalid && formSubmitted()">
-          </ion-input>
+          <div class="password-input-wrapper">
+            <ion-input
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              [placeholder]="'auth.password' | translate"
+              fill="outline"
+              (ionInput)="onPasswordInput($event)"
+              [class.ion-invalid]="signupForm.get('password')?.invalid && formSubmitted()">
+            </ion-input>
+            <button type="button" class="btn-icon show-hide-btn" (click)="togglePassword()">
+              <ion-icon [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </button>
+          </div>
           <app-password-strength [password]="passwordValue()"></app-password-strength>
           @if (signupForm.get('password')?.invalid && formSubmitted()) {
             <div class="error-message">
@@ -128,14 +133,19 @@
 
         <!-- Confirm Password Input -->
         <div class="input-group">
-          <ion-input
-            type="password"
-            formControlName="confirmPassword"
-            [placeholder]="'auth.confirmPassword' | translate"
-            fill="outline"
-            (ionInput)="onConfirmInput($event)"
-            [class.ion-invalid]="((signupForm.get('confirmPassword')?.invalid && formSubmitted()) || (signupForm.errors?.['passwordMismatch'] && formSubmitted()))">
-          </ion-input>
+          <div class="password-input-wrapper">
+            <ion-input
+              [type]="showConfirmPassword() ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              [placeholder]="'auth.confirmPassword' | translate"
+              fill="outline"
+              (ionInput)="onConfirmInput($event)"
+              [class.ion-invalid]="((signupForm.get('confirmPassword')?.invalid && formSubmitted()) || (signupForm.errors?.['passwordMismatch'] && formSubmitted()))">
+            </ion-input>
+            <button type="button" class="btn-icon show-hide-btn" (click)="toggleConfirmPassword()">
+              <ion-icon [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </button>
+          </div>
           @if (confirmValue().length > 0) {
             <span class="confirm-hint" [class.match]="passwordsMatch()" [class.mismatch]="!passwordsMatch()">
               {{ (passwordsMatch() ? 'auth.passwordsMatch' : 'auth.passwordsDontMatch') | translate }}

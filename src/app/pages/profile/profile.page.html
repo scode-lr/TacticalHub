@@ -83,14 +83,19 @@
             <label class="form-label" for="delete-account-password">
               {{ 'profile.confirmWithPassword' | translate }}
             </label>
-            <ion-input
-              id="delete-account-password"
-              class="form-input"
-              formControlName="currentPassword"
-              type="password"
-              autocomplete="current-password"
-              [placeholder]="'settings.currentPasswordPlaceholder' | translate">
-            </ion-input>
+            <div class="password-input-wrapper">
+              <ion-input
+                id="delete-account-password"
+                class="form-input"
+                formControlName="currentPassword"
+                [type]="showDeletePassword() ? 'text' : 'password'"
+                autocomplete="current-password"
+                [placeholder]="'settings.currentPasswordPlaceholder' | translate">
+              </ion-input>
+              <button type="button" class="show-hide-btn" (click)="toggleDeletePassword()">
+                <ion-icon [name]="showDeletePassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </button>
+            </div>
           </div>
 
           <div class="delete-actions">

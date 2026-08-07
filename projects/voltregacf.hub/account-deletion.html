@@ -29,8 +29,11 @@ header { padding: 1.5rem 0 0.5rem; }
   background: #edeae3;
   color: #201e1d;
   cursor: pointer;
-  font: 600 1.35rem/1 system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.back-button svg { width: 1.25rem; height: 1.25rem; }
 .back-button:hover { background: #e2ded6; }
 .back-button:focus-visible { outline: 3px solid #8a6a06; outline-offset: 2px; }
 h1 { margin: 1.5rem 0 0; font-size: clamp(1.8rem, 6vw, 2.25rem); line-height: 1.2; }
@@ -44,7 +47,7 @@ a { color: #6f5700; overflow-wrap: anywhere; }
 </head>
 <body>
 <header>
-  <button class="back-button" type="button" aria-label="Tornar enrere" onclick="if (history.length > 1) { history.back(); } else if (window.opener) { window.close(); } else { location.href='./'; }">←</button>
+  <button class="back-button" type="button" aria-label="Tornar enrere" onclick="if (history.length > 1) { history.back(); } else if (window.opener) { window.close(); } else { location.href='./'; }"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" aria-hidden="true"><path d="M244 400 100 256l144-144M120 256h292"/></svg></button>
   <h1>Eliminació del compte</h1>
 </header>
 <main><h2>Des de l'aplicació</h2><ol><li>Inicia sessió.</li><li>Obre <strong>Perfil</strong>.</li><li>Prem <strong>Eliminar compte</strong>.</li><li>Confirma amb la contrasenya.</li></ol><p>L'accés i les sessions es revoquen, les relacions amb clubs es desactiven i les dades identificatives deixen d'estar associades al compte, excepte allò que s'hagi de conservar per obligació o reclamació.</p>

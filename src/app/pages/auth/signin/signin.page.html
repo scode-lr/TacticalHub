@@ -35,14 +35,19 @@
         
         <!-- Password Input -->
         <div class="input-group">
-          <ion-input 
-            type="password" 
-            formControlName="password"
-            [placeholder]="'auth.password' | translate"
-            fill="outline"
-            class="modern-input"
-            [class.ion-invalid]="signinForm.get('password')?.invalid && formSubmitted()">
-          </ion-input>
+          <div class="password-input-wrapper">
+            <ion-input
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              [placeholder]="'auth.password' | translate"
+              fill="outline"
+              class="modern-input"
+              [class.ion-invalid]="signinForm.get('password')?.invalid && formSubmitted()">
+            </ion-input>
+            <button type="button" class="btn-icon show-hide-btn" (click)="togglePassword()">
+              <ion-icon [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </button>
+          </div>
           @if (passwordError(); as error) {
             <div class="error-message">
               <ion-icon name="alert-circle" class="error-icon"></ion-icon>

@@ -319,8 +319,11 @@
       background: #edeae3;
       color: #201e1d;
       cursor: pointer;
-      font: 600 1.35rem/1 system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+    .back-button svg { width: 1.25rem; height: 1.25rem; }
     .back-button:hover { background: #e2ded6; }
     h1 {
       margin: 1.5rem 0 0;
@@ -392,7 +395,7 @@
       </div>
     </div>
     <div class="hero">
-      <button class="back-button" type="button" aria-label="Tornar enrere" onclick="if (history.length > 1) { history.back(); } else if (window.opener) { window.close(); } else { location.href='./'; }">←</button>
+      <button class="back-button" type="button" aria-label="Tornar enrere" onclick="if (history.length > 1) { history.back(); } else if (window.opener) { window.close(); } else { location.href='./'; }"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" aria-hidden="true"><path d="M244 400 100 256l144-144M120 256h292"/></svg></button>
       <p class="eyebrow" data-ui="eyebrow">Informació legal</p>
       <h1 data-ui="title">Política de privacitat</h1>
       <p class="updated" data-ui="updated">Última actualització: 5 d’agost de 2026</p>

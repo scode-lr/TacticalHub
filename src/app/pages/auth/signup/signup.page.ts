@@ -8,7 +8,7 @@ import {
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { alertCircle } from 'ionicons/icons';
+import { alertCircle, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -55,9 +55,11 @@ export class SignupPage {
   readonly passwordValue = signal<string>('');
   readonly confirmValue = signal<string>('');
   readonly passwordsMatch = computed(() => this.passwordValue() === this.confirmValue());
+  readonly showPassword = signal<boolean>(false);
+  readonly showConfirmPassword = signal<boolean>(false);
 
   constructor() {
-    addIcons({ alertCircle });
+    addIcons({ alertCircle, eyeOutline, eyeOffOutline });
 
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -186,6 +188,14 @@ export class SignupPage {
 
   onConfirmInput(event: any): void {
     this.confirmValue.set(event.target.value ?? '');
+  }
+
+  togglePassword(): void {
+    this.showPassword.update(v => !v);
+  }
+
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword.update(v => !v);
   }
 
   onDateInput(event: any): void {
