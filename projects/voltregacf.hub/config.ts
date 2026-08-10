@@ -5,7 +5,7 @@ export const PROJECT_CONFIG = {
   taglineKey: 'app.tagline',
   appId: 'es.tacticalhub.voltrega',
   clubId: 1,
-  logoUrl: 'assets/icon/icon.svg',
+  logoUrl: 'assets/icon/logo.svg',
   private: true, 
   translations: {
     en: translationsEn,
