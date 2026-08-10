@@ -104,7 +104,8 @@
       "Bash(MSYS_NO_PATHCONV=1 docker build -f Dockerfile.voltrega -t tactical-voltrega-test .)",
       "Bash(cp \"../../designsToCode/voltrega-app-icon-1024.png\" \"resources/icon.png\")",
       "Bash(cp \"../../designsToCode/voltrega-app-icon-1024.png\" \"resources/icon/icon.png\")",
-      "Bash(node scripts/generate-splash.js)"
+      "Bash(node scripts/generate-splash.js)",
+      "Bash(node -e \"const p=require\\('./package-lock.json'\\); console.log\\(p.lockfileVersion\\); console.log\\(Object.keys\\(p.packages\\).filter\\(k=>k.includes\\('chokidar'\\)||k.includes\\('readdirp'\\)\\)\\)\")"
     ]
   },
   "enabledMcpjsonServers": [

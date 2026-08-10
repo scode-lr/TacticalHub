@@ -5,8 +5,9 @@ ENV NPM_CONFIG_UPDATE_NOTIFIER=false \
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm ci --include=dev --no-audit
+# Instala desde package.json y genera un package-lock.json nuevo
+COPY package.json ./
+RUN npm install --include=dev --no-audit
 
 COPY . ./
 
