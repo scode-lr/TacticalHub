@@ -1,0 +1,69 @@
+@use '../auth-shared.scss';
+
+.verify-email-page {
+  @extend .auth-page;
+}
+
+.verify-form {
+  @extend .auth-form;
+}
+
+.icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(56, 128, 255, 0.08);
+  border: 1.5px solid rgba(56, 128, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+
+  ion-icon {
+    color: var(--ion-color-primary, #3880ff);
+    font-size: 1.75rem;
+  }
+
+  &.success {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.25);
+
+    ion-icon { color: var(--ion-color-success, #10b981); }
+  }
+}
+
+.code-input {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.4rem;
+}
+
+.resend-button {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--ion-color-primary, #3880ff);
+  font-weight: 600;
+  cursor: pointer;
+
+  &:disabled { opacity: 0.55; }
+}
+
+.success-state {
+  text-align: center;
+
+  h1 {
+    margin: 0 0 0.75rem;
+    color: var(--text-primary, #111827);
+  }
+
+  p {
+    margin: 0 0 1.75rem;
+    color: var(--text-secondary, #6b7280);
+    line-height: 1.6;
+  }
+}

@@ -76,19 +76,11 @@
             </select>
           </div>
           <div class="form-field">
-            <label for="action">{{ 'admin.settingsForms.fields.action' | translate }} <span class="required-mark">*</span></label>
-            <select
-              id="action"
-              class="form-select"
-              formControlName="action"
-            >
-              @for (item of actionItems; track item.value) {
-                <option [value]="item.value">{{ item.label }}</option>
-              }
-            </select>
-            @if (ctrl.action.invalid && ctrl.action.touched) {
-              <small class="field-error">{{ 'admin.settingsForms.fields.actionRequired' | translate }}</small>
-            }
+            <label>{{ 'admin.settingsForms.type' | translate }}</label>
+            <div class="type-readonly">
+              <ion-icon [name]="typeIcon()"></ion-icon>
+              <span>{{ typeLabelKey() | translate }}</span>
+            </div>
           </div>
         </div>
 

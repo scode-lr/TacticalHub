@@ -1,8 +1,9 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { IonToast } from '@ionic/angular/standalone';
-import { saveOutline, syncOutline } from 'ionicons/icons';
+import { IonIcon, IonToast } from '@ionic/angular/standalone';
+import { bodyOutline, documentTextOutline, peopleOutline, saveOutline, syncOutline } from 'ionicons/icons';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
@@ -46,11 +47,13 @@ interface HeaderFormControls {
     PreviewModalComponent,
     FormPreviewContentComponent,
     SettingsFormFieldsComponent,
+    IonIcon,
     IonToast,
   ]
 })
 export class SettingsFormDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
+  private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly formService = inject(FormService);
   private readonly roleService = inject(RolesService);
@@ -84,13 +87,18 @@ export class SettingsFormDetailPage implements OnInit {
     ];
   }
 
-  get actionItems() {
-    return [
-      { label: this.translationService.instant('admin.settingsForms.actions.simple'), value: FormAction.Simple },
-      { label: this.translationService.instant('admin.settingsForms.actions.register-player'), value: FormAction.RegisterPlayer },
-      { label: this.translationService.instant('admin.settingsForms.actions.become-member'), value: FormAction.BecomeMember },
-    ];
-  }
+  /** The type is chosen once, before the builder opens, and stays fixed from then on. */
+  readonly selectedAction = signal<FormAction>(FormAction.Simple);
+
+  readonly typeIcon = computed((): string => {
+    switch (this.selectedAction()) {
+      case FormAction.RegisterPlayer: return 'body-outline';
+      case FormAction.BecomeMember:   return 'people-outline';
+      default:                        return 'document-text-outline';
+    }
+  });
+
+  readonly typeLabelKey = computed(() => `admin.settingsForms.actions.${this.selectedAction()}`);
 
   form!: FormGroup;
 
@@ -99,13 +107,25 @@ export class SettingsFormDetailPage implements OnInit {
   }
 
   constructor() {
-    addIcons({ saveOutline, syncOutline });
+    addIcons({ bodyOutline, documentTextOutline, peopleOutline, saveOutline, syncOutline });
   }
 
   async ngOnInit(): Promise<void> {
     const id = this.navigationService.findRouteParam('formId');
     this.isEditMode.set(id !== 'new');
     this.formId.set(id);
+
+    if (!this.isEditMode()) {
+      const action = this.route.snapshot.queryParamMap.get('action') as FormAction | null;
+      if (!action || !Object.values(FormAction).includes(action)) {
+        // The type is chosen from the forms list before landing here; without it
+        // there is nothing valid to build.
+        this.navigationService.goBack();
+        return;
+      }
+      this.selectedAction.set(action);
+    }
+
     this.isLoading.set(true);
     this.buildForm(this.isEditMode() ? await this.fetchFormById(id!) : null);
     this.isLoading.set(false);
@@ -211,6 +231,10 @@ export class SettingsFormDetailPage implements OnInit {
   }
 
   private buildForm(existing: FormDetail | null): void {
+    if (existing) {
+      this.selectedAction.set(existing.action);
+    }
+
     const fieldsArray = this.fb.array(
       (existing?.fields ?? []).map(f =>
         this.fb.group({
@@ -233,7 +257,7 @@ export class SettingsFormDetailPage implements OnInit {
       fromDate: [existing?.fromDate ? String(existing.fromDate).substring(0, 10) : null],
       toDate: [existing?.toDate ? String(existing.toDate).substring(0, 10) : null],
       status: [existing?.status ?? AppStatus.Draft, Validators.required],
-      action: [existing?.action ?? '', Validators.required],
+      action: [existing?.action ?? this.selectedAction(), Validators.required],
       email: [existing?.email ?? '', Validators.email],
       fields: fieldsArray
     });

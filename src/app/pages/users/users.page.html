@@ -1,0 +1,107 @@
+<div class="page-container users-page">
+  <div class="section-header users-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'clubMembers.title' | translate }}</h1>
+      <p class="section-subtitle">{{ 'clubMembers.subtitle' | translate }}</p>
+    </div>
+
+    <span class="users-count">
+      <ion-icon name="people-outline"></ion-icon>
+      {{ totalCount() }}
+    </span>
+  </div>
+
+  <div class="search-field">
+    <ion-icon name="search-outline" class="search-icon"></ion-icon>
+    <input
+      type="search"
+      autocomplete="off"
+      [value]="query()"
+      (input)="search($any($event.target).value)"
+      [attr.aria-label]="'clubMembers.search' | translate"
+      [placeholder]="'clubMembers.search' | translate" />
+    @if (query()) {
+      <button type="button" class="clear-search" (click)="clearSearch()"
+        [attr.aria-label]="'primeng.clear' | translate">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </button>
+    }
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  } @else if (!visibleUsers().length) {
+    <div class="empty-state-card">
+      <app-empty-state icon="people-outline" titleKey="clubMembers.empty"
+        messageKey="clubMembers.emptyDescription" />
+    </div>
+  } @else {
+    <div class="member-list">
+      @for (user of visibleUsers(); track user.userId) {
+        <article class="member-card" [class.is-saving]="savingUserId() === user.userId">
+          <div class="identity">
+            <img
+              class="avatar"
+              [src]="user.avatarUrl"
+              [alt]="displayName(user)"
+              (error)="onAvatarError($event)" />
+            <div class="identity-copy">
+              <h2>{{ displayName(user) }}</h2>
+              <p>{{ user.email }}</p>
+            </div>
+            <div class="actions">
+              <button class="actions-toggle" type="button" (click)="toggleMenu(user.userId)"
+                [attr.aria-label]="'clubMembers.actions' | translate"
+                [attr.aria-expanded]="openMenuUserId() === user.userId" aria-haspopup="menu">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+              </button>
+              @if (openMenuUserId() === user.userId) {
+                <div class="actions-menu" role="menu">
+                  <strong>{{ 'clubMembers.assignRole' | translate }}</strong>
+                  <button type="button" role="menuitem" (click)="assignAdmin(user)"
+                    [disabled]="hasRole(user, roleType.Admin) || savingUserId() === user.userId">
+                    {{ 'clubMembers.assignAdmin' | translate }}
+                  </button>
+                  <button class="danger-action" type="button" role="menuitem" (click)="deactivateUser(user)"
+                    [disabled]="savingUserId() === user.userId">
+                    {{ 'clubMembers.deactivateUser' | translate }}
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="role-section">
+            <span class="section-label">{{ 'clubMembers.currentRoles' | translate }}</span>
+            <div class="role-list">
+              @for (relation of user.relations; track relation.id) {
+                <span class="role-chip">
+                  {{ roleLabelKey(relation.roleId) | translate }}
+                  @if (relation.teamName) { · {{ relation.teamName }} }
+                </span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <nav class="pagination" [attr.aria-label]="'clubMembers.pagination' | translate">
+        <button type="button" (click)="previousPage()" [disabled]="!canGoBack() || isLoading()">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+          <span>{{ 'clubMembers.previousPage' | translate }}</span>
+        </button>
+        <span class="page-status">
+          {{ 'clubMembers.pageStatus' | translate: { current: currentPage(), total: totalPages() } }}
+        </span>
+        <button type="button" (click)="nextPage()" [disabled]="!canGoForward() || isLoading()">
+          <span>{{ 'clubMembers.nextPage' | translate }}</span>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </button>
+      </nav>
+    }
+  }
+</div>

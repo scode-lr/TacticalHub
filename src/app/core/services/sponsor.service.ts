@@ -1,15 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiService } from './api.service';
-import { Sponsor, AdditionalInfo, CreateSponsorRequest, UpdateSponsorRequest, ReorderSponsorsRequest, UploadImageResponse, DeleteImagesRequest, BatchSponsorRequest } from '@core/models/sponsor.model';
+import { Sponsor, SponsorTier, AdditionalInfo, CreateSponsorRequest, UpdateSponsorRequest, ReorderSponsorsRequest, UploadImageResponse, DeleteImagesRequest, BatchSponsorRequest } from '@core/models/sponsor.model';
 
 @Injectable({ providedIn: 'root' })
 export class SponsorService {
   private readonly apiService = inject(ApiService);
 
-  async getByClubId(clubId: number): Promise<Sponsor[]> {
+  async getByClubId(clubId: number, tier?: SponsorTier): Promise<Sponsor[]> {
+    const params = tier !== undefined ? { tier: tier.toString() } : undefined;
     return await firstValueFrom(
-      this.apiService.get<Sponsor[]>(`clubs/${clubId}/sponsors`)
+      this.apiService.get<Sponsor[]>(`clubs/${clubId}/sponsors`, { params })
         .pipe(map(data => ((data as any[]) ?? []).map(s => this.normalizeSponsor(s))))
     );
   }

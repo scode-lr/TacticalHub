@@ -38,4 +38,16 @@ export class DynamicFormFieldsComponent {
     return !!(ctrl?.invalid && ctrl?.touched) || field.status === AppStatus.Rejected;
   }
 
+  fieldErrorMessage(field: FormField): { key: string; params?: Record<string, unknown> } | null {
+    const ctrl = this.form().get(field.key);
+    const errors = ctrl?.errors;
+    if (!ctrl || !ctrl.touched || !errors) return null;
+
+    if (errors['required']) return { key: 'validation.required' };
+    if (errors['email']) return { key: 'validation.invalidEmail' };
+    if (errors['iban']) return { key: 'validation.invalidIban' };
+    if (errors['maxlength']) return { key: 'validation.maxLength', params: { max: errors['maxlength'].requiredLength } };
+    return null;
+  }
+
 }

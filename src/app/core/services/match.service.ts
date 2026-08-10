@@ -1,55 +1,38 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Match } from '@models/match.model';
 import { MatchDetail, LineupData, GoalScorer, TeamStanding } from '@models/match-detail.model';
-import { mockMatches } from '@mocks/match.mock';
-import { mockMatchDetail, mockLineup, mockGoalScorers, mockStandings, mockRelatedMatches } from '@mocks/match-detail.mock';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
-  private matches = signal<Match[]>(mockMatches);
+  private readonly matches: Match[] = [];
 
   getMatches(): Match[] {
-    return this.matches();
+    return this.matches;
   }
 
   getMatchById(id: number): Match | undefined {
-    return this.matches().find(match => match.id === id);
+    return this.matches.find(match => match.id === id);
   }
 
-  getMatchDetail(id: number): MatchDetail | null {
-    if (id === 1) {
-      return mockMatchDetail;
-    }
+  getMatchDetail(_id: number): MatchDetail | null {
     return null;
   }
 
-  getLineup(matchId: number): LineupData | null {
-    if (matchId === 1) {
-      return mockLineup;
-    }
+  getLineup(_matchId: number): LineupData | null {
     return null;
   }
 
-  getGoalScorers(matchId: number): GoalScorer[] {
-    if (matchId === 1) {
-      return mockGoalScorers;
-    }
+  getGoalScorers(_matchId: number): GoalScorer[] {
     return [];
   }
 
-  getStandings(matchId: number): TeamStanding[] {
-    if (matchId === 1) {
-      return mockStandings;
-    }
+  getStandings(_matchId: number): TeamStanding[] {
     return [];
   }
 
-  getRelatedMatches(matchId: number): Match[] {
-    if (matchId === 1) {
-      return mockRelatedMatches;
-    }
+  getRelatedMatches(_matchId: number): Match[] {
     return [];
   }
 }

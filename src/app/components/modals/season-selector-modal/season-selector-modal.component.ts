@@ -1,9 +1,8 @@
 import { Component, input, output, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonModal, IonIcon, Platform } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
-import { ListboxModule } from 'primeng/listbox';
+import { ListCardComponent } from '@components/list-card/list-card.component';
 import { addIcons } from 'ionicons';
 import { closeOutline } from 'ionicons/icons';
 
@@ -14,10 +13,9 @@ import { closeOutline } from 'ionicons/icons';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     IonModal,
     IonIcon,
-    ListboxModule,
+    ListCardComponent,
     TranslatePipe
   ]
 })
@@ -37,9 +35,6 @@ export class SeasonSelectorModalComponent {
     addIcons({ closeOutline });
     this.isMobile.set(this.platform.is('mobile') || this.platform.is('mobileweb'));
   }
-
-  get currentValue(): string { return this.selectedSeason(); }
-  set currentValue(val: string) { if (val) this.selectSeason(val); }
 
   closeModal(): void {
     this.didDismiss.emit();

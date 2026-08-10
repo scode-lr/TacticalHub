@@ -1,0 +1,95 @@
+@if (loading()) {
+  <div class="config-loading">
+    {{ 'admin.forms.exportConfig.loading' | translate }}
+  </div>
+} @else {
+  <p class="config-help">{{ 'admin.forms.exportConfig.help' | translate }}</p>
+
+  <section class="csv-preview">
+    <span class="step-label">{{ 'admin.forms.exportConfig.preview' | translate }}</span>
+    <div class="csv-preview-scroll">
+      <table class="csv-preview-table">
+        <thead>
+          <tr>
+            @for (header of previewHeaders(); track $index) {
+              <th>{{ header }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            @for (header of previewHeaders(); track $index) {
+              <td>&nbsp;</td>
+            }
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="columns-toolbar">
+    <label class="toggle-all">
+      <input
+        type="checkbox"
+        [checked]="allEnabled()"
+        (change)="onToggleAll($any($event.target).checked)"
+      />
+      {{ (allEnabled() ? 'admin.forms.exportConfig.unselectAll' : 'admin.forms.exportConfig.selectAll') | translate }}
+    </label>
+
+    <div class="columns-search">
+      <ion-icon name="search-outline" class="columns-search-icon"></ion-icon>
+      <input
+        type="text"
+        name="columnSearch"
+        [ngModel]="searchValue()"
+        (ngModelChange)="searchValue.set($event)"
+        [placeholder]="'admin.forms.exportConfig.searchColumn' | translate"
+      />
+      @if (searchValue()) {
+        <button type="button" class="columns-search-clear" (click)="clearSearch()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="columns-list">
+    @for (item of visibleColumns(); track item.column.sourceKey) {
+      <div class="column-row" [class.column-row--disabled]="!item.column.isEnabled">
+        <label class="column-toggle">
+          <input
+            type="checkbox"
+            [checked]="item.column.isEnabled"
+            (change)="onToggle(item.index, $any($event.target).checked)"
+          />
+        </label>
+
+        <div class="column-main">
+          <input
+            class="column-header-input"
+            type="text"
+            name="columnHeader{{item.index}}"
+            [ngModel]="item.column.header"
+            (ngModelChange)="onUpdateHeader(item.index, $event)"
+            [disabled]="!item.column.isEnabled"
+            [placeholder]="'admin.forms.exportConfig.headerPlaceholder' | translate"
+          />
+        </div>
+
+        <div class="column-order-actions">
+          <button class="icon-action" [disabled]="item.index === 0" (click)="onMove(item.index, -1)">
+            <ion-icon name="chevron-up-outline"></ion-icon>
+          </button>
+          <button class="icon-action" [disabled]="item.index === lastIndex()" (click)="onMove(item.index, 1)">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <div class="app-modal-empty">
+        {{ 'admin.forms.exportConfig.noColumnsFound' | translate }}
+      </div>
+    }
+  </div>
+}

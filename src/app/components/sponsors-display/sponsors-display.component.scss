@@ -9,7 +9,7 @@
   color: var(--text-primary, #111827);
   animation: fadeIn 0.3s ease backwards;
 
-  // Space above every section heading except the first (which follows a grid).
+  // Space above the collaborator heading when it follows the sponsor grid (preview mode).
   .sponsors-grid + & {
     margin-top: 32px;
   }
@@ -20,21 +20,8 @@
   gap: 16px;
   animation: fadeIn 0.3s ease backwards;
 
-  & + .sponsors-grid {
-    margin-top: 24px;
-  }
-
-  // Tier hierarchy — differentiated only by size and layout.
   &.tier-sponsor {
     grid-template-columns: 1fr;
-
-    .sponsor-image-container {
-      height: 280px;
-
-      @media (max-width: 600px) {
-        height: 200px;
-      }
-    }
 
     // Web: 2 por línea.
     @media (min-width: 768px) {
@@ -42,64 +29,23 @@
     }
   }
 
+  // Pre-supplied collaborators (preview mode only — live mode renders its
+  // own grid inside SponsorsCollaboratorsGridComponent).
   &.tier-collaborator {
     grid-template-columns: repeat(3, 1fr);
-
-    .sponsor-image-container {
-      height: 120px;
-    }
 
     @media (max-width: 600px) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    // Tablet: 4 por línea.
     @media (min-width: 768px) {
       grid-template-columns: repeat(4, 1fr);
     }
   }
 }
 
-.sponsor-card {
-  background: var(--background-primary, #ffffff);
-  border: 1px solid var(--border-light, #e5e7eb);
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.15s ease;
-
-  &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-
-  .sponsor-image-container {
-    background: #f9fafb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .sponsor-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 12px;
-  }
-
-  .sponsor-card-footer {
-    padding: 12px;
-  }
-
-  .sponsor-name {
-    font-weight: 600;
-    font-size: 0.9375rem;
-    color: var(--text-primary, #111827);
-  }
+.collaborators-placeholder {
+  min-height: 1px;
 }
 
 // ---- Ion Modal Styles ----

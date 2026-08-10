@@ -1,8 +1,8 @@
 .member-information-page {
   .empty-state {
-    background: var(--background-primary, #ffffff);
-    border: 1px solid var(--border-light, #e5e7eb);
-    border-radius: 12px;
+    background: var(--color-surface, var(--background-primary, #ffffff));
+    border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+    border-radius: 18px;
     padding: 4rem 2rem;
     text-align: center;
     animation: fadeIn 0.3s ease backwards;

@@ -1,0 +1,40 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="onNativeDismiss()" class="app-modal">
+  <ng-template>
+    <div class="app-modal-container">
+      <div class="app-modal-header">
+        <div class="app-modal-header-info">
+          <div class="app-modal-header-text">
+            <h2 class="app-modal-title">{{ 'admin.settingsForms.typePicker.title' | translate }}</h2>
+            <p class="app-modal-subtitle">{{ 'admin.settingsForms.typePicker.subtitle' | translate }}</p>
+          </div>
+        </div>
+        <button class="app-modal-close" (click)="close()" [attr.aria-label]="'common.close' | translate">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="app-modal-content">
+        <div class="type-options">
+          @for (option of options; track option.action) {
+            <button type="button" class="type-option" (click)="choose(option.action)">
+              <span class="type-icon">
+                <ion-icon [name]="option.icon"></ion-icon>
+              </span>
+              <span class="type-text">
+                <span class="type-title">{{ option.titleKey | translate }}</span>
+                <span class="type-description">{{ option.descriptionKey | translate }}</span>
+              </span>
+              <ion-icon name="chevron-forward-outline" class="type-arrow"></ion-icon>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="app-modal-footer">
+        <button type="button" class="btn-secondary" (click)="close()">
+          {{ 'common.cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

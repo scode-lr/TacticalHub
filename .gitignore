@@ -79,3 +79,8 @@ projects/tactical.hub/android/
 # Capacitor - Voltrega Hub
 projects/voltregacf.hub/ios/
 projects/voltregacf.hub/android/
+
+/designsToCode
+/output
+
+/projects/*/wwww

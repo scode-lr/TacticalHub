@@ -8,7 +8,7 @@ import {
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionicons/icons';
+import { alertCircle, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
@@ -48,8 +48,9 @@ export class SigninPage {
   readonly toastColor = this.toastService.toastColor;
   readonly appName = environment.name;
   readonly formSubmitted = signal<boolean>(false);
+  readonly showPassword = signal<boolean>(false);
 
-  readonly tagline = computed(() => 
+  readonly tagline = computed(() =>
     this.translationService.instant(environment.taglineKey)
   );
 
@@ -72,8 +73,8 @@ export class SigninPage {
   });
 
   constructor() {
-    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline });
-    
+    addIcons({ alertCircle, eyeOutline, eyeOffOutline });
+
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -86,6 +87,10 @@ export class SigninPage {
 
   goToForgotPassword(): void {
     this.navigationService.navigateTo(['auth/forgot-password']);
+  }
+
+  togglePassword(): void {
+    this.showPassword.update(v => !v);
   }
 
   async onSignIn(): Promise<void> {
@@ -104,6 +109,10 @@ export class SigninPage {
       
       if (response.success) {
         this.navigationService.navigateTo(['auth/loading']);
+      } else if (response.requiresEmailVerification) {
+        this.navigationService.navigateTo(['auth/verify-email'], {
+          queryParams: { email: response.email ?? email }
+        });
       } else {
         this.toastService.show(response.message, 'danger');
       }

@@ -10,6 +10,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 
+export const GUEST_MENU_CONFIG: MenuConfig = {
+  role: RoleType.Guest,
+  items: [
+    { id: 'news', label: 'guest.menu.news', icon: 'newspaper-outline', route: 'news' },
+    { id: 'matches', label: 'guest.menu.matches', icon: 'football-outline', route: 'matches' },
+    { id: 'information', label: 'guest.menu.information', icon: 'information-circle-outline', route: 'information' },
+    { id: 'sponsors', label: 'guest.menu.sponsors', icon: 'people-outline', route: 'sponsors' }
+  ]
+};
+
 @Component({
   selector: 'app-guest',
   templateUrl: './guest.page.html',
@@ -32,15 +42,7 @@ export class GuestPage implements OnInit {
   readonly memberId = signal<string>('');
   readonly currentRole = signal<Role | null>(null);
   
-  readonly guestMenuConfig: MenuConfig = {
-    role: RoleType.Guest,
-    items: [
-      { id: 'news', label: 'guest.menu.news', icon: 'newspaper-outline', route: 'news' },
-      { id: 'matches', label: 'guest.menu.matches', icon: 'football-outline', route: 'matches' },
-      { id: 'information', label: 'guest.menu.information', icon: 'information-circle-outline', route: 'information' },
-      { id: 'sponsors', label: 'guest.menu.sponsors', icon: 'people-outline', route: 'sponsors' }
-    ]
-  };
+  readonly guestMenuConfig = GUEST_MENU_CONFIG;
   
   readonly isDetailPage = signal<boolean>(false);
   readonly backUrl = computed(() => {

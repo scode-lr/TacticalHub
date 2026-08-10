@@ -115,6 +115,14 @@ export class SettingsSponsorsPage implements OnInit {
     return this.sponsors();
   });
 
+  readonly previewSponsorTier = computed(() =>
+    this.previewSponsors().filter(s => s.tier === SponsorTier.Sponsor)
+  );
+
+  readonly previewCollaboratorTier = computed(() =>
+    this.previewSponsors().filter(s => s.tier === SponsorTier.Collaborator)
+  );
+
   private clubId: number = 0;
 
   constructor() {

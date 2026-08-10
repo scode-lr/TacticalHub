@@ -8,12 +8,18 @@ export interface AuthUser {
   isGuest?: boolean;
 }
 
-export interface User extends AuthUser {
-  roles?: Role[];
+export interface UserMetadata {
   firstName?: string;
   lastName?: string;
-  avatarUrl?: string;
+  birthDate?: Date;
+  avatar?: string | null;
+  lastLogin?: Date;
+}
+
+export interface User extends AuthUser {
+  roles?: Role[];
+  status?: string;
+  metadata?: UserMetadata;
   prefixPhoneNumber?: string;
   phoneNumber?: string;
-  dateOfBirth?: Date;
 }

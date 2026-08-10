@@ -1,7 +1,7 @@
 .menu-container {
-  width: 280px;
+  width: 244px;
   background: var(--background-primary, #ffffff);
-  border-right: 1px solid var(--border-light, #e5e7eb);
+  border-right: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -9,50 +9,37 @@
 
   .menu-nav {
     flex: 1;
-    padding: 1rem 0.75rem;
+    padding: 1rem 0;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 3px;
     overflow-y: auto;
 
     .menu-item {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 0.875rem 1rem;
+      gap: 12px;
+      padding: 11px 14px;
       background: transparent;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: background 0.15s ease, color 0.15s ease;
       text-align: left;
       font-size: 0.9375rem;
       font-weight: 500;
-      color: var(--text-secondary, #6b7280);
+      color: var(--text-primary, #212529);
       position: relative;
 
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 3px;
-        height: 0;
-        background: var(--ion-color-primary, #3880ff);
-        border-radius: 0 2px 2px 0;
-        transition: height 0.2s ease;
-      }
-
       .menu-icon {
-        font-size: 1.375rem;
-        color: var(--text-light, #9ca3af);
-        transition: all 0.2s ease;
+        font-size: 1.25rem;
+        color: var(--text-secondary, #6c757d);
+        transition: color 0.15s ease;
       }
 
       .menu-label {
         flex: 1;
-        transition: all 0.2s ease;
+        transition: color 0.15s ease;
       }
 
       .menu-badge {
@@ -64,31 +51,28 @@
       }
 
       &:hover:not(.active) {
-        background: var(--background-secondary, #f8f9fa);
-        color: var(--text-primary, #111827);
-
-        .menu-icon {
-          color: var(--text-secondary, #6b7280);
-        }
+        background: color-mix(in srgb, var(--text-primary, #212529) 6%, transparent);
       }
 
       &.active {
-        color: var(--text-secondary, #6b7280);
+        background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
+        color: var(--color-accent-hover, var(--color-accent, var(--ion-color-primary, #4a90e2)));
         font-weight: 700;
 
-        &::before {
-          height: 60%;
-        }
-
         .menu-icon {
-          color: var(--text-secondary, #6b7280);
-          transform: scale(1.1);
+          color: var(--color-accent-hover, var(--color-accent, var(--ion-color-primary, #4a90e2)));
         }
       }
 
       &:active {
         transform: scale(0.98);
       }
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: var(--color-divider, var(--border-light, #e5e7eb));
+      margin: 8px 14px;
     }
   }
 
@@ -115,8 +99,8 @@
   }
 
   .user-section {
-    padding: 1rem;
-    border-top: 1px solid var(--border-light, #e5e7eb);
+    padding: 10px;
+    border-top: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -126,53 +110,66 @@
     }
 
     .user-info {
-      flex: 1;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      min-width: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+
+      &:hover .user-avatar {
+        border-color: var(--color-accent, var(--ion-color-primary, #4a90e2));
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-accent, var(--ion-color-primary, #4a90e2));
+        outline-offset: 2px;
+      }
 
       .user-avatar {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--border-light, #e5e7eb);
+        border: 2px solid var(--color-divider, var(--border-light, #e5e7eb));
         flex-shrink: 0;
+        transition: border-color 0.15s ease;
       }
     }
 
     .action-buttons {
       display: flex;
       gap: 0.5rem;
+      margin-left: auto;
       flex-shrink: 0;
     }
 
     .settings-button,
     .logout-button {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: transparent;
       border: none;
-      border-radius: 8px;
+      border-radius: 999px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: background 0.15s ease;
       flex-shrink: 0;
 
       ion-icon {
-        font-size: 1.25rem;
-        color: var(--text-secondary, #6b7280);
-        transition: all 0.2s ease;
+        font-size: 1.125rem;
+        color: var(--text-secondary, #6c757d);
+        transition: color 0.15s ease;
       }
 
       &:hover {
-        background: var(--background-secondary, #f8f9fa);
+        background: color-mix(in srgb, var(--text-primary, #212529) 7%, transparent);
 
         ion-icon {
-          color: var(--text-primary, #111827);
+          color: var(--text-primary, #212529);
         }
       }
 
@@ -191,155 +188,19 @@
   }
 }
 
-.modal-menu {
-  padding: 0;
-  background: var(--background-primary, #ffffff);
-  border-radius: 12px 12px 0 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  .modal-header {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-light, #e5e7eb);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--background-secondary, #f8f9fa);
-
-    .modal-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--text-primary, #111827);
-      margin: 0;
-    }
-
-    .modal-close {
-      background: transparent;
-      border: none;
-      padding: 0.5rem;
-      cursor: pointer;
-      color: var(--text-secondary, #6b7280);
-      border-radius: 8px;
-      transition: all 0.2s ease;
-
-      ion-icon {
-        font-size: 1.5rem;
-      }
-
-      &:hover {
-        background: var(--background-primary, #ffffff);
-      }
-    }
-  }
-
-  .modal-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0.5rem;
-  }
-
-  .modal-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1rem;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: left;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--text-secondary, #6b7280);
-    width: 100%;
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 3px;
-      height: 0;
-      background: var(--ion-color-primary, #3880ff);
-      border-radius: 0 2px 2px 0;
-      transition: height 0.2s ease;
-    }
-
-    .modal-icon-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .menu-badge-mobile {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 10px;
-      height: 10px;
-      background: var(--ion-color-danger, #eb445a);
-      border-radius: 50%;
-      border: 2px solid var(--background-primary, #ffffff);
-    }
-
-    .modal-icon {
-      font-size: 1.25rem;
-      color: var(--text-light, #9ca3af);
-      transition: all 0.2s ease;
-    }
-
-    .modal-label {
-      flex: 1;
-      transition: all 0.2s ease;
-    }
-
-    &:hover:not(.active) {
-      background: var(--background-secondary, #f8f9fa);
-      color: var(--text-primary, #111827);
-
-      .modal-icon {
-        color: var(--text-secondary, #6b7280);
-      }
-    }
-
-    &.active {
-      color: var(--text-secondary, #6b7280);
-      font-weight: 700;
-
-      &::before {
-        height: 60%;
-      }
-
-      .modal-icon {
-        color: var(--ion-color-primary, #3880ff);
-        transform: scale(1.1);
-      }
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-  }
-}
-
 @media (max-width: 768px) {
   .menu-container {
     width: 100%;
     height: auto;
     order: 2;
     border-right: none;
-    border-top: 1px solid var(--border-light, #e5e7eb);
+    border-top: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
     position: fixed;
     bottom: 0;
     left: 0;
     z-index: 1000;
-    background: var(--background-primary, #ffffff);
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+    background: var(--color-surface, var(--background-primary, #ffffff));
+    box-shadow: 0 -4px 16px var(--shadow-light, rgba(0, 0, 0, 0.08));
     padding: 0;
 
     .desktop-only {
@@ -352,63 +213,49 @@
 
     .menu-nav-mobile {
       display: flex;
-      padding: 0.5rem 0.25rem;
+      align-items: flex-start;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
       flex-direction: row;
       overflow-x: auto;
       overflow-y: hidden;
-      gap: 0.25rem;
+      gap: 2px;
       justify-content: space-around;
 
       .menu-item {
+        flex: 1;
         flex-direction: column;
-        min-width: 60px;
-        padding: 0.75rem 0.25rem;
-        gap: 0;
+        min-width: 56px;
+        padding: 2px 0;
+        gap: 4px;
         background: transparent;
         border: none;
         border-radius: 10px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: color 0.15s ease;
         text-align: center;
-        font-size: 0.9375rem;
+        font-size: 11px;
         font-weight: 500;
-        color: var(--text-secondary, #6b7280);
+        color: color-mix(in srgb, var(--text-primary, #212529) 52%, transparent);
         position: relative;
 
-        &::before {
-          content: '';
-          position: absolute;
-          left: 50%;
-          bottom: 0;
-          transform: translateX(-50%);
-          width: 0;
-          height: 3px;
-          background: var(--ion-color-primary, #3880ff);
-          border-radius: 2px 2px 0 0;
-          transition: width 0.2s ease;
-        }
-
         .menu-icon {
-          font-size: 1.625rem;
-          color: var(--text-light, #9ca3af);
-          transition: all 0.2s ease;
+          font-size: 1.375rem;
+          color: inherit;
+          transition: color 0.15s ease;
         }
 
         .menu-label {
-          display: none;
+          display: block;
+          font-size: 11px;
+          line-height: 1.1;
         }
 
         &.active {
-          color: var(--text-secondary, #6b7280);
+          color: var(--color-accent-hover, var(--color-accent, var(--ion-color-primary, #4a90e2)));
           font-weight: 700;
 
-          &::before {
-            width: 80%;
-          }
-
           .menu-icon {
-            color: var(--text-secondary, #6b7280);
-            transform: scale(1.1);
+            color: var(--color-accent-hover, var(--color-accent, var(--ion-color-primary, #4a90e2)));
           }
         }
 
@@ -418,7 +265,7 @@
 
         &.menu-more {
           .menu-icon {
-            font-size: 1.625rem;
+            font-size: 1.375rem;
           }
         }
       }

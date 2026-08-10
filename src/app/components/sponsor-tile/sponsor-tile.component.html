@@ -1,0 +1,14 @@
+<div class="sponsor-card" (click)="onSelect()">
+  <div class="sponsor-image-container">
+    <img
+      [src]="sponsor().imageUrl || 'assets/image-non-available.svg'"
+      [alt]="sponsor().name"
+      class="sponsor-image"
+      appDefaultImage />
+  </div>
+  @if (showName()) {
+    <div class="sponsor-card-footer">
+      <span class="sponsor-name">{{ sponsor().name }}</span>
+    </div>
+  }
+</div>

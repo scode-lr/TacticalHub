@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import {
@@ -8,12 +8,13 @@ import {
   IonToast
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline } from 'ionicons/icons';
+import { alertCircle, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 import { environment } from '@environment';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { ToastService } from '@services/toast.service';
 import { AuthBrandingComponent, AuthFooterComponent } from '../components';
+import { PasswordStrengthComponent } from '@components/password-strength/password-strength.component';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { AuthService } from '@services/auth.service';
 
@@ -31,6 +32,7 @@ import { AuthService } from '@services/auth.service';
     IonToast,
     AuthBrandingComponent,
     AuthFooterComponent,
+    PasswordStrengthComponent,
     TranslatePipe
   ]
 })
@@ -48,16 +50,26 @@ export class SignupPage {
   readonly appName = environment.name;
   readonly formSubmitted = signal<boolean>(false);
 
+  // Live values for the password-strength meter / confirm-match hint —
+  // presentation only, the reactive form validators remain the source of truth.
+  readonly passwordValue = signal<string>('');
+  readonly confirmValue = signal<string>('');
+  readonly passwordsMatch = computed(() => this.passwordValue() === this.confirmValue());
+  readonly showPassword = signal<boolean>(false);
+  readonly showConfirmPassword = signal<boolean>(false);
+
   constructor() {
-    addIcons({ logoGoogle, logoApple, arrowBack, alertCircle, eyeOutline });
-    
+    addIcons({ alertCircle, eyeOutline, eyeOffOutline });
+
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       birthDate: ['', [Validators.required, this.dateValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required]],
+      dataProcessingConsent: [false, [Validators.requiredTrue]],
+      legalConsent: [false, [Validators.requiredTrue]]
     }, {
       validators: this.passwordMatchValidator
     });
@@ -100,6 +112,19 @@ export class SignupPage {
       return { futureDate: true };
     }
 
+    const today = new Date();
+    let age = today.getFullYear() - yearNum;
+    const birthdayHasPassed = today.getMonth() > monthNum - 1 ||
+      (today.getMonth() === monthNum - 1 && today.getDate() >= dayNum);
+
+    if (!birthdayHasPassed) {
+      age--;
+    }
+
+    if (age < 14) {
+      return { minimumAge: true };
+    }
+
     return null;
   }
 
@@ -140,13 +165,11 @@ export class SignupPage {
         password: formData.password
       });
       
-      console.log('SignUp Response:', response);
-      
       if (response.success) {
         this.toastService.show(this.translationService.instant('messages.accountCreatedSuccess'));
-        setTimeout(() => {
-          this.navigationService.navigateTo(['/auth/loading']);
-        }, 1000);
+        await this.navigationService.navigateTo(['/auth/verify-email'], {
+          queryParams: { email: response.email ?? formData.email }
+        });
       } else {
         this.toastService.show(response.message);
       }
@@ -157,6 +180,22 @@ export class SignupPage {
 
   onToastDismiss(): void {
     this.toastService.hide();
+  }
+
+  onPasswordInput(event: any): void {
+    this.passwordValue.set(event.target.value ?? '');
+  }
+
+  onConfirmInput(event: any): void {
+    this.confirmValue.set(event.target.value ?? '');
+  }
+
+  togglePassword(): void {
+    this.showPassword.update(v => !v);
+  }
+
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword.update(v => !v);
   }
 
   onDateInput(event: any): void {

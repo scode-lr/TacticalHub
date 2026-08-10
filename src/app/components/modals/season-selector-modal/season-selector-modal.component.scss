@@ -79,57 +79,9 @@
   .modal-body {
     overflow-y: auto;
     max-height: 55vh;
-    padding: 0.375rem 0;
-  }
-
-  ::ng-deep .season-listbox {
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    width: 100%;
-
-    .p-listbox-list-container {
-      padding: 0;
-    }
-
-    .p-listbox-list {
-      padding: 0;
-      gap: 0;
-    }
-
-    .p-listbox-option {
-      padding: 0.875rem 1.375rem;
-      border-radius: 0;
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--text-primary, #1e293b);
-      transition: background 0.12s ease, color 0.12s ease;
-      border-bottom: 1px solid var(--border-light, #f1f5f9);
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      &:hover,
-      &.p-focus {
-        background: rgba(74, 144, 226, 0.06) !important;
-        color: var(--text-primary, #1e293b) !important;
-      }
-
-      &.p-selected {
-        background: rgba(74, 144, 226, 0.09) !important;
-        color: var(--ion-color-primary, #4a90e2) !important;
-        font-weight: 600;
-      }
-    }
-
-    .p-listbox-option-check-icon {
-      color: var(--ion-color-primary, #4a90e2);
-      order: 1;
-      margin-left: auto;
-      margin-right: 0;
-      flex-shrink: 0;
-    }
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
   }
 }

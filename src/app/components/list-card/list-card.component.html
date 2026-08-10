@@ -1,0 +1,43 @@
+<div
+  class="list-card"
+  [class.pending]="disabled()"
+  [class.disabled]="disabled()"
+  [class.selected]="selected() === true"
+  [class.unselected]="selected() === false"
+  [class.list-mode]="listMode()"
+  (click)="onClick()"
+>
+  @if (badgeText()) {
+    <div class="pending-badge">
+      <ion-icon name="time-outline"></ion-icon>
+      <span>{{ badgeText() }}</span>
+    </div>
+  }
+  <div class="card-logo">
+    @if (avatarSrc() && !avatarError()) {
+      <ion-avatar class="card-avatar">
+        <ion-img [src]="avatarSrc()" [alt]="title()" (ionError)="onAvatarError()"></ion-img>
+      </ion-avatar>
+    } @else {
+      <ion-icon [name]="icon()" class="default-icon"></ion-icon>
+    }
+  </div>
+
+  <div class="card-info">
+    <h3 class="card-title">{{ title() }}</h3>
+    @if (subtitle()) {
+      <div class="subtitle-container">
+        @if (subtitleIcon()) {
+          <ion-icon [name]="subtitleIcon()" class="subtitle-icon"></ion-icon>
+        }
+        <p class="card-subtitle">{{ subtitle() }}</p>
+      </div>
+    }
+  </div>
+
+  @if (selected()) {
+    <ion-icon name="checkmark-outline" class="check-icon"></ion-icon>
+  } @else if (showArrow() && !disabled()) {
+    <ion-icon name="arrow-forward-outline" class="arrow-icon"></ion-icon>
+  }
+</div>

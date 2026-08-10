@@ -44,13 +44,15 @@
         </button>
       </div>
       <div class="modal-body">
-        <p-listbox
-          [options]="seasons()"
-          [(ngModel)]="currentValue"
-          [checkmark]="true"
-          [highlightOnSelect]="true"
-          class="season-listbox"
-        />
+        @for (season of seasons(); track season) {
+          <app-list-card
+            [title]="season"
+            [listMode]="true"
+            [showArrow]="false"
+            [selected]="season === selectedSeason()"
+            (cardClicked)="selectSeason(season)"
+          />
+        }
       </div>
     </div>
   </ng-template>

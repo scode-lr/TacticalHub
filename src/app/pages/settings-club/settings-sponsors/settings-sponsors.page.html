@@ -119,5 +119,5 @@
   [isEmpty]="previewSponsors().length === 0"
   (didDismiss)="previewOpen.set(false)"
 >
-  <app-sponsors-display [sponsors]="previewSponsors()" />
+  <app-sponsors-display [sponsors]="previewSponsorTier()" [collaborators]="previewCollaboratorTier()" />
 </app-preview-modal>

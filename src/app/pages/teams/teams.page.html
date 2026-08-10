@@ -2,10 +2,9 @@
   <div class="section-header">
     <div class="header-info">
       <h1 class="section-title">{{ 'admin.menu.teams' | translate }}</h1>
-      <button class="season-button" (click)="openSeasonSelector()">
+      <div class="season-button" aria-label="Temporada activa">
         <span class="season-text">{{ selectedSeason() }}</span>
-        <ion-icon name="chevron-down-outline"></ion-icon>
-      </button>
+      </div>
       <button class="add-team-btn" (click)="createNewTeam()">
         <p>{{ 'roleSelection.addNewTeam' | translate }} </p>
         <ion-icon name="add-outline"></ion-icon>
@@ -38,14 +37,8 @@
 
 <app-team-form-modal
   [isOpen]="isModalOpen()"
+  [clubId]="clubId()"
+  [categories]="categories()"
   (didDismiss)="closeModal()"
   (teamAdded)="onTeamAdded($event)">
 </app-team-form-modal>
-
-<app-season-selector-modal
-  [isOpen]="isSeasonModalOpen()"
-  [seasons]="seasons"
-  [selectedSeason]="selectedSeason()"
-  (didDismiss)="closeSeasonModal()"
-  (seasonSelected)="selectSeason($event)">
-</app-season-selector-modal>

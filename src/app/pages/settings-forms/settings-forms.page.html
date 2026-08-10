@@ -35,30 +35,35 @@
       </div>
     </div>
   </div>
+  } @else if (forms().length === 0) {
+  <div class="empty-state">
+    <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+    <h3 class="empty-title">
+      {{ 'admin.settingsForms.noForms' | translate }}
+    </h3>
+    <p class="empty-description">
+      {{ 'admin.settingsForms.noFormsDescription' | translate }}
+    </p>
+    <button class="btn-primary" (click)="addForm()">
+      <ion-icon name="add-outline"></ion-icon>
+      {{ 'admin.settingsForms.addForm' | translate }}
+    </button>
+  </div>
   } @else {
-  <p-dataview [value]="forms()" class="forms-dataview">
-    <ng-template #list let-items>
-      <div class="forms-grid">
-        @for (item of items; track item.id; let i = $index) {
+  <div class="forms-groups">
+    @for (group of formGroups(); track group.action) {
+      <app-forms-group-section [icon]="group.icon" [titleKey]="group.titleKey" [count]="group.forms.length">
+        @for (item of group.forms; track item.id; let i = $index) {
         <app-form-header [form]="item" [index]="i" [editable]="true" />
         }
-      </div>
-    </ng-template>
-    <ng-template #empty>
-      <div class="empty-state">
-        <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
-        <h3 class="empty-title">
-          {{ 'admin.settingsForms.noForms' | translate }}
-        </h3>
-        <p class="empty-description">
-          {{ 'admin.settingsForms.noFormsDescription' | translate }}
-        </p>
-        <button class="btn-primary" (click)="addForm()">
-          <ion-icon name="add-outline"></ion-icon>
-          {{ 'admin.settingsForms.addForm' | translate }}
-        </button>
-      </div>
-    </ng-template>
-  </p-dataview>
+      </app-forms-group-section>
+    }
+  </div>
   }
+
+  <app-form-type-picker
+    [isOpen]="isTypePickerOpen()"
+    (typeSelected)="selectType($event)"
+    (didDismiss)="closeTypePicker()"
+  />
 </div>

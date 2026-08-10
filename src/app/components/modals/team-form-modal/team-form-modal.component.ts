@@ -5,10 +5,12 @@ import { IonModal, IonIcon, IonInput, IonSelect, IonSelectOption } from '@ionic/
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { addIcons } from 'ionicons';
 import { closeOutline, peopleOutline } from 'ionicons/icons';
+import { TeamCategory } from '@core/models/team.model';
 
 export interface NewTeamData {
   name: string;
-  category: string;
+  categoryId: number;
+  sportId: number;
   clubId: number;
 }
 
@@ -30,15 +32,14 @@ export interface NewTeamData {
 })
 export class TeamFormModalComponent {
   readonly isOpen = input.required<boolean>();
+  readonly clubId = input.required<number>();
+  readonly categories = input<TeamCategory[]>([]);
   
   readonly didDismiss = output<void>();
   readonly teamAdded = output<NewTeamData>();
 
   readonly teamName = signal<string>('');
-  readonly teamCategory = signal<string>('');
-  readonly clubId = signal<number>(1);
-
-  readonly categories = []; // This should be populated with actual categories from your service
+  readonly teamCategoryId = signal<number>(0);
 
   constructor() {
     addIcons({ closeOutline, peopleOutline });
@@ -54,22 +55,26 @@ export class TeamFormModalComponent {
   }
 
   onCategoryChange(event: any): void {
-    this.teamCategory.set(event.detail.value);
+    this.teamCategoryId.set(Number(event.detail.value));
   }
 
   isFormValid(): boolean {
     return (
       this.teamName().trim().length > 0 &&
-      this.teamCategory().trim().length > 0
+      this.teamCategoryId() > 0
     );
   }
 
   submitTeam(): void {
     if (!this.isFormValid()) return;
 
+    const category = this.categories().find(item => item.id === this.teamCategoryId());
+    if (!category) return;
+
     const newTeam: NewTeamData = {
       name: this.teamName().trim(),
-      category: this.teamCategory(),
+      categoryId: category.id,
+      sportId: category.sportId,
       clubId: this.clubId()
     };
 
@@ -80,6 +85,6 @@ export class TeamFormModalComponent {
 
   private resetForm(): void {
     this.teamName.set('');
-    this.teamCategory.set('');
+    this.teamCategoryId.set(0);
   }
 }

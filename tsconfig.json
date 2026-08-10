@@ -31,7 +31,6 @@
       "@assets/*": ["src/assets/*"],
       "@core/*": ["src/app/core/*"],
       "@models/*": ["src/app/core/models/*"],
-      "@mocks/*": ["src/mocks/*"],
       "@directives/*": ["src/app/core/directives/*"]
     }
   },

@@ -23,7 +23,7 @@
   .forgot-link {
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--text-secondary, #6b7280);
+    color: var(--color-accent, #3880ff);
     background: none;
     border: none;
     padding: 0.25rem 0;
@@ -31,7 +31,8 @@
     transition: color 0.15s ease;
 
     &:hover {
-      color: var(--ion-color-primary, #3880ff);
+      color: var(--color-accent-hover, #1f5fd1);
+      text-decoration: underline;
     }
   }
 }

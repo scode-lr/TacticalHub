@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { logoGoogle, logoApple } from 'ionicons/icons';
+import { IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 
 export type SocialProvider = 'google' | 'apple';
@@ -20,7 +18,6 @@ export interface SocialLoginResult {
   standalone: true,
   imports: [
     CommonModule,
-    IonIcon,
     IonSpinner,
     TranslatePipe
   ]
@@ -31,10 +28,6 @@ export class SocialLoginComponent {
 
   isLoading = false;
   currentProvider: SocialProvider | null = null;
-
-  constructor() {
-    addIcons({ logoGoogle, logoApple });
-  }
 
   async onGoogleClick() {
     await this.handleSocialLogin('google');

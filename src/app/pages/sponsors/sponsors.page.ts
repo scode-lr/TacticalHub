@@ -4,7 +4,7 @@ import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { SponsorService } from '@core/services/sponsor.service';
 import { ClubService } from '@services/club.service';
-import { Sponsor } from '@core/models/sponsor.model';
+import { Sponsor, SponsorTier } from '@core/models/sponsor.model';
 import { SponsorsDisplayComponent } from '@components/sponsors-display/sponsors-display.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -23,13 +23,19 @@ export class SponsorsPage implements OnInit {
 
   readonly loading = signal(true);
   readonly sponsors = signal<Sponsor[]>([]);
+  readonly allEmpty = signal(false);
+  readonly clubId = signal(0);
 
   async ngOnInit(): Promise<void> {
     const clubId = this.clubService.getCurrentClubId() ?? 0;
+    this.clubId.set(clubId);
     try {
       this.loading.set(true);
-      const data = await this.sponsorService.getByClubId(clubId);
-      this.sponsors.set(data.sort((a, b) => b.tier - a.tier || a.sortOrder - b.sortOrder));
+      // Fetch only the sponsor tier eagerly; the collaborator tier is fetched
+      // separately and deferred (see sponsors-collaborators-grid) so we avoid
+      // a single get-all call when the page usually only needs one tier above the fold.
+      const data = await this.sponsorService.getByClubId(clubId, SponsorTier.Sponsor);
+      this.sponsors.set(data.sort((a, b) => a.sortOrder - b.sortOrder));
     } catch {
       // Silently fail — show empty state
     } finally {

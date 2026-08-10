@@ -1,12 +1,17 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonInput, IonAvatar, IonImg, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@services/user.service';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { User } from '@core/models/user.model';
+import { AuthService } from '@services/auth.service';
+import { ToastService } from '@services/toast.service';
+import { addIcons } from 'ionicons';
+import { alertCircleOutline, closeOutline, trashOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-profile',
@@ -18,30 +23,37 @@ import { User } from '@core/models/user.model';
     ReactiveFormsModule,
     IonContent,
     IonInput,
-    IonAvatar,
-    IonImg,
     IonIcon,
     TranslatePipe,
-    UserHeaderComponent
+    UserHeaderComponent,
+    BackButtonComponent
   ]
 })
-export class ProfilePage {
+export class ProfilePage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
   private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly toastService = inject(ToastService);
 
   readonly user = signal<User | null>(null);
-  readonly avatarUrl = signal<string>('assets/default-avatar.svg');
   readonly isSaving = signal<boolean>(false);
-  
+  readonly isDeleting = signal<boolean>(false);
+  readonly showDeleteConfirmation = signal<boolean>(false);
+  readonly showDeletePassword = signal<boolean>(false);
+
   profileForm: FormGroup;
+  deleteAccountForm: FormGroup;
 
   constructor() {
+    addIcons({ alertCircleOutline, closeOutline, trashOutline, eyeOutline, eyeOffOutline });
     this.profileForm = this.fb.group({
       email: [{ value: '', disabled: true }],
-      username: ['', [Validators.required]],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
+    });
+    this.deleteAccountForm = this.fb.group({
+      currentPassword: ['', [Validators.required]],
     });
   }
 
@@ -53,7 +65,6 @@ export class ProfilePage {
     const currentUser = this.userService.getCurrentUser();
     if (currentUser) {
       this.user.set(currentUser);
-      this.avatarUrl.set(currentUser.avatarUrl || 'assets/default-avatar.svg');
       this.patchFormValues(currentUser);
     }
   }
@@ -61,14 +72,9 @@ export class ProfilePage {
   patchFormValues(user: User) {
     this.profileForm.patchValue({
       email: user.email,
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName
+      firstName: user.metadata?.firstName,
+      lastName: user.metadata?.lastName
     });
-  }
-
-  onAvatarError() {
-    this.avatarUrl.set('assets/default-avatar.svg');
   }
 
   async saveProfile() {
@@ -86,9 +92,11 @@ export class ProfilePage {
 
     const updatedUser: User = {
       ...currentUser,
-      username: this.profileForm.value.username,
-      firstName: this.profileForm.value.firstName,
-      lastName: this.profileForm.value.lastName
+      metadata: {
+        ...currentUser.metadata,
+        firstName: this.profileForm.value.firstName,
+        lastName: this.profileForm.value.lastName
+      }
     };
 
     this.userService.setUser(updatedUser);
@@ -101,5 +109,32 @@ export class ProfilePage {
 
   goBack() {
     this.navigationService.goBack();
+  }
+
+  openDeleteConfirmation(): void {
+    this.showDeleteConfirmation.set(true);
+  }
+
+  cancelDeleteAccount(): void {
+    if (this.isDeleting()) return;
+    this.showDeleteConfirmation.set(false);
+    this.showDeletePassword.set(false);
+    this.deleteAccountForm.reset();
+  }
+
+  toggleDeletePassword(): void {
+    this.showDeletePassword.update(v => !v);
+  }
+
+  async deleteAccount(): Promise<void> {
+    if (this.deleteAccountForm.invalid || this.isDeleting()) return;
+
+    this.isDeleting.set(true);
+    const result = await this.authService.deleteAccount(this.deleteAccountForm.value.currentPassword);
+    this.isDeleting.set(false);
+
+    if (!result.success) {
+      this.toastService.show(result.message, 'danger');
+    }
   }
 }

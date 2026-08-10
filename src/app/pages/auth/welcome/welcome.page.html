@@ -1,4 +1,4 @@
-<div class="welcome-page auth-background">
+<div class="welcome-page">
   <!-- Branding Section -->
   <div class="brand-section">
     <app-auth-branding></app-auth-branding>
@@ -6,25 +6,26 @@
 
   <!-- Action Section -->
   <div class="action-section">
-    <!-- Sign Up Button (Primary) -->
-    <button class="btn-primary btn-block" (click)="navigateToSignUp()">
-      <ion-icon name="person-add-outline"></ion-icon>
-      {{ 'welcome.createAccount' | translate }}
-    </button>
-
-    <!-- Sign In Button (Secondary) -->
-    <button class="btn-secondary btn-block" (click)="navigateToSignIn()">
-      <ion-icon name="log-in-outline"></ion-icon>
-      {{ 'welcome.signIn' | translate }}
-    </button>
-
-    <!-- Terms Text -->
-    <div class="terms-text">
-      <ion-text>
-        {{ 'welcome.terms' | translate }} 
-        <span class="link">{{ 'welcome.termsOfService' | translate }}</span> {{ 'welcome.and' | translate }} 
-        <span class="link">{{ 'welcome.privacyPolicy' | translate }}</span>
-      </ion-text>
+    <div class="get-started-heading">
+      <span class="kicker">{{ 'welcome.kicker' | translate }}</span>
+      <h1>{{ 'welcome.getStarted' | translate }}</h1>
+      <p>{{ 'welcome.subtitle' | translate }}</p>
     </div>
+
+    <div class="action-buttons">
+      <!-- Sign Up Button (Primary) -->
+      <button class="btn-primary btn-block" (click)="navigateToSignUp()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M19 8v6"></path><path d="M22 11h-6"></path></svg>
+        {{ 'welcome.createAccount' | translate }}
+      </button>
+
+      <!-- Sign In Button (Secondary) -->
+      <button class="btn-secondary btn-block" (click)="navigateToSignIn()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><path d="M10 17l5-5-5-5"></path><path d="M15 12H3"></path></svg>
+        {{ 'welcome.signIn' | translate }}
+      </button>
+    </div>
+
+    <p class="footer-text">{{ 'welcome.poweredBy' | translate }} <strong>Tactical</strong></p>
   </div>
 </div>
