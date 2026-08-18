@@ -1,0 +1,70 @@
+<div class="page-container my-documents-page">
+  <div class="section-header">
+    <div class="header-content">
+      <h1 class="section-title">{{ 'user.myDocuments.title' | translate }}</h1>
+      <p class="section-subtitle">{{ 'user.myDocuments.description' | translate }}</p>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="documents-list">
+      @for (_ of [1, 2, 3]; track $index) {
+        <div class="skeleton-card">
+          <div class="skeleton-line skeleton-line--title"></div>
+          <div class="skeleton-line skeleton-line--meta"></div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (isEmpty()) {
+    <div class="empty-state">
+      <ion-icon name="folder-outline" class="empty-icon"></ion-icon>
+      <h2 class="empty-title">{{ 'user.myDocuments.empty' | translate }}</h2>
+      <p class="empty-description">{{ 'user.myDocuments.emptyDescription' | translate }}</p>
+    </div>
+  }
+
+  @if (!loading() && documents().length > 0) {
+    <div class="documents-list">
+      @for (document of documents(); track document.id) {
+        <div class="document-card">
+          <span class="document-card__icon">
+            <ion-icon name="document-text-outline"></ion-icon>
+          </span>
+
+          <div class="document-card__body">
+            <span class="document-card__title">{{ document.formName }}</span>
+            <span class="document-card__meta">
+              {{ document.generatedAt | date: 'mediumDate' }} · {{ document.reference }}
+            </span>
+          </div>
+
+          @if (canPreviewInline) {
+            <button
+              type="button"
+              class="document-card__download"
+              (click)="openPreview(document)"
+              [attr.aria-label]="'user.myDocuments.preview' | translate">
+              <ion-icon name="eye-outline"></ion-icon>
+            </button>
+          }
+
+          <button
+            type="button"
+            class="document-card__download"
+            (click)="download(document)"
+            [disabled]="downloadingId() !== null"
+            [attr.aria-label]="'user.myDocuments.download' | translate">
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <app-document-preview
+    [documentId]="previewDocumentId()"
+    [fileName]="previewFileName()"
+    (closed)="closePreview()" />
+</div>

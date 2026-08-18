@@ -1,13 +1,22 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
-import { FormSubmissionRequest } from '@core/requests/form.request';
+import { FormSubmissionRequest, ReviewSubmissionRequest } from '@core/requests/form.request';
+import { saveBlob } from '@core/utils/file-download.util';
 import { RolesService } from '@services/roles.service';
 import { FormSubmissionResult, SubmissionDetail, SubmissionPage } from '@core/responses/form.response';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
 import { ExportProfile, SaveExportProfileRequest } from '@core/models/export-profile.model';
 import { CreateGoogleSheetsIntegrationRequest, CreateGoogleSheetsIntegrationResponse, ExternalIntegration, ExternalIntegrationTestResult, ExternalSyncResult, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
+
+export interface ReviewSubmissionResult {
+  submissionId: number;
+  status: string;
+  reviewedByUserId: number;
+  reviewedAt: string;
+  documentId: number | null;
+}
 
 export interface FormsSubmissionsPageState {
   viewState: 'list' | 'detail';
@@ -71,9 +80,21 @@ export class FormSubmissionsService {
     );
   }
 
-  async reviewSubmission(submissionId: number, approved: boolean): Promise<void> {
-    await firstValueFrom(
-      this.apiService.put<ApiResponse<void>>(`/forms/submissions/${submissionId}/review`, { approved })
+  /**
+   * Approves or rejects a submission. Replaces the old notification-resolve call: reviewing is an
+   * operation on the submission, and the API closes the linked coordination task itself.
+   */
+  async reviewSubmission(
+    submissionId: number,
+    approved: boolean,
+    comment?: string | null,
+    fieldStatuses?: Record<number, string>
+  ): Promise<ReviewSubmissionResult> {
+    const request: ReviewSubmissionRequest = { approved, comment: comment ?? null, fieldStatuses: fieldStatuses ?? {} };
+    return await firstValueFrom(
+      this.apiService.put<ApiResponse<ReviewSubmissionResult>>(`/forms/submissions/${submissionId}/review`, request).pipe(
+        map(response => response.data!)
+      )
     );
   }
 
@@ -85,16 +106,25 @@ export class FormSubmissionsService {
     );
   }
 
+  /**
+   * Fetches the current user's latest submission for every open form in a club in one request.
+   * A formId absent from the returned map means the user has no submission for it.
+   */
+  async getMySubmissionsByClub(clubId: number): Promise<Record<number, FormSubmission>> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<{ submissions: Record<number, FormSubmission> }>>('/forms/my-submissions', {
+        params: { clubId: String(clubId) }
+      }).pipe(
+        map(response => response.data?.submissions ?? {})
+      )
+    );
+  }
+
   async exportSubmissions(formId: number, formName: string): Promise<void> {
     const blob = await firstValueFrom(
       this.apiService.getBlob(`/forms/${formId}/submissions/export`)
     );
-    const url = window.URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = `${formName}_submissions.csv`;
-    anchor.click();
-    window.URL.revokeObjectURL(url);
+    await saveBlob(blob, `${formName}_submissions.csv`);
   }
 
   async getExportProfile(formId: number): Promise<ExportProfile> {

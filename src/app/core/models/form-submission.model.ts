@@ -7,4 +7,6 @@ export interface FormSubmission {
   submittedAt: string | null;
   createdAt: string;
   comment?: string | null;
+  /** Set when a signed document has been issued for this submission. */
+  documentId?: number | null;
 }

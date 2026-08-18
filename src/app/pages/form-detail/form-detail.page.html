@@ -20,19 +20,32 @@
       }
     }
     
-    <div class="submissions-section">
-      <div class="submissions-header">
-        <h2 class="submissions-title">{{ 'user.forms.submission.title' | translate }}</h2>
-        <button type="button" class="btn-primary" (click)="onFillAgain()">
-          {{ 'user.forms.submission.fillAgain' | translate }}
-        </button>
-      </div>
-      
+    @if (hasSubmissions()) {
+      <div class="submissions-section">
+        <div class="submissions-header">
+          <h2 class="submissions-title">{{ 'user.forms.submission.title' | translate }}</h2>
+          <button type="button" class="btn-primary" (click)="onFillAgain()">
+            {{ 'user.forms.submission.fillAgain' | translate }}
+          </button>
+        </div>
+
         <div class="submissions-list">
           @for (submission of mySubmissions(); track submission.id) {
             <app-form-submission-card [submission]="submission" [formFields]="formFields()" (editRequested)="onEditRejected(submission)" />
           }
         </div>
-    </div>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <div class="empty-icon-wrap">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <h3 class="empty-title">{{ 'user.forms.submission.emptyTitle' | translate }}</h3>
+        <p class="empty-description">{{ 'user.forms.submission.emptyDescription' | translate }}</p>
+        <button type="button" class="btn-primary" (click)="onFillAgain()">
+          {{ 'user.forms.submission.fillNow' | translate }}
+        </button>
+      </div>
+    }
     }
 </div>

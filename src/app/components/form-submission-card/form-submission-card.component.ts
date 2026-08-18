@@ -1,8 +1,13 @@
-import { Component, input, output, computed, signal } from '@angular/core';
+import { Component, input, output, computed, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { documentTextOutline, createOutline, chatbubbleOutline } from 'ionicons/icons';
+import { documentTextOutline, createOutline, chatbubbleOutline, downloadOutline, eyeOutline } from 'ionicons/icons';
+import { DocumentPreviewComponent } from '@components/document-preview/document-preview.component';
+import { canPreviewPdfInline } from '@core/utils/file-download.util';
+import { DocumentsService } from '@core/services/documents.service';
+import { ToastService } from '@core/services/toast.service';
+import { TranslationService } from '@core/services/i18n/translation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { SubmissionDetailModalComponent } from '@components/modals/submission-detail-modal/submission-detail-modal.component';
 import { FormSubmission } from '@core/models/form-submission.model';
@@ -24,20 +29,56 @@ export interface SubmissionTimelineStep {
   templateUrl: './form-submission-card.component.html',
   styleUrls: ['./form-submission-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, SubmissionDetailModalComponent],
+  imports: [CommonModule, IonIcon, TranslatePipe, SubmissionDetailModalComponent, DocumentPreviewComponent],
 })
 export class FormSubmissionCardComponent {
+  private readonly documentsService = inject(DocumentsService);
+  private readonly translationService = inject(TranslationService);
+  private readonly toastService = inject(ToastService);
+
   readonly submission = input.required<FormSubmission>();
   readonly formFields = input.required<FormField[]>();
 
   readonly isModalOpen = signal(false);
+  readonly isDownloading = signal(false);
+  readonly previewDocumentId = signal<number | null>(null);
   readonly editRequested = output<void>();
+
+  /** No in-app viewer on native, so there the download already opens the OS preview. */
+  readonly canPreviewInline = canPreviewPdfInline();
 
   readonly isRejected = computed(() => this.submission().status === AppStatus.Rejected);
   readonly rejectionComment = computed(() => latestComment(this.submission().comment));
 
+  /** The signed authorization only exists once coordination has approved the submission. */
+  readonly documentId = computed(() => this.submission().documentId ?? null);
+
+  readonly documentFileName = computed(() => `document-${this.submission().id}.pdf`);
+
   constructor() {
-    addIcons({ documentTextOutline, createOutline, chatbubbleOutline });
+    addIcons({ documentTextOutline, createOutline, chatbubbleOutline, downloadOutline, eyeOutline });
+  }
+
+  openPreview(): void {
+    this.previewDocumentId.set(this.documentId());
+  }
+
+  closePreview(): void {
+    this.previewDocumentId.set(null);
+  }
+
+  async downloadDocument(): Promise<void> {
+    const documentId = this.documentId();
+    if (!documentId || this.isDownloading()) return;
+
+    this.isDownloading.set(true);
+    try {
+      await this.documentsService.download(documentId, this.documentFileName());
+    } catch {
+      this.toastService.show(this.translationService.instant('user.myDocuments.downloadError'), 'danger');
+    } finally {
+      this.isDownloading.set(false);
+    }
   }
 
   readonly timelineSteps = computed<SubmissionTimelineStep[]>(() => {

@@ -11,7 +11,8 @@ import { FormField } from '@core/models/form-field.model';
 import { SubmissionDetail } from '@core/responses/form.response';
 import { SubmissionValue } from '@core/models/submission-value.model';
 import { maskIban } from '@core/utils/iban.util';
-import { FormFieldType } from '@core/models/form.model';
+import { readBooleanValue } from '@core/utils/submission-value.util';
+import { FormFieldType, isDisplayOnlyField } from '@core/models/form.model';
 
 @Component({
   selector: 'app-submission-detail-modal',
@@ -62,17 +63,42 @@ export class SubmissionDetailModalComponent {
   }
 
   private buildFromValues(detail: SubmissionDetail): void {
-    const fields: FormField[] = [];
+    const valuesByKey = new Map(detail.values.map(val => [val.fieldKey, val]));
+    const fields = this.fieldsToRender(detail, valuesByKey);
     const group: Record<string, unknown> = {};
 
-    detail.values.forEach((val, index) => {
-      const field = this.fieldFromValue(val, index);
-      fields.push(field);
-      group[field.key] = [{ value: this.resolveValue(val), disabled: true }];
-    });
+    for (const field of fields) {
+      // Informational blocks carry no answer and never become a control.
+      if (isDisplayOnlyField(field.type)) continue;
+
+      const val = valuesByKey.get(field.key);
+      group[field.key] = [{ value: val ? this.resolveValue(val) : null, disabled: true }];
+    }
 
     this.submissionFields.set(fields);
     this.form.set(this.fb.group(group));
+  }
+
+  /**
+   * The submission only carries answered fields, so the form definition is what drives the render:
+   * it is the only side that still knows about informational blocks, field descriptions and the
+   * full list of options. Answers whose field is no longer in the definition are appended so an
+   * edited form does not hide what a member actually submitted.
+   */
+  private fieldsToRender(detail: SubmissionDetail, valuesByKey: Map<string, SubmissionValue>): FormField[] {
+    const definition = this.formFields();
+    if (!definition.length) return detail.values.map((val, index) => this.fieldFromValue(val, index));
+
+    const defined = [...definition]
+      .sort((a, b) => a.order - b.order)
+      .map(field => ({ ...field, status: valuesByKey.get(field.key)?.status ?? field.status }));
+
+    const definedKeys = new Set(definition.map(field => field.key));
+    const orphans = detail.values
+      .filter(val => !definedKeys.has(val.fieldKey))
+      .map((val, index) => this.fieldFromValue(val, definition.length + index));
+
+    return [...defined, ...orphans];
   }
 
   private fieldFromValue(val: SubmissionValue, order: number): FormField {
@@ -89,15 +115,19 @@ export class SubmissionDetailModalComponent {
       validationJson: null,
       createdAt: new Date(),
       status: val.status ?? undefined,
-      // For select/radio: provide stored value as the only option so p-select renders it
-      options: (val.fieldType === FormFieldType.Select || val.fieldType === FormFieldType.Checkbox)
-        ? (val.valueText !== null ? [val.valueText] : [])
-        : null,
+      // For select/radio: provide stored value as the only option so p-select renders it. A plain
+      // yes/no answer is not a choice list, so it keeps the built-in options.
+      options: this.isChoiceValue(val) && val.valueText !== null ? [val.valueText] : null,
     };
   }
 
+  private isChoiceValue(val: SubmissionValue): boolean {
+    if (val.fieldType === FormFieldType.Select) return true;
+    return val.fieldType === FormFieldType.Checkbox && readBooleanValue(val) === null;
+  }
+
   private resolveValue(val: SubmissionValue): unknown {
-    if (val.valueBoolean !== null) return val.valueBoolean;
+    if (val.fieldType === FormFieldType.Checkbox) return readBooleanValue(val) ?? val.valueText;
     if (val.valueNumber !== null) return val.valueNumber;
     if (val.valueDate !== null) return new Date(val.valueDate);
     if (val.fieldType === FormFieldType.Iban) return maskIban(val.valueText);

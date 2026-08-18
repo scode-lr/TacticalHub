@@ -17,16 +17,34 @@ export interface FormRequest {
   toDate?: string | null;
   status?: string;
   action: string;
-  email?: string | null;
+  requiresSignature?: boolean;
+  requiresReview?: boolean;
+  adultsOnly?: boolean;
+  generatesDocument?: boolean;
   fields?: AddFormFieldRequest[];
 }
 
 export type CreateFormRequest = FormRequest & { clubId?: number };
 export type UpdateFormRequest = FormRequest;
 
+export interface FormSignatureRequest {
+  /** PNG data URL produced by the signature pad. */
+  dataUrl: string;
+  widthPx?: number;
+  heightPx?: number;
+}
+
 export interface SubmitFormRequest {
   values: Record<string, string | number | boolean | string[] | null>;
+  /** Required when the form requires a signature. */
+  signature?: FormSignatureRequest;
 }
 
 /** Alias kept for backward compatibility */
 export type FormSubmissionRequest = SubmitFormRequest;
+
+export interface ReviewSubmissionRequest {
+  approved: boolean;
+  comment?: string | null;
+  fieldStatuses?: Record<number, string>;
+}

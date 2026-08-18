@@ -148,7 +148,7 @@
 // club's existing colors so the new auth layout keeps TacticalHub's palette.
 :root {
   --color-bg: var(--background-primary);
-  --color-surface: var(--background-secondary);
+  --color-surface: #ffffff;
   --color-divider: var(--border-light);
   --color-panel-bg: linear-gradient(160deg, var(--background-secondary) 0%, var(--background-primary) 100%);
   --color-welcome-bg: linear-gradient(180deg, var(--background-secondary) 0%, var(--background-primary) 100%);

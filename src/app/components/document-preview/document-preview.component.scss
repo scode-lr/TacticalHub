@@ -1,0 +1,27 @@
+// The viewer fills the modal body: no padding, no scroll container of its own — the PDF
+// viewer inside the iframe does its own scrolling.
+.app-modal-content.preview-content {
+  display: flex;
+  padding: 0;
+  overflow: hidden;
+}
+
+.preview-loading {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-frame {
+  flex: 1;
+  min-width: 0;
+  border: none;
+}
+
+// File names are long enough to push the close button off the header.
+.app-modal-subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

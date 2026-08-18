@@ -21,6 +21,7 @@ export const MEMBER_MENU_CONFIG: MenuConfig = {
     { id: 'sponsors', label: 'user.menu.sponsors', icon: 'people-outline', route: 'sponsors', description: 'user.description.sponsors' },
   ],
   moreItems: [
+    { id: 'my-documents', label: 'user.menu.myDocuments', icon: 'folder-outline', route: 'my-documents', description: 'user.description.myDocuments' },
     { id: 'information', label: 'user.menu.information', icon: 'information-circle-outline', route: 'information', description: 'user.description.information' },
     { id: 'contact', label: 'user.menu.contact', icon: 'mail-outline', route: 'contact', description: 'user.description.contact' },
   ]
@@ -66,6 +67,12 @@ export class MemberPage implements OnInit {
       return '';
     }
 
+    // The signature step goes back to the form it belongs to, not to the submissions list.
+    const signMatch = url.match(/\/forms\/(\d+)\/(-?\d+)\/sign/);
+    if (signMatch) {
+      return `/app/${roleType}/${roleId}/forms/${signMatch[1]}/${signMatch[2]}`;
+    }
+
     const formSubmissionMatch = url.match(/\/forms\/(\d+)\/(-?\d+)/);
     if (formSubmissionMatch) {
       return `/app/${roleType}/${roleId}/forms/${formSubmissionMatch[1]}`;
@@ -106,6 +113,7 @@ export class MemberPage implements OnInit {
     const url = this.router.url;
     const isSponsorContact = /[?&]type=sponsors?(?:&|$)/.test(url);
     const isMoreSubpage = url.includes('/information') ||
+                          url.includes('/my-documents') ||
                           (url.includes('/contact') && !isSponsorContact);
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||

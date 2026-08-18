@@ -38,6 +38,26 @@
     }
   </div>
 
+  @if (documentId()) {
+    <div class="document-actions">
+      @if (canPreviewInline) {
+        <button class="btn-secondary btn-block" type="button" (click)="openPreview()">
+          <ion-icon name="eye-outline"></ion-icon>
+          {{ 'user.myDocuments.preview' | translate }}
+        </button>
+      }
+      <button class="btn-primary btn-block download-document" (click)="downloadDocument()" [disabled]="isDownloading()">
+        <ion-icon name="download-outline"></ion-icon>
+        {{ 'user.forms.submission.downloadDocument' | translate }}
+      </button>
+    </div>
+
+    <app-document-preview
+      [documentId]="previewDocumentId()"
+      [fileName]="documentFileName()"
+      (closed)="closePreview()" />
+  }
+
   @if (isRejected()) {
     <div class="rejection-footer">
       @if (rejectionComment()) {

@@ -29,6 +29,7 @@ Apple permite de una a diez capturas por tamaño/localización. Preparar al meno
 ## iOS / App Store Connect
 
 - [ ] Registrar App ID explícito idéntico al bundle ID y habilitar Push Notifications.
+- [ ] Compilar con Xcode 26 y el SDK de iOS 26 o posterior, requisito para cargas desde el 28 de abril de 2026.
 - [ ] Configurar Apple Distribution y perfil App Store Connect, o firma automática en Xcode.
 - [ ] Crear APNs Auth Key y custodiar el `.p8` fuera de Git.
 - [ ] Incrementar build number en cada carga y fijar marketing version.
@@ -39,10 +40,20 @@ Apple permite de una a diez capturas por tamaño/localización. Preparar al meno
 
 ## BLOQUEANTES actuales
 
-1. Completar razón social/nombre, NIF/CIF, domicilio, registro y contacto del aviso legal de Tactical Hub.
-2. Completar identidad legal del Voltregà CF y del prestador Tactical Hub en sus tres documentos.
-3. Revisión jurídica de privacidad, bases, conservación, encargados y transferencias.
-4. Configurar `google-services.json`, APNs y secretos de servidor por app.
-5. Crear/sincronizar proyectos iOS; el repositorio los excluye actualmente.
-6. Ejecutar el piloto físico y recopilar capturas sin datos reales.
-7. Confirmar cuentas Apple Developer y Google Play con permisos de publicación.
+1. Completar la identidad legal del prestador Tactical Hub en los documentos de Voltregà.
+2. Publicar por HTTPS las URLs de privacidad, soporte, condiciones y eliminación de cuenta.
+3. Obtener la revisión jurídica de privacidad, bases, conservación, encargados y transferencias.
+4. Configurar APNs, habilitar las capacidades iOS y cargar los secretos del servidor de Voltregà.
+5. Ejecutar el piloto físico y recopilar capturas sin datos reales.
+6. Confirmar la cuenta Apple Developer y sus permisos de publicación.
+
+## Estado técnico de Voltregà a 13 de agosto de 2026
+
+- [x] Bundle ID nativo: `es.tacticalhub.voltrega`.
+- [x] Versión de marketing `1.0` y build `1`.
+- [x] Build web de producción superada.
+- [x] Proyecto iOS sincronizado con siete plugins Capacitor.
+- [x] Icono iOS 1024 x 1024 sin transparencia.
+- [x] Eliminación de cuenta disponible desde Perfil y mediante página pública integrada.
+- [ ] Equipo de firma y capacidades Push Notifications/Remote notifications configurados en Xcode.
+- [ ] Archive y Validate App ejecutados en un Mac con Xcode 26.

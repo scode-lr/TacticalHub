@@ -49,7 +49,7 @@
           <div class="news-row-actions" (click)="$event.stopPropagation()">
             <button
               type="button"
-              class="actions-toggle"
+              class="btn-icon-round actions-toggle"
               (click)="toggleMenu(item.id)"
               [attr.aria-label]="'admin.settingsNews.actions' | translate"
               [attr.aria-expanded]="openMenuId() === item.id"
@@ -104,7 +104,7 @@
 
         <div class="app-modal-content news-form">
           <label class="field-group">
-            <span>{{ 'user.news.fieldTitle' | translate }}</span>
+            <span class="field-label">{{ 'user.news.fieldTitle' | translate }}</span>
             <input
               type="text"
               [ngModel]="form().title"
@@ -115,7 +115,7 @@
           </label>
 
           <label class="field-group">
-            <span>{{ 'user.news.fieldBody' | translate }}</span>
+            <span class="field-label">{{ 'user.news.fieldBody' | translate }}</span>
             <textarea
               rows="8"
               [ngModel]="form().body"
@@ -126,7 +126,7 @@
           </label>
 
           <div class="field-group">
-            <span>{{ 'user.news.primaryImage' | translate }}</span>
+            <span class="field-label">{{ 'user.news.primaryImage' | translate }}</span>
             @if (uploadedPrimaryImageUrl()) {
               <div class="image-preview" [style.background-image]="'url(' + uploadedPrimaryImageUrl() + ')'"></div>
               <button class="btn-text danger" type="button" (click)="removePrimaryImage()">{{ 'user.news.removeImage' | translate }}</button>
@@ -138,17 +138,17 @@
           </div>
 
           <label class="field-group">
-            <span>{{ 'user.news.externalLinkUrl' | translate }}</span>
+            <span class="field-label">{{ 'user.news.externalLinkUrl' | translate }}</span>
             <input type="url" [ngModel]="form().externalLinkUrl" (ngModelChange)="updateForm('externalLinkUrl', $event)" placeholder="https://..." />
           </label>
 
           <label class="field-group">
-            <span>{{ 'user.news.externalLinkLabel' | translate }}</span>
+            <span class="field-label">{{ 'user.news.externalLinkLabel' | translate }}</span>
             <input type="text" [ngModel]="form().externalLinkLabel" (ngModelChange)="updateForm('externalLinkLabel', $event)" [placeholder]="'user.news.openLink' | translate" />
           </label>
 
           <label class="field-group">
-            <span>{{ 'user.news.linkedForm' | translate }}</span>
+            <span class="field-label">{{ 'user.news.linkedForm' | translate }}</span>
             <select [ngModel]="form().linkedFormId" (ngModelChange)="updateForm('linkedFormId', $event)">
               <option [ngValue]="null">{{ 'user.news.noLinkedForm' | translate }}</option>
               @for (activeForm of activeForms(); track activeForm.id) {

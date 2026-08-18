@@ -1,0 +1,124 @@
+.document-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 18px;
+  background: var(--color-surface, #ffffff);
+}
+
+.document-banner__icon {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  border-radius: 12px;
+  background: #fbf0c2;
+  color: #6b5300;
+  font-size: 20px;
+}
+
+.document-banner__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.document-banner__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+}
+
+.document-banner__reference {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.document-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+
+  .btn-primary,
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+    }
+  }
+}
+
+// Same footprint as the loaded banner, so resolving the document does not shift the page.
+.document-skeleton {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 18px;
+  background: var(--color-surface, #ffffff);
+}
+
+.document-skeleton__icon {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+}
+
+.document-skeleton__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.document-skeleton__line {
+  height: 14px;
+  border-radius: 6px;
+
+  &--title {
+    width: 60%;
+  }
+
+  &--actions {
+    height: 34px;
+    width: 100%;
+    max-width: 320px;
+    border-radius: 10px;
+  }
+}
+
+.document-skeleton__icon,
+.document-skeleton__line {
+  background: linear-gradient(
+    90deg,
+    var(--background-secondary, #f3f4f6) 25%,
+    var(--border-light, #e5e7eb) 37%,
+    var(--background-secondary, #f3f4f6) 63%
+  );
+  background-size: 400% 100%;
+  animation: document-skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes document-skeleton-shimmer {
+  from { background-position: 100% 50%; }
+  to   { background-position: 0 50%; }
+}

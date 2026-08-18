@@ -143,6 +143,18 @@
   height: 4rem;
 }
 
+/// Turns any icon into a busy indicator.
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+// Lives here, next to its only users: keyframes are never scoped to a
+// component, so a page defining its own copy was styling the whole app.
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 .loading-spinner {
   width: 20px;
   height: 20px;

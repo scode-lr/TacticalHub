@@ -48,24 +48,6 @@
   margin: 0;
 }
 
-.close-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  border: none;
-  background: var(--background-secondary, #f3f4f6);
-  color: var(--text-secondary, #6b7280);
-  cursor: pointer;
-  flex-shrink: 0;
-
-  ion-icon {
-    font-size: 1.125rem;
-  }
-}
-
 .modal-content {
   flex: 1;
   overflow-y: auto;

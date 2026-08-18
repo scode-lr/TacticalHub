@@ -629,9 +629,15 @@ export const sharedTranslations = {
         toDate: 'Fecha de fin',
         status: 'Estado',
         action: 'Acción',
-        email: 'Email',
-        emailPlaceholder: 'Introduce un email para enviar las respuestas',
-        emailInvalid: 'Por favor, introduce un email válido'
+        requiresSignature: 'Requiere firma digital',
+        requiresSignatureDescription: 'El miembro deberá firmar antes de enviar y se generará un documento oficial.',
+        requiresReview: 'Requiere revisión de coordinación',
+        requiresReviewDescription: 'El envío queda pendiente hasta que coordinación lo apruebe o lo rechace.',
+        adultsOnly: 'Solo mayores de edad',
+        adultsOnlyDescription: 'Solo los miembros mayores de edad verán y podrán rellenar el formulario.',
+        generatesDocument: 'Generar documento',
+        generatesDocumentDescription: 'Al aceptarse la respuesta se genera un comprobante en PDF descargable.',
+        generatesDocumentLocked: 'Obligatorio: la firma solo tiene valor si se puede mostrar en un documento.'
       },
       section: {
         general: 'General',
@@ -665,7 +671,8 @@ export const sharedTranslations = {
           textarea: 'Área de texto',
           boolean: 'Checkbox',
           select: 'Selección',
-          file: 'Archivo'
+          file: 'Archivo',
+          info: 'Texto informativo'
         }
       },
       preview: {
@@ -776,6 +783,7 @@ export const sharedTranslations = {
       news: 'Noticias',
       action: 'Acciones',
       information: 'Información',
+      myDocuments: 'Mis documentos',
       proposals: 'Propuestas y quejas',
       matches: 'Partidos',
       sponsors: 'Patrocinadores',
@@ -789,6 +797,7 @@ export const sharedTranslations = {
       news: 'Últimas actualizaciones y anuncios',
       action: 'Registra jugadores o hazte socio',
       information: 'Información y recursos del club',
+      myDocuments: 'Tus autorizaciones firmadas',
       proposals: 'Envía propuestas o quejas',
       matches: 'Ver próximos partidos del fin de semana',
       sponsors: 'Nuestros colaboradores y patrocinadores del club',
@@ -899,13 +908,41 @@ export const sharedTranslations = {
         statusApproved: 'Aprobado',
         statusRejected: 'Rechazado',
         fillAgain: 'Volver a rellenar',
+        fillNow: 'Rellenar formulario',
+        emptyTitle: 'Aún no has enviado nada',
+        emptyDescription: 'Rellena el formulario y aquí verás su estado y el documento cuando esté listo.',
         detailTitle: 'Mi envío',
         rejectionComment: 'Comentario del coordinador',
         editAndResend: 'Editar y reenviar',
         resend: 'Reenviar',
         rejectionFeedback: 'Comentario del coordinador',
         viewHistory: 'Ver historial',
-        commentHistory: 'Historial de comentarios'
+        commentHistory: 'Historial de comentarios',
+        downloadDocument: 'Descargar documento',
+        documentAvailable: 'El documento de esta solicitud ya está disponible.'
+      },
+      signature: {
+        title: 'Firma',
+        finalStep: 'Paso final',
+        headingPrefix: 'Firma',
+        lead: 'Con tu firma declaras que las respuestas son correctas y autorizas el envío del formulario.',
+        reviewAndSign: 'Revisar y firmar',
+        reviewAnswers: 'Revisar las respuestas',
+        fieldCount: '{count} campos rellenados',
+        myAnswers: 'Mis respuestas',
+        continueToSign: 'Continuar a firmar',
+        notProvided: 'No aplica',
+        drawHint: 'Firma con el dedo o el ratón',
+        typeHint: 'Escribe tu nombre completo',
+        modeDraw: 'Dibujar',
+        modeType: 'Escribir',
+        namePlaceholder: 'Nombre y apellidos',
+        signed: 'Firmado',
+        pending: 'Pendiente de firmar',
+        clear: 'Borrar',
+        legalNotice: 'Al firmar, esta firma tiene la misma validez que la manuscrita.',
+        back: 'Atrás',
+        signAndSend: 'Firmar y enviar'
       },
       status: {
         closed: 'Cerrado'
@@ -918,6 +955,17 @@ export const sharedTranslations = {
       description: 'Información importante y guías para los miembros del club',
       empty: 'No hay información disponible',
       emptyDescription: 'La información del club estará disponible pronto.'
+    },
+    myDocuments: {
+      title: 'Mis documentos',
+      description: 'Tus autorizaciones firmadas y aprobadas por el club.',
+      empty: 'Todavía no tienes documentos',
+      emptyDescription: 'Cuando firmes un formulario y coordinación lo apruebe, tu documento aparecerá aquí.',
+      download: 'Descargar documento',
+      downloadError: 'No se ha podido descargar el documento.',
+      preview: 'Ver documento',
+      previewTitle: 'Vista previa del documento',
+      loadError: 'No se han podido cargar tus documentos.'
     },
     proposals: {
       title: 'Propuestas',

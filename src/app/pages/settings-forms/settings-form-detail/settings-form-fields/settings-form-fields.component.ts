@@ -11,7 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { FormFieldType } from '@core/models/form.model';
+import { FormFieldType, isDisplayOnlyField } from '@core/models/form.model';
 
 @Component({
   selector: 'app-settings-form-fields',
@@ -30,8 +30,17 @@ export class SettingsFormFieldsComponent {
   private fieldNotifiers = new Map<number, Subject<void>>();
 
   readonly fieldTypeOptions: FormFieldType[] = [
-    FormFieldType.Text, FormFieldType.Number, FormFieldType.Date, FormFieldType.Iban, FormFieldType.Select, FormFieldType.Checkbox
+    FormFieldType.Text, FormFieldType.Number, FormFieldType.Date, FormFieldType.Iban,
+    FormFieldType.Select, FormFieldType.Checkbox, FormFieldType.Info
   ];
+
+  /**
+   * Informational text takes no input, so "required", max length and options make no sense for it.
+   * Length and options are already excluded by hasLength/hasOptions; this hides the required toggle.
+   */
+  isDisplayOnly(fieldIndex: number): boolean {
+    return isDisplayOnlyField(this.asFormGroup(fieldIndex).get('type')?.value);
+  }
 
   get fieldTypeItems() {
     return this.fieldTypeOptions.map(type => ({

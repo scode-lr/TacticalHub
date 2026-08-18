@@ -7,10 +7,9 @@ import { FormSubmissionsService } from '@core/services/form-submissions.service'
 import { NavigationService } from '@core/services/navigation.service';
 import { Notification, NotificationType } from '@core/models';
 import { RoleType } from '@core/models/role.model';
-import { TeamJoinRequestsComponent } from '@components/team-join-requests/team-join-requests.component';
 import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
 import { addIcons } from 'ionicons';
-import { checkmarkOutline, closeOutline, checkmarkDoneOutline } from 'ionicons/icons';
+import { checkmarkDoneOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-notifications',
@@ -21,7 +20,6 @@ import { checkmarkOutline, closeOutline, checkmarkDoneOutline } from 'ionicons/i
     CommonModule,
     IonAvatar, IonImg, IonIcon, IonSpinner,
     TranslatePipe,
-    TeamJoinRequestsComponent,
     EmptyStateComponent
   ]
 })
@@ -70,7 +68,7 @@ export class NotificationsPage implements OnInit, OnDestroy {
   });
 
   constructor() {
-    addIcons({ checkmarkOutline, closeOutline, checkmarkDoneOutline });
+    addIcons({ checkmarkDoneOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -78,7 +76,6 @@ export class NotificationsPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.notificationsService.removeRejectedNotifications();
     this.notificationsService.markAllAsRead();
   }
 
@@ -113,14 +110,6 @@ export class NotificationsPage implements OnInit, OnDestroy {
         notification.action.data
       );
     }
-  }
-
-  handleApprove(notification: Notification): void {
-    this.notificationsService.handleApproval(notification.id, true);
-  }
-
-  handleReject(notification: Notification): void {
-    this.notificationsService.handleApproval(notification.id, false);
   }
 
   onAvatarError(event: Event): void {

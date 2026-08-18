@@ -5,7 +5,7 @@
       <h2 class="card-section-title">{{ 'admin.forms.submissionDetail.sectionInfo' | translate }}</h2>
     </div>
     <div class="form-card-body">
-      <div class="field-row">
+      <div class="field-stack">
         <div class="field-display">
           <span class="field-key">{{ 'admin.forms.submissionDetail.formName' | translate }}</span>
           <span class="field-value">{{ submission().formName }}</span>
@@ -16,7 +16,9 @@
         </div>
         <div class="field-display">
           <span class="field-key">{{ 'admin.forms.submissionDetail.submittedAt' | translate }}</span>
-          <span class="field-value">{{ submission().submittedAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+          <span class="field-value">
+            {{ (submission().submittedAt ?? submission().createdAt) | date: 'd MMMM y, HH:mm' }}
+          </span>
         </div>
       </div>
     </div>
@@ -32,10 +34,14 @@
           <div class="field-display-content">
             <span class="field-key">{{ value.fieldLabel }}</span>
             @if (value.fieldType === 'boolean') {
+              @let answer = booleanValue(value);
               <div class="field-value field-value--boolean">
-                <p-checkbox [ngModel]="true" [binary]="true" [disabled]="true" [inputId]="'field-' + value.fieldId" />
-                @if (value.valueText) {
-                  <span>{{ value.valueText }}</span>
+                @if (answer === null) {
+                  <!-- Boolean fields with authored options answer with the option text. -->
+                  <span>{{ value.valueText ?? '—' }}</span>
+                } @else {
+                  <p-checkbox [ngModel]="answer" [binary]="true" [disabled]="true" [inputId]="'field-' + value.fieldId" />
+                  <span>{{ (answer ? 'common.yes' : 'common.no') | translate }}</span>
                 }
               </div>
             } @else if (value.fieldType === 'textarea') {

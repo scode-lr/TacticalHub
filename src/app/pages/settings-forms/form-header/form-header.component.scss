@@ -98,6 +98,12 @@
   &--rejected {
     background: var(--ion-color-danger, #eb445a);
   }
+
+  // Amber, so "sent" never reads as "settled" at a glance.
+  &--review {
+    background: var(--ion-color-warning, #ffc409);
+    color: #4a3800;
+  }
 }
 
 .fr-chevron {

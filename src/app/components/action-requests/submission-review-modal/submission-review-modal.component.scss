@@ -90,28 +90,8 @@
   }
 }
 
-.close-button {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--background-secondary, #f3f4f6);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s ease;
+.app-modal-close {
   margin-top: 0.125rem;
-
-  ion-icon {
-    font-size: 1.25rem;
-    color: var(--text-secondary, #6b7280);
-  }
-
-  &:hover {
-    background: var(--border-light, #e5e7eb);
-  }
 }
 
 /* ── Content ─────────────────────────────────────────────── */
