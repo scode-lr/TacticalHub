@@ -268,4 +268,22 @@
   ion-icon {
     font-size: 1.125rem;
   }
+
+  &:hover:not(:disabled) {
+    background: var(--background-secondary, #f3f4f6);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--background-tertiary, #e9ecef);
+  }
+
+  &.btn-small {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+
+    ion-icon {
+      font-size: 1rem;
+    }
+  }
 }

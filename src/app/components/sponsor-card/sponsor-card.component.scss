@@ -25,13 +25,6 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-
-  .icon-button.small {
-    width: 28px;
-    height: 28px;
-
-    ion-icon { font-size: 16px; }
-  }
 }
 
 .sponsor-thumbnail {
@@ -65,37 +58,3 @@
   }
 }
 
-.icon-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  color: var(--ion-color-medium);
-  cursor: pointer;
-  flex-shrink: 0;
-
-  ion-icon { font-size: 20px; }
-
-  &:hover {
-    background: var(--ion-color-light);
-  }
-
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  &.delete:hover {
-    background: #ffebee;
-    color: var(--ion-color-danger);
-  }
-
-  &.cancel:hover {
-    background: var(--ion-color-light);
-    color: var(--ion-color-dark);
-  }
-}

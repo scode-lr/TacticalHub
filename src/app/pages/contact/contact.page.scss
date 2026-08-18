@@ -22,11 +22,8 @@
   gap: 0.875rem;
 }
 
+// Labels and controls come from app/styles/_forms.scss.
 .field-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
   &:first-child {
     grid-column: 1 / -1;
   }
@@ -35,9 +32,6 @@
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: var(--text-primary, #111827);
   }
 
   .field-required {
@@ -46,6 +40,7 @@
     line-height: 1;
   }
 
+  /// The character counter, parked on the right under the control.
   .field-meta {
     align-self: flex-end;
     color: var(--text-secondary, #6b7280);
@@ -54,34 +49,11 @@
     line-height: 1;
   }
 
-  input,
-  textarea {
-    width: 100%;
-    border: 1px solid var(--border-light, #e5e7eb);
-    border-radius: 14px;
-    padding: 0.9rem 1rem;
-    font: inherit;
-    color: var(--text-primary, #111827);
-    background: var(--background-secondary, #f8f9fa);
-    outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-
-    &::placeholder {
-      color: var(--text-light, #9ca3af);
-    }
-
-    &:focus {
-      border-color: var(--button-primary-color, #3880ff);
-      background: var(--background-primary, #ffffff);
-      box-shadow: 0 0 0 3px rgba(var(--button-primary-color-rgb, 56, 128, 255), 0.14);
-    }
-  }
-
   textarea {
     min-height: 160px;
-    resize: vertical;
   }
 
+  // Validity is tracked on the group here, not on the control.
   &.invalid input,
   &.invalid textarea {
     border-color: var(--ion-color-danger, #eb445a);

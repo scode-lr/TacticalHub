@@ -8,7 +8,7 @@ import {
   ApiGetNotificationsResponse,
   ApiNotificationSummary
 } from '@models/notification.model';
-import { ResolveNotificationRequest } from '@core/requests/notification.request';
+
 import { RolesService } from '@services/roles.service';
 
 @Injectable({ providedIn: 'root' })
@@ -48,8 +48,21 @@ export class NotificationsService {
     return this._notifications().filter(n => n.status === NotificationStatus.Unread);
   }
 
+  /**
+   * Unread notifications shown in the notifications badge. Pending submissions are
+   * excluded because they are surfaced in the forms section instead.
+   */
   getUnreadCount(): number {
-    return this.getUnreadNotifications().length;
+    return this.getUnreadNotifications().filter(n => !this.isSubmissionPending(n)).length;
+  }
+
+  /** Unread pending-submission notifications, badged on the forms menu item. */
+  getPendingSubmissionsCount(): number {
+    return this.getUnreadNotifications().filter(n => this.isSubmissionPending(n)).length;
+  }
+
+  private isSubmissionPending(notification: Notification): boolean {
+    return (notification.metadata?.apiType ?? notification.type) === NotificationType.Action;
   }
 
   // ── API calls ────────────────────────────────────────────────────
@@ -145,10 +158,9 @@ export class NotificationsService {
     }
   }
 
-  async resolveNotification(id: number, request: ResolveNotificationRequest): Promise<void> {
-    await firstValueFrom(this.apiService.put(`/notifications/${id}/resolve`, request));
-    this.markAsCompleted(id);
-  }
+  // Reviewing a form submission moved to FormSubmissionsService.reviewSubmission, which hits
+  // PUT /forms/submissions/{id}/review and closes the linked notification server-side. Callers
+  // update the local list with markAsCompleted afterwards.
 
   async markAsRead(id: number): Promise<void> {
     // Optimistic update
@@ -226,47 +238,6 @@ export class NotificationsService {
       };
       this._notifications.set([newNotification, ...notifications]);
     }
-  }
-
-  handleApproval(notificationId: number, approved: boolean): void {
-    const notifications = this._notifications();
-    const notification = notifications.find(n => n.id === notificationId);
-    if (!notification) return;
-
-    if (approved) {
-      this.markAsCompleted(notificationId);
-      if (notification.user && notification.metadata?.teamName) {
-        const newNotification: Notification = {
-          id: Math.max(...notifications.map(n => n.id)) + 1,
-          type: NotificationType.Info,
-          title: 'Request Approved',
-          message: `${notification.user.firstName} ${notification.user.lastName} is now the ${notification.metadata.teamName} coach`,
-          status: NotificationStatus.Unread,
-          createdAt: new Date(),
-          userId: notification.userId,
-          user: notification.user
-        };
-        this._notifications.set([newNotification, ...notifications]);
-      }
-    } else {
-      notification.metadata = { ...notification.metadata, rejected: true };
-      this._notifications.set([...notifications]);
-    }
-  }
-
-  undoRejection(notificationId: number): void {
-    const notifications = this._notifications();
-    const notification = notifications.find(n => n.id === notificationId);
-    if (notification?.metadata?.rejected) {
-      notification.status = NotificationStatus.Unread;
-      const { rejected, ...rest } = notification.metadata;
-      notification.metadata = Object.keys(rest).length > 0 ? rest : undefined;
-      this._notifications.set([...notifications]);
-    }
-  }
-
-  removeRejectedNotifications(): void {
-    this._notifications.update(list => list.filter(n => !n.metadata?.rejected));
   }
 
   // ── Private mapper ───────────────────────────────────────────────

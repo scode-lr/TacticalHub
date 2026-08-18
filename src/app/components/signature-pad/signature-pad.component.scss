@@ -1,0 +1,147 @@
+.signature-pad {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 18px 14px;
+  border: 2px dashed var(--border-color, #e7e3d8);
+  border-radius: 18px;
+  background: var(--color-surface, #ffffff);
+}
+
+.signature-pad__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.signature-pad__hint {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6b7280);
+}
+
+.signature-pad__modes {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--background-secondary, #f3f4f6);
+}
+
+.signature-pad__mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #6b7280);
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 14px;
+  }
+
+  &--active {
+    background: var(--color-surface, #ffffff);
+    color: var(--text-primary, #111827);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.signature-pad__surface {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signature-pad__canvas {
+  width: 100%;
+  height: 150px;
+  touch-action: none; // let the pad receive the gesture instead of scrolling the page
+  cursor: crosshair;
+
+  &--hidden {
+    visibility: hidden;
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.signature-pad__typed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.signature-pad__input {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  font: inherit;
+  font-size: 15px;
+  text-align: center;
+  color: var(--text-primary, #111827);
+  background: var(--color-surface, #ffffff);
+}
+
+.signature-pad__preview {
+  min-height: 56px;
+  font-family: 'Segoe Script', 'Brush Script MT', 'Snell Roundhand', cursive;
+  font-size: 40px;
+  line-height: 1.2;
+  color: var(--text-primary, #1a1a1a);
+  word-break: break-word;
+  text-align: center;
+}
+
+.signature-pad__line {
+  height: 1.5px;
+  opacity: 0.85;
+  background: var(--text-primary, #1a1a1a);
+}
+
+.signature-pad__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.signature-pad__status {
+  font-size: 11px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.signature-pad__clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: #8a6a06;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

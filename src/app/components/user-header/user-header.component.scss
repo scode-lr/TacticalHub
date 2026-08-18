@@ -172,7 +172,7 @@
   }
 
   @media (max-width: 768px) {
-    background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
+    background: color-mix(in srgb, var(--color-primary, #ffd700) 35%, var(--color-surface, var(--background-secondary, #f8f9fa)));
     height: 56px;
 
     .notifications-button {

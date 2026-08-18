@@ -3,6 +3,8 @@ import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } 
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { languageInterceptor } from './core/interceptors/language.interceptor';
+import { localeProvider } from './core/i18n/locale.provider';
 import { AuthService } from './core/services/auth.service';
 import { Animation, AnimationController } from '@ionic/angular/standalone';
 import { providePrimeNG } from 'primeng/config';
@@ -28,11 +30,12 @@ const customNavAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    localeProvider,
     provideIonicAngular({
       navAnimation: customNavAnimation
     }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([languageInterceptor, authInterceptor])),
     /**
      * Runs before any route guard is evaluated.
      * Attempts a silent token refresh via the HttpOnly refresh-token cookie.

@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { SubmissionDetailViewComponent } from '@components/submission-detail-view/submission-detail-view.component';
+import { SubmissionDocumentComponent } from '@components/submission-document/submission-document.component';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { NavigationService } from '@services/navigation.service';
 import { SubmissionDetail } from '@core/responses/form.response';
@@ -11,7 +12,7 @@ import { SubmissionDetail } from '@core/responses/form.response';
   templateUrl: './forms-submission-detail.page.html',
   styleUrls: ['./forms-submission-detail.page.scss'],
   standalone: true,
-  imports: [TranslatePipe, BackButtonComponent, SubmissionDetailViewComponent]
+  imports: [TranslatePipe, BackButtonComponent, SubmissionDetailViewComponent, SubmissionDocumentComponent]
 })
 export class FormsSubmissionDetailPage implements OnInit {
   private readonly formSubmissionsService = inject(FormSubmissionsService);

@@ -1,0 +1,48 @@
+<ion-modal
+  [isOpen]="documentId() !== null && canPreviewInline"
+  (didDismiss)="close()"
+  class="app-modal app-modal--large document-preview-modal">
+  <ng-template>
+    <div class="app-modal-container">
+
+      <div class="app-modal-header">
+        <div class="app-modal-header-info">
+          <ion-icon name="document-text-outline" class="app-modal-header-icon"></ion-icon>
+          <div class="app-modal-header-text">
+            <h2 class="app-modal-title">{{ 'user.myDocuments.previewTitle' | translate }}</h2>
+            <span class="app-modal-subtitle">{{ fileName() }}</span>
+          </div>
+        </div>
+        <button class="app-modal-close" type="button" (click)="close()"
+                [attr.aria-label]="'common.close' | translate">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="app-modal-content preview-content">
+        @if (isLoading()) {
+          <div class="preview-loading">
+            <ion-spinner name="crescent"></ion-spinner>
+          </div>
+        } @else if (previewUrl(); as url) {
+          <iframe
+            class="preview-frame"
+            [src]="url"
+            [title]="'user.myDocuments.previewTitle' | translate"></iframe>
+        }
+      </div>
+
+      <div class="app-modal-footer">
+        <button class="btn-secondary" type="button" (click)="close()">
+          {{ 'common.close' | translate }}
+        </button>
+        <button class="btn-primary" type="button" (click)="save()"
+                [disabled]="isSaving() || isLoading()">
+          <ion-icon name="download-outline"></ion-icon>
+          {{ 'user.forms.submission.downloadDocument' | translate }}
+        </button>
+      </div>
+
+    </div>
+  </ng-template>
+</ion-modal>

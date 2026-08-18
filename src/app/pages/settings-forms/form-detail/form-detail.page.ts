@@ -6,7 +6,7 @@ import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
-import { FormFieldType } from '@models/form-field.model';
+import { FormFieldType } from '@models/form.model';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { addIcons } from 'ionicons';
 import { saveOutline, addOutline, trashOutline } from 'ionicons/icons';
@@ -50,8 +50,9 @@ export class FormDetailPage implements OnInit {
 
   readonly actionOptions = Object.values(FormAction);
 
-  readonly fieldTypeOptions: FormFieldType[] = [
-    'text', 'number', 'date', 'datetime', 'email', 'phone', 'textarea', 'boolean', 'select', 'file'
+  // Plain strings: this legacy screen also lists types that are not in FormFieldType (datetime, file).
+  readonly fieldTypeOptions: string[] = [
+    'text', 'number', 'date', 'datetime', 'email', 'phone', 'textarea', 'boolean', 'select', 'file', 'info'
   ];
 
   form!: FormGroup;
@@ -137,6 +138,10 @@ export class FormDetailPage implements OnInit {
         toDate: new Date('2025-12-31'),
         status: AppStatus.Active,
         action: FormAction.BecomeMember,
+        requiresSignature: false,
+        requiresReview: true,
+        adultsOnly: false,
+        generatesDocument: false,
         settingsJson: {},
         createdAt: new Date('2024-12-01'),
         updatedAt: new Date('2025-01-15')
@@ -150,6 +155,10 @@ export class FormDetailPage implements OnInit {
         toDate: new Date('2025-08-31'),
         status: AppStatus.Draft,
         action: FormAction.RegisterPlayer,
+        requiresSignature: false,
+        requiresReview: true,
+        adultsOnly: false,
+        generatesDocument: false,
         settingsJson: {},
         createdAt: new Date('2025-02-01'),
         updatedAt: new Date('2025-02-10')

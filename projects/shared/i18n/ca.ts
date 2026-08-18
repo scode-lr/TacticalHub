@@ -629,9 +629,15 @@ export const sharedTranslations = {
         toDate: 'Data de fi',
         status: 'Estat',
         action: 'Acció',
-        email: 'Email',
-        emailPlaceholder: 'Introdueix un email per enviar les respostes',
-        emailInvalid: 'Si us plau, introdueix un email vàlid'
+        requiresSignature: 'Requereix signatura digital',
+        requiresSignatureDescription: 'El membre haurà de signar abans d\'enviar i es generarà un document oficial.',
+        requiresReview: 'Requereix revisió de coordinació',
+        requiresReviewDescription: 'L\'enviament queda pendent fins que coordinació l\'aprovi o el rebutgi.',
+        adultsOnly: 'Només majors d\'edat',
+        adultsOnlyDescription: 'Només els membres majors d\'edat veuran i podran omplir el formulari.',
+        generatesDocument: 'Generar document',
+        generatesDocumentDescription: 'En acceptar-se la resposta es genera un comprovant en PDF descarregable.',
+        generatesDocumentLocked: 'Obligatori: la signatura només té valor si es pot mostrar en un document.'
       },
       section: {
         general: 'General',
@@ -665,7 +671,8 @@ export const sharedTranslations = {
           textarea: 'Àrea de text',
           boolean: 'Checkbox',
           select: 'Selecció',
-          file: 'Arxiu'
+          file: 'Arxiu',
+          info: 'Text informatiu'
         }
       },
       preview: {
@@ -776,6 +783,7 @@ export const sharedTranslations = {
       news: 'Notícies',
       action: 'Accions',
       information: 'Informació',
+      myDocuments: 'Els meus documents',
       proposals: 'Propostes i queixes',
       matches: 'Partits',
       sponsors: 'Patrocinadors',
@@ -789,6 +797,7 @@ export const sharedTranslations = {
       news: 'Últimes actualitzacions i anuncis',
       action: 'Registra jugadors o fes-te soci',
       information: 'Informació i recursos del club',
+      myDocuments: 'Les teves autoritzacions signades',
       proposals: 'Envia propostes o queixes',
       matches: 'Veure propers partits del cap de setmana',
       sponsors: 'Els nostres col·laboradors i patrocinadors del club',
@@ -958,13 +967,41 @@ export const sharedTranslations = {
         statusApproved: 'Aprovat',
         statusRejected: 'Rebutjat',
         fillAgain: 'Tornar a omplir',
+        fillNow: 'Omplir formulari',
+        emptyTitle: 'Encara no has enviat res',
+        emptyDescription: 'Omple el formulari i aquí en veuràs l\'estat i el document quan estigui llest.',
         detailTitle: 'El meu enviament',
         rejectionComment: 'Comentari del coordinador',
         editAndResend: 'Editar i reenviar',
         resend: 'Reenviar',
         rejectionFeedback: 'Comentari del coordinador',
         viewHistory: 'Veure historial',
-        commentHistory: 'Historial de comentaris'
+        commentHistory: 'Historial de comentaris',
+        downloadDocument: 'Baixar document',
+        documentAvailable: 'El document d\'aquesta sol·licitud ja està disponible.'
+      },
+      signature: {
+        title: 'Signatura',
+        finalStep: 'Pas final',
+        headingPrefix: 'Signa',
+        lead: 'Amb la teva signatura declares que les respostes són correctes i autoritzes l\'enviament del formulari.',
+        reviewAndSign: 'Revisar i signar',
+        reviewAnswers: 'Revisar les respostes',
+        fieldCount: '{count} camps emplenats',
+        myAnswers: 'Les meves respostes',
+        continueToSign: 'Continuar a signar',
+        notProvided: 'No aplica',
+        drawHint: 'Signa amb el dit o el ratolí',
+        typeHint: 'Escriu el teu nom complet',
+        modeDraw: 'Dibuixar',
+        modeType: 'Escriure',
+        namePlaceholder: 'Nom i cognoms',
+        signed: 'Signat',
+        pending: 'Pendent de signar',
+        clear: 'Esborrar',
+        legalNotice: 'En signar, aquesta signatura té la mateixa validesa que la manuscrita.',
+        back: 'Enrere',
+        signAndSend: 'Signar i enviar'
       },
       status: {
         closed: 'Tancat'
@@ -977,6 +1014,17 @@ export const sharedTranslations = {
       description: 'Informació important i guies per als membres del club',
       empty: 'No hi ha informació disponible',
       emptyDescription: 'La informació del club estarà disponible aviat.'
+    },
+    myDocuments: {
+      title: 'Els meus documents',
+      description: 'Les teves autoritzacions signades i aprovades pel club.',
+      empty: 'Encara no tens documents',
+      emptyDescription: 'Quan signis un formulari i coordinació l\'aprovi, el teu document apareixerà aquí.',
+      download: 'Baixar document',
+      downloadError: 'No s\'ha pogut baixar el document.',
+      preview: 'Veure document',
+      previewTitle: 'Vista prèvia del document',
+      loadError: 'No s\'han pogut carregar els teus documents.'
     },
     proposals: {
       title: 'Propostes',

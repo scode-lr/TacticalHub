@@ -1,10 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslationService } from '@services/i18n/translation.service';
 import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { AppStatus } from '@core/models/app-status.model';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,16 +22,31 @@ import { FormField } from '@core/models/form-field.model';
     TextareaModule,
     SelectModule,
     DatePickerModule,
-    ToggleSwitchModule,
     RadioButtonModule,
   ]
 })
 export class DynamicFormFieldsComponent {
+  private readonly translationService = inject(TranslationService);
+
   readonly fields = input.required<FormField[]>();
   readonly form = input.required<FormGroup>();
-  readonly fieldStates = input<Record<string, AppStatus>>({});
 
   readonly AppStatus = AppStatus;
+
+  /**
+   * A boolean field with authored options is a pick-one list and answers with the option text.
+   * Without options it is a plain yes/no question, so the answer is a real boolean and only the
+   * labels are translated.
+   */
+  booleanOptions(field: FormField): { value: string | boolean; label: string }[] {
+    const options = field.options;
+    if (options?.length) return options.map(option => ({ value: option, label: option }));
+
+    return [
+      { value: true, label: this.translationService.instant('common.yes') },
+      { value: false, label: this.translationService.instant('common.no') },
+    ];
+  }
 
   isFieldInvalid(field: FormField): boolean {
     const ctrl = this.form().get(field.key);

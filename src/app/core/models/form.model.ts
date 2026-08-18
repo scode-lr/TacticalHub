@@ -16,7 +16,17 @@ export enum FormFieldType {
   Checkbox = 'boolean',
   Email = 'email',
   Phone = 'phone',
-  Textarea = 'textarea'
+  Textarea = 'textarea',
+  /**
+   * Read-only block of text (instructions, legal clauses). It renders as content, collects no
+   * input and never produces a submission value.
+   */
+  Info = 'info'
+}
+
+/** Field types that only display content and take no user input. */
+export function isDisplayOnlyField(type: string | null | undefined): boolean {
+  return type === FormFieldType.Info;
 }
 
 

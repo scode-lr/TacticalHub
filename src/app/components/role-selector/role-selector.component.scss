@@ -106,26 +106,6 @@ ion-modal {
         margin: 0;
       }
 
-      .close-button {
-        background: none;
-        border: none;
-        padding: 0.5rem;
-        cursor: pointer;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s ease;
-
-        ion-icon {
-          font-size: 1.5rem;
-          color: var(--text-secondary, #6b7280);
-        }
-
-        &:hover {
-          background: var(--background-secondary, #f8f9fa);
-        }
-      }
     }
 
     .modal-content {

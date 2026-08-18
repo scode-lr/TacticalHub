@@ -2,7 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline } from 'ionicons/icons';
+import { bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline, timeOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
@@ -57,19 +57,58 @@ export class FormHeaderComponent {
 
   readonly hasSubmission = computed((): boolean => this.mySubmissionStatus() !== null);
 
+  /** Nothing sent yet and the window is open: the form is still waiting on the member. */
   readonly isPending = computed((): boolean =>
     !this.editable() && !this.mySubmissionLoading() && !this.hasSubmission() && this.formOpen()
   );
 
   readonly isRejected = computed((): boolean => this.mySubmissionStatus() === AppStatus.Rejected);
 
+  /**
+   * Sent, but coordination has not resolved it yet.
+   *
+   * Kept apart from approved on purpose: showing the same tick for both told the member their
+   * request was settled when it was still in the queue.
+   */
+  readonly isUnderReview = computed((): boolean => {
+    const status = this.mySubmissionStatus();
+    return status === AppStatus.Pending || status === AppStatus.Submitted;
+  });
+
+  readonly submissionIcon = computed((): string => {
+    if (this.isRejected()) return 'close-outline';
+    if (this.isUnderReview()) return 'time-outline';
+    return 'checkmark-outline';
+  });
+
+  readonly submissionLabelKey = computed((): string => {
+    if (this.isRejected()) return 'user.forms.submission.statusRejected';
+    if (this.isUnderReview()) return 'user.forms.submission.statusUnderReview';
+    return 'user.forms.submission.statusApproved';
+  });
+
   constructor() {
-    addIcons({ bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline });
+    addIcons({ bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline, timeOutline });
   }
 
+  /**
+   * Admin rows always open the builder. Member rows open the submission list, except when the row
+   * already tells us there is nothing to list: then the form itself is the destination, so the
+   * member does not pass through an empty page on the way in.
+   */
   redirect(): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    const route = this.editable() ? 'settings-forms' : 'forms';
-    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/${route}/${this.form().id}`]);
+
+    if (this.editable()) {
+      this.navigationService.navigateTo([`/app/${roleType}/${roleId}/settings-forms/${this.form().id}`]);
+      return;
+    }
+
+    const base = `/app/${roleType}/${roleId}/forms/${this.form().id}`;
+
+    // While the status is still loading we do not know yet; the list page handles the empty case.
+    const goStraightToForm = !this.mySubmissionLoading() && !this.hasSubmission() && this.formOpen();
+
+    this.navigationService.navigateTo([goStraightToForm ? `${base}/-1` : base]);
   }
 }

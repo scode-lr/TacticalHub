@@ -1,0 +1,36 @@
+@if (loading()) {
+  <div class="document-skeleton">
+    <div class="document-skeleton__icon"></div>
+    <div class="document-skeleton__body">
+      <div class="document-skeleton__line document-skeleton__line--title"></div>
+      <div class="document-skeleton__line document-skeleton__line--actions"></div>
+    </div>
+  </div>
+} @else if (document(); as doc) {
+  <div class="document-banner">
+    <ion-icon name="document-text-outline" class="document-banner__icon"></ion-icon>
+    <div class="document-banner__body">
+      <span class="document-banner__title">
+        {{ 'user.forms.submission.documentAvailable' | translate }}
+      </span>
+      <span class="document-banner__reference">{{ doc.reference }}</span>
+      <div class="document-banner__actions">
+        @if (canPreviewInline) {
+          <button type="button" class="btn-secondary" (click)="openPreview()">
+            <ion-icon name="eye-outline"></ion-icon>
+            {{ 'user.myDocuments.preview' | translate }}
+          </button>
+        }
+        <button type="button" class="btn-primary" (click)="downloadDocument()" [disabled]="isDownloading()">
+          <ion-icon name="download-outline"></ion-icon>
+          {{ 'user.forms.submission.downloadDocument' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-document-preview
+    [documentId]="previewDocumentId()"
+    [fileName]="doc.fileName"
+    (closed)="closePreview()" />
+}

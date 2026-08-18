@@ -113,6 +113,8 @@
   color: var(--text-primary, #111827);
   text-align: left;
   line-height: 1.4;
+  overflow-wrap: normal;
+  word-break: normal;
 
   @media (max-width: 768px) {
     font-size: 0.9375rem;

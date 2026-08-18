@@ -1,6 +1,8 @@
 # Estado de preparación de publicación
 
-Actualizado: 1 de agosto de 2026.
+Actualizado: 13 de agosto de 2026.
+
+Objetivo activo de publicación: **Voltregà CF**. La aplicación Tactical Hub queda aplazada hasta nuevo aviso.
 
 ## Estado actual
 
@@ -11,7 +13,7 @@ Actualizado: 1 de agosto de 2026.
 | MVP de equipos, jugadores y usuarios | Implementado | Validación funcional del club |
 | Push Android/iOS | Implementado en app y API | Credenciales FCM/APNs y proyectos nativos |
 | CSV y Google Sheets | Implementado y endurecido | Cuenta de servicio y hoja del club |
-| Privacidad, términos y aviso legal | Borradores integrados | Identidades legales y revisión jurídica |
+| Privacidad, términos y aviso legal | Datos del Club Futbol Voltregà integrados | Identidad completa del prestador, revisión jurídica y URLs HTTPS públicas |
 | Pruebas de dispositivo y piloto | Guion preparado | Dispositivos físicos y usuarios piloto |
 | Stores y firma | Checklist preparado | Cuentas, certificados, keystore y creatividades finales |
 
@@ -22,7 +24,10 @@ La rama no debe marcarse como lista para producción hasta cerrar todos los elem
 - API .NET en `Release`: 0 errores y 0 advertencias.
 - 19 tests de API: 19 superados.
 - Builds de producción: Tactical Hub y Voltregà CF superados.
-- Proyectos Capacitor Android/iOS generados y sincronizados localmente; plugin push detectado en ambos.
+- Proyecto Capacitor iOS de Voltregà sincronizado el 13 de agosto de 2026; siete plugins detectados (`app`, `device`, `filesystem`, `push-notifications`, `share`, `splash-screen` y `status-bar`).
+- Build de producción de Voltregà superada el 13 de agosto de 2026.
+- Icono iOS de Voltregà verificado a 1024 x 1024, PNG sin transparencia.
+- Corregidas las tres regresiones críticas del informe `REVIEW_CRITICAL_DEV_MAIN.md`: representación de booleanos, conservación de `sourceKind` al guardar exportaciones y retirada de la interfaz simulada de aprobación sin endpoint.
 - APK debug Android de Tactical Hub y Voltregà CF compilados correctamente.
 - Smoke web a 390 x 844: sin overflow horizontal, sin errores de consola y enlaces legales accesibles.
 - Migraciones EF: modelo sin cambios pendientes en la última comprobación.
@@ -38,7 +43,7 @@ Estos identificadores deben coincidir exactamente en Capacitor, Firebase, Apple 
 
 ## Orden recomendado
 
-1. Completar datos legales y publicar las cuatro URLs públicas de cada app.
+1. Completar la identidad legal del prestador tecnológico y publicar las cuatro URLs públicas de Voltregà.
 2. Configurar SMTP, cifrado, Google y push en el entorno de producción.
 3. Aplicar migraciones y ejecutar el guion de piloto.
 4. Generar proyectos nativos, instalar credenciales y probar push en dispositivos reales.

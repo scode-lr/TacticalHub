@@ -631,9 +631,15 @@ export const sharedTranslations = {
         toDate: 'End Date',
         status: 'Status',
         action: 'Action',
-        email: 'Email',
-        emailPlaceholder: 'Enter an email to send the submissions',
-        emailInvalid: 'Please enter a valid email address',
+        requiresSignature: 'Requires a digital signature',
+        requiresSignatureDescription: 'The member must sign before submitting, and an official document is generated.',
+        requiresReview: 'Requires coordination review',
+        requiresReviewDescription: 'The submission stays pending until coordination approves or rejects it.',
+        adultsOnly: 'Adults only',
+        adultsOnlyDescription: 'Only members of legal age can see and fill in the form.',
+        generatesDocument: 'Generate document',
+        generatesDocumentDescription: 'Accepting a response produces a downloadable PDF receipt.',
+        generatesDocumentLocked: 'Required: a signature is only worth anything if a document can show it.',
         actionRequired: 'Action is required'
       },
       section: {
@@ -668,7 +674,8 @@ export const sharedTranslations = {
           textarea: 'Textarea',
           boolean: 'Checkbox',
           select: 'Selection',
-          file: 'File'
+          file: 'File',
+          info: 'Informational text'
         }
       },
       preview: {
@@ -779,6 +786,7 @@ export const sharedTranslations = {
       news: 'News',
       action: 'Actions',
       information: 'Information',
+      myDocuments: 'My documents',
       proposals: 'Proposals & complaints',
       matches: 'Matches',
       sponsors: 'Sponsors',
@@ -792,6 +800,7 @@ export const sharedTranslations = {
       news: 'Latest updates and announcements',
       action: 'Register players or become a member',
       information: 'Club information and resources',
+      myDocuments: 'Your signed authorizations',
       proposals: 'Submit proposals or complaints',
       matches: 'View upcoming weekend matches',
       sponsors: 'Our club collaborators and sponsors',
@@ -961,13 +970,41 @@ export const sharedTranslations = {
         statusApproved: 'Approved',
         statusRejected: 'Rejected',
         fillAgain: 'Fill again',
+        fillNow: 'Fill in the form',
+        emptyTitle: 'You have not submitted anything yet',
+        emptyDescription: 'Fill in the form and you will see its status and document here once ready.',
         detailTitle: 'My submission',
         rejectionComment: 'Coordinator\'s comment',
         editAndResend: 'Edit and resend',
         resend: 'Resend',
         rejectionFeedback: 'Coordinator\'s feedback',
         viewHistory: 'View history',
-        commentHistory: 'Comment history'
+        commentHistory: 'Comment history',
+        downloadDocument: 'Download document',
+        documentAvailable: 'The document for this request is ready.'
+      },
+      signature: {
+        title: 'Signature',
+        finalStep: 'Final step',
+        headingPrefix: 'Sign',
+        lead: 'By signing you declare that the answers are correct and authorize the submission.',
+        reviewAndSign: 'Review and sign',
+        reviewAnswers: 'Review your answers',
+        fieldCount: '{count} fields completed',
+        myAnswers: 'My answers',
+        continueToSign: 'Continue to sign',
+        notProvided: 'Not applicable',
+        drawHint: 'Sign with your finger or mouse',
+        typeHint: 'Type your full name',
+        modeDraw: 'Draw',
+        modeType: 'Type',
+        namePlaceholder: 'Full name',
+        signed: 'Signed',
+        pending: 'Not signed yet',
+        clear: 'Clear',
+        legalNotice: 'By signing, this signature has the same validity as a handwritten one.',
+        back: 'Back',
+        signAndSend: 'Sign and send'
       },
       status: {
         closed: 'Closed'
@@ -980,6 +1017,17 @@ export const sharedTranslations = {
       description: 'Important information and guidelines for club members',
       empty: 'No information available',
       emptyDescription: 'Club information will be available soon.'
+    },
+    myDocuments: {
+      title: 'My documents',
+      description: 'Your authorizations, signed and approved by the club.',
+      empty: 'You have no documents yet',
+      emptyDescription: 'Once you sign a form and coordination approves it, your document will appear here.',
+      download: 'Download document',
+      downloadError: 'The document could not be downloaded.',
+      preview: 'View document',
+      previewTitle: 'Document preview',
+      loadError: 'Your documents could not be loaded.'
     },
     proposals: {
       title: 'Proposals',

@@ -41,6 +41,14 @@ export const memberRoutes: Routes = [
         loadComponent: () => import('../form-detail-submission/form-detail-submission.page').then(m => m.FormDetailSubmissionPage)
       },
       {
+        path: 'forms/:formId/:submissionId/sign',
+        loadComponent: () => import('../form-signature/form-signature.page').then(m => m.FormSignaturePage)
+      },
+      {
+        path: 'my-documents',
+        loadComponent: () => import('../my-documents/my-documents.page').then(m => m.MyDocumentsPage)
+      },
+      {
         path: 'information',
         loadComponent: () => import('../information/information.page').then(m => m.InformationPage)
       },

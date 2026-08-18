@@ -11,45 +11,10 @@
     gap: 1rem;
   }
 
-  .field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    span {
-      font-size: 0.875rem;
-      font-weight: 700;
-      color: var(--text-primary, #111827);
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--border-light, #e5e7eb);
-      border-radius: 12px;
-      padding: 0.875rem 1rem;
-      font: inherit;
-      color: var(--text-primary, #111827);
-      background: var(--background-primary, #ffffff);
-      outline: none;
-
-      &:focus {
-        border-color: var(--ion-color-primary, #3880ff);
-        box-shadow: 0 0 0 3px rgba(56, 128, 255, 0.12);
-      }
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 180px;
-    }
-
-    .field-hint {
-      color: var(--text-secondary, #6b7280);
-      font-size: 0.8125rem;
-      line-height: 1.35;
-    }
+  // Labels, controls and hints come from app/styles/_forms.scss; the editor only
+  // asks for a taller body box.
+  .field-group textarea {
+    min-height: 180px;
   }
 
   .image-preview {
@@ -178,18 +143,9 @@
 }
 
 .actions-toggle {
-  display: grid;
   width: 36px;
   height: 36px;
-  padding: 0;
-  place-items: center;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text-secondary, #6b7280);
-  cursor: pointer;
 
-  &:hover,
   &[aria-expanded='true'] {
     background: var(--background-secondary, #f3f4f6);
     color: var(--text-primary, #111827);
@@ -201,44 +157,7 @@
 }
 
 .actions-menu {
-  position: absolute;
-  z-index: 20;
-  top: calc(100% + 0.35rem);
-  right: 0;
   width: 190px;
-  padding: 0.5rem;
-  border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
-  border-radius: 12px;
-  background: var(--background-primary, #ffffff);
-  box-shadow: 0 14px 32px rgba(17, 24, 39, 0.16);
-
-  button {
-    display: block;
-    width: 100%;
-    min-height: 40px;
-    padding: 0.625rem;
-    border: 0;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--text-primary, #111827);
-    font: inherit;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-
-    &:hover:not(:disabled) {
-      background: var(--background-secondary, #f3f4f6);
-    }
-  }
-
-  .danger-action {
-    color: var(--ion-color-danger, #d92d20);
-
-    &:hover:not(:disabled) {
-      background: rgba(217, 45, 32, 0.07);
-    }
-  }
 }
 
 .skeleton-row {

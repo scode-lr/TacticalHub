@@ -6,6 +6,7 @@ import { FormService } from '@services/form.service';
 import { ClubService } from '@services/club.service';
 import { FormSubmissionsService } from '@core/services/form-submissions.service';
 import { FormHeader } from '@models/form-header.model';
+import { FormSubmission } from '@models/form-submission.model';
 import { FormAction } from '@models/form-action.enum';
 import { FormHeaderComponent } from '../settings-forms/form-header/form-header.component';
 import { FormsGroupSectionComponent } from '@components/forms-group-section/forms-group-section.component';
@@ -58,7 +59,15 @@ export class FormsPage {
     addIcons({ documentTextOutline, bodyOutline, peopleOutline });
   }
 
-  async ngOnInit(): Promise<void> {
+  /**
+   * Ionic keeps this page alive in the navigation stack, so `ngOnInit` would not run again when the
+   * member returns from filling a form — leaving every row showing its pre-submission status.
+   */
+  async ionViewWillEnter(): Promise<void> {
+    await this.load();
+  }
+
+  private async load(): Promise<void> {
     const clubId = this.clubService.getCurrentClubId();
     if (clubId === null) {
       this.loading.set(false);
@@ -75,23 +84,23 @@ export class FormsPage {
     this.loading.set(false);
 
     // Kept off the initial load: the list renders as soon as the forms
-    // themselves arrive, and each row resolves its own submission status
-    // independently (shown as a skeleton meanwhile) instead of the whole
-    // page waiting on every my-submissions call.
-    forms.forEach(form => void this.loadMySubmissionStatus(form.id));
+    // themselves arrive, and the whole batch resolves in one request instead
+    // of the page waiting on every form's own my-submissions call.
+    void this.loadMySubmissionStatuses(clubId);
   }
 
-  private async loadMySubmissionStatus(formId: number): Promise<void> {
-    let status: string | null = null;
+  private async loadMySubmissionStatuses(clubId: number): Promise<void> {
+    let submissionsByFormId: Record<number, FormSubmission> = {};
     try {
-      const submissions = await this.formSubmissionsService.getMySubmissions(formId);
-      status = submissions[0]?.status ?? null;
+      submissionsByFormId = await this.formSubmissionsService.getMySubmissionsByClub(clubId);
     } catch {
-      status = null;
+      submissionsByFormId = {};
     }
-    this.rows.update(rows => rows.map(row =>
-      row.form.id === formId ? { ...row, mySubmissionStatus: status, mySubmissionLoading: false } : row
-    ));
+    this.rows.update(rows => rows.map(row => ({
+      ...row,
+      mySubmissionStatus: submissionsByFormId[row.form.id]?.status ?? null,
+      mySubmissionLoading: false
+    })));
   }
 
   private computeIsOpen(form: FormHeader): boolean {

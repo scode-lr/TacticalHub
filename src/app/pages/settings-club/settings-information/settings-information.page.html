@@ -188,7 +188,7 @@
                       (click)="openIconPicker(i)"
                     />
                     @if (asFormGroup(i).get('icon')?.value) {
-                      <button type="button" class="icon-clear-btn visible" (click)="clearIcon(i)">
+                      <button type="button" class="btn-icon icon-clear-btn visible" (click)="clearIcon(i)">
                         <ion-icon name="close-outline"></ion-icon>
                       </button>
                     }

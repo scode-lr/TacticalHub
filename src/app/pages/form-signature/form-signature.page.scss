@@ -1,0 +1,244 @@
+.signature-page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 32px;
+}
+
+.signature-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.signature-step {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a6a06;
+}
+
+.signature-heading {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text-primary, #111827);
+}
+
+.signature-lead {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-secondary, #6b7280);
+}
+
+.review-answers {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 14px;
+  background: var(--color-surface, #ffffff);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.review-answers__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #fbf0c2;
+  color: #6b5300;
+}
+
+.review-answers__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.review-answers__title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+}
+
+.review-answers__count {
+  font-size: 11.5px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.review-answers__chevron {
+  flex: none;
+  opacity: 0.4;
+}
+
+.signature-legal {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-secondary, #6b7280);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+
+  button {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-primary {
+    flex: 1.4;
+  }
+}
+
+// ── Answers review sheet ────────────────────────────────────────────
+
+.answers-sheet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-surface, #ffffff);
+}
+
+.answers-sheet__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 18px 18px 12px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.answers-sheet__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.answers-sheet__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+}
+
+.answers-sheet__subtitle {
+  font-size: 11.5px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.answers-sheet__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--background-secondary, #f3f4f6);
+  color: var(--text-primary, #111827);
+  cursor: pointer;
+}
+
+.answers-sheet__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px;
+  overflow-y: auto;
+}
+
+.answer-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color, #f0efec);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.answer-row__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6b7280);
+}
+
+.answer-row__value {
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--text-primary, #111827);
+
+  &--check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+}
+
+.answer-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: #4c8f34;
+  color: #ffffff;
+  font-size: 11px;
+
+  &--off {
+    background: #c0392b;
+  }
+}
+
+.answers-sheet__footer {
+  padding: 12px 18px 22px;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.btn-block {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}

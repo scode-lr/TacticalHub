@@ -10,8 +10,6 @@
     }
   </div>
 
-  <app-team-join-requests></app-team-join-requests>
-
   <!-- Loading state (initial load) -->
   @if (isLoading() && notifications().length === 0) {
     <div class="loading-state">
@@ -80,20 +78,6 @@
                   </div>
                 }
 
-                @if (notification.type === NotificationType.Approval && notification.status === 'unread') {
-                  <div class="notification-approval-actions">
-                    <button
-                      class="btn-icon btn-icon--success btn-small"
-                      (click)="handleApprove(notification); $event.stopPropagation()">
-                      <ion-icon name="checkmark-outline"></ion-icon>
-                    </button>
-                    <button
-                      class="btn-icon btn-icon--danger btn-small"
-                      (click)="handleReject(notification); $event.stopPropagation()">
-                      <ion-icon name="close-outline"></ion-icon>
-                    </button>
-                  </div>
-                }
               </div>
 
               @if (notification.status === 'unread') {

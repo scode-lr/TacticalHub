@@ -126,10 +126,6 @@
     ion-icon { font-size: 16px; }
   }
 
-  .field-error {
-    font-size: 11px;
-    color: var(--ion-color-danger);
-  }
 }
 
 .form-fields {
@@ -140,50 +136,14 @@
   gap: 12px;
 }
 
-.field-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ion-color-medium);
-  }
-
-  input, select, textarea {
-    padding: 10px 12px;
-    border: 1px solid var(--ion-color-light-shade, #e0e0e0);
-    border-radius: 8px;
-    font-size: 14px;
-    background: var(--ion-card-background, #fff);
-    color: var(--ion-color-dark);
-    font-family: inherit;
-
-    &:focus {
-      outline: none;
-      border-color: var(--ion-color-primary);
-    }
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 60px;
-  }
+// Labels, controls, .field-error and .required-mark come from
+// app/styles/_forms.scss.
+.field-group textarea {
+  min-height: 60px;
 }
 
 .field-select {
   cursor: pointer;
-}
-
-.field-error {
-  font-size: 11px;
-  color: var(--ion-color-danger);
-}
-
-.required-mark {
-  color: var(--ion-color-danger);
-  margin-left: 0.125rem;
 }
 
 .additional-info-section {

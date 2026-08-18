@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
@@ -10,7 +10,7 @@ import { NotificationsService } from '@core/services/notifications.service';
 import { NavigationService } from '@services/navigation.service';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
-import { ExportColumn, ExportProfile, ExportColumnSourceKind, SaveExportProfileRequest } from '@core/models/export-profile.model';
+import { ExportColumn, ExportProfile, SaveExportProfileRequest } from '@core/models/export-profile.model';
 import { CreateGoogleSheetsIntegrationRequest, ExternalIntegration, ExternalIntegrationDestinationType, ExternalIntegrationProvider, GoogleSheetsConfiguration, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
 import { AppStatus } from '@core/models/app-status.model';
 import { FormAction } from '@core/models/form-action.enum';
@@ -25,7 +25,6 @@ import { MenuItem } from 'primeng/api';
 import { IonIcon, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, settingsOutline, saveOutline, chevronUpOutline, chevronDownOutline, chevronForwardOutline, chevronBackOutline, cloudUploadOutline, addOutline, refreshOutline, checkmarkCircleOutline, trashOutline, openOutline, bodyOutline, peopleOutline } from 'ionicons/icons';
-import { TeamJoinRequestsComponent } from '@components/team-join-requests/team-join-requests.component';
 import { ActionRequestsComponent } from '@components/action-requests/action-requests.component';
 import { ExportWizardStep, FormsExportWizardModalComponent } from './components/forms-export-wizard-modal/forms-export-wizard-modal.component';
 import { GoogleSheetsCreateFormState, IntegrationFormState } from './components/forms-integrations-step/forms-integrations-step.component';
@@ -35,9 +34,9 @@ import { GoogleSheetsCreateFormState, IntegrationFormState } from './components/
   templateUrl: './forms-submissions.page.html',
   styleUrls: ['./forms-submissions.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, BreadcrumbModule, PaginatorModule, IonIcon, IonToast, TeamJoinRequestsComponent, ActionRequestsComponent, FormsExportWizardModalComponent]
+  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, TagModule, InputTextModule, IconFieldModule, InputIconModule, BreadcrumbModule, PaginatorModule, IonIcon, IonToast, ActionRequestsComponent, FormsExportWizardModalComponent]
 })
-export class FormsSubmissionsPage {
+export class FormsSubmissionsPage implements OnInit {
   private readonly formService = inject(FormService);
   private readonly clubService = inject(ClubService);
   private readonly translationService = inject(TranslationService);
@@ -378,7 +377,7 @@ export class FormsSubmissionsPage {
     const request: SaveExportProfileRequest = {
       name: profile.name,
       columns: columns.map(column => ({
-        sourceKind: ExportColumnSourceKind.FormField,
+        sourceKind: column.sourceKind,
         sourceKey: column.sourceKey,
         header: column.header.trim(),
         order: column.order,
