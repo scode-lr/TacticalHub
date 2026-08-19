@@ -23,6 +23,30 @@
       [severity]="statusSeverity()"
       class="fr-status"
     />
+    <div class="actions fr-actions" (click)="$event.stopPropagation()">
+      <button
+        type="button"
+        class="btn-icon-round fr-actions-toggle"
+        [disabled]="duplicating() || removing()"
+        (click)="toggleMenu($event)"
+        [attr.aria-label]="'admin.settingsForms.actionsMenu' | translate"
+        [attr.aria-expanded]="menuOpen()"
+        aria-haspopup="menu">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </button>
+      @if (menuOpen()) {
+        <div class="actions-menu fr-actions-menu" role="menu">
+          <button type="button" role="menuitem" (click)="onDuplicateClick($event)">
+            <ion-icon name="copy-outline"></ion-icon>
+            {{ 'admin.settingsForms.duplicate' | translate }}
+          </button>
+          <button type="button" role="menuitem" class="danger-action" (click)="onRemoveClick($event)">
+            <ion-icon name="trash-outline"></ion-icon>
+            {{ 'admin.settingsForms.remove' | translate }}
+          </button>
+        </div>
+      }
+    </div>
   } @else if (mySubmissionLoading()) {
     <span class="fr-status-skeleton" aria-hidden="true"></span>
   } @else if (hasSubmission()) {
