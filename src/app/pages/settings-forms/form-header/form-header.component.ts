@@ -1,8 +1,8 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, HostListener, computed, inject, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline, timeOutline } from 'ionicons/icons';
+import { bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, copyOutline, documentTextOutline, ellipsisVertical, peopleOutline, timeOutline, trashOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
@@ -30,6 +30,16 @@ export class FormHeaderComponent {
   readonly mySubmissionStatus = input<string | null>(null);
   /** Member list only: true while mySubmissionStatus is still being fetched for this row. */
   readonly mySubmissionLoading = input<boolean>(false);
+
+  /** Admin rows only: true while this row's duplicate request is in flight. */
+  readonly duplicating = input<boolean>(false);
+  /** Admin rows only: true while this row's remove request is in flight. */
+  readonly removing = input<boolean>(false);
+
+  readonly duplicate = output<FormHeader>();
+  readonly remove = output<FormHeader>();
+
+  readonly menuOpen = signal<boolean>(false);
 
   readonly statusSeverity = computed((): 'success' | 'info' | 'warn' | 'secondary' => {
     switch (this.form().status) {
@@ -88,7 +98,35 @@ export class FormHeaderComponent {
   });
 
   constructor() {
-    addIcons({ bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline, timeOutline });
+    addIcons({ bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, copyOutline, documentTextOutline, ellipsisVertical, peopleOutline, timeOutline, trashOutline });
+  }
+
+  toggleMenu(event: Event): void {
+    event.stopPropagation();
+    this.menuOpen.update(open => !open);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.menuOpen()) return;
+    if (!(event.target as HTMLElement).closest('.fr-actions')) {
+      this.menuOpen.set(false);
+    }
+  }
+
+  /** Kept out of `redirect()` so the row click still opens the builder. */
+  onDuplicateClick(event: Event): void {
+    event.stopPropagation();
+    this.menuOpen.set(false);
+    if (this.duplicating()) return;
+    this.duplicate.emit(this.form());
+  }
+
+  onRemoveClick(event: Event): void {
+    event.stopPropagation();
+    this.menuOpen.set(false);
+    if (this.removing()) return;
+    this.remove.emit(this.form());
   }
 
   /**
