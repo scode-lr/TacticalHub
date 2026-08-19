@@ -73,9 +73,7 @@ export class SettingsFormsPage {
     const clubId = this.clubService.getCurrentClubId();
     if (clubId !== null) {
       const result = await this.formService.getFormsByClubId(clubId);
-      // Archived is a soft-delete: it must never resurface in the list, and there is no
-      // status picker path back to it, so once archived a form is gone for good.
-      this.forms.set(result.filter(form => form.status !== AppStatus.Archived));
+      this.forms.set(result);
     }
     this.loading.set(false);
   }
