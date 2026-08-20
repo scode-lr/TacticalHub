@@ -1,8 +1,9 @@
+import { version } from '../package.json';
 import { PROJECT_CONFIG } from '../config';
 
 export const environment = {
   production: true,
   apiUrl: 'https://api.tacticalhub.lol',
-  version: '1.0.0',
+  version,
   ...PROJECT_CONFIG
 };

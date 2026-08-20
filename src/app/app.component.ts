@@ -4,6 +4,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { TranslationService } from '@services/i18n/translation.service';
 import { UserService } from '@services/user.service';
 import { environment } from '@environment';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
   private readonly titleService = inject(Title);
 
   async ngOnInit() {
+    await SplashScreen.show()
     this.titleService.setTitle(environment.name);
 
     await this.translationService.initialize({

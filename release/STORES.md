@@ -22,6 +22,23 @@ Apple permite de una a diez capturas por tamaño/localización. Preparar al meno
 - [ ] Activar Play App Signing y documentar propietario/recuperación.
 - [ ] Incrementar `versionCode` en cada entrega y fijar `versionName`.
 - [ ] Generar AAB `release`, comprobar firma y subir primero a Internal testing.
+
+### CI/CD (`.github/workflows/android-voltregacf-release.yml`)
+
+Cada merge a `main` compila, firma y sube el AAB de Voltregà CF a Internal testing automáticamente. Requiere estos GitHub Secrets (Settings → Secrets and variables → Actions) antes de que el workflow pueda completarse:
+
+| Secret | Contenido |
+|---|---|
+| `ANDROID_KEYSTORE_BASE64` | Keystore de upload (`.jks`), codificado en base64 (`base64 -w0 upload-keystore.jks`) |
+| `ANDROID_KEYSTORE_PASSWORD` | Contraseña del keystore |
+| `ANDROID_KEY_ALIAS` | Alias de la clave dentro del keystore |
+| `ANDROID_KEY_PASSWORD` | Contraseña de la clave |
+| `VOLTREGA_GOOGLE_SERVICES_JSON` | Contenido completo de `google-services.json` de Voltregà CF |
+| `PLAY_SERVICE_ACCOUNT_JSON` | JSON de la cuenta de servicio de Google Play con permiso de publicación sobre `es.tacticalhub.voltrega` |
+
+`versionName` sale directamente del campo `version` de `projects/voltregacf.hub/package.json` (no el `package.json` de la raíz, que es solo el manifiesto del monorepo) — subir la versión ahí antes de mergear a `main` es lo único que hay que tocar para publicar una nueva versión marketing. `versionCode` es el número de run de GitHub Actions (siempre creciente, requisito de Play). El mismo `version` se usa también dentro de la app (`environment.version`, ver `settings.page.html`), así que ambos quedan siempre sincronizados. Tactical Hub tiene su propio `projects/tactical.hub/package.json` independiente, para cuando se retome su publicación.
+
+El workflow borra el keystore, `keystore.properties` y `google-services.json` del runner al finalizar; ninguno se versiona (ver `.gitignore` dentro de `projects/voltregacf.hub/android/`).
 - [ ] Target API 35 solo si la entrega se hace antes del 31 de agosto de 2026; después, API 36 salvo extensión.
 - [ ] Completar Content rating, Target audience, Ads, App access y Data safety.
 - [ ] Informar la URL de eliminación y verificarla sin login.

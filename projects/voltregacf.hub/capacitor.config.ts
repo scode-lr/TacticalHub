@@ -26,10 +26,18 @@ const config: CapacitorConfig = {
       backgroundColor: '#000000'
     },
     SplashScreen: {
-      launchAutoHide: false,
+      launchShowDuration: 3000,
+      launchAutoHide: true,
       launchFadeOutDuration: 200,
-      backgroundColor: '#F6F6F4FF',
-      showSpinner: false
+      backgroundColor: "#ffffffff",
+      androidSplashResourceName: "splash",
+      androidScaleType: "CENTER_CROP",
+      showSpinner: true,
+      androidSpinnerStyle: "large",
+      iosSpinnerStyle: "small",
+      spinnerColor: "#999999",
+      splashFullScreen: true,
+      useDialog: true,
     },
     PushNotifications: {
       presentationOptions: ['badge', 'sound', 'alert']
