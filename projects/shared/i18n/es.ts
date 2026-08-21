@@ -208,7 +208,8 @@ export const sharedTranslations = {
     currentPasswordPlaceholder: 'Introduce tu contraseña actual',
     newPassword: 'Nueva contraseña',
     newPasswordPlaceholder: 'Introduce la nueva contraseña',
-    updatePassword: 'Actualizar contraseña'
+    updatePassword: 'Actualizar contraseña',
+    version: 'Versión'
   },  profile: {
     title: 'Mi perfil',
     editProfile: 'Editar perfil',

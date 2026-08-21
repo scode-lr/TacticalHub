@@ -11,6 +11,7 @@ import { AuthService } from '@services/auth.service';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { PasswordStrengthComponent } from '@components/password-strength/password-strength.component';
+import { environment } from '@environment';
 
 @Component({
   selector: 'app-settings',
@@ -37,6 +38,8 @@ export class SettingsPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly authService = inject(AuthService);
   private readonly formBuilder = inject(FormBuilder);
+
+  readonly appVersion = environment.version;
 
   readonly currentLanguage = signal<string>('en');
   readonly supportedLanguages = signal<Array<{ code: string; name: string }>>([]);
