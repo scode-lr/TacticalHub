@@ -20,7 +20,7 @@ export class BackButtonComponent {
     addIcons({ arrowBackOutline });
   }
 
-  goBack(): void {
+  async goBack(): Promise<void> {
     const route = this.route();
     if (route) {
       this.navigationService.navigateTo([route]);

@@ -98,6 +98,39 @@
   &--rejected {
     background: var(--ion-color-danger, #eb445a);
   }
+
+  // Amber, so "sent" never reads as "settled" at a glance.
+  &--review {
+    background: var(--ion-color-warning, #ffc409);
+    color: #4a3800;
+  }
+}
+
+// .actions / .btn-icon-round / .actions-menu / .danger-action come from the
+// shared _context-menu.scss + _buttons.scss (see adr/0003). Only the row's
+// own compact sizing lives here.
+.fr-actions-toggle {
+  width: 30px;
+  height: 30px;
+
+  ion-icon {
+    font-size: 1rem;
+  }
+}
+
+.fr-actions-menu {
+  width: 170px;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    ion-icon {
+      flex: none;
+      font-size: 1rem;
+    }
+  }
 }
 
 .fr-chevron {

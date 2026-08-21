@@ -9,6 +9,7 @@ import { SubmissionValue } from '@core/models/submission-value.model';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle, closeCircle, ellipsisHorizontalCircle } from 'ionicons/icons';
 import { maskIban } from '@core/utils/iban.util';
+import { readBooleanValue } from '@core/utils/submission-value.util';
 import { FormFieldType } from '@core/models/form.model';
 
 export type FieldReviewState = 'ok' | 'nok' | null;
@@ -29,6 +30,10 @@ export class SubmissionDetailViewComponent {
 
   constructor() {
     addIcons({ checkmarkCircle, closeCircle, ellipsisHorizontalCircle });
+  }
+
+  booleanValue(value: SubmissionValue): boolean | null {
+    return readBooleanValue(value);
   }
 
   getDisplayValue(value: SubmissionValue): string {

@@ -78,12 +78,16 @@ export class MenuComponent implements OnInit {
 
   readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
   readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
+  readonly formsBadge = computed(() => this.notificationsService.getPendingSubmissionsCount());
+
+  private static readonly FORMS_ITEM_IDS = ['forms', 'forms-submissions'];
 
   private withBadges(items: MenuItem[]) {
     return items.map(item => ({
       ...item,
       badge: item.id === 'inbox' ? this.inboxBadge() :
              item.id === 'notifications' ? this.notificationsBadge() :
+             MenuComponent.FORMS_ITEM_IDS.includes(item.id) ? this.formsBadge() :
              undefined
     }));
   }

@@ -1,0 +1,96 @@
+name: Voltrega Android Release
+
+# Runs on every merge to main: builds the Voltrega CF web app, packages it into a
+# signed Android App Bundle, and pushes it to the Google Play "Internal testing" track.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  ANDROID_PROJECT_DIR: projects/voltregacf.hub/android
+
+jobs:
+  build-sign-publish:
+    name: Build, sign and publish Voltrega Android bundle
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Read app version from package.json
+        run: echo "APP_VERSION=$(node -p "require('./projects/voltregacf.hub/package.json').version")" >> "$GITHUB_ENV"
+
+      - name: Build Voltrega CF (production)
+        run: npm run build:voltregacf:prod
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-voltregacf-${{ hashFiles('projects/voltregacf.hub/android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: gradle-voltregacf-
+
+      - name: Write google-services.json
+        run: echo '${{ secrets.VOLTREGA_GOOGLE_SERVICES_JSON }}' > "$ANDROID_PROJECT_DIR/app/google-services.json"
+
+      - name: Write signing keystore
+        run: echo '${{ secrets.ANDROID_KEYSTORE_BASE64 }}' | base64 -d > "$ANDROID_PROJECT_DIR/upload-keystore.jks"
+
+      - name: Write keystore.properties
+        run: |
+          cat > "$ANDROID_PROJECT_DIR/keystore.properties" <<EOF
+          storeFile=upload-keystore.jks
+          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          EOF
+
+      - name: Capacitor sync (Android)
+        run: cd projects/voltregacf.hub && npx cap sync android
+
+      - name: Build signed release bundle
+        working-directory: ${{ env.ANDROID_PROJECT_DIR }}
+        run: |
+          chmod +x ./gradlew
+          ./gradlew bundleRelease \
+            -PversionCode=${{ github.run_number }} \
+            -PversionName="$APP_VERSION"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: voltregacf-release-aab
+          path: ${{ env.ANDROID_PROJECT_DIR }}/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 30
+
+      - name: Publish to Google Play (Internal testing)
+        uses: r0adkll/upload-google-play@v2
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: es.tacticalhub.voltrega
+          releaseFiles: ${{ env.ANDROID_PROJECT_DIR }}/app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          status: completed
+
+      - name: Remove signing material
+        if: always()
+        run: rm -f "$ANDROID_PROJECT_DIR/upload-keystore.jks" "$ANDROID_PROJECT_DIR/keystore.properties" "$ANDROID_PROJECT_DIR/app/google-services.json"

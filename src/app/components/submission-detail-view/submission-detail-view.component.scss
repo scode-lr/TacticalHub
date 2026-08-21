@@ -1,38 +1,8 @@
-.detail-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-card {
-  background: var(--background-primary, #ffffff);
-  border: 1px solid var(--border-light, #e5e7eb);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.form-card-header {
-  padding: 1rem;
-  border-bottom: 1px solid var(--border-light, #e5e7eb);
-}
-
-.card-section-title {
-  margin: 0;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-secondary, #6b7280);
-}
-
-.form-card-body {
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.field-row {
+// Card, field-display, field-key and field-value live in app/styles/_forms.scss:
+// a submitted form is still a form and reads on the same scale as the editable
+// one. Only the review affordances are local.
+/// The header block: plain label/value pairs stacked, never side by side.
+.field-stack {
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
@@ -42,20 +12,6 @@
     align-items: flex-start;
     gap: 0.25rem;
   }
-}
-
-.field-display {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.field-display-content {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
 }
 
 .field-review-btn {
@@ -87,29 +43,5 @@
 
   &--nok {
     color: var(--ion-color-danger, #eb445a);
-  }
-}
-
-.field-key {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-secondary, #6b7280);
-}
-
-.field-value {
-  font-size: 0.9375rem;
-  color: var(--text-primary, #111827);
-  line-height: 1.5;
-
-  &--multiline {
-    white-space: pre-wrap;
-  }
-
-  &--boolean {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
   }
 }

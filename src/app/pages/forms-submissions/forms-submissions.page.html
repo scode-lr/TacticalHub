@@ -7,8 +7,6 @@
   </div>
 
   @if (viewState() === 'list') {
-    <app-team-join-requests />
-
     <app-action-requests />
 
     <!-- Mobile list. It uses component state so it does not depend on a table
@@ -22,7 +20,7 @@
           [placeholder]="'admin.forms.searchPlaceholder' | translate"
         />
         @if (searchValue) {
-          <button type="button" class="cards-search-clear" (click)="clear()">
+          <button type="button" class="btn-icon cards-search-clear" (click)="clear()">
             <ion-icon name="close-outline"></ion-icon>
           </button>
         }
@@ -196,7 +194,7 @@
           [placeholder]="'admin.forms.submissionTable.searchPlaceholder' | translate"
         />
         @if (submissionsSearchValue) {
-          <button type="button" class="cards-search-clear" (click)="clearSubmissionsFilter()">
+          <button type="button" class="btn-icon cards-search-clear" (click)="clearSubmissionsFilter()">
             <ion-icon name="close-outline"></ion-icon>
           </button>
         }

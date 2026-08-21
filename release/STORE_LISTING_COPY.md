@@ -8,7 +8,11 @@ Revisar con el club antes de copiar. No incluir promesas de funciones que se hay
 
 **Nom:** Voltregà CF
 
-**Subtítol / descripció breu:** El teu club, equips, formularis i avisos en una sola aplicació.
+**Subtítol App Store (màxim 30 caràcters):** El teu club, sempre a prop
+
+**Descripció breu Google Play:** El teu club, equips, formularis i avisos en una sola aplicació.
+
+**Paraules clau App Store:** futbol,club,equips,partits,notícies,formularis,avisos,jugadors,famílies
 
 **Descripció:**
 
@@ -30,7 +34,11 @@ Necessites ajuda? Contacta amb el club a voltregacf@gmail.com.
 
 **Nombre:** Voltregà CF
 
-**Descripción breve:** Tu club, equipos, formularios y avisos en una sola aplicación.
+**Subtítulo App Store (máximo 30 caracteres):** Tu club, siempre contigo
+
+**Descripción breve Google Play:** Tu club, equipos, formularios y avisos en una sola aplicación.
+
+**Palabras clave App Store:** fútbol,club,equipos,partidos,noticias,formularios,avisos,jugadores,familias
 
 **Descripción:**
 
@@ -46,7 +54,11 @@ Soporte: voltregacf@gmail.com.
 
 **Name:** Voltregà CF
 
-**Short description:** Your club, teams, forms and alerts together in one mobile app.
+**App Store subtitle (30 characters maximum):** Your club, always connected
+
+**Google Play short description:** Your club, teams, forms and alerts together in one mobile app.
+
+**App Store keywords:** football,club,teams,matches,news,forms,alerts,players,families,coaches
 
 **Description:**
 
@@ -113,3 +125,17 @@ Each club's information stays isolated, and every user accesses it according to 
 - No usar capturas con nombres, correos, IBAN, imágenes o notificaciones de personas reales.
 - Preparar una ficha por app; no mezclar la marca Tactical Hub con la ficha Voltregà salvo el crédito tecnológico que se acuerde.
 - Mantener las descripciones de Google dentro de 4.000 caracteres y las breves dentro de 80.
+
+### Información propuesta para App Review — Voltregà CF
+
+- **Categoría principal:** Deportes.
+- **Modelo de acceso:** visitantes pueden consultar contenido público; las funciones de miembros y coordinación requieren cuenta y rol asignado.
+- **Creación de cuenta:** disponible para personas de 14 años o más.
+- **Eliminación de cuenta:** Perfil → Eliminar cuenta → confirmar contraseña.
+- **Notificaciones:** opcionales y destinadas a información operativa del club.
+- **Pagos:** la aplicación no procesa pagos ni compras dentro de la app.
+- **Cuenta de revisión:** `[PENDIENTE: correo, contraseña y rol de una cuenta demo estable]`.
+- **Pasos de revisión:** `[PENDIENTE: instrucciones para acceder a noticias, equipo, formularios y notificaciones con datos ficticios]`.
+- **URL de soporte:** `[PENDIENTE: URL HTTPS pública]`.
+- **URL de privacidad:** `[PENDIENTE: URL HTTPS pública de privacy-policy.html]`.
+- **URL de eliminación:** `[PENDIENTE: URL HTTPS pública de account-deletion.html]`.

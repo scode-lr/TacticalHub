@@ -1,6 +1,6 @@
 <div class="sponsor-card add-card">
   <div class="card-header">
-    <button class="icon-button cancel" (click)="onCancel()">
+    <button class="btn-icon-round" (click)="onCancel()">
       <ion-icon name="close-outline"></ion-icon>
     </button>
   </div>
@@ -105,7 +105,7 @@
           @if (info.get('value')?.touched && info.get('value')?.invalid) {
             <span class="field-error">{{ info.get('value')?.errors?.['maxlength'] ? maxLengthError : ('validation.required' | translate) }}</span>
           }
-          <button type="button" class="icon-button small delete" (click)="removeInfo(i)">
+          <button type="button" class="btn-icon-round btn-small btn-icon--danger" (click)="removeInfo(i)">
             <ion-icon name="trash-outline"></ion-icon>
           </button>
         </div>

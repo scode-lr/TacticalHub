@@ -1,9 +1,7 @@
 @if (team()) {
   <div class="page-container team-detail-page">
     <div class="page-header">
-      <button class="back-button" (click)="goBack()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </button>
+      <app-back-button />
       <div class="header-info">
         <h1 class="team-name">{{ team()!.name }}</h1>
         <span class="team-category">{{ team()!.categoryId }}</span>
@@ -62,7 +60,7 @@
     <div class="empty-state">
       <ion-icon name="trophy-outline" class="empty-icon"></ion-icon>
       <h3 class="empty-title">Team not found</h3>
-      <button class="btn-back" (click)="goBack()">Go Back</button>
+      <button class="btn-primary" (click)="goBack()">Go Back</button>
     </div>
   </div>
 }

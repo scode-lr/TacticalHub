@@ -1,4 +1,5 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -29,7 +30,10 @@ interface HeaderFormControls {
   toDate: FormControl<string | null>;
   status: FormControl<AppStatus>;
   action: FormControl<string>;
-  email: FormControl<string>;
+  requiresSignature: FormControl<boolean>;
+  requiresReview: FormControl<boolean>;
+  adultsOnly: FormControl<boolean>;
+  generatesDocument: FormControl<boolean>;
   fields: FormArray;
 }
 
@@ -55,6 +59,7 @@ export class SettingsFormDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly formService = inject(FormService);
   private readonly roleService = inject(RolesService);
   private readonly toastService = inject(ToastService);
@@ -179,7 +184,6 @@ export class SettingsFormDetailPage implements OnInit {
     if (!clubId) return;
 
     const value = this.form.getRawValue();
-    console.log('Form Value', value);
     const request: CreateFormRequest = {
       clubId,
       name: value.name,
@@ -188,7 +192,10 @@ export class SettingsFormDetailPage implements OnInit {
       toDate: value.toDate ? `${value.toDate}T00:00:00Z` : null,
       status: value.status,
       action: value.action,
-      email: value.email || null,
+      requiresSignature: value.requiresSignature ?? false,
+      requiresReview: value.requiresReview ?? false,
+      adultsOnly: value.adultsOnly ?? false,
+      generatesDocument: value.generatesDocument ?? false,
       fields: (value.fields as any[]).map((f, index) => ({
         key: f.key,
         label: f.label,
@@ -212,7 +219,10 @@ export class SettingsFormDetailPage implements OnInit {
           toDate: request.toDate,
           status: request.status,
           action: request.action,
-          email: request.email,
+          requiresSignature: request.requiresSignature,
+          requiresReview: request.requiresReview,
+          adultsOnly: request.adultsOnly,
+          generatesDocument: request.generatesDocument,
           fields: request.fields
         };
         await this.formService.updateForm(Number(this.formId()), updateRequest);
@@ -234,6 +244,10 @@ export class SettingsFormDetailPage implements OnInit {
     if (existing) {
       this.selectedAction.set(existing.action);
     }
+
+    // Enrolment forms are signed and reviewed by default; the coordinator can still opt out.
+    const isEnrolment = this.selectedAction() === FormAction.RegisterPlayer
+      || this.selectedAction() === FormAction.BecomeMember;
 
     const fieldsArray = this.fb.array(
       (existing?.fields ?? []).map(f =>
@@ -258,9 +272,38 @@ export class SettingsFormDetailPage implements OnInit {
       toDate: [existing?.toDate ? String(existing.toDate).substring(0, 10) : null],
       status: [existing?.status ?? AppStatus.Draft, Validators.required],
       action: [existing?.action ?? this.selectedAction(), Validators.required],
-      email: [existing?.email ?? '', Validators.email],
+      requiresSignature: [existing?.requiresSignature ?? isEnrolment],
+      requiresReview: [existing?.requiresReview ?? isEnrolment],
+      adultsOnly: [existing?.adultsOnly ?? false],
+      generatesDocument: [existing?.generatesDocument ?? false],
       fields: fieldsArray
     });
+
+    this.bindDocumentToSignature();
+  }
+
+  /**
+   * A signature is only worth capturing if the document that shows it exists, so requiring one
+   * forces the document on and locks the toggle. The API enforces the same rule; this only makes
+   * it visible. Disabled controls still reach `getRawValue()`, so the value is submitted.
+   */
+  private bindDocumentToSignature(): void {
+    const signature = this.ctrl.requiresSignature;
+    const document = this.ctrl.generatesDocument;
+
+    const sync = (requiresSignature: boolean): void => {
+      if (requiresSignature) {
+        document.setValue(true, { emitEvent: false });
+        document.disable({ emitEvent: false });
+      } else {
+        document.enable({ emitEvent: false });
+      }
+    };
+
+    sync(signature.value);
+    signature.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(sync);
   }
 
   private async fetchFormById(id: string): Promise<FormDetail | null> {

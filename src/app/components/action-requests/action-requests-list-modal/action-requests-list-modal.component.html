@@ -14,7 +14,7 @@
             <p class="header-subtitle">{{ requests().length }} {{ (requests().length === 1 ? 'notifications.pendingRequest' : 'notifications.pendingRequests') | translate }}</p>
           </div>
         </div>
-        <button class="close-button" (click)="dismissed.emit()">
+        <button class="app-modal-close" (click)="dismissed.emit()">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </div>

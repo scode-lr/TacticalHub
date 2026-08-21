@@ -75,32 +75,11 @@
   height: 100%;
 }
 
-.modal-close {
+.app-modal-close {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
   z-index: 2;
-  width: 36px;
-  height: 36px;
-  background: var(--background-secondary, #f8f9fa);
-  border: 1px solid var(--border-light, #e5e7eb);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-
-  ion-icon {
-    font-size: 1.25rem;
-    color: var(--text-primary, #111827);
-  }
-
-  &:hover {
-    border-color: var(--ion-color-primary, #3880ff);
-    background: var(--background-primary, #ffffff);
-  }
 }
 
 .modal-content {

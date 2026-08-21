@@ -26,6 +26,8 @@ export interface IAuthResponse {
   email?: string;
 }
 
+const INITIAL_AUTH_TIMEOUT_MS = 5000;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,7 +63,7 @@ export class AuthService {
     this._currentUser.set(storedUser);
 
     return firstValueFrom(
-      this.refreshAccessToken().pipe(
+      this.refreshAccessToken(INITIAL_AUTH_TIMEOUT_MS).pipe(
         map(token => {
           if (token) {
             return true;
@@ -99,11 +101,16 @@ export class AuthService {
    * keep the session). `skipErrorHandler` keeps the original
    * HttpErrorResponse intact (status preserved, no toast).
    */
-  refreshAccessToken(): Observable<string | null> {
+  refreshAccessToken(timeoutMs?: number): Observable<string | null> {
     return this.apiService.post<AuthResponse>(
       '/auth/refresh',
       {},
-      { skipAuth: true, withCredentials: true, skipErrorHandler: true }
+      {
+        skipAuth: true,
+        withCredentials: true,
+        skipErrorHandler: true,
+        timeout: timeoutMs
+      }
     ).pipe(
       map(response => {
         if (response.success && response.data?.token) {

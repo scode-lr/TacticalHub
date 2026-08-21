@@ -1,10 +1,12 @@
+import { version } from '../../package.json';
+
 export const environment = {
   production: true,
   projectName: 'Tactical Hub',
   taglineKey: 'app.tagline',
   appId: 'com.tactical.hub',
   private: false,
-  version: '1.0.0',
+  version,
   apiUrl: 'https://api.tacticalhub.lol',
   translations: {
     en: { app: { name: 'Tactical Hub', tagline: 'Manage your football teams' } },

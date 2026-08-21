@@ -52,7 +52,7 @@
               <p>{{ user.email }}</p>
             </div>
             <div class="actions">
-              <button class="actions-toggle" type="button" (click)="toggleMenu(user.userId)"
+              <button class="btn-icon-round actions-toggle" type="button" (click)="toggleMenu(user.userId)"
                 [attr.aria-label]="'clubMembers.actions' | translate"
                 [attr.aria-expanded]="openMenuUserId() === user.userId" aria-haspopup="menu">
                 <ion-icon name="ellipsis-vertical"></ion-icon>

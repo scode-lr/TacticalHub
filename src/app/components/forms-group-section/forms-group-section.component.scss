@@ -50,7 +50,9 @@
   background: var(--background-primary, #ffffff);
   border: 1px solid var(--border-light, #e5e7eb);
   border-radius: 14px;
-  overflow: hidden;
+  // No overflow: hidden here — that would clip the row's "..." actions
+  // dropdown. Corners are rounded on the first/last row instead, same
+  // fix as .news-table in settings-news.page.scss.
 }
 
 // The rows themselves (<app-form-header>) are projected from the parent
@@ -58,4 +60,12 @@
 // not this component's — ::ng-deep is required to reach them here.
 :host ::ng-deep .forms-rowlist app-form-header + app-form-header {
   border-top: 1px solid var(--border-light, #e5e7eb);
+}
+
+:host ::ng-deep .forms-rowlist app-form-header:first-child .form-row {
+  border-radius: 14px 14px 0 0;
+}
+
+:host ::ng-deep .forms-rowlist app-form-header:last-child .form-row {
+  border-radius: 0 0 14px 14px;
 }

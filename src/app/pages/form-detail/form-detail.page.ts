@@ -1,6 +1,9 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { documentTextOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@core/services/navigation.service';
 import { FormService } from '@services/form.service';
@@ -17,6 +20,7 @@ import { BackButtonComponent, FormSubmissionCardComponent } from '@components/in
   standalone: true,
   imports: [
     CommonModule,
+    IonIcon,
     TranslatePipe,
     BackButtonComponent,
     FormSubmissionCardComponent,
@@ -37,10 +41,23 @@ export class FormDetailPage implements OnInit {
 
   readonly hasSubmissions = computed(() => this.mySubmissions().length > 0);
 
-  async ngOnInit(): Promise<void> {
-    const formId = this.route.snapshot.paramMap.get('formId');
-    this.formId = Number(formId);
+  constructor() {
+    addIcons({ documentTextOutline });
+  }
 
+  ngOnInit(): void {
+    this.formId = Number(this.route.snapshot.paramMap.get('formId'));
+  }
+
+  /**
+   * Ionic keeps this page alive in the navigation stack, so `ngOnInit` does not run again when the
+   * member comes back from submitting. Reloading here is what makes a new submission show up.
+   */
+  async ionViewWillEnter(): Promise<void> {
+    await this.load();
+  }
+
+  private async load(): Promise<void> {
     const [detail, submissions] = await Promise.all([
       this.formService.getFormById(this.formId),
       this.formSubmissionsService.getMySubmissions(this.formId).catch(() => [] as FormSubmission[]),
@@ -51,10 +68,6 @@ export class FormDetailPage implements OnInit {
     this.formFields.set(sorted);
     this.mySubmissions.set(submissions);
     this.loading.set(false);
-
-    if (!this.hasSubmissions()) {
-      this.navigateToSubmission(-1);
-    }
   }
 
   onFillAgain(): void {
@@ -76,6 +89,10 @@ export class FormDetailPage implements OnInit {
 
   private navigateToSubmission(submissionId: number): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms/${this.formId}/${submissionId}`]);
+    this.navigationService.navigateTo(
+      [`/app/${roleType}/${roleId}/forms/${this.formId}/${submissionId}`],
+      // Tells the form where "back" leads, since it is reachable from the list too.
+      { queryParams: { from: 'detail' } }
+    );
   }
 }

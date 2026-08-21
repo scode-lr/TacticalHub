@@ -77,25 +77,49 @@
           </div>
           <div class="form-field">
             <label>{{ 'admin.settingsForms.type' | translate }}</label>
-            <div class="type-readonly">
+            <div class="field-readonly">
               <ion-icon [name]="typeIcon()"></ion-icon>
               <span>{{ typeLabelKey() | translate }}</span>
             </div>
           </div>
         </div>
 
-        <div class="form-field">
-          <label for="email">{{ 'admin.settingsForms.fields.email' | translate }}</label>
-          <input
-            id="email"
-            class="form-input"
-            type="email"
-            formControlName="email"
-            [placeholder]="'admin.settingsForms.fields.emailPlaceholder' | translate"
-          />
-          @if (ctrl.email.invalid && ctrl.email.touched) {
-            <small class="field-error">{{ 'admin.settingsForms.fields.emailInvalid' | translate }}</small>
-          }
+        <div class="form-toggles">
+          <label class="form-toggle">
+            <input type="checkbox" formControlName="requiresSignature" />
+            <span class="form-toggle-text">
+              <span class="form-toggle-title">{{ 'admin.settingsForms.fields.requiresSignature' | translate }}</span>
+              <span class="form-toggle-desc">{{ 'admin.settingsForms.fields.requiresSignatureDescription' | translate }}</span>
+            </span>
+          </label>
+
+          <label class="form-toggle">
+            <input type="checkbox" formControlName="generatesDocument" />
+            <span class="form-toggle-text">
+              <span class="form-toggle-title">{{ 'admin.settingsForms.fields.generatesDocument' | translate }}</span>
+              <span class="form-toggle-desc">
+                {{ (ctrl.requiresSignature.value
+                      ? 'admin.settingsForms.fields.generatesDocumentLocked'
+                      : 'admin.settingsForms.fields.generatesDocumentDescription') | translate }}
+              </span>
+            </span>
+          </label>
+
+          <label class="form-toggle">
+            <input type="checkbox" formControlName="requiresReview" />
+            <span class="form-toggle-text">
+              <span class="form-toggle-title">{{ 'admin.settingsForms.fields.requiresReview' | translate }}</span>
+              <span class="form-toggle-desc">{{ 'admin.settingsForms.fields.requiresReviewDescription' | translate }}</span>
+            </span>
+          </label>
+
+          <label class="form-toggle">
+            <input type="checkbox" formControlName="adultsOnly" />
+            <span class="form-toggle-text">
+              <span class="form-toggle-title">{{ 'admin.settingsForms.fields.adultsOnly' | translate }}</span>
+              <span class="form-toggle-desc">{{ 'admin.settingsForms.fields.adultsOnlyDescription' | translate }}</span>
+            </span>
+          </label>
         </div>
 
       </div>

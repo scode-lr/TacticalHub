@@ -1,0 +1,85 @@
+<div class="page-container signature-page">
+  <div class="section-header-with-back-button">
+    <app-back-button [route]="backRoute()" />
+    <h1 class="section-title">{{ 'user.forms.signature.title' | translate }}</h1>
+  </div>
+
+  @if (draft(); as draft) {
+    <div class="signature-intro">
+      <span class="signature-step">{{ 'user.forms.signature.finalStep' | translate }}</span>
+      <h2 class="signature-heading">
+        {{ 'user.forms.signature.headingPrefix' | translate }} {{ draft.formName }}
+      </h2>
+      <p class="signature-lead">{{ 'user.forms.signature.lead' | translate }}</p>
+    </div>
+
+    <button type="button" class="review-answers" (click)="isReviewOpen.set(true)">
+      <span class="review-answers__icon">
+        <ion-icon name="eye-outline"></ion-icon>
+      </span>
+      <span class="review-answers__body">
+        <span class="review-answers__title">{{ 'user.forms.signature.reviewAnswers' | translate }}</span>
+        <span class="review-answers__count">
+          {{ 'user.forms.signature.fieldCount' | translate: { count: answeredCount() } }}
+        </span>
+      </span>
+      <ion-icon name="chevron-forward-outline" class="review-answers__chevron"></ion-icon>
+    </button>
+
+    <app-signature-pad (signatureChange)="onSignatureChange($event)" />
+
+    <p class="signature-legal">{{ 'user.forms.signature.legalNotice' | translate }}</p>
+
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" (click)="goBackToForm()">
+        {{ 'user.forms.signature.back' | translate }}
+      </button>
+      <button type="button" class="btn-primary" [disabled]="!canSubmit()" (click)="signAndSubmit()">
+        {{ 'user.forms.signature.signAndSend' | translate }}
+      </button>
+    </div>
+
+    <ion-modal [isOpen]="isReviewOpen()" (didDismiss)="isReviewOpen.set(false)" class="answers-modal">
+      <ng-template>
+        <div class="answers-sheet">
+          <div class="answers-sheet__header">
+            <div class="answers-sheet__titles">
+              <h2 class="answers-sheet__title">{{ 'user.forms.signature.myAnswers' | translate }}</h2>
+              <span class="answers-sheet__subtitle">
+                {{ draft.formName }} · {{ 'user.forms.signature.fieldCount' | translate: { count: answeredCount() } }}
+              </span>
+            </div>
+            <button type="button" class="answers-sheet__close" (click)="isReviewOpen.set(false)">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+
+          <div class="answers-sheet__content">
+            @for (answer of answers(); track answer.label) {
+              <div class="answer-row">
+                <span class="answer-row__label">{{ answer.label }}</span>
+                @if (answer.accepted !== null) {
+                  <span class="answer-row__value answer-row__value--check"
+                        [class.answer-row__value--rejected]="!answer.accepted">
+                    <span class="answer-check" [class.answer-check--off]="!answer.accepted">
+                      <ion-icon [name]="answer.accepted ? 'checkmark-outline' : 'close-outline'"></ion-icon>
+                    </span>
+                    {{ answer.value }}
+                  </span>
+                } @else {
+                  <span class="answer-row__value">{{ answer.value }}</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="answers-sheet__footer">
+            <button type="button" class="btn-primary btn-block" (click)="isReviewOpen.set(false)">
+              {{ 'user.forms.signature.continueToSign' | translate }}
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  }
+</div>

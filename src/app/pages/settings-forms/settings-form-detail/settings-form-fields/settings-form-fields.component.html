@@ -25,16 +25,16 @@
           <div class="field-order-controls">
             <span class="field-order-badge">{{ i + 1 }}</span>
             <div class="field-move-buttons">
-              <button type="button" class="btn-move" (click)="moveFieldUp(i)" [disabled]="i === 0" [attr.aria-label]="'admin.settingsForms.formFields.moveUp' | translate">
+              <button type="button" class="field-move-btn" (click)="moveFieldUp(i)" [disabled]="i === 0" [attr.aria-label]="'admin.settingsForms.formFields.moveUp' | translate">
                 <ion-icon name="chevron-up-outline"></ion-icon>
               </button>
-              <button type="button" class="btn-move" (click)="moveFieldDown(i)" [disabled]="i === fields().length - 1" [attr.aria-label]="'admin.settingsForms.formFields.moveDown' | translate">
+              <button type="button" class="field-move-btn" (click)="moveFieldDown(i)" [disabled]="i === fields().length - 1" [attr.aria-label]="'admin.settingsForms.formFields.moveDown' | translate">
                 <ion-icon name="chevron-down-outline"></ion-icon>
               </button>
             </div>
           </div>
             <div class="field-rows">
-              <div class="field-row">
+              <div class="field-mini-row">
                 <div class="field-mini-group">
                   <label class="field-mini-label" [for]="'flabel-' + i">
                     {{ 'admin.settingsForms.formFields.label' | translate }}
@@ -69,7 +69,7 @@
                   />
                 </div>
               </div>
-              <div class="field-row">
+              <div class="field-mini-row">
                 <div class="field-mini-group field-mini-group--stretch">
                   <label class="field-mini-label" [for]="'fdesc-' + i">
                     {{ 'admin.settingsForms.formFields.description' | translate }}
@@ -89,13 +89,15 @@
                     <span class="field-error">{{ 'admin.settingsForms.formFields.descriptionMaxLength' | translate }}</span>
                   }
                 </div>
-                <div class="field-mini-group field-mini-group--toggle">
-                  <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
-                  <p-toggleswitch formControlName="required" />
-                </div>
+                @if (!isDisplayOnly(i)) {
+                  <div class="field-mini-group field-mini-group--toggle">
+                    <span class="field-mini-label">{{ 'admin.settingsForms.formFields.required' | translate }}</span>
+                    <p-toggleswitch formControlName="required" />
+                  </div>
+                }
               </div>
             </div>
-            <button type="button" class="btn-remove-field" (click)="removeField(i)">
+            <button type="button" class="field-remove-btn" (click)="removeField(i)">
               <ion-icon name="trash-outline"></ion-icon>
             </button>
           </div>
@@ -119,7 +121,7 @@
             <div class="field-item-options">
               <div class="options-header">
                 <span class="options-label">{{ 'admin.settingsForms.formFields.options' | translate }}</span>
-                <button type="button" class="btn-add-option" (click)="addOption(i)">
+                <button type="button" class="option-add-btn" (click)="addOption(i)">
                   <ion-icon name="add-outline"></ion-icon>
                   {{ 'admin.settingsForms.formFields.addOption' | translate }}
                 </button>
@@ -139,7 +141,7 @@
                     [placeholder]="'admin.settingsForms.formFields.optionPlaceholder' | translate"
                     pSize="small"
                   />
-                  <button type="button" class="btn-remove-option" (click)="removeOption(i, j)" [attr.aria-label]="'common.remove' | translate">
+                  <button type="button" class="option-remove-btn" (click)="removeOption(i, j)" [attr.aria-label]="'common.remove' | translate">
                     <ion-icon name="close-outline"></ion-icon>
                   </button>
                 </div>

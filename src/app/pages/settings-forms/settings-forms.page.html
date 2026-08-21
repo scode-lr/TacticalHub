@@ -54,7 +54,15 @@
     @for (group of formGroups(); track group.action) {
       <app-forms-group-section [icon]="group.icon" [titleKey]="group.titleKey" [count]="group.forms.length">
         @for (item of group.forms; track item.id; let i = $index) {
-        <app-form-header [form]="item" [index]="i" [editable]="true" />
+        <app-form-header
+          [form]="item"
+          [index]="i"
+          [editable]="true"
+          [duplicating]="duplicatingId() === item.id"
+          [removing]="removingId() === item.id"
+          (duplicate)="duplicateForm($event)"
+          (remove)="removeForm($event)"
+        />
         }
       </app-forms-group-section>
     }
@@ -67,3 +75,12 @@
     (didDismiss)="closeTypePicker()"
   />
 </div>
+
+<ion-toast
+  [isOpen]="showToast()"
+  [message]="toastMessage()"
+  [color]="toastColor()"
+  duration="3000"
+  position="top"
+  (didDismiss)="onToastDismiss()">
+</ion-toast>

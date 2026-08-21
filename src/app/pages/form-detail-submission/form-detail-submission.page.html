@@ -20,7 +20,7 @@
       }
     }
 
-    @if (isEditing() && latestComment()) {
+    @if (showRejectionBanner()) {
       <div class="rejection-banner">
         <div class="rejection-banner__stripe"></div>
         <div class="rejection-banner__body">
@@ -40,7 +40,8 @@
       </div>
     }
 
-    @if (rejectionComments().length > 1) {
+    <!-- Only reachable from the banner's history button, so it follows the same condition. -->
+    @if (showRejectionBanner() && rejectionComments().length > 1) {
       <ion-modal [isOpen]="showHistory()" (didDismiss)="showHistory.set(false)" class="comments-history-modal">
         <ng-template>
           <div class="history-modal">
@@ -75,7 +76,6 @@
         <app-dynamic-form-fields
           [fields]="activeFormFields()"
           [form]="dynamicForm"
-          [fieldStates]="rejectedFieldStatuses()"
         />
 
         <div class="form-actions">
@@ -83,7 +83,11 @@
             {{ 'common.cancel' | translate }}
           </button>
           <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
-            {{ (isEditing() ? 'user.forms.submission.resend' : 'common.submit') | translate }}
+            @if (requiresSignature()) {
+              {{ 'user.forms.signature.reviewAndSign' | translate }}
+            } @else {
+              {{ (isEditing() ? 'user.forms.submission.resend' : 'common.submit') | translate }}
+            }
           </button>
         </div>
       </form>

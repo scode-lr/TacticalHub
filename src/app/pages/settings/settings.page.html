@@ -51,7 +51,7 @@
               class="settings-input"
               [class.ion-invalid]="passwordForm.get('currentPassword')?.invalid && passwordFormSubmitted()">
             </ion-input>
-            <button type="button" class="show-hide-btn" (click)="toggleCurrentPassword()">
+            <button type="button" class="btn-icon show-hide-btn" (click)="toggleCurrentPassword()">
               <ion-icon [name]="showCurrentPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
             </button>
           </div>
@@ -76,7 +76,7 @@
               (ionInput)="onPasswordInput($event)"
               [class.ion-invalid]="passwordForm.get('newPassword')?.invalid && passwordFormSubmitted()">
             </ion-input>
-            <button type="button" class="show-hide-btn" (click)="toggleNewPassword()">
+            <button type="button" class="btn-icon show-hide-btn" (click)="toggleNewPassword()">
               <ion-icon [name]="showNewPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
             </button>
           </div>
@@ -124,5 +124,7 @@
         <a href="account-deletion.html">{{ 'welcome.accountDeletion' | translate }}</a>
       </nav>
     </div>
+
+    <div class="app-version">{{ 'settings.version' | translate }} {{ appVersion }}</div>
   </div>
 </ion-content>

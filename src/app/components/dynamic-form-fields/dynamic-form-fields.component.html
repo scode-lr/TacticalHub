@@ -1,9 +1,28 @@
 @for (field of fields(); track field.id) {
+  @if (field.type === 'info') {
+    <!-- Informational text: rendered as content, with no control bound to it. Uses the same
+         classes as every other field so it reads as part of the form, not as a callout. -->
+    <div class="field-group">
+      @if (field.label) {
+        <span class="field-label">{{ field.label }}</span>
+      }
+      @if (field.description) {
+        <p class="field-hint field-hint--multiline">{{ field.description }}</p>
+      }
+    </div>
+  } @else {
   <div class="field-group"
-       [class.field-group--boolean]="field.type === 'boolean' && !field.options?.length"
        [class.field-group--approved]="field.status === AppStatus.Approved"
        [class.field-group--rejected]="field.status === AppStatus.Rejected">
-    @if (field.type !== 'boolean' || field.options?.length) {
+    @if (field.type === 'boolean') {
+      <!-- The radio group has no single control to point at, so the caption is not a <label>. -->
+      <span class="field-label">
+        {{ field.label }}
+        @if (field.isRequired) {
+          <span class="required-mark">*</span>
+        }
+      </span>
+    } @else {
       <label class="field-label" [for]="field.key">
         {{ field.label }}
         @if (field.isRequired) {
@@ -95,31 +114,19 @@
     }
 
     @if (field.type === 'boolean') {
-      @if (field.options?.length) {
-        <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field)">
-          @for (option of field.options; track option) {
-            <div class="radio-option">
-              <p-radiobutton
-                [inputId]="field.key + '_' + option"
-                [formControl]="$any(form().get(field.key))"
-                [name]="field.key"
-                [value]="option"
-              />
-              <label [for]="field.key + '_' + option" class="radio-text">{{ option }}</label>
-            </div>
-          }
-        </div>
-      } @else {
-        <label class="boolean-label">
-          <p-toggleswitch [formControl]="$any(form().get(field.key))" />
-          <span class="boolean-text">
-            {{ field.label }}
-            @if (field.isRequired) {
-              <span class="required-mark">*</span>
-            }
-          </span>
-        </label>
-      }
+      <div class="radio-group" [class.radio-group--error]="isFieldInvalid(field)">
+        @for (option of booleanOptions(field); track option.value) {
+          <div class="radio-option">
+            <p-radiobutton
+              [inputId]="field.key + '_' + option.value"
+              [formControl]="$any(form().get(field.key))"
+              [name]="field.key"
+              [value]="option.value"
+            />
+            <label [for]="field.key + '_' + option.value" class="radio-text">{{ option.label }}</label>
+          </div>
+        }
+      </div>
     }
 
     @if (field.type === 'select') {
@@ -139,4 +146,5 @@
     }
 
   </div>
+  }
 }

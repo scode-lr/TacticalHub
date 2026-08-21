@@ -105,7 +105,27 @@
       "Bash(cp \"../../designsToCode/voltrega-app-icon-1024.png\" \"resources/icon.png\")",
       "Bash(cp \"../../designsToCode/voltrega-app-icon-1024.png\" \"resources/icon/icon.png\")",
       "Bash(node scripts/generate-splash.js)",
-      "Bash(node -e \"const p=require\\('./package-lock.json'\\); console.log\\(p.lockfileVersion\\); console.log\\(Object.keys\\(p.packages\\).filter\\(k=>k.includes\\('chokidar'\\)||k.includes\\('readdirp'\\)\\)\\)\")"
+      "Bash(node -e \"const p=require\\('./package-lock.json'\\); console.log\\(p.lockfileVersion\\); console.log\\(Object.keys\\(p.packages\\).filter\\(k=>k.includes\\('chokidar'\\)||k.includes\\('readdirp'\\)\\)\\)\")",
+      "PowerShell(npx ng build --configuration development 2>&1 | Select-Object -Last 30)",
+      "PowerShell(npx ng build app --configuration development 2>&1 | Select-Object -Last 30)",
+      "PowerShell(dotnet build C:\\\\Projects\\\\tactical\\\\TacticalHubApi --nologo -v q 2>&1 | Select-Object -Last 25)",
+      "PowerShell(dotnet build C:\\\\Projects\\\\tactical\\\\TacticalHubApi --nologo -v q -p:BaseOutputPath=\"$env:TEMP\\\\claude\\\\api-build\\\\\" 2>&1 | Select-String -Pattern \"error|Advertencia|Error|correctamente\" | Select-Object -First 20)",
+      "Bash(perl -0pi -e \"s/<span>\\\\{\\\\{ 'user\\\\.news\\\\.\\(fieldTitle|fieldBody|primaryImage|externalLinkUrl|externalLinkLabel|linkedForm\\)' \\\\| translate \\\\}\\\\}<\\\\/span>/<span class=\\\\\"field-label\\\\\">{{ 'user.news.\\\\$1' | translate }}<\\\\/span>/g\" src/app/pages/settings-news/settings-news.page.html)",
+      "PowerShell(dotnet test *)",
+      "PowerShell($out = dotnet test C:\\\\Projects\\\\tactical\\\\TacticalHubApi\\\\TacticalHubApi.Tests --nologo --logger \"console;verbosity=normal\" -p:BaseOutputPath=\"$env:TEMP\\\\claude\\\\api-test\\\\\" 2>&1; \"EXIT=$LASTEXITCODE\"; $out | Select-Object -Last 25)",
+      "PowerShell($out = dotnet run --project C:\\\\Projects\\\\tactical\\\\TacticalHubApi\\\\TacticalHubApi.Tests --no-restore 2>&1; \"EXIT=$LASTEXITCODE\"; $out | Select-Object -Last 20)",
+      "PowerShell($out = dotnet run --project C:\\\\Projects\\\\tactical\\\\TacticalHubApi\\\\TacticalHubApi.Tests -p:BaseOutputPath=\"$env:TEMP\\\\claude\\\\api-test\\\\\" 2>&1; \"EXIT=$LASTEXITCODE\"; $out | Select-Object -Last 15)",
+      "PowerShell(Set-Content *)",
+      "PowerShell($out = dotnet build C:\\\\Projects\\\\tactical\\\\TacticalHubApi --nologo -v q -p:BaseOutputPath=\"$env:TEMP\\\\claude\\\\api-build\\\\\" 2>&1; \"EXIT=$LASTEXITCODE\"; $out | Select-String -Pattern \"error|Error|Advertencia\" | Select-Object -First 20)",
+      "PowerShell($out = dotnet build C:\\\\Projects\\\\tactical\\\\TacticalHubApi --nologo -v q -p:BaseOutputPath=\"$env:TEMP\\\\claude\\\\api-build\\\\\" 2>&1; \"EXIT=$LASTEXITCODE\"; $out | Select-String -Pattern \"error|Advertencia|Errores\" | Select-Object -First 20)",
+      "Bash(perl -pi -e 's/_formService\\\\.\\(GetAllFormsAsync|GetFormWithFieldsAsync|CreateFormAsync|UpdateFormAsync\\)/_formCatalogService.$1/g; s/_formService\\\\.\\(GetMySubmissionsAsync|GetMySubmissionsByClubAsync|GetSubmissionsAsync|GetSubmissionAsync|EditSubmissionAsync|SubmitFormAsync|ReviewSubmissionAsync\\)/_submissionService.$1/g' Interfaces/Controllers/FormsController.cs)",
+      "PowerShell($out = dotnet build C:\\\\Projects\\\\tactical\\\\TacticalHubApi --nologo -v q -p:BaseOutputPath=\"$env:TEMP\\\\claude\\\\api-build\\\\\" 2>&1; \"EXIT=$LASTEXITCODE\"; $out | Select-String -Pattern \"error|Advertencia|Errores\" | Select-Object -First 25)",
+      "PowerShell($out = dotnet run --project C:\\\\Projects\\\\tactical\\\\TacticalHubApi\\\\TacticalHubApi.Tests -p:BaseOutputPath=\"$env:TEMP\\\\claude\\\\api-test\\\\\" 2>&1; \"EXIT=$LASTEXITCODE\"; $out | Select-Object -Last 8)",
+      "PowerShell(Select-String *)",
+      "Bash(perl -pi -e 's/\\(?<!\\\\.\\)IsClubAdminAsync\\\\\\(userId, form\\\\.ClubId, cancellationToken\\\\\\)/_clubAccessService.IsClubAdminAsync\\(userId, form.ClubId, cancellationToken\\)/g' Application/Services/FormExportService.cs)",
+      "Bash(perl -pi -e 's/\\(?<![.\\\\w]\\)IsClubAdminAsync\\\\\\(/_clubAccessService.IsClubAdminAsync\\(/g unless /_clubAccessService\\\\.IsClubAdminAsync|public|private/' Application/Services/ExternalIntegrationService.cs Application/Services/SponsorService.cs Application/Services/NewsPostService.cs)",
+      "Bash(perl -pi -e 's/\\(?<![.\\\\w]\\)CanReadClubAsync\\\\\\(/_clubAccessService.CanReadClubAsync\\(/g' Application/Services/NewsPostService.cs)",
+      "Bash(perl -0pi -e 's/    private Task<bool> IsClubAdminAsync\\\\\\(int userId, int clubId, CancellationToken cancellationToken\\\\\\)\\\\n        => _clubAccessService\\\\.IsClubAdminAsync\\\\\\(userId, clubId, cancellationToken\\\\\\);\\\\n\\\\n//' Application/Services/SponsorService.cs)"
     ]
   },
   "enabledMcpjsonServers": [

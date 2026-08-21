@@ -1,0 +1,61 @@
+<div class="signature-pad">
+  <div class="signature-pad__header">
+    <span class="signature-pad__hint">
+      {{ (mode() === 'draw'
+            ? 'user.forms.signature.drawHint'
+            : 'user.forms.signature.typeHint') | translate }}
+    </span>
+
+    <div class="signature-pad__modes" role="group">
+      <button
+        type="button"
+        class="signature-pad__mode"
+        [class.signature-pad__mode--active]="mode() === 'draw'"
+        (click)="setMode('draw')">
+        <ion-icon name="create-outline"></ion-icon>
+        {{ 'user.forms.signature.modeDraw' | translate }}
+      </button>
+      <button
+        type="button"
+        class="signature-pad__mode"
+        [class.signature-pad__mode--active]="mode() === 'type'"
+        (click)="setMode('type')">
+        <ion-icon name="text-outline"></ion-icon>
+        {{ 'user.forms.signature.modeType' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="signature-pad__surface" [class.signature-pad__surface--typing]="mode() === 'type'">
+    <!-- The canvas stays mounted so the pad keeps its size; typing just covers it. -->
+    <canvas #canvas class="signature-pad__canvas" [class.signature-pad__canvas--hidden]="mode() === 'type'"></canvas>
+
+    @if (mode() === 'type') {
+      <div class="signature-pad__typed">
+        <input
+          type="text"
+          class="signature-pad__input"
+          [(ngModel)]="typedName"
+          (ngModelChange)="onTypedNameChange()"
+          [placeholder]="'user.forms.signature.namePlaceholder' | translate"
+          maxlength="60"
+          autocomplete="name" />
+        <span class="signature-pad__preview">{{ typedName }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="signature-pad__line"></div>
+
+  <div class="signature-pad__footer">
+    <span class="signature-pad__status">
+      {{ (hasSignature()
+            ? 'user.forms.signature.signed'
+            : 'user.forms.signature.pending') | translate }}
+    </span>
+    <button type="button" class="signature-pad__clear" (click)="clear()" [disabled]="!hasSignature()">
+      <ion-icon name="refresh-outline"></ion-icon>
+      {{ 'user.forms.signature.clear' | translate }}
+    </button>
+  </div>
+</div>

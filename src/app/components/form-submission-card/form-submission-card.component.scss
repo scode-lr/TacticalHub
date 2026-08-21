@@ -190,3 +190,40 @@ $marker-size: 1.75rem;
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+.document-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+
+  // Side by side once there is room; stacked on a phone, where full-width targets read better.
+  @media (min-width: 480px) {
+    flex-direction: row;
+
+    > button {
+      flex: 1;
+      margin-top: 0;
+    }
+  }
+
+  > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+.download-document {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

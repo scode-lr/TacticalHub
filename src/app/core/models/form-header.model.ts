@@ -10,7 +10,14 @@ export interface FormHeader {
   toDate: Date | null;
   status: AppStatus;
   action: FormAction;
-  email: string | null;
+  /** The member must sign the form digitally before it can be submitted. */
+  requiresSignature: boolean;
+  /** Coordination must approve the submission before it counts as accepted. */
+  requiresReview: boolean;
+  /** Only members of legal age can see and fill in the form. */
+  adultsOnly: boolean;
+  /** An accepted submission produces a downloadable PDF. Always true when signed. */
+  generatesDocument: boolean;
   settingsJson: Record<string, unknown>;
   createdAt: Date;
   updatedAt: Date;

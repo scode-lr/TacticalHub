@@ -1,3 +1,490 @@
+// =============================================================================
+// Forms
+//
+// One visual language for every form in the app: the member-facing dynamic
+// forms, the club editors, the forms inside modals and the read-only views of a
+// submission. Components should reach for these classes instead of restyling
+// labels and inputs on their own — that is how the app ended up with five
+// different field paddings.
+//
+// Vocabulary
+//   .form-card / -header / -body   framed section of a form
+//   .form-stack                    vertical run of fields
+//   .field-row                     two fields side by side, stacked on mobile
+//   .field-group                   one field: label + control + hint + error
+//   .radio-group / .form-toggle    choice controls
+//   .field-display                 the same field, read-only
+//   .form-actions                  the footer buttons
+//
+// PrimeNG controls (pInputText, p-select, p-datepicker…) keep the look their own
+// theme gives them; here they only get sizing and the shared focus ring, so the
+// two families still read as one form.
+// =============================================================================
+
+:root {
+  --form-gap: 1.25rem;
+  --form-control-radius: 8px;
+  --form-accent: var(--color-accent, var(--ion-color-primary, #3880ff));
+  --form-focus-ring: 0 0 0 3px color-mix(in srgb, var(--form-accent) 18%, transparent);
+  --form-danger-ring: 0 0 0 3px rgba(235, 68, 90, 0.12);
+}
+
+/// The shared control skin: anything the user types into looks like this.
+@mixin form-control {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: var(--form-control-radius);
+  background: var(--background-primary, #ffffff);
+  color: var(--text-primary, #111827);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: var(--text-light, #9ca3af);
+  }
+
+  &:focus {
+    border-color: var(--form-accent);
+    box-shadow: var(--form-focus-ring);
+  }
+
+  &:disabled {
+    background: var(--background-secondary, #f8f9fa);
+    color: var(--text-secondary, #6b7280);
+    cursor: not-allowed;
+  }
+
+  &.ng-invalid.ng-touched,
+  &[aria-invalid='true'] {
+    border-color: var(--ion-color-danger, #eb445a);
+
+    &:focus {
+      box-shadow: var(--form-danger-ring);
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Layout
+// -----------------------------------------------------------------------------
+
+/// A vertical run of fields. The default spacing between anything form-shaped.
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-gap);
+}
+
+/// A whole page of form cards — one step looser than the fields inside them.
+.detail-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-card {
+  overflow: hidden;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 12px;
+  background: var(--background-primary, #ffffff);
+}
+
+.form-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-light, #e5e7eb);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+
+/// Small caps caption of a form section.
+.card-section-title {
+  margin: 0;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-gap);
+  padding: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+}
+
+/// Two fields sharing a line. Never on a phone.
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--form-gap);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Field
+//
+// `.form-field` is the older name for the same thing and is kept as an alias so
+// every form looks alike without a mass rename; new markup uses `.field-group`.
+// (`.form-group` is the third one, but it spaces its children with margins
+// instead of a gap, so it stays down in the Ionic section.)
+// -----------------------------------------------------------------------------
+
+.field-group,
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+
+  // The generic skin is for plain HTML controls only: a PrimeNG input carries
+  // its own theme and is handled further down.
+  input:not([pInputText]):not([type='checkbox']):not([type='radio']),
+  textarea:not([pTextarea]):not([pInputTextarea]),
+  select {
+    @include form-control;
+  }
+
+  textarea:not([pTextarea]):not([pInputTextarea]) {
+    min-height: 80px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  /// Coordination reviewed this field and let it through.
+  &--approved {
+    padding-left: 0.625rem;
+    border-left: 3px solid var(--ion-color-success, #16a34a);
+    border-radius: 0 6px 6px 0;
+
+    .field-label { color: var(--ion-color-success, #16a34a); }
+  }
+
+  /// Coordination sent this field back.
+  &--rejected {
+    padding-left: 0.625rem;
+    border-left: 3px solid var(--ion-color-danger, #dc2626);
+    border-radius: 0 6px 6px 0;
+
+    .field-label { color: var(--ion-color-danger, #dc2626); }
+  }
+}
+
+.field-label,
+.form-label,
+.field-group > label,
+.form-field > label {
+  color: var(--text-primary, #111827);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/// Muted variant for the dense editors, where the label is a caption.
+.field-label--muted,
+.field-mini-label,
+.options-label {
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.required-mark {
+  margin-left: 0.125rem;
+  color: var(--ion-color-danger, #eb445a);
+}
+
+/// Help text under the label, before the control.
+.field-hint {
+  margin: 0 0 0.125rem 0;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+
+  /// Authored paragraphs keep their line breaks.
+  &--multiline {
+    white-space: pre-line;
+  }
+}
+
+.field-error {
+  margin-top: 0.125rem;
+  color: var(--ion-color-danger, #eb445a);
+  font-size: 0.75rem;
+}
+
+// -----------------------------------------------------------------------------
+// Controls
+// -----------------------------------------------------------------------------
+
+// Explicit control classes, for markup that does not nest inside a field group.
+// Qualified by element on purpose: `.form-input` also names an <ion-input> in
+// the older pages, and PrimeNG controls carry the same classes while painting
+// themselves — both would end up with two borders.
+input.form-input:not([pInputText]),
+input.field-input:not([pInputText]),
+textarea.form-textarea:not([pTextarea]):not([pInputTextarea]),
+textarea.field-textarea:not([pTextarea]):not([pInputTextarea]),
+select.form-select {
+  @include form-control;
+}
+
+textarea.form-textarea:not([pTextarea]):not([pInputTextarea]),
+textarea.field-textarea:not([pTextarea]):not([pInputTextarea]) {
+  min-height: 80px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+select.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  cursor: pointer;
+
+  option {
+    background: var(--background-primary, #ffffff);
+    color: var(--text-primary, #111827);
+  }
+}
+
+input.form-date {
+  cursor: pointer;
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+
+    &:hover { opacity: 1; }
+  }
+}
+
+// PrimeNG keeps its own theme; it only borrows the sizing and the focus ring so
+// a themed control and a plain one do not look like two different forms.
+input[pInputText],
+textarea[pTextarea],
+textarea[pInputTextarea] {
+  width: 100%;
+
+  &:focus {
+    border-color: var(--form-accent) !important;
+    box-shadow: var(--form-focus-ring) !important;
+  }
+}
+
+p-select,
+p-datepicker,
+p-inputnumber {
+  width: 100%;
+}
+
+/// Read-only stand-in for a control (a value the member cannot change).
+.field-readonly {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: var(--form-control-radius);
+  background: var(--background-secondary, #f8f9fa);
+  color: var(--text-primary, #111827);
+  font-size: 0.9375rem;
+
+  ion-icon {
+    flex: none;
+    font-size: 1.125rem;
+    color: var(--form-accent);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Choice controls
+// -----------------------------------------------------------------------------
+
+/// Pick one: radios in a framed list. Also how a yes/no question is asked.
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 10px;
+  background: var(--background-primary, #ffffff);
+  transition: border-color 0.2s ease;
+
+  &--error {
+    border-color: var(--ion-color-danger, #eb445a);
+    background: var(--background-danger-subtle, #fef2f2);
+  }
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.375rem 0;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--border-light, #e5e7eb);
+  }
+}
+
+.radio-text {
+  color: var(--text-primary, #111827);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+/// A setting the user turns on, with its explanation underneath.
+.form-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.25rem;
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--form-accent);
+    cursor: pointer;
+  }
+}
+
+.form-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.form-toggle-title {
+  color: var(--text-primary, #111827);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.form-toggle-desc {
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+// -----------------------------------------------------------------------------
+// Read-only
+//
+// A submitted form is still a form: same rhythm, same type scale, no controls.
+// -----------------------------------------------------------------------------
+
+.field-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.field-display-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-key {
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.field-value {
+  color: var(--text-primary, #111827);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+
+  &--multiline {
+    white-space: pre-wrap;
+  }
+
+  &--boolean {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Footer
+// -----------------------------------------------------------------------------
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+
+    @media (max-width: 768px) {
+      justify-content: stretch;
+    }
+  }
+
+  &.justify-center {
+    justify-content: center;
+  }
+
+  &.justify-between {
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Ionic inputs
+//
+// Only the auth pages still build their fields out of <ion-input>. They keep
+// their own classes, tuned to match the scale above.
+// -----------------------------------------------------------------------------
+
+/// Spaces its children with margins, not a gap — that is the whole difference
+/// with `.field-group`.
 .form-group {
   margin-bottom: 1.5rem;
 
@@ -57,8 +544,8 @@
 .error-message {
   display: block;
   margin-top: 0.5rem;
-  font-size: 0.8125rem;
   color: var(--ion-color-danger, #eb445a);
+  font-size: 0.8125rem;
   font-weight: 500;
 
   @media (max-width: 768px) {
@@ -69,40 +556,11 @@
 .success-message {
   display: block;
   margin-top: 0.5rem;
-  font-size: 0.8125rem;
   color: var(--ion-color-success, #10b981);
+  font-size: 0.8125rem;
   font-weight: 500;
 
   @media (max-width: 768px) {
     font-size: 0.75rem;
-  }
-}
-
-.form-actions {
-  display: flex;
-  gap: 1rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-
-  &.justify-end {
-    justify-content: flex-end;
-
-    @media (max-width: 768px) {
-      justify-content: stretch;
-    }
-  }
-
-  &.justify-center {
-    justify-content: center;
-  }
-
-  &.justify-between {
-    justify-content: space-between;
-
-    @media (max-width: 768px) {
-      flex-direction: column;
-    }
   }
 }
