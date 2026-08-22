@@ -1015,7 +1015,10 @@ export const sharedTranslations = {
         clear: 'Clear',
         legalNotice: 'By signing, this signature has the same validity as a handwritten one.',
         back: 'Back',
-        signAndSend: 'Sign and send'
+        signAndSend: 'Sign and send',
+        successTitle: 'Form signed successfully',
+        successDescription: 'Your signature was submitted successfully. You can check its status from your forms.',
+        goToForms: 'Go to my forms'
       },
       status: {
         closed: 'Closed'

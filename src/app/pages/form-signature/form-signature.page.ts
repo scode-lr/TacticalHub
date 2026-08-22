@@ -110,14 +110,9 @@ export class FormSignaturePage implements OnInit {
       }
 
       this.draftService.clear();
-      await this.showToast(
-        isEditing ? 'user.action.form.success.resubmitMessage' : 'user.action.form.success.submitMessage',
-        'success',
-        'checkmark-circle-outline'
-      );
-
-      const { roleType, roleId } = this.navigationService.extractRoleDetails();
-      this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms/${draft.formId}`]);
+      // replaceUrl drops this signature page (and the filled-in form before it) from history,
+      // so there is nothing stale to land back on from the confirmation screen.
+      this.navigationService.navigateTo(['/forms/signed'], { replaceUrl: true });
     } catch {
       await this.showToast('user.action.form.errors.submitError', 'danger', 'alert-circle-outline');
     } finally {

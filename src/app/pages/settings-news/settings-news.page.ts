@@ -2,6 +2,7 @@ import { Component, signal, computed, inject, HostListener, OnInit } from '@angu
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonIcon, IonModal, IonSpinner } from '@ionic/angular/standalone';
+import { EditorModule } from 'primeng/editor';
 import { formatDistanceToNow, Locale } from 'date-fns';
 import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
@@ -34,7 +35,7 @@ interface NewsFormModel {
   templateUrl: './settings-news.page.html',
   styleUrls: ['./settings-news.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonIcon, IonModal, IonSpinner, TranslatePipe]
+  imports: [CommonModule, FormsModule, IonIcon, IonModal, IonSpinner, TranslatePipe, EditorModule]
 })
 export class SettingsNewsPage implements OnInit {
   private readonly navigationService = inject(NavigationService);

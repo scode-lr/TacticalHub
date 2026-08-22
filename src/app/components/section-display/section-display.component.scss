@@ -146,6 +146,8 @@
   font-size: 0.9375rem;
   color: var(--text-secondary, #6b7280);
   line-height: 1.6;
+  overflow-wrap: normal;
+  word-break: normal;
 
   p, ul, ol {
     margin: 0 0 0.75rem !important;

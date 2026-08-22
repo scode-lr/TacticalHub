@@ -114,16 +114,31 @@
             />
           </label>
 
-          <label class="field-group">
+          <div class="field-group">
             <span class="field-label">{{ 'user.news.fieldBody' | translate }}</span>
-            <textarea
-              rows="8"
+            <p-editor
+              class="content-editor"
               [ngModel]="form().body"
               (ngModelChange)="updateForm('body', $event)"
-              maxlength="10000"
+              [style]="{ height: '220px' }"
+              [formats]="['bold', 'italic', 'list', 'link']"
               [placeholder]="'user.news.bodyPlaceholder' | translate"
-            ></textarea>
-          </label>
+            >
+              <ng-template #header>
+                <span class="ql-formats">
+                  <button type="button" class="ql-bold" [attr.aria-label]="'admin.settings.information.form.editor.bold' | translate"></button>
+                  <button type="button" class="ql-italic" [attr.aria-label]="'admin.settings.information.form.editor.italic' | translate"></button>
+                </span>
+                <span class="ql-formats">
+                  <button type="button" class="ql-list" value="ordered" [attr.aria-label]="'admin.settings.information.form.editor.orderedList' | translate"></button>
+                  <button type="button" class="ql-list" value="bullet" [attr.aria-label]="'admin.settings.information.form.editor.bulletList' | translate"></button>
+                </span>
+                <span class="ql-formats">
+                  <button type="button" class="ql-link" [attr.aria-label]="'admin.settings.information.form.editor.link' | translate"></button>
+                </span>
+              </ng-template>
+            </p-editor>
+          </div>
 
           <div class="field-group">
             <span class="field-label">{{ 'user.news.primaryImage' | translate }}</span>

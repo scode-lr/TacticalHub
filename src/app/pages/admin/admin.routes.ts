@@ -65,7 +65,11 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../forms-submissions/forms-submissions.page').then(m => m.FormsSubmissionsPage)
       },
       {
-        path: 'forms-submissions/:idSubmision',
+        path: 'forms-submissions/:formId',
+        loadComponent: () => import('../forms-submissions/form-submissions-list/form-submissions-list.page').then(m => m.FormSubmissionsListPage)
+      },
+      {
+        path: 'forms-submissions/:formId/:submissionId',
         loadComponent: () => import('../forms-submissions/forms-submission-detail/forms-submission-detail.page').then(m => m.FormsSubmissionDetailPage)
       },
       {

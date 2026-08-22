@@ -1,0 +1,13 @@
+<ion-content class="success-content" [fullscreen]="true">
+  <div class="success-screen">
+    <div class="success-icon">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+    </div>
+    <h1 class="success-title">{{ 'user.forms.signature.successTitle' | translate }}</h1>
+    <p class="success-description">{{ 'user.forms.signature.successDescription' | translate }}</p>
+
+    <button type="button" class="btn-primary btn-block success-action" (click)="goToForms()">
+      {{ 'user.forms.signature.goToForms' | translate }}
+    </button>
+  </div>
+</ion-content>

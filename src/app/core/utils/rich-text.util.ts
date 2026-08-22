@@ -37,3 +37,16 @@ export function ensureRichTextHtml(content: string | null | undefined): string {
 
   return hardenLinks(html);
 }
+
+/**
+ * Plain-text excerpt of rich-text content, for previews (card lists, notifications) that must not
+ * render markup. Legacy plain-text content passes through unchanged, tags included, and it is
+ * whitespace-collapsed since block tags otherwise butt words together (`</p><p>` -> no space).
+ */
+export function richTextToPlainText(content: string | null | undefined): string {
+  if (!content) return '';
+  if (!HTML_START_PATTERN.test(content)) return content;
+
+  const doc = new DOMParser().parseFromString(content, 'text/html');
+  return (doc.body.textContent ?? '').replace(/\s+/g, ' ').trim();
+}

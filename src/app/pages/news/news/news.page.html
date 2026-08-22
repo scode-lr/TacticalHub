@@ -1,4 +1,5 @@
 <div class="page-container member-news-page">
+<app-pull-to-refresh (refresh)="onRefresh($event)">
   <div class="section-header news-header">
     <h1 class="section-title">{{ 'user.news.title' | translate }}</h1>
 
@@ -76,4 +77,5 @@
       </div>
     }
   }
+</app-pull-to-refresh>
 </div>

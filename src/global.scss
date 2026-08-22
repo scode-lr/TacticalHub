@@ -38,3 +38,12 @@
 /* -------------------------------------------------------------------------- */
 /* Global Component Styles */
 /* -------------------------------------------------------------------------- */
+
+// Android WebView shows a persistent gray tap-highlight overlay on native <button>s
+// after a tap, and since navigation happens via the router (no full page reload) it
+// never clears — buttons look "stuck selected" after navigating away. Disabling the
+// browser's own highlight is safe here because every interactive state (:hover,
+// :active, .active) is already styled explicitly per component.
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}

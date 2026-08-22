@@ -22,7 +22,7 @@ export class FormsSubmissionDetailPage implements OnInit {
   readonly loading = signal<boolean>(true);
 
   async ngOnInit(): Promise<void> {
-    const submissionId = Number(this.navigationService.findRouteParam('idSubmision'));
+    const submissionId = Number(this.navigationService.findRouteParam('submissionId'));
     if (!submissionId) return;
     try {
       const result = await this.formSubmissionsService.getSubmission(submissionId);
@@ -34,6 +34,7 @@ export class FormsSubmissionDetailPage implements OnInit {
 
   backRoute(): string {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/forms-submissions`;
+    const formId = this.navigationService.findRouteParam('formId');
+    return `/app/${roleType}/${roleId}/forms-submissions/${formId}`;
   }
 }

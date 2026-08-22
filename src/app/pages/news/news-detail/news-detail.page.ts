@@ -6,6 +6,8 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
 import { NewsCardComponent } from '@components/news-card/news-card.component';
+import { ImageLightboxComponent } from '@components/image-lightbox/image-lightbox.component';
+import { RichTextPipe } from '@core/pipes/rich-text.pipe';
 import { NewsPost } from '@models/news.model';
 import { NewsService } from '@services/news.service';
 import { ClubService } from '@services/club.service';
@@ -18,7 +20,7 @@ import { ToastService } from '@services/toast.service';
   templateUrl: './news-detail.page.html',
   styleUrls: ['./news-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, NewsCardComponent]
+  imports: [CommonModule, IonIcon, TranslatePipe, NewsCardComponent, ImageLightboxComponent, RichTextPipe]
 })
 export class NewsDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
@@ -32,6 +34,8 @@ export class NewsDetailPage implements OnInit {
   readonly news = signal<NewsPost | null>(null);
   readonly relatedNews = signal<NewsPost | null>(null);
   readonly loading = signal(true);
+  readonly isLightboxOpen = signal(false);
+  readonly lightboxStartIndex = signal(0);
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => this.loadNews(params.get('newsId')));
@@ -42,9 +46,23 @@ export class NewsDetailPage implements OnInit {
     return images.find(image => image.isPrimary)?.imageUrl ?? images[0]?.imageUrl ?? null;
   }
 
-  get bodyParagraphs(): string[] {
-    const body = this.news()?.body ?? '';
-    return body.split(/\n+/).map(paragraph => paragraph.trim()).filter(Boolean);
+  /** All of the article's images, ordered for the lightbox — same order the admin arranged them in. */
+  get imageUrls(): string[] {
+    const images = this.news()?.images ?? [];
+    return [...images].sort((a, b) => a.sortOrder - b.sortOrder).map(image => image.imageUrl);
+  }
+
+  openLightbox(): void {
+    const urls = this.imageUrls;
+    if (urls.length === 0) return;
+
+    const startIndex = Math.max(0, urls.indexOf(this.primaryImageUrl ?? ''));
+    this.lightboxStartIndex.set(startIndex);
+    this.isLightboxOpen.set(true);
+  }
+
+  closeLightbox(): void {
+    this.isLightboxOpen.set(false);
   }
 
   goBack(): void {
@@ -129,10 +147,24 @@ export class NewsDetailPage implements OnInit {
     }
   }
 
+  /**
+   * Picks the article right next to the current one in the feed (the next-older one, or the
+   * previous-newer one when the current article is the oldest fetched) — not just the first item
+   * of page 1, which always showed the same one or two most recent posts regardless of which
+   * article you were actually reading.
+   */
   private async loadRelated(clubId: number, excludeId: number): Promise<void> {
     try {
-      const page = await this.newsService.getByClubId(clubId, false, 3, 0);
-      this.relatedNews.set(page.items.find(item => item.id !== excludeId) ?? null);
+      const page = await this.newsService.getByClubId(clubId, false, 50, 0);
+      const items = page.items;
+      const currentIndex = items.findIndex(item => item.id === excludeId);
+
+      if (currentIndex === -1) {
+        this.relatedNews.set(items.find(item => item.id !== excludeId) ?? null);
+        return;
+      }
+
+      this.relatedNews.set(items[currentIndex + 1] ?? items[currentIndex - 1] ?? null);
     } catch {
       this.relatedNews.set(null);
     }

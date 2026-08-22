@@ -953,7 +953,10 @@ export const sharedTranslations = {
         clear: 'Borrar',
         legalNotice: 'Al firmar, esta firma tiene la misma validez que la manuscrita.',
         back: 'Atrás',
-        signAndSend: 'Firmar y enviar'
+        signAndSend: 'Firmar y enviar',
+        successTitle: 'Formulario firmado correctamente',
+        successDescription: 'Tu firma se ha enviado correctamente. Ya puedes consultar el estado desde tus formularios.',
+        goToForms: 'Ir a mis formularios'
       },
       status: {
         closed: 'Cerrado'

@@ -21,7 +21,7 @@
 
     <article class="news-article">
       @if (primaryImageUrl) {
-        <div class="news-hero" [style.background-image]="'url(' + primaryImageUrl + ')'"></div>
+        <button type="button" class="news-hero" [style.background-image]="'url(' + primaryImageUrl + ')'" (click)="openLightbox()"></button>
       }
 
       <div class="news-content">
@@ -33,11 +33,7 @@
           <span>{{ getFormattedDate(post.publishedAt || post.createdAt) }}</span>
         </div>
 
-        <div class="news-body">
-          @for (paragraph of bodyParagraphs; track $index; let first = $first) {
-            <p [class.news-lede]="first">{{ paragraph }}</p>
-          }
-        </div>
+        <div class="news-body" [innerHTML]="post.body | richText"></div>
 
         @if (post.externalLinkUrl || post.linkedFormId) {
           <div class="article-footer news-links">
@@ -64,6 +60,12 @@
       </div>
     </article>
   </div>
+
+  <app-image-lightbox
+    [images]="imageUrls"
+    [startIndex]="lightboxStartIndex()"
+    [isOpen]="isLightboxOpen()"
+    (closed)="closeLightbox()" />
 } @else {
   <div class="page-container-narrow news-detail-page">
     <div class="empty-state">

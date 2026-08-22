@@ -1012,7 +1012,10 @@ export const sharedTranslations = {
         clear: 'Esborrar',
         legalNotice: 'En signar, aquesta signatura té la mateixa validesa que la manuscrita.',
         back: 'Enrere',
-        signAndSend: 'Signar i enviar'
+        signAndSend: 'Signar i enviar',
+        successTitle: 'Formulari signat correctament',
+        successDescription: 'La teva signatura s\'ha enviat correctament. Ja pots consultar l\'estat des dels teus formularis.',
+        goToForms: 'Anar als meus formularis'
       },
       status: {
         closed: 'Tancat'

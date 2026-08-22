@@ -86,6 +86,11 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'forms/signed',
+    loadComponent: () => import('./pages/form-signature-success/form-signature-success.page').then(m => m.FormSignatureSuccessPage),
+    canActivate: [authGuard]
+  },
+  {
     path: 'settings',
     loadComponent: () => import('./pages/settings/settings.page').then(m => m.SettingsPage),
     canActivate: [authGuard]

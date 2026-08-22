@@ -7,13 +7,14 @@ import { NewsCardComponent } from '@components/news-card/news-card.component';
 import { NewsPost, TimeFilter } from '@models/news.model';
 import { NewsService } from '@services/news.service';
 import { ClubService } from '@services/club.service';
+import { PullToRefreshComponent } from '@components/pull-to-refresh/pull-to-refresh.component';
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.page.html',
   styleUrls: ['./news.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonModal, IonSpinner, TranslatePipe, NewsCardComponent]
+  imports: [CommonModule, IonIcon, IonModal, IonSpinner, TranslatePipe, NewsCardComponent, PullToRefreshComponent]
 })
 export class NewsPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
@@ -36,6 +37,11 @@ export class NewsPage implements OnInit {
   async ngOnInit(): Promise<void> {
     this.clubId = this.clubService.getCurrentClubId() ?? 0;
     await this.loadInitialNews();
+  }
+
+  async onRefresh(complete: () => void): Promise<void> {
+    await this.loadInitialNews();
+    complete();
   }
 
   readonly filteredNews = computed(() => {

@@ -16,12 +16,14 @@
     color: var(--text-primary, #111827);
   }
 
-  &:hover {
-    border-color: var(--ion-color-primary, #3880ff);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--ion-color-primary, #3880ff);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
-    ion-icon {
-      color: var(--ion-color-primary, #3880ff);
+      ion-icon {
+        color: var(--ion-color-primary, #3880ff);
+      }
     }
   }
 

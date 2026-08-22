@@ -26,7 +26,12 @@ export interface IAuthResponse {
   email?: string;
 }
 
-const INITIAL_AUTH_TIMEOUT_MS = 5000;
+// A cold app launch on a real mobile network (DNS + TLS + a possibly-sleeping API) is much slower
+// than a warm dev-server reload. 5s was tripping on that first request often enough that a still-
+// valid session (the refresh-token cookie was fine) looked "lost" — the guard only sees the
+// in-memory access token, and a timed-out refresh never sets one, even though the cached user
+// profile in localStorage was correctly left untouched.
+const INITIAL_AUTH_TIMEOUT_MS = 15000;
 
 @Injectable({
   providedIn: 'root'

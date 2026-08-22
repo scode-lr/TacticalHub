@@ -31,7 +31,7 @@
 
         <div class="submissions-list">
           @for (submission of mySubmissions(); track submission.id) {
-            <app-form-submission-card [submission]="submission" [formFields]="formFields()" (editRequested)="onEditRejected(submission)" />
+            <app-form-submission-card [submission]="submission" [formFields]="formFields()" [formName]="formDetail()?.name ?? ''" (editRequested)="onEditRejected(submission)" />
           }
         </div>
       </div>

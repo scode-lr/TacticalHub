@@ -7,7 +7,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { DocumentsService } from '@core/services/documents.service';
 import { ToastService } from '@core/services/toast.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
-import { canPreviewPdfInline, saveBlob } from '@core/utils/file-download.util';
+import { canPreviewPdfInline, previewBlob, saveBlob } from '@core/utils/file-download.util';
 
 /**
  * Shows a generated document before the member commits to saving it.
@@ -40,7 +40,7 @@ export class DocumentPreviewComponent {
   readonly isSaving = signal(false);
   readonly previewUrl = signal<SafeResourceUrl | null>(null);
 
-  /** False on native: the WebView has no PDF viewer, so the OS one is used instead. */
+  /** False on native: there the file opens in the OS viewer via FileViewer instead of an in-app iframe. */
   readonly canPreviewInline = canPreviewPdfInline();
 
   private blob: Blob | null = null;
@@ -73,8 +73,8 @@ export class DocumentPreviewComponent {
         this.objectUrl = URL.createObjectURL(this.blob);
         this.previewUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(this.objectUrl));
       } else {
-        // Nothing to render in-app: hand it straight to the OS viewer and close.
-        await saveBlob(this.blob, this.fileName());
+        // Nothing to render in-app: hand it to the OS document viewer and close.
+        await previewBlob(this.blob, this.fileName());
         this.close();
       }
     } catch {

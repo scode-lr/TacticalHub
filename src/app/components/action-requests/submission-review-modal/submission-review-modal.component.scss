@@ -27,33 +27,8 @@
   }
 }
 
-.modal-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: var(--background-primary, #ffffff);
-  overflow: hidden;
-}
-
-/* ── Header ─────────────────────────────────────────────── */
-
-.modal-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--border-light, #e5e7eb);
-  background: var(--background-primary, #ffffff);
-  flex-shrink: 0;
-}
-
-.header-text {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
+/* .app-modal-container / .app-modal-header / .app-modal-content / .app-modal-footer come from the
+   shared _modals.scss (see adr/0002). Only genuinely local pieces live here. */
 
 .review-label {
   display: inline-block;
@@ -65,42 +40,11 @@
   margin-bottom: 0.125rem;
 }
 
-.header-title {
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: var(--text-primary, #111827);
-  margin: 0;
-  line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.header-subtitle {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.8125rem;
-  color: var(--text-secondary, #6b7280);
-  margin: 0;
-
-  ion-icon {
-    font-size: 0.875rem;
-    flex-shrink: 0;
-  }
-}
-
 .app-modal-close {
   margin-top: 0.125rem;
 }
 
 /* ── Content ─────────────────────────────────────────────── */
-
-.modal-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1.5rem;
-}
 
 .detail-loading {
   display: flex;
@@ -151,14 +95,7 @@
 
 /* ── Footer ──────────────────────────────────────────────── */
 
-.detail-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  padding: 1.25rem 1.5rem;
-  border-top: 1px solid var(--border-light, #e5e7eb);
-  background: var(--background-primary, #ffffff);
-  flex-shrink: 0;
+.app-modal-footer {
   animation: slideUp 0.2s ease;
 }
 
@@ -182,20 +119,3 @@
 
 /* ── Responsive ──────────────────────────────────────────── */
 
-@media (max-width: 768px) {
-  .modal-header {
-    padding: 1rem;
-  }
-
-  .header-title {
-    font-size: 1rem;
-  }
-
-  .modal-content {
-    padding: 1rem;
-  }
-
-  .detail-footer {
-    padding: 1rem;
-  }
-}

@@ -14,9 +14,9 @@ import {
   footballOutline,
   peopleOutline,
   mailOutline,
-  ellipsisHorizontal,
   logOutOutline,
-  settingsOutline
+  settingsOutline,
+  appsOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
@@ -121,7 +121,7 @@ export class MenuComponent implements OnInit {
       footballOutline,
       peopleOutline,
       mailOutline,
-      ellipsisHorizontal,
+      appsOutline,
       logOutOutline,
       settingsOutline
     });
