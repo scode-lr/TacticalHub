@@ -876,6 +876,13 @@ export const sharedTranslations = {
       titlePlaceholder: 'Actualización importante',
       fieldBody: 'Contenido',
       bodyPlaceholder: 'Escribe el anuncio...',
+      linkEditor: {
+        visit: 'Enlace',
+        enter: 'Añadir enlace',
+        edit: 'Editar',
+        save: 'Guardar',
+        remove: 'Quitar'
+      },
       primaryImage: 'Imagen principal',
       removeImage: 'Quitar imagen',
       uploadingImage: 'Subiendo imagen...',

@@ -2,7 +2,7 @@ import { Component, signal, computed, inject, HostListener, OnInit } from '@angu
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonIcon, IonModal, IonSpinner } from '@ionic/angular/standalone';
-import { EditorModule } from 'primeng/editor';
+import { EditorInitEvent, EditorModule } from 'primeng/editor';
 import { formatDistanceToNow, Locale } from 'date-fns';
 import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
@@ -165,6 +165,35 @@ export class SettingsNewsPage implements OnInit {
 
   updateForm<K extends keyof NewsFormModel>(key: K, value: NewsFormModel[K]): void {
     this.form.update(current => ({ ...current, [key]: value }));
+  }
+
+  onEditorInit(event: EditorInitEvent): void {
+    const tooltip = event.editor?.container?.querySelector?.('.ql-tooltip') as HTMLElement | null;
+    if (!tooltip) return;
+
+    const enterLabel = this.translationService.instant('user.news.linkEditor.enter');
+    const editLabel = this.translationService.instant('user.news.linkEditor.edit');
+    const saveLabel = this.translationService.instant('user.news.linkEditor.save');
+    const removeLabel = this.translationService.instant('user.news.linkEditor.remove');
+
+    tooltip.dataset['visitLabel'] = this.translationService.instant('user.news.linkEditor.visit');
+    tooltip.dataset['enterLabel'] = enterLabel;
+
+    tooltip
+      .querySelector<HTMLInputElement>('input[type="text"]')
+      ?.setAttribute('aria-label', enterLabel);
+
+    const action = tooltip.querySelector<HTMLElement>('.ql-action');
+    if (action) {
+      action.dataset['editLabel'] = editLabel;
+      action.dataset['saveLabel'] = saveLabel;
+    }
+
+    const remove = tooltip.querySelector<HTMLElement>('.ql-remove');
+    if (remove) {
+      remove.dataset['removeLabel'] = removeLabel;
+      remove.setAttribute('aria-label', removeLabel);
+    }
   }
 
   async onImageSelected(event: Event): Promise<void> {

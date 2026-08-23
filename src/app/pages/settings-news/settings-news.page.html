@@ -123,6 +123,7 @@
               [style]="{ height: '220px' }"
               [formats]="['bold', 'italic', 'list', 'link']"
               [placeholder]="'user.news.bodyPlaceholder' | translate"
+              (onInit)="onEditorInit($event)"
             >
               <ng-template #header>
                 <span class="ql-formats">
@@ -187,7 +188,7 @@
           <button class="btn-secondary" type="button" (click)="cancelEditor()" [disabled]="isSaving()">
             {{ 'common.cancel' | translate }}
           </button>
-          <button class="btn-primary save-news-button" type="button" (click)="saveNews()" [disabled]="isSaving() || imageUploading()">
+          <button class="btn-primary" type="button" (click)="saveNews()" [disabled]="isSaving() || imageUploading()">
             @if (isSaving()) {
               <ion-spinner name="crescent" />
             }
