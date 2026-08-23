@@ -43,19 +43,11 @@
       @if (!isLoading() && submission()) {
         <div class="app-modal-footer">
           <button class="btn-secondary" [disabled]="isReviewing()" (click)="rejected.emit({ comment, fieldStates: fieldStates() })">
-            @if (isReviewing()) {
-              <ion-spinner name="dots"></ion-spinner>
-            } @else {
               <ion-icon name="close-circle-outline"></ion-icon>
-            }
             {{ 'common.reject' | translate }}
           </button>
           <button class="btn-primary" [disabled]="isReviewing()" (click)="approved.emit({ comment, fieldStates: fieldStates() })">
-            @if (isReviewing()) {
-              <ion-spinner name="dots"></ion-spinner>
-            } @else {
               <ion-icon name="checkmark-outline"></ion-icon>
-            }
             {{ 'common.approve' | translate }}
           </button>
         </div>
