@@ -3,7 +3,7 @@ import { PROJECT_CONFIG } from '../config';
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.1.51:5197',
+  apiUrl: 'https://api-dev-voltrega.tacticalhub.es',
   version,
   ...PROJECT_CONFIG
 };
