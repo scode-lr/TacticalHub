@@ -1,6 +1,8 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, OnDestroy, inject, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import { STORAGE_KEYS } from '../constants/storage-keys';
+import { StorageService } from './storage.service';
 
 /** Sentinel meaning "a refresh is in flight; no result yet". Kept distinct
  *  from null (which means "refresh failed") so waiters resolve in both cases. */
@@ -9,9 +11,9 @@ const PENDING = Symbol('refresh-pending');
 /**
  * TokenService
  *
- * Holds the access token exclusively in memory (Angular signal).
- * It is NEVER written to localStorage or sessionStorage, making it immune
- * to XSS token-theft attacks.
+ * Keeps the access token in an Angular signal and persists it in localStorage
+ * so a session survives reloads, new tabs, browser restarts and native app
+ * restarts. The persisted value is restored only while the JWT is valid.
  *
  * The refresh token lives in an HttpOnly cookie managed by the server.
  * JavaScript never reads or writes it; the browser attaches it automatically
@@ -25,16 +27,47 @@ const PENDING = Symbol('refresh-pending');
 @Injectable({
   providedIn: 'root'
 })
-export class TokenService {
+export class TokenService implements OnDestroy {
 
-  // ─── In-memory access token ──────────────────────────────────────────────
+  private readonly storageService = inject(StorageService);
+
+  // ─── Reactive access token with persistent backing ──────────────────────
 
   private readonly _accessToken = signal<string | null>(null);
   /** Read-only Signal; subscribe to react to token changes in templates. */
   readonly accessToken = this._accessToken.asReadonly();
 
+  private readonly storageListener = (event: StorageEvent): void => {
+    if (event.key !== STORAGE_KEYS.TOKEN) return;
+
+    const token = this.readTokenFromStorage();
+    if (token && !this.isTokenExpired(token)) {
+      this._accessToken.set(token);
+      return;
+    }
+
+    this._accessToken.set(null);
+    if (token) this.storageService.remove(STORAGE_KEYS.TOKEN);
+  };
+
+  constructor() {
+    const storedToken = this.readTokenFromStorage();
+    if (storedToken && !this.isTokenExpired(storedToken)) {
+      this._accessToken.set(storedToken);
+    } else if (storedToken) {
+      this.storageService.remove(STORAGE_KEYS.TOKEN);
+    }
+
+    window.addEventListener('storage', this.storageListener);
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('storage', this.storageListener);
+  }
+
   setAccessToken(token: string): void {
     this._accessToken.set(token);
+    this.storageService.set<string>(STORAGE_KEYS.TOKEN, token);
   }
 
   getAccessToken(): string | null {
@@ -43,6 +76,7 @@ export class TokenService {
 
   clearAccessToken(): void {
     this._accessToken.set(null);
+    this.storageService.remove(STORAGE_KEYS.TOKEN);
   }
 
   // ─── Concurrent refresh coordination ─────────────────────────────────────
@@ -91,9 +125,23 @@ export class TokenService {
    */
   isAccessTokenExpired(): boolean {
     const token = this._accessToken();
-    if (!token) return true;
+    return !token || this.isTokenExpired(token);
+  }
+
+  private readTokenFromStorage(): string | null {
+    return this.storageService.get<string>(STORAGE_KEYS.TOKEN);
+  }
+
+  private isTokenExpired(token: string): boolean {
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payloadSegment = token.split('.')[1]
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+      const paddedPayload = payloadSegment.padEnd(
+        payloadSegment.length + (4 - payloadSegment.length % 4) % 4,
+        '='
+      );
+      const payload = JSON.parse(atob(paddedPayload));
       return Date.now() >= (payload.exp * 1000) - 30_000;
     } catch {
       return true;
@@ -105,7 +153,14 @@ export class TokenService {
     const token = this._accessToken();
     if (!token) return null;
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payloadSegment = token.split('.')[1]
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+      const paddedPayload = payloadSegment.padEnd(
+        payloadSegment.length + (4 - payloadSegment.length % 4) % 4,
+        '='
+      );
+      const payload = JSON.parse(atob(paddedPayload));
       return new Date(payload.exp * 1000);
     } catch {
       return null;

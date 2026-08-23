@@ -5,7 +5,6 @@ import { FormSubmissionRequest, ReviewSubmissionRequest } from '@core/requests/f
 import { saveBlob } from '@core/utils/file-download.util';
 import { RolesService } from '@services/roles.service';
 import { FormSubmissionResult, SubmissionDetail, SubmissionPage } from '@core/responses/form.response';
-import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
 import { ExportProfile, SaveExportProfileRequest } from '@core/models/export-profile.model';
 import { CreateGoogleSheetsIntegrationRequest, CreateGoogleSheetsIntegrationResponse, ExternalIntegration, ExternalIntegrationTestResult, ExternalSyncResult, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
@@ -18,29 +17,12 @@ export interface ReviewSubmissionResult {
   documentId: number | null;
 }
 
-export interface FormsSubmissionsPageState {
-  viewState: 'list' | 'detail';
-  selectedFormId: number | null;
-  forms: FormDetail[];
-  formsLimit: number;
-  formsOffset: number;
-  searchValue: string;
-  submissions: FormSubmission[];
-  totalSubmissions: number;
-  pageSize: number;
-  currentPage: number;
-  currentSort: string | undefined;
-  submissionsSearchValue: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class FormSubmissionsService {
   private readonly apiService = inject(ApiService);
   private readonly rolesService = inject(RolesService);
-
-  savedPageState: FormsSubmissionsPageState | null = null;
 
   async submitForm(formId: number, request: FormSubmissionRequest): Promise<FormSubmissionResult> {
     const userClubRoleId = String(this.rolesService.getCurrentRole()!.id);

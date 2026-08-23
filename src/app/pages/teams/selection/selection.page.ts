@@ -45,6 +45,7 @@ export class RoleSelectionPage {
   ionViewWillEnter() {
     this.loadUserData();
     this.checkRolesStatus();
+    this.skipIfSingleRole();
   }
 
   loadUserData() {
@@ -59,6 +60,14 @@ export class RoleSelectionPage {
   checkRolesStatus() {
     const activeRolesCount = this.activeRoles().length;
     this.hasRoles.set(activeRolesCount > 0 || this.hasPendingRoles());
+  }
+
+  /** Skip this screen and enter directly when the user only has one role to choose from. */
+  private skipIfSingleRole() {
+    const roles = this.activeRoles();
+    if (roles.length === 1 && !this.hasPendingRoles()) {
+      this.selectRole(roles[0]);
+    }
   }
 
   selectRole(role: Role) {

@@ -28,8 +28,7 @@
   }
 
   .uploading-row,
-  .checkbox-row,
-  .save-news-button {
+  .checkbox-row {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -40,9 +39,152 @@
     color: var(--text-primary, #111827);
   }
 
-  .save-news-button {
-    justify-content: center;
-    min-height: 44px;
+  .app-modal-footer ion-spinner {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  // Quill's link editor still ships with its legacy inline layout. Inside a
+  // field group that layout also picks up the app's generic input styles,
+  // which makes the URL field and actions overlap. Keep the override scoped to
+  // this modal and present it as the same compact popover used elsewhere.
+  ::ng-deep .content-editor .ql-snow .ql-tooltip {
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: calc(100% - 1rem);
+    padding: 0.5rem;
+    border: 1px solid var(--border-light, #e5e7eb);
+    border-radius: 8px;
+    background: var(--background-primary, #ffffff);
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.16);
+    color: var(--text-primary, #111827);
+    font-family: inherit;
+    white-space: normal;
+    transform: translateY(8px);
+
+    &.ql-hidden {
+      display: none;
+    }
+
+    &.ql-flip {
+      transform: translateY(-8px);
+    }
+
+    &::before {
+      content: attr(data-visit-label);
+      flex: 0 0 auto;
+      margin: 0;
+      color: var(--text-secondary, #6b7280);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    &[data-mode='link']::before {
+      content: attr(data-enter-label);
+    }
+
+    input[type='text'] {
+      display: none;
+      flex: 1 1 220px;
+      min-width: 0;
+      width: min(260px, 50vw);
+      height: 36px;
+      margin: 0;
+      padding: 0.5rem 0.625rem;
+      border: 1px solid var(--border-light, #e5e7eb);
+      border-radius: 6px;
+      background: var(--background-primary, #ffffff);
+      color: var(--text-primary, #111827);
+      font-family: inherit;
+      font-size: 0.875rem;
+      line-height: 1.2;
+      outline: none;
+
+      &:focus {
+        border-color: var(--form-accent, var(--ion-color-primary, #3880ff));
+        box-shadow: var(--form-focus-ring);
+      }
+    }
+
+    a {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0.5rem 0.625rem;
+      border-radius: 6px;
+      background: var(--background-secondary, #f3f4f6);
+      color: var(--text-primary, #111827);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      line-height: 1;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    a.ql-preview {
+      display: inline-block;
+      min-height: 0;
+      max-width: 220px;
+      overflow: hidden;
+      padding: 0;
+      background: transparent;
+      color: var(--ion-color-primary, #3880ff);
+      font-weight: 500;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    a.ql-action::after {
+      content: attr(data-edit-label);
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    a.ql-remove::before {
+      content: attr(data-remove-label);
+      margin: 0;
+    }
+
+    &.ql-editing {
+      input[type='text'] {
+        display: block;
+      }
+
+      a.ql-preview,
+      a.ql-remove {
+        display: none;
+      }
+
+      a.ql-action {
+        background: var(--color-primary, #3880ff);
+        color: var(--color-primary-contrast, #ffffff);
+
+        &::after {
+          content: attr(data-save-label);
+        }
+      }
+    }
+
+    @media (max-width: 520px) {
+      flex-wrap: wrap;
+      align-items: stretch;
+      width: calc(100% - 1rem);
+
+      &.ql-editing::before {
+        flex-basis: 100%;
+      }
+
+      input[type='text'] {
+        width: auto;
+      }
+    }
   }
 }
 

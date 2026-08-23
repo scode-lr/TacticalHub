@@ -1,0 +1,20 @@
+@if (isOpen()) {
+  <div class="lightbox" (click)="close()">
+    <button type="button" class="lightbox-close" (click)="close(); $event.stopPropagation()">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+
+    @if (hasMultiple()) {
+      <span class="lightbox-counter">{{ currentIndex() + 1 }} / {{ images().length }}</span>
+
+      <button type="button" class="lightbox-nav lightbox-nav--prev" (click)="previous(); $event.stopPropagation()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </button>
+      <button type="button" class="lightbox-nav lightbox-nav--next" (click)="next(); $event.stopPropagation()">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </button>
+    }
+
+    <img class="lightbox-image" [src]="images()[currentIndex()]" (click)="$event.stopPropagation()" alt="" />
+  </div>
+}

@@ -10,6 +10,7 @@ import { FormSubmission } from '@models/form-submission.model';
 import { FormAction } from '@models/form-action.enum';
 import { FormHeaderComponent } from '../settings-forms/form-header/form-header.component';
 import { FormsGroupSectionComponent } from '@components/forms-group-section/forms-group-section.component';
+import { PullToRefreshComponent } from '@components/pull-to-refresh/pull-to-refresh.component';
 import { addIcons } from 'ionicons';
 import { documentTextOutline, bodyOutline, peopleOutline } from 'ionicons/icons';
 import { AppStatus } from '@core/models';
@@ -33,7 +34,7 @@ interface MemberFormGroup {
   templateUrl: './forms.page.html',
   styleUrls: ['./forms.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent, FormsGroupSectionComponent]
+  imports: [CommonModule, IonIcon, TranslatePipe, FormHeaderComponent, FormsGroupSectionComponent, PullToRefreshComponent]
 })
 export class FormsPage {
   private readonly formService = inject(FormService);
@@ -65,6 +66,11 @@ export class FormsPage {
    */
   async ionViewWillEnter(): Promise<void> {
     await this.load();
+  }
+
+  async onRefresh(complete: () => void): Promise<void> {
+    await this.load();
+    complete();
   }
 
   private async load(): Promise<void> {

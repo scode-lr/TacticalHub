@@ -1,4 +1,8 @@
 .member-sponsors-page {
+  // The collaborators grid (deferred `on viewport`) is the last thing on the page and had no
+  // trailing space of its own, so its last row ended up flush against the tab bar/viewport edge.
+  padding-bottom: 2rem;
+
   .section-header {
     display: flex;
     justify-content: space-between;

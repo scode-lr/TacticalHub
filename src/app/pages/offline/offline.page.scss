@@ -1,0 +1,82 @@
+.offline-page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+  background: var(--color-welcome-bg, linear-gradient(180deg, #f3f4f6 0%, #ffffff 100%));
+}
+
+.offline-content {
+  width: min(100%, 430px);
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-primary, #111827);
+
+  h1 {
+    margin: 1.25rem 0 0.625rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    line-height: 1.15;
+  }
+
+  > p {
+    margin: 0;
+    color: var(--text-secondary, #6b7280);
+    line-height: 1.6;
+  }
+}
+
+.offline-icon {
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  margin: 0 auto;
+  border-radius: 26px;
+  color: var(--color-accent, #3880ff);
+  background: color-mix(in srgb, var(--color-accent, #3880ff) 12%, transparent);
+
+  ion-icon {
+    font-size: 2.75rem;
+  }
+}
+
+.retry-message {
+  margin-top: 1rem !important;
+  font-size: 0.875rem;
+}
+
+.retry-button {
+  width: 100%;
+  margin-top: 1.75rem;
+  padding: 0.875rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  ion-icon {
+    font-size: 1.125rem;
+  }
+}
+
+.spinning {
+  animation: offline-spin 0.8s linear infinite;
+}
+
+@keyframes offline-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 968px) {
+  .offline-page {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .offline-content {
+    margin: 0 auto;
+    padding: 0;
+  }
+}

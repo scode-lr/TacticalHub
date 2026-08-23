@@ -43,7 +43,7 @@ Routes are role-segmented by a number prefix that doubles as the `roleId` URL pa
 /teams/*             — Team selection/join/invitation
 ```
 
-Guards: `authGuard` checks in-memory token + stored user; `roleAccessGuard` validates RoleType matches the route prefix.
+Guards: `authGuard` checks the current non-expired token + stored user; `roleAccessGuard` validates RoleType matches the route prefix.
 
 `NavigationService` wraps the Angular Router and extracts the current `roleId` from URL params.
 
@@ -54,10 +54,10 @@ No NgRx. State is managed via:
 - **`StorageService`** — thin `localStorage` wrapper using typed keys from `core/constants/storage-keys.ts`
 
 ### Authentication & Token Security
-- **Access token**: stored in-memory only (`TokenService` signal) — never in `localStorage`/`sessionStorage`
+- **Access token**: managed by `TokenService` in an Angular signal and persisted in `localStorage`; expired tokens are rejected during restoration and login/logout changes synchronize across tabs
 - **Refresh token**: HttpOnly cookie (server-managed, never JS-accessible)
 - All HTTP requests use `withCredentials: true`
-- `AuthService.initializeAuth()` runs as `APP_INITIALIZER` — restores user from `localStorage`, attempts silent refresh via cookie, clears session on failure
+- `AuthService.initializeAuth()` runs as `APP_INITIALIZER` — restores user and a valid token from `localStorage`, otherwise attempts silent refresh via cookie; only confirmed authentication failures clear the session
 - `TokenService` coordinates concurrent 401s with a `BehaviorSubject` queue: multiple in-flight requests wait for one refresh rather than all triggering simultaneously
 - `authInterceptor` handles the 401 → refresh → retry flow; signs out and redirects on failure
 

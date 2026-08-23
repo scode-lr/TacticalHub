@@ -1,41 +1,3 @@
-.detail-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-
-  p-breadcrumb {
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  @media (max-width: 768px) {
-    margin-bottom: 1rem;
-    font-size: 0.8125rem;
-  }
-}
-
-.detail-count {
-  font-size: 0.8125rem;
-  color: var(--text-secondary, #6b7280);
-  white-space: nowrap;
-}
-
-.detail-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-
-  @media (max-width: 768px) {
-    .btn-primary {
-      width: 100%;
-    }
-  }
-}
-
 .section-header {
   display: flex;
   align-items: flex-start;
@@ -264,16 +226,6 @@
 }
 
 :host ::ng-deep {
-  .p-breadcrumb {
-    background: transparent;
-    border: none;
-    padding: 0;
-
-    .p-breadcrumb-item-link {
-      cursor: pointer;
-    }
-  }
-
   .p-datatable {
     border-radius: 12px;
     border: 1px solid var(--border-light, #e5e7eb);
@@ -325,29 +277,6 @@
     }
   }
 
-  .p-datatable-paginator-bottom {
-    border-top: 1px solid var(--border-light, #e5e7eb);
-    background: var(--background-secondary, #f8f9fa);
-    border-radius: 0 0 12px 12px;
-  }
-
-  .p-paginator {
-    background: transparent;
-    padding: 0.75rem 1rem;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-
-    @media (max-width: 768px) {
-      justify-content: center;
-      padding: 0.625rem 0.5rem;
-
-      .p-paginator-rpp-options,
-      .p-paginator-current {
-        display: none;
-      }
-    }
-  }
-
   .p-iconfield input {
     border-radius: 10px;
     border: 1px solid var(--border-light, #e5e7eb);
@@ -361,14 +290,6 @@
     }
   }
 
-  // Paginator of the mobile card list.
-  .cards-mobile .p-paginator {
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 12px;
-    background: transparent;
-    justify-content: center;
-  }
 }
 
 .list-pager {

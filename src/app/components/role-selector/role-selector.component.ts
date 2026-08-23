@@ -55,7 +55,9 @@ export class RoleSelectorComponent {
   readonly isPrivateApp = environment.private;
   readonly currentRole = input<Role | null>();
   readonly asMenuItem = input<boolean>(false);
-  readonly isRoleSelectorDisabled = computed(() => this.currentRole()?.roleId === RoleType.Guest);
+  readonly isRoleSelectorDisabled = computed(() =>
+    this.currentRole()?.roleId === RoleType.Guest || this.availableRoles().length <= 1
+  );
   readonly availableRoles = computed(() => {
     const user = this.userService.getStoredUser();
     return user?.roles || [];
@@ -124,7 +126,7 @@ export class RoleSelectorComponent {
   }
 
   hasMultipleRoles(): boolean {
-    return this.availableRoles().length > 0;
+    return this.availableRoles().length > 1;
   }
 
   addNewTeam() {

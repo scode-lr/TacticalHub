@@ -80,9 +80,12 @@ export class AdminPage implements OnInit {
   readonly adminMenuConfig = ADMIN_MENU_CONFIG;
 
   readonly isDetailPage = signal<boolean>(false);
+  readonly currentUrl = signal<string>(this.router.url);
   readonly backUrl = computed(() => {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    const url = this.router.url;
+    // Read from the signal (not `this.router.url` directly) so this computed re-runs on
+    // every navigation, even nested ones where isDetailPage doesn't change value.
+    const url = this.currentUrl();
 
     if (this.isDetailPage()) {
       // Notifications are opened from the header/menu, so their back action
@@ -108,11 +111,16 @@ export class AdminPage implements OnInit {
       if (url.includes('/settings-club/sponsors')) {
         return `app/${roleType}/${roleId}/settings-club`;
       }
-      if (url.includes('/settings-forms/:formId')) {
-        console.log('url', url);
+      if (/\/settings-forms\/[^/]+/.test(url)) {
         return `app/${roleType}/${roleId}/settings-forms`;
       }
-      if (url.includes('/forms-submissions')) {
+      // /forms-submissions/{formId}/{submissionId} -> back to that form's submissions list.
+      const submissionMatch = url.match(/\/forms-submissions\/(\d+)\/\d+/);
+      if (submissionMatch) {
+        return `app/${roleType}/${roleId}/forms-submissions/${submissionMatch[1]}`;
+      }
+      // /forms-submissions/{formId} -> back to the forms list.
+      if (url.includes('/forms-submissions/')) {
         return `app/${roleType}/${roleId}/forms-submissions`;
       }
       if (url.includes('/forms')) {
@@ -147,6 +155,7 @@ export class AdminPage implements OnInit {
 
   private checkIfDetailPage(): void {
     const url = this.router.url;
+    this.currentUrl.set(url);
     const isDetail =
       (url.includes('/news/') && url.split('/').length > 5) ||
       (url.includes('/matches/') && url.split('/').length > 5) ||

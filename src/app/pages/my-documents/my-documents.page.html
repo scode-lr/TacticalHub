@@ -40,15 +40,13 @@
             </span>
           </div>
 
-          @if (canPreviewInline) {
-            <button
-              type="button"
-              class="document-card__download"
-              (click)="openPreview(document)"
-              [attr.aria-label]="'user.myDocuments.preview' | translate">
-              <ion-icon name="eye-outline"></ion-icon>
-            </button>
-          }
+          <button
+            type="button"
+            class="document-card__download"
+            (click)="openPreview(document)"
+            [attr.aria-label]="'user.myDocuments.preview' | translate">
+            <ion-icon name="eye-outline"></ion-icon>
+          </button>
 
           <button
             type="button"

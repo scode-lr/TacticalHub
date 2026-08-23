@@ -52,12 +52,19 @@ export class MemberPage implements OnInit {
   
   readonly isDetailPage = signal<boolean>(false);
   readonly isMoreSubpage = signal<boolean>(false);
+  readonly currentUrl = signal<string>(this.router.url);
   readonly showBackButton = computed(() => this.isDetailPage() || this.isMoreSubpage());
   readonly backUrl = computed(() => {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
     if (!this.showBackButton()) return '';
 
-    const url = this.router.url;
+    // Read from the signal (not `this.router.url` directly) so this computed re-runs on
+    // every navigation, even nested ones where isDetailPage/isMoreSubpage don't change value.
+    const url = this.currentUrl();
+
+    if (url.includes('/contact') && /[?&]type=sponsors?(?:&|$)/.test(url)) {
+      return `/app/${roleType}/${roleId}/sponsors`;
+    }
 
     if (this.isMoreSubpage()) {
       return `/app/${roleType}/${roleId}/more`;
@@ -111,10 +118,10 @@ export class MemberPage implements OnInit {
 
   private checkIfDetailPage(): void {
     const url = this.router.url;
-    const isSponsorContact = /[?&]type=sponsors?(?:&|$)/.test(url);
+    this.currentUrl.set(url);
     const isMoreSubpage = url.includes('/information') ||
                           url.includes('/my-documents') ||
-                          (url.includes('/contact') && !isSponsorContact);
+                          url.includes('/contact');
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
                      url.includes('/action/') ||

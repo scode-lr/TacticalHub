@@ -9,6 +9,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'offline',
+    loadComponent: () => import('./pages/offline/offline.page').then(m => m.OfflinePage),
+  },
+  {
     path: 'auth',
     canActivate: [authGuard],
     data: { requiresAuth: false },
@@ -84,6 +88,11 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/teams/invitation/invitation.page').then(m => m.InvitationPage),
       }
     ]
+  },
+  {
+    path: 'forms/signed',
+    loadComponent: () => import('./pages/form-signature-success/form-signature-success.page').then(m => m.FormSignatureSuccessPage),
+    canActivate: [authGuard]
   },
   {
     path: 'settings',

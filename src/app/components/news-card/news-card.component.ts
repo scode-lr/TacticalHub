@@ -7,6 +7,7 @@ import { es } from 'date-fns/locale/es';
 import { ca } from 'date-fns/locale/ca';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { NewsPost } from '@models/news.model';
+import { richTextToPlainText } from '@core/utils/rich-text.util';
 
 @Component({
   selector: 'app-news-card',
@@ -26,6 +27,11 @@ export class NewsCardComponent {
   get primaryImageUrl(): string | null {
     const images = this.news().images ?? [];
     return images.find(image => image.isPrimary)?.imageUrl ?? images[0]?.imageUrl ?? null;
+  }
+
+  /** Body can now be rich HTML (see the settings-news editor); the card excerpt must stay plain text. */
+  get bodyExcerpt(): string {
+    return richTextToPlainText(this.news().body);
   }
 
   getTimeAgo(date: string | null | undefined): string {

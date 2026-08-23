@@ -32,6 +32,14 @@ export const sharedTranslations = {
     and: 'y',
     privacyPolicy: 'Política de privacidad'
   },
+  offline: {
+    title: 'Sin conexión',
+    description: 'No podemos conectar con el servidor. Tu sesión sigue guardada y se recuperará cuando vuelva Internet.',
+    banner: 'Sin conexión · Tu sesión sigue activa',
+    retry: 'Volver a intentar',
+    checking: 'Comprobando…',
+    stillOffline: 'La conexión todavía no está disponible.'
+  },
   auth: {
     email: 'Correo electrónico',
     password: 'Contraseña',
@@ -868,6 +876,13 @@ export const sharedTranslations = {
       titlePlaceholder: 'Actualización importante',
       fieldBody: 'Contenido',
       bodyPlaceholder: 'Escribe el anuncio...',
+      linkEditor: {
+        visit: 'Enlace',
+        enter: 'Añadir enlace',
+        edit: 'Editar',
+        save: 'Guardar',
+        remove: 'Quitar'
+      },
       primaryImage: 'Imagen principal',
       removeImage: 'Quitar imagen',
       uploadingImage: 'Subiendo imagen...',
@@ -953,7 +968,10 @@ export const sharedTranslations = {
         clear: 'Borrar',
         legalNotice: 'Al firmar, esta firma tiene la misma validez que la manuscrita.',
         back: 'Atrás',
-        signAndSend: 'Firmar y enviar'
+        signAndSend: 'Firmar y enviar',
+        successTitle: 'Formulario firmado correctamente',
+        successDescription: 'Tu firma se ha enviado correctamente. Ya puedes consultar el estado desde tus formularios.',
+        goToForms: 'Ir a mis formularios'
       },
       status: {
         closed: 'Cerrado'

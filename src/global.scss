@@ -23,6 +23,12 @@
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
+:root {
+  // Mobile bottom navigation: 58px of controls plus the device home-indicator area.
+  // Page shells use this value to keep their final content above the fixed menu.
+  --app-mobile-menu-height: calc(59px + env(safe-area-inset-bottom, 0px));
+}
+
 /* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
@@ -38,3 +44,12 @@
 /* -------------------------------------------------------------------------- */
 /* Global Component Styles */
 /* -------------------------------------------------------------------------- */
+
+// Android WebView shows a persistent gray tap-highlight overlay on native <button>s
+// after a tap, and since navigation happens via the router (no full page reload) it
+// never clears — buttons look "stuck selected" after navigating away. Disabling the
+// browser's own highlight is safe here because every interactive state (:hover,
+// :active, .active) is already styled explicitly per component.
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}

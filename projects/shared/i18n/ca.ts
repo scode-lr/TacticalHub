@@ -32,6 +32,14 @@ export const sharedTranslations = {
     and: 'i',
     privacyPolicy: 'Política de privadesa'
   },
+  offline: {
+    title: 'Sense connexió',
+    description: 'No podem connectar amb el servidor. La teva sessió continua desada i es recuperarà quan torni Internet.',
+    banner: 'Sense connexió · La sessió continua activa',
+    retry: 'Tornar-ho a provar',
+    checking: 'Comprovant…',
+    stillOffline: 'La connexió encara no està disponible.'
+  },
   auth: {
     email: 'Correu electrònic',
     password: 'Contrasenya',
@@ -868,6 +876,13 @@ export const sharedTranslations = {
       titlePlaceholder: 'Actualització important',
       fieldBody: 'Contingut',
       bodyPlaceholder: 'Escriu l\'anunci...',
+      linkEditor: {
+        visit: 'Enllaç',
+        enter: 'Afegir enllaç',
+        edit: 'Editar',
+        save: 'Desar',
+        remove: 'Treure'
+      },
       primaryImage: 'Imatge principal',
       removeImage: 'Treure imatge',
       uploadingImage: 'Pujant imatge...',
@@ -1012,7 +1027,10 @@ export const sharedTranslations = {
         clear: 'Esborrar',
         legalNotice: 'En signar, aquesta signatura té la mateixa validesa que la manuscrita.',
         back: 'Enrere',
-        signAndSend: 'Signar i enviar'
+        signAndSend: 'Signar i enviar',
+        successTitle: 'Formulari signat correctament',
+        successDescription: 'La teva signatura s\'ha enviat correctament. Ja pots consultar l\'estat des dels teus formularis.',
+        goToForms: 'Anar als meus formularis'
       },
       status: {
         closed: 'Tancat'

@@ -8,7 +8,6 @@ import { DocumentsService } from '@core/services/documents.service';
 import { ToastService } from '@core/services/toast.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { FormDocument } from '@core/models/document.model';
-import { canPreviewPdfInline } from '@core/utils/file-download.util';
 
 /**
  * The document issued for a submission, resolved on its own.
@@ -38,9 +37,6 @@ export class SubmissionDocumentComponent implements OnInit {
   readonly document = signal<FormDocument | null>(null);
   readonly previewDocumentId = signal<number | null>(null);
   readonly isDownloading = signal(false);
-
-  /** No in-app viewer on native, so there the download already opens the OS preview. */
-  readonly canPreviewInline = canPreviewPdfInline();
 
   constructor() {
     addIcons({ documentTextOutline, downloadOutline, eyeOutline });

@@ -57,7 +57,7 @@
       flex-direction: column;
       height: calc(100dvh - 56px);
 
-      app-guest-menu {
+      app-menu {
         &.hidden-on-detail {
           display: none;
         }
@@ -66,11 +66,11 @@
       .content-container {
         order: 1;
         padding: 1.5rem;
-        padding-bottom: 70px;
+        padding-bottom: calc(1.5rem + var(--app-mobile-menu-height));
 
         &.full-width {
           padding: 1.5rem;
-          padding-bottom: 70px;
+          padding-bottom: calc(1.5rem + var(--app-mobile-menu-height));
         }
       }
     }
