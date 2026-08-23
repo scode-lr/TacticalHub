@@ -26,12 +26,12 @@ export class AppComponent implements OnInit {
     if (!Capacitor.isNativePlatform()) return;
 
     try {
-      // Force light (white) status bar text so the clock stays readable regardless
-      // of the device's default style, which is what caused it to be invisible
-      // against the black status bar background on some devices.
-      await StatusBar.setStyle({ style: Style.Dark });
+      // Keep the WebView below the status bar/Dynamic Island and use dark icons
+      // against the app's light background.
+      await StatusBar.setOverlaysWebView({ overlay: false });
+      await StatusBar.setStyle({ style: Style.Light });
       if (Capacitor.getPlatform() === 'android') {
-        await StatusBar.setBackgroundColor({ color: '#000000' });
+        await StatusBar.setBackgroundColor({ color: '#ffffff' });
       }
     } catch {
       // Status bar APIs can be unavailable on some platforms/devices — non-critical.

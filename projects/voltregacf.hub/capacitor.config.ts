@@ -21,6 +21,11 @@ const config: CapacitorConfig = {
     '@capacitor/status-bar'
   ],
   plugins: {
+    StatusBar: {
+      overlaysWebView: false,
+      style: 'LIGHT',
+      backgroundColor: '#ffffff'
+    },
     EdgeToEdge: {
       backgroundColor: '#000000'
     },
