@@ -27,11 +27,11 @@ export function skipAuthContext(): HttpContext {
  * Security contract:
  *  1. Every outgoing request gets `withCredentials: true` so the browser
  *     attaches the HttpOnly refresh-token cookie automatically.
- *  2. The access token is read exclusively from in-memory TokenService —
- *     never from localStorage — protecting against XSS token theft.
+ *  2. The access token is read exclusively through TokenService, which keeps
+ *     its in-memory signal synchronized with persistent storage.
  *  3. On a 401 response the interceptor:
  *       a. Calls POST /auth/refresh (cookie is sent automatically).
- *       b. Stores the new access token in memory.
+ *       b. Stores the new access token through TokenService.
  *       c. Retries the original request with the new token.
  *       d. Queues any concurrent 401s so only ONE refresh call is made.
  *       e. Ends the session locally ONLY on a real 401/403 from the refresh
@@ -47,7 +47,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // ── 1. Always send cookies (needed for the HttpOnly refresh-token cookie) ──
   let authReq = req.clone({ withCredentials: true });
 
-  // ── 2. Attach the in-memory access token (skip for auth endpoints) ────────
+  // ── 2. Attach the current access token (skip for auth endpoints) ──────────
   if (!req.context.get(SKIP_AUTH)) {
     const token = tokenService.getAccessToken();
     if (token) {

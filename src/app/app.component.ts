@@ -1,33 +1,44 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { TranslationService } from '@services/i18n/translation.service';
 import { UserService } from '@services/user.service';
 import { environment } from '@environment';
-import { SplashScreen } from '@capacitor/splash-screen';
+import { Capacitor } from '@capacitor/core';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { NetworkService } from '@services/network.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+  imports: [IonApp, IonRouterOutlet, TranslatePipe],
 })
 export class AppComponent implements OnInit {
-  private readonly translationService = inject(TranslationService);
   private readonly userService = inject(UserService);
   private readonly titleService = inject(Title);
+  protected readonly networkService = inject(NetworkService);
 
   async ngOnInit() {
-    await SplashScreen.show()
+    await this.applyStatusBarStyle();
     this.titleService.setTitle(environment.name);
-
-    await this.translationService.initialize({
-      translations: environment.translations,
-      supportedLanguages: environment.supportedLanguages,
-      defaultLanguage: environment.defaultLanguage
-    });
-
     await this.refreshUserData();
+  }
+
+  private async applyStatusBarStyle(): Promise<void> {
+    if (!Capacitor.isNativePlatform()) return;
+
+    try {
+      // Keep the WebView below the status bar/Dynamic Island and use dark icons
+      // against the app's light background.
+      await StatusBar.setOverlaysWebView({ overlay: false });
+      await StatusBar.setStyle({ style: Style.Light });
+      if (Capacitor.getPlatform() === 'android') {
+        await StatusBar.setBackgroundColor({ color: '#ffffff' });
+      }
+    } catch {
+      // Status bar APIs can be unavailable on some platforms/devices — non-critical.
+    }
   }
 
   private async refreshUserData(): Promise<void> {

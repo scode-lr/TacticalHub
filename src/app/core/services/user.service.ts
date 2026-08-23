@@ -48,9 +48,7 @@ export class UserService {
   }
 
   /**
-   * Returns the in-memory access token.
-   * Do NOT use for storage reads — the token is never persisted to
-   * localStorage. Use TokenService directly when possible.
+   * Returns the current access token managed and restored by TokenService.
    */
   getStoredToken(): string | null {
     return this.tokenService.getAccessToken();
@@ -62,9 +60,8 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    // Access token lives in memory only; its presence proves the session is
-    // still valid (it was issued or refreshed on this app load).
-    const hasToken = !!this.tokenService.getAccessToken();
+    const hasToken = !!this.tokenService.getAccessToken() &&
+      !this.tokenService.isAccessTokenExpired();
     const user     = this.getStoredUser();
     return hasToken && !!user;
   }

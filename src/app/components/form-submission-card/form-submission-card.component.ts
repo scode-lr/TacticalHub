@@ -4,7 +4,6 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { documentTextOutline, createOutline, chatbubbleOutline, downloadOutline, eyeOutline } from 'ionicons/icons';
 import { DocumentPreviewComponent } from '@components/document-preview/document-preview.component';
-import { canPreviewPdfInline } from '@core/utils/file-download.util';
 import { DocumentsService } from '@core/services/documents.service';
 import { ToastService } from '@core/services/toast.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
@@ -14,6 +13,7 @@ import { FormSubmission } from '@core/models/form-submission.model';
 import { FormField } from '@core/models/form-field.model';
 import { AppStatus } from '@core/models/app-status.model';
 import { latestComment } from '@core/utils/submission-comment.util';
+import { sanitizeFileName } from '@core/utils/file-download.util';
 
 export interface SubmissionTimelineStep {
   labelKey: string;
@@ -38,14 +38,12 @@ export class FormSubmissionCardComponent {
 
   readonly submission = input.required<FormSubmission>();
   readonly formFields = input.required<FormField[]>();
+  readonly formName = input.required<string>();
 
   readonly isModalOpen = signal(false);
   readonly isDownloading = signal(false);
   readonly previewDocumentId = signal<number | null>(null);
   readonly editRequested = output<void>();
-
-  /** No in-app viewer on native, so there the download already opens the OS preview. */
-  readonly canPreviewInline = canPreviewPdfInline();
 
   readonly isRejected = computed(() => this.submission().status === AppStatus.Rejected);
   readonly rejectionComment = computed(() => latestComment(this.submission().comment));
@@ -53,7 +51,12 @@ export class FormSubmissionCardComponent {
   /** The signed authorization only exists once coordination has approved the submission. */
   readonly documentId = computed(() => this.submission().documentId ?? null);
 
-  readonly documentFileName = computed(() => `document-${this.submission().id}.pdf`);
+  readonly documentFileName = computed(() => {
+    const date = this.submission().submittedAt ?? this.submission().createdAt;
+    const datePart = date ? new Date(date).toISOString().slice(0, 10) : '';
+    const name = sanitizeFileName(this.formName());
+    return `${name}${datePart ? ` - ${datePart}` : ''}.pdf`;
+  });
 
   constructor() {
     addIcons({ documentTextOutline, createOutline, chatbubbleOutline, downloadOutline, eyeOutline });

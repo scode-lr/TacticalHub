@@ -1,0 +1,9 @@
+<div class="ptr-indicator" [style.height.px]="pullDistance()" [style.opacity]="pullDistance() > 0 ? 1 : 0">
+  <ion-icon
+    name="refresh-outline"
+    class="ptr-icon"
+    [class.ptr-icon--spinning]="refreshing()"
+    [style.transform]="'rotate(' + (pullDistance() * 3) + 'deg)'">
+  </ion-icon>
+</div>
+<ng-content></ng-content>

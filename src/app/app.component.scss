@@ -1,0 +1,17 @@
+.offline-banner {
+  position: fixed;
+  top: env(safe-area-inset-top, 0);
+  left: 50%;
+  z-index: 10000;
+  max-width: calc(100% - 2rem);
+  padding: 0.5rem 0.875rem;
+  border-radius: 0 0 0.75rem 0.75rem;
+  background: var(--color-warning, #b45309);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 18%);
+  pointer-events: none;
+  transform: translateX(-50%);
+}

@@ -2,7 +2,8 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
+  --header-surface: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
+  background: var(--header-surface);
   border-bottom: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
   box-shadow: 0 2px 10px var(--shadow-light, rgba(20, 18, 16, 0.06));
 
@@ -54,8 +55,10 @@
     cursor: pointer;
     transition: background 0.15s ease, transform 0.15s ease;
 
-    &:hover {
-      background: color-mix(in srgb, var(--text-primary, #212529) 7%, transparent);
+    @media (hover: hover) {
+      &:hover {
+        background: color-mix(in srgb, var(--text-primary, #212529) 7%, transparent);
+      }
     }
 
     &:focus-visible {
@@ -86,8 +89,10 @@
       font-size: 1.3125rem;
     }
 
-    &:hover {
-      background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
+    @media (hover: hover) {
+      &:hover {
+        background: var(--color-header-bg, var(--color-surface, var(--background-secondary, #f8f9fa)));
+      }
     }
 
     &:active {
@@ -109,14 +114,16 @@
     transition: all 0.2s ease;
     border-radius: 8px;
 
-    &:hover {
-      background: var(--background-secondary, #f8f9fa);
+    @media (hover: hover) {
+      &:hover {
+        background: var(--background-secondary, #f8f9fa);
+      }
     }
 
     ion-icon {
       font-size: 20px;
     }
-  } 
+  }
 
   .header-actions {
     display: flex;
@@ -143,8 +150,10 @@
       font-size: 1.25rem;
     }
 
-    &:hover {
-      background: color-mix(in srgb, var(--text-primary, #212529) 7%, transparent);
+    @media (hover: hover) {
+      &:hover {
+        background: color-mix(in srgb, var(--text-primary, #212529) 7%, transparent);
+      }
     }
 
     &:active {
@@ -159,7 +168,7 @@
     min-width: 16px;
     height: 16px;
     padding: 0 3px;
-    border: 2px solid var(--color-bg, var(--background-primary, #ffffff));
+    border: 2px solid var(--header-surface, var(--background-primary, #ffffff));
     border-radius: 999px;
     background: var(--ion-color-danger, #eb445a);
     color: #ffffff;
@@ -172,7 +181,8 @@
   }
 
   @media (max-width: 768px) {
-    background: color-mix(in srgb, var(--color-primary, #ffd700) 35%, var(--color-surface, var(--background-secondary, #f8f9fa)));
+    --header-surface: color-mix(in srgb, var(--color-primary, #ffd700) 35%, var(--color-surface, var(--background-secondary, #f8f9fa)));
+    background: var(--header-surface);
     height: 56px;
 
     .notifications-button {
@@ -268,8 +278,10 @@
     color: var(--text-secondary, #6c757d);
   }
 
-  &:hover {
-    background: color-mix(in srgb, var(--text-primary, #212529) 6%, transparent);
+  @media (hover: hover) {
+    &:hover {
+      background: color-mix(in srgb, var(--text-primary, #212529) 6%, transparent);
+    }
   }
 
   &:active {

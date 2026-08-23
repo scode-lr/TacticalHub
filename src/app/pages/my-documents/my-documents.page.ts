@@ -4,7 +4,6 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { documentTextOutline, downloadOutline, eyeOutline, folderOutline } from 'ionicons/icons';
 import { DocumentPreviewComponent } from '@components/document-preview/document-preview.component';
-import { canPreviewPdfInline } from '@core/utils/file-download.util';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { DocumentsService } from '@core/services/documents.service';
 import { ClubService } from '@core/services/club.service';
@@ -35,9 +34,6 @@ export class MyDocumentsPage implements OnInit {
   readonly previewFileName = signal<string>('');
 
   readonly isEmpty = computed(() => !this.loading() && this.documents().length === 0);
-
-  /** No in-app viewer on native, so there the download already opens the OS preview. */
-  readonly canPreviewInline = canPreviewPdfInline();
 
   constructor() {
     addIcons({ documentTextOutline, downloadOutline, eyeOutline, folderOutline });

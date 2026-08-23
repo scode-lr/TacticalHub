@@ -67,7 +67,7 @@
       flex-direction: column;
       height: calc(100dvh - 56px);
 
-      app-member-menu {
+      app-menu {
         &.hidden-on-detail {
           display: none;
         }
@@ -83,7 +83,7 @@
 
         ::ng-deep ion-router-outlet > .ion-page {
           padding: 1.5rem;
-          padding-bottom: 70px;
+          padding-bottom: calc(1.5rem + var(--app-mobile-menu-height));
         }
       }
     }

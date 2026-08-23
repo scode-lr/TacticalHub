@@ -15,12 +15,10 @@
       </span>
       <span class="document-banner__reference">{{ doc.reference }}</span>
       <div class="document-banner__actions">
-        @if (canPreviewInline) {
-          <button type="button" class="btn-secondary" (click)="openPreview()">
-            <ion-icon name="eye-outline"></ion-icon>
-            {{ 'user.myDocuments.preview' | translate }}
-          </button>
-        }
+        <button type="button" class="btn-secondary" (click)="openPreview()">
+          <ion-icon name="eye-outline"></ion-icon>
+          {{ 'user.myDocuments.preview' | translate }}
+        </button>
         <button type="button" class="btn-primary" (click)="downloadDocument()" [disabled]="isDownloading()">
           <ion-icon name="download-outline"></ion-icon>
           {{ 'user.forms.submission.downloadDocument' | translate }}

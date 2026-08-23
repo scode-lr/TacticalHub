@@ -39,22 +39,24 @@
       </button>
     </div>
 
-    <ion-modal [isOpen]="isReviewOpen()" (didDismiss)="isReviewOpen.set(false)" class="answers-modal">
+    <ion-modal [isOpen]="isReviewOpen()" (didDismiss)="isReviewOpen.set(false)" class="app-modal answers-modal">
       <ng-template>
-        <div class="answers-sheet">
-          <div class="answers-sheet__header">
-            <div class="answers-sheet__titles">
-              <h2 class="answers-sheet__title">{{ 'user.forms.signature.myAnswers' | translate }}</h2>
-              <span class="answers-sheet__subtitle">
-                {{ draft.formName }} · {{ 'user.forms.signature.fieldCount' | translate: { count: answeredCount() } }}
-              </span>
+        <div class="app-modal-container">
+          <div class="app-modal-header">
+            <div class="app-modal-header-info">
+              <div class="app-modal-header-text">
+                <h2 class="app-modal-title">{{ 'user.forms.signature.myAnswers' | translate }}</h2>
+                <span class="app-modal-subtitle">
+                  {{ draft.formName }} · {{ 'user.forms.signature.fieldCount' | translate: { count: answeredCount() } }}
+                </span>
+              </div>
             </div>
-            <button type="button" class="answers-sheet__close" (click)="isReviewOpen.set(false)">
+            <button type="button" class="app-modal-close" (click)="isReviewOpen.set(false)">
               <ion-icon name="close-outline"></ion-icon>
             </button>
           </div>
 
-          <div class="answers-sheet__content">
+          <div class="app-modal-content">
             @for (answer of answers(); track answer.label) {
               <div class="answer-row">
                 <span class="answer-row__label">{{ answer.label }}</span>
@@ -73,7 +75,7 @@
             }
           </div>
 
-          <div class="answers-sheet__footer">
+          <div class="app-modal-footer">
             <button type="button" class="btn-primary btn-block" (click)="isReviewOpen.set(false)">
               {{ 'user.forms.signature.continueToSign' | translate }}
             </button>

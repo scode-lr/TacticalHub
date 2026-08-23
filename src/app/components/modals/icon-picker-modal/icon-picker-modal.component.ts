@@ -41,7 +41,7 @@ export class IconPickerModalComponent {
         'chevron-down-outline', 'arrow-forward-outline', 'arrow-back-outline',
         'arrow-up-outline', 'arrow-down-outline', 'refresh-outline', 'sync-outline',
         'search-outline', 'menu-outline', 'more-horizontal-outline', 'more-vertical-outline',
-        'ellipsis-horizontal-outline', 'ellipsis-vertical-outline', 'grid-outline',
+        'ellipsis-horizontal-outline', 'ellipsis-vertical-outline', 'apps-outline',
         'list-outline', 'reorder-three-outline', 'reorder-four-outline'
       ]
     },

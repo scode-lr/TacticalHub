@@ -32,6 +32,14 @@ export const sharedTranslations = {
     and: 'and',
     privacyPolicy: 'Privacy policy'
   },
+  offline: {
+    title: 'No connection',
+    description: 'We cannot reach the server. Your session is still saved and will be restored when you are back online.',
+    banner: 'Offline · Your session remains active',
+    retry: 'Try again',
+    checking: 'Checking…',
+    stillOffline: 'The connection is still unavailable.'
+  },
   auth: {
     email: 'Email',
     password: 'Password',
@@ -871,6 +879,13 @@ export const sharedTranslations = {
       titlePlaceholder: 'Important update',
       fieldBody: 'Body',
       bodyPlaceholder: 'Write the announcement...',
+      linkEditor: {
+        visit: 'Link',
+        enter: 'Add link',
+        edit: 'Edit',
+        save: 'Save',
+        remove: 'Remove'
+      },
       primaryImage: 'Primary image',
       removeImage: 'Remove image',
       uploadingImage: 'Uploading image...',
@@ -1015,7 +1030,10 @@ export const sharedTranslations = {
         clear: 'Clear',
         legalNotice: 'By signing, this signature has the same validity as a handwritten one.',
         back: 'Back',
-        signAndSend: 'Sign and send'
+        signAndSend: 'Sign and send',
+        successTitle: 'Form signed successfully',
+        successDescription: 'Your signature was submitted successfully. You can check its status from your forms.',
+        goToForms: 'Go to my forms'
       },
       status: {
         closed: 'Closed'
