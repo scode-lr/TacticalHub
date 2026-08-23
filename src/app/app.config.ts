@@ -52,8 +52,9 @@ export const appConfig: ApplicationConfig = {
     /**
      * Runs before any route guard is evaluated.
      * Attempts a silent token refresh via the HttpOnly refresh-token cookie.
-     * On success the access token is in memory; on failure the stale cache
-     * is cleared and the auth guard redirects to sign-in.
+     * Reuses a valid persisted access token, or silently refreshes it when
+     * absent/expired. Offline failures preserve the cached profile and are
+     * handled by the recoverable offline route.
      */
     provideAppInitializer(() => inject(AuthService).initializeAuth()),
     providePrimeNG({

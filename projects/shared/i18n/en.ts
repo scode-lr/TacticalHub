@@ -32,6 +32,14 @@ export const sharedTranslations = {
     and: 'and',
     privacyPolicy: 'Privacy policy'
   },
+  offline: {
+    title: 'No connection',
+    description: 'We cannot reach the server. Your session is still saved and will be restored when you are back online.',
+    banner: 'Offline · Your session remains active',
+    retry: 'Try again',
+    checking: 'Checking…',
+    stillOffline: 'The connection is still unavailable.'
+  },
   auth: {
     email: 'Email',
     password: 'Password',

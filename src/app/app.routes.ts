@@ -9,6 +9,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'offline',
+    loadComponent: () => import('./pages/offline/offline.page').then(m => m.OfflinePage),
+  },
+  {
     path: 'auth',
     canActivate: [authGuard],
     data: { requiresAuth: false },

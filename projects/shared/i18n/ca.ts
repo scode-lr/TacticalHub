@@ -32,6 +32,14 @@ export const sharedTranslations = {
     and: 'i',
     privacyPolicy: 'Política de privadesa'
   },
+  offline: {
+    title: 'Sense connexió',
+    description: 'No podem connectar amb el servidor. La teva sessió continua desada i es recuperarà quan torni Internet.',
+    banner: 'Sense connexió · La sessió continua activa',
+    retry: 'Tornar-ho a provar',
+    checking: 'Comprovant…',
+    stillOffline: 'La connexió encara no està disponible.'
+  },
   auth: {
     email: 'Correu electrònic',
     password: 'Contrasenya',

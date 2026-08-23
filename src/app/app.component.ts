@@ -5,16 +5,19 @@ import { UserService } from '@services/user.service';
 import { environment } from '@environment';
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { NetworkService } from '@services/network.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+  imports: [IonApp, IonRouterOutlet, TranslatePipe],
 })
 export class AppComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly titleService = inject(Title);
+  protected readonly networkService = inject(NetworkService);
 
   async ngOnInit() {
     await this.applyStatusBarStyle();

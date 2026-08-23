@@ -1,3 +1,8 @@
 <ion-app>
+  @if (!networkService.online()) {
+    <div class="offline-banner" role="status">
+      {{ 'offline.banner' | translate }}
+    </div>
+  }
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

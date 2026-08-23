@@ -1,0 +1,19 @@
+<div class="offline-page">
+  <main class="offline-content">
+    <div class="offline-icon" aria-hidden="true">
+      <ion-icon name="cloud-offline-outline" />
+    </div>
+
+    <h1>{{ 'offline.title' | translate }}</h1>
+    <p>{{ 'offline.description' | translate }}</p>
+
+    @if (retryFailed()) {
+      <p class="retry-message" role="status">{{ 'offline.stillOffline' | translate }}</p>
+    }
+
+    <button class="btn-primary retry-button" type="button" [disabled]="checking()" (click)="retry()">
+      <ion-icon name="refresh-outline" [class.spinning]="checking()" />
+      {{ (checking() ? 'offline.checking' : 'offline.retry') | translate }}
+    </button>
+  </main>
+</div>

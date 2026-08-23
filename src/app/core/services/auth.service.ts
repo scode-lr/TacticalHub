@@ -12,6 +12,7 @@ import { ApiService } from './api.service';
 import { TokenService } from './token.service';
 import { NavigationService } from './navigation.service';
 import { PushNotificationsService } from './push-notifications.service';
+import { NetworkService } from './network.service';
 
 export interface IAuthState {
   isAuthenticated: boolean;
@@ -28,9 +29,8 @@ export interface IAuthResponse {
 
 // A cold app launch on a real mobile network (DNS + TLS + a possibly-sleeping API) is much slower
 // than a warm dev-server reload. 5s was tripping on that first request often enough that a still-
-// valid session (the refresh-token cookie was fine) looked "lost" — the guard only sees the
-// in-memory access token, and a timed-out refresh never sets one, even though the cached user
-// profile in localStorage was correctly left untouched.
+// valid session (the refresh-token cookie was fine) looked "lost". This timeout now applies only
+// when the persisted access token is absent or expired and a refresh is actually necessary.
 const INITIAL_AUTH_TIMEOUT_MS = 15000;
 
 @Injectable({
@@ -43,8 +43,11 @@ export class AuthService {
   private readonly apiService = inject(ApiService);
   private readonly tokenService = inject(TokenService);
   private readonly pushNotificationsService = inject(PushNotificationsService);
+  private readonly networkService = inject(NetworkService);
   private readonly _isLoading = signal<boolean>(false);
   readonly isLoading = this._isLoading.asReadonly();
+  private readonly _sessionRecoveryPending = signal(false);
+  readonly sessionRecoveryPending = this._sessionRecoveryPending.asReadonly();
 
   _currentUser = signal<User | null>(null);
 
@@ -52,28 +55,47 @@ export class AuthService {
 
   /**
    * Called via APP_INITIALIZER before the app renders.
-   * If a user profile is cached in localStorage, we attempt a silent token
-   * refresh using the HttpOnly refresh-token cookie.  On success the new
-   * access token is stored in memory; on failure the stale user cache is
-   * cleared so the guard redirects to sign-in.
+   * Restores the cached user and persisted access token first. When the token
+   * is absent or expired, it attempts a silent refresh using the HttpOnly
+   * refresh-token cookie. Only a confirmed 401/403 clears the session;
+   * offline/transient failures leave it available for later restoration.
    */
   initializeAuth(): Promise<boolean> {
     const storedUser = this.storageService.get<User>(STORAGE_KEYS.USER);
     if (!storedUser) {
-      // No cached session — nothing to restore.
+      // An access token without its user context is not a usable session.
+      this.tokenService.clearAccessToken();
+      this._sessionRecoveryPending.set(false);
       return Promise.resolve(false);
     }
 
     // Pre-populate the user signal so UI has data immediately.
     this._currentUser.set(storedUser);
 
+    // TokenService restores a valid persisted token during construction.
+    if (this.tokenService.getAccessToken() && !this.tokenService.isAccessTokenExpired()) {
+      this._sessionRecoveryPending.set(false);
+      void this.pushNotificationsService.register();
+      return Promise.resolve(true);
+    }
+
+    // A refresh cannot succeed while the device is offline. Return immediately
+    // and keep the cached user so the offline route can restore the session as
+    // soon as connectivity comes back.
+    if (!this.networkService.isOnline()) {
+      this._sessionRecoveryPending.set(true);
+      return Promise.resolve(false);
+    }
+
     return firstValueFrom(
       this.refreshAccessToken(INITIAL_AUTH_TIMEOUT_MS).pipe(
         map(token => {
           if (token) {
+            this._sessionRecoveryPending.set(false);
             return true;
           }
           // Server responded OK but without a token — treat as no session.
+          this._sessionRecoveryPending.set(false);
           this.cleanSesion();
           return false;
         }),
@@ -83,8 +105,11 @@ export class AuthService {
           // error (timeout, 5xx, status 0) must NOT destroy the cached session
           // — leave it so a later reload can restore it when the network is back.
           if (this.isAuthError(error)) {
+            this._sessionRecoveryPending.set(false);
             this.cleanSesion();
             this.navigationService.navigateTo(['auth/signin']);
+          } else {
+            this._sessionRecoveryPending.set(true);
           }
           return of(false);
         })
@@ -123,6 +148,7 @@ export class AuthService {
           // Keep user in sync if the response carries updated data.
           if (response.data.user) {
             this._currentUser.set(response.data.user);
+            this.storageService.set<User>(STORAGE_KEYS.USER, response.data.user);
           }
           void this.pushNotificationsService.register();
           return response.data.token;
@@ -155,7 +181,7 @@ export class AuthService {
       if (response.success && response.data) {
         const { user, token } = response.data;
 
-        // Store user profile for UX persistence; access token stays in memory only.
+        // Persist both through their dedicated services so the session survives restarts.
         this.storageService.set<User>(STORAGE_KEYS.USER, user);
         this.tokenService.setAccessToken(token);
 
@@ -483,10 +509,10 @@ export class AuthService {
     this.navigationService.navigateTo(['auth/signin']);
   }
 
-  /** Clears all client-side auth state.  The access token is memory-only so
-   *  it is simply discarded.  The refresh-token cookie is expired by the
-   *  server during signOut(); there is nothing to remove from localStorage. */
+  /** Clears all client-side auth state, including the persisted access token.
+   *  The refresh-token cookie is expired by the server during signOut(). */
   private cleanSesion(): void {
+    this._sessionRecoveryPending.set(false);
     this.storageService.remove(STORAGE_KEYS.USER);
     this.storageService.remove(STORAGE_KEYS.SELECTED_ROLE);
     this.storageService.remove(STORAGE_KEYS.CLUB_INFO);

@@ -32,6 +32,14 @@ export const sharedTranslations = {
     and: 'y',
     privacyPolicy: 'Política de privacidad'
   },
+  offline: {
+    title: 'Sin conexión',
+    description: 'No podemos conectar con el servidor. Tu sesión sigue guardada y se recuperará cuando vuelva Internet.',
+    banner: 'Sin conexión · Tu sesión sigue activa',
+    retry: 'Volver a intentar',
+    checking: 'Comprobando…',
+    stillOffline: 'La conexión todavía no está disponible.'
+  },
   auth: {
     email: 'Correo electrónico',
     password: 'Contraseña',
