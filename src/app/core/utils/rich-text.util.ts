@@ -7,9 +7,20 @@ function escapePlainText(text: string): string {
     .replace(/>/g, '&gt;');
 }
 
-function hardenLinks(html: string): string {
-  if (!html.includes('<a')) return html;
+function normalizeHtml(html: string): string {
   const doc = new DOMParser().parseFromString(html, 'text/html');
+
+  // Content pasted from documents may use a non-breaking space for every
+  // regular space. Keeping those characters prevents the browser from
+  // wrapping paragraphs on narrow screens, so normalize text nodes while
+  // leaving tag attributes (for example link URLs) untouched.
+  const textNodes = doc.createTreeWalker(doc.body, 4);
+  let textNode = textNodes.nextNode();
+  while (textNode) {
+    textNode.nodeValue = textNode.nodeValue?.replace(/\u00a0/g, ' ') ?? null;
+    textNode = textNodes.nextNode();
+  }
+
   doc.querySelectorAll('a').forEach(anchor => {
     anchor.setAttribute('target', '_blank');
     anchor.setAttribute('rel', 'noopener noreferrer');
@@ -35,7 +46,7 @@ export function ensureRichTextHtml(content: string | null | undefined): string {
     ? content
     : `<p>${escapePlainText(content).split(/\r?\n/).join('<br>')}</p>`;
 
-  return hardenLinks(html);
+  return normalizeHtml(html);
 }
 
 /**
