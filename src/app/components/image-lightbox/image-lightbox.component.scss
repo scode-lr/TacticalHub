@@ -5,8 +5,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.92);
   animation: lightbox-fade-in 0.15s ease;
+  touch-action: none;
 }
 
 .lightbox-image {
@@ -14,34 +16,69 @@
   max-height: 88vh;
   object-fit: contain;
   border-radius: 4px;
+  transition: transform 0.1s ease-out;
+  cursor: zoom-in;
+
+  &.is-zoomed {
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
 }
 
-.lightbox-close {
-  position: absolute;
-  top: max(1rem, env(safe-area-inset-top, 0px));
-  right: 1rem;
-  z-index: 1;
+// Close/download/nav all sit on top of arbitrary photos, so they get a solid-enough dark backdrop
+// (not the old translucent-white one, which all but vanished against light/white photos) to stay
+// legible regardless of what's underneath.
+%lightbox-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
   border: none;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.5);
   color: #ffffff;
   cursor: pointer;
   transition: background 0.15s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.lightbox-close,
+.lightbox-download {
+  @extend %lightbox-control;
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top, 0px));
+  z-index: 1;
+  width: 40px;
+  height: 40px;
 
   ion-icon {
     font-size: 1.375rem;
   }
 
-  @media (hover: hover) {
-    &:hover {
-      background: rgba(255, 255, 255, 0.22);
-    }
+  ion-spinner {
+    width: 1.125rem;
+    height: 1.125rem;
   }
+}
+
+.lightbox-close {
+  right: 1rem;
+}
+
+.lightbox-download {
+  left: 1rem;
 }
 
 .lightbox-counter {
@@ -51,36 +88,22 @@
   transform: translateX(-50%);
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.5);
   color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 600;
 }
 
 .lightbox-nav {
+  @extend %lightbox-control;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 44px;
   height: 44px;
-  border: none;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  cursor: pointer;
-  transition: background 0.15s ease;
 
   ion-icon {
     font-size: 1.5rem;
-  }
-
-  @media (hover: hover) {
-    &:hover {
-      background: rgba(255, 255, 255, 0.22);
-    }
   }
 
   &--prev {

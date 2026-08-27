@@ -1,7 +1,27 @@
 @if (isOpen()) {
-  <div class="lightbox" (click)="close()">
+  <div
+    class="lightbox"
+    (click)="close()"
+    (touchstart)="onTouchStart($event)"
+    (touchmove)="onTouchMove($event)"
+    (touchend)="onTouchEnd($event)"
+    (mousemove)="onMouseMove($event)"
+    (mouseup)="onMouseUp()"
+    (mouseleave)="onMouseUp()">
     <button type="button" class="lightbox-close" (click)="close(); $event.stopPropagation()">
       <ion-icon name="close-outline"></ion-icon>
+    </button>
+
+    <button
+      type="button"
+      class="lightbox-download"
+      (click)="download(); $event.stopPropagation()"
+      [disabled]="isDownloading()">
+      @if (isDownloading()) {
+        <ion-spinner name="crescent" />
+      } @else {
+        <ion-icon name="download-outline"></ion-icon>
+      }
     </button>
 
     @if (hasMultiple()) {
@@ -15,6 +35,14 @@
       </button>
     }
 
-    <img class="lightbox-image" [src]="images()[currentIndex()]" (click)="$event.stopPropagation()" alt="" />
+    <img
+      class="lightbox-image"
+      [class.is-zoomed]="isZoomed()"
+      [style.transform]="'translate(' + panX() + 'px, ' + panY() + 'px) scale(' + zoomScale() + ')'"
+      [src]="images()[currentIndex()]"
+      (click)="$event.stopPropagation()"
+      (dblclick)="onDoubleClick($event)"
+      (mousedown)="onMouseDown($event)"
+      alt="" />
   </div>
 }
