@@ -124,6 +124,30 @@
     }
   }
 
+  .news-photo-strip {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem 0;
+    overflow-x: auto;
+
+    @media (min-width: 769px) {
+      padding: 0.75rem 0 0;
+    }
+  }
+
+  .news-photo-strip-item {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-surface, var(--background-secondary, #f8f9fa));
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+  }
+
   .news-content {
     padding: 1.5rem 1.25rem 2.5rem;
 

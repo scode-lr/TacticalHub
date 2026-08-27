@@ -52,11 +52,21 @@ export class NewsDetailPage implements OnInit {
     return [...images].sort((a, b) => a.sortOrder - b.sortOrder).map(image => image.imageUrl);
   }
 
+  /** The non-featured photos, shown as a strip under the hero so they're visible before opening the lightbox. */
+  get secondaryImageUrls(): string[] {
+    const primary = this.primaryImageUrl;
+    return this.imageUrls.filter(url => url !== primary);
+  }
+
   openLightbox(): void {
+    this.openLightboxAt(this.primaryImageUrl ?? '');
+  }
+
+  openLightboxAt(url: string): void {
     const urls = this.imageUrls;
     if (urls.length === 0) return;
 
-    const startIndex = Math.max(0, urls.indexOf(this.primaryImageUrl ?? ''));
+    const startIndex = Math.max(0, urls.indexOf(url));
     this.lightboxStartIndex.set(startIndex);
     this.isLightboxOpen.set(true);
   }

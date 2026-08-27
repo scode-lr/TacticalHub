@@ -24,6 +24,14 @@
         <button type="button" class="news-hero" [style.background-image]="'url(' + primaryImageUrl + ')'" (click)="openLightbox()"></button>
       }
 
+      @if (secondaryImageUrls.length) {
+        <div class="news-photo-strip">
+          @for (url of secondaryImageUrls; track url) {
+            <button type="button" class="news-photo-strip-item" [style.background-image]="'url(' + url + ')'" (click)="openLightboxAt(url)"></button>
+          }
+        </div>
+      }
+
       <div class="news-content">
         <h1 class="news-title">{{ post.title }}</h1>
 
