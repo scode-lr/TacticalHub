@@ -931,7 +931,10 @@ export const sharedTranslations = {
         save: 'Guardar',
         remove: 'Quitar'
       },
-      primaryImage: 'Imagen principal',
+      primaryImage: 'Fotos',
+      addPhoto: 'Añadir foto',
+      setPrimary: 'Marcar como destacada',
+      primaryBadge: 'Destacada',
       removeImage: 'Quitar imagen',
       uploadingImage: 'Subiendo imagen...',
       externalLinkUrl: 'URL del enlace externo',
