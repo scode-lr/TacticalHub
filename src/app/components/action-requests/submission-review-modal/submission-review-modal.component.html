@@ -7,9 +7,9 @@
       <div class="app-modal-header">
         <div class="app-modal-header-info">
           <div class="app-modal-header-text">
-            <h2 class="app-modal-title">{{ notification()?.title }}</h2>
-            @if (notification()?.user?.username) {
-              <p class="app-modal-subtitle">{{ notification()!.user!.username }}</p>
+            <h2 class="app-modal-title">{{ notification()?.title || ('admin.forms.submissionDetail.title' | translate) }}</h2>
+            @if (notification()?.user?.username || submission()?.userName) {
+              <p class="app-modal-subtitle">{{ notification()?.user?.username || submission()?.userName }}</p>
             }
           </div>
         </div>
@@ -26,21 +26,23 @@
         }
 
         @if (!isLoading() && submission()) {
-          <app-submission-detail-view [submission]="submission()!" [reviewMode]="true" (fieldStatesChange)="onFieldStatesChange($event)" />
+          <app-submission-detail-view [submission]="submission()!" [reviewMode]="canReview()" (fieldStatesChange)="onFieldStatesChange($event)" />
 
-          <div class="review-comment">
-            <label class="review-comment-label">{{ 'notifications.reviewComment' | translate }}</label>
-            <textarea
-              class="review-comment-input"
-              rows="3"
-              [placeholder]="'notifications.reviewCommentPlaceholder' | translate"
-              [(ngModel)]="comment"
-            ></textarea>
-          </div>
+          @if (canReview()) {
+            <div class="review-comment">
+              <label class="review-comment-label">{{ 'notifications.reviewComment' | translate }}</label>
+              <textarea
+                class="review-comment-input"
+                rows="3"
+                [placeholder]="'notifications.reviewCommentPlaceholder' | translate"
+                [(ngModel)]="comment"
+              ></textarea>
+            </div>
+          }
         }
       </div>
 
-      @if (!isLoading() && submission()) {
+      @if (!isLoading() && submission() && canReview()) {
         <div class="app-modal-footer">
           <button class="btn-secondary" [disabled]="isReviewing()" (click)="rejected.emit({ comment, fieldStates: fieldStates() })">
               <ion-icon name="close-circle-outline"></ion-icon>

@@ -470,6 +470,53 @@ export const sharedTranslations = {
       title: 'Parameters',
     },
     forms: {
+      tabs: {
+        submissions: 'Submissions',
+        sync: 'Export / Sync'
+      },
+      dashboard: {
+        total: 'Total submissions',
+        allFormsMeta: 'Every form',
+        pending: 'Pending',
+        pendingMeta: 'Awaiting review',
+        approved: 'Approved',
+        approvedMeta: 'Resolved',
+        rejected: 'Rejected',
+        rejectedMeta: 'Needs correction'
+      },
+      submissionStatus: {
+        ALL: 'All',
+        P: 'Pending',
+        A: 'Approved',
+        R: 'Rejected'
+      },
+      clubSubmissions: {
+        searchPlaceholder: 'Search by name...',
+        formFilterAll: 'All forms',
+        empty: 'No submissions yet',
+        emptyDescription: 'No submissions match the current filters.',
+        columns: {
+          form: 'Form',
+          submittedBy: 'Submitted by',
+          date: 'Date'
+        }
+      },
+      sync: {
+        notConfigured: 'No sync configured',
+        configure: 'Open export / sync setup',
+        integration: 'Integration',
+        action: 'Action',
+        pendingTitle: 'Needs syncing',
+        pendingCount: '{count} pending item(s)',
+        syncNow: 'Sync now',
+        syncing: 'Syncing...'
+      },
+      syncStatus: {
+        error: 'Error',
+        pending: 'Pending',
+        active: 'Active',
+        none: 'Not configured'
+      },
       export: 'Export',
       responses: 'responses',
       assign: 'Assign',
@@ -586,7 +633,8 @@ export const sharedTranslations = {
         sectionValues: 'Submitted values',
         formName: 'Form',
         userName: 'User',
-        submittedAt: 'Submitted at'
+        submittedAt: 'Submitted at',
+        reviewError: 'Could not save the review. Please try again.'
       }
     },
     settingsForms: {

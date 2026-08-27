@@ -1,0 +1,30 @@
+<div class="stat-card-grid">
+  <button type="button" class="stat-card" [class.active]="activeStatus() === ''" (click)="statusSelected.emit('')">
+    <span class="stat-label">{{ 'admin.forms.dashboard.total' | translate }}</span>
+    <div class="stat-value">
+      @if (loading() && false) { <span class="skeleton-bar"></span> } @else { {{ counts().total }} }
+    </div>
+    <div class="stat-meta">{{ 'admin.forms.dashboard.allFormsMeta' | translate }}</div>
+  </button>
+  <button type="button" class="stat-card" [class.active]="activeStatus() === AppStatus.Pending" (click)="statusSelected.emit(AppStatus.Pending)">
+    <span class="stat-label">{{ 'admin.forms.dashboard.pending' | translate }}</span>
+    <div class="stat-value stat-value--warning">
+      @if (loading() && false) { <span class="skeleton-bar"></span> } @else { {{ counts().pending }} }
+    </div>
+    <div class="stat-meta"><span class="stat-dot stat-dot--warning"></span>{{ 'admin.forms.dashboard.pendingMeta' | translate }}</div>
+  </button>
+  <button type="button" class="stat-card" [class.active]="activeStatus() === AppStatus.Approved" (click)="statusSelected.emit(AppStatus.Approved)">
+    <span class="stat-label">{{ 'admin.forms.dashboard.approved' | translate }}</span>
+    <div class="stat-value stat-value--success">
+      @if (loading() && false) { <span class="skeleton-bar"></span> } @else { {{ counts().approved }} }
+    </div>
+    <div class="stat-meta"><span class="stat-dot stat-dot--success"></span>{{ 'admin.forms.dashboard.approvedMeta' | translate }}</div>
+  </button>
+  <button type="button" class="stat-card" [class.active]="activeStatus() === AppStatus.Rejected" (click)="statusSelected.emit(AppStatus.Rejected)">
+    <span class="stat-label">{{ 'admin.forms.dashboard.rejected' | translate }}</span>
+    <div class="stat-value stat-value--danger">
+      @if (loading() && false) { <span class="skeleton-bar"></span> } @else { {{ counts().rejected }} }
+    </div>
+    <div class="stat-meta"><span class="stat-dot stat-dot--danger"></span>{{ 'admin.forms.dashboard.rejectedMeta' | translate }}</div>
+  </button>
+</div>

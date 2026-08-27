@@ -66,7 +66,8 @@ export const adminRoutes: Routes = [
       },
       {
         path: 'forms-submissions/:formId',
-        loadComponent: () => import('../forms-submissions/form-submissions-list/form-submissions-list.page').then(m => m.FormSubmissionsListPage)
+        redirectTo: 'forms-submissions',
+        pathMatch: 'full'
       },
       {
         path: 'forms-submissions/:formId/:submissionId',

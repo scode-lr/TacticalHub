@@ -34,6 +34,20 @@ export interface SubmissionPage {
   pageSize: number;
 }
 
+export interface SubmissionStatusCounts {
+  pending: number;
+  approved: number;
+  rejected: number;
+  total: number;
+}
+
+export interface ClubSubmissionsPage {
+  submissions: FormSubmission[];
+  limit: number;
+  offset: number;
+  totalCount: number;
+}
+
 export interface FormsPage {
   forms: FormDetail[];
   totalCount: number;
