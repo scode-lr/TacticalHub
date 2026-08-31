@@ -9,120 +9,122 @@
       <h1 class="section-title">{{ 'settings.title' | translate }}</h1>
     </div>
 
-    <!-- Language -->
-    <div class="setting-card">
-      <div class="setting-card-row">
-        <div class="setting-card-text">
-          <span class="setting-card-title">{{ 'settings.language' | translate }}</span>
-          <span class="setting-card-desc">{{ 'settings.languageDescription' | translate }}</span>
-        </div>
-
-        <ion-select
-          class="language-select"
-          [value]="currentLanguage()"
-          (ionChange)="onLanguageChange($event)"
-          [placeholder]="'settings.selectLanguage' | translate">
-          @for (lang of supportedLanguages(); track lang.code) {
-            <ion-select-option [value]="lang.code">
-              {{ lang.name | translate }}
-            </ion-select-option>
-          }
-        </ion-select>
-      </div>
-    </div>
-
-    <!-- Security -->
-    <div class="setting-card security-card">
-      <div class="setting-card-text">
-        <span class="setting-card-title">{{ 'settings.security' | translate }}</span>
-        <span class="setting-card-desc">{{ 'settings.changePasswordDescription' | translate }}</span>
-      </div>
-
-      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
-        <!-- Current Password -->
-        <div class="setting-group">
-          <label class="setting-label">{{ 'settings.currentPassword' | translate }}</label>
-          <div class="password-input-wrapper">
-            <ion-input
-              [type]="showCurrentPassword() ? 'text' : 'password'"
-              formControlName="currentPassword"
-              [placeholder]="'settings.currentPasswordPlaceholder' | translate"
-              fill="outline"
-              class="settings-input"
-              [class.ion-invalid]="passwordForm.get('currentPassword')?.invalid && passwordFormSubmitted()">
-            </ion-input>
-            <button type="button" class="btn-icon show-hide-btn" (click)="toggleCurrentPassword()">
-              <ion-icon [name]="showCurrentPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-            </button>
-          </div>
-          @if (currentPasswordError(); as error) {
-            <div class="field-error">
-              <ion-icon name="alert-circle"></ion-icon>
-              <span>{{ error }}</span>
-            </div>
-          }
-        </div>
-
-        <!-- New Password -->
-        <div class="setting-group">
-          <label class="setting-label">{{ 'settings.newPassword' | translate }}</label>
-          <div class="password-input-wrapper">
-            <ion-input
-              [type]="showNewPassword() ? 'text' : 'password'"
-              formControlName="newPassword"
-              [placeholder]="'settings.newPasswordPlaceholder' | translate"
-              fill="outline"
-              class="settings-input"
-              (ionInput)="onPasswordInput($event)"
-              [class.ion-invalid]="passwordForm.get('newPassword')?.invalid && passwordFormSubmitted()">
-            </ion-input>
-            <button type="button" class="btn-icon show-hide-btn" (click)="toggleNewPassword()">
-              <ion-icon [name]="showNewPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-            </button>
+    <div class="settings-card">
+      <!-- Language -->
+      <div class="setting-section">
+        <div class="setting-card-row">
+          <div class="setting-card-text">
+            <span class="setting-card-title">{{ 'settings.language' | translate }}</span>
+            <span class="setting-card-desc">{{ 'settings.languageDescription' | translate }}</span>
           </div>
 
-          @if (passwordValue()) {
-            <app-password-strength [password]="passwordValue()"></app-password-strength>
-          }
-
-          @if (newPasswordError(); as error) {
-            <div class="field-error">
-              <ion-icon name="alert-circle"></ion-icon>
-              <span>{{ error }}</span>
-            </div>
-          }
-        </div>
-
-        <!-- Feedback -->
-        @if (passwordFeedback(); as fb) {
-          <div class="feedback-line" [class.success]="fb.success" [class.danger]="!fb.success">
-            <ion-icon [name]="fb.success ? 'checkmark-circle' : 'alert-circle'"></ion-icon>
-            <span>{{ fb.message }}</span>
-          </div>
-        }
-
-        <div class="form-actions">
-          <button type="submit" class="btn-primary" [disabled]="isLoading()">
-            @if (isLoading()) {
-              <ion-spinner name="dots"></ion-spinner>
-            } @else {
-              {{ 'settings.updatePassword' | translate }}
+          <ion-select
+            class="language-select"
+            [value]="currentLanguage()"
+            (ionChange)="onLanguageChange($event)"
+            [placeholder]="'settings.selectLanguage' | translate">
+            @for (lang of supportedLanguages(); track lang.code) {
+              <ion-select-option [value]="lang.code">
+                {{ lang.name | translate }}
+              </ion-select-option>
             }
-          </button>
+          </ion-select>
         </div>
-      </form>
-    </div>
-
-    <div class="setting-card legal-card">
-      <div class="setting-card-text">
-        <span class="setting-card-title">{{ 'settings.legal' | translate }}</span>
-        <span class="setting-card-desc">{{ 'settings.legalDescription' | translate }}</span>
       </div>
-      <nav class="legal-links" [attr.aria-label]="'settings.legal' | translate">
-        <a href="terms-of-service.html">{{ 'welcome.termsOfService' | translate }}</a>
-        <a href="privacy-policy.html">{{ 'welcome.privacyPolicy' | translate }}</a>
-        <a href="account-deletion.html">{{ 'welcome.accountDeletion' | translate }}</a>
-      </nav>
+
+      <!-- Security -->
+      <div class="setting-section">
+        <div class="setting-card-text">
+          <span class="setting-card-title">{{ 'settings.security' | translate }}</span>
+          <span class="setting-card-desc">{{ 'settings.changePasswordDescription' | translate }}</span>
+        </div>
+
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
+          <!-- Current Password -->
+          <div class="setting-group">
+            <label class="setting-label">{{ 'settings.currentPassword' | translate }}</label>
+            <div class="password-input-wrapper">
+              <ion-input
+                [type]="showCurrentPassword() ? 'text' : 'password'"
+                formControlName="currentPassword"
+                [placeholder]="'settings.currentPasswordPlaceholder' | translate"
+                fill="outline"
+                class="settings-input"
+                [class.ion-invalid]="passwordForm.get('currentPassword')?.invalid && passwordFormSubmitted()">
+              </ion-input>
+              <button type="button" class="btn-icon show-hide-btn" (click)="toggleCurrentPassword()">
+                <ion-icon [name]="showCurrentPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </button>
+            </div>
+            @if (currentPasswordError(); as error) {
+              <div class="field-error">
+                <ion-icon name="alert-circle"></ion-icon>
+                <span>{{ error }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- New Password -->
+          <div class="setting-group">
+            <label class="setting-label">{{ 'settings.newPassword' | translate }}</label>
+            <div class="password-input-wrapper">
+              <ion-input
+                [type]="showNewPassword() ? 'text' : 'password'"
+                formControlName="newPassword"
+                [placeholder]="'settings.newPasswordPlaceholder' | translate"
+                fill="outline"
+                class="settings-input"
+                (ionInput)="onPasswordInput($event)"
+                [class.ion-invalid]="passwordForm.get('newPassword')?.invalid && passwordFormSubmitted()">
+              </ion-input>
+              <button type="button" class="btn-icon show-hide-btn" (click)="toggleNewPassword()">
+                <ion-icon [name]="showNewPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </button>
+            </div>
+
+            @if (passwordValue()) {
+              <app-password-strength [password]="passwordValue()"></app-password-strength>
+            }
+
+            @if (newPasswordError(); as error) {
+              <div class="field-error">
+                <ion-icon name="alert-circle"></ion-icon>
+                <span>{{ error }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Feedback -->
+          @if (passwordFeedback(); as fb) {
+            <div class="feedback-line" [class.success]="fb.success" [class.danger]="!fb.success">
+              <ion-icon [name]="fb.success ? 'checkmark-circle' : 'alert-circle'"></ion-icon>
+              <span>{{ fb.message }}</span>
+            </div>
+          }
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="isLoading()">
+              @if (isLoading()) {
+                <ion-spinner name="dots"></ion-spinner>
+              } @else {
+                {{ 'settings.updatePassword' | translate }}
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="setting-section">
+        <div class="setting-card-text">
+          <span class="setting-card-title">{{ 'settings.legal' | translate }}</span>
+          <span class="setting-card-desc">{{ 'settings.legalDescription' | translate }}</span>
+        </div>
+        <nav class="legal-links" [attr.aria-label]="'settings.legal' | translate">
+          <a href="terms-of-service.html">{{ 'welcome.termsOfService' | translate }}</a>
+          <a href="privacy-policy.html">{{ 'welcome.privacyPolicy' | translate }}</a>
+          <a href="account-deletion.html">{{ 'welcome.accountDeletion' | translate }}</a>
+        </nav>
+      </div>
     </div>
 
     <div class="app-version">{{ 'settings.version' | translate }} {{ appVersion }}</div>
