@@ -55,6 +55,15 @@ export interface UploadNewsImageResponse {
   url: string;
 }
 
+/** Trimmed shape for the "related post" widget — no body, matches the backend's summary endpoint. */
+export interface NewsPostSummary {
+  id: number;
+  title: string;
+  publishedAt?: string | null;
+  createdAt: string;
+  images: NewsPostImage[];
+}
+
 export interface NewsComment {
   id: number;
   author: {

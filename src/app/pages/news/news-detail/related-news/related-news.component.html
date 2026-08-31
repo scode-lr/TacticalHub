@@ -1,0 +1,20 @@
+@if (related(); as post) {
+  <div class="related-news">
+    <span class="related-news-label">{{ 'user.news.relatedTitle' | translate }}</span>
+
+    <button type="button" class="related-news-card card card-hover" (click)="open(post.id)">
+      <div class="related-news-thumb" [class.related-news-thumb--empty]="!primaryImageUrl(post)" [style.background-image]="primaryImageUrl(post) ? 'url(' + primaryImageUrl(post) + ')' : null">
+        @if (!primaryImageUrl(post)) {
+          <ion-icon name="newspaper-outline"></ion-icon>
+        }
+      </div>
+
+      <div class="related-news-body">
+        <h3 class="related-news-title">{{ post.title }}</h3>
+        <span class="related-news-time">{{ getTimeAgo(post.publishedAt || post.createdAt) }}</span>
+      </div>
+
+      <ion-icon class="related-news-chevron" name="chevron-forward-outline"></ion-icon>
+    </button>
+  </div>
+}

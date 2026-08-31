@@ -278,28 +278,16 @@
     }
   }
 
-  .news-related {
+  // Reserves the related-news card's approximate height so the @defer(on viewport) trigger has
+  // something to observe and the page doesn't jump once it resolves.
+  .related-news-placeholder {
+    height: 96px;
     margin: 2rem 1rem 0;
-    padding: 1rem;
-    border-radius: 14px;
-    background: var(--background-secondary, #f8f9fa);
-    border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
 
     @media (min-width: 769px) {
+      height: 112px;
       margin: 2.5rem 0 0;
-      padding: 1.5rem;
     }
-  }
-
-  .news-related-label {
-    display: block;
-    font-family: var(--font-heading, inherit);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-secondary, #6b7280);
-    margin-bottom: 0.75rem;
   }
 
   .empty-state {

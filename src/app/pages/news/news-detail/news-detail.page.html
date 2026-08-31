@@ -59,11 +59,10 @@
           </div>
         }
 
-        @if (relatedNews(); as related) {
-          <div class="news-related">
-            <span class="news-related-label">{{ 'user.news.relatedTitle' | translate }}</span>
-            <app-news-card [news]="related" variant="row" (cardClick)="openRelated($event)" />
-          </div>
+        @defer (on viewport) {
+          <app-related-news [clubId]="post.clubId" [excludeId]="post.id" (opened)="openRelated($event)" />
+        } @placeholder {
+          <div class="related-news-placeholder"></div>
         }
       </div>
     </article>
