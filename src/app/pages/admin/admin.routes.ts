@@ -21,10 +21,6 @@ export const adminRoutes: Routes = [
         loadComponent: () => import('../inbox/inbox.page').then(m => m.InboxPage)
       },
       {
-        path: 'notifications',
-        loadComponent: () => import('../notifications/notifications.page').then(m => m.NotificationsPage)
-      },
-      {
         path: 'membership',
         loadComponent: () => import('../membership/membership.page').then(m => m.MembershipPage)
       },

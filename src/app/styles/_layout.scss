@@ -8,26 +8,6 @@
   }
 }
 
-.page-container-narrow {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-
-  @media (max-width: 768px) {
-    padding: 0;
-  }
-}
-
-.page-container-extra-narrow {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-
-  @media (max-width: 768px) {
-    padding: 0;
-  }
-}
-
 .content-section {
   background: var(--background-primary, #ffffff);
   border: 1px solid var(--border-light, #e5e7eb);

@@ -1,37 +1,4 @@
 .news-detail-page {
-  max-width: 760px;
-  margin: 0 auto;
-
-  .detail-back {
-    display: none;
-
-    @media (min-width: 769px) {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.375rem;
-      margin-bottom: 1rem;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--border-light, #e5e7eb);
-      border-radius: 8px;
-      background: var(--background-primary, #ffffff);
-      color: var(--text-primary, #111827);
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      ion-icon {
-        font-size: 1.125rem;
-      }
-
-      &:hover {
-        border-color: var(--ion-color-primary, #3880ff);
-        background: rgba(56, 128, 255, 0.06);
-        color: var(--ion-color-primary, #3880ff);
-      }
-    }
-  }
-
   .news-article {
     animation: fadeIn 0.3s ease backwards;
   }
@@ -42,13 +9,14 @@
 
   .skeleton-hero {
     width: 100%;
-    height: 220px;
+    height: 260px;
+    border-radius: 18px;
     background: var(--background-tertiary, #e9ecef);
     animation: shimmer 1.5s infinite;
 
     @media (min-width: 769px) {
-      height: 360px;
-      border-radius: 10px;
+      height: 440px;
+      border-radius: 24px;
     }
   }
 
@@ -108,78 +76,72 @@
   .news-hero {
     display: block;
     width: 100%;
-    height: 220px;
+    height: 260px;
+    margin-top: 2rem;
     padding: 0;
-    border: none;
+    border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+    border-radius: 18px;
     background-color: var(--color-surface, var(--background-secondary, #f8f9fa));
     background-size: cover;
     background-position: center;
-    border-bottom: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
     cursor: pointer;
+    box-shadow: 0 10px 30px var(--shadow-light, rgba(20, 18, 16, 0.08));
+    transition: box-shadow 0.25s ease;
+
+    &:hover {
+      box-shadow: 0 16px 40px var(--shadow-medium, rgba(20, 18, 16, 0.14));
+    }
 
     @media (min-width: 769px) {
-      height: 360px;
-      border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
-      border-radius: 10px;
+      height: 440px;
+      border-radius: 24px;
     }
   }
 
   .news-photo-strip {
     display: flex;
-    gap: 0.5rem;
-    padding: 0.75rem 0 0;
+    gap: 0.625rem;
+    padding: 0.875rem 0 0;
     overflow-x: auto;
 
     @media (min-width: 769px) {
-      padding: 0.75rem 0 0;
+      padding: 1rem 0 0;
+      gap: 0.75rem;
     }
   }
 
   .news-photo-strip-item {
     flex: 0 0 auto;
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     padding: 0;
-    border: none;
-    border-radius: 10px;
+    border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+    border-radius: 12px;
     background-color: var(--color-surface, var(--background-secondary, #f8f9fa));
     background-size: cover;
     background-position: center;
     cursor: pointer;
-  }
+    transition: transform 0.18s ease, border-color 0.18s ease;
 
-  .news-content {
-    padding: 1.5rem 0 1.5rem;
-
-    @media (min-width: 769px) {
-      padding: 2rem 0 2rem;
+    &:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-accent, var(--ion-color-primary, #4a90e2));
     }
-  }
-
-  .news-title {
-    margin: 0 0 0.75rem;
-    font-family: var(--font-heading, inherit);
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: var(--text-primary, #111827);
 
     @media (min-width: 769px) {
-      font-size: 2.75rem;
-      margin-bottom: 1rem;
+      width: 88px;
+      height: 88px;
     }
   }
 
   .news-byline {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 0.5rem;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     color: var(--text-secondary, #6b7280);
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+    margin-top: 1.5rem;
 
     .news-byline-author {
       font-weight: 700;
@@ -187,16 +149,32 @@
     }
   }
 
+  .news-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-accent, var(--ion-color-primary, #4a90e2)) 14%, var(--background-primary, #ffffff));
+    color: var(--color-accent, var(--ion-color-primary, #4a90e2));
+    font-family: var(--font-heading, inherit);
+    font-size: 0.6875rem;
+    font-weight: 700;
+  }
+
   // Body is rendered via [innerHTML] (see the `richText` pipe), so the actual p/ul/li/a elements
   // never pass through Angular's template compiler and need ::ng-deep to be styled at all.
   .news-body {
-    font-size: 1rem;
-    line-height: 1.75;
+    font-size: 0.9375rem;
+    line-height: 1.65;
     color: var(--text-primary, #111827);
+    font-weight: 400;
 
     @media (min-width: 769px) {
-      font-size: 1.0625rem;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.7;
     }
 
     ::ng-deep {
@@ -214,6 +192,11 @@
 
       li {
         margin-bottom: 0.4em;
+
+        &::marker {
+          color: var(--color-accent, var(--ion-color-primary, #3880ff));
+          font-weight: 700;
+        }
       }
 
       strong, b {
@@ -223,16 +206,23 @@
       a {
         color: var(--color-accent, var(--ion-color-primary, #3880ff));
         text-decoration: underline;
+        text-underline-offset: 2px;
+        text-decoration-thickness: 1px;
+        transition: text-decoration-thickness 0.15s ease;
+
+        &:hover {
+          text-decoration-thickness: 2px;
+        }
       }
 
-      // The first paragraph reads as the lede: slightly larger, muted.
+      // The first paragraph reads as the lede: a step up from the body size below it.
       > p:first-child {
         font-size: 1.0625rem;
-        font-weight: 500;
-        color: var(--text-secondary, #6b7280);
+        font-weight: 400;
+        color: var(--text-primary, #111827);
 
         @media (min-width: 769px) {
-          font-size: 1.1875rem;
+          font-size: 1.125rem;
         }
       }
     }
@@ -282,7 +272,7 @@
   // something to observe and the page doesn't jump once it resolves.
   .related-news-placeholder {
     height: 96px;
-    margin: 2rem 1rem 0;
+    margin: 2rem 0 0;
 
     @media (min-width: 769px) {
       height: 112px;
@@ -303,10 +293,16 @@
     }
 
     .empty-icon {
-      font-size: 4rem;
-      color: var(--text-light, #9ca3af);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 84px;
+      height: 84px;
+      font-size: 2.25rem;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--color-accent, var(--ion-color-primary, #4a90e2)) 12%, var(--background-primary, #ffffff));
+      color: var(--color-accent, var(--ion-color-primary, #4a90e2));
       margin-bottom: 1.5rem;
-      opacity: 0.6;
     }
 
     h3 {

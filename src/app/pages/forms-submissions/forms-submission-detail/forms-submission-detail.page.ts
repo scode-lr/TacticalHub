@@ -4,7 +4,6 @@ import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { SubmissionDetailViewComponent, FieldReviewState } from '@components/submission-detail-view/submission-detail-view.component';
-import { SubmissionDocumentComponent } from '@components/submission-document/submission-document.component';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { NavigationService } from '@services/navigation.service';
 import { SubmissionDetail } from '@core/responses/form.response';
@@ -16,7 +15,7 @@ import { IonToast } from '@ionic/angular/standalone';
   templateUrl: './forms-submission-detail.page.html',
   styleUrls: ['./forms-submission-detail.page.scss'],
   standalone: true,
-  imports: [FormsModule, TranslatePipe, BackButtonComponent, SubmissionDetailViewComponent, SubmissionDocumentComponent, IonToast]
+  imports: [FormsModule, TranslatePipe, BackButtonComponent, SubmissionDetailViewComponent, IonToast]
 })
 export class FormsSubmissionDetailPage implements OnInit {
   private readonly formSubmissionsService = inject(FormSubmissionsService);

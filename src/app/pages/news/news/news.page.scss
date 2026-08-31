@@ -1,7 +1,4 @@
 .member-news-page {
-  max-width: 760px;
-  margin: 0 auto;
-
   .news-header {
     margin-bottom: 2rem;
     display: flex;
@@ -135,7 +132,26 @@
     flex-direction: column;
 
     .news-featured-item {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
       border-bottom: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+    }
+  }
+
+  .news-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+
+    @media (min-width: 769px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      align-items: stretch;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 1100px) {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 

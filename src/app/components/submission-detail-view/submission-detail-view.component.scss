@@ -58,3 +58,8 @@
     color: var(--ion-color-danger, #eb445a);
   }
 }
+
+// Reserves the deferred document block's height while its chunk loads.
+.document-placeholder {
+  height: 84px;
+}
