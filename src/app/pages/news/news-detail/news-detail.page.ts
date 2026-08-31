@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { ImageLightboxComponent } from '@components/image-lightbox/image-lightbox.component';
 import { RelatedNewsComponent } from './related-news/related-news.component';
 import { RichTextPipe } from '@core/pipes/rich-text.pipe';
@@ -20,7 +21,7 @@ import { ToastService } from '@services/toast.service';
   templateUrl: './news-detail.page.html',
   styleUrls: ['./news-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, ImageLightboxComponent, RelatedNewsComponent, RichTextPipe]
+  imports: [CommonModule, IonIcon, TranslatePipe, BackButtonComponent, ImageLightboxComponent, RelatedNewsComponent, RichTextPipe]
 })
 export class NewsDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
@@ -38,6 +39,10 @@ export class NewsDetailPage implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => this.loadNews(params.get('newsId')));
+  }
+
+  get authorInitial(): string {
+    return (this.news()?.authorName ?? '').trim().charAt(0).toUpperCase();
   }
 
   get primaryImageUrl(): string | null {

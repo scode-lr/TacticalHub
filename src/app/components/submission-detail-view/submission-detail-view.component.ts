@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
+import { SubmissionDocumentComponent } from '@components/submission-document/submission-document.component';
 import { SubmissionDetail } from '@core/responses/form.response';
 import { SubmissionValue } from '@core/models/submission-value.model';
 import { addIcons } from 'ionicons';
@@ -19,7 +20,7 @@ export type FieldReviewState = 'ok' | 'nok' | null;
   templateUrl: './submission-detail-view.component.html',
   styleUrls: ['./submission-detail-view.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, CheckboxModule, IonIcon],
+  imports: [CommonModule, FormsModule, TranslatePipe, CheckboxModule, IonIcon, SubmissionDocumentComponent],
 })
 export class SubmissionDetailViewComponent implements OnChanges {
   readonly submission = input.required<SubmissionDetail>();

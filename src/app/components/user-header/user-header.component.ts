@@ -54,7 +54,7 @@ export class UserHeaderComponent {
   readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
   readonly showNotificationsButton = computed(() => {
     const role = this.currentRole() ?? this.userService.getCurrentRole();
-    return role?.roleId === RoleType.Admin || role?.roleId === RoleType.Member;
+    return role?.roleId === RoleType.Member;
   });
   readonly defaultClubLogo = computed(() => (environment as Record<string, unknown>)['logoUrl'] as string ?? 'assets/image-non-available.svg');
   readonly displayName = computed(() => {

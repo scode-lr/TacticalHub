@@ -35,14 +35,6 @@
         </button>
       </div>
     }
-
-    <!-- Deferred: the document is a side artifact, so its chunk and its lookup must never hold
-         up the answers. The placeholder keeps the same footprint to avoid a layout jump. -->
-    @defer (on immediate) {
-      <app-submission-document [submissionId]="detail.id" />
-    } @placeholder {
-      <div class="document-placeholder"></div>
-    }
   }
 
   <ion-toast
