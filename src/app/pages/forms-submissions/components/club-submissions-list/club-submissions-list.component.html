@@ -1,0 +1,192 @@
+@defer (on immediate) {
+  <app-submissions-stat-cards [activeStatus]="statusFilter()" (statusSelected)="setStatusFilter($event)" />
+} @placeholder {
+  <div class="stat-card-grid">
+    @for (card of skeletonCards; track card) {
+      <div class="stat-card">
+        <span class="stat-label">&nbsp;</span>
+        <div class="stat-value"><span class="skeleton-bar"></span></div>
+        <div class="stat-meta">&nbsp;</div>
+      </div>
+    }
+  </div>
+}
+
+<div class="cards-mobile">
+  <div class="cards-search">
+    <ion-icon name="search-outline" class="cards-search-icon"></ion-icon>
+    <input
+      type="text"
+      [(ngModel)]="searchValue"
+      (input)="onSearch()"
+      [placeholder]="'admin.forms.clubSubmissions.searchPlaceholder' | translate"
+    />
+    @if (searchValue) {
+      <button type="button" class="btn-icon cards-search-clear" (click)="clearSearch()">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    }
+  </div>
+
+  @if (formsLoading()) {
+    <span class="skeleton-bar" style="width:100%;height:2.5rem;border-radius:10px"></span>
+  } @else {
+    <select class="form-select" [(ngModel)]="selectedFormId" (change)="onFormFilterChange()">
+      <option [ngValue]="''">{{ 'admin.forms.clubSubmissions.formFilterAll' | translate }}</option>
+      @for (form of forms(); track form.id) {
+        <option [ngValue]="form.id">{{ form.name }}</option>
+      }
+    </select>
+  }
+
+  @if (loading()) {
+    @for (row of skeletonRows; track row) {
+      <div class="entity-card entity-card--skeleton">
+        <div class="entity-body">
+          <span class="skeleton-bar" style="width:55%;height:0.875rem;margin-bottom:0.375rem"></span>
+          <span class="skeleton-bar" style="width:80%;height:0.75rem"></span>
+        </div>
+        <span class="skeleton-bar" style="width:3.5rem;height:1.375rem;border-radius:999px"></span>
+      </div>
+    }
+  } @else {
+    @for (submission of submissions(); track submission.id) {
+      <div class="entity-card" (click)="openReview(submission)">
+        <div class="entity-body">
+          <span class="entity-title">{{ submission.userName }}</span>
+          <span class="entity-meta">{{ submission.formName }} &middot; {{ submission.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <p-tag [value]="'admin.forms.submissionStatus.' + submission.status | translate" [severity]="getSeverity(submission.status)" />
+        <ion-icon name="chevron-forward-outline" class="entity-arrow"></ion-icon>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+        <h3 class="empty-title">{{ 'admin.forms.clubSubmissions.empty' | translate }}</h3>
+        <p class="empty-description">{{ 'admin.forms.clubSubmissions.emptyDescription' | translate }}</p>
+      </div>
+    }
+  }
+
+  @if (totalCount() > pageSize()) {
+    <p-paginator
+      [first]="(currentPage() - 1) * pageSize()"
+      [rows]="pageSize()"
+      [totalRecords]="totalCount()"
+      [showFirstLastIcon]="false"
+      [pageLinkSize]="3"
+      (onPageChange)="onMobilePage($event)"
+    />
+  }
+</div>
+
+<p-table
+  #dtSubmissions
+  class="table-desktop"
+  [value]="submissions()"
+  [loading]="loading()"
+  [first]="(currentPage() - 1) * pageSize()"
+  [rows]="pageSize()"
+  [showCurrentPageReport]="true"
+  [paginator]="true"
+  [showFirstLastIcon]="false"
+  [pageLinks]="3"
+  [lazy]="true"
+  [lazyLoadOnInit]="false"
+  [totalRecords]="totalCount()"
+  currentPageReportTemplate="{{ 'admin.forms.paginatorReport' | translate }}"
+  (onLazyLoad)="onLazyLoad($event)"
+>
+  <ng-template #colgroup>
+    <colgroup>
+      <col style="width: 192px" />
+      <col style="width: 160px" />
+      <col style="width: 128px" />
+      <col style="width: 96px" />
+    </colgroup>
+  </ng-template>
+
+  <ng-template #caption>
+    <div class="table-caption">
+      <p-iconField iconPosition="left">
+        <input
+          pInputText
+          style="padding-inline-start: 1rem"
+          type="text"
+          [(ngModel)]="searchValue"
+          (input)="onSearch()"
+          [placeholder]="'admin.forms.clubSubmissions.searchPlaceholder' | translate"
+        />
+        @if (searchValue) {
+          <p-inputIcon (click)="clearSearch(dtSubmissions)" style="cursor: pointer">
+            <ion-icon name="close-outline"></ion-icon>
+          </p-inputIcon>
+        }
+      </p-iconField>
+
+      @if (formsLoading()) {
+        <span class="skeleton-bar" style="width:220px;height:2.5rem;border-radius:10px"></span>
+      } @else {
+        <select class="form-select" [(ngModel)]="selectedFormId" (change)="onFormFilterChange()">
+          <option [ngValue]="''">{{ 'admin.forms.clubSubmissions.formFilterAll' | translate }}</option>
+          @for (form of forms(); track form.id) {
+            <option [ngValue]="form.id">{{ form.name }}</option>
+          }
+        </select>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th style="width: 192px">{{ 'admin.forms.clubSubmissions.columns.form' | translate }}</th>
+      <th style="width: 160px">{{ 'admin.forms.clubSubmissions.columns.submittedBy' | translate }}</th>
+      <th style="width: 128px">{{ 'admin.forms.clubSubmissions.columns.date' | translate }}</th>
+      <th style="width: 96px">{{ 'admin.forms.columns.status' | translate }}</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-submission>
+    <tr class="p-selectable-row" (click)="openReview(submission)">
+      <td><span class="cell-strong">{{ submission.formName }}</span></td>
+      <td>{{ submission.userName }}</td>
+      <td>{{ submission.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td>
+        <p-tag [value]="'admin.forms.submissionStatus.' + submission.status | translate" [severity]="getSeverity(submission.status)" />
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #loadingbody>
+    @for (row of skeletonRows; track row) {
+      <tr>
+        <td><span class="skeleton-bar" style="width:70%;height:0.875rem"></span></td>
+        <td><span class="skeleton-bar" style="width:60%;height:0.875rem"></span></td>
+        <td><span class="skeleton-bar" style="width:50%;height:0.875rem"></span></td>
+        <td><span class="skeleton-bar" style="width:3.5rem;height:1.375rem;border-radius:999px"></span></td>
+      </tr>
+    }
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="4">
+        <div class="empty-state">
+          <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+          <h3 class="empty-title">{{ 'admin.forms.clubSubmissions.empty' | translate }}</h3>
+          <p class="empty-description">{{ 'admin.forms.clubSubmissions.emptyDescription' | translate }}</p>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<app-submission-review-modal
+  [isOpen]="isReviewOpen()"
+  [submission]="selectedSubmission()"
+  [isLoading]="isDetailLoading()"
+  [isReviewing]="isReviewing()"
+  (dismissed)="closeReview()"
+  (approved)="handleApprove($event)"
+  (rejected)="handleReject($event)"
+></app-submission-review-modal>

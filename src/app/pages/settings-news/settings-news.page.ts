@@ -59,7 +59,7 @@ export class SettingsNewsPage implements OnInit {
   readonly isSaving = signal(false);
   readonly imageUploading = signal(false);
   readonly editingNews = signal<NewsPost | null>(null);
-  readonly uploadedPrimaryImageUrl = signal<string | null>(null);
+  readonly editorImages = signal<NewsPostImage[]>([]);
   readonly activeForms = signal<FormDetail[]>([]);
   readonly formsLoading = signal(false);
   readonly form = signal<NewsFormModel>(this.createEmptyForm());
@@ -138,7 +138,7 @@ export class SettingsNewsPage implements OnInit {
     this.openMenuId.set(null);
     this.editingNews.set(null);
     this.form.set(this.createEmptyForm());
-    this.uploadedPrimaryImageUrl.set(null);
+    this.editorImages.set([]);
     this.orphanedImageUrls.clear();
     this.uploadedUnsavedImageUrls.clear();
     await this.loadActiveForms();
@@ -156,7 +156,7 @@ export class SettingsNewsPage implements OnInit {
       linkedFormId: newsPost.linkedFormId ?? null,
       publishNow: newsPost.status === AppStatus.Active
     });
-    this.uploadedPrimaryImageUrl.set(this.getPrimaryImageUrl(newsPost));
+    this.editorImages.set(newsPost.images ?? []);
     this.orphanedImageUrls.clear();
     this.uploadedUnsavedImageUrls.clear();
     await this.loadActiveForms();
@@ -198,21 +198,20 @@ export class SettingsNewsPage implements OnInit {
 
   async onImageSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    if (!file) return;
+    const files = Array.from(input.files ?? []);
+    if (!files.length) return;
 
-    const previousUrl = this.uploadedPrimaryImageUrl();
     this.imageUploading.set(true);
 
     try {
-      const result = await this.newsService.uploadImage(this.clubId, file);
-
-      if (previousUrl?.startsWith('http')) {
-        this.orphanedImageUrls.add(previousUrl);
+      for (const file of files) {
+        const result = await this.newsService.uploadImage(this.clubId, file);
+        this.uploadedUnsavedImageUrls.add(result.url);
+        this.editorImages.update(images => [
+          ...images,
+          { imageUrl: result.url, isPrimary: images.length === 0, sortOrder: images.length }
+        ]);
       }
-
-      this.uploadedPrimaryImageUrl.set(result.url);
-      this.uploadedUnsavedImageUrls.add(result.url);
     } catch {
       this.toastService.show(this.translationService.instant('user.news.imageUploadFailed'), 'danger');
     } finally {
@@ -221,13 +220,21 @@ export class SettingsNewsPage implements OnInit {
     }
   }
 
-  async removePrimaryImage(): Promise<void> {
-    const url = this.uploadedPrimaryImageUrl();
-    if (!url) return;
+  setPrimaryImage(url: string): void {
+    this.editorImages.update(images => images.map(image => ({ ...image, isPrimary: image.imageUrl === url })));
+  }
+
+  removeImage(url: string): void {
     if (url.startsWith('http')) {
       this.orphanedImageUrls.add(url);
     }
-    this.uploadedPrimaryImageUrl.set(null);
+    this.editorImages.update(images => {
+      const remaining = images.filter(image => image.imageUrl !== url);
+      if (remaining.length && !remaining.some(image => image.isPrimary)) {
+        remaining[0] = { ...remaining[0], isPrimary: true };
+      }
+      return remaining;
+    });
   }
 
   async saveNews(): Promise<void> {
@@ -332,12 +339,7 @@ export class SettingsNewsPage implements OnInit {
   }
 
   private buildImagePayload(): NewsPostImage[] {
-    const imageUrl = this.uploadedPrimaryImageUrl();
-    return imageUrl ? [{ imageUrl, isPrimary: true, sortOrder: 0 }] : [];
-  }
-
-  private getPrimaryImageUrl(newsPost: NewsPost): string | null {
-    return newsPost.images?.find(image => image.isPrimary)?.imageUrl ?? newsPost.images?.[0]?.imageUrl ?? null;
+    return this.editorImages().map((image, index) => ({ ...image, sortOrder: index }));
   }
 
   private async cleanupOrphanedImages(): Promise<void> {

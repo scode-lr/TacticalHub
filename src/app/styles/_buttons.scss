@@ -256,6 +256,74 @@
   }
 }
 
+// ── Status filter tabs ──────────────────────────────────────────────
+// A row of togglable chips used to filter a list by status, each carrying
+// its own count (e.g. "Pending 24 / Approved 86 / Rejected 14").
+.btn-filter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 10px;
+  background: var(--background-primary, #ffffff);
+  color: var(--text-primary, #111827);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  .btn-filter-tab-count {
+    color: var(--text-secondary, #6b7280);
+    font-weight: 700;
+  }
+
+  &:hover:not(.active) {
+    border-color: var(--ion-color-primary, #3880ff);
+  }
+
+  &.active {
+    border-color: var(--ion-color-primary, #3880ff);
+    background: color-mix(in srgb, var(--ion-color-primary, #3880ff) 8%, transparent);
+    color: var(--ion-color-primary, #3880ff);
+
+    .btn-filter-tab-count {
+      color: var(--ion-color-primary, #3880ff);
+    }
+  }
+}
+
+// ── Segmented tab switch ─────────────────────────────────────────────
+// A pill-shaped group of mutually exclusive view switches (e.g. two tabs
+// living inside one page, as opposed to routed tabs).
+.tab-switch {
+  display: inline-flex;
+  gap: 0.125rem;
+  padding: 0.1875rem;
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: 999px;
+  background: var(--background-primary, #ffffff);
+}
+
+.tab-switch-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &.active {
+    background: color-mix(in srgb, var(--ion-color-primary, #3880ff) 10%, transparent);
+    color: var(--color-accent-hover, var(--color-accent, var(--ion-color-primary, #4a90e2)));
+  }
+}
+
 .btn-icon-round {
   @include btn-base;
   background: transparent;

@@ -114,12 +114,6 @@ export class AdminPage implements OnInit {
       if (/\/settings-forms\/[^/]+/.test(url)) {
         return `app/${roleType}/${roleId}/settings-forms`;
       }
-      // /forms-submissions/{formId}/{submissionId} -> back to that form's submissions list.
-      const submissionMatch = url.match(/\/forms-submissions\/(\d+)\/\d+/);
-      if (submissionMatch) {
-        return `app/${roleType}/${roleId}/forms-submissions/${submissionMatch[1]}`;
-      }
-      // /forms-submissions/{formId} -> back to the forms list.
       if (url.includes('/forms-submissions/')) {
         return `app/${roleType}/${roleId}/forms-submissions`;
       }

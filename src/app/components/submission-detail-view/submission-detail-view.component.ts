@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -7,7 +7,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { SubmissionDetail } from '@core/responses/form.response';
 import { SubmissionValue } from '@core/models/submission-value.model';
 import { addIcons } from 'ionicons';
-import { checkmarkCircle, closeCircle, ellipsisHorizontalCircle } from 'ionicons/icons';
+import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 import { maskIban } from '@core/utils/iban.util';
 import { readBooleanValue } from '@core/utils/submission-value.util';
 import { FormFieldType } from '@core/models/form.model';
@@ -21,7 +21,7 @@ export type FieldReviewState = 'ok' | 'nok' | null;
   standalone: true,
   imports: [CommonModule, FormsModule, TranslatePipe, CheckboxModule, IonIcon],
 })
-export class SubmissionDetailViewComponent {
+export class SubmissionDetailViewComponent implements OnChanges {
   readonly submission = input.required<SubmissionDetail>();
   readonly reviewMode = input<boolean>(false);
   readonly fieldStatesChange = output<Record<number, FieldReviewState>>();
@@ -29,7 +29,11 @@ export class SubmissionDetailViewComponent {
   fieldStates: Record<number, FieldReviewState> = {};
 
   constructor() {
-    addIcons({ checkmarkCircle, closeCircle, ellipsisHorizontalCircle });
+    addIcons({ checkmarkOutline, closeOutline });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['submission']) this.fieldStates = {};
   }
 
   booleanValue(value: SubmissionValue): boolean | null {
@@ -44,17 +48,11 @@ export class SubmissionDetailViewComponent {
     return '—';
   }
 
-  toggleField(fieldId: number): void {
+  /** Each button sets its own state; clicking the already-active one clears it back to unset. */
+  setFieldState(fieldId: number, state: 'ok' | 'nok'): void {
     const current = this.fieldStates[fieldId] ?? null;
-    const next: FieldReviewState = current === null ? 'ok' : current === 'ok' ? 'nok' : null;
+    const next: FieldReviewState = current === state ? null : state;
     this.fieldStates = { ...this.fieldStates, [fieldId]: next };
     this.fieldStatesChange.emit(this.fieldStates);
-  }
-
-  getFieldIcon(fieldId: number): string {
-    const state = this.fieldStates[fieldId] ?? null;
-    if (state === 'ok') return 'checkmark-circle';
-    if (state === 'nok') return 'close-circle';
-    return 'ellipsis-horizontal-circle';
   }
 }

@@ -1,56 +1,57 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
-import { FormService } from '@core/services/form.service';
+import { ClubService } from '@core/services/club.service';
 import { FormSubmissionsService } from '@core/services/form-submissions.service';
-import { NavigationService } from '@services/navigation.service';
-import { FormDetail } from '@core/responses/form.response';
-import { FormSubmission } from '@core/models/form-submission.model';
 import { ExportColumn, ExportProfile, SaveExportProfileRequest } from '@core/models/export-profile.model';
-import { CreateGoogleSheetsIntegrationRequest, ExternalIntegration, ExternalIntegrationDestinationType, ExternalIntegrationProvider, GoogleSheetsConfiguration, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
-import { Table, TableModule, TableLazyLoadEvent } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
+import { CreateGoogleSheetsIntegrationRequest, ExternalIntegration, ExternalIntegrationDestinationType, ExternalIntegrationProvider, FormSyncStatus, GoogleSheetsConfiguration, PendingSyncAction, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
+import { TagModule } from 'primeng/tag';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { IonIcon, IonToast } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, chevronForwardOutline } from 'ionicons/icons';
-import { BackButtonComponent } from '@components/back-button/back-button.component';
-import { ExportWizardStep, FormsExportWizardModalComponent } from '../components/forms-export-wizard-modal/forms-export-wizard-modal.component';
-import { GoogleSheetsCreateFormState, IntegrationFormState } from '../components/forms-integrations-step/forms-integrations-step.component';
+import { settingsOutline, documentTextOutline, syncOutline, searchOutline, closeOutline } from 'ionicons/icons';
+import { ExportWizardStep, FormsExportWizardModalComponent } from '../forms-export-wizard-modal/forms-export-wizard-modal.component';
+import { GoogleSheetsCreateFormState, IntegrationFormState } from '../forms-integrations-step/forms-integrations-step.component';
+
+/** Minimal form reference the export wizard needs — a form's full detail is not required just to configure its export/sync. */
+export interface FormRef {
+  id: number;
+  name: string;
+}
 
 @Component({
-  selector: 'app-form-submissions-list',
-  templateUrl: './form-submissions-list.page.html',
-  styleUrls: ['./form-submissions-list.page.scss'],
+  selector: 'app-forms-sync-list',
+  templateUrl: './forms-sync-list.component.html',
+  styleUrls: ['./forms-sync-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, TableModule, InputTextModule, IconFieldModule, InputIconModule, PaginatorModule, IonIcon, IonToast, BackButtonComponent, FormsExportWizardModalComponent]
+  imports: [CommonModule, FormsModule, TranslatePipe, TagModule, PaginatorModule, IonIcon, IonToast, FormsExportWizardModalComponent]
 })
-export class FormSubmissionsListPage implements OnInit {
-  private readonly formService = inject(FormService);
-  private readonly translationService = inject(TranslationService);
+export class FormsSyncListComponent implements OnInit, OnDestroy {
+  private readonly clubService = inject(ClubService);
   private readonly formSubmissionsService = inject(FormSubmissionsService);
-  private readonly navigationService = inject(NavigationService);
+  private readonly translationService = inject(TranslationService);
+  private searchDebounceHandle: ReturnType<typeof setTimeout> | null = null;
+  private statusRequestId = 0;
 
-  private formId = 0;
+  readonly pendingActionsLoading = signal<boolean>(true);
+  readonly pendingActions = signal<PendingSyncAction[]>([]);
+  readonly syncingActionId = signal<number | null>(null);
 
-  constructor() {
-    addIcons({ downloadOutline, searchOutline, funnelOutline, documentTextOutline, closeOutline, chevronForwardOutline });
-  }
-
-  readonly form = signal<FormDetail | null>(null);
-  readonly loading = signal<boolean>(true);
-  readonly submissions = signal<FormSubmission[]>([]);
-  readonly submissionsLoading = signal<boolean>(false);
+  readonly statusLoading = signal<boolean>(true);
+  readonly formsStatus = signal<FormSyncStatus[]>([]);
   readonly pageSize = signal<number>(10);
   readonly currentPage = signal<number>(1);
-  readonly totalSubmissions = signal<number>(0);
-  readonly currentSort = signal<string | undefined>(undefined);
+  readonly totalCount = signal<number>(0);
+  searchValue = '';
 
-  submissionsSearchValue = '';
+  readonly selectedForm = signal<FormRef | null>(null);
+  readonly skeletonRows = [1, 2, 3];
+
+  constructor() {
+    addIcons({ settingsOutline, documentTextOutline, syncOutline, searchOutline, closeOutline });
+  }
 
   readonly toastVisible = signal<boolean>(false);
   readonly toastMessage = signal<string>('');
@@ -72,90 +73,129 @@ export class FormSubmissionsListPage implements OnInit {
   readonly integrationForm = signal<IntegrationFormState>(this.createEmptyIntegrationForm());
   readonly googleSheetsCreateForm = signal<GoogleSheetsCreateFormState>(this.createEmptyGoogleSheetsCreateForm());
 
-  async ngOnInit(): Promise<void> {
-    this.formId = Number(this.navigationService.findRouteParam('formId'));
-    if (!this.formId) return;
-
-    await this.loadForm();
-    await this.loadSubmissions();
+  ngOnInit(): void {
+    void this.loadPendingActions();
+    void this.loadFormsStatus();
   }
 
-  backRoute(): string {
-    const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/forms-submissions`;
+  ngOnDestroy(): void {
+    this.cancelSearchDebounce();
+    this.statusRequestId++;
   }
 
-  private async loadForm(): Promise<void> {
-    this.loading.set(true);
-    try {
-      const detail = await this.formService.getFormById(this.formId);
-      this.form.set(detail);
-      this.totalSubmissions.set(detail.submissionsCount ?? 0);
-    } finally {
-      this.loading.set(false);
+  /** Pull-to-refresh: reloads both independent blocks together, awaited so the gesture's spinner reflects real completion. */
+  async refresh(): Promise<void> {
+    await Promise.all([this.loadPendingActions(), this.loadFormsStatus()]);
+  }
+
+  getSeverity(status: FormSyncStatus['status']): 'success' | 'warn' | 'danger' | 'secondary' {
+    switch (status) {
+      case 'active': return 'success';
+      case 'pending': return 'warn';
+      case 'error': return 'danger';
+      default: return 'secondary';
     }
   }
 
-  async onLazyLoad(event: TableLazyLoadEvent): Promise<void> {
-    const rows = event.rows ?? this.pageSize();
-    const rowsChanged = rows !== this.pageSize();
-    this.pageSize.set(rows);
-    this.currentPage.set(rowsChanged ? 1 : Math.floor((event.first ?? 0) / rows) + 1);
-    if (event.sortField) {
-      const field = Array.isArray(event.sortField) ? event.sortField[0] : event.sortField;
-      const dir = event.sortOrder === 1 ? 'asc' : 'desc';
-      this.currentSort.set(`${field};${dir}`);
-    }
-    await this.loadSubmissions();
+  integrationsSummary(row: FormSyncStatus): string {
+    return row.integrationsSummary || this.translationService.instant('admin.forms.sync.notConfigured');
   }
 
-  async onSubmissionsSearch(): Promise<void> {
-    this.currentPage.set(1);
-    await this.loadSubmissions();
-  }
+  async syncNow(action: PendingSyncAction): Promise<void> {
+    if (this.syncingActionId()) return;
 
-  async clearSubmissionsFilter(dt?: Table): Promise<void> {
-    this.submissionsSearchValue = '';
-    dt?.reset();
-    this.currentPage.set(1);
-    await this.loadSubmissions();
-  }
-
-  private async loadSubmissions(): Promise<void> {
-    this.submissionsLoading.set(true);
+    this.syncingActionId.set(action.integrationId);
     try {
-      const submissionsPage = await this.formSubmissionsService.getSubmissions(this.formId, this.pageSize(), (this.currentPage() - 1) * this.pageSize(), this.submissionsSearchValue || undefined, this.currentSort());
-      this.submissions.set(submissionsPage.submissions);
-      this.totalSubmissions.set(submissionsPage.totalCount ?? this.totalSubmissions());
+      const result = await this.formSubmissionsService.syncPendingIntegration(action.formId, action.integrationId);
+      this.showToast(
+        this.translationService.instant('admin.forms.integrations.syncSuccess', { synced: result.synced, failed: result.failed }),
+        result.failed > 0 ? 'danger' : 'success'
+      );
+      await Promise.all([this.loadPendingActions(), this.loadFormsStatus()]);
     } catch (error) {
-      console.error('Error loading submissions:', error);
-      this.submissions.set([]);
+      console.error('Error syncing integration:', error);
+      this.showToast(this.translationService.instant('admin.forms.integrations.syncError'), 'danger');
     } finally {
-      this.submissionsLoading.set(false);
+      this.syncingActionId.set(null);
     }
   }
 
-  navigateToSubmission(submissionId: number): void {
-    const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/forms-submissions/${this.formId}/${submissionId}`]);
+  private async loadPendingActions(): Promise<void> {
+    this.pendingActionsLoading.set(true);
+    try {
+      const clubId = this.clubService.getCurrentClubId();
+      if (clubId === null) return;
+
+      this.pendingActions.set(await this.formSubmissionsService.getPendingSyncActions(clubId));
+    } catch (error) {
+      console.error('Error loading pending sync actions:', error);
+      this.pendingActions.set([]);
+    } finally {
+      this.pendingActionsLoading.set(false);
+    }
   }
 
-  /**
-   * Keep the mobile paginator on the same signal state as the desktop table.
-   */
-  async onMobilePage(event: PaginatorState): Promise<void> {
+  /** Keeps the paginator on the same signal state whichever layout (mobile/desktop) fired the page change. */
+  async onPage(event: PaginatorState): Promise<void> {
     const rows = event.rows ?? this.pageSize();
     this.pageSize.set(rows);
     this.currentPage.set(Math.floor((event.first ?? 0) / rows) + 1);
-    await this.loadSubmissions();
+    await this.loadFormsStatus();
+  }
+
+  onSearch(): void {
+    this.cancelSearchDebounce();
+    this.statusRequestId++;
+    this.searchDebounceHandle = setTimeout(() => {
+      this.searchDebounceHandle = null;
+      this.currentPage.set(1);
+      void this.loadFormsStatus();
+    }, 300);
+  }
+
+  async clearSearch(): Promise<void> {
+    this.cancelSearchDebounce();
+    this.searchValue = '';
+    this.currentPage.set(1);
+    await this.loadFormsStatus();
+  }
+
+  private async loadFormsStatus(): Promise<void> {
+    const requestId = ++this.statusRequestId;
+    this.statusLoading.set(true);
+    try {
+      const clubId = this.clubService.getCurrentClubId();
+      if (clubId === null) return;
+
+      const page = await this.formSubmissionsService.getFormsSyncStatus(
+        clubId,
+        this.pageSize(),
+        (this.currentPage() - 1) * this.pageSize(),
+        this.searchValue || undefined
+      );
+      if (requestId !== this.statusRequestId) return;
+      this.formsStatus.set(page.items);
+      this.totalCount.set(page.totalCount);
+    } catch (error) {
+      if (requestId !== this.statusRequestId) return;
+      console.error('Error loading forms sync status:', error);
+      this.formsStatus.set([]);
+      this.totalCount.set(0);
+    } finally {
+      if (requestId === this.statusRequestId) this.statusLoading.set(false);
+    }
+  }
+
+  private cancelSearchDebounce(): void {
+    if (this.searchDebounceHandle === null) return;
+    clearTimeout(this.searchDebounceHandle);
+    this.searchDebounceHandle = null;
   }
 
   // ── Export wizard ────────────────────────────────────────────────
 
-  async openExport(): Promise<void> {
-    const form = this.form();
-    if (!form) return;
-
+  async openExport(form: FormRef): Promise<void> {
+    this.selectedForm.set(form);
     this.isExportOpen.set(true);
     this.exportStep.set('columns');
     this.exportConfigLoading.set(true);
@@ -190,6 +230,10 @@ export class FormSubmissionsListPage implements OnInit {
     this.integrations.set([]);
     this.integrationForm.set(this.createEmptyIntegrationForm());
     this.googleSheetsCreateForm.set(this.createEmptyGoogleSheetsCreateForm());
+    this.selectedForm.set(null);
+    // The form's own status (error/pending/active/none) and pending actions may have just changed.
+    void this.loadPendingActions();
+    void this.loadFormsStatus();
   }
 
   /** Back arrow: from the destination step to the columns, from Sheets to the destination. */
@@ -205,7 +249,7 @@ export class FormSubmissionsListPage implements OnInit {
   }
 
   async goToSheets(): Promise<void> {
-    const form = this.form();
+    const form = this.selectedForm();
     if (!form) return;
 
     this.exportStep.set('sheets');
@@ -226,7 +270,7 @@ export class FormSubmissionsListPage implements OnInit {
   }
 
   async downloadCsv(): Promise<void> {
-    const form = this.form();
+    const form = this.selectedForm();
     if (!form) return;
 
     try {
@@ -329,7 +373,7 @@ export class FormSubmissionsListPage implements OnInit {
   }
 
   async createGoogleSheetsIntegration(): Promise<void> {
-    const form = this.form();
+    const form = this.selectedForm();
     const createForm = this.googleSheetsCreateForm();
     if (!form || this.integrationsCreatingSheet()) return;
 
@@ -359,7 +403,7 @@ export class FormSubmissionsListPage implements OnInit {
   }
 
   async saveIntegration(): Promise<void> {
-    const form = this.form();
+    const form = this.selectedForm();
     const profile = this.exportProfile();
     const integrationForm = this.integrationForm();
     if (!form || !profile?.id || this.integrationsSaving()) return;
@@ -398,7 +442,7 @@ export class FormSubmissionsListPage implements OnInit {
   }
 
   async testIntegration(integration: ExternalIntegration): Promise<void> {
-    const form = this.form();
+    const form = this.selectedForm();
     if (!form || this.integrationsTestingId()) return;
 
     this.integrationsTestingId.set(integration.id);
@@ -414,7 +458,7 @@ export class FormSubmissionsListPage implements OnInit {
   }
 
   async syncIntegration(integration: ExternalIntegration): Promise<void> {
-    const form = this.form();
+    const form = this.selectedForm();
     if (!form || this.integrationsSyncingId()) return;
 
     this.integrationsSyncingId.set(integration.id);
@@ -431,7 +475,7 @@ export class FormSubmissionsListPage implements OnInit {
   }
 
   async deleteIntegration(integration: ExternalIntegration): Promise<void> {
-    const form = this.form();
+    const form = this.selectedForm();
     if (!form) return;
 
     try {

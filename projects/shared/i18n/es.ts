@@ -468,6 +468,53 @@ export const sharedTranslations = {
       title: 'Parámetros',
     },
     forms: {
+      tabs: {
+        submissions: 'Envíos',
+        sync: 'Exportar / Sincronizar'
+      },
+      dashboard: {
+        total: 'Total de envíos',
+        allFormsMeta: 'Todos los formularios',
+        pending: 'Pendientes',
+        pendingMeta: 'Por revisar',
+        approved: 'Aprobados',
+        approvedMeta: 'Resueltos',
+        rejected: 'Rechazados',
+        rejectedMeta: 'Necesitan corrección'
+      },
+      submissionStatus: {
+        ALL: 'Todos',
+        P: 'Pendiente',
+        A: 'Aprobado',
+        R: 'Rechazado'
+      },
+      clubSubmissions: {
+        searchPlaceholder: 'Buscar por nombre...',
+        formFilterAll: 'Todos los formularios',
+        empty: 'Todavía no hay envíos',
+        emptyDescription: 'Ningún envío coincide con los filtros actuales.',
+        columns: {
+          form: 'Formulario',
+          submittedBy: 'Enviado por',
+          date: 'Fecha'
+        }
+      },
+      sync: {
+        notConfigured: 'Sin sincronización configurada',
+        configure: 'Abrir configuración de exportación / sincronización',
+        integration: 'Integración',
+        action: 'Acción',
+        pendingTitle: 'Necesitan sincronizarse',
+        pendingCount: '{count} elemento(s) pendiente(s)',
+        syncNow: 'Sincronizar ahora',
+        syncing: 'Sincronizando...'
+      },
+      syncStatus: {
+        error: 'Error',
+        pending: 'Pendiente',
+        active: 'Activa',
+        none: 'No configurado'
+      },
       export: 'Exportar',
       responses: 'respuestas',
       assign: 'Asignar',
@@ -584,7 +631,8 @@ export const sharedTranslations = {
         sectionValues: 'Valores enviados',
         formName: 'Formulario',
         userName: 'Usuario',
-        submittedAt: 'Enviado el'
+        submittedAt: 'Enviado el',
+        reviewError: 'No se pudo guardar la revisión. Inténtalo de nuevo.'
       }
     },
     settingsForms: {
@@ -883,7 +931,10 @@ export const sharedTranslations = {
         save: 'Guardar',
         remove: 'Quitar'
       },
-      primaryImage: 'Imagen principal',
+      primaryImage: 'Fotos',
+      addPhoto: 'Añadir foto',
+      setPrimary: 'Marcar como destacada',
+      primaryBadge: 'Destacada',
       removeImage: 'Quitar imagen',
       uploadingImage: 'Subiendo imagen...',
       externalLinkUrl: 'URL del enlace externo',

@@ -56,7 +56,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding: 1.5rem 1.25rem 0;
+    padding: 1.5rem 0 0;
 
     @media (min-width: 769px) {
       padding: 2rem 0 0;
@@ -124,11 +124,35 @@
     }
   }
 
-  .news-content {
-    padding: 1.5rem 1.25rem 2.5rem;
+  .news-photo-strip {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 0 0;
+    overflow-x: auto;
 
     @media (min-width: 769px) {
-      padding: 2rem 0 3rem;
+      padding: 0.75rem 0 0;
+    }
+  }
+
+  .news-photo-strip-item {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-surface, var(--background-secondary, #f8f9fa));
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+  }
+
+  .news-content {
+    padding: 1.5rem 0 1.5rem;
+
+    @media (min-width: 769px) {
+      padding: 2rem 0 2rem;
     }
   }
 
@@ -254,21 +278,16 @@
     }
   }
 
-  .news-related {
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
-  }
+  // Reserves the related-news card's approximate height so the @defer(on viewport) trigger has
+  // something to observe and the page doesn't jump once it resolves.
+  .related-news-placeholder {
+    height: 96px;
+    margin: 2rem 1rem 0;
 
-  .news-related-label {
-    display: block;
-    font-family: var(--font-heading, inherit);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-secondary, #6b7280);
-    margin-bottom: 0.75rem;
+    @media (min-width: 769px) {
+      height: 112px;
+      margin: 2.5rem 0 0;
+    }
   }
 
   .empty-state {

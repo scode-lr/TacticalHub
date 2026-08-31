@@ -1,0 +1,87 @@
+.related-news {
+  margin: 2rem 1rem 0;
+
+  @media (min-width: 769px) {
+    margin: 2.5rem 0 0;
+  }
+}
+
+.related-news-label {
+  display: block;
+  font-family: var(--font-heading, inherit);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6b7280);
+  margin-bottom: 0.625rem;
+}
+
+// .card / .card-hover (global, see app/styles/_cards.scss) give the border, radius and hover
+// lift+shadow; this just lays out the row inside it.
+.related-news-card {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--background-primary, #ffffff);
+  font: inherit;
+  text-align: left;
+
+  @media (min-width: 769px) {
+    padding: 1rem 1.25rem;
+  }
+}
+
+.related-news-thumb {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+  background-color: var(--color-surface, var(--background-secondary, #f8f9fa));
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 1.5rem;
+    color: var(--text-secondary, #6c757d);
+  }
+}
+
+.related-news-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.related-news-title {
+  margin: 0;
+  font-family: var(--font-heading, inherit);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-primary, #111827);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.related-news-time {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary, #6c757d);
+}
+
+.related-news-chevron {
+  flex: none;
+  font-size: 1.25rem;
+  color: var(--text-light, #9ca3af);
+}

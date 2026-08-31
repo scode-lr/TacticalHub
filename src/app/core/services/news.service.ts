@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { ApiResponse, ApiService } from './api.service';
-import { CreateNewsPostRequest, NewsPost, NewsPostsPage, UpdateNewsPostRequest, UploadNewsImageResponse } from '@models/news.model';
+import { CreateNewsPostRequest, NewsPost, NewsPostsPage, NewsPostSummary, UpdateNewsPostRequest, UploadNewsImageResponse } from '@models/news.model';
 
 @Injectable({ providedIn: 'root' })
 export class NewsService {
@@ -25,6 +25,15 @@ export class NewsService {
     return await firstValueFrom(
       this.apiService.get<ApiResponse<NewsPost>>(`clubs/${clubId}/news/${id}`).pipe(
         map(response => response.data!)
+      )
+    );
+  }
+
+  /** The post right next to this one in the feed — a single lightweight row, not a full page fetch. */
+  async getAdjacent(clubId: number, id: number): Promise<NewsPostSummary | null> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<NewsPostSummary | null>>(`clubs/${clubId}/news/${id}/related`).pipe(
+        map(response => response.data ?? null)
       )
     );
   }

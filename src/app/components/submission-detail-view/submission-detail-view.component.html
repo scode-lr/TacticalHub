@@ -51,14 +51,24 @@
             }
           </div>
           @if (reviewMode()) {
-            <button
-              class="field-review-btn"
-              [class.field-review-btn--ok]="fieldStates[value.fieldId] === 'ok'"
-              [class.field-review-btn--nok]="fieldStates[value.fieldId] === 'nok'"
-              (click)="toggleField(value.fieldId)"
-              type="button">
-              <ion-icon [name]="getFieldIcon(value.fieldId)"></ion-icon>
-            </button>
+            <div class="field-review-actions">
+              <button
+                class="field-review-btn field-review-btn--ok"
+                [class.active]="fieldStates[value.fieldId] === 'ok'"
+                (click)="setFieldState(value.fieldId, 'ok')"
+                type="button"
+                [attr.aria-label]="'common.approve' | translate">
+                <ion-icon name="checkmark-outline"></ion-icon>
+              </button>
+              <button
+                class="field-review-btn field-review-btn--nok"
+                [class.active]="fieldStates[value.fieldId] === 'nok'"
+                (click)="setFieldState(value.fieldId, 'nok')"
+                type="button"
+                [attr.aria-label]="'common.reject' | translate">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+            </div>
           }
         </div>
       }
