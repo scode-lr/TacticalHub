@@ -21,18 +21,18 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
     },
     { id: 'inbox', label: 'admin.menu.inbox', icon: 'mail-outline', route: 'inbox' },
     {
-      id: 'notifications',
-      label: 'admin.menu.notifications',
-      icon: 'notifications-outline',
-      route: 'notifications',
-    },
-    {
       id: 'forms-submissions',
       label: 'admin.menu.forms',
       icon: 'document-text-outline',
       route: 'forms-submissions',
     },
     { id: 'news', label: 'admin.menu.news', icon: 'newspaper-outline', route: 'news' },
+    // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
+    // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
+    // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
+    // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
+  ],
+  moreItems: [
     {
       id: 'settings-club',
       label: 'admin.menu.settings',
@@ -40,10 +40,6 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
       route: 'settings-club',
       description: 'admin.description.settings',
     },
-    // { id: 'teams', label: 'admin.menu.teams', icon: 'people-circle-outline', route: 'teams' },
-    // { id: 'matches', label: 'admin.menu.matches', icon: 'football-outline', route: 'matches' },
-    // { id: 'membership', label: 'admin.menu.membership', icon: 'card-outline', route: 'membership' },
-    // { id: 'club', label: 'admin.menu.club', icon: 'business-outline', route: 'club' },
     {
       id: 'users',
       label: 'admin.menu.users',
@@ -52,8 +48,6 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
       description: 'admin.description.users',
     }
   ],
-  // moreItems: [
-  // ],
 };
 
 @Component({
@@ -114,12 +108,6 @@ export class AdminPage implements OnInit {
       if (/\/settings-forms\/[^/]+/.test(url)) {
         return `app/${roleType}/${roleId}/settings-forms`;
       }
-      // /forms-submissions/{formId}/{submissionId} -> back to that form's submissions list.
-      const submissionMatch = url.match(/\/forms-submissions\/(\d+)\/\d+/);
-      if (submissionMatch) {
-        return `app/${roleType}/${roleId}/forms-submissions/${submissionMatch[1]}`;
-      }
-      // /forms-submissions/{formId} -> back to the forms list.
       if (url.includes('/forms-submissions/')) {
         return `app/${roleType}/${roleId}/forms-submissions`;
       }

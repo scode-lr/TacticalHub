@@ -4,10 +4,10 @@ import { ApiResponse, ApiService } from './api.service';
 import { FormSubmissionRequest, ReviewSubmissionRequest } from '@core/requests/form.request';
 import { saveBlob } from '@core/utils/file-download.util';
 import { RolesService } from '@services/roles.service';
-import { FormSubmissionResult, SubmissionDetail, SubmissionPage } from '@core/responses/form.response';
+import { ClubSubmissionsPage, FormSubmissionResult, SubmissionDetail, SubmissionPage, SubmissionStatusCounts } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
 import { ExportProfile, SaveExportProfileRequest } from '@core/models/export-profile.model';
-import { CreateGoogleSheetsIntegrationRequest, CreateGoogleSheetsIntegrationResponse, ExternalIntegration, ExternalIntegrationTestResult, ExternalSyncResult, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
+import { CreateGoogleSheetsIntegrationRequest, CreateGoogleSheetsIntegrationResponse, ExternalIntegration, ExternalIntegrationTestResult, ExternalSyncResult, FormsSyncStatusPage, PendingSyncAction, SaveExternalIntegrationRequest } from '@core/models/external-integration.model';
 
 export interface ReviewSubmissionResult {
   submissionId: number;
@@ -40,6 +40,38 @@ export class FormSubmissionsService {
     if (status) params['status'] = status;
     return await firstValueFrom(
       this.apiService.get<ApiResponse<SubmissionPage>>(`/forms/${formId}/submissions`, { params }).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  /**
+   * The dashboard's status-tab counts for a club. A separate call from `getClubSubmissions()` on
+   * purpose — the counts don't change with the list's own pagination/status filter/search, so they
+   * don't need to be refetched every time that list reloads.
+   */
+  async getClubSubmissionCounts(clubId: number): Promise<SubmissionStatusCounts> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<SubmissionStatusCounts>>('/forms/submissions/counts', { params: { clubId: String(clubId) } }).pipe(
+        map(response => response.data!)
+      )
+    );
+  }
+
+  /** Every reviewable submission across every form of a club. */
+  async getClubSubmissions(
+    clubId: number,
+    limit = 12,
+    offset = 0,
+    options: { status?: string; formId?: number; search?: string; sort?: string } = {}
+  ): Promise<ClubSubmissionsPage> {
+    const params: Record<string, string> = { clubId: String(clubId), limit: String(limit), offset: String(offset) };
+    if (options.status) params['status'] = options.status;
+    if (options.formId) params['formId'] = String(options.formId);
+    if (options.search) params['search'] = options.search;
+    if (options.sort) params['sort'] = options.sort;
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<ClubSubmissionsPage>>('/forms/submissions', { params }).pipe(
         map(response => response.data!)
       )
     );
@@ -175,6 +207,30 @@ export class FormSubmissionsService {
     return await firstValueFrom(
       this.apiService.post<ApiResponse<ExternalSyncResult>>(`/forms/${formId}/integrations/${integrationId}/sync-pending`, {}).pipe(
         map(response => response.data!)
+      )
+    );
+  }
+
+  /**
+   * Every integration in the club that currently needs attention (a failed sync, or items waiting
+   * to sync) — a quick-action panel. Separate from `getFormsSyncStatus()` so it doesn't refetch
+   * every form's status just to check for pending syncs.
+   */
+  async getPendingSyncActions(clubId: number): Promise<PendingSyncAction[]> {
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<PendingSyncAction[]>>('/forms/integrations/pending-sync', { params: { clubId: String(clubId) } }).pipe(
+        map(response => response.data ?? [])
+      )
+    );
+  }
+
+  /** A page of the club's forms (optionally filtered by name) with their sync status, computed server-side in one query. */
+  async getFormsSyncStatus(clubId: number, limit = 10, offset = 0, search?: string): Promise<FormsSyncStatusPage> {
+    const params: Record<string, string> = { clubId: String(clubId), limit: String(limit), offset: String(offset) };
+    if (search) params['search'] = search;
+    return await firstValueFrom(
+      this.apiService.get<ApiResponse<FormsSyncStatusPage>>('/forms/sync-status', { params }).pipe(
+        map(response => response.data ?? { items: [], limit, offset, totalCount: 0 })
       )
     );
   }

@@ -468,6 +468,53 @@ export const sharedTranslations = {
       title: 'Paràmetres',
     },
     forms: {
+      tabs: {
+        submissions: 'Enviaments',
+        sync: 'Exportar / Sincronitzar'
+      },
+      dashboard: {
+        total: 'Total d\'enviaments',
+        allFormsMeta: 'Tots els formularis',
+        pending: 'Pendents',
+        pendingMeta: 'Per revisar',
+        approved: 'Aprovats',
+        approvedMeta: 'Resolts',
+        rejected: 'Rebutjats',
+        rejectedMeta: 'Necessiten correcció'
+      },
+      submissionStatus: {
+        ALL: 'Tots',
+        P: 'Pendent',
+        A: 'Aprovat',
+        R: 'Rebutjat'
+      },
+      clubSubmissions: {
+        searchPlaceholder: 'Cerca per nom...',
+        formFilterAll: 'Tots els formularis',
+        empty: 'Encara no hi ha enviaments',
+        emptyDescription: 'Cap enviament coincideix amb els filtres actuals.',
+        columns: {
+          form: 'Formulari',
+          submittedBy: 'Enviat per',
+          date: 'Data'
+        }
+      },
+      sync: {
+        notConfigured: 'Sense sincronització configurada',
+        configure: 'Obrir configuració d\'exportació / sincronització',
+        integration: 'Integració',
+        action: 'Acció',
+        pendingTitle: 'Necessiten sincronitzar-se',
+        pendingCount: '{count} element(s) pendent(s)',
+        syncNow: 'Sincronitzar ara',
+        syncing: 'Sincronitzant...'
+      },
+      syncStatus: {
+        error: 'Error',
+        pending: 'Pendent',
+        active: 'Activa',
+        none: 'No configurat'
+      },
       export: 'Exportar',
       responses: 'respostes',
       assign: 'Assignar',
@@ -584,7 +631,8 @@ export const sharedTranslations = {
         sectionValues: 'Valors enviats',
         formName: 'Formulari',
         userName: 'Usuari',
-        submittedAt: 'Enviat el'
+        submittedAt: 'Enviat el',
+        reviewError: 'No s\'ha pogut desar la revisió. Torna-ho a provar.'
       }
     },
     settingsForms: {
@@ -883,7 +931,10 @@ export const sharedTranslations = {
         save: 'Desar',
         remove: 'Treure'
       },
-      primaryImage: 'Imatge principal',
+      primaryImage: 'Fotos',
+      addPhoto: 'Afegir foto',
+      setPrimary: 'Marcar com a destacada',
+      primaryBadge: 'Destacada',
       removeImage: 'Treure imatge',
       uploadingImage: 'Pujant imatge...',
       externalLinkUrl: 'URL de l\'enllaç extern',

@@ -143,11 +143,29 @@
 
           <div class="field-group">
             <span class="field-label">{{ 'user.news.primaryImage' | translate }}</span>
-            @if (uploadedPrimaryImageUrl()) {
-              <div class="image-preview" [style.background-image]="'url(' + uploadedPrimaryImageUrl() + ')'"></div>
-              <button class="btn-text danger" type="button" (click)="removePrimaryImage()">{{ 'user.news.removeImage' | translate }}</button>
+            @if (editorImages().length) {
+              <div class="image-grid">
+                @for (img of editorImages(); track img.imageUrl) {
+                  <div class="image-thumb" [class.is-primary]="img.isPrimary" (click)="setPrimaryImage(img.imageUrl)">
+                    <div class="image-thumb-photo" [style.background-image]="'url(' + img.imageUrl + ')'"></div>
+                    @if (img.isPrimary) {
+                      <span class="image-thumb-badge">{{ 'user.news.primaryBadge' | translate }}</span>
+                    }
+                    <button
+                      class="image-thumb-remove"
+                      type="button"
+                      (click)="removeImage(img.imageUrl); $event.stopPropagation()"
+                      [attr.aria-label]="'user.news.removeImage' | translate">
+                      <ion-icon name="close-outline"></ion-icon>
+                    </button>
+                  </div>
+                }
+              </div>
             }
-            <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onImageSelected($event)" [disabled]="imageUploading()" />
+            <label class="btn-text btn-add-photo">
+              {{ 'user.news.addPhoto' | translate }}
+              <input type="file" accept="image/png,image/jpeg,image/webp" multiple (change)="onImageSelected($event)" [disabled]="imageUploading()" hidden />
+            </label>
             @if (imageUploading()) {
               <div class="uploading-row"><ion-spinner name="crescent" /> {{ 'user.news.uploadingImage' | translate }}</div>
             }

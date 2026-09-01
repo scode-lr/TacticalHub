@@ -55,13 +55,17 @@
         />
       }
 
-      @for (newsItem of restNews(); track newsItem.id; let i = $index) {
-        <app-news-card
-          [news]="newsItem"
-          variant="row"
-          [animationDelay]="i"
-          (cardClick)="openNews($event)"
-        />
+      @if (restNews().length) {
+        <div class="news-grid">
+          @for (newsItem of restNews(); track newsItem.id; let i = $index) {
+            <app-news-card
+              [news]="newsItem"
+              variant="row"
+              [animationDelay]="i"
+              (cardClick)="openNews($event)"
+            />
+          }
+        </div>
       }
     </div>
 

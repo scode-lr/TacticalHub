@@ -66,3 +66,29 @@ export interface ExternalSyncResult {
   pending: number;
   message?: string | null;
 }
+
+/** One integration that currently needs attention (a failed sync, or items waiting to sync), club-wide. */
+export interface PendingSyncAction {
+  integrationId: number;
+  formId: number;
+  formName: string;
+  integrationName: string;
+  provider: ExternalIntegrationProvider;
+  pendingSyncItems: number;
+  lastError: string | null;
+}
+
+/** A club's form with its integrations rolled up into a single status. */
+export interface FormSyncStatus {
+  formId: number;
+  formName: string;
+  status: 'error' | 'pending' | 'active' | 'none';
+  integrationsSummary: string;
+}
+
+export interface FormsSyncStatusPage {
+  items: FormSyncStatus[];
+  limit: number;
+  offset: number;
+  totalCount: number;
+}

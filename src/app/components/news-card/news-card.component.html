@@ -4,21 +4,31 @@
   [class.news-card--row]="variant() === 'row'"
   [style.animation-delay]="animationDelay() * 0.04 + 's'"
   (click)="onCardClick()">
+
   <div class="news-thumb" [class.news-thumb--empty]="!primaryImageUrl" [style.background-image]="primaryImageUrl ? 'url(' + primaryImageUrl + ')' : null">
     @if (!primaryImageUrl) {
       <ion-icon name="newspaper-outline"></ion-icon>
     }
-  </div>
-
-  <div class="news-body">
-    <span class="news-time">{{ getTimeAgo(news().publishedAt || news().createdAt) }}</span>
 
     @if (variant() === 'featured') {
-      <h2 class="news-title">{{ news().title }}</h2>
-    } @else {
-      <h3 class="news-title">{{ news().title }}</h3>
+      <div class="news-scrim"></div>
+      <div class="news-overlay">
+        <span class="news-kicker">{{ getTimeAgo(news().publishedAt || news().createdAt) }}</span>
+        <h2 class="news-title">{{ news().title }}</h2>
+      </div>
     }
-
-    <p class="news-excerpt">{{ bodyExcerpt }}</p>
   </div>
+
+  @if (variant() === 'featured') {
+    <p class="news-excerpt">{{ bodyExcerpt }}</p>
+  } @else {
+    <div class="news-body">
+      <span class="news-time">{{ getTimeAgo(news().publishedAt || news().createdAt) }}</span>
+      <h3 class="news-title">{{ news().title }}</h3>
+      <p class="news-excerpt">{{ bodyExcerpt }}</p>
+      <span class="news-read-hint" aria-hidden="true">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </span>
+    </div>
+  }
 </article>

@@ -1,5 +1,5 @@
 @if (loading()) {
-  <div class="page-container-narrow news-detail-page">
+  <div class="page-container news-detail-page">
     <div class="news-skeleton">
       <div class="skeleton-hero"></div>
       <div class="news-skeleton-content">
@@ -13,51 +13,55 @@
     </div>
   </div>
 } @else if (news(); as post) {
-  <div class="page-container-narrow news-detail-page">
-    <button class="detail-back" type="button" (click)="goBack()">
-      <ion-icon name="arrow-back-outline"></ion-icon>
-      <span>{{ 'common.back' | translate }}</span>
-    </button>
+  <div class="page-container news-detail-page">
+    <div class="section-header-with-back-button">
+      <app-back-button />
+      <h1 class="section-title">{{ post.title }}</h1>
+    </div>
 
     <article class="news-article">
+      <div class="news-body" [innerHTML]="post.body | richText"></div>
+
+      @if (post.externalLinkUrl || post.linkedFormId) {
+        <div class="article-footer news-links">
+          @if (post.externalLinkUrl) {
+            <button class="btn-secondary" type="button" (click)="openExternalLink()">
+              {{ post.externalLinkLabel || ('user.news.openLink' | translate) }}
+            </button>
+          }
+
+          @if (post.linkedFormId) {
+            <button class="btn-primary" type="button" (click)="openLinkedForm()">
+              {{ 'user.news.openForm' | translate }}
+            </button>
+          }
+        </div>
+      }
+
       @if (primaryImageUrl) {
         <button type="button" class="news-hero" [style.background-image]="'url(' + primaryImageUrl + ')'" (click)="openLightbox()"></button>
       }
 
-      <div class="news-content">
-        <h1 class="news-title">{{ post.title }}</h1>
-
-        <div class="news-byline">
-          <span class="news-byline-author">{{ post.authorName }}</span>
-          <span aria-hidden="true">·</span>
-          <span>{{ getFormattedDate(post.publishedAt || post.createdAt) }}</span>
+      @if (secondaryImageUrls.length) {
+        <div class="news-photo-strip">
+          @for (url of secondaryImageUrls; track url) {
+            <button type="button" class="news-photo-strip-item" [style.background-image]="'url(' + url + ')'" (click)="openLightboxAt(url)"></button>
+          }
         </div>
+      }
 
-        <div class="news-body" [innerHTML]="post.body | richText"></div>
-
-        @if (post.externalLinkUrl || post.linkedFormId) {
-          <div class="article-footer news-links">
-            @if (post.externalLinkUrl) {
-              <button class="btn-secondary" type="button" (click)="openExternalLink()">
-                {{ post.externalLinkLabel || ('user.news.openLink' | translate) }}
-              </button>
-            }
-
-            @if (post.linkedFormId) {
-              <button class="btn-primary" type="button" (click)="openLinkedForm()">
-                {{ 'user.news.openForm' | translate }}
-              </button>
-            }
-          </div>
-        }
-
-        @if (relatedNews(); as related) {
-          <div class="news-related">
-            <span class="news-related-label">{{ 'user.news.relatedTitle' | translate }}</span>
-            <app-news-card [news]="related" variant="row" (cardClick)="openRelated($event)" />
-          </div>
-        }
+      <div class="news-byline">
+        <span class="news-avatar" aria-hidden="true">{{ authorInitial }}</span>
+        <span class="news-byline-author">{{ post.authorName }}</span>
+        <span aria-hidden="true">·</span>
+        <span>{{ getFormattedDate(post.publishedAt || post.createdAt) }}</span>
       </div>
+
+      @defer (on viewport) {
+        <app-related-news [clubId]="post.clubId" [excludeId]="post.id" (opened)="openRelated($event)" />
+      } @placeholder {
+        <div class="related-news-placeholder"></div>
+      }
     </article>
   </div>
 
@@ -67,7 +71,7 @@
     [isOpen]="isLightboxOpen()"
     (closed)="closeLightbox()" />
 } @else {
-  <div class="page-container-narrow news-detail-page">
+  <div class="page-container news-detail-page">
     <div class="empty-state">
       <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
       <h3 class="empty-title">{{ 'user.news.notFound' | translate }}</h3>
