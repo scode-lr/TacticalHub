@@ -1,4 +1,4 @@
-import { Component, computed, effect, input, output, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, computed, effect, inject, input, output, signal } from '@angular/core';
 import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { closeOutline, chevronBackOutline, chevronForwardOutline, downloadOutline } from 'ionicons/icons';
@@ -24,7 +24,10 @@ const DOUBLE_TAP_MAX_DISTANCE = 30;
   standalone: true,
   imports: [IonIcon, IonSpinner],
 })
-export class ImageLightboxComponent {
+export class ImageLightboxComponent implements OnInit, OnDestroy {
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly renderer = inject(Renderer2);
+
   readonly images = input.required<string[]>();
   readonly startIndex = input<number>(0);
   readonly isOpen = input<boolean>(false);
@@ -67,6 +70,18 @@ export class ImageLightboxComponent {
         this.resetZoom();
       }
     });
+  }
+
+  ngOnInit(): void {
+    // Ionic gives every routed page `contain: layout size style`, which makes it the containing
+    // block for `position: fixed` descendants — so without this, the lightbox would scroll away
+    // with the page instead of pinning to the real viewport. Re-parenting to <body> escapes that
+    // (and any header/menu stacking context) so it can truly cover the whole screen.
+    this.renderer.appendChild(document.body, this.elementRef.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.renderer.removeChild(document.body, this.elementRef.nativeElement);
   }
 
   next(): void {
