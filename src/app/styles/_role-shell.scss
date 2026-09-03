@@ -1,0 +1,100 @@
+// The three roles share the frame. Only the router outlet/scroll owner differs.
+@mixin layout($selector, $ionic-outlet: true) {
+  #{$selector} {
+    height: 100dvh;
+    background: var(--background-primary, #ffffff);
+    overflow: hidden;
+
+    .mobile-header { display: none; }
+
+    .layout-container {
+      display: flex;
+      height: 100%;
+
+      .content-container {
+        flex: 1;
+        background: var(--background-secondary, #f8f9fa);
+
+        @if $ionic-outlet {
+          min-width: 0;
+          position: relative;
+          padding: 0;
+          overflow: hidden;
+
+          ion-router-outlet {
+            position: absolute;
+            inset: 0;
+          }
+
+          ::ng-deep ion-router-outlet > .ion-page {
+            padding: 2rem;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            background: var(--background-secondary, #f8f9fa);
+          }
+        } @else {
+          padding: 2rem;
+          overflow-y: auto;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    #{$selector} {
+      .mobile-header {
+        display: flex;
+        align-items: center;
+        height: var(--app-mobile-header-height, 56px);
+        min-height: var(--app-mobile-header-height, 56px);
+        background: var(--background-primary, #ffffff);
+        border-bottom: 1px solid var(--border-light, #e5e7eb);
+        position: sticky;
+        top: 0;
+        z-index: 1001;
+
+        app-user-header {
+          flex: 1;
+
+          ::ng-deep .page-header {
+            padding: 0;
+            border-bottom: none;
+            position: static;
+
+            .header-content {
+              padding: 0;
+              min-height: auto;
+            }
+          }
+        }
+      }
+
+      .layout-container {
+        flex-direction: column;
+        height: calc(100dvh - var(--app-mobile-header-height, 56px));
+
+        app-menu.hidden-on-detail { display: none; }
+
+        .content-container {
+          order: 1;
+
+          @if $ionic-outlet {
+            &,
+            &.full-width { padding: 0; }
+
+            ::ng-deep ion-router-outlet > .ion-page {
+              padding: var(--app-page-gutter, 1.5rem);
+              padding-bottom: calc(var(--app-page-gutter, 1.5rem) + var(--app-mobile-menu-height));
+            }
+          } @else {
+            &,
+            &.full-width {
+              padding: var(--app-page-gutter, 1.5rem);
+              padding-bottom: calc(var(--app-page-gutter, 1.5rem) + var(--app-mobile-menu-height));
+            }
+          }
+        }
+      }
+    }
+  }
+}

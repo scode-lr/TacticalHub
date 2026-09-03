@@ -1,3 +1,5 @@
+@use "../../styles/mobile";
+
 .page-header {
   position: sticky;
   top: 0;
@@ -316,5 +318,32 @@
   }
   to {
     transform: translateX(0);
+  }
+}
+
+@include mobile.private-club {
+  .page-header {
+    --header-surface: var(--mobile-brand);
+    height: var(--app-mobile-header-height);
+    box-shadow: none;
+    border-bottom: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 44px;
+      height: 6px;
+      background: var(--mobile-ink);
+      clip-path: polygon(6px 0, 100% 0, 100% 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .hamburger-button,
+    .notifications-button {
+      width: 44px;
+      height: 44px;
+    }
   }
 }

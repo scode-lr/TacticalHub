@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly titleService = inject(Title);
   protected readonly networkService = inject(NetworkService);
+  protected readonly isPrivateApp = environment.private;
 
   async ngOnInit() {
     await this.applyStatusBarStyle();

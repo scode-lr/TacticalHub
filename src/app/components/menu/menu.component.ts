@@ -16,7 +16,10 @@ import {
   mailOutline,
   logOutOutline,
   settingsOutline,
-  appsOutline
+  appsOutline,
+  documentTextOutline,
+  notificationsOutline,
+  personOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
@@ -122,6 +125,9 @@ export class MenuComponent implements OnInit {
       peopleOutline,
       mailOutline,
       appsOutline,
+      documentTextOutline,
+      notificationsOutline,
+      personOutline,
       logOutOutline,
       settingsOutline
     });

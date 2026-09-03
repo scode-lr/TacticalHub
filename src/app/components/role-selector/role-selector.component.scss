@@ -1,3 +1,5 @@
+@use "../../styles/mobile";
+
 .role-menu-item {
   display: flex;
   align-items: center;
@@ -181,6 +183,43 @@ ion-modal {
             line-height: 1.2;
           }
         }
+      }
+    }
+  }
+}
+
+// Ionic places the sheet content in an overlay. Scope on the modal itself;
+// an ancestor :host-context selector no longer reaches it once presented.
+@include mobile.viewport {
+  ion-modal.private-club-sheet {
+    --border-radius: 20px 20px 0 0;
+    --max-height: 85dvh;
+
+    .modal-role-selector {
+      display: flex;
+      flex-direction: column;
+      max-height: 85dvh;
+      padding: 1.5rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+      background: var(--mobile-paper);
+
+      .modal-header {
+        flex-shrink: 0;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        h2 {
+          font-family: var(--font-heading);
+          font-size: 1.5rem;
+          letter-spacing: -0.03em;
+        }
+      }
+
+      .modal-content {
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 4px;
+        gap: 0.75rem;
       }
     }
   }

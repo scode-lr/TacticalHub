@@ -1,4 +1,4 @@
-<ion-app>
+<ion-app [class.club-mobile-design]="isPrivateApp">
   @if (!networkService.online()) {
     <div class="offline-banner" role="status">
       {{ 'offline.banner' | translate }}

@@ -14,11 +14,10 @@ import {
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserService } from '@core/services/user.service';
-import { StorageService } from '@core/services/storage.service';
 import { NavigationService } from '@services/navigation.service';
 import { TranslationService } from '@services/i18n/translation.service';
-import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { Role, RoleType } from '@core/models/role.model';
+import { AppStatus } from '@core/models/app-status.model';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
 import { RolesService } from '@services/roles.service';
 import { NotificationsService } from '@services/notifications.service';
@@ -44,7 +43,6 @@ import { environment } from '@environment';
 })
 export class RoleSelectorComponent {
   private readonly userService = inject(UserService);
-  private readonly storageService = inject(StorageService);
   private readonly navigationService = inject(NavigationService);
   private readonly translationService = inject(TranslationService);
   private readonly roleService = inject(RolesService);
@@ -59,8 +57,14 @@ export class RoleSelectorComponent {
     this.currentRole()?.roleId === RoleType.Guest || this.availableRoles().length <= 1
   );
   readonly availableRoles = computed(() => {
-    const user = this.userService.getStoredUser();
-    return user?.roles || [];
+    const roles = this.userService.getCurrentUser()?.roles ?? [];
+    if (!this.isPrivateApp) return roles;
+
+    // A private app belongs to its configured club. Use the active club only
+    // when a private deployment has no clubId in its project configuration.
+    const clubId = (environment as { clubId?: number }).clubId ?? this.currentRole()?.clubId;
+    return roles.filter(role => role.clubId === clubId &&
+      role.status !== AppStatus.Pending && role.status !== AppStatus.Draft);
   });
 
   readonly currentRoleName = computed(() => {
@@ -112,6 +116,13 @@ export class RoleSelectorComponent {
   }
 
   selectRole(role: Role) {
+    if (this.isPrivateApp) {
+      if (this.isRoleSelectorDisabled() || !this.availableRoles().some(available => available.id === role.id)) return;
+      if (role.id === this.currentRole()?.id) {
+        this.closeRoleSelector();
+        return;
+      }
+    }
     const previousRoleId = this.roleService.getCurrentRole()?.id;
     this.roleService.setSelectedRole(role);
     if (previousRoleId !== role.id) {

@@ -1,3 +1,5 @@
+@use "../../styles/mobile";
+
 .menu-container {
   width: 244px;
   background: var(--background-primary, #ffffff);
@@ -182,6 +184,47 @@
       &:hover {
         ion-icon {
           color: var(--ion-color-danger, #eb445a);
+        }
+      }
+    }
+  }
+}
+
+@include mobile.private-club {
+  .menu-container {
+    border-top-color: var(--mobile-divider);
+    background: var(--mobile-surface);
+    box-shadow: none;
+
+    .menu-nav-mobile {
+      padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+      gap: 0;
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 56px;
+        padding: 4px 0;
+        gap: 4px;
+        color: var(--mobile-muted);
+
+        .menu-icon-wrapper {
+          width: 44px;
+          height: 28px;
+          border-radius: var(--mobile-radius-small);
+        }
+
+        .menu-label {
+          font-size: 11px;
+          line-height: 14px;
+        }
+
+        &.active {
+          color: var(--mobile-ink);
+
+          .menu-icon-wrapper { background: var(--mobile-brand); }
+          .menu-icon { color: var(--mobile-ink); }
         }
       }
     }

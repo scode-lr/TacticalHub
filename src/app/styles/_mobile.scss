@@ -1,0 +1,15 @@
+// Shared boundary for component adaptations. Desktop and public apps keep
+// their existing presentation; the opt-in class is set once by AppComponent.
+@mixin viewport {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin private-club {
+  @include viewport {
+    :host-context(.club-mobile-design) {
+      @content;
+    }
+  }
+}
