@@ -19,6 +19,7 @@ Aceptado el 2026-09-03. Primera implementación en `codex/mobile-shared-design`.
 - `styles/_mobile.scss`: un único mixin para acotar las adaptaciones de componentes a móvil privado.
 - `styles/_role-shell.scss`: marco compartido de administración, usuario e invitado. Centraliza cabecera, márgenes y reserva inferior, manteniendo el propietario de scroll de cada tipo de router.
 - Cabecera y barra inferior: adaptación visual en sus componentes compartidos. La hamburguesa y el panel lateral se mantienen hasta la fase de navegación.
+- La barra inferior mide 61 px más el área segura. La pestaña activa cambia el color de icono/texto y muestra una marca superior de 24 × 3 px, sin fondo alrededor del icono. `--mobile-tab-active-color` y `--mobile-tab-indicator-color` centralizan ambos colores en `_mobile-design.scss`; altura y reserva de espacio comparten variables.
 - Noticias y formularios mantienen su composición y estilos locales; su adaptación queda pendiente de la fase de contenido.
 - Selección de roles: se reutilizan `RoleCardComponent` y `ListCardComponent` sin rediseñar las tarjetas del resto de páginas. En apps privadas el selector muestra los roles del club configurado que no estén pendientes/en borrador; si falta `clubId`, usa el club activo. Oculta el cambio si no hay otro rol disponible. Conserva selección activa, cierre y navegación existentes.
 

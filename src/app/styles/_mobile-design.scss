@@ -11,9 +11,14 @@
     --mobile-divider: #dedfd7;
     --mobile-radius: 12px;
     --mobile-radius-small: 8px;
+    // Bottom tabs: change the active color and top marker independently here.
+    --mobile-tab-active-color: var(--mobile-ink);
+    --mobile-tab-indicator-color: var(--mobile-brand);
+    --mobile-tab-height: 48px;
+    --mobile-tab-padding: 6px;
     --app-page-gutter: 1.25rem;
     --app-mobile-header-height: 60px;
-    --app-mobile-menu-height: calc(73px + env(safe-area-inset-bottom, 0px));
+    --app-mobile-menu-height: calc(var(--mobile-tab-height) + 2 * var(--mobile-tab-padding) + 1px + env(safe-area-inset-bottom, 0px));
 
     --background-primary: var(--mobile-surface);
     --background-secondary: var(--mobile-paper);
