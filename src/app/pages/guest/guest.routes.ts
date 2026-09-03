@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { roleAccessGuard } from '@core/guards/role-access.guard';
+import { environment } from '@environment';
 
 export const guestRoutes: Routes = [
   {
@@ -7,6 +8,10 @@ export const guestRoutes: Routes = [
     canActivate: [roleAccessGuard],
     loadComponent: () => import('./guest.page').then(m => m.GuestPage),
     children: [
+      ...(environment.private ? [{
+        path: 'more',
+        loadComponent: () => import('../more/more.page').then(m => m.MorePage)
+      }] : []),
       {
         path: '',
         redirectTo: 'home',

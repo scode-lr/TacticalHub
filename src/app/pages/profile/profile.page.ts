@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { IonContent, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
+import { MobileNavigationService } from '@services/mobile-navigation.service';
 import { UserService } from '@services/user.service';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
@@ -31,6 +32,7 @@ import { alertCircleOutline, closeOutline, trashOutline, eyeOutline, eyeOffOutli
 })
 export class ProfilePage implements OnInit {
   private readonly navigationService = inject(NavigationService);
+  readonly mobileNavigation = inject(MobileNavigationService);
   private readonly userService = inject(UserService);
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
@@ -108,7 +110,9 @@ export class ProfilePage implements OnInit {
   }
 
   goBack() {
-    this.navigationService.goBack();
+    const backUrl = this.mobileNavigation.accountBackUrl();
+    if (backUrl) this.navigationService.navigateTo([backUrl]);
+    else this.navigationService.goBack();
   }
 
   openDeleteConfirmation(): void {

@@ -1,0 +1,9 @@
+<div class="account-identity">
+  <img class="account-avatar" [src]="isGuest() ? 'assets/default-avatar.svg' : user()?.metadata?.avatar || 'assets/default-avatar.svg'"
+    alt="" appDefaultImage="assets/default-avatar.svg">
+  <div class="account-details">
+    <h2>{{ isGuest() ? ('roles.guest' | translate) : displayName() }}</h2>
+    <p>{{ role()?.clubName }}</p>
+    @if (!isGuest()) { <p>{{ roleLabel() | translate }}@if (role()?.teamName) { · {{ role()?.teamName }} }</p> }
+  </div>
+</div>

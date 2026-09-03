@@ -3,8 +3,8 @@
     <!-- Mobile Header -->
     <div class="mobile-header">
       <app-user-header 
-        [showBackButton]="isDetailPage()" 
-        [showRoleSelector]="!isDetailPage()"
+        [showBackButton]="showBackButton()"
+        [showRoleSelector]="!showBackButton()"
         [currentRole]="currentRole()"
         [backUrl]="backUrl()"
         (backClick)="goBack()">

@@ -117,6 +117,7 @@ export class MemberPage implements OnInit {
   }
 
   private checkIfDetailPage(): void {
+    this.loadCurrentRole();
     const url = this.router.url;
     this.currentUrl.set(url);
     const isMoreSubpage = url.includes('/information') ||

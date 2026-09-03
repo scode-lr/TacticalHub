@@ -5,20 +5,41 @@
     </div>
   </div>
 
-  <div class="more-list">
-    @for (item of items; track item.id) {
-      <button type="button" class="more-row" (click)="goTo(item)">
-        <span class="more-row-icon">
-          <ion-icon [name]="item.icon"></ion-icon>
-        </span>
-        <span class="more-row-body">
-          <span class="more-row-title">{{ item.label | translate }}</span>
-          @if (item.description) {
-            <span class="more-row-description">{{ item.description | translate }}</span>
-          }
-        </span>
-        <ion-icon name="chevron-forward-outline" class="more-row-chevron"></ion-icon>
-      </button>
+  @if (mobileNavigation.accountInMore()) {
+    <section class="more-identity" [attr.aria-label]="'more.account' | translate">
+      <app-account-identity [user]="user()" [role]="currentRole()" />
+      @if (!isGuest()) {
+        <app-role-selector [currentRole]="currentRole()" [asMenuItem]="true" />
+      }
+    </section>
+  }
+
+  <section [class.more-group]="mobileNavigation.accountInMore()">
+    @if (mobileNavigation.accountInMore()) {
+      <h2 class="more-group-title">{{ 'more.clubServices' | translate }}</h2>
     }
-  </div>
+    <div class="more-list" [class.compact]="mobileNavigation.accountInMore()">
+      @for (item of items(); track item.id) {
+        <app-action-row [icon]="item.icon" [label]="(mobileNavigation.accountInMore() && item.id === 'settings-club' ? 'more.clubSettings' : item.label) | translate"
+          [description]="item.description ? (item.description | translate) : ''"
+          [compact]="mobileNavigation.accountInMore()" (activated)="goTo(item)" />
+      }
+    </div>
+  </section>
+
+  @if (mobileNavigation.accountInMore()) {
+    @if (!isGuest()) {
+      <section class="more-group" aria-labelledby="more-account-title">
+        <h2 id="more-account-title" class="more-group-title">{{ 'more.account' | translate }}</h2>
+        <app-action-row icon="person-outline" [label]="'common.profile' | translate"
+          [compact]="true" (activated)="openAccount('profile')" />
+        <app-action-row icon="settings-outline" [label]="'common.settings' | translate"
+          [compact]="true" (activated)="openAccount('settings')" />
+      </section>
+    }
+    <div class="more-signout">
+      <app-action-row icon="log-out-outline" [label]="(isGuest() ? 'more.leaveGuest' : 'auth.signOut') | translate"
+        [compact]="true" [danger]="true" [showChevron]="false" [disabled]="isSigningOut()" (activated)="logout()" />
+    </div>
+  }
 </div>

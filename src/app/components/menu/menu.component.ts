@@ -1,6 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, OnInit, effect } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, OnInit, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import {
   IonIcon
 } from '@ionic/angular/standalone';
@@ -30,6 +30,8 @@ import { NavigationService } from '@services/navigation.service';
 import { Role, RoleType } from '@core/models/role.model';
 import { InboxService } from '@core/services/inbox.service';
 import { NotificationsService } from '@core/services/notifications.service';
+import { MobileNavigationService } from '@services/mobile-navigation.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface MenuItem {
   id: string;
@@ -44,6 +46,7 @@ export interface MenuConfig {
   role: RoleType;
   items: MenuItem[];
   moreItems?: MenuItem[];
+  mobileMoreItems?: MenuItem[];
 }
 
 @Component({
@@ -61,10 +64,12 @@ export interface MenuConfig {
 })
 export class MenuComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
   private readonly inboxService = inject(InboxService);
   private readonly notificationsService = inject(NotificationsService);
+  private readonly mobileNavigation = inject(MobileNavigationService);
 
   readonly config = input.required<MenuConfig>();
   readonly currentRole = input<Role | null>();
@@ -75,8 +80,12 @@ export class MenuComponent implements OnInit {
   readonly avatarUrl = signal<string>('assets/default-avatar.svg');
 
   readonly moreItems = computed(() => this.config().moreItems ?? []);
+  readonly mobileMoreItems = computed(() => this.mobileNavigation.accountInMore()
+    ? this.config().mobileMoreItems ?? this.moreItems() : this.moreItems());
+  readonly showMore = computed(() => this.mobileNavigation.accountInMore() || this.moreItems().length > 0);
   readonly mobileMenuItems = computed(() =>
-    this.config().items.filter(item => item.id !== 'home' && item.id !== 'notifications')
+    this.config().items.filter(item => item.id !== 'home' && item.id !== 'notifications' &&
+      !this.mobileMoreItems().some(more => more.id === item.id))
   );
 
   readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
@@ -101,17 +110,17 @@ export class MenuComponent implements OnInit {
 
   readonly isMoreActive = computed(() => {
     const menuId = this.currentMenuId();
-    return menuId === 'more' || this.moreItems().some(item => item.route === menuId);
+    return menuId === 'more' || this.mobileMoreItems().some(item => item.route === menuId);
   });
 
   constructor() {
     this.initializeIcons();
     this.loadUserData();
-    this.subscribeToRouterEvents();
   }
 
   ngOnInit(): void {
     this.trackRouteChanges();
+    this.subscribeToRouterEvents();
   }
 
   private initializeIcons() {
@@ -143,7 +152,7 @@ export class MenuComponent implements OnInit {
 
   private subscribeToRouterEvents() {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter(event => event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.trackRouteChanges();
       });
@@ -174,7 +183,8 @@ export class MenuComponent implements OnInit {
     const role = this.currentRole();
     if (role) {
       this.selectedMenuItem.set('more');
-      this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/more`]);
+      const id = role.roleId === RoleType.Guest ? role.clubId : role.id;
+      this.navigationService.navigateTo([`/app/${role.roleId}/${id}/more`]);
     }
   }
 

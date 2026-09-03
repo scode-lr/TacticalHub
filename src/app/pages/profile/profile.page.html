@@ -5,7 +5,7 @@
 <ion-content>
   <div class="page-container">
     <div class="section-header-with-back-button">
-      <app-back-button />
+      <app-back-button [route]="mobileNavigation.accountBackUrl()" />
       <h1 class="section-title">{{ 'profile.title' | translate }}</h1>
     </div>
 

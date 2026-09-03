@@ -9,7 +9,7 @@ Aceptado el 2026-09-03. Primera implementación en `codex/mobile-shared-design`.
 - El diseño se resuelve con una base común y ajustes en componentes reutilizables.
 - No se rediseñan las páginas una a una ni se acumulan selectores específicos de páginas en el SCSS global.
 - Las excepciones se documentan y se proponen para migración a componentes/patrones comunes antes de rediseñarlas.
-- Aclaración del usuario durante la implementación: no rediseñar el contenido de las páginas todavía. Esta fase cubre la base visual común, el marco móvil y el selector; las composiciones, tarjetas y listas de contenido quedan pendientes.
+- Aclaración del usuario durante la implementación: no rediseñar el contenido de las páginas todavía. Se cubren la base visual común, el marco móvil, el selector y, tras su autorización posterior, la migración a «Más». Las composiciones, tarjetas y listas de otras páginas quedan pendientes.
 - Esta fase se activa solamente en apps privadas (`environment.private`) y hasta 768 px, siguiendo el corte de navegación existente. Es un corte por ancho, no por sistema operativo.
 - Escritorio y apps no privadas conservan su presentación. El estudio del flujo multiclub público queda pendiente.
 
@@ -18,21 +18,23 @@ Aceptado el 2026-09-03. Primera implementación en `codex/mobile-shared-design`.
 - `styles/_mobile-design.scss`: colores semánticos, tipografía, controles y medidas compartidas. Usa `--club-brand` y `--club-brand-soft`, definidos en el tema del proyecto; Voltregà usa amarillo, blanco puro y carbón. El fondo común es `#ffffff`, centralizado en `--mobile-paper`, que alimenta `--background-secondary`, `--color-bg` y el fondo Ionic. No modifica la composición de tarjetas ni abre/reorganiza las secciones de formularios.
 - `styles/_mobile.scss`: un único mixin para acotar las adaptaciones de componentes a móvil privado.
 - `styles/_role-shell.scss`: marco compartido de administración, usuario e invitado. Centraliza cabecera, márgenes y reserva inferior, manteniendo el propietario de scroll de cada tipo de router.
-- Cabecera y barra inferior: adaptación visual en sus componentes compartidos. La hamburguesa y el panel lateral se mantienen hasta la fase de navegación.
+- Cabecera y barra inferior: adaptación visual en sus componentes compartidos. La fase de navegación descrita abajo traslada el panel móvil a «Más».
 - La barra inferior mide 61 px más el área segura. La pestaña activa cambia el color de icono/texto y muestra una marca superior de 24 × 3 px, sin fondo alrededor del icono. `--mobile-tab-active-color` y `--mobile-tab-indicator-color` centralizan ambos colores en `_mobile-design.scss`; altura y reserva de espacio comparten variables.
 - Noticias y formularios mantienen su composición y estilos locales; su adaptación queda pendiente de la fase de contenido.
 - Selección de roles: se reutilizan `RoleCardComponent` y `ListCardComponent` sin rediseñar las tarjetas del resto de páginas. En apps privadas el selector muestra los roles del club configurado que no estén pendientes/en borrador; si falta `clubId`, usa el club activo. Oculta el cambio si no hay otro rol disponible. Conserva selección activa, cierre y navegación existentes.
 
-## Pendiente: migración del menú lateral a «Más»
+## Segunda implementación: migración del menú lateral a «Más»
 
-Guardado por petición del usuario; no implementado en esta fase.
+Autorizada después de guardar los ajustes visuales. Aplicada en la misma rama, para móvil privado; el lateral de escritorio y la navegación pública mantienen sus opciones.
 
-1. Mantener «Más» como pestaña, con identidad (avatar, nombre, club y rol), cambio de rol, servicios del club, cuenta y cierre de sesión.
-2. Trasladar las acciones del panel lateral móvil a esa pantalla y retirar la hamburguesa móvil. Conservar el lateral de escritorio.
-3. Perfil y Configuración: abrir desde «Más» como pantallas secundarias y asegurar un regreso a «Más». No reorganizar sus rutas para mantener la barra inferior dentro en esta fase.
-4. Respetar cada rol: administración conserva Configuración del club y Usuarios; usuario conserva Mis documentos, Información y Contactar.
-5. Invitado necesita una variante específica: actualmente no tiene pestaña ni ruta «Más». Mostrar solo acciones válidas para invitado.
-6. Reutilizar el selector en las apps privadas. No diseñar todavía el cambio multiclub de las apps no privadas.
+1. «Más» reúne identidad (avatar, nombre, club y rol), cambio de rol, servicios del club, cuenta y cierre de sesión.
+2. `AccountIdentityComponent` y `ActionRowComponent` son reutilizables. Las filas existentes de «Más» se extraen al componente común y conservan su presentación de escritorio.
+3. `MobileNavigationService` centraliza el corte de 768 px y `environment.private`. Retira la hamburguesa y el panel móvil únicamente cuando está activa esta variante.
+4. Perfil y Configuración mantienen sus rutas principales y su contenido. Desde «Más» reciben `from=more`; ambos botones de regreso reconstruyen el destino con el rol seleccionado, incluso al recargar o girar el dispositivo. No se aceptan URLs de retorno arbitrarias. La barra inferior no aparece dentro de estas dos pantallas.
+5. Administración conserva Configuración del club y Usuarios, separadas de los ajustes personales. Usuario conserva Mis documentos, Información y Contactar. El selector sigue limitado al club privado y se oculta con un solo rol disponible.
+6. Invitado dispone de ruta y pestaña «Más» en la app privada. Información pasa allí junto a Contactar y Salir del modo invitado. La barra queda en Noticias, Partidos, Patrocinadores y Más. No muestra Perfil, cambio de contraseña ni selector de rol. Se conserva el regreso desde Información/Contactar y el acceso a Patrocinadores cuando es el origen del contacto.
+7. Las pantallas conservadas por Ionic actualizan el contexto de rol al navegar. El menú empieza a observar navegación después de recibir sus entradas y libera la suscripción al destruirse.
+8. Las rutas y guardas de autenticación existentes se mantienen. El cambio multiclub público y el contenido del resto de páginas continúan fuera de esta fase.
 
 ## Excepciones a migrar con el usuario
 
@@ -42,8 +44,8 @@ Las páginas reciben los tokens comunes cuando los consumen; sus composiciones p
 | --- | --- | --- |
 | Noticias y formularios compartidos | Tarjetas/listas con bordes, tamaños y algunos colores locales. | Adaptar `NewsCardComponent`, `FormsGroupSectionComponent`, `FormHeaderComponent` y `FormSubmissionCardComponent` cuando se autorice el diseño de contenido. |
 | Inicio | `home.page` tiene destacados de noticias y formularios propios (`news-hero`, `form-highlight-card`). | Reutilizar las variantes de noticias y extraer el destacado de formulario como componente compartido. |
-| Más | `more-row` pertenece a una página y contiene solo servicios. | Extraer fila/grupo de acciones reutilizable al incorporar identidad y cuenta. |
-| Perfil y Configuración | Tarjetas y controles Ionic con estilos propios; rutas externas al marco por rol. | Adaptar secciones y controles a las primitivas comunes; conservarlas como pantallas secundarias con regreso. |
+| Más | Migración realizada en la segunda fase. | Identidad y filas ya usan `AccountIdentityComponent` y `ActionRowComponent`. |
+| Perfil y Configuración | Tarjetas y controles Ionic con estilos propios; rutas externas al marco por rol. | El regreso a «Más» está resuelto. Pendiente adaptar el contenido a primitivas comunes cuando se autorice. |
 | Mis documentos | `document-card` e icono con colores propios. | Extraer fila de documento reutilizable para listas y vistas de envíos. |
 | Notificaciones / bandeja | Filas, agrupaciones y estados de lectura particulares. | Compartir la base de fila de actividad, conservando la semántica de lectura y acciones. |
 | Gestión administrativa | Tablas de noticias, usuarios y envíos con estructura particular. | Acordar un patrón común de tabla/lista móvil y aplicar por familia, no por página. |
@@ -64,3 +66,10 @@ Las páginas reciben los tokens comunes cuando los consumen; sus composiciones p
 - Comprobación de TypeScript y ESLint en los archivos modificados; ESLint requiere `ESLINT_USE_FLAT_CONFIG=false` para la configuración actual del repositorio.
 - Revisión visual de los componentes reales con datos locales de ejemplo: anchos de 320, 390 y 768 px, barra inferior sin desbordamiento y selector con desplazamiento interno. Referencias de escritorio a 770 y 1280 px.
 - La revisión visual usó un montaje temporal de componentes, retirado al finalizar. No sustituye una prueba completa con una cuenta autenticada ni una comprobación en dispositivo nativo.
+
+## Validación de la migración a «Más»
+
+- 23 pruebas correctas: activación por ancho/app privada, regreso a cuenta, variantes de usuario/administración/invitado, rol conservado por Ionic y navegación de invitado; incluyen las ocho pruebas del selector. Compilaciones de producción de ambas apps correctas y ESLint sin errores (aviso preexistente de `OnInit` en la cabecera).
+- Revisión local con los componentes y contenedores Ionic reales y servicios simulados: «Más → Perfil → Más», «Más → Configuración → Más» y cambio de usuario a administración. Comprobados móvil de 320/390/768 px, lateral de escritorio y variante pública con hamburguesa.
+- Invitado usa el identificador del club al navegar. Su lista de servicios permanece visible al ampliar la ventana desde «Más».
+- El montaje temporal no forma parte de la app. No se han cambiado datos de usuarios ni ejecutado acciones contra el servidor durante la revisión visual.

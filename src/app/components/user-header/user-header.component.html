@@ -6,7 +6,7 @@
           <ion-icon name="arrow-back-outline"></ion-icon>
           <span>{{ 'common.back' | translate }}</span>
         </button>
-      } @else if (showRoleSelector()) {
+      } @else if (showRoleSelector() && !mobileNavigation.accountInMore()) {
         <button
           type="button"
           class="hamburger-button"
@@ -45,7 +45,7 @@
   </div>
 </div>
 
-@if (showAccountDrawer()) {
+@if (showAccountDrawer() && !mobileNavigation.accountInMore()) {
   <div class="drawer-backdrop" (click)="closeAccountDrawer()"></div>
   <div class="account-drawer">
     <div class="drawer-identity">

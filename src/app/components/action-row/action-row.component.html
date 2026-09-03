@@ -1,0 +1,13 @@
+<button type="button" class="action-row" [class.compact]="compact()" [class.danger]="danger()"
+  [disabled]="disabled()" (click)="activated.emit()">
+  <span class="action-row-icon"><ion-icon [name]="icon()" aria-hidden="true"></ion-icon></span>
+  <span class="action-row-body">
+    <span class="action-row-title">{{ label() }}</span>
+    @if (description()) {
+      <span class="action-row-description">{{ description() }}</span>
+    }
+  </span>
+  @if (showChevron()) {
+    <ion-icon name="chevron-forward-outline" class="action-row-chevron" aria-hidden="true"></ion-icon>
+  }
+</button>

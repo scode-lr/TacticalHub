@@ -1,4 +1,10 @@
 export const sharedTranslations = {
+  more: {
+    account: 'El meu compte',
+    clubServices: 'Serveis del club',
+    clubSettings: 'Configuració del club',
+    leaveGuest: "Sortir del mode convidat"
+  },
   primeng: {
     apply: 'Aplicar',
     clear: 'Netejar',

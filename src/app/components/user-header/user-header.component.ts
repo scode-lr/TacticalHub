@@ -11,6 +11,7 @@ import { NotificationsService } from '@core/services/notifications.service';
 import { TranslationService } from '@services/i18n/translation.service';
 import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
+import { MobileNavigationService } from '@services/mobile-navigation.service';
 import { addIcons } from 'ionicons';
 import {
   arrowBackOutline,
@@ -41,6 +42,7 @@ export class UserHeaderComponent {
   private readonly navigationService = inject(NavigationService);
   private readonly notificationsService = inject(NotificationsService);
   private readonly translationService = inject(TranslationService);
+  readonly mobileNavigation = inject(MobileNavigationService);
 
   readonly showBackButton = input<boolean>(false);
   readonly showRoleSelector = input<boolean>(true);

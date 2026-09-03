@@ -71,7 +71,7 @@
       </button>
     }
 
-    @if (moreItems().length > 0) {
+    @if (showMore()) {
       <button
         class="menu-item menu-more"
         [class.active]="isMoreActive()"

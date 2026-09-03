@@ -1,0 +1,9 @@
+:host { display: block; }
+.account-identity { display: flex; align-items: center; gap: 1rem; }
+.account-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.account-details {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  h2 { margin: 0 0 0.25rem; color: var(--text-primary); font-size: 1.125rem; font-weight: 700; }
+  p { margin: 0.125rem 0 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.4; }
+}

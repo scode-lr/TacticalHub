@@ -7,6 +7,7 @@ import { eyeOutline, eyeOffOutline, alertCircle, checkmarkCircle } from 'ionicon
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
+import { MobileNavigationService } from '@services/mobile-navigation.service';
 import { AuthService } from '@services/auth.service';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
@@ -36,6 +37,7 @@ import { environment } from '@environment';
 export class SettingsPage implements OnInit {
   private readonly translationService = inject(TranslationService);
   private readonly navigationService = inject(NavigationService);
+  readonly mobileNavigation = inject(MobileNavigationService);
   private readonly authService = inject(AuthService);
   private readonly formBuilder = inject(FormBuilder);
 
@@ -129,6 +131,8 @@ export class SettingsPage implements OnInit {
   toggleNewPassword(): void { this.showNewPassword.update(v => !v); }
 
   goBack() {
-    this.navigationService.goBack();
+    const backUrl = this.mobileNavigation.accountBackUrl();
+    if (backUrl) this.navigationService.navigateTo([backUrl]);
+    else this.navigationService.goBack();
   }
 }

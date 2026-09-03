@@ -9,6 +9,7 @@ import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
+import { MobileNavigationService } from '@services/mobile-navigation.service';
 
 export const GUEST_MENU_CONFIG: MenuConfig = {
   role: RoleType.Guest,
@@ -17,6 +18,10 @@ export const GUEST_MENU_CONFIG: MenuConfig = {
     { id: 'matches', label: 'guest.menu.matches', icon: 'football-outline', route: 'matches' },
     { id: 'information', label: 'guest.menu.information', icon: 'information-circle-outline', route: 'information' },
     { id: 'sponsors', label: 'guest.menu.sponsors', icon: 'people-outline', route: 'sponsors' }
+  ],
+  mobileMoreItems: [
+    { id: 'information', label: 'guest.menu.information', icon: 'information-circle-outline', route: 'information' },
+    { id: 'contact', label: 'user.menu.contact', icon: 'mail-outline', route: 'contact' }
   ]
 };
 
@@ -38,6 +43,7 @@ export class GuestPage implements OnInit {
   private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
+  private readonly mobileNavigation = inject(MobileNavigationService);
   
   readonly memberId = signal<string>('');
   readonly currentRole = signal<Role | null>(null);
@@ -45,10 +51,19 @@ export class GuestPage implements OnInit {
   readonly guestMenuConfig = GUEST_MENU_CONFIG;
   
   readonly isDetailPage = signal<boolean>(false);
+  readonly currentUrl = signal(this.router.url);
+  readonly isMoreSubpage = computed(() => this.mobileNavigation.accountInMore() &&
+    /\/(information|contact)(?:[/?#]|$)/.test(this.currentUrl()));
+  readonly showBackButton = computed(() => this.isDetailPage() || this.isMoreSubpage());
   readonly backUrl = computed(() => {
-    const {roleType, roleId} = this.navigationService.extractRoleDetails();
+    const role = this.currentRole();
+    if (!role) return '';
+    const base = `/app/${RoleType.Guest}/${role.clubId}`;
+    if (this.isMoreSubpage()) {
+      return /[?&]type=sponsors?(?:&|$)/.test(this.currentUrl()) ? `${base}/sponsors` : `${base}/more`;
+    }
     if (this.isDetailPage()) {
-      return `app/${roleType}/${roleId}/news`;
+      return `${base}/${this.currentUrl().includes('/matches/') ? 'matches' : 'news'}`;
     }
     return '';
   });
@@ -74,7 +89,9 @@ export class GuestPage implements OnInit {
   }
 
   private checkIfDetailPage(): void {
+    this.loadCurrentRole();
     const url = this.router.url;
+    this.currentUrl.set(url);
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5;
     this.isDetailPage.set(isDetail);
