@@ -15,7 +15,7 @@ Aceptado el 2026-09-03. Primera implementación en `codex/mobile-shared-design`.
 
 ## Primera implementación
 
-- `styles/_mobile-design.scss`: colores semánticos, tipografía, controles y medidas compartidas. Usa `--club-brand` y `--club-brand-soft`, definidos en el tema del proyecto; Voltregà usa amarillo, blanco cálido y carbón. No modifica la composición de tarjetas ni abre/reorganiza las secciones de formularios.
+- `styles/_mobile-design.scss`: colores semánticos, tipografía, controles y medidas compartidas. Usa `--club-brand` y `--club-brand-soft`, definidos en el tema del proyecto; Voltregà usa amarillo, blanco puro y carbón. El fondo común es `#ffffff`, centralizado en `--mobile-paper`, que alimenta `--background-secondary`, `--color-bg` y el fondo Ionic. No modifica la composición de tarjetas ni abre/reorganiza las secciones de formularios.
 - `styles/_mobile.scss`: un único mixin para acotar las adaptaciones de componentes a móvil privado.
 - `styles/_role-shell.scss`: marco compartido de administración, usuario e invitado. Centraliza cabecera, márgenes y reserva inferior, manteniendo el propietario de scroll de cada tipo de router.
 - Cabecera y barra inferior: adaptación visual en sus componentes compartidos. La hamburguesa y el panel lateral se mantienen hasta la fase de navegación.
