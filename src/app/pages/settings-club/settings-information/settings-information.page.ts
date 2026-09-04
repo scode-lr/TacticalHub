@@ -8,6 +8,7 @@ import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { ToastService } from '@services/toast.service';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { IconPickerModalComponent } from '@components/modals/icon-picker-modal/icon-picker-modal.component';
 import { PreviewModalComponent } from '@components/modals/preview-modal/preview-modal.component';
 import { SectionFooterActionsComponent } from '@components/section-footer-actions/section-footer-actions.component';
@@ -44,6 +45,7 @@ interface SectionFormValue {
     EditorModule,
     TranslatePipe,
     BackButtonComponent,
+    UserHeaderComponent,
     IconPickerModalComponent,
     PreviewModalComponent,
     SectionFooterActionsComponent,

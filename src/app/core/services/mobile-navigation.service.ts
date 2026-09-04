@@ -1,12 +1,11 @@
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { environment } from '@environment';
 import { RoleType } from '@models/role.model';
 import { NavigationService } from './navigation.service';
 import { RolesService } from './roles.service';
 
-/** Shared opt-in for the private mobile account navigation. */
+/** Drives the mobile "More" account navigation, shared by every app. */
 @Injectable({ providedIn: 'root' })
 export class MobileNavigationService {
   private readonly router = inject(Router);
@@ -15,7 +14,7 @@ export class MobileNavigationService {
   private readonly media = inject(DOCUMENT).defaultView?.matchMedia('(max-width: 768px)');
   private readonly isMobile = signal(this.media?.matches ?? false);
 
-  readonly accountInMore = computed(() => environment.private && this.isMobile());
+  readonly accountInMore = computed(() => this.isMobile());
 
   constructor() {
     const update = (event: MediaQueryListEvent) => this.isMobile.set(event.matches);
@@ -30,7 +29,7 @@ export class MobileNavigationService {
   accountBackUrl(): string | null {
     // Preserve the origin after refresh or rotation. Never accept an arbitrary
     // return URL: rebuild it from the selected role, with existing route guards.
-    if (!environment.private || this.router.parseUrl(this.router.url).queryParams['from'] !== 'more') return null;
+    if (this.router.parseUrl(this.router.url).queryParams['from'] !== 'more') return null;
     const role = this.roles.getCurrentRole();
     if (!role || ![RoleType.Admin, RoleType.Member, RoleType.Guest].includes(role.roleId)) return null;
     const id = role.roleId === RoleType.Guest ? role.clubId : role.id;

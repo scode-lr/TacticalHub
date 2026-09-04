@@ -60,7 +60,11 @@
       <button
         class="menu-item"
         [class.active]="isSelected(item.id) && !isMoreActive()"
-        (click)="selectMenuItem(item)">
+        (click)="onMobileItemClick(item)"
+        (pointerdown)="onMobileItemPressStart(item)"
+        (pointerup)="onMobileItemPressEnd()"
+        (pointerleave)="onMobileItemPressEnd()"
+        (contextmenu)="$event.preventDefault()">
         <div class="menu-icon-wrapper">
           <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
           @if (item.badge && item.badge > 0) {

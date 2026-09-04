@@ -1,13 +1,11 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
 import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
-import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleType, Role } from '@core/models/role.model';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 
 export const ADMIN_MENU_CONFIG: MenuConfig = {
@@ -60,12 +58,10 @@ export const ADMIN_MENU_CONFIG: MenuConfig = {
     IonContent,
     IonRouterOutlet,
     MenuComponent,
-    UserHeaderComponent,
   ],
 })
 export class AdminPage implements OnInit {
   private readonly router = inject(Router);
-  private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
 
   readonly memberId = signal<string>('');
@@ -74,52 +70,6 @@ export class AdminPage implements OnInit {
   readonly adminMenuConfig = ADMIN_MENU_CONFIG;
 
   readonly isDetailPage = signal<boolean>(false);
-  readonly currentUrl = signal<string>(this.router.url);
-  readonly backUrl = computed(() => {
-    const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    // Read from the signal (not `this.router.url` directly) so this computed re-runs on
-    // every navigation, even nested ones where isDetailPage doesn't change value.
-    const url = this.currentUrl();
-
-    if (this.isDetailPage()) {
-      // Notifications are opened from the header/menu, so their back action
-      // must use browser history instead of navigating to the same route.
-      if (url.includes('/notifications')) {
-        return '';
-      }
-      if (url.includes('/news')) {
-        return `app/${roleType}/${roleId}/news`;
-      }
-      if (url.includes('/inbox')) {
-        return `app/${roleType}/${roleId}/inbox`;
-      }
-      if (url.includes('/teams')) {
-        return `app/${roleType}/${roleId}/teams`;
-      }
-      if (url.includes('/matches')) {
-        return `app/${roleType}/${roleId}/matches`;
-      }
-      if (url.includes('/settings-club/information')) {
-        return `app/${roleType}/${roleId}/settings-club`;
-      }
-      if (url.includes('/settings-club/sponsors')) {
-        return `app/${roleType}/${roleId}/settings-club`;
-      }
-      if (/\/settings-forms\/[^/]+/.test(url)) {
-        return `app/${roleType}/${roleId}/settings-forms`;
-      }
-      if (url.includes('/forms-submissions/')) {
-        return `app/${roleType}/${roleId}/forms-submissions`;
-      }
-      if (url.includes('/forms')) {
-        return `app/${roleType}/${roleId}/forms`;
-      }
-      if (url.includes('/contact')) {
-        return `app/${roleType}/${roleId}/contacts`;
-      }
-    }
-    return `app/${roleType}/${roleId}/home`;
-  });
 
   constructor() {
     this.loadCurrentRole();
@@ -144,7 +94,6 @@ export class AdminPage implements OnInit {
   private checkIfDetailPage(): void {
     this.loadCurrentRole();
     const url = this.router.url;
-    this.currentUrl.set(url);
     const isDetail =
       (url.includes('/news/') && url.split('/').length > 5) ||
       (url.includes('/matches/') && url.split('/').length > 5) ||
@@ -162,14 +111,5 @@ export class AdminPage implements OnInit {
   private loadCurrentRole(): void {
     const role = this.userService.getCurrentRole();
     this.currentRole.set(role);
-  }
-
-  goBack(): void {
-    if (this.router.url.includes('/notifications')) {
-      this.navigationService.goBack();
-      return;
-    }
-
-    this.navigationService.navigateTo([this.backUrl()]);
   }
 }

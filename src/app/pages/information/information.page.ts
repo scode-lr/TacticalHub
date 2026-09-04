@@ -6,6 +6,8 @@ import { ClubInformationService } from '@services/club-information.service';
 import { ClubService } from '@services/club.service';
 import { ClubInformation } from '@core/models/club-information.model';
 import { SectionDisplayComponent, SectionDisplayData } from '@components/section-display/section-display.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { addIcons } from 'ionicons';
 import { informationCircleOutline } from 'ionicons/icons';
 
@@ -14,7 +16,7 @@ import { informationCircleOutline } from 'ionicons/icons';
   templateUrl: './information.page.html',
   styleUrls: ['./information.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, SectionDisplayComponent]
+  imports: [CommonModule, IonIcon, TranslatePipe, SectionDisplayComponent, BackButtonComponent, UserHeaderComponent]
 })
 export class InformationPage implements OnInit {
   private clubInformationService = inject(ClubInformationService);

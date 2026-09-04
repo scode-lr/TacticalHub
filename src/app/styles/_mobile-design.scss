@@ -17,7 +17,7 @@
     --mobile-tab-height: 48px;
     --mobile-tab-padding: 6px;
     --app-page-gutter: 1.25rem;
-    --app-mobile-header-height: 60px;
+    --app-mobile-header-height: 48px;
     --app-mobile-menu-height: calc(var(--mobile-tab-height) + 2 * var(--mobile-tab-padding) + 1px + env(safe-area-inset-bottom, 0px));
 
     --background-primary: var(--mobile-surface);
@@ -34,19 +34,13 @@
     --color-header-bg: var(--mobile-brand-soft);
     --color-accent: var(--mobile-ink);
     --color-accent-hover: var(--mobile-ink);
-    --color-primary: var(--mobile-ink);
-    --color-primary-contrast: #ffffff;
-    --color-primary-hover: #363830;
-    --color-primary-active: #11120f;
+    // --color-primary / --ion-color-primary are deliberately NOT overridden here — they
+    // already come from the club's own theme (variables.scss) at :root, same as desktop.
+    // Overriding them to --mobile-ink used to make primary buttons a different color on
+    // mobile than on desktop; leaving them alone keeps both consistent.
     --button-primary-color: var(--mobile-ink);
     --button-primary-color-rgb: 32, 33, 29;
     --button-primary-contrast: #ffffff;
-    --ion-color-primary: var(--mobile-ink);
-    --ion-color-primary-rgb: 32, 33, 29;
-    --ion-color-primary-contrast: #ffffff;
-    --ion-color-primary-contrast-rgb: 255, 255, 255;
-    --ion-color-primary-shade: #11120f;
-    --ion-color-primary-tint: #363830;
     --ion-background-color: var(--mobile-paper);
     --ion-text-color: var(--mobile-ink);
     --form-control-radius: var(--mobile-radius-small);
@@ -87,7 +81,6 @@
     .btn-success,
     .btn-add {
       min-height: 44px;
-      font-weight: 600;
       border-radius: var(--mobile-radius-small);
     }
 

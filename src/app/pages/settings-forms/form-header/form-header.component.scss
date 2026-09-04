@@ -23,7 +23,6 @@
   // even when the row itself is dimmed — opacity on an ancestor can't be undone on a
   // positioned descendant.
   &--dim {
-    .fr-icon,
     .fr-body,
     .fr-chevron,
     .fr-done,
@@ -31,22 +30,6 @@
     ::ng-deep .fr-status {
       opacity: 0.68;
     }
-  }
-}
-
-.fr-icon {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: var(--background-secondary, #f3f4f6);
-  color: var(--text-secondary, #6b7280);
-
-  ion-icon {
-    font-size: 1rem;
   }
 }
 
@@ -63,9 +46,7 @@
   font-weight: 700;
   font-size: 0.9375rem;
   color: var(--text-primary, #111827);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
 }
 
 .fr-meta {
@@ -79,6 +60,17 @@
     flex: none;
     font-size: 0.75rem;
     opacity: 0.75;
+  }
+}
+
+// On admin rows, mobile is tighter on width, so the date under the title gives way to the
+// status tag instead (moved here from the row's trailing edge for editable rows).
+@media (max-width: 768px) {
+  .fr-meta--editable {
+    .fr-meta-date-icon,
+    .fr-meta-date {
+      display: none;
+    }
   }
 }
 

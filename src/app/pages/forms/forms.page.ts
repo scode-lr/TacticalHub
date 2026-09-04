@@ -12,7 +12,7 @@ import { FormHeaderComponent } from '../settings-forms/form-header/form-header.c
 import { FormsGroupSectionComponent } from '@components/forms-group-section/forms-group-section.component';
 import { PullToRefreshComponent } from '@components/pull-to-refresh/pull-to-refresh.component';
 import { addIcons } from 'ionicons';
-import { documentTextOutline, bodyOutline, peopleOutline } from 'ionicons/icons';
+import { documentTextOutline, personAddOutline, cardOutline } from 'ionicons/icons';
 import { AppStatus } from '@core/models';
 
 interface MemberFormRow {
@@ -46,8 +46,8 @@ export class FormsPage {
 
   readonly formGroups = computed<MemberFormGroup[]>(() => {
     const groups: MemberFormGroup[] = [
-      { action: FormAction.RegisterPlayer, icon: 'body-outline', titleKey: 'admin.settingsForms.groups.registerPlayer', rows: [] },
-      { action: FormAction.BecomeMember, icon: 'people-outline', titleKey: 'admin.settingsForms.groups.becomeMember', rows: [] },
+      { action: FormAction.RegisterPlayer, icon: 'person-add-outline', titleKey: 'admin.settingsForms.groups.registerPlayer', rows: [] },
+      { action: FormAction.BecomeMember, icon: 'card-outline', titleKey: 'admin.settingsForms.groups.becomeMember', rows: [] },
       { action: FormAction.Simple, icon: 'document-text-outline', titleKey: 'admin.settingsForms.groups.general', rows: [] }
     ];
     for (const row of this.rows()) {
@@ -57,7 +57,7 @@ export class FormsPage {
   });
 
   constructor() {
-    addIcons({ documentTextOutline, bodyOutline, peopleOutline });
+    addIcons({ documentTextOutline, personAddOutline, cardOutline });
   }
 
   /**

@@ -30,7 +30,7 @@ describe('MobileNavigationService', () => {
 
   afterEach(() => { environment.private = originalPrivate; });
 
-  it('enables account navigation only within the private mobile breakpoint', () => {
+  it('enables account navigation only within the mobile breakpoint', () => {
     const service = TestBed.inject(MobileNavigationService);
     expect(window.matchMedia).toHaveBeenCalledWith('(max-width: 768px)');
     expect(service.accountInMore()).toBeTrue();
@@ -41,11 +41,11 @@ describe('MobileNavigationService', () => {
     expect(service.accountInMore()).toBeTrue();
   });
 
-  it('preserves the public app account navigation', () => {
+  it('enables account navigation on mobile for the public app too', () => {
     environment.private = false;
     const service = TestBed.inject(MobileNavigationService);
-    expect(service.accountInMore()).toBeFalse();
-    expect(service.accountBackUrl()).toBeNull();
+    expect(service.accountInMore()).toBeTrue();
+    expect(service.accountBackUrl()).toBe('/app/3/10/more');
   });
 
   it('marks account pages opened from More', () => {

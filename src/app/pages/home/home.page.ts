@@ -6,6 +6,7 @@ import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
 import { ca } from 'date-fns/locale/ca';
 import { TranslatePipe } from '@pipes/translate.pipe';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 import { ClubService } from '@services/club.service';
@@ -47,7 +48,7 @@ interface HomeShortcut {
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe]
+  imports: [CommonModule, IonIcon, TranslatePipe, UserHeaderComponent]
 })
 export class HomePage implements OnInit {
   private readonly navigationService = inject(NavigationService);
@@ -100,7 +101,6 @@ export class HomePage implements OnInit {
   readonly upcomingMatches = signal<Match[]>([]);
   readonly featuredNews = signal<NewsPost | null>(null);
   readonly latestForm = signal<FormHeader | null>(null);
-  readonly feedLoading = signal<boolean>(true);
 
   constructor() {
     addIcons({
@@ -194,17 +194,14 @@ export class HomePage implements OnInit {
     this.upcomingMatches.set(upcoming.slice(0, 4));
 
     const clubId = this.clubService.getCurrentClubId();
-    if (!clubId) {
-      this.feedLoading.set(false);
-      return;
-    }
+    if (!clubId) return;
+
     this.newsService.getByClubId(clubId, false, 1, 0)
       .then(page => this.featuredNews.set(page.items[0] ?? null))
       .catch(() => this.featuredNews.set(null));
     this.formService.getFormsByClubId(clubId, AppStatus.Active, false, 1, 0)
       .then(forms => this.latestForm.set(forms[0] ?? null))
-      .catch(() => this.latestForm.set(null))
-      .finally(() => this.feedLoading.set(false));
+      .catch(() => this.latestForm.set(null));
   }
 
   private getLocale(): Locale {

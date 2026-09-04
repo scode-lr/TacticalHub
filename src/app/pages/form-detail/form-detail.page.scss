@@ -5,6 +5,14 @@
   line-height: 1.5;
 }
 
+.fill-again-button {
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
 .submissions-section {
   display: flex;
   flex-direction: column;
@@ -22,13 +30,6 @@
 .submissions-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-}
-
-.submissions-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
 }
 

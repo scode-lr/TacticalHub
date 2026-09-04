@@ -295,6 +295,12 @@
         font-weight: 500;
         color: color-mix(in srgb, var(--text-primary, #212529) 52%, transparent);
         position: relative;
+        // Home has a long-press gesture (opens the role switcher) — suppress the browser's
+        // own long-press behaviors (text-selection callout) so they don't fight it.
+        touch-action: manipulation;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
 
         .menu-icon {
           font-size: 1.375rem;

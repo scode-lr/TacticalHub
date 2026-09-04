@@ -1,10 +1,4 @@
 <div class="page-container more-page">
-  <div class="section-header">
-    <div class="header-content">
-      <h1 class="section-title">{{ 'user.menu.more' | translate }}</h1>
-    </div>
-  </div>
-
   @if (mobileNavigation.accountInMore()) {
     <section class="more-identity" [attr.aria-label]="'more.account' | translate">
       <app-account-identity [user]="user()" [role]="currentRole()" />

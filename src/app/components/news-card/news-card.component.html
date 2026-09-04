@@ -19,16 +19,11 @@
     }
   </div>
 
-  @if (variant() === 'featured') {
-    <p class="news-excerpt">{{ bodyExcerpt }}</p>
-  } @else {
+  @if (variant() !== 'featured') {
     <div class="news-body">
       <span class="news-time">{{ getTimeAgo(news().publishedAt || news().createdAt) }}</span>
       <h3 class="news-title">{{ news().title }}</h3>
       <p class="news-excerpt">{{ bodyExcerpt }}</p>
-      <span class="news-read-hint" aria-hidden="true">
-        <ion-icon name="arrow-forward-outline"></ion-icon>
-      </span>
     </div>
   }
 </article>

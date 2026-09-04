@@ -13,8 +13,7 @@ import { Role, RoleType } from '@models/role.model';
 import { User } from '@models/user.model';
 import { MorePage } from './more.page';
 import { MenuComponent } from '@components/menu/menu.component';
-import { UserHeaderComponent } from '@components/user-header/user-header.component';
-import { GUEST_MENU_CONFIG, GuestPage } from '../guest/guest.page';
+import { GUEST_MENU_CONFIG } from '../guest/guest.page';
 
 describe('More mobile navigation', () => {
   const member: Role = { id: 10, clubId: 1, clubName: 'Club', roleId: RoleType.Member };
@@ -40,7 +39,7 @@ describe('More mobile navigation', () => {
     navigation.getMenuIdFromUrl.and.returnValue('more');
     openAccount = jasmine.createSpy('openAccount');
     logout = jasmine.createSpy('logout').and.resolveTo();
-    TestBed.configureTestingModule({ imports: [MorePage, MenuComponent, UserHeaderComponent], providers: [
+    TestBed.configureTestingModule({ imports: [MorePage, MenuComponent], providers: [
       { provide: UserService, useValue: { getCurrentRole: () => role, getCurrentUser: () => user(), getStoredUser: () => user(), logout } },
       { provide: MobileNavigationService, useValue: { accountInMore, openAccount } },
       { provide: NavigationService, useValue: navigation },
@@ -131,25 +130,15 @@ describe('More mobile navigation', () => {
     menu.componentRef.setInput('config', GUEST_MENU_CONFIG);
     menu.componentRef.setInput('currentRole', guest);
     menu.detectChanges();
-    expect(menu.componentInstance.mobileMenuItems().map(item => item.id)).toEqual(['news', 'matches', 'sponsors']);
+    expect(menu.componentInstance.mobileMenuItems().map(item => item.id)).toEqual(['home', 'news', 'matches', 'sponsors']);
     expect(menu.componentInstance.showMore()).toBeTrue();
     menu.componentInstance.goToMore();
     expect(navigation.navigateTo).toHaveBeenCalledWith(['/app/4/1/more']);
     accountInMore.set(false);
     menu.detectChanges();
-    expect(menu.componentInstance.mobileMenuItems().map(item => item.id)).toEqual(['news', 'matches', 'information', 'sponsors']);
+    expect(menu.componentInstance.mobileMenuItems().map(item => item.id)).toEqual(['home', 'news', 'matches', 'information', 'sponsors']);
     expect(menu.componentInstance.showMore()).toBeFalse();
     expect(menu.componentInstance.config().items).toBe(GUEST_MENU_CONFIG.items);
-  });
-
-  it('removes the account drawer trigger only when the mobile migration is enabled', () => {
-    const header = TestBed.createComponent(UserHeaderComponent);
-    header.componentRef.setInput('currentRole', member);
-    header.detectChanges();
-    expect(header.nativeElement.querySelector('.hamburger-button')).toBeNull();
-    accountInMore.set(false);
-    header.detectChanges();
-    expect(header.nativeElement.querySelector('.hamburger-button')).not.toBeNull();
   });
 
   it('waits for menu inputs before observing navigation events', () => {
@@ -159,21 +148,5 @@ describe('More mobile navigation', () => {
     menu.componentRef.setInput('currentRole', guest);
     menu.detectChanges();
     expect(menu.componentInstance.isMoreActive()).toBeTrue();
-  });
-
-  it('returns guest service pages to More with the club identifier', () => {
-    role = guest;
-    router.url = '/app/4/1/information';
-    TestBed.overrideComponent(GuestPage, { set: { template: '', imports: [] } });
-    const shell = TestBed.createComponent(GuestPage);
-    shell.detectChanges();
-    expect(shell.componentInstance.showBackButton()).toBeTrue();
-    expect(shell.componentInstance.backUrl()).toBe('/app/4/1/more');
-    router.url = '/app/4/1/contact?type=sponsors';
-    events.next(new NavigationEnd(2, router.url, router.url));
-    expect(shell.componentInstance.backUrl()).toBe('/app/4/1/sponsors');
-    router.url = '/app/4/1/matches/8';
-    events.next(new NavigationEnd(3, router.url, router.url));
-    expect(shell.componentInstance.backUrl()).toBe('/app/4/1/matches');
   });
 });

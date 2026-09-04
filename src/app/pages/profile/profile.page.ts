@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { NavigationService } from '@services/navigation.service';
 import { MobileNavigationService } from '@services/mobile-navigation.service';
 import { UserService } from '@services/user.service';
-import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { User } from '@core/models/user.model';
 import { AuthService } from '@services/auth.service';
 import { ToastService } from '@services/toast.service';
@@ -26,12 +25,11 @@ import { alertCircleOutline, closeOutline, trashOutline, eyeOutline, eyeOffOutli
     IonInput,
     IonIcon,
     TranslatePipe,
-    UserHeaderComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    UserHeaderComponent
   ]
 })
 export class ProfilePage implements OnInit {
-  private readonly navigationService = inject(NavigationService);
   readonly mobileNavigation = inject(MobileNavigationService);
   private readonly userService = inject(UserService);
   private readonly fb = inject(FormBuilder);
@@ -107,12 +105,6 @@ export class ProfilePage implements OnInit {
     setTimeout(() => {
       this.isSaving.set(false);
     }, 500);
-  }
-
-  goBack() {
-    const backUrl = this.mobileNavigation.accountBackUrl();
-    if (backUrl) this.navigationService.navigateTo([backUrl]);
-    else this.navigationService.goBack();
   }
 
   openDeleteConfirmation(): void {

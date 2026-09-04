@@ -9,6 +9,7 @@ import { TranslationService } from '@core/services/i18n/translation.service';
 import { FormSubmissionsService } from '@services/form-submissions.service';
 import { FormSignatureDraftService } from '@services/form-signature-draft.service';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { SignaturePadComponent } from '@components/signature-pad/signature-pad.component';
 import { FormField } from '@core/models/form-field.model';
 import { FormFieldType, isDisplayOnlyField } from '@core/models/form.model';
@@ -27,7 +28,7 @@ interface AnswerRow {
   templateUrl: './form-signature.page.html',
   styleUrls: ['./form-signature.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonModal, TranslatePipe, BackButtonComponent, SignaturePadComponent],
+  imports: [CommonModule, IonIcon, IonModal, TranslatePipe, BackButtonComponent, SignaturePadComponent, UserHeaderComponent],
 })
 export class FormSignaturePage implements OnInit {
   private readonly navigationService = inject(NavigationService);

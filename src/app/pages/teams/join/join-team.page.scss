@@ -20,6 +20,15 @@
   }
 }
 
+.join-team-back {
+  display: flex;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
 .page-title {
   margin-bottom: 2rem;
   text-align: center;
@@ -32,6 +41,12 @@
     margin: 0 0 0.5rem 0;
     letter-spacing: -0.025em;
     line-height: 1.2;
+
+    &.mobile-hidden {
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
   }
 
   .subtitle {
@@ -323,7 +338,6 @@
     font-weight: 600;
     padding: 0.25rem 0.625rem;
     border-radius: 12px;
-    text-transform: uppercase;
     letter-spacing: 0.025em;
   }
 

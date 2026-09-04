@@ -74,7 +74,6 @@
   color: #ffffff;
   font-size: 0.6875rem;
   font-weight: 700;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
@@ -112,34 +111,10 @@
   overflow: hidden;
 }
 
-.news-read-hint {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  margin-top: 0.625rem;
-  border-radius: 50%;
-  background: var(--color-surface, var(--background-secondary, #f8f9fa));
-  color: var(--color-accent, var(--ion-color-primary, #4a90e2));
-  opacity: 0.6;
-  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
-
-  ion-icon {
-    font-size: 0.8125rem;
-  }
-}
-
 .news-card:hover,
 .news-card:focus-visible {
   .news-title {
     color: var(--color-accent, var(--ion-color-primary, #4a90e2));
-  }
-
-  .news-read-hint {
-    opacity: 1;
-    transform: translateX(3px);
-    background: color-mix(in srgb, var(--color-accent, var(--ion-color-primary, #4a90e2)) 14%, var(--color-surface, var(--background-primary, #ffffff)));
   }
 }
 
@@ -149,10 +124,11 @@
   flex-direction: row-reverse;
   align-items: flex-start;
   gap: 14px;
-  padding: 14px;
+  // Flat list item on mobile — no card chrome. Desktop re-adds its own border/padding below.
+  padding: 0;
+  border: none;
   border-radius: 16px;
   background: var(--color-surface, var(--background-primary, #ffffff));
-  border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 
   .news-thumb {
@@ -202,13 +178,6 @@
     -webkit-line-clamp: 2;
   }
 
-  > .news-excerpt {
-    padding: 0 0.125rem;
-    font-size: 14px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-  }
-
   &:hover .news-thumb {
     box-shadow: 0 16px 40px var(--shadow-medium, rgba(20, 18, 16, 0.18));
   }
@@ -220,6 +189,7 @@
     align-items: stretch;
     padding: 16px;
     border-radius: 18px;
+    border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
 
     .news-thumb {
       width: 100%;
@@ -259,11 +229,6 @@
 
     .news-overlay .news-title {
       font-size: 38px;
-    }
-
-    > .news-excerpt {
-      font-size: 16px;
-      max-width: 640px;
     }
   }
 }

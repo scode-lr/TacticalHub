@@ -182,15 +182,26 @@ export class NotificationsService {
     }
   }
 
-  markAllAsRead(): void {
+  async markAllAsRead(): Promise<void> {
+    const notifications = this._notifications();
+    const hadUnread = notifications.some(n => n.status === NotificationStatus.Unread);
+    if (!hadUnread) return;
+
     const now = new Date();
     this._notifications.set(
-      this._notifications().map(n =>
+      notifications.map(n =>
         n.status === NotificationStatus.Unread
           ? { ...n, status: NotificationStatus.Read, readAt: now }
           : n
       )
     );
+
+    try {
+      await firstValueFrom(this.apiService.put('/notifications/read-all', {}, { params: { userClubRoleId: this.getUserClubRoleId() } }));
+    } catch {
+      // Rollback on error
+      this._notifications.set(notifications);
+    }
   }
 
   clearAllNotifications(): void {

@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, OnInit, DestroyRef } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, viewChild, OnInit, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import {
@@ -49,6 +49,8 @@ export interface MenuConfig {
   mobileMoreItems?: MenuItem[];
 }
 
+const LONG_PRESS_MS = 500;
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -70,6 +72,7 @@ export class MenuComponent implements OnInit {
   private readonly inboxService = inject(InboxService);
   private readonly notificationsService = inject(NotificationsService);
   private readonly mobileNavigation = inject(MobileNavigationService);
+  private readonly roleSelector = viewChild(RoleSelectorComponent);
 
   readonly config = input.required<MenuConfig>();
   readonly currentRole = input<Role | null>();
@@ -84,7 +87,7 @@ export class MenuComponent implements OnInit {
     ? this.config().mobileMoreItems ?? this.moreItems() : this.moreItems());
   readonly showMore = computed(() => this.mobileNavigation.accountInMore() || this.moreItems().length > 0);
   readonly mobileMenuItems = computed(() =>
-    this.config().items.filter(item => item.id !== 'home' && item.id !== 'notifications' &&
+    this.config().items.filter(item => item.id !== 'notifications' &&
       !this.mobileMoreItems().some(more => more.id === item.id))
   );
 
@@ -173,6 +176,34 @@ export class MenuComponent implements OnInit {
     if (role) {
       this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/${item.route}`]);
     }
+  }
+
+  private longPressTimer: ReturnType<typeof setTimeout> | null = null;
+  private longPressTriggered = false;
+
+  /** Long-press on the mobile Home tab opens the role switcher; every other tab ignores this. */
+  onMobileItemPressStart(item: MenuItem): void {
+    if (item.id !== 'home') return;
+    this.longPressTriggered = false;
+    this.longPressTimer = setTimeout(() => {
+      this.longPressTriggered = true;
+      this.roleSelector()?.openRoleSelector();
+    }, LONG_PRESS_MS);
+  }
+
+  onMobileItemPressEnd(): void {
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+      this.longPressTimer = null;
+    }
+  }
+
+  onMobileItemClick(item: MenuItem): void {
+    if (this.longPressTriggered) {
+      this.longPressTriggered = false;
+      return;
+    }
+    this.selectMenuItem(item);
   }
 
   isSelected(itemId: string): boolean {

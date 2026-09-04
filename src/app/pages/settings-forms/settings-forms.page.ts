@@ -10,10 +10,11 @@ import { FormHeaderComponent } from './form-header/form-header.component';
 import { FormTypePickerComponent } from './components/form-type-picker/form-type-picker.component';
 import { FormsGroupSectionComponent } from '@components/forms-group-section/forms-group-section.component';
 import { addIcons } from 'ionicons';
-import { addOutline, documentTextOutline, bodyOutline, peopleOutline } from 'ionicons/icons';
+import { addOutline, documentTextOutline, personAddOutline, cardOutline } from 'ionicons/icons';
 import { FormService } from '@services/form.service';
 import { ClubService } from '@services/club.service';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { ToastService } from '@services/toast.service';
 import { TranslationService } from '@services/i18n/translation.service';
 import { ConfirmService } from '@services/confirm.service';
@@ -32,7 +33,7 @@ interface FormGroup {
   templateUrl: './settings-forms.page.html',
   styleUrls: ['./settings-forms.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, FormHeaderComponent, BackButtonComponent, FormTypePickerComponent, FormsGroupSectionComponent]
+  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, FormHeaderComponent, BackButtonComponent, FormTypePickerComponent, FormsGroupSectionComponent, UserHeaderComponent]
 })
 export class SettingsFormsPage {
   private readonly navigationService = inject(NavigationService);
@@ -55,8 +56,8 @@ export class SettingsFormsPage {
   readonly formGroups = computed<FormGroup[]>(() => {
     const all = this.forms();
     const groups: FormGroup[] = [
-      { action: FormAction.RegisterPlayer, icon: 'body-outline', titleKey: 'admin.settingsForms.groups.registerPlayer', forms: [] },
-      { action: FormAction.BecomeMember, icon: 'people-outline', titleKey: 'admin.settingsForms.groups.becomeMember', forms: [] },
+      { action: FormAction.RegisterPlayer, icon: 'person-add-outline', titleKey: 'admin.settingsForms.groups.registerPlayer', forms: [] },
+      { action: FormAction.BecomeMember, icon: 'card-outline', titleKey: 'admin.settingsForms.groups.becomeMember', forms: [] },
       { action: FormAction.Simple, icon: 'document-text-outline', titleKey: 'admin.settingsForms.groups.general', forms: [] }
     ];
     for (const form of all) {
@@ -66,7 +67,7 @@ export class SettingsFormsPage {
   });
 
   constructor() {
-    addIcons({ addOutline, documentTextOutline, bodyOutline, peopleOutline });
+    addIcons({ addOutline, documentTextOutline, personAddOutline, cardOutline });
   }
 
   async ngOnInit(): Promise<void> {

@@ -144,7 +144,7 @@ import { BackButtonComponent } from '@components/back-button/back-button.compone
 })
 ```
 
-> The `BackButtonComponent` is automatically hidden on mobile (≤ 768px) — no extra CSS needed.
+> The `BackButtonComponent` is automatically hidden on mobile (≤ 768px) — no extra CSS needed. On mobile, the page's own `app-user-header` (with `showBackButton`) is what provides back navigation instead.
 
 ---
 

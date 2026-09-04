@@ -69,12 +69,12 @@
 .action-row.compact {
   min-height: 56px;
   padding: 12px 0;
-  border-width: 0 0 1px;
+  border: none;
   border-radius: 0;
   background: transparent;
 
   &:hover { box-shadow: none; transform: none; }
-  .action-row-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .action-row-icon { width: 36px; height: 36px; border-radius: 10px; background: transparent; }
   .action-row-title { font-weight: 600; }
 }
 

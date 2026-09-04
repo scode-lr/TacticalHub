@@ -25,8 +25,9 @@
     margin: 0;
     line-height: 1.2;
 
+    // The page's own mobile-page-header (app-user-header) already shows this title on mobile.
     @media (max-width: 768px) {
-      font-size: 1.125rem;
+      display: none;
     }
   }
 
@@ -138,7 +139,6 @@
       font-size: 0.75rem;
       font-weight: 600;
       color: var(--text-secondary, #6b7280);
-      text-transform: uppercase;
       letter-spacing: 0.025em;
     }
   }

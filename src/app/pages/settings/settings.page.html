@@ -1,5 +1,5 @@
-<div class="settings-header">
-  <app-user-header [showBackButton]="true" (backClick)="goBack()"></app-user-header>
+<div class="mobile-page-header">
+  <app-user-header [showBackButton]="true" [title]="'settings.title'" [backRoute]="mobileNavigation.accountBackUrl()" />
 </div>
 
 <ion-content>
