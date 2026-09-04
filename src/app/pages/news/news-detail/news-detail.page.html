@@ -1,4 +1,8 @@
 @if (loading()) {
+  <div class="mobile-page-header">
+    <app-user-header [showBackButton]="true" />
+  </div>
+
   <div class="page-container news-detail-page">
     <div class="news-skeleton">
       <div class="skeleton-hero"></div>
@@ -13,6 +17,10 @@
     </div>
   </div>
 } @else if (news(); as post) {
+  <div class="mobile-page-header">
+    <app-user-header [showBackButton]="true" [title]="post.title" />
+  </div>
+
   <div class="page-container news-detail-page">
     <div class="section-header-with-back-button">
       <app-back-button />
@@ -20,6 +28,17 @@
     </div>
 
     <article class="news-article">
+      @if (primaryImageUrl) {
+        <button type="button" class="news-hero" [style.background-image]="'url(' + primaryImageUrl + ')'" (click)="openLightbox()"></button>
+      }
+
+      <div class="news-byline">
+        <span class="news-avatar" aria-hidden="true">{{ authorInitial }}</span>
+        <span class="news-byline-author">{{ post.authorName }}</span>
+        <span aria-hidden="true">·</span>
+        <span>{{ getFormattedDate(post.publishedAt || post.createdAt) }}</span>
+      </div>
+
       <div class="news-body" [innerHTML]="post.body | richText"></div>
 
       @if (post.externalLinkUrl || post.linkedFormId) {
@@ -38,10 +57,6 @@
         </div>
       }
 
-      @if (primaryImageUrl) {
-        <button type="button" class="news-hero" [style.background-image]="'url(' + primaryImageUrl + ')'" (click)="openLightbox()"></button>
-      }
-
       @if (secondaryImageUrls.length) {
         <div class="news-photo-strip">
           @for (url of secondaryImageUrls; track url) {
@@ -49,13 +64,6 @@
           }
         </div>
       }
-
-      <div class="news-byline">
-        <span class="news-avatar" aria-hidden="true">{{ authorInitial }}</span>
-        <span class="news-byline-author">{{ post.authorName }}</span>
-        <span aria-hidden="true">·</span>
-        <span>{{ getFormattedDate(post.publishedAt || post.createdAt) }}</span>
-      </div>
 
       @defer (on viewport) {
         <app-related-news [clubId]="post.clubId" [excludeId]="post.id" (opened)="openRelated($event)" />

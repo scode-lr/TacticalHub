@@ -26,6 +26,7 @@
 }
 
 <ion-modal 
+  [class.private-club-sheet]="isPrivateApp"
   [isOpen]="isModalOpen()" 
   (didDismiss)="closeRoleSelector()"
   [breakpoints]="[0, 1]"
@@ -34,7 +35,7 @@
     <div class="modal-role-selector">
       <div class="modal-header">
         <h2>{{ 'roleSelection.switchRole' | translate }}</h2>
-        <button class="app-modal-close" (click)="closeRoleSelector()">
+        <button class="app-modal-close" (click)="closeRoleSelector()" [attr.aria-label]="'common.close' | translate">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </div>

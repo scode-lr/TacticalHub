@@ -1,34 +1,30 @@
+<div class="mobile-page-header">
+  <app-user-header [showBackButton]="true" [title]="'admin.settings.title'" [backRoute]="backRoute()" />
+</div>
+
 <div class="page-container">
-  <div class="section-header">
+  <div class="section-header-with-back-button">
+    <app-back-button [route]="backRoute()" />
     <h1 class="section-title">{{ 'admin.settings.title' | translate }}</h1>
   </div>
 
   <div class="settings-cards">
-    <div class="settings-card" [routerLink]="getSettingsInformationUrl()">
-      <ion-icon name="information-circle-outline" class="card-icon"></ion-icon>
-      <div class="card-text">
-        <h2 class="card-title">{{ 'admin.settings.information.title' | translate }}</h2>
-        <p class="card-description">{{ 'admin.settings.information.description' | translate }}</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-    </div>
+    <app-action-row
+      icon="information-circle-outline"
+      [label]="'admin.settings.information.title' | translate"
+      [description]="'admin.settings.information.description' | translate"
+      (activated)="goToInformation()" />
 
-    <div class="settings-card" [routerLink]="getSettingsFormsUrl()">
-      <ion-icon name="document-text-outline" class="card-icon"></ion-icon>
-      <div class="card-text">
-        <h2 class="card-title">{{ 'admin.settings.forms.title' | translate }}</h2>
-        <p class="card-description">{{ 'admin.settings.forms.description' | translate }}</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-    </div>
+    <app-action-row
+      icon="document-text-outline"
+      [label]="'admin.settings.forms.title' | translate"
+      [description]="'admin.settings.forms.description' | translate"
+      (activated)="goToForms()" />
 
-    <div class="settings-card" [routerLink]="getSettingsSponsorsUrl()">
-      <ion-icon name="wallet-outline" class="card-icon"></ion-icon>
-      <div class="card-text">
-        <h2 class="card-title">{{ 'admin.settings.sponsors.title' | translate }}</h2>
-        <p class="card-description">{{ 'admin.settings.sponsors.description' | translate }}</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-    </div>
+    <app-action-row
+      icon="wallet-outline"
+      [label]="'admin.settings.sponsors.title' | translate"
+      [description]="'admin.settings.sponsors.description' | translate"
+      (activated)="goToSponsors()" />
   </div>
 </div>

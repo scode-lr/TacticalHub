@@ -1,3 +1,7 @@
+<div class="mobile-page-header">
+  <app-user-header />
+</div>
+
 <div class="page-container home-page">
   @if (isMember()) {
     <section class="feed-header">
@@ -7,34 +11,12 @@
 
     <div class="feed-grid">
       <div class="feed-main">
-        <section class="feed-section" aria-label="Latest form">
-          <div class="section-heading">
-            <span class="section-label">{{ 'user.home.latestForm' | translate }}</span>
-            <button type="button" class="see-all-link" (click)="goToForms()">{{ 'user.home.seeAllForms' | translate }}</button>
-          </div>
-          @if (latestForm(); as form) {
-            <button type="button" class="form-highlight-card" (click)="goToForm(form.id)">
-              <span class="form-highlight-icon">
-                <ion-icon name="document-text-outline"></ion-icon>
-              </span>
-              <span class="form-highlight-body">
-                <span class="form-highlight-name">{{ form.name }}</span>
-                @if (form.description) {
-                  <span class="form-highlight-description">{{ form.description }}</span>
-                }
-              </span>
-            </button>
-          } @else if (!feedLoading()) {
-            <div class="feed-empty">{{ 'user.home.noLatestForm' | translate }}</div>
-          }
-        </section>
-
-        <section class="feed-section" aria-label="Featured news">
-          <div class="section-heading">
-            <span class="section-label">{{ 'user.home.featuredNews' | translate }}</span>
-            <button type="button" class="see-all-link" (click)="goToAllNews()">{{ 'user.home.seeAllNews' | translate }}</button>
-          </div>
-          @if (featuredNews(); as news) {
+        @if (featuredNews(); as news) {
+          <section class="feed-section" aria-label="Featured news">
+            <div class="section-heading">
+              <span class="section-label">{{ 'user.home.featuredNews' | translate }}</span>
+              <button type="button" class="see-all-link" (click)="goToAllNews()">{{ 'user.home.seeAllNews' | translate }}</button>
+            </div>
             <button
               type="button"
               class="news-hero"
@@ -47,10 +29,28 @@
                 <div class="news-hero-time">{{ getTimeAgo(news.publishedAt || news.createdAt) }}</div>
               </div>
             </button>
-          } @else if (!feedLoading()) {
-            <div class="feed-empty">{{ 'user.home.noNews' | translate }}</div>
-          }
-        </section>
+          </section>
+        }
+
+        @if (latestForm(); as form) {
+          <section class="feed-section" aria-label="Latest form">
+            <div class="section-heading">
+              <span class="section-label">{{ 'user.home.latestForm' | translate }}</span>
+              <button type="button" class="see-all-link" (click)="goToForms()">{{ 'user.home.seeAllForms' | translate }}</button>
+            </div>
+            <button type="button" class="form-highlight-card" (click)="goToForm(form.id)">
+              <span class="form-highlight-icon">
+                <ion-icon name="document-text-outline"></ion-icon>
+              </span>
+              <span class="form-highlight-body">
+                <span class="form-highlight-name">{{ form.name }}</span>
+                @if (form.description) {
+                  <span class="form-highlight-description">{{ form.description }}</span>
+                }
+              </span>
+            </button>
+          </section>
+        }
       </div>
 
     </div>

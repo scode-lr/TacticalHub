@@ -114,26 +114,6 @@ export class FormSubmissionCardComponent {
     ];
   });
 
-  readonly statusBadgeClass = computed(() => {
-    const status = this.submission().status as AppStatus;
-    switch (status) {
-      case AppStatus.Approved: return 'badge--approved';
-      case AppStatus.Rejected: return 'badge--rejected';
-      case AppStatus.Pending: return 'badge--review';
-      default: return 'badge--submitted';
-    }
-  });
-
-  readonly statusLabelKey = computed(() => {
-    const status = this.submission().status as AppStatus;
-    switch (status) {
-      case AppStatus.Approved: return 'user.forms.submission.statusApproved';
-      case AppStatus.Rejected: return 'user.forms.submission.statusRejected';
-      case AppStatus.Pending: return 'user.forms.submission.statusUnderReview';
-      default: return 'user.forms.submission.statusSubmitted';
-    }
-  });
-
   openDetail(): void {
     this.isModalOpen.set(true);
   }

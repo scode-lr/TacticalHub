@@ -9,8 +9,11 @@ import { ClubMembersService } from '@services/club-members.service';
 import { ConfirmService } from '@services/confirm.service';
 import { ToastService } from '@services/toast.service';
 import { UserService } from '@services/user.service';
+import { NavigationService } from '@services/navigation.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { addIcons } from 'ionicons';
 import {
   chevronBackOutline,
@@ -34,7 +37,7 @@ interface ClubUser {
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, IonIcon, IonSpinner, TranslatePipe, EmptyStateComponent],
+  imports: [CommonModule, FormsModule, IonIcon, IonSpinner, TranslatePipe, EmptyStateComponent, UserHeaderComponent, BackButtonComponent],
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss']
 })
@@ -44,6 +47,7 @@ export class UsersPage implements OnInit, OnDestroy {
   private readonly toastService = inject(ToastService);
   private readonly translationService = inject(TranslationService);
   private readonly userService = inject(UserService);
+  private readonly navigationService = inject(NavigationService);
   private searchTimer?: ReturnType<typeof setTimeout>;
   private loadRequestId = 0;
 
@@ -206,6 +210,11 @@ export class UsersPage implements OnInit, OnDestroy {
 
   displayName(user: ClubUser): string {
     return `${user.firstName} ${user.lastName}`.trim() || user.username || user.email;
+  }
+
+  backRoute(): string {
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    return `/app/${roleType}/${roleId}/more`;
   }
 
   onAvatarError(event: Event): void {

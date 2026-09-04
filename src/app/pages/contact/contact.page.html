@@ -1,14 +1,14 @@
+<div class="mobile-page-header">
+  <app-user-header [showBackButton]="true" [title]="titleKey()" />
+</div>
+
 <div class="page-container contact-page">
   <div class="section-header">
     <div class="header-content">
-      @if (showSponsorBackButton()) {
-        <div class="section-header-with-back-button">
-          <app-back-button />
-          <h1 class="section-title">{{ titleKey() | translate }}</h1>
-        </div>
-      } @else {
+      <div class="section-header-with-back-button">
+        <app-back-button />
         <h1 class="section-title">{{ titleKey() | translate }}</h1>
-      }
+      </div>
       <p class="section-subtitle">{{ subtitleKey() | translate }}</p>
     </div>
   </div>

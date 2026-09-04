@@ -1,4 +1,10 @@
 export const sharedTranslations = {
+  more: {
+    account: 'My account',
+    clubServices: 'Club services',
+    clubSettings: 'Club settings',
+    leaveGuest: 'Leave guest mode'
+  },
   primeng: {
     apply: 'Apply',
     clear: 'Clear',

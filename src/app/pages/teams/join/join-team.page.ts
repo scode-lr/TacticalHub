@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@services/navigation.service';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
 import { UserService } from '@core/services/user.service';
 import { RolesService } from '@core/services/roles.service';
 import { RoleType } from '@core/models/role.model';
@@ -28,7 +29,8 @@ import { Role } from '@core/models/role.model';
     IonContent,
     IonIcon,
     TranslatePipe,
-    UserHeaderComponent
+    UserHeaderComponent,
+    BackButtonComponent
   ]
 })
 export class JoinTeamPage implements OnInit, AfterViewInit {
@@ -330,10 +332,6 @@ export class JoinTeamPage implements OnInit, AfterViewInit {
       this.selectedTeam.set(0);
       this.codeDigits.set(['', '', '', '', '']);
     }
-  }
-
-  goBack() {
-    this.navigationService.navigateTo(['teams/selection']);
   }
 
   skipForNow() {

@@ -1,7 +1,14 @@
+<div class="mobile-page-header">
+  <app-user-header [showBackButton]="true" [title]="'clubMembers.title'" [backRoute]="backRoute()" />
+</div>
+
 <div class="page-container users-page">
   <div class="section-header users-header">
     <div class="header-content">
-      <h1 class="section-title">{{ 'clubMembers.title' | translate }}</h1>
+      <div class="section-header-with-back-button">
+        <app-back-button [route]="backRoute()" />
+        <h1 class="section-title">{{ 'clubMembers.title' | translate }}</h1>
+      </div>
       <p class="section-subtitle">{{ 'clubMembers.subtitle' | translate }}</p>
     </div>
 

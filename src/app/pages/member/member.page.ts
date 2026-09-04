@@ -1,13 +1,11 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { IonContent, IonRouterOutlet } from '@ionic/angular/standalone';
 import { MenuComponent, MenuConfig } from '@components/menu/menu.component';
-import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleType, Role } from '@core/models/role.model';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NavigationService } from '@services/navigation.service';
 import { UserService } from '@core/services/user.service';
 
 export const MEMBER_MENU_CONFIG: MenuConfig = {
@@ -36,66 +34,20 @@ export const MEMBER_MENU_CONFIG: MenuConfig = {
     CommonModule,
     IonContent,
     IonRouterOutlet,
-    MenuComponent,
-    UserHeaderComponent
+    MenuComponent
   ],
 })
 export class MemberPage implements OnInit {
   private readonly router = inject(Router);
-  private readonly navigationService = inject(NavigationService);
   private readonly userService = inject(UserService);
-  
+
   readonly memberId = signal<string>('');
   readonly currentRole = signal<Role | null>(null);
-  
+
   readonly memberMenuConfig = MEMBER_MENU_CONFIG;
-  
+
   readonly isDetailPage = signal<boolean>(false);
-  readonly isMoreSubpage = signal<boolean>(false);
-  readonly currentUrl = signal<string>(this.router.url);
-  readonly showBackButton = computed(() => this.isDetailPage() || this.isMoreSubpage());
-  readonly backUrl = computed(() => {
-    const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    if (!this.showBackButton()) return '';
 
-    // Read from the signal (not `this.router.url` directly) so this computed re-runs on
-    // every navigation, even nested ones where isDetailPage/isMoreSubpage don't change value.
-    const url = this.currentUrl();
-
-    if (url.includes('/contact') && /[?&]type=sponsors?(?:&|$)/.test(url)) {
-      return `/app/${roleType}/${roleId}/sponsors`;
-    }
-
-    if (this.isMoreSubpage()) {
-      return `/app/${roleType}/${roleId}/more`;
-    }
-
-    if (url.includes('/notifications')) {
-      return '';
-    }
-
-    // The signature step goes back to the form it belongs to, not to the submissions list.
-    const signMatch = url.match(/\/forms\/(\d+)\/(-?\d+)\/sign/);
-    if (signMatch) {
-      return `/app/${roleType}/${roleId}/forms/${signMatch[1]}/${signMatch[2]}`;
-    }
-
-    const formSubmissionMatch = url.match(/\/forms\/(\d+)\/(-?\d+)/);
-    if (formSubmissionMatch) {
-      return `/app/${roleType}/${roleId}/forms/${formSubmissionMatch[1]}`;
-    }
-    if (url.includes('/forms/')) {
-      return `/app/${roleType}/${roleId}/forms`;
-    }
-    if (url.includes('/news/')) {
-      return `/app/${roleType}/${roleId}/news`;
-    }
-    if (url.includes('/matches/')) {
-      return `/app/${roleType}/${roleId}/matches`;
-    }
-    return `/app/${roleType}/${roleId}/home`;
-  });
-  
   constructor() {
     this.loadCurrentRole();
     this.subscribeToRouterEvents();
@@ -117,27 +69,19 @@ export class MemberPage implements OnInit {
   }
 
   private checkIfDetailPage(): void {
+    this.loadCurrentRole();
     const url = this.router.url;
-    this.currentUrl.set(url);
-    const isMoreSubpage = url.includes('/information') ||
-                          url.includes('/my-documents') ||
-                          url.includes('/contact');
     const isDetail = url.includes('/news/') && url.split('/').length > 5 ||
                      url.includes('/matches/') && url.split('/').length > 5 ||
                      url.includes('/action/') ||
                      url.includes('/forms/') && url.split('/').length > 5 ||
                      url.includes('/teams/') && url.split('/').length > 5 ||
                      url.includes('/notifications');
-    this.isMoreSubpage.set(isMoreSubpage);
     this.isDetailPage.set(isDetail);
   }
-  
+
   private loadCurrentRole(): void {
     const role = this.userService.getCurrentRole();
     this.currentRole.set(role);
-  }
-  
-  goBack(): void {
-    this.navigationService.goBack();
   }
 }

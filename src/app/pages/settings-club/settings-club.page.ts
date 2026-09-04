@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { NavigationService } from '@services/navigation.service';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
+import { ActionRowComponent } from '@components/action-row/action-row.component';
 import { addIcons } from 'ionicons';
 import { settingsOutline, informationCircleOutline, documentTextOutline, walletOutline } from 'ionicons/icons';
 
@@ -12,10 +13,9 @@ import { settingsOutline, informationCircleOutline, documentTextOutline, walletO
   templateUrl: './settings-club.page.html',
   styleUrls: ['./settings-club.page.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, IonIcon, TranslatePipe]
+  imports: [CommonModule, TranslatePipe, BackButtonComponent, UserHeaderComponent, ActionRowComponent]
 })
 export class SettingsClubPage {
-  private readonly router = inject(Router);
   private readonly navigationService = inject(NavigationService);
 
   readonly selectedTab = 'information';
@@ -24,18 +24,23 @@ export class SettingsClubPage {
     addIcons({ settingsOutline, informationCircleOutline, documentTextOutline, walletOutline });
   }
 
-  getSettingsInformationUrl(): string {
+  backRoute(): string {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/settings-club/information`;
+    return `/app/${roleType}/${roleId}/more`;
   }
 
-  getSettingsFormsUrl(): string {
+  goToInformation(): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/settings-forms`;
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/settings-club/information`]);
   }
 
-  getSettingsSponsorsUrl(): string {
+  goToForms(): void {
     const { roleType, roleId } = this.navigationService.extractRoleDetails();
-    return `/app/${roleType}/${roleId}/settings-club/sponsors`;
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/settings-forms`]);
+  }
+
+  goToSponsors(): void {
+    const { roleType, roleId } = this.navigationService.extractRoleDetails();
+    this.navigationService.navigateTo([`/app/${roleType}/${roleId}/settings-club/sponsors`]);
   }
 }

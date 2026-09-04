@@ -8,6 +8,21 @@
   }
 }
 
+// Wraps a component (e.g. app-user-header) that should render sticky and mobile-only above
+// a routed page's own content. Sits as a sibling of .page-container, which is where the
+// page's padding lives (see _role-shell.scss) — so this needs no padding/margin correction
+// of its own to read as full-bleed. Hidden entirely above the mobile breakpoint.
+.mobile-page-header {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+}
+
 .content-section {
   background: var(--background-primary, #ffffff);
   border: 1px solid var(--border-light, #e5e7eb);
@@ -73,10 +88,11 @@
   align-items: center;
   gap: 1rem;
 
+  // It only ever holds app-back-button + this title, and the page's own mobile-page-header
+  // (app-user-header) already shows both on mobile — hide the whole wrapper there, not just
+  // its children, so it doesn't leave behind an empty row with its own margin.
   @media (max-width: 768px) {
-    margin-bottom: 1.5rem;
-
-    gap: 0;
+    display: none;
   }
 
   .section-title {
@@ -84,10 +100,6 @@
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--text-primary, #111827);
-
-    @media (max-width: 768px) {
-      font-size: 1.5rem;
-    }
   }
 
   .section-subtitle {

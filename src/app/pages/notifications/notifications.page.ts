@@ -8,6 +8,7 @@ import { NavigationService } from '@core/services/navigation.service';
 import { Notification, NotificationType } from '@core/models';
 import { RoleType } from '@core/models/role.model';
 import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { addIcons } from 'ionicons';
 import { checkmarkDoneOutline } from 'ionicons/icons';
 
@@ -20,7 +21,8 @@ import { checkmarkDoneOutline } from 'ionicons/icons';
     CommonModule,
     IonAvatar, IonImg, IonIcon, IonSpinner,
     TranslatePipe,
-    EmptyStateComponent
+    EmptyStateComponent,
+    UserHeaderComponent
   ]
 })
 export class NotificationsPage implements OnInit, OnDestroy {
@@ -83,8 +85,8 @@ export class NotificationsPage implements OnInit, OnDestroy {
     await this.notificationsService.loadMore();
   }
 
-  markAllRead(): void {
-    this.notificationsService.markAllAsRead();
+  async markAllRead(): Promise<void> {
+    await this.notificationsService.markAllAsRead();
   }
 
 
@@ -134,7 +136,7 @@ export class NotificationsPage implements OnInit, OnDestroy {
 
     try {
       const submission = await this.formSubmissionsService.getSubmission(relatedEntityId);
-      this.navigationService.navigateTo([`/app/${roleType}/${roleId}`, 'forms', submission.formId.toString(), relatedEntityId.toString()]);
+      this.navigationService.navigateTo([`/app/${roleType}/${roleId}`, 'forms', submission.formId.toString()]);
     } catch {
       // notification is already marked as read; ignore navigation failure
     }

@@ -19,13 +19,14 @@ import { addOutline, walletOutline, arrowBackOutline, saveOutline } from 'ionico
 import { ClubService } from '@services/club.service';
 import { ConfirmService } from '@services/confirm.service';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 
 @Component({
   selector: 'app-settings-sponsors',
   templateUrl: './settings-sponsors.page.html',
   styleUrls: ['./settings-sponsors.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent, BackButtonComponent, EmptyStateComponent]
+  imports: [CommonModule, IonIcon, IonToast, TranslatePipe, PreviewModalComponent, SectionFooterActionsComponent, SponsorCardComponent, SponsorsDisplayComponent, BackButtonComponent, EmptyStateComponent, UserHeaderComponent]
 })
 export class SettingsSponsorsPage implements OnInit {
   private readonly sponsorService = inject(SponsorService);
