@@ -3,6 +3,22 @@
   height: 100%;
 }
 
+// The mobile row list separates items with a divider (see .news-card--row above) instead of a
+// gap — trim the padding at both ends so it doesn't add space before the first item or a
+// dangling divider after the last one.
+:host(:first-child) .news-card--row {
+  @media (max-width: 768px) {
+    padding-top: 0;
+  }
+}
+
+:host(:last-child) .news-card--row {
+  @media (max-width: 768px) {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
 .news-card {
   display: flex;
   height: 100%;
@@ -87,8 +103,8 @@
 
 .news-time {
   font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--color-accent, var(--ion-color-primary, #4a90e2));
+  font-weight: 400;
+  color: var(--text-secondary, #6c757d);
 }
 
 .news-title {
@@ -124,12 +140,15 @@
   flex-direction: row-reverse;
   align-items: flex-start;
   gap: 14px;
-  // Flat list item on mobile — no card chrome. Desktop re-adds its own border/padding below.
+  // Flat list item on mobile — no card chrome, no hover lift, just a divider between rows.
+  // Desktop re-adds its own card look (background, radius, hover) below.
   padding: 0;
   border: none;
-  border-radius: 16px;
-  background: var(--color-surface, var(--background-primary, #ffffff));
-  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+
+  @media (max-width: 768px) {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-divider, var(--border-light, #e5e7eb)) 65%, transparent);
+  }
 
   .news-thumb {
     width: 88px;
@@ -151,12 +170,6 @@
     font-size: 13px;
     -webkit-line-clamp: 2;
     margin-top: 2px;
-  }
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px var(--shadow-light, rgba(20, 18, 16, 0.1));
-    border-color: color-mix(in srgb, var(--color-accent, var(--ion-color-primary, #4a90e2)) 45%, var(--color-divider, var(--border-light, #e5e7eb)));
   }
 }
 
@@ -190,6 +203,14 @@
     padding: 16px;
     border-radius: 18px;
     border: 1px solid var(--color-divider, var(--border-light, #e5e7eb));
+    background: var(--color-surface, var(--background-primary, #ffffff));
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px var(--shadow-light, rgba(20, 18, 16, 0.1));
+      border-color: color-mix(in srgb, var(--color-accent, var(--ion-color-primary, #4a90e2)) 45%, var(--color-divider, var(--border-light, #e5e7eb)));
+    }
 
     .news-thumb {
       width: 100%;
