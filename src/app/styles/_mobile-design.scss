@@ -1,0 +1,121 @@
+// Mobile design primitives. Brand comes from the project theme; controls use
+// ink for contrast instead of yellow text on a light surface.
+@media (max-width: 768px) {
+  .club-mobile-design {
+    --mobile-brand: var(--club-brand, #ffd700);
+    --mobile-brand-soft: var(--club-brand-soft, #fff4c2);
+    --mobile-ink: #20211d;
+    --mobile-muted: #62655e;
+    --mobile-paper: #ffffff;
+    --mobile-surface: #ffffff;
+    --mobile-divider: #dedfd7;
+    --mobile-radius: 12px;
+    --mobile-radius-small: 8px;
+    // Bottom tabs: change the active color and top marker independently here.
+    --mobile-tab-active-color: var(--mobile-ink);
+    --mobile-tab-indicator-color: var(--mobile-brand);
+    --mobile-tab-height: 48px;
+    --mobile-tab-padding: 6px;
+    --app-page-gutter: 1.25rem;
+    --app-mobile-header-height: 48px;
+    --app-mobile-menu-height: calc(var(--mobile-tab-height) + 2 * var(--mobile-tab-padding) + 1px + env(safe-area-inset-bottom, 0px));
+
+    --background-primary: var(--mobile-surface);
+    --background-secondary: var(--mobile-paper);
+    --background-tertiary: #efefe8;
+    --text-primary: var(--mobile-ink);
+    --text-secondary: var(--mobile-muted);
+    --text-light: var(--mobile-muted);
+    --border-light: var(--mobile-divider);
+    --border-medium: #b9bcb1;
+    --color-bg: var(--mobile-paper);
+    --color-surface: var(--mobile-surface);
+    --color-divider: var(--mobile-divider);
+    --color-header-bg: var(--mobile-brand-soft);
+    --color-accent: var(--mobile-ink);
+    --color-accent-hover: var(--mobile-ink);
+    // --color-primary / --ion-color-primary are deliberately NOT overridden here — they
+    // already come from the club's own theme (variables.scss) at :root, same as desktop.
+    // Overriding them to --mobile-ink used to make primary buttons a different color on
+    // mobile than on desktop; leaving them alone keeps both consistent.
+    --button-primary-color: var(--mobile-ink);
+    --button-primary-color-rgb: 32, 33, 29;
+    --button-primary-contrast: #ffffff;
+    --ion-background-color: var(--mobile-paper);
+    --ion-text-color: var(--mobile-ink);
+    --form-control-radius: var(--mobile-radius-small);
+    --form-accent: var(--mobile-ink);
+    --form-focus-ring: 0 0 0 3px var(--mobile-brand-soft);
+    --btn-radius: var(--mobile-radius-small);
+    --btn-secondary-bg: var(--mobile-brand-soft);
+    --btn-secondary-color: var(--mobile-ink);
+    --btn-secondary-bg-hover: #f5e6a8;
+    --btn-secondary-bg-active: #efdc8e;
+    --shadow-light: rgba(32, 33, 29, 0.04);
+    --shadow-medium: rgba(32, 33, 29, 0.1);
+
+    font-family: var(--font-heading, "Figtree", system-ui, sans-serif);
+    color: var(--text-primary);
+
+    .section-title,
+    .heading-1 {
+      font-family: inherit;
+      font-size: 1.75rem;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-subtitle {
+      line-height: 1.5;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline,
+    .btn-danger,
+    .btn-success,
+    .btn-add {
+      min-height: 44px;
+      border-radius: var(--mobile-radius-small);
+    }
+
+    .btn-filter-tab.active,
+    .tab-switch-btn.active {
+      background: var(--mobile-brand-soft);
+      color: var(--mobile-ink);
+    }
+
+    .btn-icon,
+    .btn-icon-round {
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    .field-input,
+    .form-input,
+    .field-textarea,
+    .form-textarea,
+    .form-select {
+      min-height: 44px;
+      font-size: 1rem;
+    }
+
+    .app-modal-header {
+      background: var(--mobile-paper);
+    }
+
+    .app-modal-header-icon {
+      color: var(--mobile-ink);
+    }
+
+    :is(button, a, [role="button"]):focus-visible {
+      outline: 2px solid var(--mobile-ink);
+      outline-offset: 3px;
+    }
+  }
+}

@@ -1,7 +1,14 @@
+<div class="mobile-page-header">
+  <app-user-header [showBackButton]="true" [title]="'user.myDocuments.title'" />
+</div>
+
 <div class="page-container my-documents-page">
   <div class="section-header">
     <div class="header-content">
-      <h1 class="section-title">{{ 'user.myDocuments.title' | translate }}</h1>
+      <div class="section-header-with-back-button">
+        <app-back-button />
+        <h1 class="section-title">{{ 'user.myDocuments.title' | translate }}</h1>
+      </div>
       <p class="section-subtitle">{{ 'user.myDocuments.description' | translate }}</p>
     </div>
   </div>

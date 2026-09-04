@@ -1,9 +1,13 @@
+<div class="mobile-page-header">
+  <app-user-header [showBackButton]="true" [title]="'user.menu.notifications'" />
+</div>
+
 <div class="page-container member-action-page">
   <div class="section-header notifications-header">
     <h1 class="section-title">{{ 'user.menu.notifications' | translate }}</h1>
 
     @if (notifications().length > 0) {
-      <button type="button" class="btn-icon mark-all-read-button" (click)="markAllRead()">
+      <button type="button" class="btn-primary mark-all-read-button" (click)="markAllRead()">
         <ion-icon name="checkmark-done-outline"></ion-icon>
         <span>{{ 'notifications.markAllAsRead' | translate }}</span>
       </button>

@@ -2,23 +2,10 @@
   <div class="header-content group-container">
     <div class="header-leading">
       @if (showBackButton()) {
-        <button class="back-button" (click)="onBackClick()">
+        <button class="back-button-icon" (click)="goBack()" [attr.aria-label]="'common.back' | translate">
           <ion-icon name="arrow-back-outline"></ion-icon>
-          <span>{{ 'common.back' | translate }}</span>
         </button>
-      } @else if (showRoleSelector()) {
-        <button
-          type="button"
-          class="hamburger-button"
-          (click)="toggleAccountDrawer($event)"
-          [attr.aria-label]="'common.menu' | translate">
-          <ion-icon name="menu-outline"></ion-icon>
-        </button>
-      }
-    </div>
-
-    <div class="header-center">
-      @if (showRoleSelector() && !showBackButton()) {
+      } @else {
         <button
           type="button"
           class="header-home-button"
@@ -32,49 +19,20 @@
         </button>
       }
     </div>
-    @if (!showBackButton() && showNotificationsButton()) {
-      <div class="header-actions">
-        <button class="notifications-button" type="button" (click)="goToNotifications()">
+
+    @if (showBackButton() && title(); as pageTitle) {
+      <h1 class="header-title">{{ pageTitle | translate }}</h1>
+    }
+
+    <div class="header-actions">
+      @if (showNotificationsButton()) {
+        <button class="header-action-button" type="button" (click)="goToNotifications()" [attr.aria-label]="'user.menu.notifications' | translate">
           <ion-icon name="notifications-outline"></ion-icon>
           @if (notificationsBadge() > 0) {
             <span class="notifications-badge">{{ notificationsBadge() }}</span>
           }
         </button>
-      </div>
-    }
+      }
+    </div>
   </div>
 </div>
-
-@if (showAccountDrawer()) {
-  <div class="drawer-backdrop" (click)="closeAccountDrawer()"></div>
-  <div class="account-drawer">
-    <div class="drawer-identity">
-      <ion-avatar class="drawer-avatar">
-        <ion-img [src]="avatarUrl()" [alt]="user?.username" (ionError)="onAvatarError()"></ion-img>
-      </ion-avatar>
-      <div class="drawer-identity-text">
-        <div class="drawer-name">{{ displayName() }}</div>
-        <div class="drawer-subtitle">{{ currentRole()?.clubName }} · {{ currentRoleName() }}</div>
-      </div>
-    </div>
-
-    <nav class="drawer-nav">
-      <button class="drawer-item" type="button" (click)="goToProfile()">
-        <ion-icon name="person-outline"></ion-icon>
-        <span>{{ 'common.profile' | translate }}</span>
-      </button>
-      <button class="drawer-item" type="button" (click)="goToSettings()">
-        <ion-icon name="settings-outline"></ion-icon>
-        <span>{{ 'common.settings' | translate }}</span>
-      </button>
-      <app-role-selector [currentRole]="currentRole()" [asMenuItem]="true"></app-role-selector>
-    </nav>
-
-    <div class="drawer-spacer"></div>
-
-    <button class="drawer-item drawer-item--danger" type="button" (click)="logout()">
-      <ion-icon name="log-out-outline"></ion-icon>
-      <span>{{ 'auth.signOut' | translate }}</span>
-    </button>
-  </div>
-}

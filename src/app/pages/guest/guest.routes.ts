@@ -8,6 +8,10 @@ export const guestRoutes: Routes = [
     loadComponent: () => import('./guest.page').then(m => m.GuestPage),
     children: [
       {
+        path: 'more',
+        loadComponent: () => import('../more/more.page').then(m => m.MorePage)
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

@@ -5,12 +5,17 @@
         {{ submission().submittedAt ?? submission().createdAt | date:'mediumDate' }}
       </span>
       <div class="submission-meta__right">
-        <span class="submission-badge" [class]="statusBadgeClass()">
-          {{ statusLabelKey() | translate }}
-        </span>
-        <button class="view-button" (click)="openDetail()">
-          <ion-icon name="document-text-outline"></ion-icon>
+        <button class="view-button" type="button" (click)="openDetail()" [attr.aria-label]="'user.forms.submission.detailTitle' | translate">
+          <ion-icon name="eye-outline"></ion-icon>
         </button>
+        @if (documentId()) {
+          <button class="view-button" type="button" (click)="openPreview()" [attr.aria-label]="'user.myDocuments.preview' | translate">
+            <ion-icon name="document-text-outline"></ion-icon>
+          </button>
+          <button class="view-button" (click)="downloadDocument()" [disabled]="isDownloading()" [attr.aria-label]="'user.forms.submission.downloadDocument' | translate">
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+        }
       </div>
     </div>
   </div>
@@ -39,17 +44,6 @@
   </div>
 
   @if (documentId()) {
-    <div class="document-actions">
-      <button class="btn-secondary btn-block" type="button" (click)="openPreview()">
-        <ion-icon name="eye-outline"></ion-icon>
-        {{ 'user.myDocuments.preview' | translate }}
-      </button>
-      <button class="btn-primary btn-block download-document" (click)="downloadDocument()" [disabled]="isDownloading()">
-        <ion-icon name="download-outline"></ion-icon>
-        {{ 'user.forms.submission.downloadDocument' | translate }}
-      </button>
-    </div>
-
     <app-document-preview
       [documentId]="previewDocumentId()"
       [fileName]="documentFileName()"
@@ -67,7 +61,7 @@
           </div>
         </div>
       }
-      <button class="btn-primary btn-block" (click)="editRequested.emit()">
+      <button class="btn-primary btn-small" (click)="editRequested.emit()">
         <ion-icon name="create-outline"></ion-icon>
         {{ 'user.forms.submission.editAndResend' | translate }}
       </button>

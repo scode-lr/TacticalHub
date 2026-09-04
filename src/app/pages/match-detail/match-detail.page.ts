@@ -9,6 +9,8 @@ import { MatchLineupComponent } from '@components/match-lineup/match-lineup.comp
 import { MatchGoalScorersComponent } from '@components/match-goal-scorers/match-goal-scorers.component';
 import { MatchStandingsComponent } from '@components/match-standings/match-standings.component';
 import { MatchRelatedComponent } from '@components/match-related/match-related.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 
 export type TabType = 'lineup' | 'goals' | 'standings' | 'matches';
 
@@ -26,7 +28,9 @@ export type TabType = 'lineup' | 'goals' | 'standings' | 'matches';
     MatchLineupComponent,
     MatchGoalScorersComponent,
     MatchStandingsComponent,
-    MatchRelatedComponent
+    MatchRelatedComponent,
+    BackButtonComponent,
+    UserHeaderComponent
   ]
 })
 export class MatchDetailPage implements OnInit {

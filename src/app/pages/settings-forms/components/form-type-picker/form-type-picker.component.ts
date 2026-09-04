@@ -4,7 +4,7 @@ import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormAction } from '@core/models/form-action.enum';
 import { IonIcon, IonModal } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bodyOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline } from 'ionicons/icons';
+import { personAddOutline, chevronForwardOutline, closeOutline, documentTextOutline, cardOutline } from 'ionicons/icons';
 
 interface TypeOption {
   action: FormAction;
@@ -29,13 +29,13 @@ export class FormTypePickerComponent {
   private pendingAction: FormAction | null = null;
 
   readonly options: TypeOption[] = [
-    { action: FormAction.RegisterPlayer, icon: 'body-outline', titleKey: 'admin.settingsForms.typePicker.registerPlayerTitle', descriptionKey: 'admin.settingsForms.typePicker.registerPlayerDescription' },
-    { action: FormAction.BecomeMember, icon: 'people-outline', titleKey: 'admin.settingsForms.typePicker.becomeMemberTitle', descriptionKey: 'admin.settingsForms.typePicker.becomeMemberDescription' },
+    { action: FormAction.RegisterPlayer, icon: 'person-add-outline', titleKey: 'admin.settingsForms.typePicker.registerPlayerTitle', descriptionKey: 'admin.settingsForms.typePicker.registerPlayerDescription' },
+    { action: FormAction.BecomeMember, icon: 'card-outline', titleKey: 'admin.settingsForms.typePicker.becomeMemberTitle', descriptionKey: 'admin.settingsForms.typePicker.becomeMemberDescription' },
     { action: FormAction.Simple, icon: 'document-text-outline', titleKey: 'admin.settingsForms.typePicker.generalTitle', descriptionKey: 'admin.settingsForms.typePicker.generalDescription' }
   ];
 
   constructor() {
-    addIcons({ bodyOutline, chevronForwardOutline, closeOutline, documentTextOutline, peopleOutline });
+    addIcons({ personAddOutline, chevronForwardOutline, closeOutline, documentTextOutline, cardOutline });
   }
 
   close(): void {

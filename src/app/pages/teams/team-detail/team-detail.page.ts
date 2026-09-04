@@ -6,6 +6,7 @@ import { Team } from '@models/team.model';
 import { Player, Position } from '@models/match-detail.model';
 import { PlayerFormModalComponent, NewPlayerData } from '@components/modals';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { addIcons } from 'ionicons';
 import { trophyOutline, addOutline } from 'ionicons/icons';
 import { TeamsService } from '@services/teams.service';
@@ -15,7 +16,7 @@ import { TeamsService } from '@services/teams.service';
   templateUrl: './team-detail.page.html',
   styleUrls: ['./team-detail.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, PlayerFormModalComponent, BackButtonComponent]
+  imports: [CommonModule, IonIcon, PlayerFormModalComponent, BackButtonComponent, UserHeaderComponent]
 })
 export class TeamDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);

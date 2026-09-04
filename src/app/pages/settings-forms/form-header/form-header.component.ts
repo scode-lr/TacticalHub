@@ -2,11 +2,10 @@ import { Component, HostListener, computed, inject, input, output, signal } from
 import { CommonModule } from '@angular/common';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, copyOutline, documentTextOutline, ellipsisVertical, peopleOutline, timeOutline, trashOutline } from 'ionicons/icons';
+import { calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, copyOutline, ellipsisVertical, timeOutline, trashOutline } from 'ionicons/icons';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { FormHeader } from '@models/form-header.model';
 import { AppStatus } from '@models/app-status.model';
-import { FormAction } from '@models/form-action.enum';
 import { NavigationService } from '@core/index';
 import { Tag } from 'primeng/tag';
 
@@ -51,15 +50,6 @@ export class FormHeaderComponent {
     }
   });
 
-  readonly formIcon = computed((): string => {
-    switch (this.form().action) {
-      case FormAction.RegisterPlayer: return 'body-outline';
-      case FormAction.BecomeMember:   return 'people-outline';
-      case FormAction.Simple:
-      default:                        return 'document-text-outline';
-    }
-  });
-
   /** Admin rows dim on inactive status; member rows dim once the submission window has closed. */
   readonly isDim = computed((): boolean =>
     this.editable() ? this.form().status !== AppStatus.Active : !this.formOpen()
@@ -98,7 +88,7 @@ export class FormHeaderComponent {
   });
 
   constructor() {
-    addIcons({ bodyOutline, calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, copyOutline, documentTextOutline, ellipsisVertical, peopleOutline, timeOutline, trashOutline });
+    addIcons({ calendarOutline, checkmarkOutline, chevronForwardOutline, closeOutline, copyOutline, ellipsisVertical, timeOutline, trashOutline });
   }
 
   toggleMenu(event: Event): void {

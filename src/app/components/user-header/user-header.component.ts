@@ -1,122 +1,58 @@
-import { Component, computed, inject, signal, HostListener, input, output } from '@angular/core';
-import { IonAvatar, IonIcon, IonImg } from '@ionic/angular/standalone';
+import { Component, computed, inject, input } from '@angular/core';
+import { IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { environment } from '@environment';
 import { TranslatePipe } from '@pipes/translate.pipe';
-import { User } from '@core/models/user.model';
 import { Role, RoleType } from '@core/models/role.model';
 import { UserService } from '@core/services/user.service';
 import { NavigationService } from '@services/navigation.service';
 import { NotificationsService } from '@core/services/notifications.service';
-import { TranslationService } from '@services/i18n/translation.service';
-import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
 import { DefaultImageDirective } from '@core/directives/default-image.directive';
 import { addIcons } from 'ionicons';
-import {
-  arrowBackOutline,
-  logOutOutline,
-  menuOutline,
-  notificationsOutline,
-  personOutline,
-  settingsOutline
-} from 'ionicons/icons';
+import { arrowBackOutline, notificationsOutline } from 'ionicons/icons';
 
+/**
+ * Two uses: the home page (club logo + notifications for Members) and, on mobile only,
+ * a page's own back-button bar (title + back arrow) — each page supplies its own title
+ * and back target directly, there is no shell/URL-matching logic behind it.
+ */
 @Component({
   selector: 'app-user-header',
   templateUrl: './user-header.component.html',
   styleUrls: ['./user-header.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    IonAvatar,
-    IonIcon,
-    IonImg,
-    TranslatePipe,
-    RoleSelectorComponent,
-    DefaultImageDirective
-  ]
+  imports: [CommonModule, IonIcon, TranslatePipe, DefaultImageDirective]
 })
 export class UserHeaderComponent {
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
   private readonly notificationsService = inject(NotificationsService);
-  private readonly translationService = inject(TranslationService);
 
-  readonly showBackButton = input<boolean>(false);
-  readonly showRoleSelector = input<boolean>(true);
   readonly currentRole = input<Role | null>(null);
-  readonly backUrl = input<string | string[]>();
-  readonly backClick = output<void>();
+  readonly showBackButton = input<boolean>(false);
+  /** Translation key (or literal text) for the back-button bar's title. */
+  readonly title = input<string | null>(null);
+  /** Route to navigate back to; falls back to browser history when omitted. */
+  readonly backRoute = input<string | null>(null);
 
-  user: User | null = null;
-  readonly showAccountDrawer = signal<boolean>(false);
-  readonly avatarUrl = signal<string>('assets/default-avatar.svg');
   readonly notificationsBadge = computed(() => this.notificationsService.getUnreadCount());
   readonly showNotificationsButton = computed(() => {
+    if (this.showBackButton()) return false;
     const role = this.currentRole() ?? this.userService.getCurrentRole();
     return role?.roleId === RoleType.Member;
   });
   readonly defaultClubLogo = computed(() => (environment as Record<string, unknown>)['logoUrl'] as string ?? 'assets/image-non-available.svg');
-  readonly displayName = computed(() => {
-    const name = [this.user?.metadata?.firstName, this.user?.metadata?.lastName].filter(Boolean).join(' ').trim();
-    return name || this.user?.username || '';
-  });
-  readonly currentRoleName = computed(() => {
-    const role = this.currentRole() ?? this.userService.getCurrentRole();
-    if (!role?.roleId) return '';
-    return this.translationService.instant(`roles.${this.roleKey(role.roleId)}`);
-  });
 
   constructor() {
-    addIcons({
-      arrowBackOutline,
-      logOutOutline,
-      menuOutline,
-      notificationsOutline,
-      personOutline,
-      settingsOutline
-    });
+    addIcons({ arrowBackOutline, notificationsOutline });
   }
 
-  ngOnInit() {
-    this.loadUserData();
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.account-drawer') && !target.closest('.hamburger-button')) {
-      this.showAccountDrawer.set(false);
-    }
-  }
-
-  loadUserData() {
-    const storedUser = this.userService.getStoredUser();
-    if (storedUser) {
-      this.user = storedUser;
-      this.avatarUrl.set(storedUser.metadata?.avatar || 'assets/default-avatar.svg');
-    }
-  }
-
-  onAvatarError() {
-    this.avatarUrl.set('assets/default-avatar.svg');
-  }
-
-  toggleAccountDrawer(event: MouseEvent) {
-    event.stopPropagation();
-    this.showAccountDrawer.set(!this.showAccountDrawer());
-  }
-
-  closeAccountDrawer() {
-    this.showAccountDrawer.set(false);
-  }
-
-  onBackClick() {
-    const url = this.backUrl();
-    if (url) {
-      this.navigationService.navigateTo(Array.isArray(url) ? url : [url]);
+  goBack(): void {
+    const route = this.backRoute();
+    if (route) {
+      this.navigationService.navigateTo([route]);
     } else {
-      this.backClick.emit();
+      this.navigationService.goBack();
     }
   }
 
@@ -130,30 +66,5 @@ export class UserHeaderComponent {
     const role = this.currentRole() ?? this.userService.getCurrentRole();
     if (!role) return;
     this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/home`]);
-  }
-
-  goToProfile() {
-    this.showAccountDrawer.set(false);
-    this.navigationService.navigateTo(['/profile']);
-  }
-
-  goToSettings() {
-    this.showAccountDrawer.set(false);
-    this.navigationService.navigateTo(['/settings']);
-  }
-
-  async logout() {
-    this.showAccountDrawer.set(false);
-    await this.userService.logout();
-  }
-
-  private roleKey(roleType: RoleType): string {
-    switch (roleType) {
-      case RoleType.Admin: return 'admin';
-      case RoleType.Coach: return 'coach';
-      case RoleType.Member: return 'member';
-      case RoleType.Guest: return 'guest';
-      default: return 'member';
-    }
   }
 }

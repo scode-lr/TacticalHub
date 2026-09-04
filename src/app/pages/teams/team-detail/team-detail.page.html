@@ -1,4 +1,8 @@
 @if (team()) {
+  <div class="mobile-page-header">
+    <app-user-header [showBackButton]="true" [title]="team()!.name" />
+  </div>
+
   <div class="page-container team-detail-page">
     <div class="page-header">
       <app-back-button />

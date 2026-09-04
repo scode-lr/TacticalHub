@@ -1,3 +1,5 @@
+@use "../../styles/mobile";
+
 .menu-container {
   width: 244px;
   background: var(--background-primary, #ffffff);
@@ -188,6 +190,62 @@
   }
 }
 
+@include mobile.private-club {
+  .menu-container {
+    border-top-color: var(--mobile-divider);
+    background: var(--mobile-surface);
+    box-shadow: none;
+
+    .menu-nav-mobile {
+      padding: var(--mobile-tab-padding) 6px calc(var(--mobile-tab-padding) + env(safe-area-inset-bottom, 0px));
+      gap: 0;
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--mobile-tab-height);
+        padding: 4px 0;
+        gap: 2px;
+        color: var(--mobile-muted);
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: calc(-1 * var(--mobile-tab-padding));
+          left: 50%;
+          width: 24px;
+          height: 3px;
+          border-radius: 0 0 3px 3px;
+          background: var(--mobile-tab-indicator-color);
+          transform: translateX(-50%);
+          opacity: 0;
+          transition: opacity 0.15s ease;
+          pointer-events: none;
+        }
+
+        .menu-icon-wrapper {
+          width: 24px;
+          height: 24px;
+          flex-shrink: 0;
+        }
+
+        .menu-label {
+          font-size: 11px;
+          line-height: 14px;
+        }
+
+        &.active {
+          color: var(--mobile-tab-active-color);
+
+          &::before { opacity: 1; }
+          .menu-icon { color: var(--mobile-tab-active-color); }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .menu-container {
     width: 100%;
@@ -237,6 +295,12 @@
         font-weight: 500;
         color: color-mix(in srgb, var(--text-primary, #212529) 52%, transparent);
         position: relative;
+        // Home has a long-press gesture (opens the role switcher) — suppress the browser's
+        // own long-press behaviors (text-selection callout) so they don't fight it.
+        touch-action: manipulation;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
 
         .menu-icon {
           font-size: 1.375rem;
