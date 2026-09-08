@@ -5,8 +5,12 @@ export interface ClubMember {
   email: string;
   firstName: string;
   lastName: string;
-  avatarUrl?: string | null;
-  avatar?: string | null;
+  /**
+   * Whether the member has a profile photo. The photo itself is private:
+   * fetch it as a blob from `GET /clubs/{clubId}/users/{userId}/avatar`
+   * (see `MemberAvatarService.getMemberAvatarUrl`).
+   */
+  hasAvatar: boolean;
   roleId: number;
   teamId?: number;
   teamName?: string;

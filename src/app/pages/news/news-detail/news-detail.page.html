@@ -33,7 +33,12 @@
       }
 
       <div class="news-byline">
-        <span class="news-avatar" aria-hidden="true">{{ authorInitial }}</span>
+        @if (authorAvatarUrl(); as authorAvatar) {
+          <img class="news-avatar news-avatar--image" [src]="authorAvatar" [alt]="post.authorName"
+            (error)="onAuthorAvatarError()" />
+        } @else {
+          <span class="news-avatar" aria-hidden="true">{{ authorInitial }}</span>
+        }
         <span class="news-byline-author">{{ post.authorName }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ getFormattedDate(post.publishedAt || post.createdAt) }}</span>

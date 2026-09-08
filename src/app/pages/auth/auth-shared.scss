@@ -103,14 +103,14 @@
     position: relative;
 
     ion-input {
-      --border-radius: 999px;
-      --border-width: 0;
-      --background: var(--color-surface, #f3f4f6);
+      --border-radius: 10px;
+      --border-width: 1px;
+      --border-color: var(--border-light, #e5e7eb);
+      --background: var(--background-primary, var(--color-bg, #ffffff));
       --color: var(--text-primary, #111827);
-      --placeholder-color: color-mix(in srgb, var(--text-primary, #111827) 42%, transparent);
-      --placeholder-opacity: 1;
-      --padding-start: 1.125rem;
-      --padding-end: 1.125rem;
+      --placeholder-color: var(--text-light, #9ca3af);
+      --padding-start: 1rem;
+      --padding-end: 1rem;
       --padding-top: 0.875rem;
       --padding-bottom: 0.875rem;
       font-size: 0.9375rem;
@@ -119,10 +119,12 @@
       z-index: 1;
 
       &.ion-focused {
-        --box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent, #3880ff) 25%, transparent);
+        --border-color: var(--color-accent, #3880ff);
+        --box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent, #3880ff) 18%, transparent);
       }
 
       &.ion-invalid.ion-touched {
+        --border-color: var(--ion-color-danger, #eb445a);
         --box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
       }
     }

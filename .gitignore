@@ -77,8 +77,7 @@ projects/tactical.hub/ios/
 projects/tactical.hub/android/
 
 # Capacitor - Voltrega Hub
-projects/voltregacf.hub/ios/
-# android/ is tracked for Voltrega CF so CI can build/sign it (release/STORES.md) — secrets stay excluded via projects/voltregacf.hub/android/.gitignore
+# ios/ and android/ are tracked for Voltrega CF so CI can build/sign them (release/STORES.md) — secrets stay excluded via projects/voltregacf.hub/{ios,android}/.gitignore
 
 /designsToCode
 /output

@@ -9,6 +9,96 @@
       <h1 class="section-title">{{ 'profile.title' | translate }}</h1>
     </div>
 
+    <div class="content-section avatar-section">
+      <div class="section-content">
+        <h2 class="subsection-title">{{ 'profile.avatar.title' | translate }}</h2>
+
+        <div class="avatar-row">
+          <div class="avatar-frame">
+            @if (isAvatarReading()) {
+              <ion-spinner name="dots"></ion-spinner>
+            } @else {
+              <img
+                class="avatar-image"
+                [src]="avatarSrc()"
+                [alt]="'profile.avatar.title' | translate"
+                [appDefaultImage]="defaultAvatar" />
+            }
+          </div>
+
+          <div class="avatar-details">
+            <p class="avatar-hint">{{ 'profile.avatar.hint' | translate }}</p>
+
+            <div class="avatar-actions">
+              <label class="btn-secondary avatar-picker" [class.avatar-picker--disabled]="isAvatarBusy()">
+                <ion-icon name="camera-outline"></ion-icon>
+                <span>{{ (hasStoredAvatar() ? 'profile.avatar.change' : 'profile.avatar.select') | translate }}</span>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  [disabled]="isAvatarBusy()"
+                  (change)="onAvatarSelected($event)" />
+              </label>
+
+              @if (hasStoredAvatar()) {
+                <button type="button" class="btn-danger" [disabled]="isAvatarBusy()" (click)="removeAvatar()">
+                  @if (isRemovingAvatar()) {
+                    <ion-spinner name="lines-small"></ion-spinner>
+                  } @else {
+                    <ion-icon name="trash-outline"></ion-icon>
+                  }
+                  {{ (isRemovingAvatar() ? 'profile.avatar.removing' : 'profile.avatar.remove') | translate }}
+                </button>
+              }
+            </div>
+
+            @if (!hasPendingAvatar() && avatarError(); as error) {
+              <span class="field-error" role="alert">{{ error | translate }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ion-modal class="app-modal avatar-confirm-modal" [isOpen]="hasPendingAvatar()" (didDismiss)="cancelAvatarSelection()">
+      <ng-template>
+        <div class="app-modal-container">
+          <div class="app-modal-header">
+            <div class="app-modal-header-info">
+              <div class="app-modal-header-text">
+                <h2 class="app-modal-title">{{ 'profile.avatar.confirmTitle' | translate }}</h2>
+              </div>
+            </div>
+            <button type="button" class="app-modal-close" [disabled]="isAvatarBusy()" (click)="cancelAvatarSelection()">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+
+          <div class="app-modal-content avatar-confirm-content">
+            <img class="avatar-confirm-preview" [src]="avatarPreview()" [alt]="'profile.avatar.title' | translate" />
+
+            @if (avatarError(); as error) {
+              <span class="field-error" role="alert">{{ error | translate }}</span>
+            }
+          </div>
+
+          <div class="app-modal-footer">
+            <button type="button" class="btn-secondary" [disabled]="isAvatarBusy()" (click)="cancelAvatarSelection()">
+              {{ 'common.cancel' | translate }}
+            </button>
+            <button type="button" class="btn-primary" [disabled]="isAvatarBusy()" (click)="uploadAvatar()">
+              @if (isUploadingAvatar()) {
+                <ion-spinner name="lines-small"></ion-spinner>
+              } @else {
+                <ion-icon name="cloud-upload-outline"></ion-icon>
+              }
+              {{ (isUploadingAvatar() ? 'profile.avatar.uploading' : 'profile.avatar.save') | translate }}
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+
     <div class="content-section">
       <div class="section-content">
         <h2 class="subsection-title">{{ 'profile.personalInfo' | translate }}</h2>

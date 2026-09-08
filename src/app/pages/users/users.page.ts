@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
@@ -9,6 +10,7 @@ import { ClubMembersService } from '@services/club-members.service';
 import { ConfirmService } from '@services/confirm.service';
 import { ToastService } from '@services/toast.service';
 import { UserService } from '@services/user.service';
+import { MemberAvatarService } from '@services/member-avatar.service';
 import { NavigationService } from '@services/navigation.service';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { EmptyStateComponent } from '@components/empty-state/empty-state.component';
@@ -30,7 +32,7 @@ interface ClubUser {
   email: string;
   firstName: string;
   lastName: string;
-  avatarUrl: string;
+  hasAvatar: boolean;
   relations: ClubMember[];
 }
 
@@ -47,7 +49,9 @@ export class UsersPage implements OnInit, OnDestroy {
   private readonly toastService = inject(ToastService);
   private readonly translationService = inject(TranslationService);
   private readonly userService = inject(UserService);
+  private readonly memberAvatarService = inject(MemberAvatarService);
   private readonly navigationService = inject(NavigationService);
+  private readonly destroyRef = inject(DestroyRef);
   private searchTimer?: ReturnType<typeof setTimeout>;
   private loadRequestId = 0;
 
@@ -62,6 +66,8 @@ export class UsersPage implements OnInit, OnDestroy {
   readonly pageSize = 20;
   readonly roleType = RoleType;
   readonly defaultAvatar = 'assets/default-avatar.svg';
+  /** Resolved photo object URLs by userId — members without one keep the placeholder. */
+  readonly memberAvatars = signal<ReadonlyMap<number, string>>(new Map());
 
   readonly users = computed<ClubUser[]>(() => {
     const usersById = new Map<number, ClubUser>();
@@ -69,6 +75,7 @@ export class UsersPage implements OnInit, OnDestroy {
       const existing = usersById.get(relation.userId);
       if (existing) {
         existing.relations.push(relation);
+        existing.hasAvatar = existing.hasAvatar || relation.hasAvatar === true;
         continue;
       }
 
@@ -78,7 +85,7 @@ export class UsersPage implements OnInit, OnDestroy {
         email: relation.email,
         firstName: relation.firstName,
         lastName: relation.lastName,
-        avatarUrl: relation.avatarUrl || relation.avatar || this.defaultAvatar,
+        hasAvatar: relation.hasAvatar === true,
         relations: [relation]
       });
     }
@@ -125,6 +132,7 @@ export class UsersPage implements OnInit, OnDestroy {
       if (requestId !== this.loadRequestId) return;
       this.members.set(page.items);
       this.totalCount.set(page.totalCount);
+      this.loadMemberAvatars();
     } catch {
       if (requestId !== this.loadRequestId) return;
       this.members.set([]);
@@ -217,10 +225,35 @@ export class UsersPage implements OnInit, OnDestroy {
     return `/app/${roleType}/${roleId}/more`;
   }
 
+  /** Photo of the member when it is already resolved, placeholder otherwise. */
+  avatarSrc(user: ClubUser): string {
+    return this.memberAvatars().get(user.userId) ?? this.defaultAvatar;
+  }
+
   onAvatarError(event: Event): void {
     const image = event.target as HTMLImageElement;
     if (!image.src.endsWith(this.defaultAvatar)) {
       image.src = this.defaultAvatar;
+    }
+  }
+
+  /**
+   * Downloads the photo of every member of the current page that has one.
+   * Already resolved members are skipped, and the service caches the blobs, so
+   * paginating back and forth does not hit the API again.
+   */
+  private loadMemberAvatars(): void {
+    const clubId = this.clubId();
+
+    for (const user of this.users()) {
+      if (!user.hasAvatar || this.memberAvatars().has(user.userId)) continue;
+
+      this.memberAvatarService.getMemberAvatarUrl(clubId, user.userId)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(objectUrl => {
+          if (!objectUrl) return;
+          this.memberAvatars.update(current => new Map(current).set(user.userId, objectUrl));
+        });
     }
   }
 

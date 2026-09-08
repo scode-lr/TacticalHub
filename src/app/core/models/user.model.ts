@@ -12,7 +12,6 @@ export interface UserMetadata {
   firstName?: string;
   lastName?: string;
   birthDate?: Date;
-  avatar?: string | null;
   lastLogin?: Date;
 }
 
@@ -22,4 +21,10 @@ export interface User extends AuthUser {
   metadata?: UserMetadata;
   prefixPhoneNumber?: string;
   phoneNumber?: string;
+  /**
+   * Whether the user has a profile photo stored in the private bucket.
+   * The photo itself is never a public URL: it must be fetched as a blob
+   * from `GET /users/me/avatar` (see `UserService.getAvatarBlob`).
+   */
+  hasAvatar?: boolean;
 }

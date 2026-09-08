@@ -12,6 +12,7 @@ import { RelatedNewsComponent } from './related-news/related-news.component';
 import { RichTextPipe } from '@core/pipes/rich-text.pipe';
 import { NewsPost } from '@models/news.model';
 import { NewsService } from '@services/news.service';
+import { MemberAvatarService } from '@services/member-avatar.service';
 import { ClubService } from '@services/club.service';
 import { RoleType } from '@models/role.model';
 import { TranslationService } from '@core/services/i18n/translation.service';
@@ -27,6 +28,7 @@ import { ToastService } from '@services/toast.service';
 export class NewsDetailPage implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly newsService = inject(NewsService);
+  private readonly memberAvatarService = inject(MemberAvatarService);
   private readonly clubService = inject(ClubService);
   private readonly translationService = inject(TranslationService);
   private readonly toastService = inject(ToastService);
@@ -34,6 +36,8 @@ export class NewsDetailPage implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly news = signal<NewsPost | null>(null);
+  /** Author photo as an object URL; `null` keeps the initial-letter avatar. */
+  readonly authorAvatarUrl = signal<string | null>(null);
   readonly loading = signal(true);
   readonly isLightboxOpen = signal(false);
   readonly lightboxStartIndex = signal(0);
@@ -44,6 +48,11 @@ export class NewsDetailPage implements OnInit {
 
   get authorInitial(): string {
     return (this.news()?.authorName ?? '').trim().charAt(0).toUpperCase();
+  }
+
+  /** Falls back to the initials avatar when the photo cannot be rendered. */
+  onAuthorAvatarError(): void {
+    this.authorAvatarUrl.set(null);
   }
 
   get primaryImageUrl(): string | null {
@@ -142,6 +151,8 @@ export class NewsDetailPage implements OnInit {
 
   private async loadNews(id: string | null): Promise<void> {
     const clubId = this.clubService.getCurrentClubId() ?? 0;
+    this.authorAvatarUrl.set(null);
+
     if (!id || !clubId) {
       this.news.set(null);
       this.loading.set(false);
@@ -150,11 +161,28 @@ export class NewsDetailPage implements OnInit {
 
     this.loading.set(true);
     try {
-      this.news.set(await this.newsService.getById(clubId, Number(id)));
+      const post = await this.newsService.getById(clubId, Number(id));
+      this.news.set(post);
+      this.loadAuthorAvatar(post);
     } catch {
       this.news.set(null);
     } finally {
       this.loading.set(false);
     }
+  }
+
+  /**
+   * Downloads the author's photo when there is one. It is a private, club-scoped
+   * blob, so it is fetched through the shared cache instead of bound directly.
+   */
+  private loadAuthorAvatar(post: NewsPost): void {
+    if (!post.authorHasAvatar || !post.authorUserId) return;
+
+    this.memberAvatarService.getMemberAvatarUrl(post.clubId, post.authorUserId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(objectUrl => {
+        // Guard against a slow response arriving after the reader moved on.
+        if (this.news()?.id === post.id) this.authorAvatarUrl.set(objectUrl);
+      });
   }
 }

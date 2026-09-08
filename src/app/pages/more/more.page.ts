@@ -40,6 +40,7 @@ export class MorePage {
   });
 
   constructor() {
+    void this.userService.loadAvatar();
     // Ionic can cache this page while the active role changes.
     inject(Router).events.pipe(filter(event => event instanceof NavigationEnd), takeUntilDestroyed())
       .subscribe(() => this.currentRole.set(this.userService.getCurrentRole()));
