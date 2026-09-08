@@ -4,6 +4,8 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { documentTextOutline, downloadOutline, eyeOutline, folderOutline } from 'ionicons/icons';
 import { DocumentPreviewComponent } from '@components/document-preview/document-preview.component';
+import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { DocumentsService } from '@core/services/documents.service';
 import { ClubService } from '@core/services/club.service';
@@ -19,7 +21,7 @@ import { FormDocument } from '@core/models/document.model';
   templateUrl: './my-documents.page.html',
   styleUrls: ['./my-documents.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslatePipe, DocumentPreviewComponent],
+  imports: [CommonModule, IonIcon, TranslatePipe, DocumentPreviewComponent, BackButtonComponent, UserHeaderComponent],
 })
 export class MyDocumentsPage implements OnInit {
   private readonly documentsService = inject(DocumentsService);

@@ -7,6 +7,7 @@ import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { NetworkService } from '@services/network.service';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,13 @@ export class AppComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly titleService = inject(Title);
   protected readonly networkService = inject(NetworkService);
+  protected readonly isPrivateApp = environment.private;
 
   async ngOnInit() {
+    await SplashScreen.show({
+      showDuration: 2000,
+      autoHide: true,
+    });
     await this.applyStatusBarStyle();
     this.titleService.setTitle(environment.name);
     await this.refreshUserData();

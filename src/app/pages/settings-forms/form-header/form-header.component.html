@@ -1,28 +1,29 @@
 <div class="form-row" [class.form-row--dim]="isDim()" (click)="redirect()">
-  <span class="fr-icon">
-    <ion-icon [name]="formIcon()"></ion-icon>
-  </span>
   <div class="fr-body">
     <span class="fr-title">{{ form().name }}</span>
-    <span class="fr-meta">
-      <ion-icon name="calendar-outline"></ion-icon>
-      @if (form().fromDate || form().toDate) {
-        {{ form().fromDate | date:'dd/MM/yy' }} &rarr; {{ form().toDate | date:'dd/MM/yy' }}
-      } @else {
-        {{ 'admin.settingsForms.periodAlways' | translate }}
+    <span class="fr-meta" [class.fr-meta--editable]="editable()">
+      @if (editable()) {
+        <p-tag
+          [value]="'admin.settingsForms.status.' + form().status | translate"
+          [severity]="statusSeverity()"
+          class="fr-status"
+        />
       }
-      @if (isPending()) {
-        · {{ 'user.forms.pendingLabel' | translate }}
-      }
+      <ion-icon name="calendar-outline" class="fr-meta-date-icon"></ion-icon>
+      <span class="fr-meta-date">
+        @if (form().fromDate || form().toDate) {
+          {{ form().fromDate | date:'dd/MM/yy' }} &rarr; {{ form().toDate | date:'dd/MM/yy' }}
+        } @else {
+          {{ 'admin.settingsForms.periodAlways' | translate }}
+        }
+        @if (isPending()) {
+          · {{ 'user.forms.pendingLabel' | translate }}
+        }
+      </span>
     </span>
   </div>
 
   @if (editable()) {
-    <p-tag
-      [value]="'admin.settingsForms.status.' + form().status | translate"
-      [severity]="statusSeverity()"
-      class="fr-status"
-    />
     <div class="actions fr-actions" (click)="$event.stopPropagation()">
       <button
         type="button"

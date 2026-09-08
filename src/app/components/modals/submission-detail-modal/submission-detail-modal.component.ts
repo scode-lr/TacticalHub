@@ -64,7 +64,7 @@ export class SubmissionDetailModalComponent {
 
   private buildFromValues(detail: SubmissionDetail): void {
     const valuesByKey = new Map(detail.values.map(val => [val.fieldKey, val]));
-    const fields = this.fieldsToRender(detail, valuesByKey);
+    const fields = this.fieldsToRender(detail);
     const group: Record<string, unknown> = {};
 
     for (const field of fields) {
@@ -85,13 +85,14 @@ export class SubmissionDetailModalComponent {
    * full list of options. Answers whose field is no longer in the definition are appended so an
    * edited form does not hide what a member actually submitted.
    */
-  private fieldsToRender(detail: SubmissionDetail, valuesByKey: Map<string, SubmissionValue>): FormField[] {
+  private fieldsToRender(detail: SubmissionDetail): FormField[] {
     const definition = this.formFields();
     if (!definition.length) return detail.values.map((val, index) => this.fieldFromValue(val, index));
 
-    const defined = [...definition]
-      .sort((a, b) => a.order - b.order)
-      .map(field => ({ ...field, status: valuesByKey.get(field.key)?.status ?? field.status }));
+    // This modal is the member's own read-only view of their answers — never the coordination
+    // review flow — so per-field approved/rejected styling has no place here even once the
+    // submission has been resolved.
+    const defined = [...definition].sort((a, b) => a.order - b.order);
 
     const definedKeys = new Set(definition.map(field => field.key));
     const orphans = detail.values
@@ -114,7 +115,6 @@ export class SubmissionDetailModalComponent {
       order,
       validationJson: null,
       createdAt: new Date(),
-      status: val.status ?? undefined,
       // For select/radio: provide stored value as the only option so p-select renders it. A plain
       // yes/no answer is not a choice list, so it keeps the built-in options.
       options: this.isChoiceValue(val) && val.valueText !== null ? [val.valueText] : null,

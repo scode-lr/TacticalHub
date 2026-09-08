@@ -12,6 +12,12 @@ export interface NewsPost {
   clubId: number;
   authorUserId: number;
   authorName: string;
+  /**
+   * Whether the author has a profile photo. The photo is private:
+   * fetch it as a blob from `GET /clubs/{clubId}/users/{userId}/avatar`
+   * (see `MemberAvatarService.getMemberAvatarUrl`).
+   */
+  authorHasAvatar: boolean;
   title: string;
   body: string;
   externalLinkUrl?: string | null;

@@ -1,6 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, OnInit, effect } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, signal, computed, inject, input, viewChild, OnInit, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import {
   IonIcon
 } from '@ionic/angular/standalone';
@@ -16,17 +16,23 @@ import {
   mailOutline,
   logOutOutline,
   settingsOutline,
-  appsOutline
+  appsOutline,
+  documentTextOutline,
+  notificationsOutline,
+  personOutline
 } from 'ionicons/icons';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
 import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
-import { UserService } from '@core/services/user.service';
+import { DEFAULT_AVATAR, UserService } from '@core/services/user.service';
+import { DefaultImageDirective } from '@core/directives/default-image.directive';
 import { User } from '@core/models/user.model';
 import { NavigationService } from '@services/navigation.service';
 import { Role, RoleType } from '@core/models/role.model';
 import { InboxService } from '@core/services/inbox.service';
 import { NotificationsService } from '@core/services/notifications.service';
+import { MobileNavigationService } from '@services/mobile-navigation.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface MenuItem {
   id: string;
@@ -41,7 +47,10 @@ export interface MenuConfig {
   role: RoleType;
   items: MenuItem[];
   moreItems?: MenuItem[];
+  mobileMoreItems?: MenuItem[];
 }
+
+const LONG_PRESS_MS = 500;
 
 @Component({
   selector: 'app-menu',
@@ -52,16 +61,20 @@ export interface MenuConfig {
     CommonModule,
     IonIcon,
     TranslatePipe,
-    RoleSelectorComponent
+    RoleSelectorComponent,
+    DefaultImageDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MenuComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly userService = inject(UserService);
   private readonly navigationService = inject(NavigationService);
   private readonly inboxService = inject(InboxService);
   private readonly notificationsService = inject(NotificationsService);
+  private readonly mobileNavigation = inject(MobileNavigationService);
+  private readonly roleSelector = viewChild(RoleSelectorComponent);
 
   readonly config = input.required<MenuConfig>();
   readonly currentRole = input<Role | null>();
@@ -69,11 +82,17 @@ export class MenuComponent implements OnInit {
   readonly selectedMenuItem = signal<string>('home');
   readonly currentMenuId = signal<string>('home');
   readonly user = signal<User | null>(null);
-  readonly avatarUrl = signal<string>('assets/default-avatar.svg');
+  readonly defaultAvatar = DEFAULT_AVATAR;
+  /** Object URL of the user's profile photo, resolved once by UserService. */
+  readonly avatarUrl = computed(() => this.userService.avatarUrl() ?? DEFAULT_AVATAR);
 
   readonly moreItems = computed(() => this.config().moreItems ?? []);
+  readonly mobileMoreItems = computed(() => this.mobileNavigation.accountInMore()
+    ? this.config().mobileMoreItems ?? this.moreItems() : this.moreItems());
+  readonly showMore = computed(() => this.mobileNavigation.accountInMore() || this.moreItems().length > 0);
   readonly mobileMenuItems = computed(() =>
-    this.config().items.filter(item => item.id !== 'home' && item.id !== 'notifications')
+    this.config().items.filter(item => item.id !== 'notifications' &&
+      !this.mobileMoreItems().some(more => more.id === item.id))
   );
 
   readonly inboxBadge = computed(() => this.inboxService.getUnreadCount());
@@ -98,17 +117,17 @@ export class MenuComponent implements OnInit {
 
   readonly isMoreActive = computed(() => {
     const menuId = this.currentMenuId();
-    return menuId === 'more' || this.moreItems().some(item => item.route === menuId);
+    return menuId === 'more' || this.mobileMoreItems().some(item => item.route === menuId);
   });
 
   constructor() {
     this.initializeIcons();
     this.loadUserData();
-    this.subscribeToRouterEvents();
   }
 
   ngOnInit(): void {
     this.trackRouteChanges();
+    this.subscribeToRouterEvents();
   }
 
   private initializeIcons() {
@@ -122,6 +141,9 @@ export class MenuComponent implements OnInit {
       peopleOutline,
       mailOutline,
       appsOutline,
+      documentTextOutline,
+      notificationsOutline,
+      personOutline,
       logOutOutline,
       settingsOutline
     });
@@ -131,13 +153,13 @@ export class MenuComponent implements OnInit {
     const storedUser = this.userService.getStoredUser();
     if (storedUser) {
       this.user.set(storedUser);
-      this.avatarUrl.set(storedUser.metadata?.avatar || 'assets/default-avatar.svg');
+      void this.userService.loadAvatar();
     }
   }
 
   private subscribeToRouterEvents() {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter(event => event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.trackRouteChanges();
       });
@@ -160,6 +182,34 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  private longPressTimer: ReturnType<typeof setTimeout> | null = null;
+  private longPressTriggered = false;
+
+  /** Long-press on the mobile Home tab opens the role switcher; every other tab ignores this. */
+  onMobileItemPressStart(item: MenuItem): void {
+    if (item.id !== 'home') return;
+    this.longPressTriggered = false;
+    this.longPressTimer = setTimeout(() => {
+      this.longPressTriggered = true;
+      this.roleSelector()?.openRoleSelector();
+    }, LONG_PRESS_MS);
+  }
+
+  onMobileItemPressEnd(): void {
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+      this.longPressTimer = null;
+    }
+  }
+
+  onMobileItemClick(item: MenuItem): void {
+    if (this.longPressTriggered) {
+      this.longPressTriggered = false;
+      return;
+    }
+    this.selectMenuItem(item);
+  }
+
   isSelected(itemId: string): boolean {
     return this.selectedMenuItem() === itemId;
   }
@@ -168,7 +218,8 @@ export class MenuComponent implements OnInit {
     const role = this.currentRole();
     if (role) {
       this.selectedMenuItem.set('more');
-      this.navigationService.navigateTo([`/app/${role.roleId}/${role.id}/more`]);
+      const id = role.roleId === RoleType.Guest ? role.clubId : role.id;
+      this.navigationService.navigateTo([`/app/${role.roleId}/${id}/more`]);
     }
   }
 
@@ -182,9 +233,5 @@ export class MenuComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-  }
-
-  onAvatarError() {
-    this.avatarUrl.set('assets/default-avatar.svg');
   }
 }

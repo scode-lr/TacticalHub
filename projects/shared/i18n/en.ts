@@ -1,4 +1,10 @@
 export const sharedTranslations = {
+  more: {
+    account: 'My account',
+    clubServices: 'Club services',
+    clubSettings: 'Club settings',
+    leaveGuest: 'Leave guest mode'
+  },
   primeng: {
     apply: 'Apply',
     clear: 'Clear',
@@ -237,7 +243,25 @@ export const sharedTranslations = {
     confirmDeleteAccount: 'Delete permanently',
     deletingAccount: 'Deleting account…',
     accountDeleted: 'Your account has been deleted.',
-    deleteAccountError: 'The account could not be deleted.'
+    deleteAccountError: 'The account could not be deleted.',
+    avatar: {
+      title: 'Profile photo',
+      hint: 'JPG, PNG or WEBP. Maximum 2 MB.',
+      select: 'Choose a photo',
+      change: 'Change photo',
+      confirmTitle: 'Confirm profile photo',
+      save: 'Save photo',
+      uploading: 'Uploading...',
+      remove: 'Remove photo',
+      removing: 'Removing...',
+      uploaded: 'Profile photo updated',
+      removed: 'Profile photo removed',
+      typeError: 'Only JPG, PNG or WEBP images are allowed',
+      sizeError: 'The image must not exceed 2 MB',
+      readError: 'The image could not be read. Please try another one.',
+      uploadError: 'The photo could not be uploaded.',
+      removeError: 'The photo could not be removed.'
+    }
   },
   validation: {
     required: 'This field is required',

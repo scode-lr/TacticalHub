@@ -6,7 +6,6 @@ import { TranslatePipe } from '@pipes/translate.pipe';
 import { User } from '@core/models/user.model';
 import {  Role } from '@core/models/role.model';
 import { UserService } from '@core/services/user.service';
-import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { RoleCardComponent } from '@components/role-card/role-card.component';
 import { environment } from '@environment';
 import { AppStatus } from '@core/models/app-status.model';
@@ -21,7 +20,6 @@ import { RolesService } from '@services/roles.service';
     CommonModule,
     IonContent,
     TranslatePipe,
-    UserHeaderComponent,
     RoleCardComponent
   ]
 })

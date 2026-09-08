@@ -1,0 +1,87 @@
+// The three roles share the frame. Only the router outlet/scroll owner differs.
+@mixin layout($selector, $ionic-outlet: true) {
+  #{$selector} {
+    height: 100dvh;
+    background: var(--background-primary, #ffffff);
+    overflow: hidden;
+
+    .layout-container {
+      display: flex;
+      height: 100%;
+
+      .content-container {
+        flex: 1;
+        background: var(--background-secondary, #f8f9fa);
+
+        @if $ionic-outlet {
+          min-width: 0;
+          position: relative;
+          padding: 0;
+          overflow: hidden;
+
+          ion-router-outlet {
+            position: absolute;
+            inset: 0;
+          }
+
+          // Ionic's own .ion-page is `display: flex; flex-direction: column;
+          // justify-content: space-between` (core.css) — meant for header/content/footer.
+          // Here it's repurposed as a plain scroll owner, so that has to be neutralized or a
+          // page's own top chrome (e.g. .mobile-page-header) and its .page-container get
+          // shoved apart with a gap whenever together they don't fill the full height.
+          ::ng-deep ion-router-outlet > .ion-page {
+            justify-content: flex-start;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            background: var(--background-secondary, #f8f9fa);
+          }
+
+          // Padding lives on the page's own .page-container, not on .ion-page itself, so a
+          // page can put its own chrome (e.g. .mobile-page-header) outside the padded area.
+          ::ng-deep ion-router-outlet > .ion-page > .page-container {
+            padding: 2rem;
+          }
+        } @else {
+          overflow-y: auto;
+
+          ::ng-deep .page-container {
+            padding: 2rem;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    #{$selector} {
+      .layout-container {
+        flex-direction: column;
+        height: 100dvh;
+
+        app-menu.hidden-on-detail { display: none; }
+
+        .content-container {
+          order: 1;
+
+          @if $ionic-outlet {
+            &,
+            &.full-width { padding: 0; }
+
+            ::ng-deep ion-router-outlet > .ion-page > .page-container {
+              padding: var(--app-page-gutter, 1.5rem);
+              padding-bottom: calc(var(--app-page-gutter, 1.5rem) + var(--app-mobile-menu-height));
+            }
+          } @else {
+            &,
+            &.full-width { padding: 0; }
+
+            ::ng-deep .page-container {
+              padding: var(--app-page-gutter, 1.5rem);
+              padding-bottom: calc(var(--app-page-gutter, 1.5rem) + var(--app-mobile-menu-height));
+            }
+          }
+        }
+      }
+    }
+  }
+}

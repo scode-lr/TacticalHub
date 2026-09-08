@@ -2,3 +2,24 @@
 // .field-row, .field-readonly, the toggles and .detail-form come from
 // app/styles/_forms.scss, the buttons from _buttons.scss and .spin from
 // _utilities.scss.
+
+// On mobile the card stops looking like a boxed card and blends into the page instead. The
+// page's own .page-container already carries the horizontal gutter, so header and body drop
+// their own horizontal padding rather than stacking a second inset on top of it.
+@media (max-width: 768px) {
+  .form-card {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .form-card-header {
+    border: none;
+    padding: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-card-body {
+    padding: 0;
+  }
+}

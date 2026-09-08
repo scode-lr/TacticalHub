@@ -1,4 +1,10 @@
 export const sharedTranslations = {
+  more: {
+    account: 'El meu compte',
+    clubServices: 'Serveis del club',
+    clubSettings: 'Configuració del club',
+    leaveGuest: "Sortir del mode convidat"
+  },
   primeng: {
     apply: 'Aplicar',
     clear: 'Netejar',
@@ -236,7 +242,25 @@ export const sharedTranslations = {
     confirmDeleteAccount: 'Eliminar definitivament',
     deletingAccount: 'Eliminant el compte…',
     accountDeleted: "El teu compte s'ha eliminat correctament.",
-    deleteAccountError: "No s'ha pogut eliminar el compte."
+    deleteAccountError: "No s'ha pogut eliminar el compte.",
+    avatar: {
+      title: 'Foto de perfil',
+      hint: 'JPG, PNG o WEBP. Màxim 2 MB.',
+      select: 'Triar una foto',
+      change: 'Canviar la foto',
+      confirmTitle: 'Confirmar la foto de perfil',
+      save: 'Desar la foto',
+      uploading: 'Pujant...',
+      remove: 'Eliminar la foto',
+      removing: 'Eliminant...',
+      uploaded: 'Foto de perfil actualitzada',
+      removed: 'Foto de perfil eliminada',
+      typeError: 'Només es permeten imatges JPG, PNG o WEBP',
+      sizeError: 'La imatge no pot superar els 2 MB',
+      readError: "No s'ha pogut llegir la imatge. Prova amb una altra.",
+      uploadError: "No s'ha pogut pujar la foto.",
+      removeError: "No s'ha pogut eliminar la foto."
+    }
   },  validation: {
     required: 'Aquest camp és obligatori',
     invalidEmail: 'Adreça de correu invàlida',

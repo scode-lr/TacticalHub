@@ -42,7 +42,7 @@
       class="user-info"
       (click)="goToProfile()"
       [attr.aria-label]="'common.profile' | translate">
-      <img [src]="avatarUrl()" [alt]="user()?.username" (error)="onAvatarError()" class="user-avatar">
+      <img [src]="avatarUrl()" [alt]="user()?.username" [appDefaultImage]="defaultAvatar" class="user-avatar">
     </button>
     <div class="action-buttons">
       <button class="settings-button" (click)="goToSettings()">
@@ -60,7 +60,11 @@
       <button
         class="menu-item"
         [class.active]="isSelected(item.id) && !isMoreActive()"
-        (click)="selectMenuItem(item)">
+        (click)="onMobileItemClick(item)"
+        (pointerdown)="onMobileItemPressStart(item)"
+        (pointerup)="onMobileItemPressEnd()"
+        (pointerleave)="onMobileItemPressEnd()"
+        (contextmenu)="$event.preventDefault()">
         <div class="menu-icon-wrapper">
           <ion-icon [name]="item.icon" class="menu-icon"></ion-icon>
           @if (item.badge && item.badge > 0) {
@@ -71,7 +75,7 @@
       </button>
     }
 
-    @if (moreItems().length > 0) {
+    @if (showMore()) {
       <button
         class="menu-item menu-more"
         [class.active]="isMoreActive()"

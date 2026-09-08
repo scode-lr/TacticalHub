@@ -16,7 +16,7 @@ import { FormField } from '@core/models/form-field.model';
 import { AppStatus } from '@core/models/app-status.model';
 import { parseSubmissionComment, SubmissionCommentEntry } from '@core/utils/submission-comment.util';
 import { FormDetail } from '@core/responses/form.response';
-import { BackButtonComponent, DynamicFormFieldsComponent } from '@components/index';
+import { BackButtonComponent, DynamicFormFieldsComponent, UserHeaderComponent } from '@components/index';
 import { isValidIban, normalizeIban } from '@core/utils/iban.util';
 import { readBooleanValue } from '@core/utils/submission-value.util';
 import { FormFieldType, isDisplayOnlyField } from '@core/models/form.model';
@@ -34,6 +34,7 @@ import { FormFieldType, isDisplayOnlyField } from '@core/models/form.model';
     TimelineModule,
     TranslatePipe,
     BackButtonComponent,
+    UserHeaderComponent,
     DynamicFormFieldsComponent,
   ]
 })

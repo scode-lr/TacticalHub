@@ -1,3 +1,7 @@
+<div class="mobile-page-header">
+  <app-user-header [showBackButton]="true" [title]="pageTitle()" [backRoute]="backRoute()" />
+</div>
+
 <div class="page-container">
   <div class="section-header-with-back-button">
     <app-back-button [route]="backRoute()" />
@@ -21,13 +25,12 @@
     }
     
     @if (hasSubmissions()) {
+      <button type="button" class="btn-primary fill-again-button" (click)="onFillAgain()">
+        {{ 'user.forms.submission.fillAgain' | translate }}
+      </button>
+
       <div class="submissions-section">
-        <div class="submissions-header">
-          <h2 class="submissions-title">{{ 'user.forms.submission.title' | translate }}</h2>
-          <button type="button" class="btn-primary" (click)="onFillAgain()">
-            {{ 'user.forms.submission.fillAgain' | translate }}
-          </button>
-        </div>
+        <h2 class="submissions-title">{{ 'user.forms.submission.title' | translate }}</h2>
 
         <div class="submissions-list">
           @for (submission of mySubmissions(); track submission.id) {

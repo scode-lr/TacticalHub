@@ -1,11 +1,21 @@
 <div class="join-team-page">
-  <app-user-header [showBackButton]="showBackButton()" [showRoleSelector]="false" (backClick)="goBack()"></app-user-header>
+  @if (showBackButton()) {
+    <div class="mobile-page-header">
+      <app-user-header [showBackButton]="true" [title]="'joinTeam.title'" [backRoute]="'teams/selection'" />
+    </div>
+  }
 
   <ion-content class="content">
     <div class="container">
+      @if (showBackButton()) {
+        <div class="join-team-back">
+          <app-back-button [route]="'teams/selection'" />
+        </div>
+      }
+
       <!-- Page Title -->
       <div class="page-title">
-        <h1>{{ 'joinTeam.title' | translate }}</h1>
+        <h1 [class.mobile-hidden]="showBackButton()">{{ 'joinTeam.title' | translate }}</h1>
         <p class="subtitle">{{ isPrivateApp ? ('joinTeam.subtitlePrivate' | translate) : ('joinTeam.subtitle' | translate) }}</p>
       </div>
 

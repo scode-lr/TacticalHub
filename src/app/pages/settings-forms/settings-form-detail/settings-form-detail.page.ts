@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { IonIcon, IonToast } from '@ionic/angular/standalone';
-import { bodyOutline, documentTextOutline, peopleOutline, saveOutline, syncOutline } from 'ionicons/icons';
+import { personAddOutline, documentTextOutline, cardOutline, saveOutline, syncOutline } from 'ionicons/icons';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { TranslatePipe } from '@core/pipes/translate.pipe';
 import { TranslationService } from '@services/i18n/translation.service';
 import { NavigationService } from '@services/navigation.service';
 import { AppStatus } from '@models/app-status.model';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { SectionFooterActionsComponent } from '@components/section-footer-actions/section-footer-actions.component';
 import { PreviewModalComponent } from '@components/modals/preview-modal/preview-modal.component';
 import { FormPreviewContentComponent } from '@components/form-preview-content/form-preview-content.component';
@@ -47,6 +48,7 @@ interface HeaderFormControls {
     ReactiveFormsModule,
     TranslatePipe,
     BackButtonComponent,
+    UserHeaderComponent,
     SectionFooterActionsComponent,
     PreviewModalComponent,
     FormPreviewContentComponent,
@@ -97,8 +99,8 @@ export class SettingsFormDetailPage implements OnInit {
 
   readonly typeIcon = computed((): string => {
     switch (this.selectedAction()) {
-      case FormAction.RegisterPlayer: return 'body-outline';
-      case FormAction.BecomeMember:   return 'people-outline';
+      case FormAction.RegisterPlayer: return 'person-add-outline';
+      case FormAction.BecomeMember:   return 'card-outline';
       default:                        return 'document-text-outline';
     }
   });
@@ -112,7 +114,7 @@ export class SettingsFormDetailPage implements OnInit {
   }
 
   constructor() {
-    addIcons({ bodyOutline, documentTextOutline, peopleOutline, saveOutline, syncOutline });
+    addIcons({ personAddOutline, documentTextOutline, cardOutline, saveOutline, syncOutline });
   }
 
   async ngOnInit(): Promise<void> {

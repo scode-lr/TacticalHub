@@ -11,7 +11,7 @@ import { FormSubmissionsService } from '@services/form-submissions.service';
 import { FormField } from '@core/models/form-field.model';
 import { FormDetail } from '@core/responses/form.response';
 import { FormSubmission } from '@core/models/form-submission.model';
-import { BackButtonComponent, FormSubmissionCardComponent } from '@components/index';
+import { BackButtonComponent, FormSubmissionCardComponent, UserHeaderComponent } from '@components/index';
 
 @Component({
   selector: 'app-form-detail',
@@ -23,6 +23,7 @@ import { BackButtonComponent, FormSubmissionCardComponent } from '@components/in
     IonIcon,
     TranslatePipe,
     BackButtonComponent,
+    UserHeaderComponent,
     FormSubmissionCardComponent,
   ]
 })

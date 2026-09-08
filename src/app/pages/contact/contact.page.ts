@@ -12,6 +12,7 @@ import { ToastService } from '@services/toast.service';
 import { ContactMessageType } from '@core/models/contact-message.model';
 import { TranslationService } from '@core/services/i18n/translation.service';
 import { BackButtonComponent } from '@components/back-button/back-button.component';
+import { UserHeaderComponent } from '@components/user-header/user-header.component';
 import { addIcons } from 'ionicons';
 import { checkmarkCircleOutline, mailOutline, shieldCheckmarkOutline } from 'ionicons/icons';
 
@@ -20,7 +21,7 @@ import { checkmarkCircleOutline, mailOutline, shieldCheckmarkOutline } from 'ion
   templateUrl: './contact.page.html',
   styleUrls: ['./contact.page.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IonIcon, IonSpinner, TranslatePipe, BackButtonComponent]
+  imports: [CommonModule, ReactiveFormsModule, IonIcon, IonSpinner, TranslatePipe, BackButtonComponent, UserHeaderComponent]
 })
 export class ContactPage implements OnInit {
   private readonly fb = inject(FormBuilder);
@@ -46,7 +47,6 @@ export class ContactPage implements OnInit {
   readonly titleKey = computed(() => this.requestType() === 'sponsor' ? 'contact.sponsorTitle' : 'contact.title');
   readonly subtitleKey = computed(() => this.requestType() === 'sponsor' ? 'contact.sponsorSubtitle' : 'contact.subtitle');
   readonly typeLabelKey = computed(() => this.requestType() === 'sponsor' ? 'contact.sponsorType' : 'contact.generalType');
-  readonly showSponsorBackButton = computed(() => this.requestType() === 'sponsor');
 
   readonly form = this.fb.nonNullable.group({
     contactName: ['', [Validators.required, Validators.maxLength(200)]],
