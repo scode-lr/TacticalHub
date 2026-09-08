@@ -14,7 +14,7 @@ env:
 jobs:
   build-sign-publish:
     name: Build, sign and publish Voltrega iOS build
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - name: Checkout
