@@ -33,6 +33,17 @@ export class FileValidationService {
 
     private readonly MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
+    // Profile photos: stricter than generic uploads, must match the API contract
+    // (POST /users/me/avatar accepts image/jpeg|png|webp up to 2MB).
+    private readonly ALLOWED_AVATAR_TYPES = [
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/webp'
+    ];
+
+    private readonly MAX_AVATAR_SIZE = 2 * 1024 * 1024; // 2MB in bytes
+
     /**
      * Validates a file based on extension, MIME type, and size
      * @param file The file to validate
@@ -70,10 +81,48 @@ export class FileValidationService {
     }
 
     /**
+     * Validates a profile photo against the avatar upload contract
+     * (image/jpeg|png|webp, max 2MB).
+     * @param file The image to validate
+     * @returns FileValidationResult with validation status and error key if invalid
+     */
+    validateAvatar(file: File): FileValidationResult {
+        if (!this.ALLOWED_AVATAR_TYPES.includes(file.type)) {
+            return {
+                valid: false,
+                errorKey: 'profile.avatar.typeError'
+            };
+        }
+
+        if (file.size > this.MAX_AVATAR_SIZE) {
+            return {
+                valid: false,
+                errorKey: 'profile.avatar.sizeError'
+            };
+        }
+
+        return { valid: true };
+    }
+
+    /**
      * Gets the maximum allowed file size in bytes
      */
     getMaxFileSize(): number {
         return this.MAX_FILE_SIZE;
+    }
+
+    /**
+     * Gets the maximum allowed profile photo size in bytes
+     */
+    getMaxAvatarSize(): number {
+        return this.MAX_AVATAR_SIZE;
+    }
+
+    /**
+     * Gets the list of accepted profile photo MIME types
+     */
+    getAllowedAvatarTypes(): string[] {
+        return [...this.ALLOWED_AVATAR_TYPES];
     }
 
     /**

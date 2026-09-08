@@ -51,7 +51,7 @@
           <div class="identity">
             <img
               class="avatar"
-              [src]="user.avatarUrl"
+              [src]="avatarSrc(user)"
               [alt]="displayName(user)"
               (error)="onAvatarError($event)" />
             <div class="identity-copy">

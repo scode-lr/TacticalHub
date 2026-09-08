@@ -42,7 +42,7 @@
       class="user-info"
       (click)="goToProfile()"
       [attr.aria-label]="'common.profile' | translate">
-      <img [src]="avatarUrl()" [alt]="user()?.username" (error)="onAvatarError()" class="user-avatar">
+      <img [src]="avatarUrl()" [alt]="user()?.username" [appDefaultImage]="defaultAvatar" class="user-avatar">
     </button>
     <div class="action-buttons">
       <button class="settings-button" (click)="goToSettings()">

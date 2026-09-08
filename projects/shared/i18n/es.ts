@@ -242,7 +242,25 @@ export const sharedTranslations = {
     confirmDeleteAccount: 'Eliminar definitivamente',
     deletingAccount: 'Eliminando cuenta…',
     accountDeleted: 'Tu cuenta se ha eliminado correctamente.',
-    deleteAccountError: 'No se ha podido eliminar la cuenta.'
+    deleteAccountError: 'No se ha podido eliminar la cuenta.',
+    avatar: {
+      title: 'Foto de perfil',
+      hint: 'JPG, PNG o WEBP. Máximo 2 MB.',
+      select: 'Elegir una foto',
+      change: 'Cambiar foto',
+      confirmTitle: 'Confirmar foto de perfil',
+      save: 'Guardar foto',
+      uploading: 'Subiendo...',
+      remove: 'Eliminar foto',
+      removing: 'Eliminando...',
+      uploaded: 'Foto de perfil actualizada',
+      removed: 'Foto de perfil eliminada',
+      typeError: 'Solo se permiten imágenes JPG, PNG o WEBP',
+      sizeError: 'La imagen no puede superar los 2 MB',
+      readError: 'No se ha podido leer la imagen. Prueba con otra.',
+      uploadError: 'No se ha podido subir la foto.',
+      removeError: 'No se ha podido eliminar la foto.'
+    }
   },  validation: {
     required: 'Este campo es obligatorio',
     invalidEmail: 'Dirección de correo inválida',

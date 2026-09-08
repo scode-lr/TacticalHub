@@ -1,5 +1,5 @@
 <div class="account-identity">
-  <img class="account-avatar" [src]="isGuest() ? 'assets/default-avatar.svg' : user()?.metadata?.avatar || 'assets/default-avatar.svg'"
+  <img class="account-avatar" [src]="isGuest() ? 'assets/default-avatar.svg' : avatarUrl()"
     alt="" appDefaultImage="assets/default-avatar.svg">
   <div class="account-details">
     <h2>{{ isGuest() ? ('roles.guest' | translate) : displayName() }}</h2>

@@ -164,6 +164,12 @@
     font-weight: 700;
   }
 
+  // Same circle as the initials avatar, filled with the author's photo instead.
+  .news-avatar--image {
+    background: none;
+    object-fit: cover;
+  }
+
   // Body is rendered via [innerHTML] (see the `richText` pipe), so the actual p/ul/li/a elements
   // never pass through Angular's template compiler and need ::ng-deep to be styled at all.
   .news-body {

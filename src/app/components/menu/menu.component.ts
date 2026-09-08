@@ -24,7 +24,8 @@ import {
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { filter } from 'rxjs/operators';
 import { RoleSelectorComponent } from '@components/role-selector/role-selector.component';
-import { UserService } from '@core/services/user.service';
+import { DEFAULT_AVATAR, UserService } from '@core/services/user.service';
+import { DefaultImageDirective } from '@core/directives/default-image.directive';
 import { User } from '@core/models/user.model';
 import { NavigationService } from '@services/navigation.service';
 import { Role, RoleType } from '@core/models/role.model';
@@ -60,7 +61,8 @@ const LONG_PRESS_MS = 500;
     CommonModule,
     IonIcon,
     TranslatePipe,
-    RoleSelectorComponent
+    RoleSelectorComponent,
+    DefaultImageDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -80,7 +82,9 @@ export class MenuComponent implements OnInit {
   readonly selectedMenuItem = signal<string>('home');
   readonly currentMenuId = signal<string>('home');
   readonly user = signal<User | null>(null);
-  readonly avatarUrl = signal<string>('assets/default-avatar.svg');
+  readonly defaultAvatar = DEFAULT_AVATAR;
+  /** Object URL of the user's profile photo, resolved once by UserService. */
+  readonly avatarUrl = computed(() => this.userService.avatarUrl() ?? DEFAULT_AVATAR);
 
   readonly moreItems = computed(() => this.config().moreItems ?? []);
   readonly mobileMoreItems = computed(() => this.mobileNavigation.accountInMore()
@@ -149,7 +153,7 @@ export class MenuComponent implements OnInit {
     const storedUser = this.userService.getStoredUser();
     if (storedUser) {
       this.user.set(storedUser);
-      this.avatarUrl.set(storedUser.metadata?.avatar || 'assets/default-avatar.svg');
+      void this.userService.loadAvatar();
     }
   }
 
@@ -229,9 +233,5 @@ export class MenuComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-  }
-
-  onAvatarError() {
-    this.avatarUrl.set('assets/default-avatar.svg');
   }
 }
