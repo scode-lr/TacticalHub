@@ -17,7 +17,7 @@ import { AppStatus } from '@core/models/app-status.model';
 import { parseSubmissionComment, SubmissionCommentEntry } from '@core/utils/submission-comment.util';
 import { FormDetail } from '@core/responses/form.response';
 import { BackButtonComponent, DynamicFormFieldsComponent, UserHeaderComponent } from '@components/index';
-import { isValidIban, normalizeIban } from '@core/utils/iban.util';
+import { formatIban, isValidIban, normalizeIban } from '@core/utils/iban.util';
 import { readBooleanValue } from '@core/utils/submission-value.util';
 import { FormFieldType, isDisplayOnlyField } from '@core/models/form.model';
 
@@ -133,7 +133,11 @@ export class FormDetailSubmissionPage implements OnInit {
       const value = v.fieldType === FormFieldType.Checkbox
         ? readBooleanValue(v) ?? v.valueText
         : v.valueText ?? v.valueNumber ?? v.valueDate ?? v.valueBoolean ?? null;
-      if (value !== null) prefill[v.fieldKey] = value;
+      if (value !== null) {
+        prefill[v.fieldKey] = v.fieldType === FormFieldType.Iban && typeof value === 'string'
+          ? formatIban(value)
+          : value;
+      }
       if (v.status) statuses[v.fieldKey] = v.status;
     }
     this.dynamicForm.patchValue(prefill);
@@ -150,7 +154,11 @@ export class FormDetailSubmissionPage implements OnInit {
 
       const validators = [];
       if (field.isRequired) validators.push(Validators.required);
-      if (field.maxLength && field.maxLength > 0) validators.push(Validators.maxLength(field.maxLength));
+      // IBANs are displayed with spaces, so their configured limit is enforced by the input
+      // formatter against the normalized value rather than by Angular's visible-text length.
+      if (field.type !== FormFieldType.Iban && field.maxLength && field.maxLength > 0) {
+        validators.push(Validators.maxLength(field.maxLength));
+      }
       if (field.type === FormFieldType.Email) validators.push(Validators.email);
       if (field.type === FormFieldType.Iban) validators.push((control: AbstractControl) => {
         const value = control.value as string | null;

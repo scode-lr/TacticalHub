@@ -13,7 +13,7 @@
   } @else {
   <div class="field-group"
        [class.field-group--approved]="field.status === AppStatus.Approved"
-       [class.field-group--rejected]="field.status === AppStatus.Rejected">
+       [class.field-group--rejected]="isFieldRejected(field)">
     @if (field.type === 'boolean') {
       <!-- The radio group has no single control to point at, so the caption is not a <label>. -->
       <span class="field-label">
@@ -88,7 +88,9 @@
         autocapitalize="characters"
         [formControl]="$any(form().get(field.key))"
         [invalid]="isFieldInvalid(field)"
-        [attr.maxlength]="field.maxLength ?? 34"
+        [attr.maxlength]="ibanInputMaxLength(field)"
+        placeholder="ES00 0000 0000 0000 0000 0000"
+        (input)="formatIbanInput(field, $event)"
       />
     }
 
