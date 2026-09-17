@@ -9,6 +9,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { AppStatus } from '@core/models/app-status.model';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormField } from '@core/models/form-field.model';
+import { formatIban, formattedIbanLength, ibanLengthFor, MAX_IBAN_LENGTH } from '@core/utils/iban.util';
 
 @Component({
   selector: 'app-dynamic-form-fields',
@@ -33,6 +34,28 @@ export class DynamicFormFieldsComponent {
 
   readonly AppStatus = AppStatus;
 
+  formatIbanInput(field: FormField, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const rawLimit = this.ibanRawMaxLength(field, input.value);
+    const formatted = formatIban(input.value, rawLimit);
+
+    if (input.value !== formatted) {
+      this.form().get(field.key)?.setValue(formatted);
+    }
+  }
+
+  ibanInputMaxLength(field: FormField): number {
+    const value = String(this.form().get(field.key)?.value ?? '');
+    return formattedIbanLength(this.ibanRawMaxLength(field, value));
+  }
+
+  private ibanRawMaxLength(field: FormField, value: string): number {
+    const configuredLimit = field.maxLength && field.maxLength > 0
+      ? field.maxLength
+      : MAX_IBAN_LENGTH;
+    return Math.min(configuredLimit, ibanLengthFor(value));
+  }
+
   /**
    * A boolean field with authored options is a pick-one list and answers with the option text.
    * Without options it is a plain yes/no question, so the answer is a real boolean and only the
@@ -50,7 +73,12 @@ export class DynamicFormFieldsComponent {
 
   isFieldInvalid(field: FormField): boolean {
     const ctrl = this.form().get(field.key);
-    return !!(ctrl?.invalid && ctrl?.touched) || field.status === AppStatus.Rejected;
+    return !!(ctrl?.invalid && ctrl?.touched) || this.isFieldRejected(field);
+  }
+
+  isFieldRejected(field: FormField): boolean {
+    const ctrl = this.form().get(field.key);
+    return field.status === AppStatus.Rejected && !ctrl?.dirty;
   }
 
   fieldErrorMessage(field: FormField): { key: string; params?: Record<string, unknown> } | null {
